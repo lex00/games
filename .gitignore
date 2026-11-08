@@ -1,0 +1,81 @@
+# Rust
+/target/
+**/target/
+
+# Editor (TypeScript)
+node_modules
+dist/
+.vite/
+*.tsbuildinfo
+
+# OS and editors
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Environment
+.env
+.env.*
+
+# Game images. Never commit copies of games, even ones you own.
+# ROMs live outside the repo in $GP_ROM_DIR (default ~/.game-printer/roms).
+*.nes
+*.fds
+*.unf
+*.unif
+*.sfc
+*.smc
+*.gb
+*.gbc
+*.gba
+*.gen
+*.bin
+*.iso
+*.img
+*.ima
+*.exe
+*.com
+*.zip
+*.7z
+*.rar
+roms/
+
+# Data dumped or derived from a game: ROM banks, music rips, save states, battery saves
+*.prg
+*.chr
+*.nsf
+*.nsfe
+*.state
+*.mss
+# ROM hack patches: the hack's data, kept in $GP_ROM_DIR/patches
+*.ips
+*.bps
+*.ups
+*.xdelta
+*.mst
+*.sav
+*.srm
+
+# Movies and recordings. Recordings live in the evidence store, outside the repo
+# ($GP_STORE, default ~/.game-printer/store). TAS movies stay private until their terms are checked.
+*.fm2
+*.bk2
+*.mmo
+*.rec
+recordings/
+extracted/
+.game-printer/
+
+# cc65 build output: object, debug and label files (scripts/mosshop/build.sh
+# writes them next to the ROM, in target/, but keep them out wherever they land)
+*.o
+*.dbg
+*.labels
+
+# Python
+__pycache__/
+*.pyc
+
+# Tells to a clip agent (serve/tell.rs)
+.gp-inbox/

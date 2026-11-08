@@ -1,0 +1,77 @@
+#!/bin/bash
+# Refuse to commit game images or data dumped from games, whatever the file is named.
+#
+# A staged file is refused when:
+#   - its name has a game image, dump, save, movie or ROM patch extension;
+#   - its contents start with an NES, FDS, UNIF or NSF header, or an IPS,
+#     BPS or UPS patch's magic bytes;
+#   - git sees it as binary and it isn't in .githooks/binary-allowlist
+#     (a headerless PRG or CHR dump has no magic bytes, so this is the only
+#     check that catches one);
+#   - it's over 1MB (GP_ALLOW_LARGE=1 allows a large text file deliberately);
+#   - its added lines hold 16 or more consecutive bytes of a registered ROM
+#     in $GP_ROM_DIR, typed out as hex or decimal numbers
+#     (scripts/romguard/rom_text.py; skipped when no registered ROM is there).
+#
+# `just check` fails if this hook isn't enabled. Never bypass it with --no-verify.
+
+max_bytes=1048576
+root="$(git rev-parse --show-toplevel)"
+hooks="$(CDPATH='' cd -- "$(dirname -- "$0")" >/dev/null && pwd)"
+allowlist="$root/.githooks/binary-allowlist"
+
+allowed_binary() {
+  local path="$1" pattern
+  [ -f "$allowlist" ] || return 1
+  while IFS= read -r pattern; do
+    case "$pattern" in ''|'#'*) continue ;; esac
+    # shellcheck disable=SC2053
+    [[ "$path" == $pattern ]] && return 0
+  done < "$allowlist"
+  return 1
+}
+
+refuse() {
+  echo "pre-commit: refusing $1 ($2)" >&2
+  exit 1
+}
+
+# numstat prints "-<TAB>-" for files git treats as binary.
+git diff --cached --numstat --no-renames --diff-filter=ACMRT -z | while IFS= read -r -d '' line; do
+  added="${line%%$'\t'*}"
+  path="${line#*$'\t'*$'\t'}"
+
+  case "$path" in
+    *.nes|*.fds|*.unf|*.unif|*.prg|*.chr|*.nsf|*.nsfe|*.fm2|*.bk2|*.mmo|*.state|*.mss|*.mst|*.sav|*.srm)
+      refuse "$path" "game image, dump, save or movie file" ;;
+    *.ips|*.bps|*.ups|*.xdelta)
+      refuse "$path" "ROM patch; a patch holds the hack's data, so only its hash and URL go in sources/ (docs/sources.md, \"Patched sources\")" ;;
+  esac
+
+  magic=$(git show ":$path" 2>/dev/null | head -c 16 | od -An -c | tr -d ' \n')
+  case "$magic" in
+    NES032*|FDS032*|UNIF*|001*NINTENDO-HVC*|NESM032*|NSFE*)
+      refuse "$path" "contents look like a game image or music rip" ;;
+    PATCH*|BPS1*|UPS1*)
+      refuse "$path" "contents look like a ROM patch (IPS, BPS or UPS); only its hash and URL go in sources/" ;;
+  esac
+
+  if [ "$added" = "-" ] && ! allowed_binary "$path"; then
+    refuse "$path" "binary file; game data has no place in the repo. If this file is legitimate, add a pattern for it to .githooks/binary-allowlist"
+  fi
+
+  size=$(git cat-file -s ":$path" 2>/dev/null || echo 0)
+  if [ "$size" -gt "$max_bytes" ] && [ "${GP_ALLOW_LARGE:-0}" != "1" ]; then
+    refuse "$path" "$size bytes; large data belongs in the evidence store"
+  fi
+done || exit 1
+
+# ROM data typed out as numbers. Needs python3 only when $GP_ROM_DIR exists.
+rom_dir="${GP_ROM_DIR:-${GP_HOME:-$HOME/.game-printer}/roms}"
+if [ -d "$rom_dir" ]; then
+  if ! command -v python3 >/dev/null; then
+    echo "pre-commit: python3 (3.11 or newer) is needed to check staged text for ROM bytes, since $rom_dir exists" >&2
+    exit 1
+  fi
+  python3 -I -B "$hooks/../scripts/romguard/rom_text.py" --root "$root" staged || exit 1
+fi

@@ -1,0 +1,9 @@
+# ROMs whose bytes must never be typed into this repo, by headerless SHA-256.
+# Hashes only: these are checked against the person's own files in $GP_ROM_DIR.
+[[source]]
+id = "donkey-kong-oe"
+sha256 = "45440d8ef512b4660dce0c753e110004aef96fa30f2967f9260e946d808db07d"
+
+[[source]]
+id = "donkey-kong-ju"
+sha256 = "aa408f5a6b97c0d738e7e8b489a5617ad4a9ecdee2b05c4ee504210ce31b2825"

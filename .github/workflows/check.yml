@@ -1,0 +1,25 @@
+name: check
+on:
+  push:
+jobs:
+  hosted:
+    # No ROM here, ever: the scans and format checks.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq just
+      - run: just setup
+      - run: just check
+  rom:
+    # The runner on the user's machine, which holds the ROMs. They are read
+    # there and never leave it. Pushes only, so no outside code runs here.
+    runs-on: [self-hosted, rom]
+    env:
+      GP_ROM_DIR: /Users/alex/Documents/roms
+      GP_HOME: /Users/alex/.gameprinter
+    steps:
+      - uses: actions/checkout@v4
+      - name: The ROMs are on this machine
+        run: python3 -I -B scripts/roms-present.py
+      - name: No ROM bytes written as text
+        run: git ls-files -z | xargs -0 python3 -I -B scripts/romguard/rom_text.py --root . files

@@ -1,0 +1,9 @@
+# Reviewed excerpts of ROM data the pre-commit hook may accept in text, one
+# per line: `<repo-relative path> <sha256 of the matched bytes>`, both as the
+# refusal message prints them. Only the short excerpts AGENTS.md allows (a
+# few bytes quoted to document how two revisions differ) belong here, and an
+# entry covers at most 32 bytes. Put a comment above each entry saying what
+# the bytes document, who reviewed it and when.
+#
+# Excerpts under 16 bytes, such as the 4 bytes roms/nes.toml quotes, are
+# never refused and need no entry. There are none here yet.
