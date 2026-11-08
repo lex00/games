@@ -1,0 +1,70 @@
+# lex00/donkey-kong: the ROM option and its open version, one game.
+[package]
+name = "lex00/donkey-kong"
+version = "1.0.0"
+kind = "game"
+title = "Donkey Kong"
+license = "Apache-2.0"
+tier = "commercial"
+
+[tool]
+runtime-wit = "game-printer:runtime@0.4.0"
+sim-api = "1"
+gp = ">=0.1.0, <0.2.0"
+
+[play]
+files = ["model.toml", "mapping.toml", "profiles.toml", "assets/", "themes/paper/",
+         "open/model.toml", "open/profiles.toml", "open/authored.toml", "open/themes/"]
+
+[open]
+title = "Rivet Rodeo"
+model = "open/model.toml"
+derive = "model.toml"
+authored = "open/authored.toml"
+baselines = "open/baselines/"
+
+[rom]
+how_to_get = """
+Donkey Kong: Original Edition was sold for the Nintendo 3DS Virtual Console. This game reads
+a dump of that release, or of a cartridge you own, made with a dumping tool you trust.
+Without one, play Rivet Rodeo, this game's open version.
+"""
+
+[[rom.entry]]
+id = "donkey-kong-oe"
+role = "scored"
+title = "Donkey Kong: Original Edition"
+sha256 = "45440d8ef512b4660dce0c753e110004aef96fa30f2967f9260e946d808db07d"
+platform = "nes"
+mapper = 3
+submapper = 2
+prg_rom_bytes = 32768
+chr_rom_bytes = 32768
+board_status = "unverified"
+asset_map = "assets/donkey-kong-oe.toml"
+asset_map_sha256 = "35b718d26e02b60ce9bd523dd5ea59f3537d78e8074effad5824a045f6406d10"
+lifted_sha256 = "3471247780a92d9af74e2d7fd2713926229df71f2e94bb45162e5221bba129cc"
+
+[[rom.entry]]
+id = "donkey-kong-ju"
+role = "play"
+title = "Donkey Kong (JU)"
+sha256 = "aa408f5a6b97c0d738e7e8b489a5617ad4a9ecdee2b05c4ee504210ce31b2825"
+platform = "nes"
+mapper = 0
+prg_rom_bytes = 16384
+chr_rom_bytes = 8192
+board_status = "unverified"
+asset_map = "assets/donkey-kong-ju.toml"
+asset_map_sha256 = "4a968562f81777d7e2349f65543ead02b09ad7b15794d15c63299773dbba4383"
+levels = ["main", "m75", "m100"]
+assets = { title_screens = "stage_screens", title_tiles = "tiles", title_sprite_tiles = "sprite_tiles" }
+fill_from = "open/"
+
+[hooks]
+crate = "ext"
+models = ["donkey_kong_oe", "rivet_rodeo"]
+
+[corpus]
+name = "donkey-kong-oe-25m"
+version = "6.0.0"

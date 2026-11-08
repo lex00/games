@@ -1,10 +1,10 @@
 [package]
 name = "gp-ext-dk"
-version.workspace = true
-edition.workspace = true
-rust-version.workspace = true
-publish.workspace = true
-license.workspace = true
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.99"
+publish = false
+license = "Apache-2.0"
 
 # Donkey Kong's hand-written behavior behind the model's `ext` hooks: Donkey
 # Kong throwing barrels and a barrel's own machine on 25m. It depends on
@@ -12,8 +12,10 @@ license.workspace = true
 # and gp-cycles, which has no dependencies, for the cycles of a routine's
 # path read from the lifted code (gp_cycles::walk).
 [dependencies]
-gp-sim = { path = "../../../crates/gp-sim" }
-gp-cycles = { path = "../../../crates/gp-cycles" }
+gp-sim = { path = "../../../gameprinter/crates/gp-sim" }
+gp-cycles = { path = "../../../gameprinter/crates/gp-cycles" }
 
-[lints]
-workspace = true
+[lints.rust]
+unsafe_code = "forbid"
+
+[workspace]
