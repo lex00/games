@@ -14,7 +14,8 @@ gp = ">=0.1.0, <0.2.0"
 
 [play]
 files = ["model.toml", "mapping.toml", "profiles.toml", "assets/", "themes/paper/",
-         "open/model.toml", "open/profiles.toml", "open/authored.toml", "open/themes/"]
+         "open/model.toml", "open/profiles.toml", "open/authored.toml", "open/themes/",
+         "play/"]
 
 [open]
 title = "Rivet Rodeo"
