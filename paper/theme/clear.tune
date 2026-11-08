@@ -1,0 +1,7 @@
+tune 1
+# clear: written by gp theme paint, from the role's words
+step 7
+voice lead pluck 0.45
+notes D4:1 E4:1 A4:1 E4:2 F#4:1 B4:1 D5:1 A5:2 B5:1 B5:1 A5:1 A5:2 B5:1 B5:1 B5:1 B5:2 A5:1 B5:1 B5:1 D5:2
+voice bass soft 0.35
+notes D2:5 A2:5 D2:5 A2:5 D2:5

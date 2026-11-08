@@ -1,0 +1,5 @@
+tune 1
+# walk: written by gp theme paint, from the role's words
+step 2
+voice tick noise 0.25
+notes E7:1
