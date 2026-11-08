@@ -11,7 +11,8 @@
 #   - it's over 1MB (GP_ALLOW_LARGE=1 allows a large text file deliberately);
 #   - its added lines hold 16 or more consecutive bytes of a registered ROM
 #     in $GP_ROM_DIR, typed out as hex or decimal numbers
-#     (scripts/romguard/rom_text.py; skipped when no registered ROM is there).
+#     (scripts/romguard/rom_text.py; skipped when no registered ROM is there);
+#   - a package folder in the repo fails `gp package scan`.
 #
 # `just check` fails if this hook isn't enabled. Never bypass it with --no-verify.
 
@@ -74,4 +75,37 @@ if [ -d "$rom_dir" ]; then
     exit 1
   fi
   python3 -I -B "$hooks/../scripts/romguard/rom_text.py" --root "$root" staged || exit 1
+fi
+
+# Every package folder in the repo goes through `gp package scan` as staged,
+# from a copy of the index, so what is scanned is what is committed. With no
+# ROM here it says nothing was compared; with one it compares and refuses a
+# needs-rewrite item. A repo with no package folder has nothing to scan.
+packages="$(git ls-files -- 'package.toml' '*/package.toml')"
+if [ -n "$packages" ]; then
+  gp="${GP:-}"
+  if [ -z "$gp" ]; then
+    for candidate in "$root/target/debug/gp" "$root/../gameprinter/target/debug/gp"; do
+      if [ -x "$candidate" ]; then
+        gp="$candidate"
+        break
+      fi
+    done
+  fi
+  if [ ! -x "$gp" ]; then
+    echo "pre-commit: this repo has package folders and no built gp to scan them with; build it (cargo build -p gp-cli in the gameprinter repo) or set GP" >&2
+    exit 1
+  fi
+  staged="$(mktemp -d)"
+  trap 'rm -rf "$staged"' EXIT
+  git checkout-index -a --prefix="$staged/"
+  while IFS= read -r package; do
+    dir="$(dirname "$package")"
+    if ! scanned="$("$gp" package scan "$staged/$dir" 2>&1)"; then
+      printf '%s\n' "$scanned" >&2
+      echo "pre-commit: refusing $dir: gp package scan failed" >&2
+      exit 1
+    fi
+    printf '%s\n' "$scanned" | grep '^ROM comparison:' || true
+  done <<< "$packages"
 fi

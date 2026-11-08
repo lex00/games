@@ -94,4 +94,21 @@ expect accept "15 bytes of a registered ROM" table.rs
 cp "$data/bytes16.txt" table.rs
 GP_ROM_DIR="$data/none" expect accept "16 bytes of a ROM, with no ROM folder" table.rs
 
+# The package scan: a package folder goes through $GP, and a failing scan or
+# no gp refuses the commit. Shims stand in for gp; the scan's own tests are in
+# crates/gp-cli (gameprinter repo).
+printf '#!/bin/sh\necho "ROM comparison: shim"\nexit 0\n' > "$data/gp-pass"
+printf '#!/bin/sh\necho "needs rewrite (1)"\nexit 1\n' > "$data/gp-fail"
+chmod +x "$data/gp-pass" "$data/gp-fail"
+mkdir -p pk
+printf '[package]\nname = "x/y"\n' > pk/package.toml
+GP="$data/gp-pass" expect accept "a package folder the scan passes" pk/package.toml
+mkdir -p pk
+printf '[package]\nname = "x/y"\n' > pk/package.toml
+GP="$data/gp-fail" expect reject "a package folder the scan fails" pk/package.toml
+mkdir -p pk
+printf '[package]\nname = "x/y"\n' > pk/package.toml
+GP="$data/none" expect reject "a package folder with no gp to scan it" pk/package.toml
+rm -rf pk
+
 [ "$failures" -eq 0 ] || { echo "$failures hook checks failed"; exit 1; }

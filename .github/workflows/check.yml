@@ -9,7 +9,9 @@ jobs:
       - uses: actions/checkout@v4
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq just
       - run: just setup
-      - run: just check
+      # gp is built from a private repo, so the package scan runs on the
+      # runner below and in the commit hook; this job runs the rest.
+      - run: just check-hosted
   rom:
     # The runner on the user's machine, which holds the ROMs. They are read
     # there and never leave it. Pushes only, so no outside code runs here.
@@ -19,7 +21,12 @@ jobs:
       GP_HOME: /Users/alex/.gameprinter
     steps:
       - uses: actions/checkout@v4
+      # gp is built from the tool repo on the runner's own machine.
+      - name: Build gp
+        run: cargo build -q --manifest-path /Users/alex/Documents/checkouts/lex00/gameprinter/Cargo.toml -p gp-cli
       - name: The ROMs are on this machine
         run: python3 -I -B scripts/roms-present.py
       - name: No ROM bytes written as text
         run: git ls-files -z | xargs -0 python3 -I -B scripts/romguard/rom_text.py --root . files
+      - name: The package scan, with the ROMs
+        run: git ls-files -- 'package.toml' '*/package.toml' | while IFS= read -r p; do /Users/alex/Documents/checkouts/lex00/gameprinter/target/debug/gp package scan "$(dirname "$p")" || exit 1; done

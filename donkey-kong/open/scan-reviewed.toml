@@ -1,0 +1,7 @@
+# Matches of `gp package scan` that a person reviewed and kept. Only these exact
+# keys are excused; any new match still fails the scan, and a key that stops
+# matching fails it too.
+
+[[reviewed]]
+key = "generators/stage.py|reordered|true|16727|7"
+why = "The climb's picture numbers (TOP_POSES, STEP_POSES): 22 small numbers saying which picture shows on each step, which the game's logic reads. Reviewed by the owner 2026-11-08 and kept."
