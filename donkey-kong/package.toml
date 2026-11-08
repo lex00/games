@@ -1,7 +1,7 @@
 # lex00/donkey-kong: the ROM option and its open version, one game.
 [package]
 name = "lex00/donkey-kong"
-version = "1.0.0"
+version = "1.0.1"
 kind = "game"
 title = "Donkey Kong"
 license = "Apache-2.0"
@@ -60,6 +60,8 @@ asset_map_sha256 = "4a968562f81777d7e2349f65543ead02b09ad7b15794d15c63299773dbba
 levels = ["main", "m75", "m100"]
 assets = { title_screens = "stage_screens", title_tiles = "tiles", title_sprite_tiles = "sprite_tiles" }
 fill_from = "open/"
+# Measured by game-printer's own lift of this ROM, 2026-11-08.
+lifted_sha256 = "b5ec0602d192f14527d336e6b28c0117f03d73f6d9592c18515d5f5df950adcb"
 
 [hooks]
 crate = "ext"
