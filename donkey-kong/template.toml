@@ -1,0 +1,143 @@
+# Template manifest (docs/templates.md) for Donkey Kong: Original Edition,
+# the NES source of the game donkey-kong that this project models
+# (sources/nes.toml, donkey-kong-oe; the user's decision, ROADMAP.md
+# 2026-11-04). A CNROM board: its upper 16KB is the program of Donkey Kong
+# (JU) with jumps into a new lower 16KB (50m and the title). A commercial
+# game: it ships with no assets and no facts.
+#
+# A Donkey Kong (JU) ROM may be loaded to play this model ([[loads]]
+# below); nothing scores, gates, records clips on or derives from it.
+[template]
+format = "0.3.1"
+id = "donkey-kong-oe"
+title = "Donkey Kong: Original Edition"
+tier = "commercial"
+model = "model.toml"
+contract = "fidelity.toml"
+clips = "clips.toml"
+game = "donkey-kong"
+
+[source]
+id = "donkey-kong-oe"
+platform = "nes"
+how = "rom"
+accepts = ["45440d8ef512b4660dce0c753e110004aef96fa30f2967f9260e946d808db07d"]
+
+[recipe]
+asset_map = "assets/donkey-kong-oe.toml"
+asset_map_sha256 = "35b718d26e02b60ce9bd523dd5ea59f3537d78e8074effad5824a045f6406d10"
+lifted_sha256 = "3471247780a92d9af74e2d7fd2713926229df71f2e94bb45162e5221bba129cc"
+
+# A ROM a person may load to play this model, which is not a source: no
+# tool scores, gates, records clips on or derives from it (docs/templates.md,
+# "ROMs to play"). Donkey Kong (JU) is this game's upper half without 50m
+# (the user's decision, ROADMAP.md 2026-11-04). Its assets are lifted
+# through its own asset map; `assets` names its asset each of this model's
+# assets it lacks takes instead (the title is an entry of its stage
+# screens, drawn with its one set of tiles), and the rest (50m's, the
+# jingles in the lower half) are filled from the paper version. `levels`
+# are the ones it has: the game passes over the others (stages.skip), so
+# a JU player goes 25m, 75m, 100m, as JU does.
+[[loads]]
+source = "donkey-kong-ju"
+accepts = ["aa408f5a6b97c0d738e7e8b489a5617ad4a9ecdee2b05c4ee504210ce31b2825"]
+asset_map = "assets/donkey-kong-ju.toml"
+asset_map_sha256 = "4a968562f81777d7e2349f65543ead02b09ad7b15794d15c63299773dbba4383"
+levels = ["main", "m75", "m100"]
+assets = { title_screens = "stage_screens", title_tiles = "tiles", title_sprite_tiles = "sprite_tiles" }
+
+# Every slot of the model and its role. Each is empty here and filled by
+# the recipe.
+[slots]
+climb_rom = "behavior"
+climb_tops_50m = "behavior"
+conveyor_pattern = "behavior"
+conveyor_turns = "behavior"
+pie_row_masks = "behavior"
+heights_50m = "behavior"
+fire_lists_50m = "behavior"
+ladder_waits_50m = "behavior"
+ground_runs_50m = "layout"
+ground_shapes_50m = "layout"
+demo_script = "behavior"
+font = "font"
+ground_runs = "layout"
+ground_shapes = "layout"
+kong_beat_a = "graphics"
+kong_beat_b = "graphics"
+kong_hold = "graphics"
+kong_stand = "graphics"
+kong_take = "graphics"
+kong_throw = "graphics"
+ladder_shapes = "layout"
+ladder_shapes_50m = "layout"
+ladders_50m = "layout"
+ladders = "layout"
+palettes = "palettes"
+palettes_50m = "palettes"
+play_pointers = "behavior"
+play_heights = "behavior"
+play_gaps = "behavior"
+play_ladders_end = "behavior"
+play_tables = "behavior"
+ground_runs_75m = "layout"
+ground_runs_75m_end = "behavior"
+heights_75m = "behavior"
+ground_shapes_75m = "layout"
+ladders_75m = "layout"
+ladders_75m_end = "behavior"
+ladder_shapes_75m = "layout"
+ladder_tops_75m = "layout"
+play_tables_75m = "behavior"
+fire_ways_75m = "layout"
+ground_runs_100m = "layout"
+ground_runs_100m_end = "behavior"
+heights_100m = "behavior"
+ground_shapes_100m = "layout"
+ladders_100m = "layout"
+ladders_100m_end = "behavior"
+ladder_shapes_100m = "layout"
+ladder_tops_100m = "layout"
+ladder_tops_100m_end = "behavior"
+fire_index_100m = "behavior"
+fire_ways_100m = "layout"
+fire_starts_100m = "layout"
+fire_gaps_100m = "behavior"
+play_tables_c2f0 = "behavior"
+code_c500 = "behavior"
+code_c6a3 = "behavior"
+code_c707 = "behavior"
+code_c735 = "behavior"
+code_c74e = "behavior"
+code_fa45 = "behavior"
+sound_rom = "behavior"
+sound_jingles = "behavior"
+sprite_tiles = "graphics"
+sprite_tiles_50m = "graphics"
+stage_screens = "layout"
+stage_screens_50m = "layout"
+status = "hud"
+tiles = "tileset"
+tiles_50m = "graphics"
+kong_fallen_a = "graphics"
+kong_fallen_b = "graphics"
+palettes_ending = "palettes"
+palettes_hammer = "palettes"
+palettes_scene = "palettes"
+scene_sprite_tiles = "graphics"
+title = "layout"
+title_tiles = "graphics"
+
+# The hand-written behaviors the model names, and the crate in this
+# directory that implements them (gp-ext-dk, registered in gp-exts).
+[ext]
+hooks = ["dk_barrel", "dk_carry", "dk_conveyor", "dk_demo", "dk_drum", "dk_elevators", "dk_ending", "dk_fire", "dk_hammer", "dk_idle", "dk_mario", "dk_pauline", "dk_prizes", "dk_sound", "dk_springs", "dk_taken", "dk_throw"]
+crate = "ext"
+
+# The scoring corpus this game's scores are against
+# (docs/formats/scoring-corpus.md); the records are in evidence/.
+[scored_against]
+corpus = "donkey-kong-oe-25m"
+version = "6.0.0"
+hash = "5ba9574ad55865ab903a0f2d850a758cfaacbb1ac3e5347f04c1410eb659f9cc"
+path = "."

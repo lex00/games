@@ -1,0 +1,104 @@
+# Rivet Rodeo as a delta on Donkey Kong's model (docs/templates.md,
+# "Derived templates"), written by scripts/rivet-rodeo/stage.py: its
+# own stage's numbers over the base's. Edit the script, run it, then
+# `gp template derive templates/rivet-rodeo --write`.
+
+["model.toml".model]
+name = "rivet_rodeo"
+title = "Rivet Rodeo"
+description = "Rivet Rodeo, an original stage on Donkey Kong's model and rules (templates/donkey-kong-oe), for the public page with no ROM: its girders, ladders, tables and pictures are authored in templates/rivet-rodeo, laid out by scripts/rivet-rodeo/stage.py"
+
+["model.toml".levels.main]
+description = "Rivet Rodeo: six sloped girders, full and broken ladders, an oil drum and a top platform"
+spawn = [
+  { entity = "sound", x = 0, y = 0 },
+  { entity = "player", x = 88, y = 204 },
+  { entity = "hammer", x = 176, y = 125 },
+  { entity = "hammer", x = 152, y = 66 },
+  { entity = "mario", x = 0, y = 0 },
+  { entity = "kong", x = 32, y = 32 },
+  { entity = "oil_drum", x = 32, y = 192 },
+  { entity = "pauline", x = 100, y = 16 },
+  { entity = "demo", x = 0, y = 0 },
+  { entity = "idle", x = 0, y = 0 },
+  { entity = "kong_carry", x = 0, y = 0 },
+  { entity = "kong_carry", x = 0, y = 0 },
+  { entity = "kong_carry", x = 0, y = 0 },
+  { entity = "kong_carry", x = 0, y = 0 },
+  { entity = "kong_carry", x = 0, y = 0 },
+  { entity = "pauline_carry", x = 0, y = 0 },
+]
+
+# Two cells the base's lists lack: a girder 6 pixels down its cell with a
+# ladder above it, and a girder's lower part with a ladder below it.
+["model.toml".levels.main.tile_kinds]
+76 = "ladder"
+77 = "ladder"
+
+["model.toml".levels.main.tile_surfaces]
+76 = 6
+
+# Donkey Kong's model plays 50m, 75m and 100m in its levels m50, m75 and
+# m100; Rivet Rodeo has none of them, so those slots of the stages list
+# name no level and 25m stands in.
+["model.toml".stages]
+order = ["main", "m50_off", "m75_off", "m100_off"]
+
+["fidelity.toml".contract]
+model = "rivet_rodeo"
+description = "Rivet Rodeo: no original to hold it to; its own model baselines (baselines/)"
+
+["observe.toml"]
+model = "rivet_rodeo"
+
+["mapping.toml"]
+model = "rivet_rodeo"
+
+# The slots that name Donkey Kong's 25m assets take this stage's.
+["model.toml".assets.ground_runs.from]
+asset = "ground_runs"
+
+["model.toml".assets.ground_shapes.from]
+asset = "ground_shapes"
+
+["model.toml".assets.ladders.from]
+asset = "ladders"
+
+["model.toml".assets.ladder_shapes.from]
+asset = "ladder_shapes"
+
+["model.toml".assets.palettes.from]
+asset = "palettes"
+
+# The slots that name Original Edition's lower half or CHR bank 1 take
+# this stage's assets (FROM_50M).
+["model.toml".assets.title.from]
+asset = "stage_screens"
+
+["model.toml".assets.title_tiles.from]
+asset = "tiles"
+
+["model.toml".assets.tiles_50m.from]
+asset = "tiles"
+
+["model.toml".assets.sprite_tiles_50m.from]
+asset = "sprite_tiles"
+
+["model.toml".assets.stage_screens_50m.from]
+asset = "stage_screens"
+
+["model.toml".assets.palettes_50m.from]
+asset = "palettes"
+
+# The base's note on 100m's fallen thrower quotes two of its pointers
+# ($C03C's entries $14 and $16), bytes of its ROM; this stage has no
+# 100m; its kong_fallen_a and kong_fallen_b are art.py's toppled thrower.
+["model.toml".evidence."entities.kong_fallen"]
+note = "$CDF3-$CE21: $C815 with $00 $8D, $01 $22 draws entry $14 or $16 of $C03C (kong_fallen_a or kong_fallen_b after a size byte: 24 tiles a column at a time) at $228D, after the attributes $23EB-$23EC $AA (entry $12); 100m's Kong draws at $208D with background palette 2 the same way. Rivet Rodeo has no 100m; its two poses are its thrower toppled onto its mast (scripts/rivet-rodeo/art.py, fallen_poses)"
+
+["model.toml".entities.barrel]
+ext_params = { ladder_c2 = 2, ladder_cfoot2 = 240, ladder_c3 = 204, ladder_cfoot3 = 176, ladder_c4 = 108, ladder_cfoot4 = 143, ladder_c5 = 2, ladder_cfoot5 = 240, ladder_c6 = 2, ladder_cfoot6 = 240, step_lo1 = 120, step_hi1 = 216, step_lo6 = 72, step_hi6 = 192, step_lo2 = 24, step_hi2 = 192, step_lo4 = 24, step_hi4 = 192, step_lo3 = 48, step_hi3 = 192, step_lo5 = 48, step_hi5 = 192, crowd_drop = 99 }
+
+["model.toml".entities.fire]
+ext_params = { slope_0 = 24, slope_ends = 4, ladder_bottom_a_x = 180, ladder_bottom_a_top = 173, ladder_bottom_a_foot = 197, ladder_bottom_b_x = 60, ladder_bottom_b_top = 168, ladder_bottom_b_foot = 200, ladder_mid_a_x = 84, ladder_mid_a_top = 142, ladder_mid_a_foot = 169, ladder_mid_b_x = 60, ladder_mid_b_top = 143, ladder_mid_b_foot = 168 }
+

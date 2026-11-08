@@ -1,0 +1,1677 @@
+# Donkey Kong: Original Edition's kept clip set (docs/formats/clips.md):
+# donkey-kong-ju's 25m clips, made on this ROM. The two games run from
+# power-on to 25m on the same frames (the title and a game's start take
+# the same frames, measured 2026-11-03), so each clip's start is
+# donkey-kong-ju's presses from power-on (a copy of that template's clips/
+# files, since a set reads only its own folder), and its curve is this
+# ROM's. The random bytes $18-$1F differ, so
+# the barrels' and the fires' choices part from donkey-kong-ju's once read;
+# the mapping scores with the original's draws. No snapshot and no game
+# data.
+[clipset]
+format = "0.5.0"
+game = "donkey-kong-oe"
+rom = "45440d8ef512b4660dce0c753e110004aef96fa30f2967f9260e946d808db07d"
+mapping = "22"
+run = "dkoe-gate"
+
+[[clips]]
+id = "dk.walk.001"
+name = "walk 001: walk"
+source = "played"
+presses = ["right@18-351"]
+frames = 352
+curve = "7c5a0dad0866ccc72b4b58dd59baa356c2411d5571b97b4e2c3565d0e92aec1e"
+why = "a clip of the walk mechanic session, 25m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.walk.001.start.presses"
+frame = 4581
+context = "save_point"
+
+[[clips]]
+id = "dk.climb-ladder.001"
+name = "climb-ladder 001: climb ladder"
+source = "played"
+presses = ["up@15-105", "down@117-121", "right+down@122-192", "down@193-194", "right@243-252"]
+frames = 276
+curve = "f574a63a7d545ee7e02258d44835602b5e619f978cf3ef3c513135842aaa08d8"
+why = "a clip of the climb-ladder mechanic session, 25m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.climb-ladder.001.start.presses"
+frame = 1425
+context = "save_point"
+
+[[clips]]
+id = "dk.climb-ladder.006"
+name = "climb-ladder 006: ladder-zip probe: the user's play to frame 1391, then Down from frame 1392 at the foot of the ladder at x 200 on the bottom girder. Frame 1391"
+source = "played"
+presses = ["right@0-10", "down@11-159"]
+frames = 160
+curve = "9a748f8ef967d245abc0316a19ee2a8c5aa3f5a7d6133df8ab73aaa8f0f6c2b3"
+why = "a clip of the climb-ladder mechanic session, 25m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.climb-ladder.006.start.presses"
+frame = 1380
+context = "save_point"
+
+[[clips]]
+id = "dk.climb-ladder.008"
+name = "climb-ladder 008: probe climb-stop-3: Up held on the broken ladder at x 80 on girder 3 (and 184 on girder 4, 104 on girder 5, the next probes): the climb stops "
+source = "played"
+presses = ["right@0-219", "up@269-359", "left@361-488", "up@489-496", "left@497-498", "up@499-506", "left@507-508", "up@509-516", "left@517-518", "up@519-526", "left@527-528", "up@529-536", "left@537-538", "up@539-583", "left@586-632", "up@633-723", "down@729-729", "down@733-734", "up@735-735", "down@736-739", "up@740-741", "down@742-744", "up@745-748", "down@749-888"]
+frames = 919
+curve = "368cc7a19cea881af398f0eada8f47c24f3f963d1f728b3cc17ea8df05a56266"
+why = "a clip of the climb-ladder mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.climb-ladder.008.start.presses"
+frame = 1171
+context = "save_point"
+
+[[clips]]
+id = "dk.double-barrel-jump.001"
+name = "double-barrel-jump 001: barrel down loadder"
+source = "played"
+presses = ["left@41-46", "left+a@47-57"]
+frames = 58
+curve = "a583c8fda602d70926b13756db2064ffaccec4b4fdee913c450a13aa5a3e5980"
+why = "a clip of the double-barrel-jump mechanic session, 25m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.double-barrel-jump.001.start.presses"
+frame = 33899
+context = "save_point"
+
+[[clips]]
+id = "dk.double-barrel-jump.002"
+name = "double-barrel-jump 002: double barrel jump"
+source = "played"
+presses = ["left@11-24", "right@29-30", "right+up@31-33", "right+a@34-34", "right+up+a@35-35", "right+a@36-52", "right@79-79", "right+a@80-107"]
+frames = 133
+curve = "6b1e417198c9617b2162ecb9cf402c13cd2150c28445f8f027ae2fe9e79ebaf7"
+why = "a clip of the double-barrel-jump mechanic session, 25m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.double-barrel-jump.002.start.presses"
+frame = 35729
+context = "save_point"
+
+[[clips]]
+id = "dk.double-barrel-jump.003"
+name = "double-barrel-jump 003: fireball climbs ladder"
+source = "played"
+presses = ["right@48-75", "right@157-393", "left@403-464"]
+frames = 465
+curve = "128dd3d2f75d512e25db437dbb1439c7d79582da988f4c60aa65e0c8bdd11c44"
+why = "a clip of the double-barrel-jump mechanic session, 25m; re-cut on donkey-kong-oe to the attract demo its random bytes led to (original frames 36840 to 37304, its jumps, its death and its end), since this ROM is on the title at donkey-kong-ju's frames"
+
+[clips.start]
+presses_from_power_on = "clips/dk.double-barrel-jump.003.start.presses"
+frame = 36840
+context = "save_point"
+
+[[clips]]
+id = "dk.fall-too-far.001"
+name = "fall-too-far 001: probe: walking off the girder's right end, a 23 px drop, dies"
+source = "played"
+presses = ["right@0-32", "right+a@33-34", "right@35-74"]
+frames = 215
+curve = "f3450cd7bc37b7c7e458311e4edd36e10386536dac1bf731df86085610d65b94"
+why = "a clip of the fall-too-far mechanic session, 25m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.fall-too-far.001.start.presses"
+frame = 1532
+context = "save_point"
+
+[[clips]]
+id = "dk.hammer.005"
+name = "hammer 005: probe: the user's hammer clip 1 to frame 9070, then Left held: Mario walks off the girder's left end holding the hammer (9086: $96 10 -> 1 -> 8, $A0"
+source = "played"
+presses = ["right@4-9", "left@10-599"]
+frames = 600
+curve = "2f16a969e6132f9d9ba01636d5eadb4660c1823dbe210559ffd94ae1232db510"
+why = "a clip of the hammer mechanic session, 25m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.hammer.005.start.presses"
+frame = 9060
+context = "save_point"
+
+[[clips]]
+id = "dk.hammer.007"
+name = "hammer 007: probe hammer-on-wrap: F = 3: a pickup on the frame the divider $34 wraps: $D635 sets $3F to 75 in Mario's routine and the timers ($F4AC, at $CF27) r"
+source = "played"
+presses = ["right@0-219", "up@269-359", "left@361-488", "up@489-496", "left@497-498", "up@499-506", "left@507-508", "up@509-516", "left@517-518", "up@519-526", "left@527-528", "up@529-536", "left@537-538", "up@539-583", "left@586-706", "a@714-714"]
+frames = 835
+curve = "1772c355802aba9209caec565abe53ae11f4dc85053a45eb66377798d3ad4a90"
+why = "a clip of the hammer mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.hammer.007.start.presses"
+frame = 1171
+context = "save_point"
+
+[[clips]]
+id = "dk.hammer.013"
+name = "hammer 013: probe hammer-jump-left-edge: F = 3: a walking jump left from x 36 into each hammer: Mario turns at the screen's left edge and comes down at x 27, wh"
+source = "played"
+presses = ["right@0-219", "up@269-359", "left@361-488", "up@489-496", "left@497-498", "up@499-506", "left@507-508", "up@509-516", "left@517-518", "up@519-526", "left@527-528", "up@529-536", "left@537-538", "up@539-583", "left@586-700", "left+a@701-701", "left@702-761"]
+frames = 822
+curve = "7e0c7f8f8f485274431ff688ba2ff53996b9b7d331653dcdc8ab913bd56db366"
+why = "a clip of the hammer mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.hammer.013.start.presses"
+frame = 1171
+context = "save_point"
+
+[[clips]]
+id = "dk.hammer.016"
+name = "hammer 016: probe hammer-pause-lockout: Start in a jump to the hammer with Kong's throw timer at 2: it reads 1 after the unpause frame, holds through the 64 fra"
+source = "played"
+presses = ["right@0-219", "up@269-359", "left@361-488", "up@489-496", "left@497-498", "up@499-506", "left@507-508", "up@509-516", "left@517-518", "up@519-526", "left@527-528", "up@529-536", "left@537-538", "up@539-583", "left@586-706", "a@709-709", "start@735-737", "start@818-820"]
+frames = 961
+curve = "cf9e8c8f15458f6d38131492547a4fc11ef53f5db808d95379dcb6a98abaed4c"
+why = "a clip of the hammer mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.hammer.016.start.presses"
+frame = 1171
+context = "save_point"
+
+[[clips]]
+id = "dk.hammer.023"
+name = "hammer 023: probe hammer-hold-stand-taps: F = 3, W = 20: each hammer held standing, its swing idling, with short taps each way and A: barrels on the girder abov"
+source = "played"
+presses = []
+presses_file = "clips/dk.hammer.023.presses"
+frames = 1562
+curve = "de273b5b4323212b3fb55f4f4568e9b5be5429b42ea8accc80efcd389d7a4d90"
+why = "a clip of the hammer mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.hammer.023.start.presses"
+frame = 1171
+context = "save_point"
+
+[[clips]]
+id = "dk.hammer.028"
+name = "hammer 028: probe hammer-hold-mid-21: hammer clip 21 from frame 3135, standing with Left and Up held on girder 5 with the hammer held: a start inside the hold, "
+source = "played"
+presses = ["left+up@0-135"]
+frames = 180
+curve = "03b2aeea66613acc92803adc8501d99603f1a9d4f7acf51ecb24ebc20047039b"
+why = "a clip of the hammer mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.hammer.028.start.presses"
+frame = 3135
+context = "save_point"
+
+[[clips]]
+id = "dk.top-hammer.001"
+name = "top-hammer 001: upper hamemer - also has fireballs moving"
+source = "played"
+presses = ["left@0-2", "a@25-40", "right@69-346", "left@358-372", "right@391-405", "right@443-455", "left@580-743", "left@777-892"]
+frames = 893
+curve = "bceb0b2795b4d7ad14f0b0a38d59f598fa59ba11fedd1bf767de83ab2c2db318"
+why = "a clip of the top-hammer mechanic session, 25m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.top-hammer.001.start.presses"
+frame = 13563
+context = "save_point"
+
+[[clips]]
+id = "dk.game-over.001"
+name = "game-over 001: game over"
+source = "played"
+presses = ["right@13-67"]
+frames = 618
+curve = "909a49c4fe8b99e89fd63183c7f153e742a77d9fa452f84ddc848e87d36591fd"
+why = "a clip of the game-over mechanic session, 25m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.game-over.001.start.presses"
+frame = 29427
+context = "save_point"
+
+[[clips]]
+id = "dk.clear-25m.001"
+name = "clear-25m 001: planned run: the user's ladder path, then five ladders and the barrels jumped, to Pauline; 25m cleared by climbing"
+source = "played"
+presses = []
+presses_file = "clips/dk.clear-25m.001.presses"
+frames = 2142
+curve = "fdf559c6db27f6ec825fb7793a6d11c13ddcabc88b71e44e02aa4b79d2223c44"
+why = "a clip of the clear-25m mechanic session, 25m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.clear-25m.001.start.presses"
+frame = 1532
+context = "save_point"
+
+[[clips]]
+id = "dk.title.001"
+name = "title 001: probe title-idle-demo: the title from power-on, left alone: drawn on frame 4 with the cursor on 1 PLAYER GAME A; the demo begins 32 slow-timer wraps "
+source = "played"
+presses = []
+frames = 1400
+curve = "b412eb4e9a2d32ac2f94219f7ac99bb329f3be964e567dabbe8902a38c570f70"
+why = "a clip of the title mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.title.001.start.presses"
+frame = 0
+context = "save_point"
+
+[[clips]]
+id = "dk.title.006"
+name = "title 006: probe title-menu: N = 4: Select N times on the title, then Start: the cursor steps 16 down a press and wraps; the line sets game A or B ($50 bit 0) a"
+source = "played"
+presses = ["select@60-60", "select@71-71", "select@82-82", "select@93-93", "start@104-104"]
+frames = 805
+curve = "1055472875df8258ff77ce8a6a890b80d06aad8e92d0130d8e42a0e40ac0b1bc"
+why = "a clip of the title mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.title.006.start.presses"
+frame = 0
+context = "save_point"
+
+[[clips]]
+id = "dk.title.007"
+name = "title 007: probe title-select-held: Select held moves the cursor once, and holds the idle timer at 64 while held ($C95D), so the demo waits 64 wraps from its re"
+source = "played"
+presses = ["select@60-259"]
+frames = 1160
+curve = "b6db8fb839efaf06268f71a0080a5c9c46b8513b6c41aa31745cb9885e38f765"
+why = "a clip of the title mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.title.007.start.presses"
+frame = 0
+context = "save_point"
+
+[[clips]]
+id = "dk.title.008"
+name = "title 008: probe demo-select: Select during the demo goes back to the title at once ($CE8B -> $CF2B)"
+source = "played"
+presses = ["select@700-700"]
+frames = 821
+curve = "30c4f8e139a32592945496df50cef13f288ffc82c182db1489ad66d498690bdb"
+why = "a clip of the title mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.title.008.start.presses"
+frame = 0
+context = "save_point"
+
+[[clips]]
+id = "dk.title.009"
+name = "title 009: probe demo-start: Start during the demo begins a game of the line the cursor is on ($CF42 -> $C98A)"
+source = "played"
+presses = ["start@700-700"]
+frames = 1401
+curve = "ca02810a1f79b200875b684069c370492828afd0b6d2066dd620e146d7843973"
+why = "a clip of the title mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.title.009.start.presses"
+frame = 0
+context = "save_point"
+
+[[clips]]
+id = "dk.two-players.001"
+name = "two-players 001: probe two-players-turns: a 2 PLAYER GAME A left alone: each death hands the turn over, the lives kept per player; after player 1's last life pl"
+source = "played"
+presses = ["select@60-60", "select@71-71", "start@82-82"]
+frames = 6083
+curve = "dca589749fe8d4ff006137c77c31e0c1465500e7dff28b6e11f0c72d5f8f37fc"
+why = "a clip of the two-players mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.two-players.001.start.presses"
+frame = 0
+context = "save_point"
+
+[[clips]]
+id = "dk.clear-25m-scene.001"
+name = "clear-25m-scene 001: 25m cleared at Pauline's ladder (x 145) with 3,700 bonus, through the clear scene (Kong carries Pauline off) to 50m's setup"
+source = "played"
+presses = ["left@0-130", "up@131-215", "right@218-348", "up@349-415", "left@450-616", "up@617-695", "right@722-888", "up@889-955", "left@958-1040", "up@1041-1113"]
+frames = 1519
+curve = "4953b046e5b85c3839597f162e8340752977d7a3bfc4669bf8c2613367e98702"
+why = "a clip of the clear-25m-scene mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.clear-25m-scene.001.start.presses"
+frame = 1532
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-start.001"
+name = "m50-start 001: 50m from its setup, Mario standing: Kong's beats from his wait $44 alone ($EB22-$EB4F), Pauline's calls, the bonus"
+source = "played"
+presses = []
+frames = 400
+curve = "e6d127a132e11babad02cfb8edcf5d9ab7a54833e80b103eb7b3652d079a7531"
+why = "a clip of the m50-start mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-start.001.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-walk.001"
+name = "m50-walk 001: 50m's bottom girder: a walk to each end ($C1B6-$C1B7 hold Mario between sprite x 8 and 232), and jumps where he stands"
+source = "played"
+presses = ["right@0-292", "a@303-304", "left@365-540", "left+a@541-542", "left@603-760"]
+frames = 781
+curve = "f0783032dceda3b0e0ab9bd32b9cf04862ee6fb0bf59286c19d00009619ae109"
+why = "a clip of the m50-walk mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-walk.001.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "dk.walk-sweep.001"
+name = "walk-sweep 001: girder 2, six right and three left across the girder and back"
+source = "played"
+presses = []
+presses_file = "clips/dk.walk-sweep.001.presses"
+frames = 2384
+curve = "e6bc17b83d06f1ae818fbbda57c1556e9ce9b83a232c6d380a5a4f84c2e3735f"
+why = "a cell of the 25m walk sweep (probes.toml, walk-sweep): a route from power-on found by a search over the waits before each ladder"
+
+[clips.start]
+presses_from_power_on = "clips/dk.walk-sweep.001.start.presses"
+frame = 954
+context = "save_point"
+
+[[clips]]
+id = "dk.walk-sweep.004"
+name = "walk-sweep 004: girder 5, running jumps across the girder and back"
+source = "played"
+presses = []
+presses_file = "clips/dk.walk-sweep.004.presses"
+frames = 1362
+curve = "b305c184cfac2ba99e6912b03c7d6855b3b3733ee12e6bbc6d794b740d26ac0c"
+why = "a cell of the 25m walk sweep (probes.toml, walk-sweep): a route from power-on found by a search over the waits before each ladder"
+
+[clips.start]
+presses_from_power_on = "clips/dk.walk-sweep.004.start.presses"
+frame = 1638
+context = "save_point"
+
+[[clips]]
+id = "dk.wall-jump.002"
+name = "wall-jump 002: probe wall-jump-g1-right-0-1: girder 1: a running jump held into the right edge, taking off 0 px from it after 1 more frames held"
+source = "played"
+presses = ["right@0-218", "right+a@219-219", "right@220-277", "right+a@278-278", "right@279-328"]
+frames = 329
+curve = "ea102313ee3b3c60ebbbf0d0d7493562092f5dadd2338b28674cd989b7fec455"
+why = "a clip of the wall-jump mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.wall-jump.002.start.presses"
+frame = 599
+context = "save_point"
+
+[[clips]]
+id = "dk.wall-jump.003"
+name = "wall-jump 003: probe wall-jump-g1-right-1-0: girder 1: a running jump held into the right edge, taking off 1 px from it after 0 more frames held"
+source = "played"
+presses = ["right@0-218", "right+a@219-219", "right@220-275", "right+a@276-276", "right@277-326"]
+frames = 327
+curve = "a7b1396aa406454dd33a4d070ba231ec25473be23b031aa8f3294c2e02844efa"
+why = "a clip of the wall-jump mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.wall-jump.003.start.presses"
+frame = 599
+context = "save_point"
+
+[[clips]]
+id = "dk.wall-jump.006"
+name = "wall-jump 006: probe wall-jump-g2-left-1-0: girder 2: a running jump held into the left edge, taking off 1 px from it after 0 more frames held"
+source = "played"
+presses = ["left@0-223", "left+a@224-224", "left@225-280", "left+a@281-281", "left@282-331"]
+frames = 332
+curve = "0964ee6f7e74043d4f2a49ad972213789b9a74dcd653479fcabb15bae6e1ca37"
+why = "a clip of the wall-jump mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.wall-jump.006.start.presses"
+frame = 894
+context = "save_point"
+
+[[clips]]
+id = "dk.wall-jump.007"
+name = "wall-jump 007: probe wall-jump-g3-right-0-0: girder 3: a running jump held into the right edge, taking off 0 px from it after 0 more frames held"
+source = "played"
+presses = ["right@0-127", "right+a@128-128", "right@129-186", "right+a@187-187", "right@188-237"]
+frames = 238
+curve = "dc41f6e8d2b72728afc840f4843b2b897b071422c699b94677d8dff92cb2ed8c"
+why = "a clip of the wall-jump mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.wall-jump.007.start.presses"
+frame = 1112
+context = "save_point"
+
+[[clips]]
+id = "dk.points.004"
+name = "points 004: probe points-wrap-then-second: the first 100 on a divider wrap frame (its timer 2 at 35787), a second 2 frames later in the second sprite (35789), b"
+source = "played"
+presses = ["left@11-24", "right@29-30", "right+up@31-33", "right@34-37", "right+a@38-38", "right+up+a@39-39", "right+a@40-56", "right@83-83", "right+a@84-111"]
+frames = 137
+curve = "d7710d95ec4568afc44909a7d8951dd5370ac3c2550560c41d15a8f0173ebd17"
+why = "a clip of the points mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.points.004.start.presses"
+frame = 35729
+context = "save_point"
+
+[[clips]]
+id = "dk.points.005"
+name = "points 005: probe points-after-expiry: a 100 at 35777, its timer at 0 from 35809, and the next 100 at 35821 in the first sprite again"
+source = "played"
+presses = ["left@11-24", "right@29-30", "right+up@31-33", "right@34-35", "right+a@36-36", "right+up+a@37-37", "right+a@38-54", "right@83-83", "right+a@84-111"]
+frames = 137
+curve = "2b186ac7aa4f7eb193696ccc000523ef9addabaab1a0b7f8f6e889b61b169a0e"
+why = "a clip of the points mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.points.005.start.presses"
+frame = 35729
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-hammer-smash.003"
+name = "m50-hammer-smash 003: probe m50-hammer-smash: N = 40, W = 200: 50m: the lower hammer taken from the lowest conveyor at x 122, W frames still, then a walk left o"
+source = "played"
+presses = ["right@0-53", "up@54-148", "right@149-297", "a@298-299", "left@542-581"]
+frames = 1282
+curve = "761266c504846567d065f4317a4846c37d58f2334a91483494eaa14b1712eb3c"
+why = "a clip of the m50-hammer-smash mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-hammer-smash.003.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-hammer-smash.004"
+name = "m50-hammer-smash 004: probe m50-hammer-smash: N = 120, W = 0: 50m: the lower hammer taken from the lowest conveyor at x 122, W frames still, then a walk left of"
+source = "played"
+presses = ["right@0-53", "up@54-148", "right@149-297", "a@298-299", "left@342-461"]
+frames = 1162
+curve = "1e9f58d2e30571c50f037deac9e723301cc3f73e7f04df565aac0f30de0e3a7d"
+why = "a clip of the m50-hammer-smash mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-hammer-smash.004.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-pie-points.001"
+name = "m50-pie-points 001: probe m50-pie-points: W = 746: 50m: Mario at the lowest conveyor's right end jumps W frames after he steps off the ladder, over a pie coming"
+source = "played"
+presses = ["right@0-149", "up@150-244", "a@991-992"]
+frames = 1726
+curve = "55ba39febe7b98abb370e7c96138e62f2c52ed152ae3f74339596aca80963f98"
+why = "a clip of the m50-pie-points mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-pie-points.001.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-girder3.003"
+name = "m50-girder3 003: probe m50-girder3: X = 140: 50m: on girder 3 (from the lowest conveyor's ladder at x 80), a walk to x X and back: the prizes on it are taken on"
+source = "played"
+presses = ["right@0-53", "up@54-148", "left@159-166", "up@167-284", "right@287-374", "left@395-482"]
+frames = 543
+curve = "e72a072c8913e55f1a9e733350d6d151457468fc3c0ff68756f969917dc1def1"
+why = "a clip of the m50-girder3 mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-girder3.003.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-middle.001"
+name = "m50-middle 001: probe m50-middle: W = 0: 50m: on the middle conveyor (up the ladder at x 96 from girder 3), standing W frames: its left half carries Mario to th"
+source = "played"
+presses = ["right@0-53", "up@54-148", "left@159-166", "up@167-284", "right@287-309", "up@310-427", "left@430-459"]
+frames = 1103
+curve = "7ca7d89af91902fe196998904a36ddcf7a517f246a9e3c69def4ab5f9346225a"
+why = "a clip of the m50-middle mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-middle.001.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-girder3.001"
+name = "m50-girder3 001: 50m: on girder 3 (from the lowest conveyor's ladder at x 80), a walk to x X and back: the prizes on it are taken on an exact place ($EEF0, 800 "
+source = "played"
+presses = ["right@0-53", "up@54-148", "left@159-166", "up@167-284", "left@287-686"]
+frames = 687
+curve = "3fc0d7a13540d04c0faf11a27efe938252b9224bceb006cdf5d79b813fc72e36"
+why = "a clip of the m50-girder3 mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-girder3.001.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-girder3.004"
+name = "m50-girder3 004: 50m: on girder 3 (from the lowest conveyor's ladder at x 80), a walk to x X and back: the prizes on it are taken on an exact place ($EEF0, 800 "
+source = "played"
+presses = ["right@0-53", "up@54-148", "left@159-166", "up@167-284", "right@287-686"]
+frames = 687
+curve = "e3f05c68d12f3445ae801aa8558f73e071a7f52661f65f0df414524b01fc4be0"
+why = "a clip of the m50-girder3 mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-girder3.004.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-hammer2.011"
+name = "m50-hammer2 011: 50m: the upper hammer taken on girder 3's left part after a jump over its gap, held W frames and walked right N frames: fires smashed ($ED38, $"
+source = "played"
+presses = ["right@0-53", "up@54-148", "left@159-166", "up@167-284", "left@287-299", "left+a@300-301", "left@302-381", "a@382-383", "right@526-545"]
+frames = 1246
+curve = "f0480723ba66ea0a4f7fc53978267a2d1f5e603980b8f080d54312e3b303cfc2"
+why = "a clip of the m50-hammer2 mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-hammer2.011.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-mladder.001"
+name = "m50-mladder 001: 50m: Mario up the left moving ladder from the middle conveyor (x 24): stopped at sprite y 71 while the ladder isn't up ($890F), on to the top g"
+source = "played"
+presses = ["right@0-53", "up@54-148", "left@159-166", "up@167-284", "left@287-299", "left+a@300-301", "left@302-343", "left@376-403", "up@404-522", "left@525-577", "up@578-617", "up@819-1268"]
+frames = 1329
+curve = "5204b524280dad6bf28f631191007eb12674048c1f5c8c929cc15761ed651c4b"
+why = "a clip of the m50-mladder mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-mladder.001.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-mladder.007"
+name = "m50-mladder 007: 50m: Mario up the right moving ladder (x 224): stopped at sprite y 71 while it isn't up ($890F, the ladder by his half of the screen), on to th"
+source = "played"
+presses = ["right@0-53", "up@54-148", "left@159-166", "up@167-284", "right@287-413", "right+a@414-415", "right@416-457", "right@570-615", "up@616-734", "right@737-789", "up@790-829", "up@879-1328"]
+frames = 1389
+curve = "ccef6945e5892bb087d94f6752da096ca9d37754e46680538c37a22ad44e7d26"
+why = "a clip of the m50-mladder mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-mladder.007.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-ladders.001"
+name = "m50-ladders 001: 50m: girder 1's ladders (x 32, 96, 160, 216) climbed to the lowest conveyor and back down"
+source = "played"
+presses = ["left@0-41", "up@42-136", "down@147-225"]
+frames = 236
+curve = "9a9b42d150245de4c0829aa3bb27bbf569231bba8acc49105220a07d444bb9c9"
+why = "a clip of the m50-ladders mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-ladders.001.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-ladders.005"
+name = "m50-ladders 005: 50m: the lowest conveyor's ladders up (x 80, 168) to girder 3 and back down"
+source = "played"
+presses = ["right@0-53", "up@54-148", "right@191-219", "up@220-337", "down@348-447"]
+frames = 458
+curve = "1b8cda39043486afcf2b1de5393b4d1309986b1f5ffddcafb91d3549c4614cef"
+why = "a clip of the m50-ladders mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-ladders.005.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "dk.m75-harvest.002"
+name = "75m from the 50m clear: starts in a death on the girder at y 176, x 86, then the restart (JU dk.harvest-m75.002's in-level presses)"
+source = "generated"
+presses = ["up@0-58", "right@59-59", "right+a@60-60", "right@61-102", "right@111-111", "right+b+a@112-137", "right@138-169", "up@175-179"]
+frames = 180
+curve = "a9f755d94466e0494611b5dfe6465e534e13c79dd9ea1588a19f13583407b907"
+why = "remade on OE from JU dk.harvest-m75.002 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75-harvest.002.start.presses"
+frame = 4463
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75-harvest.003"
+name = "75m from the 50m clear: starts in a death on the girder at y 176, x 86, then the restart (JU dk.harvest-m75.003's in-level presses)"
+source = "generated"
+presses = ["up@0-178", "right@179-179"]
+frames = 180
+curve = "9adf8196a8f31eac466cf0a2c453a63421d69cd8809172819709fc2c536f6956"
+why = "remade on OE from JU dk.harvest-m75.003 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75-harvest.003.start.presses"
+frame = 4343
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75.002"
+name = "75m from the 50m clear: jumps, dies (JU dk.m75.002's in-level presses)"
+source = "generated"
+presses = ["right@0-52", "right+up@53-59", "up@60-229"]
+frames = 230
+curve = "4843a8fb64df77c88856bbb1e0b492cf055a87be7dd5abc0036f4346a389830a"
+why = "remade on OE from JU dk.m75.002 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75.002.start.presses"
+frame = 4270
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75.016"
+name = "75m from the 50m clear: stands or walks on the lowest girder while the elevators, springs and fires run (JU dk.m75.016's in-level presses)"
+source = "generated"
+presses = ["left@0-59"]
+frames = 180
+curve = "a4a5e8d4721511dd42083413594e238f9cf504083db195705ceba2e76f839a28"
+why = "remade on OE from JU dk.m75.016 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75.016.start.presses"
+frame = 4151
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75.023"
+name = "75m from the 50m clear: jumps, rides the left elevator ($E834), dies, up to y 79 (JU dk.m75.023's in-level presses)"
+source = "generated"
+presses = ["right@0-19", "right+a@20-20", "right@21-26"]
+frames = 762
+curve = "d03f6caded04b158974f202c5dbe965f13c5203fe89300965b83e2a26689e0e0"
+why = "remade on OE from JU dk.m75.023 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75.023.start.presses"
+frame = 4151
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75.036"
+name = "75m from the 50m clear: jumps, rides the left elevator ($E834), up to y 87 (JU dk.m75.036's in-level presses)"
+source = "generated"
+presses = ["right@0-19", "right+a@20-20", "right@21-26", "left@394-397", "left+a@398-398", "left@399-459"]
+frames = 520
+curve = "73858073bbc9b31a58882c76ff430e7dd823e194f6c3f08601bfd9f95da97213"
+why = "remade on OE from JU dk.m75.036 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75.036.start.presses"
+frame = 4151
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75.037"
+name = "75m from the 50m clear: jumps, falls, dies (JU dk.m75.037's in-level presses)"
+source = "generated"
+presses = ["right@0-18", "left@19-58"]
+frames = 259
+curve = "0a9d0b49b774f2198a40db4c968081915f78f733f0a7fe86ac19b9243274ce1a"
+why = "remade on OE from JU dk.m75.037 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75.037.start.presses"
+frame = 4270
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75.046"
+name = "75m from the 50m clear: starts in the restart after a death, then climbs ladder 0 (JU dk.m75.046's in-level presses)"
+source = "generated"
+presses = ["up@0-3", "right@4-4", "right+a@5-5", "right@6-37", "up@39-135", "left@136-235"]
+frames = 266
+curve = "c6629418d625dc76defb06b981fb1bae27d3cdb52168aaea85ba3a907f4e28c3"
+why = "remade on OE from JU dk.m75.046 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75.046.start.presses"
+frame = 4730
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75.047"
+name = "75m from the 50m clear: jumps, falls, dies (JU dk.m75.047's in-level presses)"
+source = "generated"
+presses = ["right@0-19", "right+a@20-20", "right@21-26", "left@62-91"]
+frames = 212
+curve = "38c75355fe8796c8a6399f4eaf71bef60b03adda53e41ce326aff6699d3b2a29"
+why = "remade on OE from JU dk.m75.047 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75.047.start.presses"
+frame = 4151
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75.053"
+name = "75m from the 50m clear: stands or walks on the lowest girder while the elevators, springs and fires run (JU dk.m75.053's in-level presses)"
+source = "generated"
+presses = ["right@0-25", "right+a@90-90", "right@91-120"]
+frames = 181
+curve = "611abda97821ebd3a08a9dd55dfc69297ae4c0adb7e4d797f1318d23e93e596e"
+why = "remade on OE from JU dk.m75.053 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75.053.start.presses"
+frame = 4151
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75.060"
+name = "75m from the 50m clear: jumps, dies (JU dk.m75.060's in-level presses)"
+source = "generated"
+presses = ["right@0-63", "right+a@136-136", "right@137-166"]
+frames = 207
+curve = "8aa640a32bab02506f6b40b0d57e70043b3e8ac18d07a8b2bae367dc41e2fbfa"
+why = "remade on OE from JU dk.m75.060 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75.060.start.presses"
+frame = 4270
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75-clear.001"
+name = "75m cleared: ladders 0 and 1, the left elevator up ($E834), the jump to the middle girder, the right elevator down, the steps, ladder 8, the top girder and ladder 9 to Pauline; the clear scene ($8A81 with $450) and 100m's setup"
+source = "generated"
+presses = ["right@0-3", "up@4-128", "right@129-138", "up@139-310", "right@320-325", "right+a@415-415", "right@416-427", "right@440-457", "right+a@458-458", "right@459-498", "right@695-729", "right+a@730-730", "right@731-769", "right+a@770-770", "right@771-790", "right@810-841", "right+a@842-842", "right@843-862", "left@884-886", "up@890-1000", "left@1030-1072", "up@1073-1150"]
+frames = 1600
+curve = "2e021c4822f6a7893549e2c8c0435e7f97b757c99496f4ebd2d2252972730c02"
+why = "made from the code: the route found frame by frame on OE from the 75m start dk.m50-clear.001 carries on into 75m (start frame 4151)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75-clear.001.start.presses"
+frame = 4151
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75-prize.002"
+name = "75m: up the route to the steps, a falling spring waited out, girders 17 and 18, prize 1 taken at y 63, x 224 ($EF12, $CA)"
+source = "generated"
+presses = ["right@0-3", "up@4-128", "right@129-138", "up@139-310", "right@320-325", "right+a@415-415", "right@416-427", "right@440-457", "right+a@458-458", "right@459-498", "right@695-729", "right+a@730-730", "right@731-769", "right+a@770-770", "right@771-790", "right@810-841", "right+a@842-842", "right@843-862", "right@882-889", "right+a@966-966", "right@967-1011", "right+a@1012-1012", "right@1013-1042", "right@1055-1062"]
+frames = 1250
+curve = "aaa7f998788c4bcf06139568126f24ab84b41c032649844559812e1278e8aa15"
+why = "made from the code: the route found frame by frame on OE from the 75m start dk.m50-clear.001 carries on into 75m (start frame 4151)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75-prize.002.start.presses"
+frame = 4151
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75-fire.001"
+name = "75m: on the middle girder walked into the fire climbing ladder 3 (x 92): death and restart"
+source = "generated"
+presses = ["right@0-3", "up@4-128", "right@129-138", "up@139-310", "right@320-325", "right+a@415-415", "right@416-427", "right@440-457", "right+a@458-458", "right@459-498", "right@515-545"]
+frames = 1020
+curve = "ea48bccf6673cf06c1a4c672c0234bd1c5d868204a09a1e3d3c39fe9124fedc5"
+why = "made from the code: the route found frame by frame on OE from the 75m start dk.m50-clear.001 carries on into 75m (start frame 4151)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75-fire.001.start.presses"
+frame = 4151
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75-fall.002"
+name = "75m: the jump off the right elevator to girder 15 too late: Mario falls past the girder and dies"
+source = "generated"
+presses = ["right@0-3", "up@4-128", "right@129-138", "up@139-310", "right@320-325", "right+a@415-415", "right@416-427", "right@440-457", "right+a@458-458", "right@459-498", "right@695-729", "right+a@730-730", "right@731-775", "right+a@776-776", "right@777-796"]
+frames = 1300
+curve = "653e18625826f069209565baaafcae88a84354b755af0865fca06dc6232041fa"
+why = "made from the code: the route found frame by frame on OE from the 75m start dk.m50-clear.001 carries on into 75m (start frame 4151)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75-fall.002.start.presses"
+frame = 4151
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75-spring.001"
+name = "75m: on the top girder walked left into a bouncing spring ($E981): death and restart"
+source = "generated"
+presses = ["right@0-3", "up@4-128", "right@129-138", "up@139-310", "right@320-325", "right+a@415-415", "right@416-427", "right@440-457", "right+a@458-458", "right@459-498", "right@695-729", "right+a@730-730", "right@731-769", "right+a@770-770", "right@771-790", "right@810-841", "right+a@842-842", "right@843-862", "left@884-886", "up@890-1000", "left@1010-1052", "up@1053-1210"]
+frames = 1460
+curve = "5b1cbb3cd8b20224303395103959a456bf1997a0134bfd09de466537d6b55c2e"
+why = "made from the code: the route found frame by frame on OE from the 75m start dk.m50-clear.001 carries on into 75m (start frame 4151)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75-spring.001.start.presses"
+frame = 4151
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75-game-over.001"
+name = "75m: three falls off the left ledge: lives 2, 1, 0, then GAME OVER and the title"
+source = "generated"
+presses = ["right@0-3", "up@4-128", "right@129-138", "up@139-310", "right@320-360", "right@840-843", "up@844-968", "right@969-978", "up@979-1150", "right@1160-1200", "right@1680-1683", "up@1684-1808", "right@1809-1818", "up@1819-1990", "right@2000-2040"]
+frames = 3000
+curve = "ce18115525d3c7b3a7349ead236540411fd8e6abc90f107142f213b4763047b4"
+why = "made from the code: the route found frame by frame on OE from the 75m start dk.m50-clear.001 carries on into 75m (start frame 4151)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75-game-over.001.start.presses"
+frame = 4151
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m75-bonus-out.001"
+name = "75m: Mario left alone at the start until the bonus ($2E) runs out: death, then the restart"
+source = "generated"
+presses = []
+frames = 6700
+curve = "042966441805aed99fa921049dee04958c4323fc094c686ccbb1baea12a44158"
+why = "made from the code: the route found frame by frame on OE from the 75m start dk.m50-clear.001 carries on into 75m (start frame 4151)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m75-bonus-out.001.start.presses"
+frame = 4151
+context = "save_point"
+level = "m75"
+
+[[clips]]
+id = "dk.m100.001"
+name = "m100 001: 100m from its start, up the ladders at x 17, 225, 33 and 209, every rivet pulled ($C1-$C8), back down at x 177 and up at 73 to pull the last, to the clear ($D04C's $D063 loop finds all eight, $D086)"
+source = "played"
+presses = ["left@0-65", "up@66-160", "right@161-471", "up@472-589", "left@594-880", "up@881-998", "right@1007-1269", "up@1270-1387", "left@1388-1434", "down@1435-1532", "left@1533-1688", "up@1689-1807", "left@1808-1824"]
+frames = 1855
+curve = "5f36710cb321992a8064e3e517d72f8c6765582f4f7cb834640fcf98a24b087f"
+why = "100m's rivets and the clear, a route a search over waits found (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m100.001.start.presses"
+frame = 5615
+context = "save_point"
+
+[[clips]]
+id = "dk.m100-clear.001"
+name = "m100-clear 001: the last rivet (girder 5's left, $C7), the clear: $53 goes from 4 past the last stage to 1 and $54 (the round) to 1, the scene after 100m and round 2's 25m"
+source = "played"
+presses = ["up@0-42", "left@43-59"]
+frames = 1050
+curve = "ba15ffdd8e6532157ff65663b23e76c76ba94903b6d4aba2ad820c61d3a75d3e"
+why = "100m's clear, the ending and the loop to round 2 (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m100-clear.001.start.presses"
+frame = 7380
+context = "save_point"
+
+[[clips]]
+id = "dk.m100-kong.001"
+name = "m100-kong 001: on girder 5 from the ladder at x 209, Mario walks left into Kong (x 149) and dies, and 100m starts again"
+source = "played"
+presses = ["up@0-12", "left@13-102"]
+frames = 720
+curve = "ec6f5ba5593e10a10ae99034333957670e410d22a3e2b0799355e0c60412bdd4"
+why = "100m's death to Kong on the top girder and the restart (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m100-kong.001.start.presses"
+frame = 6990
+context = "save_point"
+
+[[clips]]
+id = "dk.m100-fires.001"
+name = "m100-fires 001: 100m from its start with nothing pressed: the fires appear ($E564's places) and wander the girders"
+source = "played"
+presses = []
+frames = 900
+curve = "6feeb2fe2e6887659d3c66673dfc27f47eecf828e6969fef91adddf115a8a834"
+why = "100m's fires as they come out and roam, Mario still (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m100-fires.001.start.presses"
+frame = 5615
+context = "save_point"
+
+[[clips]]
+id = "dk.m100-hammer.001"
+name = "m100-hammer 001: on girder 3 from the ladder at x 225, left over both rivets to x 23, a jump into the lower hammer (x 20, y 110 on screen; $0451), and the hammer's time with Mario still"
+source = "played"
+presses = ["left@0-301", "a@302-302"]
+frames = 520
+curve = "814faedd58326d134466dbed6bf94217603ad4f32939502134517f6d02fa4dfe"
+why = "100m's lower hammer taken and held to its end (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m100-hammer.001.start.presses"
+frame = 6205
+context = "save_point"
+
+[[clips]]
+id = "dk.m100-hammer.002"
+name = "m100-hammer 002: on girder 4, a jump into the upper hammer at x 124 ($0452), then a walk left into a fire, which the hammer smashes"
+source = "played"
+presses = ["right@0-135", "a@136-136", "left@207-236"]
+frames = 420
+curve = "1e28b4e351bb6025672000af16a7830282360280abdb12807e572ce2adf2c38b"
+why = "100m's upper hammer and a fire smashed ($BF's steps, $AE the fire) (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m100-hammer.002.start.presses"
+frame = 6622
+context = "save_point"
+
+[[clips]]
+id = "dk.m100-gap.001"
+name = "m100-gap 001: girder 2's left rivet pulled walking right, then back left with a jump from x 86 that lands in the rivet's gap at x 64: the fall and the death"
+source = "played"
+presses = ["left@0-5", "left+a@6-6", "left@7-49"]
+frames = 420
+curve = "509a7b2a3283e4cebf5423b64ffb046121a7238329ae8d17ed69447feaf6ae2f"
+why = "100m's rivet gap: a short jump falls through (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m100-gap.001.start.presses"
+frame = 5885
+context = "save_point"
+
+[[clips]]
+id = "dk.m100-gap.002"
+name = "m100-gap 002: girder 2's left rivet pulled walking right, then back left with a jump from x 74 over the rivet's gap"
+source = "played"
+presses = ["left@0-23", "left+a@24-24", "left@25-87"]
+frames = 120
+curve = "81aea5e1a6ac78394f777a096517ac398b8ee3c7d26198f3a84a1f2fd9cb78aa"
+why = "100m's rivet gap jumped over (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m100-gap.002.start.presses"
+frame = 5885
+context = "save_point"
+
+[[clips]]
+id = "dk.m100-game-over.001"
+name = "m100-game-over 001: on 100m's last life, standing at x 61, a fire kills Mario and the game ends ($4E set)"
+source = "played"
+presses = []
+frames = 700
+curve = "6a96a8ed25dbf745efbd84a44da6d14b7391a4e69e06aa8a6cd1d3a5263ec166"
+why = "100m's game over (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m100-game-over.001.start.presses"
+frame = 11100
+context = "save_point"
+
+[[clips]]
+id = "dk.gameb-d1.001"
+name = "gameb-d1 001: game B ($50 bit 0), round 1, so difficulty 1 ($EAF7: $50 & 1 + $54): 25m from its start up the ladders at x 201, 113, 201, 89 and 201, a jump over a barrel on the top girder and Pauline's ladder at x 145, the clear scene and 50m's setup"
+source = "played"
+presses = ["right@0-221", "up@222-292", "left@293-423", "up@424-508", "right@533-663", "up@664-730", "left@731-897", "up@898-977", "right@1008-1174", "up@1175-1241", "left@1242-1257", "left+a@1258-1258", "left@1259-1338", "up@1339-1412"]
+frames = 1816
+curve = "94c350b1c961e49955e34ca5092c0132654574a5b228b27efef798a3d7f264df"
+why = "game B's 25m at difficulty 1: Kong's timers and the barrels' tables by difficulty ($C443, $C44D, $C448) (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.gameb-d1.001.start.presses"
+frame = 610
+context = "save_point"
+
+[[clips]]
+id = "dk.gameb-d1.002"
+name = "gameb-d1 002: game B, round 1 (difficulty 1): 50m from its start up the ladders at x 97 and 81, a jump at x 72, the moving ladder at x 33 and the ladder at x 25 to the clear, the scene and 75m's setup"
+source = "played"
+presses = ["right@0-53", "up@54-148", "left@149-161", "up@162-280", "left@281-293", "left+a@294-295", "left@296-365", "up@366-484", "left@485-531", "up@532-755"]
+frames = 1155
+curve = "ca8aa8a6e153b351ba8d9ee159b4c1bfc9add0afa066d0208fd98a2897d5f3cf"
+why = "game B's 50m at difficulty 1: the conveyors' pattern and the pies by difficulty ($858E, $8588, $86CE, $882D) (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.gameb-d1.002.start.presses"
+frame = 2426
+context = "save_point"
+
+[[clips]]
+id = "dk.m100-fall.002"
+name = "m100-fall 002: from the top of the ladder at x 225 on girder 3, right off the girder's end at x 233: the fall to girder 2, the death and 100m again"
+source = "played"
+presses = ["right@0-39"]
+frames = 560
+curve = "ba9ebcfb85810974148173b0d97cb83292d2d476a812e21077d8d76be448d06d"
+why = "100m: a walk off a girder's right end and the fall's death (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m100-fall.002.start.presses"
+frame = 6205
+context = "save_point"
+
+[[clips]]
+id = "dk.m100-hammer.003"
+name = "m100-hammer 003: girder 3's rivets pulled walking left, the lower hammer taken at x 23, then right with the hammer into the gap at x 64 ($EF51 with $96 = 10): the fall and the death"
+source = "played"
+presses = ["left@0-301", "a@302-302", "right@343-559"]
+frames = 560
+curve = "ff675914273fd749ca8de1bc82f9f0aadad7ab50624bf798e1ab930a63cffbec"
+why = "100m: walking into a rivet's gap while holding the hammer (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m100-hammer.003.start.presses"
+frame = 6205
+context = "save_point"
+
+[[clips]]
+id = "dk.m100-fall.003"
+name = "m100-fall 003: up the ladders at x 121 and 97 (no rivet crossed), girder 3's left rivet pulled walking left, then right into its gap at x 64: Mario falls ($96 = 8) past girder 2's left rivet, which isn't pulled while he falls ($EEAC-$EEB0), lands and dies, and 100m starts again"
+source = "played"
+presses = ["right@0-39"]
+frames = 560
+curve = "de8c01bfcef6a66e98f18b8fff6be25c53531062a9db45cc7140a39a9e611b61"
+why = "100m: a rivet touched while falling, $EEB0 (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m100-fall.003.start.presses"
+frame = 6038
+context = "save_point"
+
+[[clips]]
+id = "dk.m50-clear-late.001"
+name = "50m cleared with the bonus under 1000: up to the middle girder (x 76, y 127), a wait there of about 4050 frames while the bonus runs down ($D041's hurry jingle, $FC = $20, at bonus 900), then dk.m50-clear.001's way up the left moving ladder; cleared at bonus 800, the scene and 75m's setup"
+source = "generated"
+presses = ["right@0-53", "up@54-148", "left@159-166", "up@167-284", "left@4627-4639", "left+a@4640-4641", "left@4642-4683", "left@4716-4743", "up@4744-4862", "left@4865-4917", "up@4918-5035"]
+frames = 5735
+curve = "ada48eb33101298e50d90d134c46852a6c094dd3fb4e3e659b303fd629950e2f"
+why = "made from the code: dk.m50-clear.001's start (50m play, frame 3052), game A round 1"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-clear-late.001.start.presses"
+frame = 3052
+context = "save_point"
+level = "m50"
+
+[[clips]]
+id = "dk.m50-bonus-out.001"
+name = "50m: the bonus runs out ($EBB6: $2E = 0 and $45 = 0 sets $96 = $FF): a wait on the middle girder (x 76, y 127), a step left at 5650 out of a fire's way, $D041's hurry jingle at bonus 900, the time-out death and the restart"
+source = "generated"
+presses = ["right@0-53", "up@54-148", "left@159-166", "up@167-284", "left@5650-5665"]
+frames = 6550
+curve = "c096b5c99fc8970c8e0f06e8618518a0f6783bad324478d6674f4430f2880778"
+why = "made from the code: dk.m50-clear.001's start (50m play, frame 3052), game A round 1"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m50-bonus-out.001.start.presses"
+frame = 3052
+context = "save_point"
+level = "m50"
+
+[[clips]]
+id = "dk.m100-bonus-out.001"
+name = "100m: Mario left alone at the start after the 75m clear: a fire takes a life, then the bonus runs out ($EBB6, $2E = 0 and $45 = 0) with $D041's hurry jingle at bonus 900: the time-out death and the restart"
+source = "generated"
+presses = []
+frames = 8300
+curve = "e501e18d4bf5b51783829d3b19258e9fd65bc75592db38ba587bc55e39568e34"
+why = "made from the code: dk.m75-clear.001's route carried on into 100m play (frame 5751), game A round 1"
+
+[clips.start]
+presses_from_power_on = "clips/dk.m100-bonus-out.001.start.presses"
+frame = 5751
+context = "save_point"
+level = "m100"
+
+[[clips]]
+id = "dk.untaken-jump-fall.001"
+name = "untaken-jump-fall 001: 25m, a running jump off the girder's right end (x 215): the jump comes 16 px below its takeoff ($D5C6 sets $95 to $FF) and its landing kills ($D619 to $D642)"
+source = "played"
+presses = ["right@0-19", "right+a@20-21", "right@22-81"]
+frames = 232
+curve = "7a958ef96f4276585cbdb9e1826059b36d3b42098a1da3274d4e8c700cc3883b"
+why = "a jump that falls too far ($D5C6, $D619), taken by no clip before (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.untaken-jump-fall.001.start.presses"
+frame = 1532
+context = "save_point"
+
+[[clips]]
+id = "dk.untaken-jump-x141.001"
+name = "untaken-jump-x141 001: 100m girder 2 from the ladder at x 17, a running jump from x 132 that passes Mario's sprite x 136 ($D815: the hammer test's right bound on 50m and 100m)"
+source = "played"
+presses = ["right@0-171", "right+a@172-172", "right@173-212"]
+frames = 330
+curve = "3b7bcc62e6052a63818beed75ec050c05614f3b165c70bac118f6491719f317e"
+why = "a jump at the hammer test's bound $88 ($D817), taken by no clip before (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.untaken-jump-x141.001.start.presses"
+frame = 5776
+context = "save_point"
+
+[[clips]]
+id = "dk.untaken-hammer-used.001"
+name = "untaken-hammer-used 001: 100m, the lower hammer taken at x 23 on girder 3, held to its end, then a jump at the same place: its flag $0451 is 0, so nothing is taken ($D86A)"
+source = "played"
+presses = ["left@0-301", "a@302-302", "a@1180-1180"]
+frames = 1260
+curve = "2d7a695336ef89633acac4999a280bce30b85c90d3e10bfd876114aef71ea6be"
+why = "a jump at the lower hammer's place after it was used ($D86A), taken by no clip before (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.untaken-hammer-used.001.start.presses"
+frame = 6205
+context = "save_point"
+
+[[clips]]
+id = "dk.untaken-hammer-used.002"
+name = "untaken-hammer-used 002: 100m, the upper hammer taken at x 124 on girder 4, a fire smashed walking left, the hammer held to its end, then back to x 124 and a jump: its flag $0452 is 0 ($D851)"
+source = "played"
+presses = ["right@0-135", "a@136-136", "left@167-196", "right@995-1012", "a@1013-1013"]
+frames = 1150
+curve = "1ac181e97616da13417ecd4cc62d2033288242fd4f7dae68969f2720c78fb7a5"
+why = "a jump at the upper hammer's place after it was used ($D851), taken by no clip before (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.untaken-hammer-used.002.start.presses"
+frame = 6622
+context = "save_point"
+
+[[clips]]
+id = "dk.untaken-hammer-edge.001"
+name = "untaken-hammer-edge 001: 100m, the lower hammer taken at x 23 on girder 3, then a walk left with it off the girder's left end: no ground under Mario ($D8EB not 0) off 25m, so the y step is skipped ($D729), the hammer is dropped ($D7BF) and he falls"
+source = "played"
+presses = ["left@0-301", "a@302-302", "left@343-402"]
+frames = 500
+curve = "e2174c38d1f037639667eea34b7f90a407ed603b2eb0b6f427f1056b3c2f9876"
+why = "a hammer walk off a girder's end off 25m ($D729), taken by no clip before (wholes)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.untaken-hammer-edge.001.start.presses"
+frame = 6205
+context = "save_point"
+
+[[clips]]
+id = "dk.untaken-crowded.002"
+name = "untaken-crowded 002: 25m, Mario on girder 3 waits 60 frames, takes the lower hammer at x 34 and holds it while five barrels are on girder 4 ($7E + 3 >= 5 with $96 = $0A and $59 = 3, $DF40-$DF5B): a barrel there is sent down through the girder ($DF8F: state $40, its stop in $C0)"
+source = "played"
+presses = ["left@60-177", "a@178-178"]
+frames = 760
+curve = "e687bbe03d687fa4d796741166b54f4c40bd7900513e050dfcf0d1949414abc2"
+why = "the crowded girder with the hammer held ($DF5B and on), taken by no clip before (w100)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.untaken-crowded.002.start.presses"
+frame = 1112
+context = "save_point"
+
+[[clips]]
+id = "dk.second-straight.001"
+name = "second-straight 001: 25m, game A round 1: clear-25m 001's path up to girder 3, then Mario climbs the ladder at x 196 to y 127 and stays on it (a barrel won't take a ladder with a climbing Mario 1 to 15 px under its top, the fires don't climb it) while the straight barrels come: slot 0's at 2629 turns $0421 from 1 to 3, and slot 0's next at 4037 finds 3 ($DAE8 taken) and sets it back to 1"
+source = "played"
+presses = []
+presses_file = "clips/dk.second-straight.001.presses"
+frames = 2540
+curve = "5be0b4b64c88a4d82058f24b983814eca270728faa3474973bf1d99041086c9b"
+why = "the second straight barrel after the drum is lit, its way read as 3 ($DAE8 taken), taken by no clip before (cstr)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.second-straight.001.start.presses"
+frame = 1532
+context = "save_point"
+
+[[clips]]
+id = "dk.third-points.001"
+name = "third-points 001: 25m, Mario walks right to x 149 on girder 1 and waits; two barrels rolling left on one spot come up behind him and he jumps left at x 149 (clip frame 1376). Mario moves 1 px every 2 frames and the barrels 1 a frame, so the sideways test ($9C < 3 and $9E = 0, $EC7A) pays each barrel on three frames: at 1989 both points sprites ($02C0, $02C8) are taken, and at 1991 and 1993 both are busy, so $CFC6 finds no free one and falls through $D005 four times; Mario lands at x 129 and lives"
+source = "played"
+presses = ["right@0-150", "left+a@1376-1378", "left@1379-1416"]
+frames = 1440
+curve = "c1fb8ba4401745f4de9117d6629001f92181ca32e787f19e69a48e8a00ffb8e8"
+why = "a third points award while both points sprites are busy ($D005 falls through), taken by no clip before (cpts)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.third-points.001.start.presses"
+frame = 599
+context = "save_point"
+
+[[clips]]
+id = "dk.crowded-top.001"
+name = "crowded-top 001: 25m, Mario on girder 5 jumps the barrels at x 44, then walks to x 34 and takes the top hammer in a jump over a barrel as another barrel starts down the ladder at x 100: three barrels on girder 5 with the hammer held ($7E + 5 >= 5 with $96 = $0A and $59 = 5, $DF72-$DF78), and the rolling one there is sent down through the girder ($DF8F: state $40, its stop in $C0)"
+source = "played"
+presses = ["left@0-58", "right@67-67", "a@80-81", "right@203-203", "left@216-216", "right@266-266", "left@283-283", "right@437-437", "left@439-453", "a@485-486"]
+frames = 724
+curve = "b0bdc1af1a052e6c0fd996b66e65ca60ec80156f7c7ffd72899662e9069a3fd8"
+why = "the crowded top girder with the top hammer held ($DF72 to $DF8F), taken by no clip before (ctop)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.crowded-top.001.start.presses"
+frame = 1576
+context = "save_point"
+
+[[clips]]
+id = "dk.crowded-top.002"
+name = "crowded-top 002: 25m, as crowded-top 001 with other jump and tap times: when three barrels are on girder 5 and the top hammer is taken, slot 0 holds a barrel rolling on girder 1, so the scan passes it ($DF87 falls through) before it sends the rolling barrel on girder 5 down through the girder ($DF8F)"
+source = "played"
+presses = ["left@0-58", "right@69-69", "a@80-81", "right@186-186", "left@203-203", "right@245-245", "left@273-273", "right@320-320", "left@340-340", "right@362-362", "left@382-382", "left@452-466", "a@483-484"]
+frames = 724
+curve = "45ddd01718b1fa9a3a8935fc7c52dca3feec153f71f14e27292af0294bb8f845"
+why = "the crowded top girder's scan past a rolling barrel on another girder ($DF87 not taken), taken by no clip before (ctop)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.crowded-top.002.start.presses"
+frame = 1576
+context = "save_point"
+
+[[clips]]
+id = "dk.crowded-top.003"
+name = "crowded-top 003: 25m, as untaken-crowded 002 (the lower hammer taken at x 34 on girder 3) with short walks each way while it is held: when three barrels are on girder 3, slot 0 is a rolling barrel whose girder is 0 and slot 1 one rolling on girder 5, so the scan passes both ($DF6A falls through) before it sends the rolling barrel on girder 3 down through the girder ($DF8F)"
+source = "played"
+presses = ["left@60-177", "a@178-178", "right@245-246", "left@260-261", "right@304-305", "left@316-317", "left@390-392", "right@404-406", "left@470-473", "right@491-494", "right@514-517", "left@530-533", "left@592-594", "right@600-602", "left@640-641", "right@657-658", "left@768-769", "right@772-773", "right@829-830", "left@847-848", "left@944-947", "right@967-970"]
+frames = 988
+curve = "a45ec51084afe7df0d36b826fa2fecac4fdc19502db566f50c29976f6c816e88"
+why = "the lower hammer's crowded-girder scan past rolling barrels on other girders ($DF6A not taken), taken by no clip before (ctop)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.crowded-top.003.start.presses"
+frame = 1112
+context = "save_point"
+
+[[clips]]
+id = "dk.crowded-top.004"
+name = "crowded-top 004: 25m, as untaken-crowded 002 (the lower hammer taken at x 34 on girder 3) with short walks each way while it is held: two barrels come down ladders onto girder 3 together while a third lands there, so for 14 frames girder 3 has three barrels and none rolling: the scan finds none and returns ($DF6F falls through), until the landed one rolls and is sent down through the girder ($DF8F)"
+source = "played"
+presses = ["left@60-177", "a@178-178", "right@247-249", "left@267-269", "left@303-304", "right@316-317", "right@434-436", "left@442-444", "left@451-451", "right@460-460", "right@506-508", "left@521-523", "right@634-637", "left@655-658", "left@770-772", "right@793-795", "right@874-875", "left@883-884", "left@967-967", "right@988-988"]
+frames = 1038
+curve = "c3ec8119270f5969f8980d9cb9eb0b10450ade75460b51e5d0732cea75fff0b7"
+why = "the lower hammer's crowded girder with no rolling barrel on it ($DF6F not taken), taken by no clip before (ctop)"
+
+[clips.start]
+presses_from_power_on = "clips/dk.crowded-top.004.start.presses"
+frame = 1112
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.death-redraw.001"
+name = "death-redraw 001: probe death-redraw-100m: 100m: m100-hammer 003's presses played on: prize 1 taken, rivets 2 and 3 pulled, the lower hammer taken, a fall into "
+source = "played"
+presses = ["left@0-65", "up@66-160", "right@161-471", "up@472-589", "left@590-891", "a@892-892", "right@933-1149"]
+frames = 1790
+curve = "38cbdf837b9987899c1c5de650b48db21636016d69b18fa0b8698c824b5cf0f3"
+why = "a clip of the death-redraw mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.death-redraw.001.start.presses"
+frame = 5615
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.death-redraw.002"
+name = "death-redraw 002: probe death-redraw-25m: 25m: the lower hammer taken on girder 3, then Left held off girder 3's left end with it, the fall death, the redraw wi"
+source = "played"
+presses = ["left@0-117", "a@118-118", "left@119-518"]
+frames = 919
+curve = "0b8c9c34c612656b5f8a7467fc25dbbb66bc85d68e424696e24365dd01a4d61e"
+why = "a clip of the death-redraw mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.death-redraw.002.start.presses"
+frame = 1112
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.diff-25m-d2.001"
+name = "diff-25m-d2 001: probe diff-25m-d2: game B round 2 ($50 1, $54 1: difficulty 2): 25m up the ladders at x 201, 113, 201, 89 (two jumps on girder 4) and 201, two jumps on the top girder and Pauline's ladder at x 145: the clear, the bonus to 23,900 with the extra life, and 50m's setup"
+source = "played"
+presses = ["right@0-221", "up@222-292", "left@295-425", "up@426-510", "right@541-671", "up@672-738", "left@739-762", "left+a@763-763", "left@764-827", "left+a@828-828", "left@829-934", "up@935-1015", "right@1018-1184", "up@1185-1252", "left+a@1253-1253", "left@1254-1296", "left+a@1297-1297", "left@1298-1364", "up@1365-1439"]
+frames = 1841
+curve = "b59eb2f8c123473cfd2a90b57009a149b52fb22518cd939ce461505c3681261d"
+why = "25m at difficulty 2 (game B round 2): Kong's throws at C443[2] (120 frames) and the straight barrel's wait C44D[2] (40); guards 281afaa6 (the extra life on the clear's bonus frame) and 1efce64f (draws after its 3 lag frames)"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.diff-25m-d2.001.start.presses"
+frame = 7823
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.diff-50m-d2.001"
+name = "diff-50m-d2 001: probe diff-50m-d2: game B round 2 (difficulty 2): 50m from its start, up the ladders at x 97 and 81, a jump at x 72, the left moving ladder at x 33, then Left held on the top girder until pie 2 meets Mario (original frame 10661), the death and the restart"
+source = "played"
+presses = ["right@60-113", "up@114-208", "left@209-221", "up@222-340", "left@341-353", "left+a@354-355", "left@356-425", "up@432-550", "left@551-1250"]
+frames = 1251
+curve = "8beac835cf573933821c1f7b4939727642f6e8df0c2dd02596aedff1691f3968"
+why = "50m at difficulty 2 (game B round 2): the conveyors' pattern $858E[2] and turns $8588[2], the pies' rows $86CE[2], the moving ladders' waits $882D[2] and $8832[2], the fire's wait C466[2]; guards ba5c89bb (the touch loop's $5D after the ride)"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.diff-50m-d2.001.start.presses"
+frame = 9664
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.diff-25m-d3.001"
+name = "diff-25m-d3 001: probe diff-25m-d3: game B round 3 ($50 1, $54 2: difficulty 3): 25m up the ladders at x 201, 113 (a jump on girder 3), 201 (two jumps on girder 4), 89 (two jumps on girder 5) and 201, two jumps on the top girder and Pauline's ladder at x 145: the clear and 50m's setup"
+source = "played"
+presses = ["right@20-241", "up@242-312", "left@315-445", "up@446-530", "right+a@531-531", "right@532-676", "up@677-743", "left@744-767", "left+a@768-768", "left@769-841", "left+a@842-842", "left@843-939", "up@940-1020", "right@1021-1050", "right+a@1051-1051", "right@1052-1094", "right+a@1095-1095", "right@1096-1216", "up@1217-1285", "left+a@1306-1306", "left@1307-1365", "left+a@1366-1366", "left@1367-1418", "up@1419-1492"]
+frames = 1896
+curve = "bbf0966bed1a2767a7f6d277ed923d6e2ab98ae8a3047aa421a8f48dd856b51c"
+why = "25m at difficulty 3 (game B round 3): Kong's throws at C443[3] (104 frames) and the straight barrel's wait C44D[3] (24), the values d = 4 reads too"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.diff-25m-d3.001.start.presses"
+frame = 15047
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.diff-50m-d3.001"
+name = "diff-50m-d3 001: probe diff-50m-d3: game B round 3 (difficulty 3): 50m up the ladders at x 97 and 81 against the conveyors, a jump at x 72, the left moving ladder at x 33, a jump on the top girder and the ladder at x 25: the clear and 75m's setup"
+source = "played"
+presses = ["right@0-53", "up@54-148", "left@149-157", "up@158-277", "left@278-290", "left+a@291-292", "left@293-362", "up@363-481", "left+a@482-482", "left@483-525", "right@526-531", "up@532-725"]
+frames = 1133
+curve = "e36b5e240cef3d28f1c82818f46f598eb06226a69943de696f69e2c73ba8f5c0"
+why = "50m at difficulty 3 (game B round 3): the conveyors moving every frame ($858E[3]), the turns $8588[3] (64), the pies' rows $86CE[3], the moving ladders' waits $882D[3] and $8832[3] (18 and 12), the fire's wait C466[3] (8)"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.diff-50m-d3.001.start.presses"
+frame = 16943
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.diff-25m-d4.001"
+name = "diff-25m-d4 001: probe diff-25m-d4: game B round 4 ($50 1, $54 3: difficulty 4, the cap): 25m up the ladders at x 201, 113 (a jump on girder 3), 201 (two jumps on girder 4), 89 (a wait of 48 at its foot, three jumps on girder 5) and 201, two jumps on the top girder and Pauline's ladder at x 145: the clear and 50m's setup"
+source = "played"
+presses = []
+presses_file = "clips/donkey-kong-oe.diff-25m-d4.001.presses"
+frames = 1951
+curve = "c5cfe07a0f6fc08ba59626daf6891d37101eb6706b23b6e71b5150bfd45714f6"
+why = "25m at difficulty 4, the cap: $EAF7's CPX #$04 falls through ($EB03), Kong's throws at C443[4] and the straight barrel's wait C44D[4]"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.diff-25m-d4.001.start.presses"
+frame = 22414
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.diff-50m-d4.001"
+name = "diff-50m-d4 001: probe diff-50m-d4: game B round 4 (difficulty 4): 50m up the ladders at x 97 and 81 against the conveyors, a jump at x 72, the left moving ladder at x 33, a jump on the top girder and the ladder at x 25: the clear and 75m's setup"
+source = "played"
+presses = ["right@48-101", "up@102-196", "left@197-205", "up@206-325", "left@326-338", "left+a@339-340", "left@341-410", "up@411-529", "left+a@530-530", "left@531-573", "right@574-579", "up@580-697"]
+frames = 1100
+curve = "0eb2fcbb769516adb9c8499ad29b165bb7ed84dad5878d10d0129bf18561c00f"
+why = "50m at difficulty 4: the tables by difficulty at their last row ($858E, $8588, $86CE, $882D, $8832) and the fire's wait C466[4] (1)"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.diff-50m-d4.001.start.presses"
+frame = 24365
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.diff-100m.001"
+name = "diff-100m 001: probe diff-100m-d1: game B round 1 (d = 1): 100m from its start, every rivet pulled up x 17, 225, 33 and 209, down 177 and up 73, the clear, the "
+source = "played"
+presses = ["left@0-65", "up@66-160", "right@179-489", "up@490-607", "left@638-924", "up@925-1042", "right@1043-1305", "up@1306-1423", "left@1424-1470", "down@1471-1568", "left@1569-1724", "up@1725-1843", "left@1844-1860"]
+frames = 2810
+curve = "131738f856772d32f5dfa63b26e05d38774ba458dbe4169deab06a16a62ec163"
+why = "a clip of the diff-100m mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.diff-100m.001.start.presses"
+frame = 5066
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.diff-100m.002"
+name = "diff-100m 002: probe diff-100m-d2: game B round 2 (d = 2): 100m from its start, every rivet pulled up x 17, 225, 33 and 209, down 177 and up 73 with waits for t"
+source = "played"
+presses = ["left@0-65", "up@66-160", "right@181-491", "up@492-609", "left@650-936", "up@937-1054", "right@1065-1327", "up@1328-1445", "left@1446-1492", "down@1493-1590", "left@1591-1746", "up@1747-1865", "left@1866-1882"]
+frames = 2883
+curve = "4e41eca04bcd96af7920a85f951d3acd657538d97a7ee438785e487948b8bd82"
+why = "a clip of the diff-100m mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.diff-100m.002.start.presses"
+frame = 12114
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.diff-100m.003"
+name = "diff-100m 003: probe diff-100m-d3: game B round 3 (d = 3): 100m from its start, up x 17 and 225, hops left along girder 3 past the fires (the faster climb gates"
+source = "played"
+presses = []
+presses_file = "clips/donkey-kong-oe.diff-100m.003.presses"
+frames = 3751
+curve = "0aa16f2b572e96d24c751e561f9330c3ef43a02e811810e729e841197e052fbb"
+why = "a clip of the diff-100m mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.diff-100m.003.start.presses"
+frame = 19270
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.diff-75m.001"
+name = "diff-75m 001: probe diff-75m-d1: game B round 1 (d = 1): 75m from its start over the lifts, the hammer jump, the ladders at x 97 and 177, Pauline's ladder at x "
+source = "played"
+presses = ["right@0-19", "right+a@20-20", "right@21-26", "right@74-83", "right+a@112-112", "right@113-171", "right@412-413", "up@414-604", "right@685-685", "right+a@686-686", "right@687-728", "right@737-737", "right+b+a@738-763", "right@764-804", "right+a@805-805", "right@806-849", "up@850-944", "left@963-1008", "up@1009-1079"]
+frames = 1485
+curve = "4cfc7738c40245f1d280b12009ab9433abef03aeebc19041d44d5fb7bc77cc0a"
+why = "a clip of the diff-75m mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.diff-75m.001.start.presses"
+frame = 3581
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.diff-75m.002"
+name = "diff-75m 002: probe diff-75m-d2: game B round 2 (d = 2): 75m from its start over the lifts (C45C, C461 by d: faster from 2), the hammer jump, the ladders at x 9"
+source = "played"
+presses = ["right@0-19", "right+a@20-20", "right@21-26", "right@74-83", "right+a@112-112", "right@113-179", "up@180-369", "right@390-390", "right+a@391-391", "right@392-434", "right+b+a@435-460", "right@461-499", "right+a@500-500", "right@501-544", "up@545-638", "left@679-724", "up@725-795"]
+frames = 1200
+curve = "5004e49558741c51b0295b3d9092045c8511996c81b57e8262c12d74a7eedfe6"
+why = "a clip of the diff-75m mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.diff-75m.002.start.presses"
+frame = 10914
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.diff-75m.003"
+name = "diff-75m 003: probe diff-75m-d3: game B round 3 (d = 3): 75m from its start over the left lifts, the jump onto the right lifts 84 frames later than at d = 2 (C4"
+source = "played"
+presses = ["right@0-19", "right+a@20-20", "right@21-26", "right@53-62", "right+a@75-75", "right@76-152", "up@153-343", "right@428-428", "right+a@429-429", "right@430-472", "right+b+a@473-498", "right@499-536", "right+a@537-537", "right@538-581", "up@582-676", "left@767-812", "up@813-883"]
+frames = 1288
+curve = "e58900131e6b856f30c84887943352d55b4ac78e88540e41eddf01f2839e1d51"
+why = "a clip of the diff-75m mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.diff-75m.003.start.presses"
+frame = 17982
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.diff-100m.004"
+name = "diff-100m 004: probe diff-100m-d4: game B round 4 (d = 4, the cap): 100m from its start, up x 17, hops right along girder 2 and left along girder 3 past the fir"
+source = "played"
+presses = []
+presses_file = "clips/donkey-kong-oe.diff-100m.004.presses"
+frames = 3910
+curve = "b2509abf1f3c962c1b34f0f0a54595d380f975d371208ebc49b15edb678ae504"
+why = "a clip of the diff-100m mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.diff-100m.004.start.presses"
+frame = 26719
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.diff-75m.004"
+name = "diff-75m 004: probe diff-75m-d4: game B round 4 (d = 4, the cap): 75m from its start over the left lifts, the jump onto the right lifts (C45C, C461 by d), the h"
+source = "played"
+presses = ["right@0-19", "right+a@20-20", "right@21-26", "right@53-62", "right+a@69-69", "right@70-144", "up@145-334", "right@335-335", "right+a@336-336", "right@337-379", "right+b+a@380-405", "right@406-443", "right+a@444-444", "right@445-489", "up@490-583", "left@734-779", "up@780-850"]
+frames = 1254
+curve = "cd379ee3d67d415b9e1e0b0135e7fa3edcb8ae70d265c4e048db5edc19750acc"
+why = "a clip of the diff-75m mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.diff-75m.004.start.presses"
+frame = 25465
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.over75-start.001"
+name = "over75-start 001: probe go75-start: game over on 75m, then Start at the title"
+source = "played"
+presses = ["start@545-546"]
+frames = 1447
+curve = "e0c05ce411203eaab4939cbce1c0749ae126d53469e5b6fcd4958dcf178a89f4"
+why = "a clip of the over75-start mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.over75-start.001.start.presses"
+frame = 6192
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.two-p-clear.001"
+name = "two-p-clear 001: probe two-p-clear: two players, game A: each loses two lives standing on 25m; player 1's last life clears 25m (ladders 201, 113, 201, 89, 201, "
+source = "played"
+presses = ["right@32-253", "up@254-324", "left@327-457", "up@458-542", "right@573-703", "up@704-770", "left@771-794", "left+a@795-795", "left@796-859", "left+a@860-860", "left@861-966", "up@967-1047", "right@1078-1244", "up@1245-1311", "left+a@1312-1312", "left@1313-1355", "left+a@1356-1356", "left@1357-1423", "up@1424-1497"]
+frames = 1758
+curve = "9891290d7ac1ed187cef8c9e792daf663d7fd9b2a97d2b3b498a2d2170cdc04c"
+why = "a clip of the two-p-clear mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.two-p-clear.001.start.presses"
+frame = 3383
+context = "save_point"
+
+[import]
+why = "a clip of the {session} mechanic session"
+
+[[import.exclude]]
+what = "clear-25m"
+why = "sessions from before the corpus 4.0.0 cut; their clips were never in the reduced set"
+
+[[import.exclude]]
+what = "clear-25m-scene"
+why = "as above"
+
+[[import.exclude]]
+what = "climb-ladder"
+why = "as above"
+
+[[import.exclude]]
+what = "lad50-grab"
+why = "as above"
+
+[[import.exclude]]
+what = "lad50-mladder"
+why = "as above"
+
+[[import.exclude]]
+what = "top-hammer"
+why = "as above"
+
+[[import.exclude]]
+what = "walk"
+why = "as above"
+
+[[import.exclude]]
+what = "sealed-run"
+why = "a sealed run"
+
+[[import.exclude]]
+what = "current"
+why = "the page's scratch session"
+
+[[clips]]
+id = "donkey-kong-oe.m50-ladder-fire.001"
+name = "m50-ladder-fire 001: probe m50-ladder-fire: Y = 137: 50m: Mario up the ladder at x 80 from the lowest conveyor to y Y, short of girder 3, then still on it until"
+source = "played"
+presses = ["right@0-53", "up@54-148", "left@159-166", "up@167-269"]
+frames = 1406
+why = "a clip of the m50-ladder-fire mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.m50-ladder-fire.001.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.m50-ladder-fire.002"
+name = "m50-ladder-fire 002: probe m50-ladder-fire: Y = 141: 50m: Mario up the ladder at x 80 from the lowest conveyor to y Y, short of girder 3, then still on it until"
+source = "played"
+presses = ["right@0-53", "up@54-148", "left@159-166", "up@167-257"]
+frames = 2184
+why = "a clip of the m50-ladder-fire mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.m50-ladder-fire.002.start.presses"
+frame = 3052
+context = "save_point"
+
+[[clips]]
+id = "donkey-kong-oe.m50-ladder-fire.003"
+name = "m50-ladder-fire 003: probe m50-ladder-fire: Y = 145: 50m: Mario up the ladder at x 80 from the lowest conveyor to y Y, short of girder 3, then still on it until"
+source = "played"
+presses = ["right@0-53", "up@54-148", "left@159-166", "up@167-245"]
+frames = 1746
+why = "a clip of the m50-ladder-fire mechanic session"
+
+[clips.start]
+presses_from_power_on = "clips/donkey-kong-oe.m50-ladder-fire.003.start.presses"
+frame = 3052
+context = "save_point"

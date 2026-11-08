@@ -1,0 +1,1066 @@
+# A model baseline (docs/originals.md): the interpreter plays Rivet Rodeo on
+# this input with no ROM anywhere. Written by hand from a route search;
+# `gp interp baselines` checks it.
+format = "0.1.0"
+model = "rivet_rodeo"
+level = "main"
+description = "The title's option 3, 2 players, game A: Select 2 times, then Start, and the stage plays"
+recorded = "hand"
+frames = 900
+holds = ["select@40-41", "select@60-61", "start@100-104"]
+digest = "7a0d88b92c2b2145320f6ac3d5c5b17bfe5244f6d50f78d77c7a76fb0ce83869"
+
+[[expect]]
+frame = 900
+path = "level"
+equals = "main"
+
+[[expect]]
+frame = 900
+path = "rules.bonus.state"
+equals = "counting"
+
+[[expect]]
+frame = 900
+path = "rules.clear_scene.state"
+equals = "waiting"
+
+[[expect]]
+frame = 900
+path = "rules.extra.state"
+equals = "none"
+
+[[expect]]
+frame = 900
+path = "rules.game.state"
+equals = "playing"
+
+[[expect]]
+frame = 900
+path = "rules.menu.state"
+equals = "idle"
+
+[[expect]]
+frame = 900
+path = "rules.pause.state"
+equals = "running"
+
+[[expect]]
+frame = 900
+path = "rules.stage_draw.state"
+equals = "idle"
+
+[[expect]]
+frame = 900
+path = "rules.turns.state"
+equals = "idle"
+
+[[expect]]
+frame = 900
+path = "counters.attract"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_anim0"
+equals = "2"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_anim1"
+equals = "4"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_anim2"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_anim3"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_anim4"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_anim5"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_anim6"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_anim7"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_anim8"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_drop"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_loop"
+equals = "9"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_start0"
+equals = "281474976841505"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_start1"
+equals = "34460480355"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_start2"
+equals = "8453936"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_start3"
+equals = "8453936"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_start4"
+equals = "8453936"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_start5"
+equals = "8453936"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_start6"
+equals = "8453936"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_start7"
+equals = "8453936"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_start8"
+equals = "8453936"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_tile0"
+equals = "140"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_tile1"
+equals = "136"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_tile2"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_tile3"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_tile4"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_tile5"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_tile6"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_tile7"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.barrel_tile8"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.belt_drawn"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.bonus"
+equals = "4700"
+
+[[expect]]
+frame = 900
+path = "counters.bonus_out"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.bonus_tick"
+equals = "9"
+
+[[expect]]
+frame = 900
+path = "counters.clear_pic"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.clear_wait"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.climb_step"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.climb_top"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.conv_beat"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.conv_low"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.conv_moving"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.conv_phase"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.conv_turn"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.cursor"
+equals = "2"
+
+[[expect]]
+frame = 900
+path = "counters.death_wait"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.demo"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.demo_index"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.demo_left"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.demo_on"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.demo_pad"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.demo_way"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.divider"
+equals = "9"
+
+[[expect]]
+frame = 900
+path = "counters.drop_timer"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.drum"
+equals = "3"
+
+[[expect]]
+frame = 900
+path = "counters.drum_flame"
+equals = "254"
+
+[[expect]]
+frame = 900
+path = "counters.drum_timer"
+equals = "3"
+
+[[expect]]
+frame = 900
+path = "counters.ending_kong"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.ending_lag"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.ending_pic"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.ending_wait"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.extra_given"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.extra_other"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.fire_aim"
+equals = "103"
+
+[[expect]]
+frame = 900
+path = "counters.fire_blue"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.fire_left_0"
+equals = "3"
+
+[[expect]]
+frame = 900
+path = "counters.fire_left_1"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.fire_left_2"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.fire_left_3"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.fire_pause0"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.fire_pause1"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.fire_start0"
+equals = "51430711"
+
+[[expect]]
+frame = 900
+path = "counters.fire_start1"
+equals = "65280"
+
+[[expect]]
+frame = 900
+path = "counters.fire_tile_0"
+equals = "156"
+
+[[expect]]
+frame = 900
+path = "counters.fire_tile_1"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.fire_tile_2"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.fire_tile_3"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.fire_wait"
+equals = "23"
+
+[[expect]]
+frame = 900
+path = "counters.fires_faced"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.frame_cost"
+equals = "9340"
+
+[[expect]]
+frame = 900
+path = "counters.frame_odd"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.game_b"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.girder_count1"
+equals = "1"
+
+[[expect]]
+frame = 900
+path = "counters.girder_count2"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.girder_count3"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.girder_count4"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.girder_count5"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.hammer"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.hammer_jingle"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.hammer_touch"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.hud_bonus"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.hud_lives"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.hud_stale"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.kong_drawn"
+equals = "3"
+
+[[expect]]
+frame = 900
+path = "counters.kong_pose"
+equals = "3"
+
+[[expect]]
+frame = 900
+path = "counters.kong_thrown"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.kong_wait"
+equals = "24"
+
+[[expect]]
+frame = 900
+path = "counters.level_neg"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.lift_beat"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.lift_due_left"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.lift_due_right"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.lives"
+equals = "2"
+
+[[expect]]
+frame = 900
+path = "counters.lives_other"
+equals = "3"
+
+[[expect]]
+frame = 900
+path = "counters.loop"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.loop_other"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.loop_shown"
+equals = "1"
+
+[[expect]]
+frame = 900
+path = "counters.mario_96"
+equals = "1"
+
+[[expect]]
+frame = 900
+path = "counters.mario_pose"
+equals = "4"
+
+[[expect]]
+frame = 900
+path = "counters.mario_split_x"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.mario_split_y"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.mario_start"
+equals = "-360287970189588653"
+
+[[expect]]
+frame = 900
+path = "counters.mladder_div"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.nmi_carry"
+equals = "1"
+
+[[expect]]
+frame = 900
+path = "counters.nmi_cycle_odd"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.nmi_entry"
+equals = "30"
+
+[[expect]]
+frame = 900
+path = "counters.nmi_resume"
+equals = "62729"
+
+[[expect]]
+frame = 900
+path = "counters.other_turns"
+equals = "1"
+
+[[expect]]
+frame = 900
+path = "counters.over"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.over_shown"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.over_wait"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.pauline_body"
+equals = "219"
+
+[[expect]]
+frame = 900
+path = "counters.pauline_calls"
+equals = "3"
+
+[[expect]]
+frame = 900
+path = "counters.pauline_shown"
+equals = "219"
+
+[[expect]]
+frame = 900
+path = "counters.pauline_step"
+equals = "6"
+
+[[expect]]
+frame = 900
+path = "counters.pauline_wait"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.pie_new_slot"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.player"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.points_timer"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.points_timer_2"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.pose_faced"
+equals = "1"
+
+[[expect]]
+frame = 900
+path = "counters.pose_unface"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.prize_0"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.prize_1"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.prize_2"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.random"
+equals = "-525438814358115198"
+
+[[expect]]
+frame = 900
+path = "counters.random_seed"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.redraw"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.restart_song"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.rivet_0"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.rivet_1"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.rivet_2"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.rivet_3"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.rivet_4"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.rivet_5"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.rivet_6"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.rivet_7"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.score"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.score_other"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.scratch_00"
+equals = "3"
+
+[[expect]]
+frame = 900
+path = "counters.select_wait"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.setup_wait"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.smash_beat"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.smash_step"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_death_seen"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_death_wait"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_fc"
+equals = "2"
+
+[[expect]]
+frame = 900
+path = "counters.sound_fc_kept"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_fd"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_fe"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_ff"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_fx1"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_fx1_step"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_fx1_time"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_fx2"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_jingle_at"
+equals = "1"
+
+[[expect]]
+frame = 900
+path = "counters.sound_jingle_now"
+equals = "2"
+
+[[expect]]
+frame = 900
+path = "counters.sound_length_table"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_music_on"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_p1_at"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_p1_left"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_p2_at"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_p2_left"
+equals = "1"
+
+[[expect]]
+frame = 900
+path = "counters.sound_p2_length"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_song"
+equals = "3"
+
+[[expect]]
+frame = 900
+path = "counters.sound_song_hi"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_song_lo"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_sweep"
+equals = "212"
+
+[[expect]]
+frame = 900
+path = "counters.sound_sweep_down"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_tri_at"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_tri_fx"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_tri_left"
+equals = "241"
+
+[[expect]]
+frame = 900
+path = "counters.sound_tri_pitch"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sound_tri_time"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.spin_start"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.sprite_turn"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.stage"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.stage_other"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.start_title"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.straight_wait"
+equals = "54"
+
+[[expect]]
+frame = 900
+path = "counters.swap"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.swing"
+equals = "1"
+
+[[expect]]
+frame = 900
+path = "counters.swing_idle"
+equals = "32"
+
+[[expect]]
+frame = 900
+path = "counters.throw_timer"
+equals = "135"
+
+[[expect]]
+frame = 900
+path = "counters.title_idle"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.title_song"
+equals = "4"
+
+[[expect]]
+frame = 900
+path = "counters.top_score"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.top_score_a"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.top_score_b"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.two_players"
+equals = "1"
+
+[[expect]]
+frame = 900
+path = "counters.wait_skip"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.walk_beat"
+equals = "0"
+
+[[expect]]
+frame = 900
+path = "counters.walk_pose"
+equals = "4"
+
+[[expect]]
+frame = 900
+path = "counters.walk_turn"
+equals = "0"

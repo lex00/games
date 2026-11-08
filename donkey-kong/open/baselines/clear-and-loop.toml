@@ -1,0 +1,1087 @@
+# A model baseline (docs/originals.md): the interpreter plays Rivet Rodeo on
+# this input with no ROM anywhere. Found by `gp level measure --template
+# rivet-rodeo --clears 4`: the direct route, waiting and jumping until it
+# is lived through. `gp interp baselines` checks it.
+format = "0.1.0"
+model = "rivet_rodeo"
+level = "main"
+description = "1 player, game A: from the start up every girder to the top platform four times (cleared at frames 1733, 3306, 4894, 6463), the stage standing in for 50m, 75m and 100m between, and the next loop's first stage"
+recorded = "search"
+frames = 7169
+holds = ["start@40-44", "right@561-698", "up@699-769", "left@770-920", "up@921-1000", "right@1001-1100", "up@1101-1180", "left@1181-1286", "left+a@1287-1287", "left@1288-1344", "up@1345-1417", "right@1418-1457", "right+a@1458-1458", "right@1459-1530", "up@1531-1615", "left@1616-1656", "up@1657-1732", "right@2134-2271", "up@2272-2342", "left@2343-2493", "up@2494-2573", "right@2574-2673", "up@2674-2753", "left@2754-2859", "left+a@2860-2860", "left@2861-2917", "up@2918-2990", "right@2991-3040", "right+a@3041-3041", "right@3042-3103", "up@3104-3188", "left@3189-3229", "up@3230-3305", "right@3707-3844", "up@3845-3915", "left@3916-4066", "up@4067-4146", "right@4147-4246", "up@4247-4326", "left@4327-4390", "left+a@4391-4391", "left@4392-4448", "left+a@4449-4449", "left@4450-4504", "up@4505-4578", "right@4579-4609", "right+a@4610-4610", "right@4611-4691", "up@4692-4776", "left@4777-4817", "up@4818-4893", "right@5291-5428", "up@5429-5499", "left@5500-5650", "up@5651-5730", "right@5731-5830", "up@5831-5910", "left@5911-6016", "left+a@6017-6017", "left@6018-6074", "up@6075-6147", "right@6148-6187", "right+a@6188-6188", "right@6189-6260", "up@6261-6345", "left@6346-6386", "up@6387-6462"]
+digest = "c2044ef51fcf81dbc7df623221c0b3d02c4123dd444f937defd414431736c995"
+
+[[expect]]
+frame = 1733
+path = "rules.game.state"
+equals = "cleared"
+
+[[expect]]
+frame = 3306
+path = "rules.game.state"
+equals = "cleared"
+
+[[expect]]
+frame = 4894
+path = "rules.game.state"
+equals = "cleared"
+
+[[expect]]
+frame = 6463
+path = "rules.game.state"
+equals = "cleared"
+
+[[expect]]
+frame = 7169
+path = "level"
+equals = "main"
+
+[[expect]]
+frame = 7169
+path = "rules.bonus.state"
+equals = "counting"
+
+[[expect]]
+frame = 7169
+path = "rules.clear_scene.state"
+equals = "waiting"
+
+[[expect]]
+frame = 7169
+path = "rules.extra.state"
+equals = "none"
+
+[[expect]]
+frame = 7169
+path = "rules.game.state"
+equals = "playing"
+
+[[expect]]
+frame = 7169
+path = "rules.menu.state"
+equals = "idle"
+
+[[expect]]
+frame = 7169
+path = "rules.pause.state"
+equals = "running"
+
+[[expect]]
+frame = 7169
+path = "rules.stage_draw.state"
+equals = "idle"
+
+[[expect]]
+frame = 7169
+path = "rules.turns.state"
+equals = "idle"
+
+[[expect]]
+frame = 7169
+path = "counters.attract"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_anim0"
+equals = "2"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_anim1"
+equals = "4"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_anim2"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_anim3"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_anim4"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_anim5"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_anim6"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_anim7"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_anim8"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_drop"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_loop"
+equals = "9"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_start0"
+equals = "281474976841505"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_start1"
+equals = "34460480915"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_start2"
+equals = "8453936"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_start3"
+equals = "8453936"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_start4"
+equals = "8453936"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_start5"
+equals = "8453936"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_start6"
+equals = "8453936"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_start7"
+equals = "8453936"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_start8"
+equals = "8453936"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_tile0"
+equals = "140"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_tile1"
+equals = "136"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_tile2"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_tile3"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_tile4"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_tile5"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_tile6"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_tile7"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.barrel_tile8"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.belt_drawn"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.bonus"
+equals = "5700"
+
+[[expect]]
+frame = 7169
+path = "counters.bonus_out"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.bonus_tick"
+equals = "6"
+
+[[expect]]
+frame = 7169
+path = "counters.clear_pic"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.clear_wait"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.climb_step"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.climb_top"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.conv_beat"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.conv_low"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.conv_moving"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.conv_phase"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.conv_turn"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.cursor"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.death_wait"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.demo"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.demo_index"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.demo_left"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.demo_on"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.demo_pad"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.demo_way"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.divider"
+equals = "8"
+
+[[expect]]
+frame = 7169
+path = "counters.drop_timer"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.drum"
+equals = "3"
+
+[[expect]]
+frame = 7169
+path = "counters.drum_flame"
+equals = "254"
+
+[[expect]]
+frame = 7169
+path = "counters.drum_timer"
+equals = "3"
+
+[[expect]]
+frame = 7169
+path = "counters.ending_kong"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.ending_lag"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.ending_pic"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.ending_wait"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.extra_given"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.extra_other"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_aim"
+equals = "71"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_blue"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_left_0"
+equals = "10"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_left_1"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_left_2"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_left_3"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_pause0"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_pause1"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_start0"
+equals = "72340172991153988"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_start1"
+equals = "65280"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_tile_0"
+equals = "156"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_tile_1"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_tile_2"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_tile_3"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.fire_wait"
+equals = "20"
+
+[[expect]]
+frame = 7169
+path = "counters.fires_faced"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.frame_cost"
+equals = "9345"
+
+[[expect]]
+frame = 7169
+path = "counters.frame_odd"
+equals = "1"
+
+[[expect]]
+frame = 7169
+path = "counters.game_b"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.girder_count1"
+equals = "1"
+
+[[expect]]
+frame = 7169
+path = "counters.girder_count2"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.girder_count3"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.girder_count4"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.girder_count5"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.hammer"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.hammer_jingle"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.hammer_touch"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.hud_bonus"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.hud_lives"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.hud_stale"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.kong_drawn"
+equals = "3"
+
+[[expect]]
+frame = 7169
+path = "counters.kong_pose"
+equals = "3"
+
+[[expect]]
+frame = 7169
+path = "counters.kong_thrown"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.kong_wait"
+equals = "20"
+
+[[expect]]
+frame = 7169
+path = "counters.level_neg"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.lift_beat"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.lift_due_left"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.lift_due_right"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.lives"
+equals = "2"
+
+[[expect]]
+frame = 7169
+path = "counters.lives_other"
+equals = "3"
+
+[[expect]]
+frame = 7169
+path = "counters.loop"
+equals = "1"
+
+[[expect]]
+frame = 7169
+path = "counters.loop_other"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.loop_shown"
+equals = "2"
+
+[[expect]]
+frame = 7169
+path = "counters.mario_96"
+equals = "1"
+
+[[expect]]
+frame = 7169
+path = "counters.mario_pose"
+equals = "4"
+
+[[expect]]
+frame = 7169
+path = "counters.mario_split_x"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.mario_split_y"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.mario_start"
+equals = "-291889550848899245"
+
+[[expect]]
+frame = 7169
+path = "counters.mladder_div"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.nmi_carry"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.nmi_cycle_odd"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.nmi_entry"
+equals = "40"
+
+[[expect]]
+frame = 7169
+path = "counters.nmi_resume"
+equals = "62701"
+
+[[expect]]
+frame = 7169
+path = "counters.other_turns"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.over"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.over_shown"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.over_wait"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.pauline_body"
+equals = "219"
+
+[[expect]]
+frame = 7169
+path = "counters.pauline_calls"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.pauline_shown"
+equals = "219"
+
+[[expect]]
+frame = 7169
+path = "counters.pauline_step"
+equals = "3"
+
+[[expect]]
+frame = 7169
+path = "counters.pauline_wait"
+equals = "183"
+
+[[expect]]
+frame = 7169
+path = "counters.pie_new_slot"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.player"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.points_timer"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.points_timer_2"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.pose_faced"
+equals = "2"
+
+[[expect]]
+frame = 7169
+path = "counters.pose_unface"
+equals = "1"
+
+[[expect]]
+frame = 7169
+path = "counters.prize_0"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.prize_1"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.prize_2"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.random"
+equals = "1668873200113632932"
+
+[[expect]]
+frame = 7169
+path = "counters.random_seed"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.redraw"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.restart_song"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.rivet_0"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.rivet_1"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.rivet_2"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.rivet_3"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.rivet_4"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.rivet_5"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.rivet_6"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.rivet_7"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.score"
+equals = "17100"
+
+[[expect]]
+frame = 7169
+path = "counters.score_other"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.scratch_00"
+equals = "2"
+
+[[expect]]
+frame = 7169
+path = "counters.select_wait"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.setup_wait"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.smash_beat"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.smash_step"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_death_seen"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_death_wait"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_fc"
+equals = "2"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_fc_kept"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_fd"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_fe"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_ff"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_fx1"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_fx1_step"
+equals = "5"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_fx1_time"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_fx2"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_jingle_at"
+equals = "1"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_jingle_now"
+equals = "2"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_length_table"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_music_on"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_p1_at"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_p1_left"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_p2_at"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_p2_left"
+equals = "1"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_p2_length"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_song"
+equals = "3"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_song_hi"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_song_lo"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_sweep"
+equals = "174"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_sweep_down"
+equals = "1"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_tri_at"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_tri_fx"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_tri_left"
+equals = "209"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_tri_pitch"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sound_tri_time"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.spin_start"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.sprite_turn"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.stage"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.stage_other"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.start_title"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.straight_wait"
+equals = "35"
+
+[[expect]]
+frame = 7169
+path = "counters.swap"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.swing"
+equals = "1"
+
+[[expect]]
+frame = 7169
+path = "counters.swing_idle"
+equals = "32"
+
+[[expect]]
+frame = 7169
+path = "counters.throw_timer"
+equals = "71"
+
+[[expect]]
+frame = 7169
+path = "counters.title_idle"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.title_song"
+equals = "4"
+
+[[expect]]
+frame = 7169
+path = "counters.top_score"
+equals = "17100"
+
+[[expect]]
+frame = 7169
+path = "counters.top_score_a"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.top_score_b"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.two_players"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.wait_skip"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.walk_beat"
+equals = "0"
+
+[[expect]]
+frame = 7169
+path = "counters.walk_pose"
+equals = "4"
+
+[[expect]]
+frame = 7169
+path = "counters.walk_turn"
+equals = "0"

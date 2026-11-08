@@ -1,0 +1,1949 @@
+# Probe recipes for Donkey Kong: Original Edition (`gp mechanic probe
+# donkey-kong-oe`, crates/gp-cli/src/probe.rs), as donkey-kong-ju's
+# probes.toml: a start and presses that reproduce a session's clips, and the
+# measures read from RAM, each with the value it must have.
+
+# RAM addresses, as donkey-kong-ju's probes.toml names them, and the clear
+# scene's bytes.
+[watch]
+state = 0x96      # Mario: 1 walk, 2 climb, 4 jump, 8 off an edge, 10 hammer, 255 dying
+x = 0x46          # Mario's x (his sprite's less 5)
+y = 0x47          # Mario's y
+fall = 0x95       # $FF once a jump has come 16 px below its takeoff
+death = 0x98      # the death's spin step; 255 when the spin ends
+step = 0x88       # the 15-frame walk counter
+stage = 0x53      # 1 on 25m, 3 on 75m
+floor = 0x59      # the girder Mario is on, 1 (the bottom) to 7 (Pauline's), from his y + 8
+mode = 0x4F       # 0 until play starts, 1 in play
+lives = 0x55
+nogame = 0x4E    # 1 with no game in play: the demo, the last life's wait, GAME OVER
+divider = 0x34    # the 11-frame divider, 10 down to 0
+throw = 0x36      # Kong's throw timer
+drop = 0x37       # Kong's drop timer
+straight = 0x43   # the straight barrel's slow timer
+slow = 0x45       # the bonus's slow timer
+bonus = 0x2E      # the bonus timer, packed BCD hundreds
+score_hi = 0x25   # the score, packed BCD
+score_mid = 0x26
+score_lo = 0x27
+drum = 0xAD       # the oil drum: 0 unlit, 2, then 3
+hammer = 0x3F     # the hammer timer
+pose = 0x9F       # the hammer's pose, 1 to 6
+smash = 0xBF      # the smash's step counter
+slot0 = 0x5E      # barrel slot 0's state ($80 held, $C0 straight down, 1 rolling)
+slot1 = 0x5F
+pause = 0x516
+pause_lock = 0x517
+no_game = 0x4E    # 1 on the title (and from a last life's spin end), 0 in a game ($C9CB)
+cursor = 0x511    # the title's cursor sprite's y: 127, 143, 159, 175 for its four lines ($C96A)
+idle = 0x44       # the title's idle timer, slow: 32 at the title, 64 after Select ($C93B, $C95D)
+attract = 0x58    # 1 while the attract demo plays ($C957)
+mode_ab = 0x50    # the menu line chosen, 0 to 3: bit 0 game B, bit 1 two players ($C9A0)
+players = 0x51    # 24 for one player, 28 for two ($C9A6, $C9AD)
+player = 0x52     # whose turn: 0 player 1, 1 player 2 ($D156)
+script = 0x50E    # the demo script's next entry ($EC25)
+drawn = 0x510     # 0 until the title is drawn, then 56 ($C938)
+p1_lives = 0x404  # player 1's lives, kept while player 2 plays ($CAB9)
+p2_lives = 0x405
+p1_over = 0x406   # 1 once player 1's game is over ($CA7D)
+p2_over = 0x407
+p2_score_mid = 0x2A  # player 2's score, packed BCD at $29-$2B ($CC15)
+swing_idle = 0xA2  # the hammer's standing swing shift ($D6E8)
+mpose = 0x201     # the first tile of Mario's sprite: the picture last drawn
+sx = 0x203        # Mario's sprite x: his x less 5
+sy = 0x200        # Mario's sprite y: his y less 5
+drum_timer = 0x38 # the oil drum's frame timer
+fire1_x = 0x223   # fire slot 1's sprite x
+fire1_y = 0x220   # fire slot 1's sprite y
+fire1_state = 0xB0 # fire slot 1's state ($AF,X for X = 1)
+turn = 0x85       # the walk's picture's way from 4 ($D268, $D273; 0 at $D4EB)
+cstep = 0x5C      # the climb's step ($D3FB, $D49F)
+drop_to = 0xC0    # where a barrel dropping through a crowded girder stops ($DFC0)
+loop = 0x5D       # the barrel loop's slot; the smashed barrel's while it breaks ($ED24)
+clearing = 0x9A   # 1 from the goal until the next stage's setup clears it ($D08C, $CC47); donkey-kong-ju clears it at the goal ($D0BD)
+scene = 0x450     # the clear scene's step ($8A81): 1 at the goal, 2 on its 2nd divider wrap, 3 on its 5th, 4 on its 21st
+wait = 0x43       # the clear scene's script: 141 at the goal ($D0B5), one less a divider wrap
+mst0 = 0x48E      # 50m: the left moving ladder's state (0 up, 1 going down, 2 down, 3 going up)
+mst1 = 0x48F      # the right one's
+conv_low = 0x483  # 50m: the lowest conveyor's way, 0 right and 1 left
+pie0_y = 0x230    # 50m: pie slot 0's sprite y ($FF free)
+pie0_x = 0x233
+pts1 = 0x41       # the points sprites' timers
+pts2 = 0x42
+ae = 0xAE          # the fire loop's slot: the fire the hammer hit while a smash runs ($ED38)
+rivet0 = 0xC1      # 100m: rivet k pulled, $C1 + k ($EEBC sets it), girder 2's left and right (pulled near x 64 and 184) are 0 and 1, then 3 and 2 on girder 3, 4 and 5 on 4, 6 and 7 on 5
+rivet1 = 0xC2
+rivet2 = 0xC3
+rivet3 = 0xC4
+rivet4 = 0xC5
+rivet5 = 0xC6
+rivet6 = 0xC7
+rivet7 = 0xC8
+loops = 0x54       # the round less 1: $C9EA clears it at a game's start; 100m's clear raises it
+prize0 = 0xC9      # 75m and 100m: prize k taken, $C9 + k ($EF12)
+prize1 = 0xCA
+prize2 = 0xCB
+hflag0 = 0x451     # the lower hammer's flag ($D7D5 clears it when its hammer goes; $CC47 sets it)
+hflag1 = 0x452     # the upper hammer's
+hy0 = 0x2D0        # the lower hammer's sprite y ($02D0)
+hy1 = 0x2D8        # the upper hammer's sprite y ($02D8)
+
+# ---- The stage clear ----------------------------------------------------
+#
+# The planned run of donkey-kong-ju's clear-25m clip 1 dies on this ROM at
+# frame 2156, since the random bytes differ. This run, found by a search
+# over the waits before each ladder (2026-11-04), climbs the ladders at x
+# 113, 201, 89 and 201 and Pauline's at x 145 (her girder is reached only
+# by it, so Mario's sprite x is 140 at the goal and the clear's picture is
+# mirrored, $839E), after a wait of W frames on the fifth girder, which
+# gives the goal another bonus. Each plays the clear scene to the next
+# stage's setup ($CC47).
+[[probe]]
+id = "clear-25m"
+session = "clear-25m-scene"
+clips = [1, 2, 3]
+note = "25m cleared by Pauline's ladder at x 145: the goal ($D04C) moves $53 to 2 (50m) and sets $43 to 141 and $9A to 1, which stays set with $4F through the scene ($D0BB returns); the scene's steps $0450 come the frame after its 2nd, 5th and 21st divider wraps, the tally on the 9th, and the next stage's setup clears $9A 396 frames after the scene's first wrap"
+base = { path = "1854103de2df3e3047a7934c814152bf6eb53e64fa112426b9561eb915bd412b", at = 1532 }
+steps = [
+  ". 0",
+  "walk_to x 113 max 400",
+  "until state == 2 U max 30",
+  "until state != 2 U max 400",
+  ". 2",
+  ". 0",
+  "walk_to x 201 max 400",
+  "until state == 2 U max 30",
+  "until state != 2 U max 400",
+  ". 2",
+  ". 32",
+  "walk_to x 89 max 400",
+  "until state == 2 U max 30",
+  "until state != 2 U max 400",
+  ". 2",
+  ". 24",
+  "walk_to x 201 max 400",
+  "until state == 2 U max 30",
+  "until state != 2 U max 400",
+  ". 2",
+  ". {W}",
+  "walk_to x 145 max 400",
+  "until state == 2 U max 30",
+  "until stage != 1 U max 400",
+  "mark",
+  "until clearing == 0 . max 600"]
+sweep = { W = [0, 192, 112] }
+check = [
+  { measure = "first stage == 2", expect_each = [2646, 2838, 2758] },
+  { measure = "min x while stage == 2", expect = 145 },
+  { measure = "max x while stage == 2", expect = 145 },
+  { measure = "count mode == 0", expect = 0, note = "$4F stays 1 through the scene" },
+  { measure = "values scene at changes scene", expect = [1, 2, 3, 4, 0] },
+  { measure = "pairs wait == 139 then scene == 2", expect = [1], note = "the scene acts the frame after the wrap" },
+  { measure = "between wait == 140 then clearing == 0", expect = 396 },
+  { measure = "min bonus", expect_each = [0x37, 0x36, 0x36], note = "the bonus at the goal, packed BCD hundreds, until the setup puts it back" },
+  { measure = "values score_mid at changes score_mid", expect_each = [[0x37], [0x36], [0x36]], note = "the tally, on the scene's 9th wrap" },
+]
+
+[[probe]]
+id = "clear-25m-late"
+session = "clear-25m-scene"
+clips = [4, 5]
+note = "as clear-25m, with 400 frames' wait at the start (another search, 2026-11-04), so the goal comes three or four of the bonus's steps later"
+base = { path = "1854103de2df3e3047a7934c814152bf6eb53e64fa112426b9561eb915bd412b", at = 1532 }
+steps = [
+  ". 400",
+  ". 16",
+  "walk_to x 113 max 400",
+  "until state == 2 U max 30",
+  "until state != 2 U max 400",
+  ". 2",
+  ". 0",
+  "walk_to x 201 max 400",
+  "until state == 2 U max 30",
+  "until state != 2 U max 400",
+  ". 2",
+  ". 16",
+  "walk_to x 89 max 400",
+  "until state == 2 U max 30",
+  "until state != 2 U max 400",
+  ". 2",
+  ". 16",
+  "walk_to x 201 max 400",
+  "until state == 2 U max 30",
+  "until state != 2 U max 400",
+  ". 2",
+  ". {W}",
+  "walk_to x 145 max 400",
+  "until state == 2 U max 30",
+  "until stage != 1 U max 400",
+  "mark",
+  "until clearing == 0 . max 600"]
+sweep = { W = [0, 96] }
+check = [
+  { measure = "min x while stage == 2", expect = 145 },
+  { measure = "count mode == 0", expect = 0 },
+  { measure = "values scene at changes scene", expect = [1, 2, 3, 4, 0] },
+  { measure = "between wait == 140 then clearing == 0", expect = 396 },
+  { measure = "min bonus", expect_each = [0x34, 0x33], note = "the bonus at the goal" },
+  { measure = "first stage == 2", expect_each = [3038, 3134] },
+]
+
+# ---- 50m -----------------------------------------------------------------
+#
+# The base is clear-25m-scene clip 1's presses from power-on (the probe
+# clear-25m with W = 0) to frame 3052, 50m's first frame of play: the
+# setup ($CC47) clears $9A on frame 3051. The path is that run's input log
+# cut there (worker m50, 2026-11-04). Mario starts at x 61 on the bottom
+# girder ($59 = 1); the ladders up from it are at x 32, 96, 160 and 216
+# (ladders_50m), the conveyor above at y 172.
+[[probe]]
+id = "m50-start"
+session = "m50-start"
+clips = [1]
+note = "50m from its setup, Mario standing: Kong's beats from his wait $44 alone ($EB22-$EB4F), Pauline's calls, the bonus"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". 400"]
+check = [
+  { measure = "min stage", expect = 2 },
+  { measure = "count state == 255", expect = 0 },
+  { measure = "values x at changes x", expect = [] },
+]
+
+[[probe]]
+id = "m50-walk"
+session = "m50-walk"
+clips = [1, 2]
+note = "50m's bottom girder: a walk to each end ($C1B6-$C1B7 hold Mario between sprite x 8 and 232), and jumps where he stands"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". {W}", "walk_to x 230 max 400", "R 40", ". 10", "A 2", ". 60", "walk_to x 120 max 400", "LA 2", ". 60", "walk_to x 14 max 400", "L 30", ". 20"]
+sweep = { W = [0, 37] }
+check = [
+  { measure = "count state == 255", expect = 0 },
+  { measure = "max y", expect = 204 },
+]
+
+# Mario up a ladder onto the lowest conveyor ($59 = 2), riding it while
+# it moves ($85A9): the ladder at x 96 (Mario's x 97), then he stands for
+# W frames and walks back toward its end.
+[[probe]]
+id = "m50-ride"
+session = "m50-conveyor"
+clips = [1, 2, 3]
+note = "50m's lowest conveyor: Mario climbs the ladder at x 96 onto it, stands while it carries him ($85A9: $0483's way, a pixel on each frame the pattern moves it), then walks"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". {S}", "walk_to x 97 max 200", "until state == 2 U max 30", "until state != 2 U max 200", ". {W}", "R 40", "L 16", ". 20"]
+sweep = { S = [0, 20, 60], W = [60] }
+check = [
+  { measure = "count state == 255", expect = 0 },
+  { measure = "min y", expect = 172 },
+]
+
+# ---- 50m: the bottom girder and the lowest conveyor ----------------------
+#
+# Machine-made from the 50m base at 3052 (worker m50, 2026-11-05), in the
+# order lv50's plan gives: deaths by a pie or a fire and the restart, the
+# conveyor's ends and ride, the lower hammer, and standing until a fire
+# comes. Every cell plays exactly on the model (dk.m50-touch, -pie-jump,
+# -ride-ends, -edges, -hammer and -stand in the corpus). None of the
+# pie-jump cells times a jump over a pie: the conveyor carries Mario to an
+# end and the pies come there after his jumps.
+
+# Mario up the ladder at x L onto the lowest conveyor, then stands until a
+# pie or a fire meets him, and on through the death and the restart.
+[[probe]]
+id = "m50-touch"
+session = "m50-touch"
+clips = [1, 2, 3, 4, 5, 6, 7, 8]
+note = "50m: Mario climbs onto the lowest conveyor at ladder x L-1 and stands; a pie or a fire kills him ($EC61, $ED9C), then the death spin and the stage's restart ($D0C0)"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". {S}", "walk_to x {L} max 400", "until state == 2 U max 30", "until state != 2 U max 200", "until state == 255 . max 900", ". 700"]
+sweep = { L = [33, 97, 161, 217], S = [0, 45] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "count state == 255" },
+  { measure = "min y" },
+]
+
+# On the lowest conveyor, a jump after J frames, then still: a jump over a
+# pie (100 points, $EC69) or a death.
+[[probe]]
+id = "m50-pie-jump"
+session = "m50-pie-jump"
+clips = [1, 2, 3, 4, 5, 6, 7, 8]
+note = "50m: Mario on the lowest conveyor at x 97 jumps in place after J frames; a pie passing under him gives 100 points ($EC69-$EC93, $8BF6 while a points sprite is up), else it or a fire kills him"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = ["walk_to x 97 max 200", "until state == 2 U max 30", "until state != 2 U max 200", ". {J}", "A 2", ". 60", "A 2", ". 120"]
+sweep = { J = [10, 25, 40, 55, 70, 85, 100, 115] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "values score_lo at changes score_lo" },
+]
+
+# The lowest conveyor's ride both ways and to its ends: up at x 33 or 217,
+# stand W frames.
+[[probe]]
+id = "m50-ride-ends"
+session = "m50-ride-ends"
+clips = [1, 2, 3, 4]
+note = "50m: Mario rides the lowest conveyor from its end ladders (x 32 and 216) for W frames, to the ride's bounds ($85A9: sprite x 8 to 232 with $C1B6, $C1B7) and with either way ($0483)"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = ["walk_to x {L} max 400", "until state == 2 U max 30", "until state != 2 U max 200", ". {W}", "R 30", "L 30", ". 30"]
+sweep = { L = [33, 217], W = [60, 200] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "min x" },
+  { measure = "max x" },
+]
+
+# Off each end of the lowest conveyor and of the bottom girder.
+[[probe]]
+id = "m50-edges-left"
+session = "m50-edges"
+clips = [1]
+note = "50m: Mario walks off the lowest conveyor's ends ( against $C1B6 and $C1B7) and falls to the bottom girder, or stands at the end"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = ["walk_to x {L} max 400", "until state == 2 U max 30", "until state != 2 U max 200", "L 120", ". 120"]
+sweep = { L = [33] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "min x" },
+  { measure = "max x" },
+  { measure = "max y" },
+]
+
+[[probe]]
+id = "m50-edges-right"
+session = "m50-edges"
+clips = [2]
+note = "50m: Mario walks off the lowest conveyor's ends ( against $C1B6 and $C1B7) and falls to the bottom girder, or stands at the end"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = ["walk_to x {L} max 400", "until state == 2 U max 30", "until state != 2 U max 200", "R 120", ". 120"]
+sweep = { L = [217] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "min x" },
+  { measure = "max x" },
+  { measure = "max y" },
+]
+
+# The hammer over the lowest conveyor (124, 150): a jump into it from the
+# conveyor, then the hammer's walk and ride, smashing what comes.
+[[probe]]
+id = "m50-hammer-right"
+session = "m50-hammer"
+clips = [1, 2, 3, 4]
+note = "50m: Mario jumps into the lower hammer from the lowest conveyor ($D800), holds it while the conveyor carries him ($85A9 with $96 = 10), and smashes pies and fires that meet it ($ED12, $88B4, $ED69, $88D0)"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = ["walk_to x 97 max 200", "until state == 2 U max 30", "until state != 2 U max 200", "walk_to x {X} max 200", "A 2", "until state != 4 . max 60", ". {W}", "R 60", ". 300"]
+sweep = { X = [122, 126], W = [0, 40] }
+check = [
+  { measure = "first state == 10" },
+  { measure = "first state == 255" },
+  { measure = "values score_lo at changes score_lo" },
+]
+
+[[probe]]
+id = "m50-hammer-left"
+session = "m50-hammer"
+clips = [5, 6, 7, 8]
+note = "50m: Mario jumps into the lower hammer from the lowest conveyor ($D800), holds it while the conveyor carries him ($85A9 with $96 = 10), and smashes pies and fires that meet it ($ED12, $88B4, $ED69, $88D0)"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = ["walk_to x 97 max 200", "until state == 2 U max 30", "until state != 2 U max 200", "walk_to x {X} max 200", "A 2", "until state != 4 . max 60", ". {W}", "L 60", ". 300"]
+sweep = { X = [122, 126], W = [0, 40] }
+check = [
+  { measure = "first state == 10" },
+  { measure = "first state == 255" },
+  { measure = "values score_lo at changes score_lo" },
+]
+
+# Standing on the bottom girder at x X until a fire comes or the bonus runs
+# out.
+[[probe]]
+id = "m50-stand"
+session = "m50-stand"
+clips = [1, 2, 3]
+note = "50m: Mario stands on the bottom girder at x X; a fire that comes down kills him ($ED9C), or the bonus runs out ($EBB6)"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = ["walk_to x {X} max 400", "until state == 255 . max 2400", ". 700"]
+sweep = { X = [20, 120, 230] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "min bonus" },
+]
+
+# On the lowest conveyor at its right end (up the ladder at x 160, then
+# carried to sprite x 232), a jump straight up as pies come from the left:
+# 100 points for each pie under him ($EC69-$EC93; $8BF6 tests the points
+# sprites only for a jump across), then the pie still under him at the
+# landing kills him, and the restart.
+[[probe]]
+id = "m50-pie-points"
+session = "m50-pie-points"
+clips = [1, 2, 3]
+note = "50m: Mario at the lowest conveyor's right end jumps W frames after he steps off the ladder, over pies coming from the left: 100 points each ($EC69-$EC93), then the pie kills him at the landing, and the restart"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = ["R 150", "U 95", ". {W}", "A 2", "until state == 255 . max 120", ". 700"]
+sweep = { W = [746, 750, 754] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "values score_mid at changes score_mid" },
+]
+
+# The lower hammer taken from the lowest conveyor at x 122, W frames still,
+# then a walk left of N frames against what the conveyor brings: a pie
+# smashed ($ED12 -> $88B4 -> $ED69, $5D its slot, paced by $8A,X), a fire
+# smashed ($ED38 -> $ED74: cell N = 40, W = 200, frame 4195, with $5D
+# left at 7 and the smash paced by $91), or nothing.
+[[probe]]
+id = "m50-hammer-smash"
+session = "m50-hammer-smash"
+clips = [1, 2, 3, 4, 5, 6]
+note = "50m: the lower hammer taken from the lowest conveyor at x 122, W frames still, then a walk left of N frames: pies and fires the hammer meets are smashed, 500 points"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = ["walk_to x 97 max 200", "until state == 2 U max 30", "until state != 2 U max 200", "walk_to x 122 max 200", "A 2", "until state != 4 . max 60", ". {W}", "L {N}", ". 700"]
+sweep = { W = [0, 100, 200], N = [40, 120] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "changes smash" },
+  { measure = "values loop at changes smash" },
+]
+
+# Routes up 50m, found by a depth-first search over the wait before each
+# ladder (worker m50's route.py, the walk sweep's method), are the first
+# steps of the two probes below: up the ladder at x 96 to the lowest
+# conveyor, at x 80 (after 8 frames) to girder 3, at x 96 to the middle
+# conveyor. No wait of 0 to 480 frames, walking or jumping every 4 to 28
+# frames, took Mario from the middle conveyor's left half to a moving
+# ladder alive; the routes to the top go over girder 3's gaps instead
+# (m50-mladder and m50-clear below). Girder 3 walks: the cells to x 21,
+# 60, 200 and 229 (clips 1, 2, 4 and 5) fall through girder 3's gaps
+# (x 64 left, 177 right) onto the lowest conveyor and die there, which
+# doesn't carry him that frame ($96 is 255 before $85A9; frame 3383).
+[[probe]]
+id = "m50-girder3"
+session = "m50-girder3"
+clips = [1, 2, 3, 4, 5]
+note = "50m: on girder 3 (from the lowest conveyor's ladder at x 80), a walk to x X and back: the prizes on it are taken on an exact place ($EEF0, 800 points), the fires and the ladders up"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". 8", "walk_to x 81 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", "walk_to x {X} max 400", ". 20", "walk_to x 81 max 400", ". 60"]
+sweep = { X = [21, 60, 140, 200, 229] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "values score_mid at changes score_mid" },
+]
+
+# Up the lowest conveyor's ladder at x 80 to a y of Y, a few steps short of
+# girder 3, then still on it until a fire coming down to girder 3 meets him
+# ($ED9C), and on through the death and the stage's restart ($D0C0): the
+# user's "scaling the top of the 2nd ladder, fireball hit me" (2026-11-08).
+[[probe]]
+id = "m50-ladder-fire"
+session = "m50-ladder-fire"
+note = "50m: Mario up the ladder at x 80 from the lowest conveyor to y Y, short of girder 3, then still on it until a fire meets him there, the death and the restart"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". 8", "walk_to x 81 max 400", "until state == 2 U max 40", "until y <= {Y} U max 400", "until state == 255 . max 2400", ". 700"]
+sweep = { Y = [137, 141, 145] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "values y at changes state" },
+  { measure = "values lives at changes lives" },
+  { measure = "changes mode" },
+]
+
+[[probe]]
+id = "m50-middle"
+session = "m50-middle"
+clips = [1, 2, 3]
+note = "50m: on the middle conveyor (up the ladder at x 96 from girder 3), standing W frames: its left half carries Mario to the oil drum's gap ($85A9 with $59 = 4, $0481), or a walk left first"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". 8", "walk_to x 81 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". {W}", "L 30", "until state == 255 . max 400", ". 600"]
+sweep = { W = [0, 20, 200] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "min x" },
+]
+
+# The upper hammer (sprite 20, 110), on girder 3's left part: up the
+# ladders at x 96 and 80 as m50-girder3 goes, a running jump left from x
+# 72 over girder 3's gap (worker dk50b's sweep: takeoffs at x 66 to 76
+# land alive, 78 falls through), then a jump straight up at x H under the
+# hammer ($D800), W frames still and a walk right of N frames: the fires
+# that meet the head are smashed ($ED8A -> $ECBF -> $ED38, $ED74 on 50m:
+# $AE the fire's slot, $5D still 7), or a walk off the gap with it.
+[[probe]]
+id = "m50-hammer2"
+session = "m50-hammer2"
+clips = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+note = "50m: the upper hammer taken on girder 3's left part after a jump over its gap, held W frames and walked right N frames: fires smashed ($ED38, $ED74), 500 points, or a fall"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". 8", "walk_to x 81 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", "walk_to x 72 max 400", "LA 2", "until state != 4 L max 60", "walk_to x {H} max 200", "A 2", "until state != 4 . max 60", ". {W}", "R {N}", ". 700"]
+sweep = { H = [22, 26], W = [0, 100, 250], N = [0, 20] }
+check = [
+  { measure = "first state == 10" },
+  { measure = "first state == 255" },
+  { measure = "changes smash" },
+  { measure = "values ae at changes smash" },
+]
+
+# The left moving ladder ($890F): from girder 3's left part (the jump
+# over its gap, as m50-hammer2 goes), A frames still, up the ladder at x 32
+# to the middle conveyor, a walk to x 25 and up the moving ladder to
+# sprite y 73 while it is up (the search over A, worker dk50b: 32 and 48
+# reach it alive, 24, 56 to 72 and 152 die on the middle conveyor or the
+# ladder, the others on the ladder at x 32), still there until it starts
+# down, W frames more, then Up for 450 frames: at sprite y 71 ($0200 below
+# $48) the climb stops while the ladder isn't up ($890F -> $D4CF) and goes
+# on once it is, to the top girder (5) and the stage's clear.
+[[probe]]
+id = "m50-mladder"
+session = "m50-mladder"
+clips = [1, 2, 3, 4, 5, 6]
+note = "50m: Mario up the left moving ladder from the middle conveyor (x 24): stopped at sprite y 71 while the ladder isn't up ($890F), on to the top girder once it is"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". 8", "walk_to x 81 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", "walk_to x 72 max 400", "LA 2", "until state != 4 L max 60", ". {A}", "walk_to x 33 max 200", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", "walk_to x 25 max 60", "until sy < 74 U max 100", "until mst0 == 1 . max 1500", ". {W}", "U 450", ". 60"]
+sweep = { A = [32, 48], W = [0, 140, 215] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "min sy" },
+  { measure = "first clearing == 1" },
+]
+
+# The right moving ladder ($890F with $0203 at $80 or more, $893A): from
+# girder 3, a running jump right from x 166 over its right gap, B frames
+# still, up the ladder at x 216 to the middle conveyor's right half, a
+# walk to x 225 and up the moving ladder (x 224) to sprite y 73 while it
+# is up, still there until it starts down, W frames more, then Up.
+[[probe]]
+id = "m50-mladder-right"
+session = "m50-mladder"
+clips = [7, 8]
+note = "50m: Mario up the right moving ladder (x 224): stopped at sprite y 71 while it isn't up ($890F, the ladder by his half of the screen), on to the top once it is"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". 8", "walk_to x 81 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", "walk_to x 166 max 400", "RA 2", "until state != 4 R max 60", ". {B}", "walk_to x 217 max 200", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", "walk_to x 225 max 60", "until sy < 74 U max 100", "until mst1 == 1 . max 1500", ". {W}", "U 450", ". 60"]
+sweep = { B = [112], W = [0, 140] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "min sy" },
+  { measure = "first clearing == 1" },
+]
+
+# The clear on 50m ($D04C: Mario on the top girder, $59 = $C1FA[1] = 5) up
+# either moving ladder while it is up, and the scene after it ($8A81 with
+# $53 at 3: the fires' and pies' sprites hidden on its 2nd divider wrap
+# ($8AEE[3]), the ladders' on its 5th, CHR bank 3) through 75m's setup.
+# Mario's picture at the goal is by his sprite x ($839E): unmirrored on
+# the left ladder, mirrored on the right. The routes are m50-mladder's (A)
+# and m50-mladder-right's (B) with no stop.
+[[probe]]
+id = "m50-clear-left"
+session = "m50-clear"
+clips = [1, 2]
+note = "50m's clear up the left moving ladder ($D04C, $839E's $F082), the scene after 50m ($8A81 with $53 = 3) and 75m's setup"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". 8", "walk_to x 81 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", "walk_to x 72 max 400", "LA 2", "until state != 4 L max 60", ". {A}", "walk_to x 33 max 200", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", "walk_to x 25 max 60", "until clearing == 1 U max 200", ". 700"]
+sweep = { A = [32, 48] }
+check = [
+  { measure = "first clearing == 1" },
+  { measure = "values stage at changes stage", expect = [3] },
+  { measure = "values scene at changes scene", expect = [1, 2, 3, 4, 0] },
+]
+
+[[probe]]
+id = "m50-clear-right"
+session = "m50-clear"
+clips = [3, 4]
+note = "50m's clear up the right moving ladder ($D04C, $839E's $F088), the scene after 50m and 75m's setup"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". 8", "walk_to x 81 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", "walk_to x 166 max 400", "RA 2", "until state != 4 R max 60", ". {B}", "walk_to x 217 max 200", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", "walk_to x 225 max 60", "until clearing == 1 U max 200", ". 700"]
+sweep = { B = [0, 128] }
+check = [
+  { measure = "first clearing == 1" },
+  { measure = "values stage at changes stage", expect = [3] },
+  { measure = "values scene at changes scene", expect = [1, 2, 3, 4, 0] },
+]
+
+# The ladders sweep (lv50's plan, step 6): each girder's own ladders of
+# ladders_50m, climbed whole and back ($D37E-$D50A with 50m's tops $828C:
+# the top zone's pictures, the step off at a top and the climb's end
+# $D4E5 -> $8C0F), or down and back, from the routes above, with the wait
+# before the walk that keeps Mario alive on the conveyors (worker dk50b's
+# sweeps of W: 40 on the lowest conveyor; on girder 3 the cells that die
+# later are kept for the deaths). The moving ladders are m50-mladder's.
+# And walks past girder 1's ladders with Up and Down pressed (as
+# walk-sweep-g1-ladder-past).
+[[probe]]
+id = "m50-ladders-g1"
+session = "m50-ladders"
+clips = [1, 2, 3, 4]
+note = "50m: girder 1's ladders (x 32, 96, 160, 216) climbed to the lowest conveyor and back down"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = ["walk_to x {X} max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 10", "until state == 2 D max 20", "until state != 2 D max 300", ". 10"]
+sweep = { X = [33, 97, 161, 217] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "values floor at changes floor" },
+]
+
+[[probe]]
+id = "m50-ladders-g2-up"
+session = "m50-ladders"
+clips = [5, 6]
+note = "50m: the lowest conveyor's ladders up (x 80, 168) to girder 3 and back down"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". {W}", "walk_to x {X} max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 10", "until state == 2 D max 20", "until state != 2 D max 300", ". 10"]
+sweep = { X = [81, 169], W = [40] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "values floor at changes floor" },
+]
+
+[[probe]]
+id = "m50-ladders-g2-down"
+session = "m50-ladders"
+clips = [7, 8, 9, 10]
+note = "50m: from the lowest conveyor down its ladders (x 32, 96, 160, 216) to girder 1 and back up"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". {W}", "walk_to x {X} max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 10", "until state == 2 U max 20", "until state != 2 U max 300", ". 10"]
+sweep = { X = [33, 97, 161, 217], W = [40] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "values floor at changes floor" },
+]
+
+[[probe]]
+id = "m50-ladders-g3-up"
+session = "m50-ladders"
+clips = [11, 12, 13, 14]
+note = "50m: girder 3's middle ladders up (x 96, 152) to the middle conveyor and back down"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". 8", "walk_to x 81 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". {W}", "walk_to x {X} max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 10", "until state == 2 D max 20", "until state != 2 D max 300", ". 10"]
+sweep = { X = [97, 153], W = [0, 20] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "values floor at changes floor" },
+]
+
+[[probe]]
+id = "m50-ladders-g3-down"
+session = "m50-ladders"
+clips = [15, 16]
+note = "50m: from girder 3 down its ladders (x 80, 168) to the lowest conveyor and back up"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". 8", "walk_to x 81 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", "walk_to x {X} max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 10", "until state == 2 U max 20", "until state != 2 U max 300", ". 10"]
+sweep = { X = [81, 169] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "values floor at changes floor" },
+]
+
+[[probe]]
+id = "m50-ladders-g4-down"
+session = "m50-ladders"
+clips = [17, 18]
+note = "50m: from the middle conveyor (up girder 3's ladder at x 96) down it again after W frames, and back up"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = [". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". 8", "walk_to x 81 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 97 max 400", "until state == 2 U max 40", "until state != 2 U max 400", ". {W}", "until state == 2 D max 20", "until state != 2 D max 300", ". 10", "until state == 2 U max 20", "until state != 2 U max 300", ". 10"]
+sweep = { W = [0, 10] }
+check = [
+  { measure = "first state == 255" },
+  { measure = "values floor at changes floor" },
+]
+
+[[probe]]
+id = "m50-ladders-past"
+session = "m50-ladders"
+clips = [19, 20, 21, 22]
+note = "50m: walks past girder 1's ladders with Up and Down pressed on the way"
+base = { path = "dd13328961c5040950262b3a2e0c7cb26b67e64a3621142d3657e3d6190f238d", at = 3052 }
+steps = ["walk_to x {X} max 400", "mark", "L 20", "R 40", "UR 3", "R 10", "DL 3", "L 20", ". 4"]
+sweep = { X = [33, 97, 161, 217] }
+check = [
+  { measure = "any state == 255" },
+  { measure = "any state == 2" },
+]
+
+# ---- The walk sweep ---------------------------------------------------------
+# Every girder of 25m walked from power-on with no recorded play: the route
+# to girder N is a wait before each ladder (201, 113, 201, 89, 201, 145),
+# found by a depth-first search over waits that reach the next girder
+# alive. On each girder: end to end both ways, taps (a frame or more held,
+# then still), turns, standing and running jumps, and at every ladder of
+# ladders_25m Up then Down, Down, and a walk past with Up and Right and Down
+# and Left. The expected values are the original's. The corpus clips
+# dk.walk-sweep.* are cells of this sweep and of its denser runs (segments
+# of 50 px, waits of 0 to 200 frames, Kong's wall), scored against the
+# model; docs/research/deterministic-inference.md, 2026-11-04, walkW.
+[start.walk_g1]
+steps = [". 60", "T 10", "until mode != 0 . max 1000", ". 12"]
+
+[start.walk_g2]
+steps = [". 60", "T 10", "until mode != 0 . max 1000", ". 12", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2"]
+
+[start.walk_g3]
+steps = [". 60", "T 10", "until mode != 0 . max 1000", ". 12", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2"]
+
+[start.walk_g4]
+steps = [". 60", "T 10", "until mode != 0 . max 1000", ". 12", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 18", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2"]
+
+[start.walk_g5]
+steps = [". 60", "T 10", "until mode != 0 . max 1000", ". 12", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 18", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2"]
+
+[start.walk_g6]
+steps = [". 60", "T 10", "until mode != 0 . max 1000", ". 12", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 18", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 72", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2"]
+
+[[probe]]
+id = "walk-sweep-g1-full"
+base = { start = "walk_g1" }
+steps = ["mark", "walk_to x 21 max 500", "walk_to x 229 max 500", "walk_to x 21 max 500"]
+check = [
+  { measure = "any state == 255", expect = false },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 199 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g1-fullr"
+base = { start = "walk_g1" }
+steps = ["mark", "walk_to x 229 max 500", "walk_to x 21 max 500", "walk_to x 229 max 500"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 53 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 199 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g1-tap1_1"
+base = { start = "walk_g1" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 306: R 1, . 1", "walk_to x 229 max 500", "repeat 306: L 1, . 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 199 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g1-tap2_3"
+base = { start = "walk_g1" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 153: R 2, . 3", "walk_to x 229 max 500", "repeat 153: L 2, . 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 199 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g1-tap4_1"
+base = { start = "walk_g1" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 76: R 4, . 1", "walk_to x 229 max 500", "repeat 76: L 4, . 1"]
+check = [
+  { measure = "any state == 255", expect = false },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 199 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g1-turn6_3"
+base = { start = "walk_g1" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 102: R 6, L 3", "walk_to x 229 max 500", "repeat 102: L 6, R 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 199 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g1-turn2_1"
+base = { start = "walk_g1" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 306: R 2, L 1", "walk_to x 229 max 500", "repeat 306: L 2, R 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 199 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g1-turn4_3"
+base = { start = "walk_g1" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 306: R 4, L 3", "walk_to x 229 max 500", "repeat 306: L 4, R 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 86 },
+  { measure = "min y", expect = 204 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g1-runjump"
+base = { start = "walk_g1" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 7: R 12, RA 1, R 44", "walk_to x 229 max 500", "repeat 7: L 12, LA 1, L 44"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 186 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g1-standjump"
+base = { start = "walk_g1" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 68: R 4, A 1, . 48", "walk_to x 229 max 500", "repeat 68: L 4, A 1, . 48"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 213 },
+  { measure = "min y", expect = 124 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g1-ladder-updown"
+base = { start = "walk_g1" }
+steps = ["walk_to x {LX+1} max 400", "mark", "until state == 2 U max 20", "U 60", "until state != 2 D max 300", ". 3", "R 30", "L 60", "R 30", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [false, false, false, false, false, false, false, false, false, false, false, false, false] },
+  { measure = "any state == 2", expect_each = [true, true, false, false, true, true, false, false, false, false, false, false, false] },
+  { measure = "min y", expect_each = [179, 179, 201, 204, 179, 195, 204, 204, 204, 203, 204, 204, 203] },
+  { measure = "max y", expect_each = [201, 201, 201, 204, 201, 204, 204, 204, 204, 203, 204, 204, 203] },
+]
+
+[[probe]]
+id = "walk-sweep-g1-ladder-down"
+base = { start = "walk_g1" }
+steps = ["walk_to x {LX+1} max 400", "mark", "until state == 2 D max 20", "D 60", "until state != 2 D max 300", ". 3", "L 30", "R 60", "L 30", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [false, false, false, false, false, false, false, false, false, false, false, false, false] },
+  { measure = "any state == 2", expect_each = [false, false, false, false, false, false, false, false, false, false, false, false, false] },
+  { measure = "min y", expect_each = [200, 200, 201, 204, 200, 204, 204, 204, 204, 203, 204, 204, 203] },
+  { measure = "max y", expect_each = [200, 200, 201, 204, 200, 204, 204, 204, 204, 203, 204, 204, 203] },
+]
+
+[[probe]]
+id = "walk-sweep-g1-ladder-past"
+base = { start = "walk_g1" }
+steps = ["walk_to x {LX+1} max 400", "mark", "L 20", "R 40", "UR 3", "R 10", "DL 3", "L 20", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [false, false, false, false, false, false, false, false, false, false, false, false, false] },
+  { measure = "any state == 2", expect_each = [false, false, false, false, false, false, false, false, false, false, false, false, false] },
+  { measure = "min y", expect_each = [199, 199, 200, 203, 199, 204, 203, 204, 204, 202, 204, 204, 202] },
+  { measure = "max y", expect_each = [201, 201, 201, 204, 201, 204, 204, 204, 204, 204, 204, 204, 203] },
+]
+
+[[probe]]
+id = "walk-sweep-g2-full"
+base = { start = "walk_g2" }
+steps = ["mark", "walk_to x 21 max 500", "walk_to x 221 max 500", "walk_to x 21 max 500"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 168 },
+  { measure = "max y", expect = 176 },
+]
+
+[[probe]]
+id = "walk-sweep-g2-fullr"
+base = { start = "walk_g2" }
+steps = ["mark", "walk_to x 221 max 500", "walk_to x 21 max 500", "walk_to x 221 max 500"]
+check = [
+  { measure = "any state == 255", expect = false },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 221 },
+  { measure = "min y", expect = 168 },
+  { measure = "max y", expect = 176 },
+]
+
+[[probe]]
+id = "walk-sweep-g2-tap1_1"
+base = { start = "walk_g2" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 294: R 1, . 1", "walk_to x 221 max 500", "repeat 294: L 1, . 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 221 },
+  { measure = "min y", expect = 168 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g2-tap2_3"
+base = { start = "walk_g2" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 147: R 2, . 3", "walk_to x 221 max 500", "repeat 147: L 2, . 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 221 },
+  { measure = "min y", expect = 168 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g2-tap4_1"
+base = { start = "walk_g2" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 73: R 4, . 1", "walk_to x 221 max 500", "repeat 73: L 4, . 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 221 },
+  { measure = "min y", expect = 168 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g2-turn6_3"
+base = { start = "walk_g2" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 98: R 6, L 3", "walk_to x 221 max 500", "repeat 98: L 6, R 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 221 },
+  { measure = "min y", expect = 168 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g2-turn2_1"
+base = { start = "walk_g2" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 294: R 2, L 1", "walk_to x 221 max 500", "repeat 294: L 2, R 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 221 },
+  { measure = "min y", expect = 168 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g2-turn4_3"
+base = { start = "walk_g2" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 294: R 4, L 3", "walk_to x 221 max 500", "repeat 294: L 4, R 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 168 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g2-runjump"
+base = { start = "walk_g2" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 7: R 12, RA 1, R 44", "walk_to x 221 max 500", "repeat 7: L 12, LA 1, L 44"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 221 },
+  { measure = "min y", expect = 155 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g2-standjump"
+base = { start = "walk_g2" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 65: R 4, A 1, . 48", "walk_to x 221 max 500", "repeat 65: L 4, A 1, . 48"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 129 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g2-ladder-updown"
+base = { start = "walk_g2" }
+steps = ["walk_to x {LX+1} max 400", "mark", "until state == 2 U max 20", "U 60", "until state != 2 D max 300", ". 3", "R 30", "L 60", "R 30", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [false, false, false, false, false, false, true, true, false, false, true, false, false] },
+  { measure = "any state == 2", expect_each = [false, false, false, false, false, false, true, true, false, false, true, false, false] },
+  { measure = "min y", expect_each = [176, 176, 175, 172, 176, 171, 151, 148, 171, 173, 148, 171, 173] },
+  { measure = "max y", expect_each = [176, 176, 175, 172, 176, 171, 173, 170, 171, 173, 170, 171, 173] },
+]
+
+[[probe]]
+id = "walk-sweep-g2-ladder-down"
+base = { start = "walk_g2" }
+steps = ["walk_to x {LX+1} max 400", "mark", "until state == 2 D max 20", "D 60", "until state != 2 D max 300", ". 3", "L 30", "R 60", "L 30", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [false, false, false, false, false, false, false, false, false, false, false, false, false] },
+  { measure = "any state == 2", expect_each = [true, true, false, false, true, false, false, false, false, false, false, false, false] },
+  { measure = "min y", expect_each = [176, 176, 175, 172, 176, 171, 172, 169, 171, 173, 169, 171, 173] },
+  { measure = "max y", expect_each = [201, 201, 175, 172, 201, 171, 172, 169, 171, 173, 169, 171, 173] },
+]
+
+[[probe]]
+id = "walk-sweep-g2-ladder-past"
+base = { start = "walk_g2" }
+steps = ["walk_to x {LX+1} max 400", "mark", "L 20", "R 40", "UR 3", "R 10", "DL 3", "L 20", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [true, true, false, false, true, false, false, false, true, false, false, true, false] },
+  { measure = "any state == 2", expect_each = [false, false, false, false, false, false, false, false, false, false, false, false, false] },
+  { measure = "min y", expect_each = [175, 175, 175, 171, 175, 171, 172, 169, 170, 172, 169, 171, 173] },
+  { measure = "max y", expect_each = [199, 199, 176, 173, 199, 172, 173, 170, 171, 174, 170, 172, 174] },
+]
+
+[[probe]]
+id = "walk-sweep-g3-full"
+base = { start = "walk_g3" }
+steps = ["mark", "walk_to x 27 max 500", "walk_to x 229 max 500", "walk_to x 27 max 500"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 190 },
+  { measure = "min y", expect = 140 },
+  { measure = "max y", expect = 146 },
+]
+
+[[probe]]
+id = "walk-sweep-g3-fullr"
+base = { start = "walk_g3" }
+steps = ["mark", "walk_to x 229 max 500", "walk_to x 27 max 500", "walk_to x 229 max 500"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 138 },
+  { measure = "max y", expect = 146 },
+]
+
+[[probe]]
+id = "walk-sweep-g3-tap1_1"
+base = { start = "walk_g3" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 297: R 1, . 1", "walk_to x 229 max 500", "repeat 297: L 1, . 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 143 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g3-tap2_3"
+base = { start = "walk_g3" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 148: R 2, . 3", "walk_to x 229 max 500", "repeat 148: L 2, . 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 143 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g3-tap4_1"
+base = { start = "walk_g3" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 74: R 4, . 1", "walk_to x 229 max 500", "repeat 74: L 4, . 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 169 },
+  { measure = "min y", expect = 141 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g3-turn6_3"
+base = { start = "walk_g3" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 99: R 6, L 3", "walk_to x 229 max 500", "repeat 99: L 6, R 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 143 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g3-turn2_1"
+base = { start = "walk_g3" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 297: R 2, L 1", "walk_to x 229 max 500", "repeat 297: L 2, R 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 143 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g3-turn4_3"
+base = { start = "walk_g3" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 297: R 4, L 3", "walk_to x 229 max 500", "repeat 297: L 4, R 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 143 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g3-runjump"
+base = { start = "walk_g3" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 7: R 12, RA 1, R 44", "walk_to x 229 max 500", "repeat 7: L 12, LA 1, L 44"]
+check = [
+  { measure = "any state == 255", expect = false },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 240 },
+  { measure = "min y", expect = 123 },
+  { measure = "max y", expect = 152 },
+]
+
+[[probe]]
+id = "walk-sweep-g3-standjump"
+base = { start = "walk_g3" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 66: R 4, A 1, . 48", "walk_to x 229 max 500", "repeat 66: L 4, A 1, . 48"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 130 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g3-ladder-updown"
+base = { start = "walk_g3" }
+steps = ["walk_to x {LX+1} max 400", "mark", "until state == 2 U max 20", "U 60", "until state != 2 D max 300", ". 3", "R 30", "L 60", "R 30", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [false, false, false, false, false, false, false, false, true, false, false, false, false] },
+  { measure = "any state == 2", expect_each = [true, true, false, false, true, false, false, false, true, true, false, false, false] },
+  { measure = "min y", expect_each = [118, 118, 140, 143, 118, 144, 143, 146, 135, 121, 146, 144, 142] },
+  { measure = "max y", expect_each = [140, 140, 140, 143, 140, 144, 143, 146, 145, 143, 146, 144, 142] },
+]
+
+[[probe]]
+id = "walk-sweep-g3-ladder-down"
+base = { start = "walk_g3" }
+steps = ["walk_to x {LX+1} max 400", "mark", "until state == 2 D max 20", "D 60", "until state != 2 D max 300", ". 3", "L 30", "R 60", "L 30", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [false, false, false, false, false, false, true, true, false, false, true, false, false] },
+  { measure = "any state == 2", expect_each = [false, false, false, false, false, false, true, true, false, false, true, false, false] },
+  { measure = "min y", expect_each = [139, 139, 140, 143, 139, 144, 143, 146, 144, 142, 146, 144, 142] },
+  { measure = "max y", expect_each = [139, 139, 140, 143, 139, 144, 173, 169, 144, 142, 169, 144, 142] },
+]
+
+[[probe]]
+id = "walk-sweep-g3-ladder-past"
+base = { start = "walk_g3" }
+steps = ["walk_to x {LX+1} max 400", "mark", "L 20", "R 40", "UR 3", "R 10", "DL 3", "L 20", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [false, false, false, false, false, false, false, false, false, false, false, false, false] },
+  { measure = "any state == 2", expect_each = [false, false, false, false, false, false, false, false, false, false, false, false, false] },
+  { measure = "min y", expect_each = [138, 138, 139, 142, 138, 143, 142, 145, 143, 141, 145, 143, 141] },
+  { measure = "max y", expect_each = [140, 140, 140, 144, 140, 144, 143, 146, 145, 143, 146, 144, 142] },
+]
+
+[[probe]]
+id = "walk-sweep-g4-full"
+base = { start = "walk_g4" }
+steps = ["mark", "walk_to x 21 max 500", "walk_to x 221 max 500", "walk_to x 21 max 500"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 108 },
+  { measure = "max y", expect = 116 },
+]
+
+[[probe]]
+id = "walk-sweep-g4-fullr"
+base = { start = "walk_g4" }
+steps = ["mark", "walk_to x 221 max 500", "walk_to x 21 max 500", "walk_to x 221 max 500"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 61 },
+  { measure = "max x", expect = 221 },
+  { measure = "min y", expect = 110 },
+  { measure = "max y", expect = 116 },
+]
+
+[[probe]]
+id = "walk-sweep-g4-tap1_1"
+base = { start = "walk_g4" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 294: R 1, . 1", "walk_to x 221 max 500", "repeat 294: L 1, . 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 221 },
+  { measure = "min y", expect = 108 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g4-tap2_3"
+base = { start = "walk_g4" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 147: R 2, . 3", "walk_to x 221 max 500", "repeat 147: L 2, . 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 221 },
+  { measure = "min y", expect = 108 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g4-tap4_1"
+base = { start = "walk_g4" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 73: R 4, . 1", "walk_to x 221 max 500", "repeat 73: L 4, . 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 221 },
+  { measure = "min y", expect = 108 },
+  { measure = "max y", expect = 116 },
+]
+
+[[probe]]
+id = "walk-sweep-g4-turn6_3"
+base = { start = "walk_g4" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 98: R 6, L 3", "walk_to x 221 max 500", "repeat 98: L 6, R 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 221 },
+  { measure = "min y", expect = 108 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g4-turn2_1"
+base = { start = "walk_g4" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 294: R 2, L 1", "walk_to x 221 max 500", "repeat 294: L 2, R 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 204 },
+  { measure = "min y", expect = 108 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g4-turn4_3"
+base = { start = "walk_g4" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 294: R 4, L 3", "walk_to x 221 max 500", "repeat 294: L 4, R 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 108 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g4-runjump"
+base = { start = "walk_g4" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 7: R 12, RA 1, R 44", "walk_to x 221 max 500", "repeat 7: L 12, LA 1, L 44"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 95 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g4-standjump"
+base = { start = "walk_g4" }
+steps = ["mark", "walk_to x 21 max 500", "repeat 65: R 4, A 1, . 48", "walk_to x 221 max 500", "repeat 65: L 4, A 1, . 48"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 95 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g4-ladder-updown"
+base = { start = "walk_g4" }
+steps = ["walk_to x {LX+1} max 400", "mark", "until state == 2 U max 20", "U 60", "until state != 2 D max 300", ". 3", "R 30", "L 60", "R 30", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [false, false, false, false, false, false, false, false, false, false, false, true, false] },
+  { measure = "any state == 2", expect_each = [false, false, true, false, false, false, false, true, false, false, true, true, false] },
+  { measure = "min y", expect_each = [116, 116, 104, 112, 116, 111, 112, 89, 111, 113, 89, 90, 113] },
+  { measure = "max y", expect_each = [116, 116, 116, 112, 116, 111, 112, 110, 111, 113, 110, 112, 113] },
+]
+
+[[probe]]
+id = "walk-sweep-g4-ladder-down"
+base = { start = "walk_g4" }
+steps = ["walk_to x {LX+1} max 400", "mark", "until state == 2 D max 20", "D 60", "until state != 2 D max 300", ". 3", "L 30", "R 60", "L 30", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [false, false, false, false, false, false, false, false, false, false, false, false, false] },
+  { measure = "any state == 2", expect_each = [true, true, false, false, true, false, false, false, false, true, false, false, false] },
+  { measure = "min y", expect_each = [116, 116, 115, 112, 116, 111, 112, 109, 111, 113, 109, 111, 113] },
+  { measure = "max y", expect_each = [140, 140, 115, 112, 140, 111, 112, 109, 111, 143, 109, 111, 113] },
+]
+
+[[probe]]
+id = "walk-sweep-g4-ladder-past"
+base = { start = "walk_g4" }
+steps = ["walk_to x {LX+1} max 400", "mark", "L 20", "R 40", "UR 3", "R 10", "DL 3", "L 20", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [true, true, false, false, true, true, false, false, true, false, false, true, false] },
+  { measure = "any state == 2", expect_each = [false, false, false, false, false, false, false, false, false, false, false, false, false] },
+  { measure = "min y", expect_each = [115, 115, 115, 111, 115, 111, 112, 109, 110, 112, 109, 111, 113] },
+  { measure = "max y", expect_each = [139, 139, 116, 113, 139, 112, 113, 110, 111, 114, 110, 111, 114] },
+]
+
+[[probe]]
+id = "walk-sweep-g5-full"
+base = { start = "walk_g5" }
+steps = ["mark", "walk_to x 27 max 500", "walk_to x 229 max 500", "walk_to x 27 max 500"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 89 },
+  { measure = "min y", expect = 84 },
+  { measure = "max y", expect = 86 },
+]
+
+[[probe]]
+id = "walk-sweep-g5-fullr"
+base = { start = "walk_g5" }
+steps = ["mark", "walk_to x 229 max 500", "walk_to x 27 max 500", "walk_to x 229 max 500"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 89 },
+  { measure = "max x", expect = 129 },
+  { measure = "min y", expect = 82 },
+  { measure = "max y", expect = 84 },
+]
+
+[[probe]]
+id = "walk-sweep-g5-tap1_1"
+base = { start = "walk_g5" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 297: R 1, . 1", "walk_to x 229 max 500", "repeat 297: L 1, . 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 84 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g5-tap2_3"
+base = { start = "walk_g5" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 148: R 2, . 3", "walk_to x 229 max 500", "repeat 148: L 2, . 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 84 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g5-tap4_1"
+base = { start = "walk_g5" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 74: R 4, . 1", "walk_to x 229 max 500", "repeat 74: L 4, . 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 84 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g5-turn6_3"
+base = { start = "walk_g5" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 99: R 6, L 3", "walk_to x 229 max 500", "repeat 99: L 6, R 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 21 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 84 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g5-turn2_1"
+base = { start = "walk_g5" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 297: R 2, L 1", "walk_to x 229 max 500", "repeat 297: L 2, R 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 155 },
+  { measure = "min y", expect = 84 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g5-turn4_3"
+base = { start = "walk_g5" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 297: R 4, L 3", "walk_to x 229 max 500", "repeat 297: L 4, R 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 89 },
+  { measure = "min y", expect = 84 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g5-runjump"
+base = { start = "walk_g5" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 7: R 12, RA 1, R 44", "walk_to x 229 max 500", "repeat 7: L 12, LA 1, L 44"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 229 },
+  { measure = "min y", expect = 73 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g5-standjump"
+base = { start = "walk_g5" }
+steps = ["mark", "walk_to x 27 max 500", "repeat 66: R 4, A 1, . 48", "walk_to x 229 max 500", "repeat 66: L 4, A 1, . 48"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 27 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 70 },
+  { measure = "max y", expect = 204 },
+]
+
+[[probe]]
+id = "walk-sweep-g5-ladder-updown"
+base = { start = "walk_g5" }
+steps = ["walk_to x {LX+1} max 400", "mark", "until state == 2 U max 20", "U 60", "until state != 2 D max 300", ". 3", "R 30", "L 60", "R 30", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [true, true, true, true, true, false, false, false, false, true, false, false, true] },
+  { measure = "any state == 2", expect_each = [false, false, false, true, false, false, false, false, false, false, false, false, false] },
+  { measure = "min y", expect_each = [82, 82, 82, 76, 82, 84, 83, 86, 84, 82, 86, 84, 82] },
+  { measure = "max y", expect_each = [84, 84, 84, 83, 84, 84, 83, 86, 84, 82, 86, 84, 84] },
+]
+
+[[probe]]
+id = "walk-sweep-g5-ladder-down"
+base = { start = "walk_g5" }
+steps = ["walk_to x {LX+1} max 400", "mark", "until state == 2 D max 20", "D 60", "until state != 2 D max 300", ". 3", "L 30", "R 60", "L 30", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [true, true, true, false, true, false, false, true, false, true, true, true, true] },
+  { measure = "any state == 2", expect_each = [false, false, false, false, false, false, false, true, false, false, true, true, false] },
+  { measure = "min y", expect_each = [82, 82, 82, 83, 82, 84, 83, 86, 84, 82, 86, 84, 82] },
+  { measure = "max y", expect_each = [84, 84, 84, 83, 84, 84, 83, 110, 84, 82, 110, 111, 84] },
+]
+
+[[probe]]
+id = "walk-sweep-g5-ladder-past"
+base = { start = "walk_g5" }
+steps = ["walk_to x {LX+1} max 400", "mark", "L 20", "R 40", "UR 3", "R 10", "DL 3", "L 20", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [true, true, true, true, true, true, true, true, true, true, true, true, true] },
+  { measure = "any state == 2", expect_each = [false, false, false, false, false, false, false, false, false, false, false, false, false] },
+  { measure = "min y", expect_each = [82, 82, 82, 83, 82, 83, 83, 85, 83, 82, 85, 83, 82] },
+  { measure = "max y", expect_each = [84, 84, 84, 84, 84, 84, 83, 86, 85, 82, 86, 84, 84] },
+]
+
+[[probe]]
+id = "walk-sweep-g6-full"
+base = { start = "walk_g6" }
+steps = ["mark", "walk_to x 110 max 500", "walk_to x 221 max 500", "walk_to x 110 max 500"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 153 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 54 },
+  { measure = "max y", expect = 56 },
+]
+
+[[probe]]
+id = "walk-sweep-g6-fullr"
+base = { start = "walk_g6" }
+steps = ["mark", "walk_to x 221 max 500", "walk_to x 110 max 500", "walk_to x 221 max 500"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 177 },
+  { measure = "max x", expect = 221 },
+  { measure = "min y", expect = 55 },
+  { measure = "max y", expect = 56 },
+]
+
+[[probe]]
+id = "walk-sweep-g6-tap1_1"
+base = { start = "walk_g6" }
+steps = ["mark", "walk_to x 110 max 500", "repeat 160: R 1, . 1", "walk_to x 221 max 500", "repeat 160: L 1, . 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 153 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 54 },
+  { measure = "max y", expect = 56 },
+]
+
+[[probe]]
+id = "walk-sweep-g6-tap2_3"
+base = { start = "walk_g6" }
+steps = ["mark", "walk_to x 110 max 500", "repeat 80: R 2, . 3", "walk_to x 221 max 500", "repeat 80: L 2, . 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 153 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 54 },
+  { measure = "max y", expect = 56 },
+]
+
+[[probe]]
+id = "walk-sweep-g6-tap4_1"
+base = { start = "walk_g6" }
+steps = ["mark", "walk_to x 110 max 500", "repeat 40: R 4, . 1", "walk_to x 221 max 500", "repeat 40: L 4, . 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 153 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 54 },
+  { measure = "max y", expect = 56 },
+]
+
+[[probe]]
+id = "walk-sweep-g6-turn6_3"
+base = { start = "walk_g6" }
+steps = ["mark", "walk_to x 110 max 500", "repeat 53: R 6, L 3", "walk_to x 221 max 500", "repeat 53: L 6, R 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 153 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 54 },
+  { measure = "max y", expect = 56 },
+]
+
+[[probe]]
+id = "walk-sweep-g6-turn2_1"
+base = { start = "walk_g6" }
+steps = ["mark", "walk_to x 110 max 500", "repeat 160: R 2, L 1", "walk_to x 221 max 500", "repeat 160: L 2, R 1"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 153 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 54 },
+  { measure = "max y", expect = 56 },
+]
+
+[[probe]]
+id = "walk-sweep-g6-turn4_3"
+base = { start = "walk_g6" }
+steps = ["mark", "walk_to x 110 max 500", "repeat 160: R 4, L 3", "walk_to x 221 max 500", "repeat 160: L 4, R 3"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 153 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 54 },
+  { measure = "max y", expect = 56 },
+]
+
+[[probe]]
+id = "walk-sweep-g6-runjump"
+base = { start = "walk_g6" }
+steps = ["mark", "walk_to x 110 max 500", "repeat 3: R 12, RA 1, R 44", "walk_to x 221 max 500", "repeat 3: L 12, LA 1, L 44"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 153 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 54 },
+  { measure = "max y", expect = 56 },
+]
+
+[[probe]]
+id = "walk-sweep-g6-standjump"
+base = { start = "walk_g6" }
+steps = ["mark", "walk_to x 110 max 500", "repeat 35: R 4, A 1, . 48", "walk_to x 221 max 500", "repeat 35: L 4, A 1, . 48"]
+check = [
+  { measure = "any state == 255", expect = true },
+  { measure = "min x", expect = 153 },
+  { measure = "max x", expect = 201 },
+  { measure = "min y", expect = 54 },
+  { measure = "max y", expect = 56 },
+]
+
+[[probe]]
+id = "walk-sweep-g6-ladder-updown"
+base = { start = "walk_g6" }
+steps = ["walk_to x {LX+1} max 400", "mark", "until state == 2 U max 20", "U 60", "until state != 2 D max 300", ". 3", "R 30", "L 60", "R 30", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [false, false, false, true, false, true, true, true, true, true, true, true, true] },
+  { measure = "any state == 2", expect_each = [false, false, false, false, false, false, false, false, false, false, false, false, false] },
+  { measure = "min y", expect_each = [56, 56, 55, 54, 56, 54, 54, 54, 54, 54, 54, 54, 54] },
+  { measure = "max y", expect_each = [56, 56, 55, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56] },
+]
+
+[[probe]]
+id = "walk-sweep-g6-ladder-down"
+base = { start = "walk_g6" }
+steps = ["walk_to x {LX+1} max 400", "mark", "until state == 2 D max 20", "D 60", "until state != 2 D max 300", ". 3", "L 30", "R 60", "L 30", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [false, false, false, true, false, true, true, true, true, true, true, true, true] },
+  { measure = "any state == 2", expect_each = [true, true, false, false, true, false, false, false, false, false, false, false, false] },
+  { measure = "min y", expect_each = [56, 56, 55, 54, 56, 54, 54, 54, 54, 54, 54, 54, 54] },
+  { measure = "max y", expect_each = [80, 80, 55, 56, 80, 56, 56, 56, 56, 56, 56, 56, 56] },
+]
+
+[[probe]]
+id = "walk-sweep-g6-ladder-past"
+base = { start = "walk_g6" }
+steps = ["walk_to x {LX+1} max 400", "mark", "L 20", "R 40", "UR 3", "R 10", "DL 3", "L 20", ". 4"]
+rows = { asset = "ladders_25m", vars = ["LX", "LY", "LS"] }
+check = [
+  { measure = "any state == 255", expect_each = [true, true, true, true, true, true, true, true, true, true, true, true, true] },
+  { measure = "any state == 2", expect_each = [false, false, false, false, false, false, false, false, false, false, false, false, false] },
+  { measure = "min y", expect_each = [55, 55, 55, 54, 55, 54, 54, 54, 54, 54, 54, 54, 54] },
+  { measure = "max y", expect_each = [79, 79, 56, 56, 79, 56, 56, 56, 56, 56, 56, 56, 56] },
+]
+
+# ---- 100m (w100) ----------------------------------------------------------
+#
+# 100m by machine: dk.m50-clear.001's presses from power-on to frame 4152
+# (75m in play), a 75m clear (left lifts, the hammer, the ladders at x 97,
+# 177 and 146), then 100m from frame 5615. The route up the ladders at x
+# 17, 225, 33 and 209, down at 177 and up at 73 was found by a search over
+# the waits before each leg (2026-11-06); it pulls the eight rivets
+# ($C1-$C8, $EEBC) and $D04C's loop at $D063 finds them all on the frame of
+# the last ($D086), when $53 passes 4 and comes back to 1 with $54 at 1.
+[start.m100]
+steps = [". 231", "A 14", ". 204", "R 32", ". 46", "R 22", ". 13", "A 11", ". 57", "T 13", ". 97", "T 10", ". 85", "A 18", ". 22", "T 16", ". 12", "A 15", ". 4", "A 12", ". 7", "A 12", ". 3", "L 15", ". 110", "R 21", ". 69", "R 220", ". 49", "U 91", ". 1", "L 131", "U 85", ". 2", "R 131", "U 67", ". 34", "L 167", "U 79", ". 26", "R 167", "U 67", ". 2", "L 83", "U 73", ". 406", "R 54", "U 95", ". 10", "L 8", "U 118", ". 2", "L 13", "LA 2", "L 42", ". 32", "L 28", "U 119", ". 2", "L 53", "U 118", ". 404", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 0", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1"]
+
+[[probe]]
+id = "m100-clear"
+note = "100m's rivets route and the clear ($D04C, $D063, $D086): $53 back to 1 and $54 to 1 on the last rivet's frame, round 2's 25m in play 926 frames later"
+base = { start = "m100" }
+steps = ["mark", ". 0", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", ". 1000"]
+check = [
+  { measure = "first stage == 1", expect = 7440 },
+  { measure = "values loops at changes loops", expect = [1] },
+  { measure = "first state == 255", expect = "none" },
+  { measure = "values x at changes rivet0", expect = [64, 61], note = "pulled at x 64; round 2's setup clears it with Mario at x 61" },
+  { measure = "values x at changes rivet6", expect = [61, 61], note = "the last, pulled walking left at x 61" },
+  { measure = "changes mode", expect = [8157, 8366] },
+]
+
+# ---- Death redraw guards (wguard) ----------------------------------------
+#
+# A death's wait redraws the stage from ROM: $73 ($CB58 -> $838A/$CB60) the
+# stage with every rivet and prize, $6D ($CAE7 -> $CC34 -> $CCC1) the
+# stage's objects, both hammers upright at their places, until the
+# restart's setup ($CC47).
+[[probe]]
+id = "death-redraw-100m"
+session = "death-redraw"
+note = "100m: m100-hammer 003's presses played on: prize 1 taken, rivets 2 and 3 pulled, the lower hammer taken, a fall into the gap with it held, the death's redraw and the restart, then about 300 frames standing"
+base = { start = "m100" }
+steps = ["L 66", "U 95", "R 311", "U 118", "mark", "L 302", "A 1", ". 40", "R 217", ". 640"]
+check = [
+  { measure = "first state == 255", expect = 6648 },
+  { measure = "changes prize1", expect = [6420, 7110], note = "taken, then 0 only at the restart's setup ($CC47), not at the redraw" },
+  { measure = "changes rivet2", expect = [6446, 7110] },
+  { measure = "changes rivet3", expect = [6266, 7110] },
+  { measure = "changes hflag0", expect = [6612, 7110], note = "the flag waits for $CC47 though the redraw draws the hammer at 6989" },
+  { measure = "values hy0 at changes hy0", expect = [113, 133, 113, 133, 113, 133, 113, 133, 113, 133, 113, 133, 113, 133, 255, 110], note = "the held hammer swung, gone at 6612, drawn upright at its place (y 110) by the redraw ($CC34) at 6989" },
+  { measure = "changes mode", expect = [6774, 7110] },
+]
+
+[[probe]]
+id = "death-redraw-25m"
+session = "death-redraw"
+note = "25m: the lower hammer taken on girder 3, then Left held off girder 3's left end with it, the fall death, the redraw with both hammers back, the restart and play on"
+base = { start = "walk_g3" }
+steps = ["mark", "walk_to x 34 max 400", "A 1", "L 400", ". 400"]
+check = [
+  { measure = "first state == 255", expect = 1296 },
+  { measure = "changes hflag0", expect = [1285, 1775] },
+  { measure = "values hy0 at changes hy0", expect = [147, 127, 255, 127], note = "taken, gone at 1285, drawn again at its place (y 127) by the redraw ($CC34) at 1654" },
+  { measure = "values hy1 at changes hy1", expect = [255, 70], note = "the upper one cleared with every sprite ($CBAE) and drawn again at y 70" },
+  { measure = "changes mode", expect = [1424, 1775] },
+  { measure = "values state at changes state", expect = [4, 10, 1, 8, 255, 1, 255], note = "the jump to the hammer, held, gone, off the edge, the death, the restart; a barrel at the end" },
+]
+
+# ---- difficulty 75m/100m (wdB) --------------------------------------------
+#
+# Game B ($50 bit 0) raises the difficulty d ($EAF7) by 1, so round k of
+# game B plays at d = k (cap 4). gb_r1_m75 and gb_r1_m100 are the presses
+# of the d = 1 clips dk.gameb-d1.003 and .004 (corpus 3.x) from power-on to
+# 75m's and 100m's start; gb_r2 runs on through 004's 100m clear to round
+# 2's 25m ($54 = 1, d = 2).
+[start.gb_r1_m75]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399"]
+
+[start.gb_r1_m100]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "R 2", "U 191", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 41", "RA 1", "R 44", "U 95", ". 18", "L 46", "U 71", ". 405"]
+
+[start.gb_r2]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "R 2", "U 191", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 41", "RA 1", "R 44", "U 95", ". 18", "L 46", "U 71", ". 405", "L 66", "U 95", ". 18", "R 311", "U 118", ". 30", "L 287", "U 118", "R 263", "U 118", "L 47", "D 98", "L 156", "U 119", "L 17", ". 949"]
+
+[[probe]]
+id = "diff-75m-d1"
+session = "diff-75m"
+note = "game B round 1 (d = 1): 75m from its start over the lifts, the hammer jump, the ladders at x 97 and 177, Pauline's ladder at x 146 after a wait for the springs, the clear and 100m's setup (dk.gameb-d1.003's presses)"
+base = { start = "gb_r1_m75" }
+steps = ["R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "R 2", "U 191", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 41", "RA 1", "R 44", "U 95", ". 18", "L 46", "U 71", ". 405"]
+check = [
+  { measure = "first state == 255", expect = "none" },
+  { measure = "first stage == 4", expect = 4661 },
+]
+
+[[probe]]
+id = "diff-100m-d1"
+session = "diff-100m"
+note = "game B round 1 (d = 1): 100m from its start, every rivet pulled up x 17, 225, 33 and 209, down 177 and up 73, the clear, the ending and round 2's 25m in play ($54 = 1, d = 2) (dk.gameb-d1.004's presses)"
+base = { start = "gb_r1_m100" }
+steps = ["L 66", "U 95", ". 18", "R 311", "U 118", ". 30", "L 287", "U 118", "R 263", "U 118", "L 47", "D 98", "L 156", "U 119", "L 17", ". 949"]
+check = [
+  { measure = "first state == 255", expect = "none" },
+  { measure = "values loops at changes loops", expect = [1] },
+]
+
+# ---- difficulty 25m/50m (wdA) ---------------------------------------------
+#
+# wda_r2_25m: game B, its round 1 as dk.gameb-d1.001 and .002 play 25m and
+# 50m, then start.m100's 75m route (5 frames' wait before the last walk) and
+# the m100-clear probe's 100m route (6 frames' wait first), to round 2's 25m
+# in play ($54 = 1, d = 2) at frame 7823. The waits and jumps were found by
+# probe sweeps (work/workers/wdA/probes/diff.toml).
+[start.wda_r2_25m]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 5", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 6", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500"]
+
+[[probe]]
+id = "diff-25m-d2"
+session = "diff-25m-d2"
+note = "Game B round 2 ($50 1, $54 1: difficulty 2): 25m from its start up the ladders at x 201, 113, 201 (a wait of 30 first), 89 (two jumps on the way) and 201, two jumps on the top girder and Pauline's ladder at x 145: the clear and 50m's setup. Kong's throws at C443[2], the straight barrel's wait C44D[2]"
+base = { start = "wda_r2_25m" }
+steps = [". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 30", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 21", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1"]
+check = [
+  { measure = "first stage == 2", expect = 9263 },
+  { measure = "first state == 255", expect = "none" },
+  { measure = "value loops at +0", expect = 1 },
+  { measure = "value mode_ab at +0", expect = 1 },
+]
+
+# wda_r2_25m and the diff-25m-d2 probe's 25m: round 2's 50m in play (d = 2) at frame 9664.
+[start.wda_r2_50m]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 5", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 6", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 30", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 21", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1"]
+
+[[probe]]
+id = "diff-50m-d2"
+session = "diff-50m-d2"
+note = "Game B round 2 (difficulty 2): 50m from its start as dk.gameb-d1.002 goes (a wait of 60 first), up the ladders at x 97 and 81, a jump at x 72, the left moving ladder at x 33 (a wait of 6), then Left held on the top conveyor against its push until a pie or the fire kills Mario, and the restart. The conveyors' pattern $858E[2], the turns $8588[2], the pies' rows $86CE[2], the moving ladders' waits $882D[2]/$8832[2] and the fire's wait C466[2]"
+base = { start = "wda_r2_50m" }
+steps = [". 60", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "walk_to x 33 max 100", ". 6", "until state == 2 U max 300", "until state != 2 U max 300", "L 700"]
+check = [
+  { measure = "value stage at +0", expect = 2 },
+  { measure = "first state == 255", expect = 10661 },
+  { measure = "values x at changes state", expect = [97, 96, 81, 81, 72, 52, 33, 34, 43] },
+  { measure = "changes mst0", expect = [9943, 10072, 10133, 10198, 10433, 10562, 10633] },
+  { measure = "values conv_low at changes conv_low", expect = [1, 0] },
+  { measure = "changes mode", expect = [10784] },
+]
+
+
+# Round 2 of game B (d = 2), found by sweeps over the waits before each
+# leg (2026-11-06): 25m with a jump on girder 5 and a wait under the ladder
+# at x 89, 50m with a jump left off the middle conveyor (it outruns a walk
+# at d = 2) to the ladder at x 25, 75m as round 1 with other waits.
+[start.gb_r2_m75]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "R 2", "U 191", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 41", "RA 1", "R 44", "U 95", ". 18", "L 46", "U 71", ". 405", "L 66", "U 95", ". 18", "R 311", "U 118", ". 30", "L 287", "U 118", "R 263", "U 118", "L 47", "D 98", "L 156", "U 119", "L 17", ". 949", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 15", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 20", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 89 max 400", ". 20", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "R 30", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 0", "walk_to x 97 max 400", ". 0", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 81 max 400", ". 0", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 68 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", "until mst0 == 2 . max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "L 72", "LA 1", "until state != 4 L max 60", ". 0", "walk_to x 25 max 100", "until state == 2 U max 20", "until clearing == 1 U max 300", "until clearing == 0 . max 1000"]
+
+[start.gb_r2_m100]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "R 2", "U 191", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 41", "RA 1", "R 44", "U 95", ". 18", "L 46", "U 71", ". 405", "L 66", "U 95", ". 18", "R 311", "U 118", ". 30", "L 287", "U 118", "R 263", "U 118", "L 47", "D 98", "L 156", "U 119", "L 17", ". 949", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 15", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 20", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 89 max 400", ". 20", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "R 30", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 0", "walk_to x 97 max 400", ". 0", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 81 max 400", ". 0", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 68 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", "until mst0 == 2 . max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "L 72", "LA 1", "until state != 4 L max 60", ". 0", "walk_to x 25 max 100", "until state == 2 U max 20", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 0", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 0", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 20", "R 1", "RA 1", "R 42", ". 0", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 40", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1"]
+
+[[probe]]
+id = "diff-75m-d2"
+session = "diff-75m"
+note = "game B round 2 (d = 2): 75m from its start over the lifts (C45C, C461 by d: faster from 2), the hammer jump, the ladders at x 97 and 177, Pauline's ladder at x 146 after a wait for the springs (C457 by d), the clear and 100m's setup"
+base = { start = "gb_r2_m75" }
+steps = [". 0", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 0", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 20", "R 1", "RA 1", "R 42", ". 0", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 40", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1"]
+check = [
+  { measure = "first state == 255", expect = "none" },
+  { measure = "value loops at +0", expect = 1 },
+  { measure = "value mode_ab at +0", expect = 1 },
+]
+
+[[probe]]
+id = "diff-100m-d2"
+session = "diff-100m"
+note = "game B round 2 (d = 2): 100m from its start, every rivet pulled up x 17, 225, 33 and 209, down 177 and up 73 with waits for the fires (C466 by d), the clear, the ending and round 3's 25m ($54 = 2, d = 3)"
+base = { start = "gb_r2_m100" }
+steps = ["mark", ". 0", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 20", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 40", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 10", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", ". 1000"]
+check = [
+  { measure = "first state == 255", expect = "none" },
+  { measure = "values loops at changes loops", expect = [2] },
+]
+
+
+# wda_r2_50m and on: game B round 2's 50m, 75m and 100m cleared (the waits
+# and jumps from probe sweeps), to round 3's 25m in play ($54 = 2, d = 3) at
+# frame 15047; wda_r3_50m adds the diff-25m-d3 probe's 25m (50m in play at
+# 16943).
+[start.wda_r3_25m]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 5", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 6", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 30", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 21", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 48", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "walk_to x 33 max 100", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1", ". 10", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 20", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 2", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "L 4", "LA 1", "until state != 4 L max 60", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500"]
+
+[start.wda_r3_50m]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 5", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 6", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 30", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 21", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 48", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "walk_to x 33 max 100", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1", ". 10", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 20", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 2", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "L 4", "LA 1", "until state != 4 L max 60", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 20", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 30", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 30", "RA 1", "until state != 4 R max 60", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 20", "L 0", "LA 1", "until state != 4 L max 60", "L 16", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1"]
+
+[[probe]]
+id = "diff-25m-d3"
+session = "diff-25m-d3"
+note = "Game B round 3 ($50 1, $54 2: difficulty 3): 25m from its start (a wait of 20) up the ladders at x 201 and 113, a jump on girder 3, the ladder at x 201, two jumps on girder 4, the ladder at x 89, two jumps on girder 5, the ladder at x 201, two jumps on the top girder and Pauline's ladder at x 145: the clear and 50m's setup. Kong's throws at C443[3] (104 frames), the straight barrel's wait C44D[3] (24)"
+base = { start = "wda_r3_25m" }
+steps = [". 20", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 30", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 30", "RA 1", "until state != 4 R max 60", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 20", "L 0", "LA 1", "until state != 4 L max 60", "L 16", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1"]
+check = [
+  { measure = "value loops at +0", expect = 2 },
+  { measure = "value mode_ab at +0", expect = 1 },
+  { measure = "first stage == 2", expect = 16540 },
+  { measure = "first state == 255", expect = "none" },
+]
+
+[start.gb3_50]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 5", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 6", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 30", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 21", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 48", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "walk_to x 33 max 100", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1", ". 10", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 20", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 2", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "L 4", "LA 1", "until state != 4 L max 60", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 20", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 30", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 30", "RA 1", "until state != 4 R max 60", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 20", "L 0", "LA 1", "until state != 4 L max 60", "L 16", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1"]
+
+[[probe]]
+id = "diff-50m-d3"
+session = "diff-50m-d3"
+note = "Game B round 3 (difficulty 3): 50m from its start up the ladders at x 97 and 81 against the conveyors, a jump at x 72, the left moving ladder at x 33, a jump on the top girder and the ladder at x 25: the clear and 75m's setup. The conveyors' pattern $858E[3] (every frame), the turns $8588[3], the pies' rows $86CE[3], the moving ladders' waits $882D[3]/$8832[3] and the fire's wait C466[3]"
+base = { start = "wda_r3_50m" }
+steps = [". 0", "walk_to x 97 max 100", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 81 max 300", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 72 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1"]
+check = [
+  { measure = "value stage at +0", expect = 2 },
+  { measure = "value loops at +0", expect = 2 },
+  { measure = "first stage == 3", expect = 17669 },
+  { measure = "first state == 255", expect = "none" },
+]
+
+# Round 3 of game B (d = 3), the same way (2026-11-06): 25m with jumps on
+# girders 4, 5 and 6, 50m riding the lowest conveyor to the ladder at x 81,
+# 75m's jump onto the right lifts 84 frames later (they run faster from
+# d = 2), 100m hopping along girders 3 and 4 past the fires into the upper
+# hammer at x 124.
+[start.gb_r3_m75]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "R 2", "U 191", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 41", "RA 1", "R 44", "U 95", ". 18", "L 46", "U 71", ". 405", "L 66", "U 95", ". 18", "R 311", "U 118", ". 30", "L 287", "U 118", "R 263", "U 118", "L 47", "D 98", "L 156", "U 119", "L 17", ". 949", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 15", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 20", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 89 max 400", ". 20", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "R 30", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 0", "walk_to x 97 max 400", ". 0", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 81 max 400", ". 0", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 68 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", "until mst0 == 2 . max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "L 72", "LA 1", "until state != 4 L max 60", ". 0", "walk_to x 25 max 100", "until state == 2 U max 20", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 0", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 0", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 20", "R 1", "RA 1", "R 42", ". 0", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 40", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 0", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 20", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 40", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 10", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", ". 1000", ". 15", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 20", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "L 56", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 300", ". 20", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "R 20", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", ". 20", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 40", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 0", "walk_to x 97 max 400", ". 0", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "until state == 2 U max 60", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 68 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", "until mst0 == 2 . max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "LA 1", "until state != 4 L max 60", ". 0", "walk_to x 25 max 100", "until state == 2 U max 20", "until clearing == 1 U max 300", "until clearing == 0 . max 1000"]
+
+[start.gb_r3_m100]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "R 2", "U 191", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 41", "RA 1", "R 44", "U 95", ". 18", "L 46", "U 71", ". 405", "L 66", "U 95", ". 18", "R 311", "U 118", ". 30", "L 287", "U 118", "R 263", "U 118", "L 47", "D 98", "L 156", "U 119", "L 17", ". 949", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 15", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 20", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 89 max 400", ". 20", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "R 30", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 0", "walk_to x 97 max 400", ". 0", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 81 max 400", ". 0", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 68 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", "until mst0 == 2 . max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "L 72", "LA 1", "until state != 4 L max 60", ". 0", "walk_to x 25 max 100", "until state == 2 U max 20", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 0", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 0", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 20", "R 1", "RA 1", "R 42", ". 0", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 40", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 0", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 20", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 40", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 10", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", ". 1000", ". 15", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 20", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "L 56", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 300", ". 20", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "R 20", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", ". 20", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 40", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 0", "walk_to x 97 max 400", ". 0", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", ". 0", "until state == 2 U max 60", "until state != 2 U max 400", ". 2", ". 0", "walk_to x 68 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", "until mst0 == 2 . max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "LA 1", "until state != 4 L max 60", ". 0", "walk_to x 25 max 100", "until state == 2 U max 20", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 0", "R 20", "RA 1", "R 6", ". 26", "R 10", ". 12", "RA 1", "R 59", ". 0", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 84", "R 1", "RA 1", "R 42", ". 0", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", ". 0", "walk_to x 177 max 60", "until state == 2 U max 20", "until state != 2 U max 200", ". 90", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1"]
+
+[[probe]]
+id = "diff-75m-d3"
+session = "diff-75m"
+note = "game B round 3 (d = 3): 75m from its start over the left lifts, the jump onto the right lifts 84 frames later than at d = 2 (C45C, C461 by d), the hammer jump, the ladders at x 97 and 177, Pauline's ladder at x 146 after a wait for the springs (C457 by d), the clear and 100m's setup"
+base = { start = "gb_r3_m75" }
+steps = [". 0", "R 20", "RA 1", "R 6", ". 26", "R 10", ". 12", "RA 1", "R 59", ". 0", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 84", "R 1", "RA 1", "R 42", ". 0", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", ". 0", "walk_to x 177 max 60", "until state == 2 U max 20", "until state != 2 U max 200", ". 90", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1"]
+check = [
+  { measure = "first state == 255", expect = "none" },
+  { measure = "value loops at +0", expect = 2 },
+  { measure = "value mode_ab at +0", expect = 1 },
+]
+
+[[probe]]
+id = "diff-100m-d3"
+session = "diff-100m"
+note = "game B round 3 (d = 3): 100m from its start, up x 17 and 225, hops left along girder 3 past the fires (the faster climb gates C3F8 from d = 3, $E441), up x 33, hops right into the upper hammer at x 124, up x 209 once it ends, down 177 and up 73, every rivet pulled, the clear, the ending and round 4's 25m ($54 = 3, d = 4)"
+base = { start = "gb_r3_m100" }
+steps = ["mark", ". 0", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 10", "repeat 9: L 2, LA 1, until state != 4 L max 60", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "repeat 7: R 0, RA 1, until state != 4 R max 60", "walk_to x 209 max 400", "until state == 1 . max 900", "walk_to x 209 max 100", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", ". 1000"]
+check = [
+  { measure = "first state == 255", expect = "none" },
+  { measure = "values loops at changes loops", expect = [3] },
+]
+
+# wda_r3_50m and on: game B round 3's 50m, 75m and 100m cleared, to round
+# 4's 25m in play ($54 = 3, d = 4) at frame 22414; wda_r4_50m adds the
+# diff-25m-d4 probe's 25m (50m in play at 24365).
+[start.wda_r4_25m]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 5", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 6", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 30", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 21", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 48", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "walk_to x 33 max 100", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1", ". 10", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 20", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 2", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "L 4", "LA 1", "until state != 4 L max 60", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 20", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 30", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 30", "RA 1", "until state != 4 R max 60", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 20", "L 0", "LA 1", "until state != 4 L max 60", "L 16", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 0", "walk_to x 97 max 100", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 81 max 300", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 72 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1", ". 4", "R 20", "RA 1", "R 6", ". 39", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 96", "R 1", "RA 1", "R 42", ". 0", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 55", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", "mark", ". 24", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500"]
+
+[start.wda_r4_50m]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 5", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 6", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 30", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 21", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 48", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "walk_to x 33 max 100", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1", ". 10", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 20", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 2", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "L 4", "LA 1", "until state != 4 L max 60", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 20", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 30", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 30", "RA 1", "until state != 4 R max 60", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 20", "L 0", "LA 1", "until state != 4 L max 60", "L 16", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 0", "walk_to x 97 max 100", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 81 max 300", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 72 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1", ". 4", "R 20", "RA 1", "R 6", ". 39", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 96", "R 1", "RA 1", "R 42", ". 0", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 55", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", "mark", ". 24", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 10", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 30", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", ". 48", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 12", "RA 1", "until state != 4 R max 60", "R 40", "RA 1", "until state != 4 R max 60", "R 20", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 20", "L 0", "LA 1", "until state != 4 L max 60", "L 16", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1"]
+
+[[probe]]
+id = "diff-25m-d4"
+session = "diff-25m-d4"
+note = "Game B round 4 ($50 1, $54 3: difficulty 4, the cap): 25m from its start (a wait of 10) up the ladders at x 201 and 113, a jump on girder 3, the ladder at x 201, two jumps on girder 4, a wait of 48 at the ladder at x 89, three jumps on girder 5, the ladder at x 201, two jumps on the top girder and Pauline's ladder at x 145: the clear and 50m's setup. $EAF7 at its cap ($EB01 falls through), Kong's throws at C443[4], the straight barrel's wait C44D[4]"
+base = { start = "wda_r4_25m" }
+steps = [". 10", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 30", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", ". 48", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 12", "RA 1", "until state != 4 R max 60", "R 40", "RA 1", "until state != 4 R max 60", "R 20", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 20", "L 0", "LA 1", "until state != 4 L max 60", "L 16", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1"]
+check = [
+  { measure = "value loops at +0", expect = 3 },
+  { measure = "value mode_ab at +0", expect = 1 },
+  { measure = "first stage == 2", expect = 23960 },
+  { measure = "first state == 255", expect = "none" },
+]
+
+[start.gb4_50]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 5", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 6", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 30", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 21", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 48", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "walk_to x 33 max 100", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1", ". 10", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 20", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 2", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "L 4", "LA 1", "until state != 4 L max 60", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 20", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 30", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 30", "RA 1", "until state != 4 R max 60", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 20", "L 0", "LA 1", "until state != 4 L max 60", "L 16", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 0", "walk_to x 97 max 100", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 81 max 300", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 72 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1", ". 4", "R 20", "RA 1", "R 6", ". 39", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 96", "R 1", "RA 1", "R 42", ". 0", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 55", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", "mark", ". 24", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 10", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 30", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", ". 48", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 12", "RA 1", "until state != 4 R max 60", "R 40", "RA 1", "until state != 4 R max 60", "R 20", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 20", "L 0", "LA 1", "until state != 4 L max 60", "L 16", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1"]
+
+[[probe]]
+id = "diff-50m-d4"
+session = "diff-50m-d4"
+note = "Game B round 4 (difficulty 4, the cap): 50m from its start (a wait of 48) up the ladders at x 97 and 81 against the conveyors, a jump at x 72, the left moving ladder at x 33, a jump on the top girder and the ladder at x 25: the clear and 75m's setup. The tables by difficulty at d = 4: the conveyors' pattern $858E[4], the turns $8588[4], the pies' rows $86CE[4], the moving ladders' waits $882D[4]/$8832[4], and the fire's wait C466[4] (1)"
+base = { start = "wda_r4_50m" }
+steps = [". 48", "walk_to x 97 max 100", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 81 max 300", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 72 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1"]
+check = [
+  { measure = "value stage at +0", expect = 2 },
+  { measure = "value loops at +0", expect = 3 },
+  { measure = "first stage == 3", expect = 25063 },
+  { measure = "first state == 255", expect = "none" },
+]
+
+# Round 4 of game B (d = 4, the cap): wdA's wda_r4_50m and its diff-50m-d4
+# probe's 50m to 75m's start, then 75m as round 3 with the lift jumps
+# re-timed and a wait of 150 for the springs.
+[start.gb_r4_m75]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 5", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 6", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 30", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 21", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 48", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "walk_to x 33 max 100", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1", ". 10", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 20", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 2", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "L 4", "LA 1", "until state != 4 L max 60", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 20", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 30", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 30", "RA 1", "until state != 4 R max 60", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 20", "L 0", "LA 1", "until state != 4 L max 60", "L 16", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 0", "walk_to x 97 max 100", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 81 max 300", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 72 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1", ". 4", "R 20", "RA 1", "R 6", ". 39", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 96", "R 1", "RA 1", "R 42", ". 0", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 55", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", "mark", ". 24", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 10", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 30", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", ". 48", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 12", "RA 1", "until state != 4 R max 60", "R 40", "RA 1", "until state != 4 R max 60", "R 20", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 20", "L 0", "LA 1", "until state != 4 L max 60", "L 16", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 48", "walk_to x 97 max 100", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 81 max 300", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 72 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1"]
+
+[[probe]]
+id = "diff-75m-d4"
+session = "diff-75m"
+note = "game B round 4 (d = 4, the cap): 75m from its start over the left lifts, the jump onto the right lifts (C45C, C461 by d), the hammer jump, the ladders at x 97 and 177, Pauline's ladder at x 146 after a wait of 150 for the springs (C457 by d), the clear and 100m's setup"
+base = { start = "gb_r4_m75" }
+steps = [". 0", "R 20", "RA 1", "R 6", ". 26", "R 10", ". 6", "RA 1", "R 59", ". 0", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "R 1", "RA 1", "R 42", ". 0", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", ". 0", "walk_to x 177 max 60", "until state == 2 U max 20", "until state != 2 U max 200", ". 150", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1"]
+check = [
+  { measure = "first state == 255", expect = "none" },
+  { measure = "value loops at +0", expect = 3 },
+  { measure = "value mode_ab at +0", expect = 1 },
+]
+
+[start.gb_r4_m100]
+steps = [". 60", "S 1", ". 10", "T 1", ". 538", "R 222", "U 71", "L 131", "U 85", ". 24", "R 131", "U 67", "L 167", "U 80", ". 30", "R 167", "U 67", "L 16", "LA 1", "L 80", "U 74", ". 403", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "U 119", "L 47", "U 224", ". 399", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 5", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 6", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 0", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 30", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 21", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 48", "R 54", "U 95", "L 13", "U 119", "L 13", "LA 2", "L 70", "walk_to x 33 max 100", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1", ". 10", "R 20", "RA 1", "R 6", ". 47", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 80", "R 1", "RA 1", "R 42", ". 8", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 20", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", ". 2", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "L 4", "LA 1", "until state != 4 L max 60", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 20", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 30", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 30", "RA 1", "until state != 4 R max 60", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 20", "L 0", "LA 1", "until state != 4 L max 60", "L 16", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 0", "walk_to x 97 max 100", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 81 max 300", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 72 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1", ". 4", "R 20", "RA 1", "R 6", ". 39", "R 10", ". 28", "RA 1", "R 59", ". 240", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 96", "R 1", "RA 1", "R 42", ". 0", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", "walk_to x 177 max 30", "until state == 2 U max 20", "until state != 2 U max 200", ". 55", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1", "mark", ". 24", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 4", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 8", "walk_to x 209 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", "until mode == 0 . max 1500", "until mode != 0 . max 500", ". 10", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 2", "walk_to x 113 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 0", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "L 24", "LA 1", "until state != 4 L max 60", "L 30", "LA 1", "until state != 4 L max 60", "walk_to x 89 max 400", ". 48", "until state == 2 U max 30", "until state != 2 U max 400", ". 0", "R 12", "RA 1", "until state != 4 R max 60", "R 40", "RA 1", "until state != 4 R max 60", "R 20", "RA 1", "until state != 4 R max 60", "walk_to x 201 max 400", "until state == 2 U max 30", "until state != 2 U max 400", ". 20", "L 0", "LA 1", "until state != 4 L max 60", "L 16", "LA 1", "until state != 4 L max 60", "walk_to x 145 max 400", "until state == 2 U max 30", "until clearing == 1 U max 400", "until clearing == 0 . max 1000", ". 1", ". 48", "walk_to x 97 max 100", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 81 max 300", "until state == 2 U max 30", "until state != 2 U max 300", "walk_to x 72 max 300", "LA 2", "until state != 4 L max 60", "walk_to x 33 max 300", ". 0", "until state == 2 U max 300", "until state != 2 U max 300", "L 0", "LA 1", "until state != 4 L max 60", "walk_to x 25 max 900", "until state == 2 U max 30", "until clearing == 1 U max 300", "until clearing == 0 . max 1000", ". 1", ". 0", "R 20", "RA 1", "R 6", ". 26", "R 10", ". 6", "RA 1", "R 59", ". 0", "walk_to x 97 max 60", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "R 1", "RA 1", "R 42", ". 0", "R 1", "RBA 26", "R 32", ". 0", "walk_to x 155 max 60", "RA 1", "until state != 4 R max 60", ". 0", "walk_to x 177 max 60", "until state == 2 U max 20", "until state != 2 U max 200", ". 150", "walk_to x 146 max 100", "until state == 2 U max 20", "until clearing == 1 U max 200", "until clearing == 0 . max 1000", ". 1"]
+
+[[probe]]
+id = "diff-100m-d4"
+session = "diff-100m"
+note = "game B round 4 (d = 4, the cap): 100m from its start, up x 17, hops right along girder 2 and left along girder 3 past the fires (C466 by d, the fast climb gates C3F8, $E441), up x 33, hops right into the upper hammer at x 124, up x 209 once it ends, down 177 and up 73, every rivet pulled, the clear, the ending and round 5's 25m ($54 = 4, d still 4)"
+base = { start = "gb_r4_m100" }
+steps = ["mark", ". 20", "walk_to x 17 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "repeat 10: R 0, RA 1, until state != 4 R max 60", "walk_to x 225 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 20", "repeat 9: L 2, LA 1, until state != 4 L max 60", "walk_to x 33 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 5", "repeat 7: R 1, RA 1, until state != 4 R max 60", "walk_to x 209 max 400", "until state == 1 . max 900", "walk_to x 209 max 100", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "walk_to x 178 max 400", ". 0", "walk_to x 177 max 400", "until state == 2 D max 20", "until state != 2 D max 300", ". 0", "walk_to x 73 max 400", "until state == 2 U max 20", "until state != 2 U max 300", ". 0", "until stage != 4 L max 400", ". 1000"]
+check = [
+  { measure = "first state == 255", expect = "none" },
+  { measure = "values loops at changes loops", expect = [4] },
+]

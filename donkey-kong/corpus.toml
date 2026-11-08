@@ -1,0 +1,313 @@
+# A scoring corpus (docs/formats/scoring-corpus.md): the clip set beside it
+# (clips.toml) with a name, a version and the hash of its recipes. Recipes,
+# hashes and metadata only: `gp corpus verify` makes every clip again from
+# your own ROM. `gp corpus bump` suggests the next version.
+[corpus]
+format = "0.5.0"
+name = "donkey-kong-oe-25m"
+version = "6.0.0"
+title = "Donkey Kong: Original Edition, 25m"
+hash = "5ba9574ad55865ab903a0f2d850a758cfaacbb1ac3e5347f04c1410eb659f9cc"
+metadata = "09cb071a76b6e6b65a98c49fbf250cbbb12beff44c60449cd6bf8fb2f2b8a445"
+
+[target]
+game = "donkey-kong-oe"
+rom = "45440d8ef512b4660dce0c753e110004aef96fa30f2967f9260e946d808db07d"
+
+[needs]
+generator = ""
+mapping = "22"
+
+[recipes]
+"dk.clear-25m-scene.001" = "9bbf90eacf14713494214af97f42755d8537e9cf42d1d78e616c95d199110bbd"
+"dk.clear-25m.001" = "3342cc71a920d470b1bef77f13c43727bbdfd06b3092d90f5a2ec02a91611ce8"
+"dk.climb-ladder.001" = "2961f814e5017e214eba76d3c996e11ac2786d85218bf63f7be3e831a1becb50"
+"dk.climb-ladder.006" = "3d614026fdfd44bc1e18e509c6c87016f3a87d7ebf0c4623d28e270b9f909648"
+"dk.climb-ladder.008" = "0312822eb012cd0ff2e6c2cd464f58c2320c30dadeb463c5f4b0818aa5968391"
+"dk.crowded-top.001" = "158052dfba16afdd70c22780742dac88cd93f0b6d2bdcfa669ecac95e7ff9a33"
+"dk.crowded-top.002" = "c3a10028a92b5882e922d3b002973bf7b0b9884f81b6afb5ba49bbd2e6590bc1"
+"dk.crowded-top.003" = "051fc90e47cb2f12e40f902e599f7bcde034dd822adcb857c607ea214e09884c"
+"dk.crowded-top.004" = "b10190ce382c1bce4d1e9b7d0f9d06f340c799e0e309965c766ff0fd034beeaf"
+"dk.double-barrel-jump.001" = "acca1126d905e2b97d25ae25fa71d8c384c7ce991b420f082b570394ef9e9d80"
+"dk.double-barrel-jump.002" = "2a7e56e42210059daf6c0512c8caaff684c61adbdd2dbdf2b1dd415c4b756f12"
+"dk.double-barrel-jump.003" = "05fc61baeece500b1340d409f3a6d5bc55819d6056fb578e5d38ead5aff791a0"
+"dk.fall-too-far.001" = "67d9f2850a65a7b902e5828c5632f8138942305b861ab55d7f2d8bb061952e04"
+"dk.game-over.001" = "447864eea877eeda9f18142f33ab7fecd41990402f42ab22cfee4f7aa1988d59"
+"dk.gameb-d1.001" = "445f55183b51f4e4b42c3a56beb53c5507fb5e622f54eaf32b57612c51bfb25e"
+"dk.gameb-d1.002" = "8aadcb9cf133ae3fada3b6817eabe98168234ff9f8ea503c169cba1af2b1187d"
+"dk.hammer.005" = "d56523e148227b5504028f28ca6df822a394db32b61a695b7b6b828ee4a5dc0a"
+"dk.hammer.007" = "1178e4f92400a637f4a26a6582699cc3a03c1a84615e86c463ddbb3eead8ea95"
+"dk.hammer.013" = "01061bee82fd39807f5f50be67c776d805797c1802fea27b90e8cf8c043de504"
+"dk.hammer.016" = "d0f96e80bd8047fa8a1edc4e3e694c0a0050b826a4832100c5c44d04480e2ab9"
+"dk.hammer.023" = "d8dbd3445296036476dbd351ae25d2310d6fb63e3524b17924db8e91df69ad82"
+"dk.hammer.028" = "b417266eb9aa7ea60b63e97d7522ebcb1a308addfa5d6c3f3053374508a3775b"
+"dk.m100-bonus-out.001" = "10fd436ce5decb7e529bfeab590256bbf4f065be8670c3022e7d546a6e185566"
+"dk.m100-clear.001" = "d152c872b44a35c44fa514dad77a2c9b05288b79cacb666c62929ccb256ff3de"
+"dk.m100-fall.002" = "b5e5f36b0c397c46e12242394cf7b8748396fee87e8717b6d7cc24ac235806ea"
+"dk.m100-fall.003" = "b93ad4a0b7756bbffaf96baa40ed7c68cdd12df73f7fbb6db506341552903a9a"
+"dk.m100-fires.001" = "84564400c9ba7dfabdf82dc14791f906fdf0728c9241e50000c851d3c729fcc9"
+"dk.m100-game-over.001" = "d4b9c2e8ab0dca2538547a95e4375543861528f3b6f9bb150a477f96bbb7f7e2"
+"dk.m100-gap.001" = "01a081eb7c40c48a8121fe9e81f67acd147382818455ddc2a3e2c330385246ee"
+"dk.m100-gap.002" = "7a8c19daef63b304062893613e9c16017386366259a6081d9dfc7afc7c456a3e"
+"dk.m100-hammer.001" = "a0801fa4955afe65979d261ca87ebd5c85373be4c67b18f91efe88df380679de"
+"dk.m100-hammer.002" = "e79125cea4301f8635625ce046283e8c1c6680f26b0e0ba128993c521de4e052"
+"dk.m100-hammer.003" = "de646aa887ed565834cc854fed5cf482ac92601fd603d85d88589f3d65b7a475"
+"dk.m100-kong.001" = "ce4cacd8581bd989becdf366f8fc8c07781ea4bd8c4e59328be624829704fdfd"
+"dk.m100.001" = "7e9978977670cd091c33c90bcff9075634800e08d9bd0a3d6ab2ed71c1b5276a"
+"dk.m50-bonus-out.001" = "f58f3f625a62ac10c67d14df6f74ec7f968ba7de9892f8339b1e89df811fccef"
+"dk.m50-clear-late.001" = "6c15013acc5a2f958c6d1aaf526044519cd7288cf26d9ed84e61b13cbb27e857"
+"dk.m50-girder3.001" = "79a0e951a274f62dd56245e5a93c8a07fbc4eb777a1b2d6c3e42b49edc8585b3"
+"dk.m50-girder3.003" = "bb5acbdcca59524527461905b3b08850e4451d2fd6c0dc03f8aae7dfafb96fa0"
+"dk.m50-girder3.004" = "bca7a8673f4a7d49ac9b62ae249b64cf57d337128d7a41c6ffbb3472e9baa239"
+"dk.m50-hammer-smash.003" = "e09bc56ce568241d3d1eaebb1b646c1e2a78e41b4b760b44e1c6172af0f36abc"
+"dk.m50-hammer-smash.004" = "d31c76b8d5054139ccd1c19b2d0bfb9f7ab3c959681d2c2d8e9b300805e010dc"
+"dk.m50-hammer2.011" = "af618f60da0a0cd61001d9d3c1dd26cbec841506d3f63112f898c29eed666838"
+"dk.m50-ladders.001" = "414307848e81acc93e951e6e87e15606f05eef499fe7b6d1f519e6bfa7cad802"
+"dk.m50-ladders.005" = "75b5165a66788e43bd7de82e9e60444b9841d067ae3c306ef4300c4ae1c44996"
+"dk.m50-middle.001" = "92b788c858cc2a8f31118044cba09b46545439997f13f7795c47babfae20ceb8"
+"dk.m50-mladder.001" = "86f8b84189171d26856ed82b32997faedc881b635bcaa4834abe1fc181619d26"
+"dk.m50-mladder.007" = "bde92a948e8a0a7575d201557724a1be08445f3b69e8e37b6eea6c0af267acb9"
+"dk.m50-pie-points.001" = "3d69cc65c99417ff5714380fb644f2c9375b112735353041b56e8b761a89f2ed"
+"dk.m50-start.001" = "bfce238446ecb4fd8a8d060ba4122d5aed2b8b16f0d2e511ab2671f93d3786f0"
+"dk.m50-walk.001" = "d2c6208a65b39ec389f9e17dec6a65feba935a5f86b9ddc3ea17c6ffaad39019"
+"dk.m75-bonus-out.001" = "fd49cb0a3122459897bc7a749c7c9a0d775cbff19462463760fcd34d40cc9df3"
+"dk.m75-clear.001" = "149bd9f51e1eacfba28caa25868765ca8ee796219dcd3208e5a8ddab02d6b331"
+"dk.m75-fall.002" = "9bb2775dd6a21c513ae04c37356e4189fc183aa633613800be1fa7de27d8a6f5"
+"dk.m75-fire.001" = "e9c533fd8b846224d1c3f269f4ec1ef462c9d692fff0d22f590f98698c143db1"
+"dk.m75-game-over.001" = "50c01477a00dbe40fe94930fdbe58734ac2d73dd8855f50fa508e0ddf81b139a"
+"dk.m75-harvest.002" = "6c02011b0db5558dd0378c668d12dfe97c050dd81c639c92452128ccbd6e25bf"
+"dk.m75-harvest.003" = "6490df3afbb22354c8add8d077b7b598c21af20316ddfabc79aec4746a7477da"
+"dk.m75-prize.002" = "50347417fa886c20b7c5517710e9fdaf95bf8f1d3a0e1fe6db106c3dd7c73790"
+"dk.m75-spring.001" = "e789f265722b6e35f0585354d48d07a1a793312efb329defc8965e35ff8ae876"
+"dk.m75.002" = "4a555c936dcc2f5f4878e5070077a90836cef260f308a22fed6a280200399050"
+"dk.m75.016" = "144999f28b1f461229aaf13b5fd60a206e2d47fcecaba4e27807f20810c4d60f"
+"dk.m75.023" = "021969c95a1684aa0283fdcfc726f428408064c2fb0025f116d996af597ac39e"
+"dk.m75.036" = "76eb1a4918a38f0a02fc4b33f07a5fea1c64f0d2004357ba27526a5744d99317"
+"dk.m75.037" = "60aebce1a7df3d01f2285bcd6345d269ecd0356d73957cf0a8f91c24ecc3f48a"
+"dk.m75.046" = "7340c645e36ab7f8c7331d63f66f866521db49720357b7e74753e000a0003cf1"
+"dk.m75.047" = "0edbe56536051bf4c6384f9ed796d18a109b2a20d2c5e75def9d6ce1f189cd8c"
+"dk.m75.053" = "e17de9ecaa383a9b3566f6b7271dbd7914f9aa8dcd45f1abc9cfe7cd4d6bc1d1"
+"dk.m75.060" = "dd97e1449da147ae69e6508dbda7bff312ae6fa6e5d752d4e7604917d207ff48"
+"dk.points.004" = "4f2172cc2efb0ad9325a0a469fce587f2b8d5bec899c8e581a8de85333c50a95"
+"dk.points.005" = "35078620176cbed29c3d1749cb95710847c5f081737bd2dcc870f2adaac8cdc1"
+"dk.second-straight.001" = "6768f3df0ff2fc96e904894e92f7298378913c4490c5f0f548676950c2aee486"
+"dk.third-points.001" = "43676fe00b98e46d63487a54cc3182611412d3ec986ac79374cff3d4cd56d551"
+"dk.title.001" = "b4f98a1d4c189d708c9fc31036c691b68714e42d75a75fdfac154d5e187bfb2a"
+"dk.title.006" = "5ac81f4d06dfe7711761751193446cddac43c708926e6fdfbe86c5f5bbb269bd"
+"dk.title.007" = "1a263bba79e6ebfee0cff8687b779c7bcf9c06eece227239aea533cc2a45ea31"
+"dk.title.008" = "bf6aba6045d1c20729a20ef8a545c8d125a93285a0247ba5c897350895cd05d4"
+"dk.title.009" = "9b8c6a07e827b0b9db6db9e2f8117535dd4bd0152092e684945eaff66477679a"
+"dk.top-hammer.001" = "f702afa928cd4f26c10f37dd19c2d782228851ccb73e9868c7f4816ad892b2b3"
+"dk.two-players.001" = "2b8f3d4ae4c1b6cd69d70ebdfcda47929c7f019b72f585f905706d3e61b92502"
+"dk.untaken-crowded.002" = "e7fa335ab58bd0504a205979ac6f7ef8f802c8f2d44140fa61d49c1c1ebf443e"
+"dk.untaken-hammer-edge.001" = "6ee501643cc5519250bc8870f23fc30959fcd3ed99afa0065a00df94d3e0963b"
+"dk.untaken-hammer-used.001" = "78ac90e272dba6ea8be79550737d2ccbb4bb2b7bf5737c13228523d8ab074e10"
+"dk.untaken-hammer-used.002" = "3d6a51409771f145e1c407143d912600397114a2b045055561387b6ced05dfb4"
+"dk.untaken-jump-fall.001" = "eeda68db7cfd9c37a6294cac20632b32decf0e5782dd1b2a46125661c458b689"
+"dk.untaken-jump-x141.001" = "257d547239d566bbbb92e32a6c182f8f21e3812d936ecd708ea5182b5e727831"
+"dk.walk-sweep.001" = "7003d75a24ddc86ec98f4fd5595a93a4af23ce41ca13879b026db08f52f7be97"
+"dk.walk-sweep.004" = "8b1fbfbeded04ddbff407f8164ac3dfdbc19a2cec6c692420623232a61f38d77"
+"dk.walk.001" = "f5398b0d653723ecf164896f5dad24e570f899a8f5fe2b0b81ab85643125672f"
+"dk.wall-jump.002" = "6a3001b8a5a86356d01d817e5bfce3620a2f53a67e4339aa04cd22c35c4f71dd"
+"dk.wall-jump.003" = "ca67dcc1c4539433c5fbaa78a8408fefb18a0d2613f6f5dd367b8a5e53941084"
+"dk.wall-jump.006" = "9b84fed88004841acf03ba60619c72c32aa1f74714a5d60256def9c014fb9838"
+"dk.wall-jump.007" = "c6db21a6e114bc04f7dfb8e9ba303e6e33876329db84ab07c905a78bec1ed4b4"
+"donkey-kong-oe.death-redraw.001" = "25440337332f6432a2b05748ba52b7837f32c5e30ed9f41a1714ef569f2d3477"
+"donkey-kong-oe.death-redraw.002" = "43c44e7d9fd3f842cf007c64992ca5ded585275928dc5eb9e5bde605d97f80df"
+"donkey-kong-oe.diff-100m.001" = "a183dc626500f05af412aa0ea4df164242882353b34680b0e1022b1e2ee13669"
+"donkey-kong-oe.diff-100m.002" = "9fe2a11a5667a0ee6bea83ce9b12057a74d60f08e4d99efbda9ed5d9dd3ed72f"
+"donkey-kong-oe.diff-100m.003" = "496dec91cd8dd99895232bfb6af222b215d91e6e0acba65664f8c5475c98b2f7"
+"donkey-kong-oe.diff-100m.004" = "c732115b9875bd208008346c1d097079146cc0c373f925314a5a6ac8502b5dde"
+"donkey-kong-oe.diff-25m-d2.001" = "d4771426f2b199f212ca8f8df8cbbedf9ac8c7730a92bf2bef1c49538b0df443"
+"donkey-kong-oe.diff-25m-d3.001" = "6ba74184956fa01f8fdf5368df84e32807490968c5b8b02d36f84fb8af5cb45b"
+"donkey-kong-oe.diff-25m-d4.001" = "23bd13b3890279246099bb3a581f7286b70178cc4238f7318197732afce55baa"
+"donkey-kong-oe.diff-50m-d2.001" = "dccbaea3c477013953a4ab5e6be6d7136e35b28d9b0ee48c8a42f93c8530671b"
+"donkey-kong-oe.diff-50m-d3.001" = "707b8936c10788ac328b44c5b24fa4839c8f2c8e310b9d262f6928356cc9fd44"
+"donkey-kong-oe.diff-50m-d4.001" = "9e6d661193815403230a177c10a59d1a396bc8bcb626276ecc4fa82aec85fa57"
+"donkey-kong-oe.diff-75m.001" = "1fefc99a769d743b4e94a06eee319dfb35587140d3dd274c6db3e38b1a05e8e3"
+"donkey-kong-oe.diff-75m.002" = "9a888529282a57217db3c1020e3dbeb3bade897fe45666dce7029031e35c8cd9"
+"donkey-kong-oe.diff-75m.003" = "ff9fe78a35a63785ae8f922be2f886ff106f9fa1aa8896c5bdc87fa1f35a3583"
+"donkey-kong-oe.diff-75m.004" = "f95c4cd7b0cbfc567ccb661755de684f73f39df64091c26ce5cee5ada0a1d239"
+"donkey-kong-oe.over75-start.001" = "ed8a42be7e1385e26c41e46079411a2ccfbc39e8bc719abd525d100b9fad84cc"
+"donkey-kong-oe.two-p-clear.001" = "7d9f720ab8723544d553f5f74b4b771aac499ab244df17f9c37c16cd29a73abb"
+
+[[changelog]]
+version = "1.0.0"
+date = "2026-11-04"
+says = "First version: donkey-kong-ju's 115 25m and title clips, made on this ROM."
+
+[[changelog]]
+version = "2.0.0"
+date = "2026-11-04"
+says = "The clips this ROM's random bytes took elsewhere are cut again: three hammer clips at the death they reach, double-barrel-jump 3 at the attract demo; the climb's end, the stage clear's picture, the jingles and the title's song measured again"
+changed = ["dk.double-barrel-jump.003", "dk.hammer.001", "dk.hammer.027", "dk.hammer.029"]
+
+[[changelog]]
+version = "2.1.0"
+date = "2026-11-04"
+says = "Five clips of 25m's clear and its scene, Kong carrying Pauline off, to 50m's setup (probes clear-25m and clear-25m-late)"
+added = ["dk.clear-25m-scene.001", "dk.clear-25m-scene.002", "dk.clear-25m-scene.003", "dk.clear-25m-scene.004", "dk.clear-25m-scene.005"]
+
+[[changelog]]
+version = "2.2.0"
+date = "2026-11-04"
+says = "Six clips of 50m from its setup: Mario standing, walks to both ends of the bottom girder with jumps, and climbs onto the lowest conveyor, which carries him (probes m50-start, m50-walk and m50-ride)"
+added = ["dk.m50-conveyor.001", "dk.m50-conveyor.002", "dk.m50-conveyor.003", "dk.m50-start.001", "dk.m50-walk.001", "dk.m50-walk.002"]
+
+[[changelog]]
+version = "2.3.0"
+date = "2026-11-04"
+says = "126 curves measured again under the model's state mapping (schema 22), by gp corpus score --remeasure"
+changed = ["dk.barrels.001", "dk.barrels.002", "dk.barrels.003", "dk.barrels.004", "dk.barrels.005", "dk.barrels.006", "dk.barrels.007", "dk.barrels.008", "dk.barrels.009", "dk.bonus-runs-out.001", "dk.clear-25m-scene.001", "dk.clear-25m-scene.002", "dk.clear-25m-scene.003", "dk.clear-25m-scene.004", "dk.clear-25m-scene.005", "dk.clear-25m.001", "dk.clear-25m.002", "dk.climb-ladder.001", "dk.climb-ladder.002", "dk.climb-ladder.003", "dk.climb-ladder.004", "dk.climb-ladder.005", "dk.climb-ladder.006", "dk.climb-ladder.007", "dk.climb-ladder.008", "dk.climb-ladder.009", "dk.climb-ladder.010", "dk.climb-ladder.011", "dk.die-barrel.001", "dk.die-barrel.002", "dk.double-barrel-jump.001", "dk.double-barrel-jump.002", "dk.double-barrel-jump.003", "dk.double-barrel-jump.004", "dk.fall-too-far.001", "dk.fall-too-far.002", "dk.findings.001", "dk.findings.002", "dk.findings.003", "dk.findings.004", "dk.findings.005", "dk.findings.006", "dk.findings.007", "dk.findings.008", "dk.findings.009", "dk.findings.010", "dk.findings.011", "dk.findings.012", "dk.findings.013", "dk.game-b.001", "dk.game-b.002", "dk.game-over.001", "dk.hammer.001", "dk.hammer.002", "dk.hammer.003", "dk.hammer.004", "dk.hammer.005", "dk.hammer.006", "dk.hammer.007", "dk.hammer.008", "dk.hammer.009", "dk.hammer.010", "dk.hammer.011", "dk.hammer.012", "dk.hammer.013", "dk.hammer.014", "dk.hammer.015", "dk.hammer.016", "dk.hammer.017", "dk.hammer.018", "dk.hammer.019", "dk.hammer.020", "dk.hammer.021", "dk.hammer.022", "dk.hammer.023", "dk.hammer.024", "dk.hammer.025", "dk.hammer.026", "dk.hammer.027", "dk.hammer.028", "dk.hammer.029", "dk.hammer.030", "dk.hammer.031", "dk.hammer.032", "dk.harvest-m25.001", "dk.harvest-m25.002", "dk.harvest-m25.003", "dk.harvest-m25.004", "dk.jump.001", "dk.jump.002", "dk.jump.003", "dk.m50-conveyor.001", "dk.m50-conveyor.002", "dk.m50-conveyor.003", "dk.m50-start.001", "dk.m50-walk.001", "dk.m50-walk.002", "dk.oil-drum.001", "dk.oil-drum.002", "dk.oil-drum.003", "dk.oil-drum.004", "dk.oil-drum.005", "dk.oil-drum.006", "dk.title.001", "dk.title.002", "dk.title.003", "dk.title.004", "dk.title.005", "dk.title.006", "dk.title.007", "dk.title.008", "dk.title.009", "dk.title.010", "dk.title.011", "dk.title.012", "dk.title.013", "dk.title.014", "dk.title.015", "dk.top-hammer.001", "dk.two-players.001", "dk.two-players.002", "dk.walk.001", "dk.walk.002", "dk.walk.003", "dk.walk.004", "dk.walk.005"]
+
+[[changelog]]
+version = "2.4.0"
+date = "2026-11-04"
+says = "Added the 25m walk sweep's 11 clips (dk.walk-sweep.001 to 011): every girder walked both ways with stops, turns and jumps, from routes found from power-on"
+added = ["dk.walk-sweep.001", "dk.walk-sweep.002", "dk.walk-sweep.003", "dk.walk-sweep.004", "dk.walk-sweep.005", "dk.walk-sweep.006", "dk.walk-sweep.007", "dk.walk-sweep.008", "dk.walk-sweep.009", "dk.walk-sweep.010", "dk.walk-sweep.011"]
+
+[[changelog]]
+version = "2.5.0"
+date = "2026-11-04"
+says = "11 curves measured again under the model's state mapping (schema 22), by gp corpus score --remeasure"
+changed = ["dk.walk-sweep.001", "dk.walk-sweep.002", "dk.walk-sweep.003", "dk.walk-sweep.004", "dk.walk-sweep.005", "dk.walk-sweep.006", "dk.walk-sweep.007", "dk.walk-sweep.008", "dk.walk-sweep.009", "dk.walk-sweep.010", "dk.walk-sweep.011"]
+
+[[changelog]]
+version = "2.6.0"
+date = "2026-11-04"
+says = "Added the wall-jump clips (dk.wall-jump.001 to 016): running jumps held into the screen's edges and Kong's wall, taking off at the edge and 1 px short, on girders 1, 2, 3, 5 and 6, and one walked into the right edge and taken off there"
+added = ["dk.wall-jump.001", "dk.wall-jump.002", "dk.wall-jump.003", "dk.wall-jump.004", "dk.wall-jump.005", "dk.wall-jump.006", "dk.wall-jump.007", "dk.wall-jump.008", "dk.wall-jump.009", "dk.wall-jump.010", "dk.wall-jump.011", "dk.wall-jump.012", "dk.wall-jump.013", "dk.wall-jump.014", "dk.wall-jump.015", "dk.wall-jump.016"]
+
+[[changelog]]
+version = "2.7.0"
+date = "2026-11-04"
+says = "Added the ladder-turn clips (dk.ladder-turn.001 to 007): Left or Right pressed on the ladders of girders 1 to 3 turns Mario without moving him, Down or Up with Left or Right climbs nothing, Left and Right together face left, on the ladder and on girder 1"
+added = ["dk.ladder-turn.001", "dk.ladder-turn.002", "dk.ladder-turn.003", "dk.ladder-turn.004", "dk.ladder-turn.005", "dk.ladder-turn.006", "dk.ladder-turn.007"]
+
+[[changelog]]
+version = "2.8.0"
+date = "2026-11-04"
+says = "Added the points clips (dk.points.001 to 005): a jumped barrel paying 100 twice two frames apart (the second points sprite while the first shows), a first 100 on a divider wrap frame with a second two frames later, and a 100 after the first sprite's timer ran out"
+added = ["dk.points.001", "dk.points.002", "dk.points.003", "dk.points.004", "dk.points.005"]
+
+[[changelog]]
+version = "2.9.0"
+date = "2026-11-05"
+says = "165 curves measured again under the model's state mapping (schema 22), by gp corpus score --remeasure"
+changed = ["dk.barrels.001", "dk.barrels.002", "dk.barrels.003", "dk.barrels.004", "dk.barrels.005", "dk.barrels.006", "dk.barrels.007", "dk.barrels.008", "dk.barrels.009", "dk.bonus-runs-out.001", "dk.clear-25m-scene.001", "dk.clear-25m-scene.002", "dk.clear-25m-scene.003", "dk.clear-25m-scene.004", "dk.clear-25m-scene.005", "dk.clear-25m.001", "dk.clear-25m.002", "dk.climb-ladder.001", "dk.climb-ladder.002", "dk.climb-ladder.003", "dk.climb-ladder.004", "dk.climb-ladder.005", "dk.climb-ladder.006", "dk.climb-ladder.007", "dk.climb-ladder.008", "dk.climb-ladder.009", "dk.climb-ladder.010", "dk.climb-ladder.011", "dk.die-barrel.001", "dk.die-barrel.002", "dk.double-barrel-jump.001", "dk.double-barrel-jump.002", "dk.double-barrel-jump.003", "dk.double-barrel-jump.004", "dk.fall-too-far.001", "dk.fall-too-far.002", "dk.findings.001", "dk.findings.002", "dk.findings.003", "dk.findings.004", "dk.findings.005", "dk.findings.006", "dk.findings.007", "dk.findings.008", "dk.findings.009", "dk.findings.010", "dk.findings.011", "dk.findings.012", "dk.findings.013", "dk.game-b.001", "dk.game-b.002", "dk.game-over.001", "dk.hammer.001", "dk.hammer.002", "dk.hammer.003", "dk.hammer.004", "dk.hammer.005", "dk.hammer.006", "dk.hammer.007", "dk.hammer.008", "dk.hammer.009", "dk.hammer.010", "dk.hammer.011", "dk.hammer.012", "dk.hammer.013", "dk.hammer.014", "dk.hammer.015", "dk.hammer.016", "dk.hammer.017", "dk.hammer.018", "dk.hammer.019", "dk.hammer.020", "dk.hammer.021", "dk.hammer.022", "dk.hammer.023", "dk.hammer.024", "dk.hammer.025", "dk.hammer.026", "dk.hammer.027", "dk.hammer.028", "dk.hammer.029", "dk.hammer.030", "dk.hammer.031", "dk.hammer.032", "dk.harvest-m25.001", "dk.harvest-m25.002", "dk.harvest-m25.003", "dk.harvest-m25.004", "dk.jump.001", "dk.jump.002", "dk.jump.003", "dk.ladder-turn.001", "dk.ladder-turn.002", "dk.ladder-turn.003", "dk.ladder-turn.004", "dk.ladder-turn.005", "dk.ladder-turn.006", "dk.ladder-turn.007", "dk.m50-conveyor.001", "dk.m50-conveyor.002", "dk.m50-conveyor.003", "dk.m50-start.001", "dk.m50-walk.001", "dk.m50-walk.002", "dk.oil-drum.001", "dk.oil-drum.002", "dk.oil-drum.003", "dk.oil-drum.004", "dk.oil-drum.005", "dk.oil-drum.006", "dk.points.001", "dk.points.002", "dk.points.003", "dk.points.004", "dk.points.005", "dk.title.001", "dk.title.002", "dk.title.003", "dk.title.004", "dk.title.005", "dk.title.006", "dk.title.007", "dk.title.008", "dk.title.009", "dk.title.010", "dk.title.011", "dk.title.012", "dk.title.013", "dk.title.014", "dk.title.015", "dk.top-hammer.001", "dk.two-players.001", "dk.two-players.002", "dk.walk-sweep.001", "dk.walk-sweep.002", "dk.walk-sweep.003", "dk.walk-sweep.004", "dk.walk-sweep.005", "dk.walk-sweep.006", "dk.walk-sweep.007", "dk.walk-sweep.008", "dk.walk-sweep.009", "dk.walk-sweep.010", "dk.walk-sweep.011", "dk.walk.001", "dk.walk.002", "dk.walk.003", "dk.walk.004", "dk.walk.005", "dk.wall-jump.001", "dk.wall-jump.002", "dk.wall-jump.003", "dk.wall-jump.004", "dk.wall-jump.005", "dk.wall-jump.006", "dk.wall-jump.007", "dk.wall-jump.008", "dk.wall-jump.009", "dk.wall-jump.010", "dk.wall-jump.011", "dk.wall-jump.012", "dk.wall-jump.013", "dk.wall-jump.014", "dk.wall-jump.015", "dk.wall-jump.016"]
+
+[[changelog]]
+version = "2.10.0"
+date = "2026-11-05"
+says = "165 curves measured again under the model's state mapping (schema 22), by gp corpus score --remeasure"
+changed = ["dk.barrels.001", "dk.barrels.002", "dk.barrels.003", "dk.barrels.004", "dk.barrels.005", "dk.barrels.006", "dk.barrels.007", "dk.barrels.008", "dk.barrels.009", "dk.bonus-runs-out.001", "dk.clear-25m-scene.001", "dk.clear-25m-scene.002", "dk.clear-25m-scene.003", "dk.clear-25m-scene.004", "dk.clear-25m-scene.005", "dk.clear-25m.001", "dk.clear-25m.002", "dk.climb-ladder.001", "dk.climb-ladder.002", "dk.climb-ladder.003", "dk.climb-ladder.004", "dk.climb-ladder.005", "dk.climb-ladder.006", "dk.climb-ladder.007", "dk.climb-ladder.008", "dk.climb-ladder.009", "dk.climb-ladder.010", "dk.climb-ladder.011", "dk.die-barrel.001", "dk.die-barrel.002", "dk.double-barrel-jump.001", "dk.double-barrel-jump.002", "dk.double-barrel-jump.003", "dk.double-barrel-jump.004", "dk.fall-too-far.001", "dk.fall-too-far.002", "dk.findings.001", "dk.findings.002", "dk.findings.003", "dk.findings.004", "dk.findings.005", "dk.findings.006", "dk.findings.007", "dk.findings.008", "dk.findings.009", "dk.findings.010", "dk.findings.011", "dk.findings.012", "dk.findings.013", "dk.game-b.001", "dk.game-b.002", "dk.game-over.001", "dk.hammer.001", "dk.hammer.002", "dk.hammer.003", "dk.hammer.004", "dk.hammer.005", "dk.hammer.006", "dk.hammer.007", "dk.hammer.008", "dk.hammer.009", "dk.hammer.010", "dk.hammer.011", "dk.hammer.012", "dk.hammer.013", "dk.hammer.014", "dk.hammer.015", "dk.hammer.016", "dk.hammer.017", "dk.hammer.018", "dk.hammer.019", "dk.hammer.020", "dk.hammer.021", "dk.hammer.022", "dk.hammer.023", "dk.hammer.024", "dk.hammer.025", "dk.hammer.026", "dk.hammer.027", "dk.hammer.028", "dk.hammer.029", "dk.hammer.030", "dk.hammer.031", "dk.hammer.032", "dk.harvest-m25.001", "dk.harvest-m25.002", "dk.harvest-m25.003", "dk.harvest-m25.004", "dk.jump.001", "dk.jump.002", "dk.jump.003", "dk.ladder-turn.001", "dk.ladder-turn.002", "dk.ladder-turn.003", "dk.ladder-turn.004", "dk.ladder-turn.005", "dk.ladder-turn.006", "dk.ladder-turn.007", "dk.m50-conveyor.001", "dk.m50-conveyor.002", "dk.m50-conveyor.003", "dk.m50-start.001", "dk.m50-walk.001", "dk.m50-walk.002", "dk.oil-drum.001", "dk.oil-drum.002", "dk.oil-drum.003", "dk.oil-drum.004", "dk.oil-drum.005", "dk.oil-drum.006", "dk.points.001", "dk.points.002", "dk.points.003", "dk.points.004", "dk.points.005", "dk.title.001", "dk.title.002", "dk.title.003", "dk.title.004", "dk.title.005", "dk.title.006", "dk.title.007", "dk.title.008", "dk.title.009", "dk.title.010", "dk.title.011", "dk.title.012", "dk.title.013", "dk.title.014", "dk.title.015", "dk.top-hammer.001", "dk.two-players.001", "dk.two-players.002", "dk.walk-sweep.001", "dk.walk-sweep.002", "dk.walk-sweep.003", "dk.walk-sweep.004", "dk.walk-sweep.005", "dk.walk-sweep.006", "dk.walk-sweep.007", "dk.walk-sweep.008", "dk.walk-sweep.009", "dk.walk-sweep.010", "dk.walk-sweep.011", "dk.walk.001", "dk.walk.002", "dk.walk.003", "dk.walk.004", "dk.walk.005", "dk.wall-jump.001", "dk.wall-jump.002", "dk.wall-jump.003", "dk.wall-jump.004", "dk.wall-jump.005", "dk.wall-jump.006", "dk.wall-jump.007", "dk.wall-jump.008", "dk.wall-jump.009", "dk.wall-jump.010", "dk.wall-jump.011", "dk.wall-jump.012", "dk.wall-jump.013", "dk.wall-jump.014", "dk.wall-jump.015", "dk.wall-jump.016"]
+
+[[changelog]]
+version = "2.11.0"
+date = "2026-11-05"
+says = "6 curves measured again under the model's state mapping (schema 22), by gp corpus score --remeasure"
+changed = ["dk.m50-conveyor.001", "dk.m50-conveyor.002", "dk.m50-conveyor.003", "dk.m50-start.001", "dk.m50-walk.001", "dk.m50-walk.002"]
+
+[[changelog]]
+version = "2.12.0"
+date = "2026-11-05"
+says = "165 curves measured again under the model's state mapping (schema 22), by gp corpus score --remeasure"
+changed = ["dk.barrels.001", "dk.barrels.002", "dk.barrels.003", "dk.barrels.004", "dk.barrels.005", "dk.barrels.006", "dk.barrels.007", "dk.barrels.008", "dk.barrels.009", "dk.bonus-runs-out.001", "dk.clear-25m-scene.001", "dk.clear-25m-scene.002", "dk.clear-25m-scene.003", "dk.clear-25m-scene.004", "dk.clear-25m-scene.005", "dk.clear-25m.001", "dk.clear-25m.002", "dk.climb-ladder.001", "dk.climb-ladder.002", "dk.climb-ladder.003", "dk.climb-ladder.004", "dk.climb-ladder.005", "dk.climb-ladder.006", "dk.climb-ladder.007", "dk.climb-ladder.008", "dk.climb-ladder.009", "dk.climb-ladder.010", "dk.climb-ladder.011", "dk.die-barrel.001", "dk.die-barrel.002", "dk.double-barrel-jump.001", "dk.double-barrel-jump.002", "dk.double-barrel-jump.003", "dk.double-barrel-jump.004", "dk.fall-too-far.001", "dk.fall-too-far.002", "dk.findings.001", "dk.findings.002", "dk.findings.003", "dk.findings.004", "dk.findings.005", "dk.findings.006", "dk.findings.007", "dk.findings.008", "dk.findings.009", "dk.findings.010", "dk.findings.011", "dk.findings.012", "dk.findings.013", "dk.game-b.001", "dk.game-b.002", "dk.game-over.001", "dk.hammer.001", "dk.hammer.002", "dk.hammer.003", "dk.hammer.004", "dk.hammer.005", "dk.hammer.006", "dk.hammer.007", "dk.hammer.008", "dk.hammer.009", "dk.hammer.010", "dk.hammer.011", "dk.hammer.012", "dk.hammer.013", "dk.hammer.014", "dk.hammer.015", "dk.hammer.016", "dk.hammer.017", "dk.hammer.018", "dk.hammer.019", "dk.hammer.020", "dk.hammer.021", "dk.hammer.022", "dk.hammer.023", "dk.hammer.024", "dk.hammer.025", "dk.hammer.026", "dk.hammer.027", "dk.hammer.028", "dk.hammer.029", "dk.hammer.030", "dk.hammer.031", "dk.hammer.032", "dk.harvest-m25.001", "dk.harvest-m25.002", "dk.harvest-m25.003", "dk.harvest-m25.004", "dk.jump.001", "dk.jump.002", "dk.jump.003", "dk.ladder-turn.001", "dk.ladder-turn.002", "dk.ladder-turn.003", "dk.ladder-turn.004", "dk.ladder-turn.005", "dk.ladder-turn.006", "dk.ladder-turn.007", "dk.m50-conveyor.001", "dk.m50-conveyor.002", "dk.m50-conveyor.003", "dk.m50-start.001", "dk.m50-walk.001", "dk.m50-walk.002", "dk.oil-drum.001", "dk.oil-drum.002", "dk.oil-drum.003", "dk.oil-drum.004", "dk.oil-drum.005", "dk.oil-drum.006", "dk.points.001", "dk.points.002", "dk.points.003", "dk.points.004", "dk.points.005", "dk.title.001", "dk.title.002", "dk.title.003", "dk.title.004", "dk.title.005", "dk.title.006", "dk.title.007", "dk.title.008", "dk.title.009", "dk.title.010", "dk.title.011", "dk.title.012", "dk.title.013", "dk.title.014", "dk.title.015", "dk.top-hammer.001", "dk.two-players.001", "dk.two-players.002", "dk.walk-sweep.001", "dk.walk-sweep.002", "dk.walk-sweep.003", "dk.walk-sweep.004", "dk.walk-sweep.005", "dk.walk-sweep.006", "dk.walk-sweep.007", "dk.walk-sweep.008", "dk.walk-sweep.009", "dk.walk-sweep.010", "dk.walk-sweep.011", "dk.walk.001", "dk.walk.002", "dk.walk.003", "dk.walk.004", "dk.walk.005", "dk.wall-jump.001", "dk.wall-jump.002", "dk.wall-jump.003", "dk.wall-jump.004", "dk.wall-jump.005", "dk.wall-jump.006", "dk.wall-jump.007", "dk.wall-jump.008", "dk.wall-jump.009", "dk.wall-jump.010", "dk.wall-jump.011", "dk.wall-jump.012", "dk.wall-jump.013", "dk.wall-jump.014", "dk.wall-jump.015", "dk.wall-jump.016"]
+
+[[changelog]]
+version = "2.13.0"
+date = "2026-11-05"
+says = "42 clips of 50m's bottom girder and lowest conveyor, machine-made by probe recipes (m50-touch, -pie-jump, -pie-points, -ride-ends, -edges-left/-right, -hammer-left/-right, -hammer-smash, -stand): deaths by pies and fires with the restart, the conveyor's ends, the lower hammer, pies jumped and smashed"
+added = ["dk.m50-edges.001", "dk.m50-edges.002", "dk.m50-hammer-smash.001", "dk.m50-hammer-smash.002", "dk.m50-hammer-smash.003", "dk.m50-hammer-smash.004", "dk.m50-hammer-smash.005", "dk.m50-hammer-smash.006", "dk.m50-hammer.001", "dk.m50-hammer.002", "dk.m50-hammer.003", "dk.m50-hammer.004", "dk.m50-hammer.005", "dk.m50-hammer.006", "dk.m50-hammer.007", "dk.m50-hammer.008", "dk.m50-pie-jump.001", "dk.m50-pie-jump.002", "dk.m50-pie-jump.003", "dk.m50-pie-jump.004", "dk.m50-pie-jump.005", "dk.m50-pie-jump.006", "dk.m50-pie-jump.007", "dk.m50-pie-jump.008", "dk.m50-pie-points.001", "dk.m50-pie-points.002", "dk.m50-pie-points.003", "dk.m50-ride-ends.001", "dk.m50-ride-ends.002", "dk.m50-ride-ends.003", "dk.m50-ride-ends.004", "dk.m50-stand.001", "dk.m50-stand.002", "dk.m50-stand.003", "dk.m50-touch.001", "dk.m50-touch.002", "dk.m50-touch.003", "dk.m50-touch.004", "dk.m50-touch.005", "dk.m50-touch.006", "dk.m50-touch.007", "dk.m50-touch.008"]
+
+[[changelog]]
+version = "2.14.0"
+date = "2026-11-05"
+says = "102 curves measured again under the model's state mapping (schema 22), by gp corpus score --remeasure"
+changed = ["dk.barrels.009", "dk.clear-25m.001", "dk.clear-25m.002", "dk.climb-ladder.011", "dk.double-barrel-jump.001", "dk.double-barrel-jump.002", "dk.double-barrel-jump.003", "dk.double-barrel-jump.004", "dk.fall-too-far.002", "dk.findings.001", "dk.findings.002", "dk.findings.003", "dk.findings.004", "dk.findings.005", "dk.findings.006", "dk.findings.007", "dk.findings.008", "dk.findings.009", "dk.findings.010", "dk.findings.011", "dk.findings.012", "dk.hammer.001", "dk.hammer.002", "dk.hammer.003", "dk.hammer.004", "dk.hammer.005", "dk.hammer.006", "dk.hammer.007", "dk.hammer.009", "dk.hammer.011", "dk.hammer.013", "dk.hammer.015", "dk.hammer.016", "dk.hammer.018", "dk.hammer.019", "dk.hammer.020", "dk.hammer.022", "dk.hammer.023", "dk.hammer.024", "dk.hammer.025", "dk.hammer.026", "dk.hammer.027", "dk.hammer.029", "dk.hammer.030", "dk.hammer.032", "dk.harvest-m25.002", "dk.harvest-m25.003", "dk.jump.001", "dk.jump.002", "dk.jump.003", "dk.m50-hammer-smash.001", "dk.m50-hammer-smash.002", "dk.m50-hammer-smash.003", "dk.m50-hammer-smash.004", "dk.m50-hammer-smash.005", "dk.m50-hammer-smash.006", "dk.m50-hammer.001", "dk.m50-hammer.002", "dk.m50-hammer.003", "dk.m50-hammer.004", "dk.m50-hammer.005", "dk.m50-hammer.006", "dk.m50-hammer.007", "dk.m50-hammer.008", "dk.m50-pie-jump.001", "dk.m50-pie-jump.002", "dk.m50-pie-jump.003", "dk.m50-pie-jump.004", "dk.m50-pie-jump.005", "dk.m50-pie-jump.006", "dk.m50-pie-jump.007", "dk.m50-pie-jump.008", "dk.m50-pie-points.001", "dk.m50-pie-points.002", "dk.m50-pie-points.003", "dk.m50-walk.001", "dk.m50-walk.002", "dk.oil-drum.001", "dk.oil-drum.002", "dk.oil-drum.003", "dk.oil-drum.004", "dk.oil-drum.005", "dk.points.001", "dk.points.002", "dk.points.003", "dk.points.004", "dk.points.005", "dk.title.001", "dk.title.011", "dk.top-hammer.001", "dk.walk-sweep.003", "dk.walk-sweep.004", "dk.wall-jump.001", "dk.wall-jump.002", "dk.wall-jump.003", "dk.wall-jump.004", "dk.wall-jump.005", "dk.wall-jump.006", "dk.wall-jump.007", "dk.wall-jump.008", "dk.wall-jump.009", "dk.wall-jump.016"]
+
+[[changelog]]
+version = "2.15.0"
+date = "2026-11-05"
+says = "4 clips of 50m's girder 3 and middle conveyor, machine-made by probe recipes (m50-girder3, m50-middle) on the routes route.py found: a prize taken as a climb ends, the middle conveyor carrying Mario into the oil drum's gap"
+added = ["dk.m50-girder3.003", "dk.m50-middle.001", "dk.m50-middle.002", "dk.m50-middle.003"]
+
+[[changelog]]
+version = "2.16.0"
+date = "2026-11-05"
+says = "211 curves measured again under the model's state mapping (schema 22), by gp corpus score --remeasure"
+changed = ["dk.barrels.001", "dk.barrels.002", "dk.barrels.003", "dk.barrels.004", "dk.barrels.005", "dk.barrels.006", "dk.barrels.007", "dk.barrels.008", "dk.barrels.009", "dk.bonus-runs-out.001", "dk.clear-25m-scene.001", "dk.clear-25m-scene.002", "dk.clear-25m-scene.003", "dk.clear-25m-scene.004", "dk.clear-25m-scene.005", "dk.clear-25m.001", "dk.clear-25m.002", "dk.climb-ladder.001", "dk.climb-ladder.002", "dk.climb-ladder.003", "dk.climb-ladder.004", "dk.climb-ladder.005", "dk.climb-ladder.006", "dk.climb-ladder.007", "dk.climb-ladder.008", "dk.climb-ladder.009", "dk.climb-ladder.010", "dk.climb-ladder.011", "dk.die-barrel.001", "dk.die-barrel.002", "dk.double-barrel-jump.001", "dk.double-barrel-jump.002", "dk.double-barrel-jump.003", "dk.double-barrel-jump.004", "dk.fall-too-far.001", "dk.fall-too-far.002", "dk.findings.001", "dk.findings.002", "dk.findings.003", "dk.findings.004", "dk.findings.005", "dk.findings.006", "dk.findings.007", "dk.findings.008", "dk.findings.009", "dk.findings.010", "dk.findings.011", "dk.findings.012", "dk.findings.013", "dk.game-b.001", "dk.game-b.002", "dk.game-over.001", "dk.hammer.001", "dk.hammer.002", "dk.hammer.003", "dk.hammer.004", "dk.hammer.005", "dk.hammer.006", "dk.hammer.007", "dk.hammer.008", "dk.hammer.009", "dk.hammer.010", "dk.hammer.011", "dk.hammer.012", "dk.hammer.013", "dk.hammer.014", "dk.hammer.015", "dk.hammer.016", "dk.hammer.017", "dk.hammer.018", "dk.hammer.019", "dk.hammer.020", "dk.hammer.021", "dk.hammer.022", "dk.hammer.023", "dk.hammer.024", "dk.hammer.025", "dk.hammer.026", "dk.hammer.027", "dk.hammer.028", "dk.hammer.029", "dk.hammer.030", "dk.hammer.031", "dk.hammer.032", "dk.harvest-m25.001", "dk.harvest-m25.002", "dk.harvest-m25.003", "dk.harvest-m25.004", "dk.jump.001", "dk.jump.002", "dk.jump.003", "dk.ladder-turn.001", "dk.ladder-turn.002", "dk.ladder-turn.003", "dk.ladder-turn.004", "dk.ladder-turn.005", "dk.ladder-turn.006", "dk.ladder-turn.007", "dk.m50-conveyor.001", "dk.m50-conveyor.002", "dk.m50-conveyor.003", "dk.m50-edges.001", "dk.m50-edges.002", "dk.m50-girder3.003", "dk.m50-hammer-smash.001", "dk.m50-hammer-smash.002", "dk.m50-hammer-smash.003", "dk.m50-hammer-smash.004", "dk.m50-hammer-smash.005", "dk.m50-hammer-smash.006", "dk.m50-hammer.001", "dk.m50-hammer.002", "dk.m50-hammer.003", "dk.m50-hammer.004", "dk.m50-hammer.005", "dk.m50-hammer.006", "dk.m50-hammer.007", "dk.m50-hammer.008", "dk.m50-middle.001", "dk.m50-middle.002", "dk.m50-middle.003", "dk.m50-pie-jump.001", "dk.m50-pie-jump.002", "dk.m50-pie-jump.003", "dk.m50-pie-jump.004", "dk.m50-pie-jump.005", "dk.m50-pie-jump.006", "dk.m50-pie-jump.007", "dk.m50-pie-jump.008", "dk.m50-pie-points.001", "dk.m50-pie-points.002", "dk.m50-pie-points.003", "dk.m50-ride-ends.001", "dk.m50-ride-ends.002", "dk.m50-ride-ends.003", "dk.m50-ride-ends.004", "dk.m50-stand.001", "dk.m50-stand.002", "dk.m50-stand.003", "dk.m50-start.001", "dk.m50-touch.001", "dk.m50-touch.002", "dk.m50-touch.003", "dk.m50-touch.004", "dk.m50-touch.005", "dk.m50-touch.006", "dk.m50-touch.007", "dk.m50-touch.008", "dk.m50-walk.001", "dk.m50-walk.002", "dk.oil-drum.001", "dk.oil-drum.002", "dk.oil-drum.003", "dk.oil-drum.004", "dk.oil-drum.005", "dk.oil-drum.006", "dk.points.001", "dk.points.002", "dk.points.003", "dk.points.004", "dk.points.005", "dk.title.001", "dk.title.002", "dk.title.003", "dk.title.004", "dk.title.005", "dk.title.006", "dk.title.007", "dk.title.008", "dk.title.009", "dk.title.010", "dk.title.011", "dk.title.012", "dk.title.013", "dk.title.014", "dk.title.015", "dk.top-hammer.001", "dk.two-players.001", "dk.two-players.002", "dk.walk-sweep.001", "dk.walk-sweep.002", "dk.walk-sweep.003", "dk.walk-sweep.004", "dk.walk-sweep.005", "dk.walk-sweep.006", "dk.walk-sweep.007", "dk.walk-sweep.008", "dk.walk-sweep.009", "dk.walk-sweep.010", "dk.walk-sweep.011", "dk.walk.001", "dk.walk.002", "dk.walk.003", "dk.walk.004", "dk.walk.005", "dk.wall-jump.001", "dk.wall-jump.002", "dk.wall-jump.003", "dk.wall-jump.004", "dk.wall-jump.005", "dk.wall-jump.006", "dk.wall-jump.007", "dk.wall-jump.008", "dk.wall-jump.009", "dk.wall-jump.010", "dk.wall-jump.011", "dk.wall-jump.012", "dk.wall-jump.013", "dk.wall-jump.014", "dk.wall-jump.015", "dk.wall-jump.016"]
+
+[[changelog]]
+version = "2.17.0"
+date = "2026-11-05"
+says = "211 curves measured again under the model's state mapping (schema 22), by gp corpus score --remeasure"
+changed = ["dk.barrels.001", "dk.barrels.002", "dk.barrels.003", "dk.barrels.004", "dk.barrels.005", "dk.barrels.006", "dk.barrels.007", "dk.barrels.008", "dk.barrels.009", "dk.bonus-runs-out.001", "dk.clear-25m-scene.001", "dk.clear-25m-scene.002", "dk.clear-25m-scene.003", "dk.clear-25m-scene.004", "dk.clear-25m-scene.005", "dk.clear-25m.001", "dk.clear-25m.002", "dk.climb-ladder.001", "dk.climb-ladder.002", "dk.climb-ladder.003", "dk.climb-ladder.004", "dk.climb-ladder.005", "dk.climb-ladder.006", "dk.climb-ladder.007", "dk.climb-ladder.008", "dk.climb-ladder.009", "dk.climb-ladder.010", "dk.climb-ladder.011", "dk.die-barrel.001", "dk.die-barrel.002", "dk.double-barrel-jump.001", "dk.double-barrel-jump.002", "dk.double-barrel-jump.003", "dk.double-barrel-jump.004", "dk.fall-too-far.001", "dk.fall-too-far.002", "dk.findings.001", "dk.findings.002", "dk.findings.003", "dk.findings.004", "dk.findings.005", "dk.findings.006", "dk.findings.007", "dk.findings.008", "dk.findings.009", "dk.findings.010", "dk.findings.011", "dk.findings.012", "dk.findings.013", "dk.game-b.001", "dk.game-b.002", "dk.game-over.001", "dk.hammer.001", "dk.hammer.002", "dk.hammer.003", "dk.hammer.004", "dk.hammer.005", "dk.hammer.006", "dk.hammer.007", "dk.hammer.008", "dk.hammer.009", "dk.hammer.010", "dk.hammer.011", "dk.hammer.012", "dk.hammer.013", "dk.hammer.014", "dk.hammer.015", "dk.hammer.016", "dk.hammer.017", "dk.hammer.018", "dk.hammer.019", "dk.hammer.020", "dk.hammer.021", "dk.hammer.022", "dk.hammer.023", "dk.hammer.024", "dk.hammer.025", "dk.hammer.026", "dk.hammer.027", "dk.hammer.028", "dk.hammer.029", "dk.hammer.030", "dk.hammer.031", "dk.hammer.032", "dk.harvest-m25.001", "dk.harvest-m25.002", "dk.harvest-m25.003", "dk.harvest-m25.004", "dk.jump.001", "dk.jump.002", "dk.jump.003", "dk.ladder-turn.001", "dk.ladder-turn.002", "dk.ladder-turn.003", "dk.ladder-turn.004", "dk.ladder-turn.005", "dk.ladder-turn.006", "dk.ladder-turn.007", "dk.m50-conveyor.001", "dk.m50-conveyor.002", "dk.m50-conveyor.003", "dk.m50-edges.001", "dk.m50-edges.002", "dk.m50-girder3.003", "dk.m50-hammer-smash.001", "dk.m50-hammer-smash.002", "dk.m50-hammer-smash.003", "dk.m50-hammer-smash.004", "dk.m50-hammer-smash.005", "dk.m50-hammer-smash.006", "dk.m50-hammer.001", "dk.m50-hammer.002", "dk.m50-hammer.003", "dk.m50-hammer.004", "dk.m50-hammer.005", "dk.m50-hammer.006", "dk.m50-hammer.007", "dk.m50-hammer.008", "dk.m50-middle.001", "dk.m50-middle.002", "dk.m50-middle.003", "dk.m50-pie-jump.001", "dk.m50-pie-jump.002", "dk.m50-pie-jump.003", "dk.m50-pie-jump.004", "dk.m50-pie-jump.005", "dk.m50-pie-jump.006", "dk.m50-pie-jump.007", "dk.m50-pie-jump.008", "dk.m50-pie-points.001", "dk.m50-pie-points.002", "dk.m50-pie-points.003", "dk.m50-ride-ends.001", "dk.m50-ride-ends.002", "dk.m50-ride-ends.003", "dk.m50-ride-ends.004", "dk.m50-stand.001", "dk.m50-stand.002", "dk.m50-stand.003", "dk.m50-start.001", "dk.m50-touch.001", "dk.m50-touch.002", "dk.m50-touch.003", "dk.m50-touch.004", "dk.m50-touch.005", "dk.m50-touch.006", "dk.m50-touch.007", "dk.m50-touch.008", "dk.m50-walk.001", "dk.m50-walk.002", "dk.oil-drum.001", "dk.oil-drum.002", "dk.oil-drum.003", "dk.oil-drum.004", "dk.oil-drum.005", "dk.oil-drum.006", "dk.points.001", "dk.points.002", "dk.points.003", "dk.points.004", "dk.points.005", "dk.title.001", "dk.title.002", "dk.title.003", "dk.title.004", "dk.title.005", "dk.title.006", "dk.title.007", "dk.title.008", "dk.title.009", "dk.title.010", "dk.title.011", "dk.title.012", "dk.title.013", "dk.title.014", "dk.title.015", "dk.top-hammer.001", "dk.two-players.001", "dk.two-players.002", "dk.walk-sweep.001", "dk.walk-sweep.002", "dk.walk-sweep.003", "dk.walk-sweep.004", "dk.walk-sweep.005", "dk.walk-sweep.006", "dk.walk-sweep.007", "dk.walk-sweep.008", "dk.walk-sweep.009", "dk.walk-sweep.010", "dk.walk-sweep.011", "dk.walk.001", "dk.walk.002", "dk.walk.003", "dk.walk.004", "dk.walk.005", "dk.wall-jump.001", "dk.wall-jump.002", "dk.wall-jump.003", "dk.wall-jump.004", "dk.wall-jump.005", "dk.wall-jump.006", "dk.wall-jump.007", "dk.wall-jump.008", "dk.wall-jump.009", "dk.wall-jump.010", "dk.wall-jump.011", "dk.wall-jump.012", "dk.wall-jump.013", "dk.wall-jump.014", "dk.wall-jump.015", "dk.wall-jump.016"]
+
+[[changelog]]
+version = "2.18.0"
+date = "2026-11-05"
+says = "girder 3's walks that fall through its gaps (dk.m50-girder3.001, .002, .004, .005)"
+added = ["dk.m50-girder3.001", "dk.m50-girder3.002", "dk.m50-girder3.004", "dk.m50-girder3.005"]
+
+[[changelog]]
+version = "2.19.0"
+date = "2026-11-05"
+says = "the upper hammer on girder 3's left part and the fires it smashes (dk.m50-hammer2.001-012)"
+added = ["dk.m50-hammer2.001", "dk.m50-hammer2.002", "dk.m50-hammer2.003", "dk.m50-hammer2.004", "dk.m50-hammer2.005", "dk.m50-hammer2.006", "dk.m50-hammer2.007", "dk.m50-hammer2.008", "dk.m50-hammer2.009", "dk.m50-hammer2.010", "dk.m50-hammer2.011", "dk.m50-hammer2.012"]
+
+[[changelog]]
+version = "2.20.0"
+date = "2026-11-05"
+says = "the moving ladders' climb stop and 50m's clear up either one (dk.m50-mladder.001-008, dk.m50-clear.001-004)"
+added = ["dk.m50-clear.001", "dk.m50-clear.002", "dk.m50-clear.003", "dk.m50-clear.004", "dk.m50-mladder.001", "dk.m50-mladder.002", "dk.m50-mladder.003", "dk.m50-mladder.004", "dk.m50-mladder.005", "dk.m50-mladder.006", "dk.m50-mladder.007", "dk.m50-mladder.008"]
+
+[[changelog]]
+version = "2.21.0"
+date = "2026-11-05"
+says = "the ladders sweep on 50m's girders 1 to 4 (dk.m50-ladders.001-022)"
+added = ["dk.m50-ladders.001", "dk.m50-ladders.002", "dk.m50-ladders.003", "dk.m50-ladders.004", "dk.m50-ladders.005", "dk.m50-ladders.006", "dk.m50-ladders.007", "dk.m50-ladders.008", "dk.m50-ladders.009", "dk.m50-ladders.010", "dk.m50-ladders.011", "dk.m50-ladders.012", "dk.m50-ladders.013", "dk.m50-ladders.014", "dk.m50-ladders.015", "dk.m50-ladders.016", "dk.m50-ladders.017", "dk.m50-ladders.018", "dk.m50-ladders.019", "dk.m50-ladders.020", "dk.m50-ladders.021", "dk.m50-ladders.022"]
+
+[[changelog]]
+version = "3.0.0"
+date = "2026-11-06"
+added = ["dk.bonus-out-75m.001", "dk.gameb-d1.001", "dk.gameb-d1.002", "dk.gameb-d1.003", "dk.gameb-d1.004", "dk.m100-bonus-out.001", "dk.m100-clear.001", "dk.m100-death.001", "dk.m100-death.002", "dk.m100-fall.001", "dk.m100-fall.002", "dk.m100-fall.003", "dk.m100-fire-gap.001", "dk.m100-fire-gap.002", "dk.m100-fire-gap.003", "dk.m100-fire-jump.001", "dk.m100-fires.001", "dk.m100-fires.002", "dk.m100-game-over.001", "dk.m100-gap.001", "dk.m100-gap.002", "dk.m100-gap.003", "dk.m100-hammer.001", "dk.m100-hammer.002", "dk.m100-hammer.003", "dk.m100-jump.001", "dk.m100-jump.002", "dk.m100-jump.003", "dk.m100-jump.004", "dk.m100-kong.001", "dk.m100-prize.001", "dk.m100-rivet-jump.001", "dk.m100-rivet-jump.002", "dk.m100.001", "dk.m50-bonus-out.001", "dk.m50-clear-late.001", "dk.m75-bonus-out.001", "dk.m75-clear.001", "dk.m75-elevator-down.001", "dk.m75-elevator-top.001", "dk.m75-fall.001", "dk.m75-fall.002", "dk.m75-fire.001", "dk.m75-fire.002", "dk.m75-game-over.001", "dk.m75-harvest.002", "dk.m75-harvest.003", "dk.m75-harvest.005", "dk.m75-harvest.006", "dk.m75-prize.001", "dk.m75-prize.002", "dk.m75-spring.001", "dk.m75-spring.002", "dk.m75-spring.003", "dk.m75.002", "dk.m75.003", "dk.m75.004", "dk.m75.005", "dk.m75.006", "dk.m75.007", "dk.m75.008", "dk.m75.009", "dk.m75.010", "dk.m75.011", "dk.m75.012", "dk.m75.013", "dk.m75.014", "dk.m75.015", "dk.m75.016", "dk.m75.017", "dk.m75.018", "dk.m75.019", "dk.m75.020", "dk.m75.021", "dk.m75.022", "dk.m75.023", "dk.m75.024", "dk.m75.035", "dk.m75.036", "dk.m75.037", "dk.m75.038", "dk.m75.039", "dk.m75.040", "dk.m75.041", "dk.m75.042", "dk.m75.043", "dk.m75.044", "dk.m75.045", "dk.m75.046", "dk.m75.047", "dk.m75.048", "dk.m75.049", "dk.m75.050", "dk.m75.051", "dk.m75.052", "dk.m75.053", "dk.m75.054", "dk.m75.055", "dk.m75.056", "dk.m75.057", "dk.m75.058", "dk.m75.059", "dk.m75.060", "dk.restart-25m.001", "dk.restart-75m.001"]
+removed = ["dk.climb-ladder.005", "dk.m50-girder3.002", "dk.m50-girder3.005", "dk.m50-ladders.018", "dk.walk.003", "dk.wall-jump.011", "dk.wall-jump.012", "dk.wall-jump.014", "dk.wall-jump.015"]
+
+[[changelog]]
+version = "3.1.0"
+date = "2026-11-06"
+added = ["dk.barrel-above-climb.001", "dk.crowded-top.001", "dk.second-straight.001", "dk.third-points.001", "dk.untaken-crowded.001", "dk.untaken-crowded.002", "dk.untaken-hammer-edge.001", "dk.untaken-hammer-used.001", "dk.untaken-hammer-used.002", "dk.untaken-jump-fall.001", "dk.untaken-jump-x141.001"]
+
+[[changelog]]
+version = "3.2.0"
+date = "2026-11-07"
+added = ["dk.crowded-top.002", "dk.crowded-top.003", "dk.crowded-top.004"]
+
+[[changelog]]
+version = "4.0.0"
+date = "2026-11-07"
+removed = ["dk.barrel-above-climb.001", "dk.barrels.001", "dk.barrels.002", "dk.barrels.003", "dk.barrels.004", "dk.barrels.005", "dk.barrels.006", "dk.barrels.007", "dk.barrels.008", "dk.barrels.009", "dk.bonus-out-75m.001", "dk.bonus-runs-out.001", "dk.clear-25m-scene.002", "dk.clear-25m-scene.003", "dk.clear-25m-scene.004", "dk.clear-25m-scene.005", "dk.clear-25m.002", "dk.climb-ladder.002", "dk.climb-ladder.003", "dk.climb-ladder.004", "dk.climb-ladder.007", "dk.climb-ladder.009", "dk.climb-ladder.010", "dk.climb-ladder.011", "dk.die-barrel.001", "dk.die-barrel.002", "dk.double-barrel-jump.004", "dk.fall-too-far.002", "dk.findings.001", "dk.findings.002", "dk.findings.003", "dk.findings.004", "dk.findings.005", "dk.findings.006", "dk.findings.007", "dk.findings.008", "dk.findings.009", "dk.findings.010", "dk.findings.011", "dk.findings.012", "dk.findings.013", "dk.game-b.001", "dk.game-b.002", "dk.gameb-d1.003", "dk.gameb-d1.004", "dk.hammer.001", "dk.hammer.002", "dk.hammer.003", "dk.hammer.004", "dk.hammer.006", "dk.hammer.008", "dk.hammer.009", "dk.hammer.010", "dk.hammer.011", "dk.hammer.012", "dk.hammer.014", "dk.hammer.015", "dk.hammer.017", "dk.hammer.018", "dk.hammer.019", "dk.hammer.020", "dk.hammer.021", "dk.hammer.022", "dk.hammer.024", "dk.hammer.025", "dk.hammer.026", "dk.hammer.027", "dk.hammer.029", "dk.hammer.030", "dk.hammer.031", "dk.hammer.032", "dk.harvest-m25.001", "dk.harvest-m25.002", "dk.harvest-m25.003", "dk.harvest-m25.004", "dk.jump.001", "dk.jump.002", "dk.jump.003", "dk.ladder-turn.001", "dk.ladder-turn.002", "dk.ladder-turn.003", "dk.ladder-turn.004", "dk.ladder-turn.005", "dk.ladder-turn.006", "dk.ladder-turn.007", "dk.m100-death.001", "dk.m100-death.002", "dk.m100-fall.001", "dk.m100-fire-gap.001", "dk.m100-fire-gap.002", "dk.m100-fire-gap.003", "dk.m100-fire-jump.001", "dk.m100-fires.002", "dk.m100-gap.003", "dk.m100-jump.001", "dk.m100-jump.002", "dk.m100-jump.003", "dk.m100-jump.004", "dk.m100-prize.001", "dk.m100-rivet-jump.001", "dk.m100-rivet-jump.002", "dk.m50-clear.001", "dk.m50-clear.002", "dk.m50-clear.003", "dk.m50-clear.004", "dk.m50-conveyor.001", "dk.m50-conveyor.002", "dk.m50-conveyor.003", "dk.m50-edges.001", "dk.m50-edges.002", "dk.m50-hammer-smash.001", "dk.m50-hammer-smash.002", "dk.m50-hammer-smash.005", "dk.m50-hammer-smash.006", "dk.m50-hammer.001", "dk.m50-hammer.002", "dk.m50-hammer.003", "dk.m50-hammer.004", "dk.m50-hammer.005", "dk.m50-hammer.006", "dk.m50-hammer.007", "dk.m50-hammer.008", "dk.m50-hammer2.001", "dk.m50-hammer2.002", "dk.m50-hammer2.003", "dk.m50-hammer2.004", "dk.m50-hammer2.005", "dk.m50-hammer2.006", "dk.m50-hammer2.007", "dk.m50-hammer2.008", "dk.m50-hammer2.009", "dk.m50-hammer2.010", "dk.m50-hammer2.012", "dk.m50-ladders.002", "dk.m50-ladders.003", "dk.m50-ladders.004", "dk.m50-ladders.006", "dk.m50-ladders.007", "dk.m50-ladders.008", "dk.m50-ladders.009", "dk.m50-ladders.010", "dk.m50-ladders.011", "dk.m50-ladders.012", "dk.m50-ladders.013", "dk.m50-ladders.014", "dk.m50-ladders.015", "dk.m50-ladders.016", "dk.m50-ladders.017", "dk.m50-ladders.019", "dk.m50-ladders.020", "dk.m50-ladders.021", "dk.m50-ladders.022", "dk.m50-middle.002", "dk.m50-middle.003", "dk.m50-mladder.002", "dk.m50-mladder.003", "dk.m50-mladder.004", "dk.m50-mladder.005", "dk.m50-mladder.006", "dk.m50-mladder.008", "dk.m50-pie-jump.001", "dk.m50-pie-jump.002", "dk.m50-pie-jump.003", "dk.m50-pie-jump.004", "dk.m50-pie-jump.005", "dk.m50-pie-jump.006", "dk.m50-pie-jump.007", "dk.m50-pie-jump.008", "dk.m50-pie-points.002", "dk.m50-pie-points.003", "dk.m50-ride-ends.001", "dk.m50-ride-ends.002", "dk.m50-ride-ends.003", "dk.m50-ride-ends.004", "dk.m50-stand.001", "dk.m50-stand.002", "dk.m50-stand.003", "dk.m50-touch.001", "dk.m50-touch.002", "dk.m50-touch.003", "dk.m50-touch.004", "dk.m50-touch.005", "dk.m50-touch.006", "dk.m50-touch.007", "dk.m50-touch.008", "dk.m50-walk.002", "dk.m75-elevator-down.001", "dk.m75-elevator-top.001", "dk.m75-fall.001", "dk.m75-fire.002", "dk.m75-harvest.005", "dk.m75-harvest.006", "dk.m75-prize.001", "dk.m75-spring.002", "dk.m75-spring.003", "dk.m75.003", "dk.m75.004", "dk.m75.005", "dk.m75.006", "dk.m75.007", "dk.m75.008", "dk.m75.009", "dk.m75.010", "dk.m75.011", "dk.m75.012", "dk.m75.013", "dk.m75.014", "dk.m75.015", "dk.m75.017", "dk.m75.018", "dk.m75.019", "dk.m75.020", "dk.m75.021", "dk.m75.022", "dk.m75.024", "dk.m75.035", "dk.m75.038", "dk.m75.039", "dk.m75.040", "dk.m75.041", "dk.m75.042", "dk.m75.043", "dk.m75.044", "dk.m75.045", "dk.m75.048", "dk.m75.049", "dk.m75.050", "dk.m75.051", "dk.m75.052", "dk.m75.054", "dk.m75.055", "dk.m75.056", "dk.m75.057", "dk.m75.058", "dk.m75.059", "dk.oil-drum.001", "dk.oil-drum.002", "dk.oil-drum.003", "dk.oil-drum.004", "dk.oil-drum.005", "dk.oil-drum.006", "dk.points.001", "dk.points.002", "dk.points.003", "dk.restart-25m.001", "dk.restart-75m.001", "dk.title.002", "dk.title.003", "dk.title.004", "dk.title.005", "dk.title.010", "dk.title.011", "dk.title.012", "dk.title.013", "dk.title.014", "dk.title.015", "dk.two-players.002", "dk.untaken-crowded.001", "dk.walk-sweep.002", "dk.walk-sweep.003", "dk.walk-sweep.005", "dk.walk-sweep.006", "dk.walk-sweep.007", "dk.walk-sweep.008", "dk.walk-sweep.009", "dk.walk-sweep.010", "dk.walk-sweep.011", "dk.walk.002", "dk.walk.004", "dk.walk.005", "dk.wall-jump.001", "dk.wall-jump.004", "dk.wall-jump.005", "dk.wall-jump.008", "dk.wall-jump.009", "dk.wall-jump.010", "dk.wall-jump.013", "dk.wall-jump.016"]
+
+[[changelog]]
+version = "4.1.0"
+date = "2026-11-07"
+added = ["donkey-kong-oe.death-redraw.001", "donkey-kong-oe.death-redraw.002", "donkey-kong-oe.diff-100m.001", "donkey-kong-oe.diff-100m.002", "donkey-kong-oe.diff-100m.003", "donkey-kong-oe.diff-100m.004", "donkey-kong-oe.diff-25m-d2.001", "donkey-kong-oe.diff-25m-d3.001", "donkey-kong-oe.diff-25m-d4.001", "donkey-kong-oe.diff-50m-d2.001", "donkey-kong-oe.diff-50m-d3.001", "donkey-kong-oe.diff-50m-d4.001", "donkey-kong-oe.diff-75m.001", "donkey-kong-oe.diff-75m.002", "donkey-kong-oe.diff-75m.003", "donkey-kong-oe.diff-75m.004"]
+
+[[changelog]]
+version = "5.0.0"
+date = "2026-11-07"
+says = "Curves measured again under mapping 22 for all 109 clips (28 had none: the clips added today; 81 had changed with today's mapping)"
+changed = ["dk.clear-25m-scene.001", "dk.clear-25m.001", "dk.climb-ladder.001", "dk.climb-ladder.006", "dk.climb-ladder.008", "dk.crowded-top.001", "dk.crowded-top.002", "dk.crowded-top.003", "dk.crowded-top.004", "dk.double-barrel-jump.001", "dk.double-barrel-jump.002", "dk.double-barrel-jump.003", "dk.fall-too-far.001", "dk.game-over.001", "dk.gameb-d1.001", "dk.gameb-d1.002", "dk.hammer.005", "dk.hammer.007", "dk.hammer.013", "dk.hammer.016", "dk.hammer.023", "dk.hammer.028", "dk.m100-bonus-out.001", "dk.m100-clear.001", "dk.m100-fall.002", "dk.m100-fall.003", "dk.m100-fires.001", "dk.m100-game-over.001", "dk.m100-gap.001", "dk.m100-gap.002", "dk.m100-hammer.001", "dk.m100-hammer.002", "dk.m100-hammer.003", "dk.m100-kong.001", "dk.m100.001", "dk.m50-bonus-out.001", "dk.m50-clear-late.001", "dk.m50-girder3.001", "dk.m50-girder3.003", "dk.m50-girder3.004", "dk.m50-hammer-smash.003", "dk.m50-hammer-smash.004", "dk.m50-hammer2.011", "dk.m50-ladders.001", "dk.m50-ladders.005", "dk.m50-middle.001", "dk.m50-mladder.001", "dk.m50-mladder.007", "dk.m50-pie-points.001", "dk.m50-start.001", "dk.m50-walk.001", "dk.m75-bonus-out.001", "dk.m75-clear.001", "dk.m75-fall.002", "dk.m75-fire.001", "dk.m75-game-over.001", "dk.m75-harvest.002", "dk.m75-harvest.003", "dk.m75-prize.002", "dk.m75-spring.001", "dk.m75.002", "dk.m75.016", "dk.m75.023", "dk.m75.036", "dk.m75.037", "dk.m75.046", "dk.m75.047", "dk.m75.053", "dk.m75.060", "dk.points.004", "dk.points.005", "dk.second-straight.001", "dk.third-points.001", "dk.title.001", "dk.title.006", "dk.title.007", "dk.title.008", "dk.title.009", "dk.top-hammer.001", "dk.two-players.001", "dk.untaken-crowded.002", "dk.untaken-hammer-edge.001", "dk.untaken-hammer-used.001", "dk.untaken-hammer-used.002", "dk.untaken-jump-fall.001", "dk.untaken-jump-x141.001", "dk.walk-sweep.001", "dk.walk-sweep.004", "dk.walk.001", "dk.wall-jump.002", "dk.wall-jump.003", "dk.wall-jump.006", "dk.wall-jump.007", "donkey-kong-oe.death-redraw.001", "donkey-kong-oe.death-redraw.002", "donkey-kong-oe.diff-100m.001", "donkey-kong-oe.diff-100m.002", "donkey-kong-oe.diff-100m.003", "donkey-kong-oe.diff-100m.004", "donkey-kong-oe.diff-25m-d2.001", "donkey-kong-oe.diff-25m-d3.001", "donkey-kong-oe.diff-25m-d4.001", "donkey-kong-oe.diff-50m-d2.001", "donkey-kong-oe.diff-50m-d3.001", "donkey-kong-oe.diff-50m-d4.001", "donkey-kong-oe.diff-75m.001", "donkey-kong-oe.diff-75m.002", "donkey-kong-oe.diff-75m.003", "donkey-kong-oe.diff-75m.004"]
+
+[[changelog]]
+version = "5.1.0"
+date = "2026-11-07"
+says = "Curves for the clips added after 5.0.0 (over75-start, two-p-clear)"
+added = ["donkey-kong-oe.over75-start.001", "donkey-kong-oe.two-p-clear.001"]
+
+[[changelog]]
+version = "6.0.0"
+date = "2026-11-07"
+says = "Curves for over75-start and two-p-clear, measured on a run made from the current mapping"
+changed = ["dk.top-hammer.001", "donkey-kong-oe.over75-start.001", "donkey-kong-oe.two-p-clear.001"]

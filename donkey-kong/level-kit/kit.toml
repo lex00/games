@@ -1,0 +1,874 @@
+# The level kit for donkey-kong-oe (docs/level-kit.md), written by `gp level kit` from the
+# model, the asset map and level-kit/rules.toml. Edit the rules file, not this one.
+format = "0.1.0"
+game = "donkey-kong-oe"
+model = "donkey_kong_oe"
+title = "Donkey Kong: Original Edition"
+screen = [256, 240]
+summary = """
+A stage is one screen of 256 by 240 pixels: six sloped girders and a short top platform, joined by ladders, full and broken. The thrower (`kong`) on the top girder rolls barrels down; each rolls along its girder, drops off its end or down a ladder to the one below, and ends in the oil drum at the bottom left, which lets out fires that wander the girders and climb their own ladders. The hero starts on the bottom girder, can take one of two hammers, and clears the stage by climbing to the top platform where the one to rescue (`pauline`) waits. The rules below are for a stage that runs on the game's own engine, as 25m's replacement: the model runs any layout, but the engine reads the stage from fixed places in a fixed format, and some of the stage is numbers in its code.
+"""
+open = ["The stage picture's bytes are counted by hand (packP); a tool that encodes a layout entry and reports the space left would replace it", "The rules fixed in code were read from the model's notes and packP's and gcFit's work, not from a detector; docs/research/deterministic-inference.md lists a code-immediate finder as the tool that would find them", "Whether the attract demo's script must stay within 20 holds when packed (its table's size) is not checked", "The 75m and 100m stages have no kit: the model holds only 25m"]
+
+[[levels]]
+name = "m100"
+description = "100m: flat floors narrowing up to Pauline's, ladders between them, eight rivets, three prizes and the fires"
+cells = [32, 30]
+tile_size = 8
+pixels = [256, 240]
+bounds = ["the level is 256 by 240 px; the screen 256 by 240", "a body below row 232 is out"]
+goal = "set by the rules or a hook, not a place"
+slots = ["ground_runs_100m", "ground_shapes_100m", "ladder_shapes_100m", "ladder_tops_100m", "ladders_100m", "stage_screens"]
+
+[[levels.spawns]]
+entity = "player"
+role = "player"
+x = 61
+y = 204
+
+[[levels.spawns]]
+entity = "hammer"
+role = "power-up"
+x = 20
+y = 110
+
+[[levels.spawns]]
+entity = "hammer"
+role = "power-up"
+x = 124
+y = 70
+
+[[levels.spawns]]
+entity = "kong_100m"
+role = "enemy"
+x = 32
+y = 32
+
+[[levels.spawns]]
+entity = "pauline"
+role = "npc"
+x = 80
+y = 25
+
+[levels.tile_kinds]
+ladder = 1
+top = 2
+
+[[levels]]
+name = "m50"
+description = "50m: four conveyors, flat girders, ladders and two that move"
+cells = [32, 30]
+tile_size = 8
+pixels = [256, 240]
+bounds = ["the level is 256 by 240 px; the screen 256 by 240", "a body below row 232 is out"]
+goal = "the hero's left edge at x 0 or past, with its top above row 53"
+slots = ["ground_runs_50m", "ground_shapes_50m", "ladder_shapes_50m", "ladders_50m", "palettes_50m", "stage_screens_50m"]
+
+[[levels.spawns]]
+entity = "player"
+role = "player"
+x = 61
+y = 204
+
+[[levels.spawns]]
+entity = "hammer"
+role = "power-up"
+x = 124
+y = 150
+
+[[levels.spawns]]
+entity = "hammer"
+role = "power-up"
+x = 20
+y = 110
+
+[[levels.spawns]]
+entity = "kong_50m"
+role = "enemy"
+x = 32
+y = 32
+
+[[levels.spawns]]
+entity = "pauline"
+role = "npc"
+x = 80
+y = 25
+
+[[levels.spawns]]
+entity = "oil_drum"
+role = "hazard"
+x = 120
+y = 96
+
+[[levels.spawns]]
+entity = "belt_ends"
+role = "npc"
+x = 8
+y = 104
+
+[[levels.spawns]]
+entity = "mladder"
+role = "npc"
+x = 20
+y = 71
+
+[[levels.spawns]]
+entity = "mladder"
+role = "npc"
+x = 220
+y = 71
+
+[levels.tile_kinds]
+ladder = 1
+top = 4
+
+[[levels]]
+name = "m75"
+description = "75m: flat girders in steps, ladders, two columns of elevators, springs across the top and two fires"
+cells = [32, 30]
+tile_size = 8
+pixels = [256, 240]
+bounds = ["the level is 256 by 240 px; the screen 256 by 240", "a body below row 232 is out"]
+goal = "the hero's left edge at x 0 or past, with its top above row 29"
+slots = ["ground_runs_75m", "ground_shapes_75m", "ladder_shapes_75m", "ladder_tops_75m", "ladders_75m", "stage_screens"]
+
+[[levels.spawns]]
+entity = "player"
+role = "player"
+x = 21
+y = 188
+
+[[levels.spawns]]
+entity = "kong_75m"
+role = "enemy"
+x = 32
+y = 32
+
+[[levels.spawns]]
+entity = "pauline"
+role = "npc"
+x = 80
+y = 25
+
+[[levels.spawns]]
+entity = "elevator"
+role = "npc"
+x = 48
+y = 120
+
+[[levels.spawns]]
+entity = "elevator"
+role = "npc"
+x = 48
+y = 168
+
+[[levels.spawns]]
+entity = "elevator"
+role = "npc"
+x = 112
+y = 112
+
+[[levels.spawns]]
+entity = "elevator"
+role = "npc"
+x = 112
+y = 160
+
+[levels.tile_kinds]
+ladder = 1
+top = 1
+
+[[levels]]
+name = "main"
+description = "25m: girders sloping a pixel every 24 px, full and broken ladders"
+cells = [32, 30]
+tile_size = 8
+pixels = [256, 240]
+bounds = ["the level is 256 by 240 px; the screen 256 by 240", "a body below row 232 is out"]
+goal = "the hero's left edge at x 0 or past, with its top above row 29"
+slots = ["ground_runs", "ground_shapes", "ladder_shapes", "ladders", "stage_screens"]
+
+[[levels.spawns]]
+entity = "player"
+role = "player"
+x = 53
+y = 204
+
+[[levels.spawns]]
+entity = "hammer"
+role = "power-up"
+x = 32
+y = 127
+
+[[levels.spawns]]
+entity = "hammer"
+role = "power-up"
+x = 32
+y = 70
+
+[[levels.spawns]]
+entity = "kong"
+role = "enemy"
+x = 32
+y = 32
+
+[[levels.spawns]]
+entity = "oil_drum"
+role = "hazard"
+x = 32
+y = 192
+
+[[levels.spawns]]
+entity = "pauline"
+role = "npc"
+x = 80
+y = 25
+
+[levels.tile_kinds]
+ladder = 13
+top = 8
+
+[hero]
+climb = "0.3333 px a frame, about 90 frames for 30 px"
+fall = "at most 4 px a frame"
+"fatal drop" = "a fall of more than 16 px kills"
+jump = "up at 1.3789 px a frame, gravity 0.06641 px a frame each frame: about 14 px high and 42 frames in the air on flat ground (v*v/2g and 2v/g)"
+"jump across" = "about 28 px walking"
+walk = "0.6667 px a frame, 40 px a second at 60 frames"
+
+[[things]]
+entity = "barrel"
+role = "enemy"
+size = [16, 16]
+touch = [2, 10, 14, 4]
+touch_does = "kill-player"
+
+[[things]]
+entity = "fire"
+role = "enemy"
+size = [16, 16]
+touch = [2, 10, 14, 4]
+touch_does = "kill-player"
+
+[[things]]
+entity = "hammer"
+role = "power-up"
+size = [8, 16]
+touch = [0, 0, 8, 8]
+touch_does = "a hook decides"
+
+[[things]]
+entity = "oil_drum"
+role = "hazard"
+size = [16, 8]
+touch = [-2, 6, 22, 3]
+touch_does = "kill-player"
+
+[[things]]
+entity = "pie"
+role = "enemy"
+size = [16, 16]
+touch = [2, 10, 14, 4]
+touch_does = "kill-player"
+
+[[things]]
+entity = "player"
+role = "player"
+size = [16, 16]
+touch = [3, 0, 1, 12]
+touch_does = "the hero's box"
+
+[[things]]
+entity = "spring"
+role = "enemy"
+size = [16, 16]
+touch = [2, 10, 14, 4]
+touch_does = "kill-player"
+
+[[slots]]
+slot = "climb_rom"
+kind = "table"
+asset = "climb_rom"
+format = "table"
+size = "56 rows of 1 column"
+note = "25m's ladder tops and the climb's pictures, from $C127: the top zones, their box and the pictures by $5B and $5C"
+
+[[slots]]
+slot = "demo_script"
+kind = "table"
+asset = "demo_script"
+format = "table"
+size = "20 rows of 2 columns"
+note = "The attract demo's script: 20 entries of a direction and its frames ($C014, $C028)"
+
+[[slots]]
+slot = "ground_runs"
+kind = "rows"
+asset = "ground_runs_25m"
+format = "byte-rows"
+size = "8 rows of 6 bytes (48 bytes)"
+note = "25m's girders as runs of one-row pieces: x, y, shape, the step across and the count, each piece a pixel higher"
+
+[[slots]]
+slot = "ground_runs_100m"
+kind = "rows"
+asset = "ground_runs_100m"
+format = "byte-rows"
+size = "5 rows of 3 bytes (15 bytes)"
+note = "100m's ground as $D2E2 reads it on any stage but 25m: rows of x, y and a shape, each one box, through the pointer at $C46B ($C2F0)"
+
+[[slots]]
+slot = "ground_runs_50m"
+kind = "rows"
+asset = "ground_runs_50m"
+format = "byte-rows"
+size = "7 rows of 3 bytes (21 bytes)"
+note = "50m's ground as $D2E2 reads it on any stage but 25m: rows of x, y and a shape, each one box, through the pointer at $C46B ($8260)"
+
+[[slots]]
+slot = "ground_runs_75m"
+kind = "rows"
+asset = "ground_runs_75m"
+format = "byte-rows"
+size = "21 rows of 3 bytes (63 bytes)"
+note = "75m's ground as $D2E2 reads it on any stage but 25m: rows of x, y and a shape, each one box, through the pointer at $C46B ($C20C)"
+
+[[slots]]
+slot = "ground_shapes"
+kind = "rows"
+asset = "ground_shapes_25m"
+format = "byte-rows"
+size = "3 rows of 4 bytes (12 bytes)"
+note = "The girder pieces' boxes by shape: left, top, right and bottom from the piece's place"
+
+[[slots]]
+slot = "ground_shapes_100m"
+kind = "rows"
+asset = "ground_shapes_100m"
+format = "byte-rows"
+size = "4 rows of 4 bytes (16 bytes)"
+note = "100m's ground boxes by shape through the pointer at $C473: left, top, right and bottom from the row's place ($C306)"
+
+[[slots]]
+slot = "ground_shapes_50m"
+kind = "rows"
+asset = "ground_shapes_50m"
+format = "byte-rows"
+size = "4 rows of 4 bytes (16 bytes)"
+note = "50m's ground boxes by shape: left, top, right and bottom from the row's place ($8276)"
+
+[[slots]]
+slot = "ground_shapes_75m"
+kind = "rows"
+asset = "ground_shapes_75m"
+format = "byte-rows"
+size = "7 rows of 4 bytes (28 bytes)"
+note = "75m's ground boxes by shape: left, top, right and bottom from the row's place ($C252)"
+
+[[slots]]
+slot = "ladder_shapes"
+kind = "rows"
+asset = "ladder_shapes_25m"
+format = "byte-rows"
+size = "7 rows of 4 bytes (28 bytes)"
+note = "The ladders' boxes by shape: left, top, right and bottom from the ladder's place"
+
+[[slots]]
+slot = "ladder_shapes_100m"
+kind = "rows"
+asset = "ladder_shapes_100m"
+format = "byte-rows"
+size = "2 rows of 4 bytes (8 bytes)"
+note = "100m's ladders' boxes by shape (the pointer at $C483, $C341)"
+
+[[slots]]
+slot = "ladder_shapes_50m"
+kind = "rows"
+asset = "ladder_shapes_50m"
+format = "byte-rows"
+size = "2 rows of 4 bytes (8 bytes)"
+note = "50m's ladders' boxes by shape: left, top, right and bottom from the ladder's place"
+
+[[slots]]
+slot = "ladder_shapes_75m"
+kind = "rows"
+asset = "ladder_shapes_75m"
+format = "byte-rows"
+size = "6 rows of 4 bytes (24 bytes)"
+note = "75m's ladders' boxes by shape ($C28D)"
+
+[[slots]]
+slot = "ladder_tops_100m"
+kind = "rows"
+asset = "ladder_tops_100m"
+format = "byte-rows"
+size = "14 rows of 3 bytes (42 bytes)"
+note = "100m's whole ladders' tops as $D50A reads them (the pointer at $C489 + $53 * 2): rows of x, y and a shape, with 25m's box at $C143 ($C349)"
+
+[[slots]]
+slot = "ladder_tops_75m"
+kind = "rows"
+asset = "ladder_tops_75m"
+format = "byte-rows"
+size = "10 rows of 3 bytes (30 bytes)"
+note = "75m's whole ladders' tops as $D50A reads them: x, y and a shape each ($C2A5)"
+
+[[slots]]
+slot = "ladders"
+kind = "rows"
+asset = "ladders_25m"
+format = "byte-rows"
+size = "13 rows of 3 bytes (39 bytes)"
+note = "25m's ladders: x, y and a shape each"
+
+[[slots]]
+slot = "ladders_100m"
+kind = "rows"
+asset = "ladders_100m"
+format = "byte-rows"
+size = "14 rows of 3 bytes (42 bytes)"
+note = "100m's ladders as $D28B reads them (the pointer at $C47B): rows of x, y and a shape ($C316)"
+
+[[slots]]
+slot = "ladders_50m"
+kind = "rows"
+asset = "ladders_50m"
+format = "byte-rows"
+size = "12 rows of 3 bytes (36 bytes)"
+note = "50m's ladders: x, y and a shape each, the last two the ladders that move, at their top"
+
+[[slots]]
+slot = "ladders_75m"
+kind = "rows"
+asset = "ladders_75m"
+format = "byte-rows"
+size = "10 rows of 3 bytes (30 bytes)"
+note = "75m's ladders: x, y and a shape each ($C26E)"
+
+[[slots]]
+slot = "palettes_50m"
+kind = "palettes"
+asset = "palettes_50m"
+format = "palette"
+size = "8 palettes of 4 colors"
+note = "50m's palettes, the first update of screen_50m"
+
+[[slots]]
+slot = "play_gaps"
+kind = "table"
+asset = "play_gaps"
+format = "table"
+size = "20 rows of 1 column"
+note = "The play routine's tables: 25m's gaps under the girders' ends ($C0CF) and their boxes ($C0DF), $D36A's list, which the dk_idle hook's cost of the play routine reads by CPU address (ext/src/play_mario.rs)"
+
+[[slots]]
+slot = "play_heights"
+kind = "table"
+asset = "play_heights"
+format = "table"
+size = "7 rows of 1 column"
+note = "The play routine's tables: 25m's girders' heights by row ($C0BC), $E016's list, which the dk_idle hook's cost of the play routine reads by CPU address (ext/src/play_mario.rs)"
+
+[[slots]]
+slot = "play_tables"
+kind = "table"
+asset = "play_tables"
+format = "table"
+size = "173 rows of 1 column"
+note = "The play routine's tables from $C15F to $C20B: Mario's boxes, the swing's pictures, the barrels' ladder lists, the slope list and the straight drops' stops, which the hooks read by CPU address (gp_ext_dk::rom_at, ext/src/play_mario.rs)"
+
+[[slots]]
+slot = "play_tables_c2f0"
+kind = "table"
+asset = "play_tables_c2f0"
+format = "table"
+size = "286 rows of 1 column"
+note = "The play routine's tables from $C3E2 to $C4FF (the name keeps the first address from before 100m's were split off): the fires' girder ends, the barrels' bounce and drop tables, the kill boxes, the screen's edges, the walk's beat bits, the stage pointers and the object lists, which the hooks read by CPU address (gp_ext_dk::rom_at, ext/src/play_mario.rs)"
+
+[[slots]]
+slot = "stage_screens"
+kind = "level-objects"
+asset = "stage_screens"
+format = "ppu-strings"
+size = "1258 bytes in all, 5 entries share it"
+note = "The stages as PPU update strings, which the draw routine at $F1F0 walks"
+
+[[slots]]
+slot = "stage_screens_50m"
+kind = "level-objects"
+asset = "stage_screens_50m"
+format = "ppu-strings"
+size = "281 bytes in all, 1 entries share it"
+note = "50m's screen as PPU update strings, string 2 at $8147 in the lower half"
+
+[[data]]
+what = "Girders"
+rule = "Runs of 6 bytes the walk's ground test reads ($D91A): x, y, the piece's shape, the step across (signed), the count of 24 px pieces, each a pixel higher than the last, and an end mark (0, or $FE to end the row)"
+slot = "ground_runs"
+source = "the asset map's note; packP's pack, 2026-11-04"
+
+[[data]]
+what = "Girder pieces' shapes"
+rule = "A box by shape, 4 bytes: left, top, right and bottom from the piece's place. 25m has 3 (a long flat piece, a 24 px piece and the top platform's)"
+slot = "ground_shapes"
+source = "the asset map"
+
+[[data]]
+what = "Ladders"
+rule = "3 bytes a ladder: x, y and a shape; each shape is a box of 4 bytes, left, top, right and bottom from the ladder's place. The list ends with $FE. A broken ladder is one whose box stops short of the girder above"
+slot = "ladders"
+source = "the asset map; the ladder routine $D28B, $D8AD tests the hero's feet box against each"
+
+[[data]]
+what = "Ladder tops and the climb's pictures"
+rule = "The tops the climb finds (up to 9, then an end mark), the top zone's box, the 16 pictures of a climb over a top and the 6 of a step"
+slot = "climb_rom"
+source = "the model's climb_rom slot ($C127)"
+
+[[data]]
+what = "Girder heights"
+rule = "The rows that say which girder a body is on (7 thresholds), read by the fires and the edge test"
+slot = "play_heights"
+source = "the model's play_heights slot ($C0BC)"
+
+[[data]]
+what = "Gaps under the girders' ends"
+rule = "The places a walk off a girder's end drops through, and their boxes"
+slot = "play_gaps"
+source = "the model's play_gaps slot ($C0CF, $C0DF)"
+
+[[data]]
+what = "The slope list"
+rule = "9 x places where a girder steps a pixel, shared by barrels and fires: a barrel on girders 2 to 5 steps at each, on girders 1 and 6 from the fifth on; a fire steps at 24 (in code) and at the list from its second. Each is a piece's step less 8, the middle of a 16 px sprite"
+slot = "play_tables"
+source = "$C1C4; gcFit's notes in scripts/rivet-rodeo/stage.py (in progress, 2026-11-04)"
+
+[[data]]
+what = "Barrels' ladders"
+rule = "Two ladders a girder for girders 2 to 6, each an x and a foot row (20 bytes): the ladders a barrel may take down"
+slot = "play_tables"
+source = "$C172 to $C185; packP's pack"
+
+[[data]]
+what = "Broken ladders' stops"
+rule = "A box at the top of each broken ladder that stops the hero's climb: x, y, 0, ended by $FE"
+slot = "play_tables"
+source = "$C161; packP's pack"
+
+[[data]]
+what = "Straight drops"
+rule = "Three ways a barrel can drop straight down the stage, each 5 rows where it stops"
+slot = "play_tables"
+source = "three tables after the slope list; the barrel's straight*_stop params"
+
+[[data]]
+what = "Hammers and the hero's start"
+rule = "Two hammers, an x and a y each; the hero's start as its sprite's x (the model's x less 5) and y"
+slot = "play_tables_c2f0"
+source = "$C4CB, $C4D1, $C4E3; packP's pack"
+
+[[data]]
+what = "The stage's picture"
+rule = "PPU update strings that draw the girders, ladders and drum, with 25m's palettes: what the screen shows. Play never reads it, so it must agree with the girders and ladders above"
+slot = "stage_screens"
+source = "the asset map: entry screen_25m"
+
+[[data]]
+what = "The attract demo"
+rule = "The demo's moves: up to 20 holds, a way and a frame count each"
+slot = "demo_script"
+source = "the model's demo_script slot"
+
+[[code]]
+what = "Rows of runs"
+rule = "The ground test reads row 1 as two runs at the list's start and row n (2 to 7) as one run at byte 12 + 6(n - 2): the bottom girder has exactly 2 runs and every other row exactly 1, 8 runs in all"
+source = "$D91A; packP's pack, gcFit's notes"
+
+[[code]]
+what = "Sloped ends"
+rule = "A run is one straight slope of 24 px pieces, each a pixel higher than the last in its direction, so a girder above the bottom slopes from end to end; a flat part needs a run of its own, which only the bottom row has (25m's: flat to x 128, then sloped)"
+source = "gcFit's notes"
+
+[[code]]
+what = "Fires' ladders"
+rule = "Fires climb 4 ladders whose x, top and foot are numbers in the fire routine's code ($E626, $E640 to $E697): two from the bottom girder (x 92 and 196) and two from the second (x 44 and 108), the model's fire ladder_* params. A stage keeps ladders where fires climb, or the code changes"
+source = "the model's note on entities.fire; packP's pack patched these as code"
+
+[[code]]
+what = "The third barrel ladder"
+rule = "Barrels take a third ladder only on girders 4 and 5, its x and foot in code ($E0D1, $E0DD; the model's barrel ladder_c4 and ladder_c5, foot 14 over girders 3 and 4)"
+source = "packP's pack, gcFit's notes"
+
+[[code]]
+what = "The throw"
+rule = "The thrower lets a barrel go at x 77, y 50 (the barrel's let_go_x and let_go_y), so girder 6 lies 64 px under the thrower and steps a pixel only from the slope list's fifth place on"
+source = "the model's barrel params; gcFit's notes"
+
+[[code]]
+what = "A pushed barrel's drop"
+rule = "A barrel the hammer holder's crowd pushes through girder 3 or 5 drops 21 px and 2 more each 24 across, so girders 2 and 4 must lie under 3 and 5 as 25m's do"
+source = "the barrel's crowd and crowd_drop params; gcFit's notes"
+
+[[code]]
+what = "The drum and the fires' way out"
+rule = "The drum's flames are at x 32, y 192 and a fire comes out at x 32, y 184 (the drum's out_x and out_y): the bottom girder's left end holds the drum"
+source = "the model's oil_drum spawn and params"
+
+[[code]]
+what = "Screen edges"
+rule = "The hero's walk stops at x 21 and 229 ($D990); barrels fall at x 19 and 219 and bounce on to x 31 when they land on an even girder; fires turn at x 12 and 212 (228 on the bottom girder)"
+source = "the hammer's left_edge and right_edge, the barrel's edge_left and edge_right, the fire's edge params"
+
+[[code]]
+what = "The goal and the top"
+rule = "The stage is cleared when the hero's top is above row 29 (the model's goal under); only standing on the top platform does that: the hero stands 12 rows under its top, so the platform must stand at row 40 or above, and a full ladder must reach it from girder 6"
+source = "the model's levels.main.goal"
+
+[[code]]
+what = "The thrower's place"
+rule = "The thrower stands at x 32, y 32, where the throw's numbers (above) assume him; his six poses are fixed pictures of 24 tiles each"
+source = "the kong spawn; the kong_* slots"
+
+[[limits]]
+what = "Girder runs"
+limit = "8 runs, 48 bytes: 2 on the bottom row, 1 on each of 6 rows above"
+why = "the row rule; 9 runs spill 6 bytes into the shapes"
+source = "the asset map (ground_runs_25m: 8 rows of 6); packP's pack"
+
+[[limits]]
+what = "Girder shapes"
+limit = "3 shapes, 12 bytes"
+why = "a fourth must move elsewhere with its pointer (packP moved heights and shapes into 100m's ladder list)"
+source = "the asset map; packP's pack"
+
+[[limits]]
+what = "Ladders"
+limit = "13 ladders (39 bytes) and an end mark; 7 shapes (28 bytes)"
+why = "the list is followed by other tables"
+source = "the asset map (ladders_25m: 13 rows of 3; ladder_shapes_25m: 7 of 4)"
+
+[[limits]]
+what = "Broken ladders"
+limit = "4"
+why = "the stop boxes' list is 13 bytes"
+source = "$C161; packP's pack"
+
+[[limits]]
+what = "Ladder tops"
+limit = "9"
+why = "the climb's top list"
+source = "climb_rom"
+
+[[limits]]
+what = "Barrel ladders"
+limit = "2 on each of girders 2 to 6, a third on girders 4 and 5 only"
+why = "the table and the code"
+source = "packP's pack"
+
+[[limits]]
+what = "Fire ladders"
+limit = "4, at x 92 and 196 from the bottom girder and 44 and 108 from the second, unless the code changes"
+source = "the fire's params"
+
+[[limits]]
+what = "Hammers"
+limit = "2"
+source = "$C4CB, $C4D1"
+
+[[limits]]
+what = "The screen"
+limit = "256 by 240 px; girders between x 0 and 256, the hero's walk from x 21 to 229; a body below row 232 is out"
+source = "the model"
+
+[[limits]]
+what = "Space for the stage's picture"
+limit = "1258 bytes hold all five screens: 25m 449, 75m 177, 100m 268, the title 322, the status box 42. A new 25m with the others kept has 449 bytes; with 75m and 100m dropped, 894"
+why = "Rivet Rodeo's 25m picture is 569 bytes (120 over 449), its title 523"
+source = "the asset map (stage_screens: 1258 bytes, 5 entries); packP's pack, 2026-11-04"
+
+[[limits]]
+what = "Tiles"
+limit = "256 background tiles and 256 sprite tiles, 8 KB of CHR in all"
+source = "the asset map"
+
+[[measures]]
+name = "girders"
+what = "Girders, and the top platform"
+target = "6 + 1"
+within = "1"
+example = "6 + 1"
+source = "docs/originals.md, Rivet Rodeo's measures of 2026-11-03"
+
+[[measures]]
+name = "slope_px_per_24"
+what = "Slope, pixels per 24 across, bottom to top"
+target = [-0.53, 0.88, -0.88, 0.88, -0.88, 0.83]
+within = "0.25 each"
+example = [-0.56, 0.88, -0.77, 0.88, -0.77, 0.69]
+source = "docs/originals.md"
+
+[[measures]]
+name = "gaps"
+what = "Gaps between girders' middles, px"
+target = [31, 30, 30, 30, 29, 25]
+within = "8 px each"
+example = [30, 30, 30, 30, 30, 26]
+source = "docs/originals.md"
+
+[[measures]]
+name = "ladders, broken"
+what = "Ladders, and how many are broken"
+target = "13, 4 (0.31)"
+within = "1 each"
+example = "13, 4 (0.31)"
+source = "docs/originals.md"
+
+[[measures]]
+name = "things"
+what = "Hammers' heights over the bottom girder; their distance to the nearest ladder"
+target = "72, 129; 16, 16"
+within = "8 px"
+example = "75, 134; 16, 16"
+source = "docs/originals.md"
+
+[[measures]]
+name = "climb_frames_min, climb_frames_median"
+what = "A climb, frames (fastest, median)"
+target = "68, 71"
+within = "not set: it follows the gaps"
+example = "68, 74"
+source = "docs/originals.md"
+
+[[measures]]
+name = "route_frames"
+what = "The direct route to the top, frames"
+target = 1160
+within = "10%"
+example = 1148
+source = "docs/originals.md"
+
+[[measures]]
+name = "leave_by_ladder_share"
+what = "Barrels leaving a girder by a ladder"
+target = 0.48
+within = "0.1"
+example = 0.4
+source = "docs/originals.md"
+
+[[measures]]
+name = "throw_to_drum_median"
+what = "From the throw to the drum, median frames"
+target = 1003
+within = "10%"
+example = 982
+source = "docs/originals.md"
+
+[[measures]]
+name = "jump_window_median"
+what = "The jump window over a barrel, median frames"
+target = 22
+within = "3 frames"
+example = 19
+source = "docs/originals.md"
+
+[[measures]]
+name = "goal_height"
+what = "The goal over the bottom girder's middle, px"
+target = 186
+within = "not set"
+example = 187
+source = "docs/originals.md"
+
+[originality]
+cells_refuse = 0.6
+ladders_refuse = 0.5
+shift_cells = 4
+copying = ["the layout: 60% or more of the cells either level fills (ground, ladder) the same kind in both, at the best shift of up to 4 cells each way, mirrored or not", "the ladders: 50% or more of them within a tile across of one of the original's, between the same floors counted from the bottom, at that shift", "the data: any line of 24 characters or more of the stage's built files that the original's lifted files hold too (gp template served's rule)", "tracing: a stage drawn over the original's picture, or laid out from a guide made from the ROM, is a copy whatever it scores", """the art: a theme's sprites and pictures are held to the theme kit's originality check (docs/theme-kit.md, "The originality check")"""]
+
+[[verify]]
+step = "1. The model's own checks"
+how = "Write the stage as data (a derived template's authored.toml, as scripts/rivet-rodeo/stage.py does), then gp template derive T --write, gp template build T --write and gp template check T: every slot filled, the pins current"
+
+[[verify]]
+step = "2. The play measures"
+how = "gp level measure --template T: each measure above within its tolerance. --clears 3 plays the route with the barrels and fires in and prints the holds a baseline takes"
+
+[[verify]]
+step = "3. Originality"
+how = "gp template check T --original with your ROM in $GP_ROM_DIR: cells and ladders under the thresholds, no shared data line"
+
+[[verify]]
+step = "4. Baselines"
+how = 'Write the holds from step 2 as a model baseline (docs/originals.md, "Model baselines") and run gp interp baselines T'
+
+[[verify]]
+step = "5. The real engine"
+how = "Pack the stage's slots into a copy of your ROM at 25m's places in 25m's formats, outside the repo (packP's script did it by hand; gp assets pack writes slots that keep their sizes), then run the same inputs on the model and on the copy: gp interp compare T --rom COPY --input LOG --assets LIFT --mode free. A slot that doesn't fit its place, or a rule fixed in code, is where a run first splits from the model where Donkey Kong's own doesn't. Never commit the copy"
+
+[[verify]]
+step = "6. A theme"
+how = """gp theme check T --theme DIR: a theme's floors and sprites must keep the stage's geometry (docs/theme-kit.md, "Gameplay geometry")"""
+
+[[fit]]
+what = "Rivet Rodeo's girders as of 2026-11-03"
+rule = "9 runs (a run per flat stretch and slope), 54 bytes: 6 over the 48. They fit only rewritten: one run a row, as gcFit's redesign does"
+source = "packP's pack, 2026-11-04"
+
+[[fit]]
+what = "Shapes and heights"
+rule = "Rivet Rodeo needs 4 ground shapes against 25m's 3; packP moved the heights and shapes into 100m's ladder list and pointed 25m at them, which breaks 100m"
+source = "packP's pack"
+
+[[fit]]
+what = "Ladders, tops, stop boxes, barrel ladders, slope list, hammers, start, demo"
+rule = "All fit 25m's places and formats as data: 13 ladders and 7 shapes, 9 tops, 4 stop boxes, 2 barrel ladders a girder, 9 slope places, 2 hammers"
+source = "packP's pack"
+
+[[fit]]
+what = "Fires' ladders and the third barrel ladder"
+rule = "Only by changing code: packP rewrote 12 numbers of the fire routine and 4 of the barrels' third-ladder test, and swapped the girder 3 and 5 branches. gcFit's redesign keeps them where the code has them instead, so no code changes"
+source = "packP's pack; gcFit's notes"
+
+[[fit]]
+what = "The stage's picture"
+rule = "569 bytes against 449: it fits only with 75m's and 100m's pictures dropped (1129 of 1258 bytes with Rivet Rodeo's title and status box)"
+source = "packP's pack"
+
+[[fit]]
+what = "Runs on the real engine"
+rule = "Rivet Rodeo packed, the same inputs run on the copy and on the model: the first splits Donkey Kong's own runs don't have came at model frame 640 (a climb: the hero's y 204 on the engine, 203 on the model), 705 (a jump: a sound), 811 (a start: a barrel) and 1079 (a climb: a death's wait)"
+source = "packP's runs, model frames, 2026-11-04"
+
+[example]
+template = "rivet-rodeo"
+text = ["Rivet Rodeo is an original stage on this model (docs/originals.md). Its girders are 25m's in kind and spacing: six girders about 30 px apart at their middles, sloping a pixel each 24 px piece, the bottom one flat for its left half, and a top platform. Its ladders, hammers and start are its own places, and gp template check --original holds it apart from 25m: cells 0.472 at a shift of 2 cells, ladders 0.385 (5 of 13), both under the thresholds.", "Against the format: it keeps the counts (13 ladders, 4 broken, 9 tops, 2 hammers), the slope list and the screen edges, so those slots pack into 25m's places. It breaks two rules: it writes its girders as 9 runs (a run per flat stretch and slope), where the format holds 8, one a row above the bottom; and its ladders don't stand where the code has the fires' ladders (x 92 and 196 from the bottom girder, 44 and 108 from the second) and the third barrel ladder. The model runs it anyway, since the model reads the runs and the fire params as data; the real engine does only with code changed (What fits, above).", "Its measures land within the tolerances: the slopes within 0.14 (girder 6: 0.69 against 0.83), the gaps within 1 px, the route 1148 frames against 1160, the throw to the drum 982 against 1003, the jump window 19 against 22.", "gcFit's redesign (in progress on 2026-11-04) keeps to every rule above: one run a row, girders 1 to 3 laid so the fires' ladders stand on them, a ladder where the third barrel ladder is on girders 4 and 5, and girder 6 64 px under the thrower."]
+
+[[example_spawns]]
+entity = "player"
+role = "player"
+x = 61
+y = 204
+
+[[example_spawns]]
+entity = "hammer"
+role = "power-up"
+x = 20
+y = 110
+
+[[example_spawns]]
+entity = "hammer"
+role = "power-up"
+x = 124
+y = 70
+
+[[example_spawns]]
+entity = "kong_100m"
+role = "enemy"
+x = 32
+y = 32
+
+[[example_spawns]]
+entity = "pauline"
+role = "npc"
+x = 80
+y = 25

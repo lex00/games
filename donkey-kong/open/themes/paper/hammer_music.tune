@@ -1,0 +1,8 @@
+tune 1
+# hammer_music: written by gp theme paint, from the role's words
+step 4
+loop
+voice lead pluck 0.45
+notes G4:1 A4:1 C5:1 G4:2 C5:1 A4:1 E4:1 C4:2 G4:1 D5:1 E5:1 D5:2 D5:1 G5:1 D5:1 A5:2 G5:1 A5:1 G5:1 A5:2 A5:1 G5:1 E5:1 D5:2 C5:1 D5:1 D5:1 E5:2 G5:1 A5:1 G5:1 E5:2
+voice bass soft 0.35
+notes C2:5 G2:5 C2:5 G2:5 C2:5 G2:5 C2:5 G2:5

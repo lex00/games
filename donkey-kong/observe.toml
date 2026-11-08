@@ -1,0 +1,11 @@
+# How the original is observed (docs/formats/observe.md) for Donkey Kong:
+# Original Edition.
+# Until 2026-11-06 it was derived from templates/donkey-kong-ju (gp
+# template derive); it is this template's own now.
+model = "donkey_kong_oe"
+schema = 0
+
+[level]
+names = [["0x01", "main"], ["0x02", "m50"], ["0x03", "m75"], ["0x04", "m100"]]
+ram = [83]
+when = "ram[0x0053] >= 1 && ram[0x0053] <= 4"

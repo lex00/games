@@ -1,0 +1,8 @@
+format = "0.1.0"
+model = "rivet_rodeo"
+
+# The paper theme is the stage's look and sound on the public page
+# (docs/web.md, "The public page"): on by default.
+[[layer]]
+theme = "paper"
+scope = "baked"

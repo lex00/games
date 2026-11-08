@@ -1,0 +1,575 @@
+# Asset map for Rivet Rodeo, an original template (docs/originals.md). Written by
+# gp template build from the template's authored.toml; don't edit it by hand.
+# The offsets are into the data image the build makes, which holds the
+# authored assets one after another and no code.
+schema = 1
+source = "rivet-rodeo"
+title = "Rivet Rodeo"
+sha256 = "a92040fce4409f1e51d9003fd0fd5a423275277fa1c8927e2f69be9ca55f924e"
+
+[[asset]]
+name = "sprite_tiles"
+format = "chr-2bpp"
+region = "chr"
+offset = 0x0000
+tiles = 256
+tiles_per_row = 16
+
+[[asset]]
+name = "scene_sprite_tiles"
+format = "chr-2bpp"
+region = "chr"
+offset = 0x1000
+tiles = 256
+tiles_per_row = 16
+
+[[asset]]
+name = "tiles"
+format = "chr-2bpp"
+region = "chr"
+offset = 0x2000
+tiles = 256
+tiles_per_row = 16
+charset = [[0x00, "0123456789"], [0x0a, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"], [0x24, " "], [0xf0, "|#"]]
+
+[[asset]]
+name = "stage_screens"
+format = "ppu-strings"
+region = "prg"
+offset = 0x0000
+size = 1368
+end = 0x00
+charset = [[0x00, "0123456789"], [0x0a, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"], [0x24, " "], [0xf0, "|#"]]
+entry = [
+  { name = "screen_25m", note = "the stage: palettes, attributes, girders, ladders" },
+  { name = "screen_100m", note = "unused: Rivet Rodeo has no 100m" },
+  { name = "screen_50m", note = "unused: Rivet Rodeo has no 50m" },
+  { name = "screen_75m", note = "unused: Rivet Rodeo has no 75m" },
+  { name = "screen_title", note = "the title screen" },
+  { name = "screen_25m_more", note = "the status labels" },
+]
+
+[[asset]]
+name = "palettes"
+format = "palette"
+region = "prg"
+offset = 0x0558
+count = 8
+
+[[asset]]
+name = "palette_scene"
+format = "palette"
+region = "prg"
+offset = 0x0578
+count = 1
+
+[[asset]]
+name = "palette_hammer"
+format = "palette"
+region = "prg"
+offset = 0x057c
+count = 1
+
+[[asset]]
+name = "palette_ending"
+format = "palette"
+region = "prg"
+offset = 0x0580
+count = 1
+
+[[asset]]
+name = "ladders"
+format = "byte-rows"
+region = "prg"
+offset = 0x0584
+count = 13
+width = 3
+
+[[asset]]
+name = "ladder_shapes"
+format = "byte-rows"
+region = "prg"
+offset = 0x05ab
+count = 7
+width = 4
+
+[[asset]]
+name = "ground_runs"
+format = "byte-rows"
+region = "prg"
+offset = 0x05c7
+count = 49
+width = 6
+
+[[asset]]
+name = "ground_shapes"
+format = "byte-rows"
+region = "prg"
+offset = 0x06ed
+count = 6
+width = 4
+
+[[asset]]
+name = "climb_rom"
+format = "table"
+count = 56
+column = [
+  { name = "byte", region = "prg", offset = 0x0705 },
+]
+
+[[asset]]
+name = "demo_script"
+format = "table"
+count = 20
+column = [
+  { name = "way", region = "prg", offset = 0x073d },
+  { name = "frames", region = "prg", offset = 0x0751 },
+]
+
+[[asset]]
+name = "play_pointers"
+format = "table"
+count = 80
+column = [
+  { name = "byte", region = "prg", offset = 0x0765 },
+]
+
+[[asset]]
+name = "play_heights"
+format = "table"
+count = 7
+column = [
+  { name = "byte", region = "prg", offset = 0x07b5 },
+]
+
+[[asset]]
+name = "play_gaps"
+format = "table"
+count = 20
+column = [
+  { name = "byte", region = "prg", offset = 0x07bc },
+]
+
+[[asset]]
+name = "play_ladders_end"
+format = "table"
+count = 1
+column = [
+  { name = "byte", region = "prg", offset = 0x07d0 },
+]
+
+[[asset]]
+name = "play_tables"
+format = "table"
+count = 173
+column = [
+  { name = "byte", region = "prg", offset = 0x07d1 },
+]
+
+[[asset]]
+name = "ground_runs_75m"
+format = "byte-rows"
+region = "prg"
+offset = 0x087e
+count = 21
+width = 3
+
+[[asset]]
+name = "ground_runs_75m_end"
+format = "table"
+count = 1
+column = [
+  { name = "byte", region = "prg", offset = 0x08bd },
+]
+
+[[asset]]
+name = "heights_75m"
+format = "table"
+count = 6
+column = [
+  { name = "byte", region = "prg", offset = 0x08be },
+]
+
+[[asset]]
+name = "ground_shapes_75m"
+format = "byte-rows"
+region = "prg"
+offset = 0x08c4
+count = 7
+width = 4
+
+[[asset]]
+name = "ladders_75m"
+format = "byte-rows"
+region = "prg"
+offset = 0x08e0
+count = 10
+width = 3
+
+[[asset]]
+name = "ladders_75m_end"
+format = "table"
+count = 1
+column = [
+  { name = "byte", region = "prg", offset = 0x08fe },
+]
+
+[[asset]]
+name = "ladder_shapes_75m"
+format = "byte-rows"
+region = "prg"
+offset = 0x08ff
+count = 6
+width = 4
+
+[[asset]]
+name = "ladder_tops_75m"
+format = "byte-rows"
+region = "prg"
+offset = 0x0917
+count = 10
+width = 3
+
+[[asset]]
+name = "play_tables_75m"
+format = "table"
+count = 21
+column = [
+  { name = "byte", region = "prg", offset = 0x0935 },
+]
+
+[[asset]]
+name = "fire_ways_75m"
+format = "byte-rows"
+region = "prg"
+offset = 0x094a
+count = 8
+width = 3
+
+[[asset]]
+name = "ground_runs_100m"
+format = "byte-rows"
+region = "prg"
+offset = 0x0962
+count = 5
+width = 3
+
+[[asset]]
+name = "ground_runs_100m_end"
+format = "table"
+count = 1
+column = [
+  { name = "byte", region = "prg", offset = 0x0971 },
+]
+
+[[asset]]
+name = "heights_100m"
+format = "table"
+count = 6
+column = [
+  { name = "byte", region = "prg", offset = 0x0972 },
+]
+
+[[asset]]
+name = "ground_shapes_100m"
+format = "byte-rows"
+region = "prg"
+offset = 0x0978
+count = 4
+width = 4
+
+[[asset]]
+name = "ladders_100m"
+format = "byte-rows"
+region = "prg"
+offset = 0x0988
+count = 14
+width = 3
+
+[[asset]]
+name = "ladders_100m_end"
+format = "table"
+count = 1
+column = [
+  { name = "byte", region = "prg", offset = 0x09b2 },
+]
+
+[[asset]]
+name = "ladder_shapes_100m"
+format = "byte-rows"
+region = "prg"
+offset = 0x09b3
+count = 2
+width = 4
+
+[[asset]]
+name = "ladder_tops_100m"
+format = "byte-rows"
+region = "prg"
+offset = 0x09bb
+count = 14
+width = 3
+
+[[asset]]
+name = "ladder_tops_100m_end"
+format = "table"
+count = 1
+column = [
+  { name = "byte", region = "prg", offset = 0x09e5 },
+]
+
+[[asset]]
+name = "fire_index_100m"
+format = "table"
+count = 6
+column = [
+  { name = "byte", region = "prg", offset = 0x09e6 },
+]
+
+[[asset]]
+name = "fire_ways_100m"
+format = "byte-rows"
+region = "prg"
+offset = 0x09ec
+count = 28
+width = 3
+
+[[asset]]
+name = "fire_starts_100m"
+format = "byte-rows"
+region = "prg"
+offset = 0x0a40
+count = 8
+width = 2
+
+[[asset]]
+name = "fire_gaps_100m"
+format = "table"
+count = 4
+column = [
+  { name = "byte", region = "prg", offset = 0x0a50 },
+]
+
+[[asset]]
+name = "ground_runs_50m"
+format = "byte-rows"
+region = "prg"
+offset = 0x0a54
+count = 7
+width = 3
+
+[[asset]]
+name = "ground_shapes_50m"
+format = "byte-rows"
+region = "prg"
+offset = 0x0a69
+count = 4
+width = 4
+
+[[asset]]
+name = "ladders_50m"
+format = "byte-rows"
+region = "prg"
+offset = 0x0a79
+count = 12
+width = 3
+
+[[asset]]
+name = "ladder_shapes_50m"
+format = "byte-rows"
+region = "prg"
+offset = 0x0a9d
+count = 2
+width = 4
+
+[[asset]]
+name = "climb_tops_50m"
+format = "table"
+count = 37
+column = [
+  { name = "byte", region = "prg", offset = 0x0aa5 },
+]
+
+[[asset]]
+name = "heights_50m"
+format = "table"
+count = 5
+column = [
+  { name = "byte", region = "prg", offset = 0x0aca },
+]
+
+[[asset]]
+name = "ladder_waits_50m"
+format = "table"
+count = 10
+column = [
+  { name = "byte", region = "prg", offset = 0x0acf },
+]
+
+[[asset]]
+name = "fire_lists_50m"
+format = "table"
+count = 84
+column = [
+  { name = "byte", region = "prg", offset = 0x0ad9 },
+]
+
+[[asset]]
+name = "conveyor_pattern"
+format = "table"
+count = 10
+column = [
+  { name = "byte", region = "prg", offset = 0x0b2d },
+]
+
+[[asset]]
+name = "conveyor_turns"
+format = "table"
+count = 5
+column = [
+  { name = "byte", region = "prg", offset = 0x0b37 },
+]
+
+[[asset]]
+name = "pie_row_masks"
+format = "table"
+count = 5
+column = [
+  { name = "byte", region = "prg", offset = 0x0b3c },
+]
+
+[[asset]]
+name = "play_tables_c2f0"
+format = "table"
+count = 286
+column = [
+  { name = "byte", region = "prg", offset = 0x0b41 },
+]
+
+[[asset]]
+name = "code_c500"
+format = "table"
+count = 269
+column = [
+  { name = "byte", region = "prg", offset = 0x0c5f },
+]
+
+[[asset]]
+name = "code_c6a3"
+format = "table"
+count = 93
+column = [
+  { name = "byte", region = "prg", offset = 0x0d6c },
+]
+
+[[asset]]
+name = "code_c707"
+format = "table"
+count = 22
+column = [
+  { name = "byte", region = "prg", offset = 0x0dc9 },
+]
+
+[[asset]]
+name = "code_c735"
+format = "table"
+count = 1
+column = [
+  { name = "byte", region = "prg", offset = 0x0ddf },
+]
+
+[[asset]]
+name = "code_c74e"
+format = "table"
+count = 11789
+column = [
+  { name = "byte", region = "prg", offset = 0x0de0 },
+]
+
+[[asset]]
+name = "code_fa45"
+format = "table"
+count = 160
+column = [
+  { name = "byte", region = "prg", offset = 0x3bed },
+]
+
+[[asset]]
+name = "sound_rom"
+format = "table"
+count = 1265
+column = [
+  { name = "byte", region = "prg", offset = 0x3c8d },
+]
+
+[[asset]]
+name = "sound_jingles"
+format = "table"
+count = 42
+column = [
+  { name = "byte", region = "prg", offset = 0x417e },
+]
+
+[[asset]]
+name = "kong_stand"
+format = "byte-rows"
+region = "prg"
+offset = 0x41a8
+count = 1
+width = 24
+
+[[asset]]
+name = "kong_take"
+format = "byte-rows"
+region = "prg"
+offset = 0x41c0
+count = 1
+width = 24
+
+[[asset]]
+name = "kong_hold"
+format = "byte-rows"
+region = "prg"
+offset = 0x41d8
+count = 1
+width = 24
+
+[[asset]]
+name = "kong_throw"
+format = "byte-rows"
+region = "prg"
+offset = 0x41f0
+count = 1
+width = 24
+
+[[asset]]
+name = "kong_beat_a"
+format = "byte-rows"
+region = "prg"
+offset = 0x4208
+count = 1
+width = 24
+
+[[asset]]
+name = "kong_beat_b"
+format = "byte-rows"
+region = "prg"
+offset = 0x4220
+count = 1
+width = 24
+
+[[asset]]
+name = "kong_fallen_a"
+format = "byte-rows"
+region = "prg"
+offset = 0x4238
+count = 1
+width = 24
+
+[[asset]]
+name = "kong_fallen_b"
+format = "byte-rows"
+region = "prg"
+offset = 0x4250
+count = 1
+width = 24

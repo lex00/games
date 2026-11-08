@@ -1,0 +1,19 @@
+[package]
+name = "gp-ext-dk"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+license.workspace = true
+
+# Donkey Kong's hand-written behavior behind the model's `ext` hooks: Donkey
+# Kong throwing barrels and a barrel's own machine on 25m. It depends on
+# gp-sim, so the interpreter and a generated project link the same code,
+# and gp-cycles, which has no dependencies, for the cycles of a routine's
+# path read from the lifted code (gp_cycles::walk).
+[dependencies]
+gp-sim = { path = "../../../crates/gp-sim" }
+gp-cycles = { path = "../../../crates/gp-cycles" }
+
+[lints]
+workspace = true

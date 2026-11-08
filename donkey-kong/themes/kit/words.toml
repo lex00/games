@@ -1,0 +1,326 @@
+# Prompt words for donkey-kong-oe's theme kit (docs/theme-kit.md, "Prompt words"),
+# written by hand from watching the template's clips. `gp theme kit`
+# puts the labels, descriptions and poses into kit.toml. `deny` lists the
+# words no prompt-facing text may hold; `note` keeps the game's own term
+# and never reaches the kit.
+format = "0.1.0"
+deny = ["donkey", "kong", "mario", "jumpman", "pauline", "barrel", "girder", "oil drum", "oil", "drum", "hammer", "mallet", "ape", "gorilla", "monkey", "damsel", "princess", "lady", "plumber", "carpenter", "mustache", "moustache", "overalls", "cap", "nintendo", "rivet"]
+
+[[art]]
+id = "entity.barrel"
+label = "rolling hazard"
+description = "a small round hazard the big foe sends rolling down the sloped platforms and sometimes down a ladder, 16 by 16 pixels; the hero jumps over it or smashes it"
+poses = [
+    "rolling, seen from the side, a stripe from lower left to upper right",
+    "breaking apart: a large hollow ring",
+    "breaking apart: a small hollow ring",
+    "breaking apart: a tiny spark",
+    "breaking apart: a burst of short rays",
+    "tumbling down a ladder, seen front on, dark band across the middle",
+    "tumbling down a ladder, seen front on, light band across the middle",
+    "tumbling down a ladder, seen front on, dark band, bright rims",
+    "tumbling down a ladder, seen front on, dark band, first turn",
+    "tumbling down a ladder, seen front on, dark band, second turn",
+    "rolling, seen from the side, a stripe from upper left to lower right",
+    "held still, seen front on, before its first roll (the same picture as while the big foe holds it)",
+    "rolling, seen from the side, a stripe from lower left to upper right",
+    "rolling, seen from the side, a short stripe pointing down right",
+    "rolling, seen from the side, a short stripe pointing up right",
+    "rolling, seen from the side, a stripe nearly level",
+    "tumbling down a ladder, seen front on, dark band (another turn)",
+    "tumbling down a ladder, seen front on, light band (another turn)",
+]
+note = "the game's barrel"
+
+[[art]]
+id = "entity.fire"
+label = "wandering flame"
+description = "a small living flame with eyes that comes out of the fire source and wanders the platforms and ladders, 16 by 16 pixels; it harms the hero on touch"
+poses = [
+    "flickering, tips leaning left",
+    "flickering, tips leaning right",
+    "flickering, tall tips",
+    "flickering, tips spread wide",
+    "flickering, low tips",
+    "flickering, tall tips leaning left",
+    "flickering, tall tips leaning right",
+]
+note = "the fireball out of the oil drum"
+
+[[art]]
+id = "entity.hammer"
+label = "smashing tool"
+description = "a tool lying on a platform that the hero grabs by jumping into it, then swings up and down to smash hazards while its time runs, 8 by 16 pixels, drawn facing right"
+poses = [
+    "upright, the heavy end at the top",
+    "swung forward, the heavy end pointing right",
+]
+note = "the hammer"
+
+[[art]]
+id = "entity.enemy_821"
+label = "big foe"
+description = "the large foe at the top of the stage who rolls hazards down at the hero, 48 by 32 pixels; it never moves from its place"
+poses = [
+    "standing, facing the viewer, arms bent at its sides",
+    "standing, facing the viewer, arms bent at its sides (the same)",
+    "turned to its left, bending to pick something up",
+    "facing the viewer, holding something low in front with both hands",
+    "turned to its right, bending to set something down",
+    "facing the viewer, mouth open, its right fist raised",
+    "facing the viewer, mouth open, its left fist raised",
+]
+note = "Donkey Kong, who throws the barrels"
+
+[[art]]
+id = "entity.enemy_629"
+label = "big foe"
+description = "the large foe at the top of the third stage, 48 by 32 pixels; it beats its chest and throws nothing, and never moves from its place"
+poses = [
+    "standing, facing the viewer, arms bent at its sides",
+    "facing the viewer, mouth open, its right fist raised",
+    "facing the viewer, mouth open, its left fist raised",
+]
+note = "Donkey Kong on 75m"
+
+[[art]]
+id = "entity.enemy_278"
+label = "big foe"
+description = "the large foe at the top middle of the last stage, 48 by 32 pixels; it beats its chest and throws nothing, and never moves from its place"
+poses = [
+    "standing, facing the viewer, arms bent at its sides",
+    "facing the viewer, mouth open, its right fist raised",
+    "facing the viewer, mouth open, its left fist raised",
+]
+note = "Donkey Kong on 100m"
+
+[[art]]
+id = "entity.npc_222"
+label = "lift platform"
+description = "a short flat platform that rides up one shaft and down the other, 16 by 8 pixels; the hero stands on its top and is carried with it"
+poses = [
+    "a flat platform, seen from the side",
+]
+note = "an elevator platform on 75m"
+
+[[art]]
+id = "entity.spring"
+label = "bouncing hazard"
+description = "a coiled spring that bounces along the top platform from the left and drops down the right side, 16 by 16 pixels; it harms the hero on touch"
+poses = [
+    "pressed flat, coils close together",
+    "stretched tall in the air, coils apart",
+]
+note = "the springs on 75m"
+
+[[art]]
+id = "entity.oil_drum"
+label = "fire source flames"
+description = "the flames on top of a fire source at the bottom left of the stage, 16 by 8 pixels; they harm the hero on touch, and a rolling hazard that reaches the source makes it flare and lets out a wandering flame"
+poses = [
+    "unlit: draw nothing",
+    "low flames",
+    "high flames",
+]
+note = "the flames on the oil drum"
+
+[[art]]
+id = "entity.npc_912"
+label = "the one to rescue"
+description = "a character waiting at the top of the stage and calling for help, the one the hero climbs to reach, 16 by 24 pixels; it never moves"
+poses = [
+    "standing, one arm waving, calling out",
+    "standing, the other step, clothes swaying",
+]
+note = "Pauline"
+
+[[art]]
+id = "entity.player"
+label = "hero"
+description = "the hero, the one the player moves: a small climber who walks, jumps, climbs ladders and swings a tool, 16 by 16 pixels, drawn facing right"
+poses = [
+    "standing, facing right, arms at its sides",
+    "stepping, legs apart, both arms raised overhead gripping a tool",
+    "standing, both arms raised overhead gripping a tool",
+    "long stride, both arms raised overhead gripping a tool",
+    "stepping, legs apart, arms thrust forward and low gripping a tool",
+    "standing, arms thrust forward and low gripping a tool",
+    "long stride, arms thrust forward and low gripping a tool",
+    "spinning: facing the viewer, arms and legs spread",
+    "spinning: lying on its side, head to the left",
+    "spinning: upside down, arms and legs spread",
+    "spinning: lying on its side, head to the right",
+    "spinning: facing the viewer, arms and legs spread (second turn)",
+    "spinning: lying on its side, head to the left (second turn)",
+    "spinning: upside down (second turn)",
+    "spinning: lying on its side, head to the right (second turn)",
+    "standing, turned to face left",
+    "climbing, seen from behind, left hand up (facing left)",
+    "climbing, seen from behind, right hand up (facing left)",
+    "climbing over a ledge, seen from behind, body bent forward (facing left)",
+    "pulling itself up over a ledge, lying forward (facing left)",
+    "standing at the top of a ladder, seen from behind, arms out (facing left)",
+    "climbing, seen from behind, left hand up",
+    "climbing, seen from behind, right hand up",
+    "climbing over a ledge, seen from behind, body bent forward",
+    "pulling itself up over a ledge, lying forward",
+    "standing at the top of a ladder, seen from behind, arms out",
+    "walking, legs apart",
+    "standing still, mid step",
+    "walking, long stride, legs wide",
+    "jumping, knees tucked, one arm forward",
+    "landing, crouched low",
+    "stepping, legs apart, both arms raised overhead gripping a tool",
+    "standing, both arms raised overhead gripping a tool",
+    "long stride, both arms raised overhead gripping a tool",
+    "stepping, legs apart, arms thrust forward and low gripping a tool",
+    "standing, arms thrust forward and low gripping a tool",
+    "long stride, arms thrust forward and low gripping a tool",
+]
+note = "Jumpman"
+
+[[art]]
+id = "effect.0"
+label = "points"
+description = "a short-lived score number that pops up where the hero jumped over a rolling hazard, 16 by 8 pixels"
+poses = [
+    "a small number: the points won",
+]
+
+[[art]]
+id = "effect.1"
+label = "points"
+description = "a short-lived picture where the hero smashed a hazard, 16 by 8 pixels: first nothing, then the points won"
+poses = [
+    "empty: draw nothing",
+    "a small number: the points won",
+]
+
+[[art]]
+id = "screen-sprite.6.0"
+label = "cursor"
+poses = [
+    "a small pointer, pointing right",
+]
+
+[[art]]
+id = "screen-sprite.7.0"
+label = "cursor"
+poses = [
+    "a small pointer, pointing right",
+]
+
+[[art]]
+id = "picture.stage_screens.screen_25m"
+label = "stage"
+description = "the whole stage, 256 by 240: sloped platforms and ladders where the guide puts them (the hero stands on them, so keep them in place), on a plain backdrop"
+poses = [
+    "the stage",
+]
+note = "the 25m girder stage"
+
+[[art]]
+id = "picture.stage_screens.screen_75m"
+label = "stage"
+description = "the whole third stage, 256 by 240: flat platforms in steps, ladders, two tall shafts the lift platforms ride and two prizes where the guide puts them (the hero stands on them, so keep them in place), on a plain backdrop"
+poses = [
+    "the stage",
+]
+note = "the 75m elevator stage"
+
+[[art]]
+id = "picture.status.screen_25m_more"
+label = "score display"
+poses = [
+    "labels and boxes, no numbers",
+]
+
+[[art]]
+id = "picture.title.screen_title"
+label = "title screen"
+description = "the title screen, 256 by 240: the theme's own title and the menu lines, never the original's logo or names"
+poses = [
+    "the title and the menu",
+]
+
+[[art]]
+id = "entity.enemy_552"
+label = "big foe"
+description = "the large foe at the top of the conveyor stage, 48 by 32 pixels; it beats its chest and throws nothing, and never moves from its place"
+poses = [
+    "standing, facing the viewer, arms bent at its sides",
+    "facing the viewer, mouth open, its right fist raised",
+    "facing the viewer, mouth open, its left fist raised",
+]
+note = "Donkey Kong on 50m"
+
+[[art]]
+id = "entity.enemy_988"
+label = "sliding hazard"
+description = "a small flat hazard carried along a moving belt, 16 by 16 pixels; it harms the hero on touch, and the hero jumps over it or smashes it"
+poses = [
+    "lying flat on the belt",
+    "breaking apart: a large hollow ring",
+    "breaking apart: a small hollow ring",
+    "breaking apart: a tiny spark",
+    "breaking apart: a burst of short rays",
+    "breaking apart: fading rays",
+    "breaking apart: a few sparks",
+    "breaking apart: the last spark",
+    "empty: draw nothing",
+]
+note = "a pie on 50m"
+
+[[art]]
+id = "entity.npc_711"
+label = "sliding ladder"
+description = "a short ladder that slides up and down at the top of a platform, 16 by 16 pixels; the hero can climb it only while it is down"
+poses = [
+    "a short ladder, seen front on",
+]
+note = "a moving ladder on 50m"
+
+[[art]]
+id = "entity.npc_324"
+label = "belt ends"
+description = "the round ends of the moving belts, drawn into the background, 240 by 88 pixels; they turn the way their belt runs"
+poses = [
+    "the belt ends at rest",
+    "the lowest belt's ends turning one way",
+    "the lowest belt's ends turning the other way",
+    "the ends turning, first step",
+    "the ends at a turn",
+    "the ends turning, second step",
+    "the ends at another turn",
+    "the ends turning, third step",
+    "the ends turning, fourth step",
+    "the ends turning, fifth step",
+    "the ends turning, sixth step",
+]
+note = "the conveyors' end caps on 50m"
+
+[[art]]
+id = "picture.stage_screens_50m.screen_50m"
+label = "stage"
+description = "the whole second stage, 256 by 240: flat platforms with moving belts, ladders and two short sliding ladders where the guide puts them (the hero stands on them, so keep them in place), on a plain backdrop"
+poses = [
+    "the stage",
+]
+note = "the 50m conveyor stage"
+
+[[sound]]
+role = "walk"
+description = "a soft tick on every second step, every move while swinging the tool, and every few rungs climbed"
+
+[[sound]]
+role = "smash"
+description = "a rolling hazard or a wandering flame smashed by the tool"
+
+[[sound]]
+role = "thump"
+description = "a low thump: the big foe raising its fist, the fire source flaring up, and the start of the hero's spin when a life is lost"
+
+[[sound]]
+role = "hammer_music"
+description = "a fast, urgent loop while the hero holds the smashing tool"
+note = "the hammer music"

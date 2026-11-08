@@ -1,0 +1,54 @@
+# Donkey Kong's (templates/donkey-kong-oe/themes/kit/geometry.toml): this stage runs
+# its model and hooks. Boxes and danger frames the model's hooks read from their params, which
+# its components don't say (docs/theme-kit.md, "Gameplay geometry").
+# `gp theme kit` reads the numbers from the model's ext_params and puts each
+# box into kit.toml in the slot's own pixels. The hammer's boxes are
+# measured from the hero's place; `origin` names where the hammer's picture
+# is drawn from the same place (the dk_hammer hook, ext/src/lib.rs).
+format = "0.1.0"
+
+[[box]]
+slot = "entity.hammer"
+kind = "hit"
+what = "the head, raised: smashes a rolling hazard it meets while the hero holds the tool"
+params = ["up_x0", "up_y0", "up_x1", "up_y1"]
+origin = ["draw_up_x", "draw_up_y"]
+frames = ["base"]
+
+[[box]]
+slot = "entity.hammer"
+kind = "hit"
+what = "the head, swung forward: smashes a rolling hazard it meets while the hero holds the tool"
+params = ["front_x0", "front_y0", "front_x1", "front_y1"]
+origin = ["draw_front_x", "draw_front_y"]
+frames = ["clip0.0"]
+
+[[slot]]
+id = "entity.hammer"
+danger = ["base", "clip0.0"]
+danger_what = "smashes rolling hazards while the hero holds it"
+
+# The touch tests the game runs, in each picture's own pixels. The model
+# folds them into one column of the hero's ($C196's box moved onto the
+# fire's and barrels' hitboxes, the note on entities.fire.hitbox): these
+# are the boxes as the screen shows them, which a theme's art must cover.
+[[box]]
+slot = "entity.barrel"
+kind = "touch"
+what = "harms the hero where the hero's box meets it; the same box the tool's head smashes"
+params = ["smash_x0", "smash_y0", "smash_x1", "smash_y1"]
+params_of = "hammer"
+
+[[box]]
+slot = "entity.fire"
+kind = "touch"
+what = "harms the hero where the hero's box meets it"
+params = ["smash_x0", "smash_y0", "smash_x1", "smash_y1"]
+params_of = "hammer"
+
+[[box]]
+slot = "entity.player"
+kind = "touch"
+what = "the hero's own box: a foe harms the hero where it meets this"
+rect = [5, 4, 6, 6]
+source = "the table at $C196, 5 to 10 across and down from the hero's sprite, a line lower on the screen; the note on entities.fire in model.toml"

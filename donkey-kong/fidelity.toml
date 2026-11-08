@@ -1,0 +1,10 @@
+[contract]
+schema = "0.2.0"
+model = "donkey_kong_oe"
+default = "exact"
+description = "Donkey Kong: Original Edition 25m: the original's play frame for frame, its random choices given"
+
+[corpus]
+together = "100%"
+longest_stretch = "10s"
+note = "Every clip at 100% of its frames together straight through from its start, and each long run (over 600 frames) with a longest exact stretch of 10 s or more in resync mode, the user's bar of 2026-11-02"

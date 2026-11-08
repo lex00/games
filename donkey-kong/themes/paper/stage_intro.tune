@@ -1,0 +1,7 @@
+tune 1
+# stage_intro: written by gp theme paint, from the role's words
+step 7
+voice lead pluck 0.45
+notes D4:1 G4:1 G4:1 G4:2 E4:1 E4:1 G4:1 E4:2 C4:1 C4:1 C4:1 C4:2
+voice bass soft 0.35
+notes C2:5 G2:5 C2:5

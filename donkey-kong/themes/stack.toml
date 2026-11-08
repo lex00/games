@@ -1,0 +1,8 @@
+format = "0.1.0"
+model = "donkey_kong_oe"
+
+# The paper theme ships off: the model draws the lifted art by default.
+[[layer]]
+theme = "paper"
+scope = "baked"
+enabled = false

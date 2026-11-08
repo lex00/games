@@ -1,0 +1,1258 @@
+# Asset map for Donkey Kong (donkey-kong-ju): its two pattern tables, the
+# stage screens with their palettes, 25m's ladders and Kong's poses. Each
+# span names the routine that reads it, found by tracing the PRG (there's no
+# disassembly to cite).
+schema = 1
+source = "donkey-kong-ju"
+title = "Donkey Kong"
+sha256 = "aa408f5a6b97c0d738e7e8b489a5617ad4a9ecdee2b05c4ee504210ce31b2825"
+
+# 8KB of CHR ROM, two pattern tables of 256 tiles. The game sets PPUCTRL to
+# $94 in play: sprites from the first table, the background from the
+# second. The background's digits are tiles 0 to 9 (the score, bonus and
+# lives the status routine writes to rows 3 and 5), A to Z $0A-$23, $24 blank.
+[[asset]]
+name = "sprite_tiles"
+format = "chr-2bpp"
+region = "chr"
+offset = 0x0000
+tiles = 256
+tiles_per_row = 16
+
+[[asset]]
+name = "tiles"
+format = "chr-2bpp"
+region = "chr"
+offset = 0x1000
+tiles = 256
+tiles_per_row = 16
+charset = [[0x00, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ "]]
+
+# The stage screens: PPU update strings the draw routine at $F1F0 walks to
+# draw a stage (found by tracing the PRG reads while 25m is drawn, frame
+# 985 of the fall-too-far probe clip). 25m draws strings 0 and 4, and the
+# title routine string 3 ($C807 with 8: the pointer at $C4AF). The others
+# are drawn for other screens, not identified yet.
+[[asset]]
+name = "stage_screens"
+format = "ppu-strings"
+region = "prg"
+offset = 0x355B
+size = 1258
+end = 0x00
+entry = [
+  { name = "screen_25m", note = "drawn for 25m: palettes, attributes, girders, ladders" },
+  { name = "screen_100m", note = "drawn for 100m: the string the pointer at $C4A7 names for $53 = 4 ($F71C): girders, ladders, rivets, the prizes and Pauline's platform" },
+  { name = "screen_75m", note = "drawn for 75m: the string the pointer at $C4A7 names for $53 = 3 ($F7CD)" },
+  { name = "screen_title", note = "drawn by the title routine ($C914-$C91E): its palettes, DONKEY KONG in blocks, the four menu lines and the copyright" },
+  { name = "screen_25m_more", note = "drawn for 25m after screen_25m: the status box" },
+]
+embed = [{ asset = "palettes_25m", offset = 0x355E, size = 32 }]
+
+# 25m's palettes, the first update of screen_25m ($3F00, 32 bytes): four
+# for the background, then four for sprites (Mario 0, Pauline 1, the
+# fireballs and the oil drum's fire 2, barrels and hammers 3).
+[[asset]]
+name = "palettes_25m"
+format = "palette"
+region = "prg"
+offset = 0x355E
+count = 8
+
+# Each stage's ladders, as the ladder routine at $D28B reads them: a list of
+# 3-byte rows, x, y and a shape, ended by $FE, picked by stage through the
+# pointer table at $C47B ($C0E3 for 25m), and the shapes through $C483
+# ($C10B for 25m): rows of four bytes, the box's left, top, right and bottom
+# from the ladder's x and y. $D8AD tests Mario's feet box against each
+# (traced from hammer session clip 4, frames 7508 to 7513).
+[[asset]]
+name = "ladders_25m"
+format = "byte-rows"
+region = "prg"
+offset = 0x00E3
+count = 13
+width = 3
+
+[[asset]]
+name = "ladder_shapes_25m"
+format = "byte-rows"
+region = "prg"
+offset = 0x010B
+count = 7
+width = 4
+
+# The sound driver's data: the effects' pitch tables, the note periods,
+# the length tables, the songs' headers and notes and the jingles, $FAE5
+# to $FFF8, read by the driver at $FA48-$FE58 (traced reads of the user's
+# play and run 5658S). The dk_sound hook reads it by CPU address from
+# $FAE5 up.
+[[asset]]
+name = "sound_rom"
+format = "table"
+count = 1300
+column = [
+  { name = "byte", region = "prg", offset = 0x3AE5 },
+]
+
+# The attract demo's script: 20 entries, each a direction ($56: 1 right, 2
+# left, 4 down, 8 up, 0 none, 5 a jump) and the frames it holds for. The
+# demo routine $EBDA loads entry $050E from $C014 (way) and $C028 (frames)
+# when its count $050C runs out.
+[[asset]]
+name = "demo_script"
+format = "table"
+count = 20
+column = [
+  { name = "way", region = "prg", offset = 0x0014 },
+  { name = "frames", region = "prg", offset = 0x0028 },
+]
+
+# Kong's poses. Kong is background tiles, not sprites: the routine at
+# $EB06 picks a pose and $C815 queues it for the name table at $2084 (row
+# 4, column 4) through the pointer table at $C03C. Each pose is a size byte
+# ($46: 4 rows, 6 columns, not lifted) and then 24 tile numbers, a column
+# at a time from the top left. $EB54 shows them by the throw timer $36 and
+# the slow timer $44: `kong_take` at $36 = 24, `kong_hold` at $36 = 0,
+# `kong_throw` once a held barrel is let go ($0515 set by $DB1B), then
+# `kong_beat_a` at $44 = $13 and $0B, `kong_beat_b` at $0F and $08, and
+# `kong_stand` at $04 (frames 351 to 3160 of recording dk-clear-25m).
+[[asset]]
+name = "kong_take"
+format = "byte-rows"
+region = "prg"
+offset = 0x060D
+count = 1
+width = 24
+
+[[asset]]
+name = "kong_hold"
+format = "byte-rows"
+region = "prg"
+offset = 0x0626
+count = 1
+width = 24
+
+[[asset]]
+name = "kong_throw"
+format = "byte-rows"
+region = "prg"
+offset = 0x063F
+count = 1
+width = 24
+
+[[asset]]
+name = "kong_stand"
+format = "byte-rows"
+region = "prg"
+offset = 0x0658
+count = 1
+width = 24
+
+[[asset]]
+name = "kong_beat_a"
+format = "byte-rows"
+region = "prg"
+offset = 0x0671
+count = 1
+width = 24
+
+[[asset]]
+name = "kong_beat_b"
+format = "byte-rows"
+region = "prg"
+offset = 0x068A
+count = 1
+width = 24
+
+# 25m's ladder tops and the climb's pictures, $C127-$C15E, which the
+# climb routine reads ($D37E-$D4ED): the top zones as $D50A reads them
+# (rows of x, y and a shape through the pointer at $C48B, ended by $FE),
+# the zones' box at $C143, the top zone's 16 pictures at $C147 (by $5B)
+# and the climb's 6 at $C159 (by $5C). The dk_mario hook reads it by CPU
+# address from $C127 up (climb-ladder clip 1, frames 1470 to 1510).
+[[asset]]
+name = "climb_rom"
+format = "table"
+count = 56
+column = [
+  { name = "byte", region = "prg", offset = 0x0127 },
+]
+
+# 25m's girders as the walk's ground test reads them ($D91A): runs of five
+# bytes (x, y, a shape, the step across, a signed byte, and the count of
+# pieces, each a pixel higher than the last), each followed by a byte that
+# is $FE at the end of a girder's row, from $C08C (the bottom girder's two
+# runs, then one run a girder); and the pieces' boxes by shape at $C0C3
+# (left, top, right and bottom from the piece's place). The walk tests
+# Mario's feet box against them after each move across and steps a pixel
+# when it meets none ($D8EB).
+[[asset]]
+name = "ground_runs_25m"
+format = "byte-rows"
+region = "prg"
+offset = 0x008C
+count = 8
+width = 6
+
+[[asset]]
+name = "ground_shapes_25m"
+format = "byte-rows"
+region = "prg"
+offset = 0x00C3
+count = 3
+width = 4
+
+
+# The play routine's tables, which the dk_idle hook's cost of the play
+# routine ($CE7C) reads by CPU address (templates/donkey-kong-oe/ext/src/
+# play_mario.rs), each span from $C03C to $C4FF that no asset above lifts.
+
+# The box pointers at $C03C and $C044 and the boxes up to $C08B.
+[[asset]]
+name = "play_pointers"
+format = "table"
+count = 80
+column = [
+  { name = "byte", region = "prg", offset = 0x003C },
+]
+
+# 25m's girders' heights by row ($C0BC), $E016's list.
+[[asset]]
+name = "play_heights"
+format = "table"
+count = 7
+column = [
+  { name = "byte", region = "prg", offset = 0x00BC },
+]
+
+# 25m's gaps under the girders' ends ($C0CF) and their boxes ($C0DF), $D36A's list.
+[[asset]]
+name = "play_gaps"
+format = "table"
+count = 20
+column = [
+  { name = "byte", region = "prg", offset = 0x00CF },
+]
+
+# The end mark of 25m's ladder list ($C10A), after the ladders.
+[[asset]]
+name = "play_ladders_end"
+format = "table"
+count = 1
+column = [
+  { name = "byte", region = "prg", offset = 0x010A },
+]
+
+# The tables from $C15F to $C20B: Mario's boxes, the swing's pictures, the
+# barrels' ladder lists, the slope list and the straight drops' stops.
+[[asset]]
+name = "play_tables"
+format = "table"
+count = 173
+column = [
+  { name = "byte", region = "prg", offset = 0x015F },
+]
+
+# 75m's tables, $C20C to $C2EF, each found through a pointer table indexed
+# by the stage $53 (worker lv75's dossiers, 2026-11-04, from a trace of run
+# 5658S's 75m, frames 1611 to 2440). The ground under Mario on any stage
+# but 25m ($D2E2): rows of x, y and a shape through the pointer at $C46B
+# (entry 2), each one box, ended by $FE; and the boxes by shape through
+# $C473 (entry 2): left, top, right and bottom from the row's place. $D8AD
+# tests Mario's feet box against each.
+[[asset]]
+name = "ground_runs_75m"
+format = "byte-rows"
+region = "prg"
+offset = 0x020C
+count = 21
+width = 3
+
+# The $FE that ends 75m's ground runs.
+[[asset]]
+name = "ground_runs_75m_end"
+format = "table"
+count = 1
+column = [
+  { name = "byte", region = "prg", offset = 0x024B },
+]
+
+# 75m's girders' heights by row, ended by $FF: $E016's list through the
+# pointer at $C493 (entry 2), the girder number from a y.
+[[asset]]
+name = "heights_75m"
+format = "table"
+count = 6
+column = [
+  { name = "byte", region = "prg", offset = 0x024C },
+]
+
+[[asset]]
+name = "ground_shapes_75m"
+format = "byte-rows"
+region = "prg"
+offset = 0x0252
+count = 7
+width = 4
+
+# 75m's ladders as the ladder routine $D28B reads them (the pointers at
+# $C47B and $C483, entry 2): rows of x, y and a shape, ended by $FE, and
+# the shapes' boxes, as ladders_25m and ladder_shapes_25m.
+[[asset]]
+name = "ladders_75m"
+format = "byte-rows"
+region = "prg"
+offset = 0x026E
+count = 10
+width = 3
+
+# The $FE that ends 75m's ladders.
+[[asset]]
+name = "ladders_75m_end"
+format = "table"
+count = 1
+column = [
+  { name = "byte", region = "prg", offset = 0x028C },
+]
+
+[[asset]]
+name = "ladder_shapes_75m"
+format = "byte-rows"
+region = "prg"
+offset = 0x028D
+count = 6
+width = 4
+
+# 75m's whole ladders' tops as $D50A reads them (the pointer at $C489 +
+# $53 * 2): rows of x, y and a shape, with the box at $C143 as on 25m.
+[[asset]]
+name = "ladder_tops_75m"
+format = "byte-rows"
+region = "prg"
+offset = 0x02A5
+count = 10
+width = 3
+
+# $C2C3 to $C2D7: the $FE that ends 75m's ladder tops, 8 bytes not
+# identified yet, the elevators' six sprite offsets ($C2CC, read by $D326
+# and $E834) and the fires' ladder list's index by girder ($C2D2, through
+# the pointer at $C49B + ($53 - 2) * 2), which $E7A3 reads.
+[[asset]]
+name = "play_tables_75m"
+format = "table"
+count = 21
+column = [
+  { name = "byte", region = "prg", offset = 0x02C3 },
+]
+
+# The fires' ladders on 75m ($E7A3, the pointer at $C4A1 + ($53 - 2) * 2):
+# rows of x, the y a fire climbs to and its state.
+[[asset]]
+name = "fire_ways_75m"
+format = "byte-rows"
+region = "prg"
+offset = 0x02D8
+count = 8
+width = 3
+
+# 100m's tables, $C2F0 to $C3E1, each found through a pointer table indexed
+# by the stage $53 or read by 100m's code (worker lv100's dossiers,
+# 2026-11-04, from a trace of run 5658S's 100m, frames 2442 to 5232).
+
+# 100m's ground as $D2E2 reads it on any stage but 25m: rows of x, y and a shape, each one box, through the pointer at $C46B ($C2F0)
+[[asset]]
+name = "ground_runs_100m"
+format = "byte-rows"
+region = "prg"
+offset = 0x02F0
+count = 5
+width = 3
+
+# The $FE that ends 100m's ground runs ($C2FF)
+[[asset]]
+name = "ground_runs_100m_end"
+format = "table"
+count = 1
+column = [
+  { name = "byte", region = "prg", offset = 0x02FF },
+]
+
+# 100m's floors' heights by row, ended by $FF: $E016's list through the pointer at $C493 ($C300)
+[[asset]]
+name = "heights_100m"
+format = "table"
+count = 6
+column = [
+  { name = "byte", region = "prg", offset = 0x0300 },
+]
+
+# 100m's ground boxes by shape through the pointer at $C473: left, top, right and bottom from the row's place ($C306)
+[[asset]]
+name = "ground_shapes_100m"
+format = "byte-rows"
+region = "prg"
+offset = 0x0306
+count = 4
+width = 4
+
+# 100m's ladders as $D28B reads them (the pointer at $C47B): rows of x, y and a shape ($C316)
+[[asset]]
+name = "ladders_100m"
+format = "byte-rows"
+region = "prg"
+offset = 0x0316
+count = 14
+width = 3
+
+# The $FE that ends 100m's ladders ($C340)
+[[asset]]
+name = "ladders_100m_end"
+format = "table"
+count = 1
+column = [
+  { name = "byte", region = "prg", offset = 0x0340 },
+]
+
+# 100m's ladders' boxes by shape (the pointer at $C483, $C341)
+[[asset]]
+name = "ladder_shapes_100m"
+format = "byte-rows"
+region = "prg"
+offset = 0x0341
+count = 2
+width = 4
+
+# 100m's whole ladders' tops as $D50A reads them (the pointer at $C489 + $53 * 2): rows of x, y and a shape, with 25m's box at $C143 ($C349)
+[[asset]]
+name = "ladder_tops_100m"
+format = "byte-rows"
+region = "prg"
+offset = 0x0349
+count = 14
+width = 3
+
+# The $FE that ends 100m's ladder tops ($C373)
+[[asset]]
+name = "ladder_tops_100m_end"
+format = "table"
+count = 1
+column = [
+  { name = "byte", region = "prg", offset = 0x0373 },
+]
+
+# The fires' ladder list's index by girder on 100m ($C374, through the pointer at $C49B + ($53 - 2) * 2), which $E7A3 reads
+[[asset]]
+name = "fire_index_100m"
+format = "table"
+count = 6
+column = [
+  { name = "byte", region = "prg", offset = 0x0374 },
+]
+
+# The fires' ladders on 100m as $E7A3 reads them (the pointer at $C4A1 + ($53 - 2) * 2): x, the y a fire climbs to and its state ($C37A)
+[[asset]]
+name = "fire_ways_100m"
+format = "byte-rows"
+region = "prg"
+offset = 0x037A
+count = 28
+width = 3
+
+# Where a new fire appears on 100m ($E564): x and y, four a side, the left side first ($C3CE)
+[[asset]]
+name = "fire_starts_100m"
+format = "byte-rows"
+region = "prg"
+offset = 0x03CE
+count = 8
+width = 2
+
+# The x at which a fire turns before a gap where a rivet was, by its way ($E770, $C3DE)
+[[asset]]
+name = "fire_gaps_100m"
+format = "table"
+count = 4
+column = [
+  { name = "byte", region = "prg", offset = 0x03DE },
+]
+
+# The tables from $C3E2 to $C4FF (the name keeps the first address from before
+# 100m's were split off): the fires' girder ends, the barrels' bounce
+# and drop tables, the kill boxes, the screen's edges, the walk's beat bits,
+# the stage pointers from $C46B and the object lists.
+[[asset]]
+name = "play_tables_c2f0"
+format = "table"
+count = 286
+column = [
+  { name = "byte", region = "prg", offset = 0x03E2 },
+]
+
+# The program's code between the tables and the pictures, from $C500 to
+# $C60C, $C6A6 to $F55A and $FA45 to $FAE4: the routines the handler's
+# cost walks (gp_cycles::walk), so their cycles come from the person's ROM
+# (docs/cycles.md, "Costs from the ROM's code"). Lifted, never in the repo.
+# From $C6A2 it is cut as donkey-kong-oe's map cuts it (that map's offsets
+# less 0x4000: Original Edition's upper half is this program), round
+# 100m's hammer palette, its ending's palette and fallen Kong's two poses,
+# which Original Edition's model takes as slots of their own and its hooks
+# read by CPU address (templates/donkey-kong-oe/ext/src/play.rs, TABLES).
+[[asset]]
+name = "code_c500"
+format = "table"
+count = 269
+column = [
+  { name = "byte", region = "prg", offset = 0x0500 },
+]
+
+# 100m's fires' colors while a hammer is out: Mario's touch of a hammer in
+# a jump ($D800) queues entry $46 of $C03C on 100m ($D894-$D8A4, $53 = 4),
+# the update $3F19 of 3 bytes at $C6A2 (sprite palette 2), and the hammer's
+# end queues entry $4E ($D7F2, $C6A6), the stage's colors again. Lifted
+# from its count byte, as palette_ending. code_c6a3 starts after it, at
+# $C6A6 (its name kept).
+[[asset]]
+name = "palette_hammer"
+format = "palette"
+region = "prg"
+offset = 0x06A2
+count = 1
+
+[[asset]]
+name = "code_c6a3"
+format = "table"
+count = 93
+column = [
+  { name = "byte", region = "prg", offset = 0x06A6 },
+]
+
+# 100m's ending ($CCF4) takes three spans out of the code's tables, which
+# go on round them as code_c707, code_c735 and code_c74e. The colors the
+# ending gives sprite palette 3 for Kong's fall: the update $3F1D, 3 bytes,
+# in the string $C823 queues at $43 $9E (entry $0C of $C03C, $C701),
+# lifted from its count byte so the palette's four bytes are the count (its
+# unused color 0) and the three colors.
+[[asset]]
+name = "palette_ending"
+format = "palette"
+region = "prg"
+offset = 0x0703
+count = 1
+
+[[asset]]
+name = "code_c707"
+format = "table"
+count = 22
+column = [
+  { name = "byte", region = "prg", offset = 0x0707 },
+]
+
+# Kong fallen on his head, drawn into the name table at $228D ($CE0E,
+# $C815 through $C03C): two poses in turn by $43's parity, entry $14
+# ($C71C) and entry $16 ($C735), each a size byte ($46, in the tables
+# around them) and 24 tiles, a column of four at a time.
+[[asset]]
+name = "kong_fallen_a"
+format = "byte-rows"
+region = "prg"
+offset = 0x071D
+count = 1
+width = 24
+
+[[asset]]
+name = "code_c735"
+format = "table"
+count = 1
+column = [
+  { name = "byte", region = "prg", offset = 0x0735 },
+]
+
+[[asset]]
+name = "kong_fallen_b"
+format = "byte-rows"
+region = "prg"
+offset = 0x0736
+count = 1
+width = 24
+
+[[asset]]
+name = "code_c74e"
+format = "table"
+count = 11789
+column = [
+  { name = "byte", region = "prg", offset = 0x074E },
+]
+
+[[asset]]
+name = "code_fa45"
+format = "table"
+count = 160
+column = [
+  { name = "byte", region = "prg", offset = 0x3A45 },
+]
+
+# Content, written by `gp assets hash` from the ROM the map describes.
+# Each span's BLAKE3 and length, and a fingerprint of each 16 bytes of it,
+# so `gp assets find` finds the span in another dump (docs/assets.md,
+# "Content"). Hashes, not ROM data. Don't edit by hand.
+
+[[content]]
+part = "sprite_tiles"
+region = "chr"
+offset = 0x0000
+len = 4096
+blake3 = "b1de5d22bdbfa3c53fa675f31bd43b05b3943214de5040918136719295900ce2"
+chunks = [
+  "2d7a88bd66d7152ab110ffdaf619a2a9b486759179a451d4ecffd5ee97e7921c2135e998b3ca441a322cf5417c44d98e53f8b07e3b4f14fd5293c6e084e6bb182d7a88bd3b4f14fdb110ffdaf1f50a6a5f2601ea98e22aac122532ddc12cebc1f948b2e8dc2728bd00e4472c354b6ea691de2bb9ebf1c4b9122532ddf23a3f7a",
+  "8f3239c431ebd2ec00e4472c18b3c79b1afdb9986ff5062cbd79733f347938799e8f33ce8c53039d3648c4b8affb361b0a014f088ad76751c8eca98e83c0b786c6e74f80cd34188d1d4c8ca33d651a7dbdcad2719405bfb22bb9b4aac62dab4cf2602851922aca56f3822a71633b002d019fc27c0576a46297e5f6fbde8a791d",
+  "4f6eaaa90af1bcff070552a0f3822a71eedce17b4864abccce18b528b811b94dd5288b4d91d4f194a1d11e377ad7a284b0ec781283c6e1f9a779c45ae0fafc55dac2950023c889d987d55f8b2446a73abe43fbba88e8b80bed4bb926f3822a71bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2",
+  "7ad78f90208b5490869a3905a54554068cab1aa4020e1cf964e8403482d5eaaae0093b20bfe341505469c4ef9a5483f53135b742244b9ae8fe2d8b4d0a9162e50904d9f28b6da204d2e1101507f0ad63e0adba97bdbe686de94bad118acfeb575be51fa5c8daf2a25bd11a8b6dd0ddd95df806cb2d90045f368039d50d798ab7",
+  "52cb04bbb2192e1da4ff8d4d61e02fee807f3517953c853f41fe15acf001809da3bf0bc67478f4b5f6633c124f14a2adc50358e056a7b75a8c87414459ec45546d7666820761f2924d69682aa69e7027dad39c481839fd06fe44fad9d2808fb3bf119acb2158eb06e6a0ba4d9b768c26dd82c3d043570d29c0648b162cdb760c",
+  "112342da112342daa44bed05bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b28af85d420df0c07d546122789219aae43e17547239f5c20ff4a923052e4b3dd7bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2c6b1fc50bc07681cbc97d536ba4fe29e48c984fa1f03e1a63695836d9efb9709",
+  "e6064ad35c65accd394e9da1e058b659315d6a5a3fa3eb17dae0a2a30445d2d1136684475f7d06e178e6e1e7afd798edbc71f3b2bc71f3b2bc71f3b2bc71f3b2ad05513716dd43761b43aafd18e61f43fa84284c88edcb606effdfd2cbbdd1cae235c91721160ef5f26c3d0b6ce62f165e55998e27f0e5a06e062651bc71f3b2",
+  "bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b2bc71f3b279139be625ac79f6e153dd6cd80a11183e83ac2a6e12fc9675c175f04c350bc5afb3e8b2ff1c79413aff7d5f27643f9794dffcd730b82d81241140aa2ad15bb2bc6440740ef38852189b846848b94761",
+]
+
+[[content]]
+part = "tiles"
+region = "chr"
+offset = 0x1000
+len = 4096
+blake3 = "e63111bef7d29c60543263c0148a0aeedaf2aea494065751520c83915236b3fc"
+chunks = [
+  "6320327d88ba22e41e94d5e1a16ea4c635042e83122cdb2ebba8f260d7215203a196a6c9fdad7c2c75c0ceb2e06be43518269c4374f35522ceb07be8ab80db889da26ff4fb767a86ffd25560245a495af6617c074633c31e37eedf5beb96fe14fc469c3ec1ebd90c59583fcba5f5a668f9ea6d8ad88db7d994faa406d7088545",
+  "9c9e739387860f47c97bac483427c1cdf3822a71846b4502a37ae0607fabae0b328071d25c4b28a7f6c24c276df7b3474ba608c22114e8db519f3aba40b363a710553051f6ba58de37a534834a9d902e272659e004a65a0bafa2ba3ecee461d2298bb75523fcddf5bfa0f757719db2e03ddf42ac838b025c43727a7492191d07",
+  "5f7482a771838ce945d3697abaecef474037108889eef7266447676d4a942882e394811e95d4345b7a62b965e9fa1bec3d667b41578f642f87504a559f4bd54d1156d55c34d6c5c51156d55c34d6c5c57253865b243719a77253865b8356ef1e928c613c91bdb9c2928c613c91bdb9c2487186c0c18c42d51736bb0c6a85750b",
+  "233ca57bfc65db462ad4d2d4eb971a4a85933ef213b96662eac8da4f059719e0a5d0fac513be86b549a1d2ff7e8bc440f21b4987ee75536bfeea40740dcab732061730675af450bddf745ab4d0904dc69be8d9a5047cac837ee6d3df1b17841b5b12885215447a9741821f4a5f27bf1325aff2ae3be44faf7e4bcb2da6da2567",
+  "6db4eb1210b1b53af2f798426d77ffd560a4c410324710fb2375e4b0a2ef5d49c35a780eba750cbd795174f2372a5d500d8f206620c3e28e5a7d345800c34f118b1a999329c70b4eb7f383e44cc746e39ae516e3f82bbc79b64f97dbdddec09bada5f6039cdfae3126a0a77bca9050ab08a8b0f9537eb2bd6baf65cb75e191fe",
+  "1b09eebb4b5902193adfef4588297ceff662e0fd0ee972c405dd8cf019931ec6022e32fae8a085c3c7664dad084b4fa057d482f7dd57a28aa0d58cf76949de394b04a49fd4e1c4f976ad46f8e4d7cbd560fcac85fb4efd46ec3fef49bb846a65014910c3000f85f7c025e8631dde4a1ae91aaec25cd5085d28131074d6c437ac",
+  "912146da6d717758fb945cb07e8e5af3bdd75ce34abbc6790b41bd8c13aa6e4cf5daaf1090e985246440c6a362349e3bfc662517f4caa26722f19f0631672700c09a9f1d125f34fb053c5d95bc8e1b8049dc4daf2c9fa5c87a8e9d2a37abf0c50458eaa07f9c82db28f96695a604933c9311db00002517e3f96105c7da2b7a15",
+  "508ad04f8372d7b42102472a60b5bd1ec294922054c58e90ae6817558225d6abf26028516abc35ce5779fdf7c28c106b1c7451bdaefeee67338b3f3ca57ad50765900ba63869a8f51799ac191c401801d893594360b5bd1eede97c18dd98190c0aee838da09b411a60476882b2f0ccddfc9c651c98f88250a70461b7fc8451f5",
+]
+
+[[content]]
+part = "stage_screens (part 1)"
+region = "prg"
+offset = 0x355B
+len = 3
+blake3 = "69a9bdd0c65e6453b672efd6d6a073a3afd85683c863b1615b93a1edfa716bd8"
+chunks = [
+  "2aeed26e",
+]
+
+[[content]]
+part = "stage_screens (part 2)"
+region = "prg"
+offset = 0x357E
+len = 1223
+blake3 = "37e499aa1edff2999561d0d7133d8c93b7e30e9e799ab6ca9387fab353f0ca76"
+chunks = [
+  "141666edfe8701ff06fc914a91c3c7ab053b7263b6c7503e154271798e68f6744f3855e1146d6e75a716fd0554ef05d0357467ac020373ef8d66bbf4465977af8b76dbd5a581bdc2f0610fe8c6d051f8768bf995a169d51c404600ae51d62f6ebddc53172ba6a3eb27bb97f4ed2500b7f10ca688818232aa0df4c76f1636276a",
+  "a1209479da8033e434c402f36b2b6d3ee071c3ad270d38ced0799fccdf3a72c4bda4f51e70b72191d39cc43492411a9648cd9faf7c6211f7c224a56d7b4d5cfbdcc56f5b84a4aa87a2696c39f396fbb7b3fb490b55c7705bc98704487dde4484bf559578a3e6628e38d22de56df0514e7d79fdad56240d6673419ac7d0c90994",
+  "399fe09960187ec27ac200e1f070faf8fefd34f771213caf7892876137df6b41dbffe3dc7e0c534579ea0661f15cf9b763935269",
+]
+
+[[content]]
+part = "palettes_25m"
+region = "prg"
+offset = 0x355E
+len = 32
+blake3 = "042276e0ebecdcb0d9ca0fd4cdb939f1842e58821bacfd0a1003eae28d323225"
+chunks = [
+  "8cd555a12e06b124",
+]
+
+[[content]]
+part = "ladders_25m"
+region = "prg"
+offset = 0x00E3
+len = 39
+blake3 = "b35d338a290cb03975bc7413e3a6bbef60990ccef02eadebb119e4bc3f5a29cc"
+chunks = [
+  "f4016c67d6d544939c1f7030",
+]
+
+[[content]]
+part = "ladder_shapes_25m"
+region = "prg"
+offset = 0x010B
+len = 28
+blake3 = "40d1fdaa47cb778a7be11e6c42ddd1f40c479d5bdb72c5d3667b29030961be11"
+chunks = [
+  "6f599183ae2c7fb2",
+]
+
+[[content]]
+part = "sound_rom.byte"
+region = "prg"
+offset = 0x3AE5
+len = 1300
+blake3 = "bec13db4752dbabeea20f9ab46ba755fcc121b9519bfc4854a73f09fe17c8ae4"
+chunks = [
+  "bee9855dc395684e1cb2a01d2b295da3aa818c22e9b165d322b29e5e9a1e89d1cdc52aae4d0da26d56c956f8f63dd47ec3bb80243398d9bb23087352c83cb7f1e9ce169d0ddf363aaec98279b0d361c837e6896f847b419ba56b7edac0053a8cc592ca23af08eb817129208c86a6c2bdddd91417fd4bfcffadc7e352074315ca",
+  "4b5863361f575c68b9baa1a44c9c300384c4dad8616707cc0c0af4078c973673173f53a16a61e600e73c3a279a293dd656864053d2d92e84a0f3a212bfebd6e4536c0b2ae20052f2be8eb54155d083d0b4366b5cf5bb15184aba2884891b018f4f8696d097ccc46bb69fbc396aa59c260d773e1205de9f3f0c44760f73333ceb",
+  "878b972a91b252e02da929ffccc4ff3670411023966407308a7e1e478565387e8f2987d984e67da93dd985fb59fe7af65d4175d78f659dcd03558c84caf042e84377a998369268ef",
+]
+
+[[content]]
+part = "demo_script.way"
+region = "prg"
+offset = 0x0014
+len = 20
+blake3 = "bcca977f50487eb77581f26e9f862b6c88ad3644ec2098b507f2d536328df882"
+chunks = [
+  "d1b03cd57de10a59",
+]
+
+[[content]]
+part = "demo_script.frames"
+region = "prg"
+offset = 0x0028
+len = 20
+blake3 = "c42bc75b0db0404c6d5a707020748f054ecab065bcca210fed909b82780816ea"
+chunks = [
+  "aff31bac7d366d94",
+]
+
+[[content]]
+part = "kong_take"
+region = "prg"
+offset = 0x060D
+len = 24
+blake3 = "b4a0ae0c163d8030c810069ebf6b423eda64b4a37b095dcf9242c11eb63a7557"
+chunks = [
+  "b73d8c088dc5663b",
+]
+
+[[content]]
+part = "kong_hold"
+region = "prg"
+offset = 0x0626
+len = 24
+blake3 = "5c781d56b3f5af37d42520afd0bd9b2f51edb50bf7bcf491a8cb43a27d221db7"
+chunks = [
+  "3bb66da299af27aa",
+]
+
+[[content]]
+part = "kong_throw"
+region = "prg"
+offset = 0x063F
+len = 24
+blake3 = "1a1ee8dc63e914397ea8ea222eed75a9593165df0a6ee8bf988a73c3d9693434"
+chunks = [
+  "71158843107efffc",
+]
+
+[[content]]
+part = "kong_stand"
+region = "prg"
+offset = 0x0658
+len = 24
+blake3 = "49c0f9487122352f2626a8179898384a0e1e71960c4ca78180be36c0ed463734"
+chunks = [
+  "6fadaa7530852460",
+]
+
+[[content]]
+part = "kong_beat_a"
+region = "prg"
+offset = 0x0671
+len = 24
+blake3 = "86a243dae8b7c894f64a2f01777b31f3b6a0ccbff01bb4752487126707e97b89"
+chunks = [
+  "1fb9a435902b5032",
+]
+
+[[content]]
+part = "kong_beat_b"
+region = "prg"
+offset = 0x068A
+len = 24
+blake3 = "a188dbe8ceb4716db74a5ca4e9abfa1c5831c19cf463925db4cef1db809a7977"
+chunks = [
+  "f1b50d6b387c3cdd",
+]
+
+[[content]]
+part = "climb_rom.byte"
+region = "prg"
+offset = 0x0127
+len = 56
+blake3 = "d01d3ce792e48ad2c288e64c375565b0355a7468cce8deaf84f313ca0ea9f2be"
+chunks = [
+  "9342f042a76058e5ccf4a0bb369a0a5d",
+]
+
+[[content]]
+part = "ground_runs_25m"
+region = "prg"
+offset = 0x008C
+len = 48
+blake3 = "43c7a1752aa8445a26bb424a33ee4ef02a7a8462617e3f49ec5e529070f32a7e"
+chunks = [
+  "7ba80e9429f37d6510292535",
+]
+
+[[content]]
+part = "ground_shapes_25m"
+region = "prg"
+offset = 0x00C3
+len = 12
+blake3 = "2874bafca88000ee27f4bbb6f85d6250b7e576e6406b2b92ef9ac18f23b9c031"
+chunks = [
+  "dc17975a",
+]
+
+[[content]]
+part = "play_pointers.byte"
+region = "prg"
+offset = 0x003C
+len = 80
+blake3 = "ae27eed3f9c2d6fdb047d135ca81ca25acb1aefd78f3ce4422ad6d681e22cc4b"
+chunks = [
+  "e09759d25bdb74c0aed0ea96c386ed9ddcb45e3e",
+]
+
+[[content]]
+part = "play_heights.byte"
+region = "prg"
+offset = 0x00BC
+len = 7
+blake3 = "fb264064dd7dc0821bcbc9c4eef0d1996612147dedf33d48b8d2fea99730d140"
+chunks = [
+  "87b29c19",
+]
+
+[[content]]
+part = "play_gaps.byte"
+region = "prg"
+offset = 0x00CF
+len = 20
+blake3 = "8cc32d583114345f5f2e34ea274d99b87037a9583d886fcf6148a9c7a1c1e508"
+chunks = [
+  "3874e3a31e66e620",
+]
+
+[[content]]
+part = "play_ladders_end.byte"
+region = "prg"
+offset = 0x010A
+len = 1
+blake3 = "29e0f11cf95a8a0b317dbbec3704abe89d5416b0ca354bc27b0ddcf28d59da2d"
+chunks = [
+  "687d1c98",
+]
+
+[[content]]
+part = "play_tables.byte"
+region = "prg"
+offset = 0x015F
+len = 173
+blake3 = "15f8f75f877bb31b3554e5564dd242bf406adfeb6da36c6305cbba9d6aa049e8"
+chunks = [
+  "6a0f9afe7298fb7b9495d835503f207cd38859cf4c4f8abdaac8cb0b77f1e2e02a92ade015a7c3ffafde6e25",
+]
+
+[[content]]
+part = "ground_runs_75m"
+region = "prg"
+offset = 0x020C
+len = 63
+blake3 = "fb0926527bb051f4644cfdc49c1bd10df46b4638edea6f9c8e5513e010f2338e"
+chunks = [
+  "52222478eb136691b2294cf2ef191536",
+]
+
+[[content]]
+part = "ground_runs_75m_end.byte"
+region = "prg"
+offset = 0x024B
+len = 1
+blake3 = "29e0f11cf95a8a0b317dbbec3704abe89d5416b0ca354bc27b0ddcf28d59da2d"
+chunks = [
+  "687d1c98",
+]
+
+[[content]]
+part = "heights_75m.byte"
+region = "prg"
+offset = 0x024C
+len = 6
+blake3 = "536026b9b8b032ecdc00197daedede5865b5267651f94994f1e197047dfe33a7"
+chunks = [
+  "18116745",
+]
+
+[[content]]
+part = "ground_shapes_75m"
+region = "prg"
+offset = 0x0252
+len = 28
+blake3 = "41dcccdf2f37602449f9ee8646999286332e4a23764ac415aa5277ee28496021"
+chunks = [
+  "ef255277168c63ae",
+]
+
+[[content]]
+part = "ladders_75m"
+region = "prg"
+offset = 0x026E
+len = 30
+blake3 = "12b1d1b48d2d3f44254707912aa3f35ffdf95fa644ec02422432ed9423340807"
+chunks = [
+  "b9ff05075a6ca23e",
+]
+
+[[content]]
+part = "ladders_75m_end.byte"
+region = "prg"
+offset = 0x028C
+len = 1
+blake3 = "29e0f11cf95a8a0b317dbbec3704abe89d5416b0ca354bc27b0ddcf28d59da2d"
+chunks = [
+  "687d1c98",
+]
+
+[[content]]
+part = "ladder_shapes_75m"
+region = "prg"
+offset = 0x028D
+len = 24
+blake3 = "7aa9b9218838d20c2410308aea9a30c60af844dbcd9fb0b7763468ba99e7899d"
+chunks = [
+  "d60244a64911fccd",
+]
+
+[[content]]
+part = "ladder_tops_75m"
+region = "prg"
+offset = 0x02A5
+len = 30
+blake3 = "bf722f61869d68e9a3f033473f43a5d9a3c6ab68b4a893eff6cbb916c8f62fef"
+chunks = [
+  "e8cff4184a0e6adc",
+]
+
+[[content]]
+part = "play_tables_75m.byte"
+region = "prg"
+offset = 0x02C3
+len = 21
+blake3 = "738355af6b8ef85f8977a902e3c12537e453dbb753ca7c5b8f0f864d2fb294a0"
+chunks = [
+  "345eae387fe36b9f",
+]
+
+[[content]]
+part = "fire_ways_75m"
+region = "prg"
+offset = 0x02D8
+len = 24
+blake3 = "63cb0462b9281fd5c78451ceeb4fe8ab348717ace552920af5ff1c4dede8869d"
+chunks = [
+  "c37f27c943daff79",
+]
+
+[[content]]
+part = "ground_runs_100m"
+region = "prg"
+offset = 0x02F0
+len = 15
+blake3 = "8644daa3646847f73df7aede43601a19d858914a68fb7277a43638e46cdd001e"
+chunks = [
+  "3ae16f61",
+]
+
+[[content]]
+part = "ground_runs_100m_end.byte"
+region = "prg"
+offset = 0x02FF
+len = 1
+blake3 = "29e0f11cf95a8a0b317dbbec3704abe89d5416b0ca354bc27b0ddcf28d59da2d"
+chunks = [
+  "687d1c98",
+]
+
+[[content]]
+part = "heights_100m.byte"
+region = "prg"
+offset = 0x0300
+len = 6
+blake3 = "ba7fe8ab66ae2893f5ebba96fcb10eb69c68ac889d19a73ee053aa14f09e4197"
+chunks = [
+  "706dc4a4",
+]
+
+[[content]]
+part = "ground_shapes_100m"
+region = "prg"
+offset = 0x0306
+len = 16
+blake3 = "3a12ac090fb05f16a744dd6439337164c05a5072c066f37d6cf2406034b71463"
+chunks = [
+  "fa28e700",
+]
+
+[[content]]
+part = "ladders_100m"
+region = "prg"
+offset = 0x0316
+len = 42
+blake3 = "eddede3e2298d04c0ee39b5a334d9931b66e2df9bcdc7e945fff08f3e2e92bbb"
+chunks = [
+  "d4adeb340878fc7ea461133a",
+]
+
+[[content]]
+part = "ladders_100m_end.byte"
+region = "prg"
+offset = 0x0340
+len = 1
+blake3 = "29e0f11cf95a8a0b317dbbec3704abe89d5416b0ca354bc27b0ddcf28d59da2d"
+chunks = [
+  "687d1c98",
+]
+
+[[content]]
+part = "ladder_shapes_100m"
+region = "prg"
+offset = 0x0341
+len = 8
+blake3 = "dc4aba91ec1d3f71cd1b5449ec383eda959a54a410ffc479b52a718033b03869"
+chunks = [
+  "227bfc95",
+]
+
+[[content]]
+part = "ladder_tops_100m"
+region = "prg"
+offset = 0x0349
+len = 42
+blake3 = "2d09dfa045bd61c32b084a07ce805a6e6b339b6c03dc40c999f0a339af74b607"
+chunks = [
+  "dbc50819ef48c3e604da3d41",
+]
+
+[[content]]
+part = "ladder_tops_100m_end.byte"
+region = "prg"
+offset = 0x0373
+len = 1
+blake3 = "29e0f11cf95a8a0b317dbbec3704abe89d5416b0ca354bc27b0ddcf28d59da2d"
+chunks = [
+  "687d1c98",
+]
+
+[[content]]
+part = "fire_index_100m.byte"
+region = "prg"
+offset = 0x0374
+len = 6
+blake3 = "6e7a3e268977a1d3d7b4e4f7b67c2792a46d0ee6e585349469cfdc2a7e2f88e7"
+chunks = [
+  "b32526b4",
+]
+
+[[content]]
+part = "fire_ways_100m"
+region = "prg"
+offset = 0x037A
+len = 84
+blake3 = "819db89847698ef0ceac1801f89301eceb5f1fa3aa9e26a4274af471a6ce7d1c"
+chunks = [
+  "781e535b05b85863593de502915963a4640e8f0c332ce94c",
+]
+
+[[content]]
+part = "fire_starts_100m"
+region = "prg"
+offset = 0x03CE
+len = 16
+blake3 = "30a8916ef854787b0e668adeb0b2e14c1e852b10ea63340715a2c783ceb98c60"
+chunks = [
+  "ab495eeb",
+]
+
+[[content]]
+part = "fire_gaps_100m.byte"
+region = "prg"
+offset = 0x03DE
+len = 4
+blake3 = "95f9e0ab66e4d7978bb8d996bb7cc683e8113a6536f2b9f18a8dda352a3a795f"
+chunks = [
+  "65bad09f",
+]
+
+[[content]]
+part = "play_tables_c2f0.byte"
+region = "prg"
+offset = 0x03E2
+len = 286
+blake3 = "1d78719af6e43953dcfa99ec77ccd77b08e5bfb97fde4d4dabae7eec42bf2b25"
+chunks = [
+  "d50dfbb935f72e5dd51463d623b6952073de2b14d2fe1ca180376dd8bf1822b4d6e92c8e936a805312d02454e2d0ec01ff9b7b44ac1acc0741dc97e0421c71f1605e3cb3e6ab902d",
+]
+
+[[content]]
+part = "code_c500.byte"
+region = "prg"
+offset = 0x0500
+len = 269
+blake3 = "54a49d4a15acfd63d725bfa87ccbec8b873dc584b1257b80dafa6154b2237d9b"
+chunks = [
+  "6f90da287f19942eac36e8483880968cff90e6250c5daa2cc1d7b792a91c1afc77075c913e7a1bfa2b0486a5c3de3a58ffd4a2825c702ce1fc328591a9c7724fa46046b7",
+]
+
+[[content]]
+part = "palette_hammer"
+region = "prg"
+offset = 0x06A2
+len = 4
+blake3 = "022e25711c6c0f4d00dcb069aa3c87b6be6e141e4fd9ba426b65cc21d9e70c18"
+chunks = [
+  "c1c9c8c1",
+]
+
+[[content]]
+part = "code_c6a3.byte"
+region = "prg"
+offset = 0x06A6
+len = 93
+blake3 = "3c46e5dd115f61ead02b2538171d5835e8e2f5ee48920b18a5a20e7dce5c7cd6"
+chunks = [
+  "fc67687c591fdace572ef983782d7cc6e662202e5050333c",
+]
+
+[[content]]
+part = "palette_ending"
+region = "prg"
+offset = 0x0703
+len = 4
+blake3 = "e9825e7cdfafa1a2e63eaf8d618de6595c9cb1417206e32686a20b9a04a5e521"
+chunks = [
+  "b186de71",
+]
+
+[[content]]
+part = "code_c707.byte"
+region = "prg"
+offset = 0x0707
+len = 22
+blake3 = "065f32dd9dd1722d74bb2c925f9c20c638676dbf4b8a598a7bb038b72deda16a"
+chunks = [
+  "0ff04688f9cc4834",
+]
+
+[[content]]
+part = "kong_fallen_a"
+region = "prg"
+offset = 0x071D
+len = 24
+blake3 = "16e8444eb135958512cfca824cb4d0899d9f9e837d5e15a1dcef29525e1046e6"
+chunks = [
+  "68bbe9349c922723",
+]
+
+[[content]]
+part = "code_c735.byte"
+region = "prg"
+offset = 0x0735
+len = 1
+blake3 = "542a1d6b133a93a2b22779029c14f78023ce6f98dd9780ba3c1f23535434d0a6"
+chunks = [
+  "6b812dc6",
+]
+
+[[content]]
+part = "kong_fallen_b"
+region = "prg"
+offset = 0x0736
+len = 24
+blake3 = "37cb1c8348f7e8aac9d619c8c4f1d0c127df1ad519344a9edd2fa8686b95e058"
+chunks = [
+  "764b648b1aedabb5",
+]
+
+[[content]]
+part = "code_c74e.byte"
+region = "prg"
+offset = 0x074E
+len = 11789
+blake3 = "9d2f7d51faadf470023f002a2fd5bf6a9eb632a42d35047bd8065345f08ac3af"
+chunks = [
+  "fe8eaedf7cda87c94131d237215e1660e6d5a25745b658b98dc497f1cf12109253e5894cd04328b30014a003ac3078b7bf9cd32e473c7ae2ac0853c4866aab0440085bb645d4f25e23d0b6583535bcc9ccb04a7d88c5c0b6fbd00e863a5912ce4735b9b2346b0e6ecf140f5a93c22079bfbf3e88e55ae038ef5bddd8293f74e3",
+  "0068f5aa57d3b6c21c3bcdd3a9f73bf4215bc9d7c0c2f4b9b8c0b395e1d164dd408b58f00b966f5af932f9eab4556ab927db2c536353cc7b99431ebb1f714cbac6f29d2b4a79a4a7f1d276d9969f20cd2b8fe51247a9643fe64ed3f19e13e9dc7d75d40e30b69e94e99a9d0a9e77d752d447f5457cadf04a306eb67c48c02f9c",
+  "33fcab0f0b7b8a664898986d0f548e51f9830789968253911744ba2267491d662e37cf9670b025bb29dccac212b3944ff390aa0236a23405b4776ed81f09b9951f206a6ac911d861aa82432629165322e8a5be99a96f42a7e46e270f098659fe6f25ee7186a2566a6eb9c437f2de649b30b44b46277c50daca1309ffefa167ef",
+  "2bcfe3e3d3fc52f6a639b88c1f7ccd08df898a484110024b59acd65972203bbffe3624f0c1408964c6e21b140600e048b2d2c926f55f4e2f05a8870b5c2d069748a5086021b5d09380abb4efa4dcf9fb29c5b7b6756f2a86e49c2c295ad790cc1d0c6fbab211526a97cad02fd687443dda46194c57b31857ba08c7aaabfdc02d",
+  "4dd2b722c5601325ab3b5dc8fc70ea84965b8c14c101f15a4e78233a452cef1b7a0648683a52923f2eafb7ca89307c39e9855101a6283783520bffb9b9c9312a4c1f03a28c796664100bf0a06c4644ddf51873a6a5cb051ca67b71f605797d98e462e0602e316ed4bd1e970ee8fc5c4dcff777236caae34c78e4a6f0f5b4ccac",
+  "5f62c4304f2e968c9f8dedab2ab08a56fb7b2d36acab66460b2075b5da10e1943d5a0d8b6e1a155c126e08f8a0ab8d98f390a0f3119050b6311fb90c769bf8ad3997a4e09dc022a2e510eb3e3208de5e61934771f31aac971f6d10166c9b5989670d8c4d2a419afa44fe1aabd035116dbcddf63b2f7deb7758ccec9f74ada9f8",
+  "b16c5f2073dea3fbb2addde70434cdb7c0f2bb2b22c445d49d068bd17ca4e9219de0e60cace78f7af5eab4cc11fff23604e0d72d4de5a00b89810381fc7895bc3cd2facfe4cbdc6fbb324a3fa3f2047f84812b765d5103d04d0eb3e2f4e72c16d27826303fd7fb7f27fd1403523bc01ea1c09c09363769de5ecea34ed0a66e75",
+  "f37d755313baf6c910846fe7cb280840a9ecf6bd47c62153bba98446070bd37260f928195e8012854739bca3a9f19777a9046753fb5aedaf870b9592d07226086ca0d4b484f02fd1293d03d5458a7d5b0b8621948e794ca3984b5a18e68d75f95138fa1b0aaa0775afd747dbfa437876783c66c2e5c66df2377a19ce3fcbe272",
+  "e740bc06336cac1c27e53c4a97d9e16fab2e9473f1ba5a1f0b21e98e3219c6c425cdf9d4fd5c37e73acc91db1588368b4a83e19502d573f271a0a61c64fed423102716eb5b9431382226d09c727ab49dec8851072247c11be259113a663ec3fd42e960f05761090cb0c03bbd7396cfc9f193ce984b9c79b2ad051d14d9e0286f",
+  "4de5749c199dc99918e541427fa9e3948a47d0af21049ac4b34505015712934ece3d0b6d08f248fd306b0521bc7c847dafeae63b604ac4df17266ac72d2fd88b5d37e22facea6683ef6abd1ba5bf102f70b452d79a4969ab1e5f3e7f57a9d4a3ceb27548968baa70b4002adf163870d17c02aef07ce9b234581af447a31096c9",
+  "86964e1e26be1fa5be015cb4d4da6bde6397f060291f6a2c5c5966739b4c5ddfe09bdeb363ee1903a905c31081deb583ce892ed71a2f9d62224aa7a3e6c3057c7ac1c1907a06bb1f7bb5431d35731364d7789dce1575ebf244d97473ade9c46722fbbb776f05208e6bc239b9bfa1319988d76fd4e5281420a6acadf07c458a89",
+  "f958526be3730a0e9aee9e7459883e5cf79359e82bfd91f9324c6cdbae3fc1b13dba34c2967eb1c29dfbfd04bb6e4e0d07d15bd36b15a8a46b2cf03cf852ea8106078cd566fa351d28bcba6f3e160ec8400f44d61c6ba18bf8e1d15d45bc19727d357879f8e67480f0f4c2f2bfd72667cf2a0055b569e9b2549454d7c6f49535",
+  "39ed1933003e9c5561f0b25351792ce5c9e241da9dd14bcd6d80fbdded285e1a18e40005ca9052afb412f11d913914cdd42d0370ac20316efb1e70976b39aaf36aabd37728bb2acabddaae14f53403fa84584f232c7e8f7f509a50a44492e9c8ddf39bdd4406bdef30f615430b1ee7c52965b77fd0b7e712e32d2db58a7aadf4",
+  "982c1a02e8f94587a3555599ebbc1e63880513bb20ed1ed183ead3ac1db64027f8fb9b7305ff32ffb236a1365aca29a7960bbfe97160b826abb561d4ff07187cb6dbb0b132b4ad1ca8249ca7068affe97dd328b00973b0978a8c677c7dba1ebc73246e58b1edf06ec7e037fcca2be425257ce16ea125c6bfcef6bc4dd05836cf",
+  "eef9ed2202061c0991548afe246f1dcaa39422de2ae4b8aa760e8948a759ac9e0689a74f2950dfa7d248347408dcd3a37970b616966771b6ffdadfca2dce94367cdc337ff541eb581830435ae9bdfc289d7bb183a3f2846c15920ca2a8180a832555c41b634cfa5198b92e9d77a0240df1fab8ee110e4bc44dae57cfa7f1f1c9",
+  "592e680d978ce634a8df700238be06ac15513899131e0a52fc93e877fdfd63dc0757d4905a528218417552582d3c1af2b44acaec4078320311bcfb2440d21c67c6b8906ae122f8509d9fb0ed1dc071e88fc2e061e609c3fbcabd867b951abfec3dbe1d811070aff49fed6d2ab5d45e2a16b5eff1871f4af68808dc4d8cdcad5a",
+  "c069323024b0127d63fa4668f9a6bf167baa409bc43ac3ddb8cccad35f9413fd51859b0493c6e80bbe63fceb93fdbc22572b9611a2defa20c9937470dabace19341c6e896e322de82e785b55552c9b5af0c31ca73219669f2f7c67435adb95960e87b50328d144074ebb30411f13523c918ae5c0404e2200e581f07e0ef91f81",
+  "70b8118ce0808a4bf72cbe0a4f504bc8def88eb5669b0d274365e5cf1ed1dbc96dd097cf91968c7daf214196f17bf03e7598b5fbecf96e5c58a73d353e3074cdebb77987d280ce5c35820cb6f2eb6fc5a9cb8a4a39ea227baee05132aed375c529d5ca3f83f13ebc1a17d1c2dc1d714095ce0a1eb9d689755ca7963c98471a5a",
+  "3fb77317ebff24eb5e0987c5643582949f2c6feda0397e17494b0811e8654e3c3672f5c43643dc7248afab4b690516a62b0267eac136919f503ff9b0ec90583617a6323e053aeeb1137bb5409d3d1f68b92306da9c90d42cebbc57080b1dd22ad26207ff4d8c0e9f63910c59ed3df3cb3999eba228d8d9335fa9d5178313694c",
+  "594020a5f929879659e490da80c72307433268f4d5e66b18ce96dfdf3ba5517e5d86e3ca74c4bf53b13786fc258ce688c2e0af6aa584d9515136e041a9228ae5a204a6b906d35f331e2625adf0daa932ae26b73074e9f1ad2d88a4faf98aff674c49d83eb9bb66160dc1b2369830fdea9df0bc3ff8ac71a72c27f7f03de1059b",
+  "f58f894a557a9b961dba389aedf6b1e833db80afa314032b00a82df1842c0e43971cd8b35d4fea01617a6319c036351886f29cae2f822527ab92b10b60a22977b2517c452c4dcfe8de50ecb2f43d2bae40705d7d20537163363fe9f280bca4c5d508cd1b68fc521fd27621c494ba6f482c75f981741b99c253e848fbbf4da1ad",
+  "281d526574561275ce678fceb00d36b0d5c8f301acbe887b5fca4f42e0676a3c2f0be82bf91f2d86f56d6b1f757c74c864f8ac3d99ae801254805999eb8fefa598dedc14fe6b7d9795dc3fc9a093aebfa1d0933c7c6d7256035ef8b53a49f3840abef91caf48b080fd7b77f14c27a63845d27902c14cd3dcb1c5f761fd9d0538",
+  "98f173693f1cf2bff2d18b039ff051d5ac7c69809a6fa61681c8ee8e753b8ad620faa82e482111b393f798ca59fcb43408c7633a613dc1b60a5777fb6263bdaeba11bef980680b2c964d89940449a02170a83cbc88752aa8045d78b108682d747bc5868bf6ef4a53e7f6ba2402a0e47b6371b13ecf25003873f11028b041b19f",
+  "90df0759",
+]
+
+[[content]]
+part = "code_fa45.byte"
+region = "prg"
+offset = 0x3A45
+len = 160
+blake3 = "9ad65861e8fec8105fa4066dcb5a4912c47083bbdd4c87202d9e6c07fc25d23d"
+chunks = [
+  "60c72c61d4a7ff7340234278c772adc84bad11eb00e9c363351c144a68b6b8e1c5d1523480d79c73",
+]
+
+# The PRG's fingerprints, which `gp assets find` compares a ROM's program
+# with to pick the model.
+[code]
+region = "prg"
+len = 16384
+chunks = [
+  "28d11d08960c40d5adc63f6e11ca211fc4ce03aa2e9d23f214f4562bbd64504457d88aefdb2305f9dd1dd785e0b1ad3a684e8b9a10022099abfc7a413b1936e6ba6ebd89c77827b146f0a6de6b3c0c2828156fdb20a5994688082cabbbc941f4ac84158127816bc5b1d119a246c2e8638654c1f62efe07714c9a6416cf0122ff",
+  "a61c1b75a30e94e2629960e16a4f766ac5a170638972c3beb5c650d8f16293f1e29862f8315a7efc8b9d9ca70e811e318d4bd1d31bc9848d0cea9b05edccad17479d62480c12df2efcc2ff8904eb83f0141a6dba5b0eb0b423e4dbb69c88e7c019a8cda003003903c96f412b1146c69960eacc908b43ac78fdf1d99b8f42f82c",
+  "8da8103a21108d8d19c194a1595221aab83e4b3f238d5c89dc52a3d62740e6e5e73c5a733cf775f9461c469781829b8670fb33e6a8a61befeefef77db0f8c41c6f90da287f19942eac36e8483880968cff90e6250c5daa2cc1d7b792a91c1afc77075c913e7a1bfa2b0486a5c3de3a58ffd4a2825c702ce1fc328591a9c7724f",
+  "090204132211bfff2f3006d08f1e4f5669674375c75f8b2a9c7e888071266a4e3fbc9c90d7d3883c5b1967420c9f812d94d3979cd526e56770edc85c0ff9480180828f3653aa2927557676899d7c4ee0f654463c7811f9ec8727fc99445f1bda9e08ba73086e19ad257ed640f54cdd9630bcfda68a4315fb40ea2b8a430a17f4",
+  "4d209941bec1c09917ec1c560e7925cf91004697fcfe848c75aea8637a3faaed2c7e32a89ffcc4fdae8c444232bd6fb202279fcb3588fc20978df34cd9fbcb140aff089995b91774394474a9e6e0499ee0c5f9c86c25d8f13b52c35cabc6131f5c0fcc4491eb702c4a89f1f61b8fcfa75043a6cd41fb81df44ce713fae0de97e",
+  "7d7e104ab4ed898f9ddc4351174f71b97b9ea42f2dcc9d3711335bea91d76bca82518f7e63126d2a168f1cb31bd67c941f6a65a06e8e596b4266a9f7f3b2764d5204313036c27ba9fd9f08a405752a4e10584be70d1ffef3c1da80c4c4bccc8f35ccb7c9af534b0b95666f2288d5ed85eb31336c876553833f9ea1244f3e2662",
+  "676e26f027a7c90f65df7cd70fccdc323ef40dd2eb1885a927e1c2cf7e9f4ad7d7bd09693afd6ad0f1d7eea32511115c948f1d424aa6dcad16f49e022c8e3b720f10b3f0cc33e72b4ff72ccf1f71f51fe22bb6c68b8669dcfe42c10f813a2cab6c053761a9d247d05ff4dbec6315bba4aeacf3712461ad81097b6202b3d8098e",
+  "cdbc25458966117a85af186bca403fbe55877e7735ee37a78e0928f9d759b47937952caab57a4faed593db6b91ab9da713a53898dc04ee9e597748d36ac2dc6d9a75f47700d014d52c63955ff7bf7fc5d68db5c6bd15c6f1f3a9349b06957c172475211c8f140da9d9cc6c020612b4c04e659de0297d0dbe0b7c52b3c18effbe",
+  "5f65213ccf40aee0766bc8dd5d5f788e18a2ba5717d475da02908690de9649c09a481f3dfedd191b360701512be89f9c5982bc9c360eff0aff89921fafe8cef10db43f70129c022daa6afef7f0adcb09ba02068ad28c3e483a3f1e43c903a8b2116cf502d75e8ea45f81e184a608e29c56e2cf3c3a8aac4b3c5c48420fae22af",
+  "1907eebc3a94c8e6dbca210c0cc9cee24527ce760201a835068e7b4cd099ba51d211112aaab72c09626b431f454ca0030b754f0885077b6822d8b4243b8219ded9e8f8f26b4a9bbabbecee2de602f6264e002ac0a54606833917a267442e725d6c2409edc368a7cdcd0b2de4885cd6ef5637412ee6e848c0dcbaca8b4e78deef",
+  "8301fb4f9a6c8bcf9bdac5537a2063d68f52588cc30a83da01c0b84a5ddd96ccde84d9888d3dabb5aa7b15cb3ed298e4a81a192988a52f4db145998ad0e7ade82decfc1f812ba7b472b46b499d8a2a8c082a505bf0fdc37f3d57a1051534d860c73c17ccd17aefe2a8f925cede2e6025c606cd5813143f8e72011ed51eb8ff46",
+  "5cd3ee12ac348f082704e93828aa46a943e17252786b2528a3e6222a97fab9846efa5985242bd32da0e0f434ac44cd29b88ea64cfb1aa3071578513a0312665bc9c431d14c6fca3c3f6e2ae2779407a118642618852c3e69b469f7617e58a7f35ccbdfb5afafef6958d2093fe9ad6620b45f6380d848ca638d23b4b2fd386343",
+  "8318affbea2379a396a33de5d15f10d8972b59bd082635d5cfe96e006704a664158c348830eee0388131f0842d1d23fa6dfa9431f37d8b8e01d687559870e56db7239c5e5792cd1749244a80ddef118667c9e65bc8c860053492e5f36aa6ea0994f23e990feb65965e84304c77ca5ea67a66a7b6cf5dc7d69593ea0b2f22b1b0",
+  "012512d74b0a97f25dc973e66f51cbf56e24306531ef28de67a91d31ff7a19a791d0d165c47b6f3d421db9752cfbe6f98c770e1f3fb47f8e25f8985d25630c843bd5675c085a5fe38988e845bee3dd4eacbaa362fc568cb226862c6bba8a703ddefff8c504845abc87b14c4af851c72d244ba14ad8b60e788c4dbb07417aee50",
+  "606c9863071fa651592532bff57ec181a48899ed91d23fbada5afc7211cb7b3deabf9a07bc76a38964708d485dc10959ab8936940bfb461832258dcc5c7d2c79687e58c5ac1290a980d60379802b3d0f0ce9a36c280c51462878a7436723c99927fb123153d412930862c77a5cf364a930e894ed04b48a1b14c5194e4bcf8a4b",
+  "0002dfcdbd160dd5cd342a2f3dec87ecee0198983eaca6db80503b94d27a3e7bfff59523bb9cffc047ab9f745bf194eab091985cf63d232a82f7e5f15ce39ad55cebfc95e3945fb579b8aec516b514d8baf1c43d16ff464edc383cbe69bcdd3de4fbd06cb43fbf1e6087cd549d9b2e69ab7747a2e6193734a7096c7285a9f93a",
+  "b5776541d8c1a0e78d1d9c258e34b28c4328b14362b8c1e5e1b388e30aa0f69a86bff3ac86164152336b1dfe3e1d5bc3567e4136a0be36d173c35b03c6464a8b75004a93b59baa5c30d6d8d996d3da78991154b219dd94a526c707f5ad6caafe6f03c419eda0ee23255956ba6ee13a20598391ca28ef8f8a08203fb17223b0b9",
+  "2329e4b58c297a5586ee7695490f2fa0fd462d9c3e710c8f1538781b4e6d7c2ba7a1d4c16020bd98fec1641ec43fc82a7d8c31001fd8481c2b8f7ba02d831d9f64dfed5f2b8ecd8cb0d8efb14d9ae504a442c27f2ecf025c34a202c065ae00f08f9cd92cffb357315fc92bc98cfaebbed400f562f8368e28cc2da3bb77b26326",
+  "1df6cbd10c88af06f89a727cdfed7abf0688502ca40894fa64a486031682abc5b9f3bf0e64eed01928cbe6d618fac091ded36742808107a88ca3adbf7130b09ff534887d5afda515be42840c0b8a8fbc5a2d24f44f2bad3fe26eaa85a276fea35c58890873a38bbf77f8f5a10246d52ad74ee039104cc1079e159695cc039e07",
+  "db2e55035b948f694f9af7a3cfb6e2eb04d0b478f456a47b36b51f54ca210d269ad8a54ce530fc0e05d98ad9ff4b0869098474e70e2b1bb146d815b27aec891cd516aeea21f4bf07645c1407121572bb155f6898886bf77ca6e730e85e0ee3467b2e4df6a7a3bcdf6efb1abb477737dfebbb32efc2eadb71dd066e74bba0c4de",
+  "aa3eaeedea6918c0bef0f947bd07438b37c3e6b9c64472ac72af14badd678ef589fb4327f64eac1f7b1c0bfb4efbebc04532a4edbe6aaf929497178dcd2c58375061fd17b52623d5072e8da76026c138a35d3480b515e2e5b8c25d64cf19cdb6c8352c438b75476da6ae37a66468c1bda02c84fe13a7859287157d930a352c2c",
+  "30cb522692b03680e80f778bfa054c5dc06522e82180706c28c0415448318a4ddbcca6c14a86b50683800296cdb5f130a5b789dd2e9e7ea485d852cd8560dc700daae4c0ae1949e4fa86a44d759d915d151cf7ffa49259aafff6c18483a91b73cda283b6326b173c2e57f21e157f5295d875a9116dc2992e0b2299d811679234",
+  "a64bb4c13f950f515b6282c9e74bda26b9fb835597223adcc2d2292daf1f8cf00b16edb0344e35b2f05f993bb680f02e6a3f30752fe1a43f6b32346cfbb46b8d1457caa915c02252ac0e0c0c9689fd642a9d5966c2328b41679455e72b498f46587ffdd5948ab08e3c9e897a27c4a2a7b4fe538991e763d9da53c2b1a1ef50ce",
+  "05d5b334f27456af8ae69b794bb8f624ea0c158d96517e7c61945dac904cb2a30c31da7f0d63759e4c8fd70e19a2682eee7317141b7758bbadeb766afd5c4f85f4b63b68afab38a1bb98edd1fb39b9e96b48363d5d2cbadf35ed67256f6091fca665e1d96c9929e5c60b89943610f4469886356f4bb4b8bf8e18d1a7b6fc6d12",
+  "b2194a0a8d50b395e34fe9c2b8b3c9a7d523fa38f394422a953ada6565f1bee440d2034ee4ccb0d801111acf2d7d5e8aaefc64a0cb4a9c51db0e4c7174a81d12c9708f6822ad7d1dea171595ed3d02d1ad9dbf64c41318e5b5cfbaf9a546376e14443b8918a0616770ee5dfedad0bbb7837981356b2739fa69a2e9e20af20d48",
+  "0a7ec5c0d77b6d65150b617efb26130bd0755992b99d99e749c4351aff1ee3e6bb874e8359eaeff63975d187da45498d3905b21e14489e903a18334fabd03fef094ef6c3f678e4d5188d532c1d558c1e3bff17e765cbf70326c9def013e65e2e933f6959434d8c30032d7401afa1e3e06ef7b27805f54a4e593a7b6b025b8135",
+  "b55b6c9d28f40e5024ca6a05e56de03bcb14827d43c2dee638a9bd090d254b70f90b1086f9a4e9426cfd8c97d443d97606a2b43f13f2cc73bed8de328f6af88e157092fdab0362afe9fe68b4a286997dd50833caa1d9c2ae6f7ef6b9297333d38dc93a424307feb97a7b9ec31a70e7a3558b3fa64637fb6dc699b30ca1fe39fd",
+  "103f16f6326e89cac7436fb2a02b73c2e6026cce49ba87315b008c52f9ef543b58ddc4322bba3eebfa6d164739f8791bc9107c6cd822247a8862d0ee62b468c88e7f2d9ae060442a8d041a5def26ea158001919c4fc5d35d859ca30984d0b1b97f167310a26ea5e49b6ca0a6fe5a578df9599bef3d6841605e96a27e2ba34633",
+  "3b7d1d993abe65d6d8bf96159ccea8bf92b2c1505b91e8272c897c6f58ddd30e28a1ceea075112dba54916c82da10e520eced08754ccab12be5bc99e24e042dc2a90b27f89c82210ad73a7c6d12f87c906e37f326d6f2ffbd04366d3483d6ee28bec25e426442d9424dd9893a1e7ca3999052e8bad17f92e6ff72c1449310a95",
+  "72821ceeddfa4f2b44a3d88e783f84eba3262a28d6df4a466f8a0eecc2cd2ff0b84a22c217b1365921fca71b55b8672e50d4fdc1690204d0699ea40f54bf0e0577ec30ed07edf2bef335f7d22a9f5cfa6d19b0ab662c58eec6fc5207b781e6bca6b7fe36ce3a1a4fd298ee3880e962f4a97d3281b4dbcc94cdb278fbb0b05b14",
+  "c06efd0f7912465411348255a4427075707d4762540a4b5febfd5c9b2b57ce31a5258b180a218ff4e9b6cdaa7ce3f2fd7cf87c46495cd9cb1d4ee3a060e09cf35fb3a27d28cc475d231374a2da8a75eafe48ad0052096f11667778078e88249069140fa5a24c387067796dfdad5e0fe66b96a2b0883971553b970f7c1c46b6be",
+  "ae83e4da24dbc2adb4400cf3e47e2220e3682e6e5541187699cbded50f2c941c43bff5293bb464df56a508f9f7fd92147834e043622a54b13627fb13dc94d289be8511552dbab5ca8389a051f1466371958e08f8dc46db42f7dd0981e1f9a0ec7ff26bcfea30eee9b4667cd7158173c2b40da96e4d92bfbdf37df787f79b98ed",
+]
