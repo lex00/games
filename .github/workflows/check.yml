@@ -12,15 +12,95 @@ jobs:
       # gp is built from a private repo, so the package scan runs on the
       # runner below and in the commit hook; this job runs the rest.
       - run: just check-hosted
+  kit:
+    # The tool's source and the module kit, from the tool repo on the user's
+    # machine, and the module built there. Tool sources only: no ROM is read.
+    runs-on: [self-hosted, rom]
+    env:
+      GP_HOME: /Users/alex/.gameprinter
+    outputs:
+      hash: ${{ steps.build.outputs.hash }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build gp
+        run: cargo build -q --manifest-path /Users/alex/Documents/checkouts/lex00/gameprinter/Cargo.toml -p gp-cli
+      - name: Pack the tool's source and the kit
+        run: |
+          gp=/Users/alex/Documents/checkouts/lex00/gameprinter/target/debug/gp
+          git -C /Users/alex/Documents/checkouts/lex00/gameprinter archive --format=tar.gz -o "$PWD/tool-src.tar.gz" HEAD
+          "$gp" game kit -o "$RUNNER_TEMP/kit"
+          tar -czf kit.tar.gz -C "$RUNNER_TEMP/kit" .
+      - name: Build the module here
+        id: build
+        run: |
+          gp=/Users/alex/Documents/checkouts/lex00/gameprinter/target/debug/gp
+          "$gp" game build donkey-kong --kit "$RUNNER_TEMP/kit" -o "$RUNNER_TEMP/module.wasm"
+          echo "hash=$("$gp" game hash "$RUNNER_TEMP/module.wasm")" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tool-and-kit
+          path: |
+            tool-src.tar.gz
+            kit.tar.gz
+          retention-days: 1
+  module:
+    # The module built on a second machine, from source: no ROM is involved.
+    # It has to come out byte for byte the same as the one built above.
+    needs: kit
+    runs-on: ubuntu-24.04
+    env:
+      GP_HOME: /home/runner/.gameprinter
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: tool-and-kit
+          path: ${{ runner.temp }}/in
+      - name: Unpack
+        run: |
+          mkdir -p "$RUNNER_TEMP/tool" "$RUNNER_TEMP/kit"
+          tar -xzf "$RUNNER_TEMP/in/tool-src.tar.gz" -C "$RUNNER_TEMP/tool"
+          tar -xzf "$RUNNER_TEMP/in/kit.tar.gz" -C "$RUNNER_TEMP/kit"
+      - name: The build sandbox
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq bubblewrap
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+      - name: Build gp
+        run: cargo build -q -p gp-cli
+        working-directory: ${{ runner.temp }}/tool
+      - name: Build the module
+        run: |
+          channel="$(sed -n 's/^channel = "\(.*\)"/\1/p' "$RUNNER_TEMP/kit/rust-toolchain.toml")"
+          rustup toolchain install "$channel" --profile minimal --target wasm32-unknown-unknown
+          "$RUNNER_TEMP/tool/target/debug/gp" game build donkey-kong --kit "$RUNNER_TEMP/kit" -o "$RUNNER_TEMP/module.wasm"
+      - name: The same bytes as the first machine
+        env:
+          WANT: ${{ needs.kit.outputs.hash }}
+        run: |
+          got="$("$RUNNER_TEMP/tool/target/debug/gp" game hash "$RUNNER_TEMP/module.wasm")"
+          echo "first machine:  $WANT"
+          echo "second machine: $got"
+          [ -n "$WANT" ] && [ "$got" = "$WANT" ]
+      - uses: actions/upload-artifact@v4
+        with:
+          name: module
+          path: ${{ runner.temp }}/module.wasm
+          retention-days: 1
   rom:
     # The runner on the user's machine, which holds the ROMs. They are read
     # there and never leave it. Pushes only, so no outside code runs here.
+    needs: module
     runs-on: [self-hosted, rom]
     env:
       GP_ROM_DIR: /Users/alex/Documents/roms
       GP_HOME: /Users/alex/.gameprinter
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: module
+          path: ${{ runner.temp }}/module
       # gp is built from the tool repo on the runner's own machine.
       - name: Build gp
         run: cargo build -q --manifest-path /Users/alex/Documents/checkouts/lex00/gameprinter/Cargo.toml -p gp-cli
@@ -28,5 +108,5 @@ jobs:
         run: python3 -I -B scripts/roms-present.py
       - name: No ROM bytes written as text
         run: git ls-files -z | xargs -0 python3 -I -B scripts/romguard/rom_text.py --root . files
-      - name: The package scan, with the ROMs
-        run: git ls-files -- 'package.toml' '*/package.toml' | while IFS= read -r p; do /Users/alex/Documents/checkouts/lex00/gameprinter/target/debug/gp package scan "$(dirname "$p")" || exit 1; done
+      - name: The package scan, with the ROMs and the built module
+        run: git ls-files -- 'package.toml' '*/package.toml' | while IFS= read -r p; do /Users/alex/Documents/checkouts/lex00/gameprinter/target/debug/gp package scan "$(dirname "$p")" --wasm "$RUNNER_TEMP/module/module.wasm" || exit 1; done

@@ -1,7 +1,7 @@
 # lex00/donkey-kong: the ROM option and its open version, one game.
 [package]
 name = "lex00/donkey-kong"
-version = "1.0.1"
+version = "1.0.2"
 kind = "game"
 title = "Donkey Kong"
 license = "Apache-2.0"
