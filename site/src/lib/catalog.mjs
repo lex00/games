@@ -1,0 +1,78 @@
+// What the site lists, read from the public registry when the site is built,
+// so a newly published game appears without an edit here. A build that can't
+// read the registry fails: it must never publish an empty or stale list.
+import { parse } from 'smol-toml';
+
+const REGISTRY = process.env.GP_REGISTRY ?? 'https://raw.githubusercontent.com/lex00/rivetrodeo/main';
+export const RUNNER = process.env.GP_RUNNER ?? 'https://rivet-rodeo.intentius.workers.dev';
+
+async function text(key) {
+	const r = await fetch(`${REGISTRY}/${key}`);
+	if (!r.ok) throw new Error(`${REGISTRY}/${key} answered ${r.status}`);
+	return r.text();
+}
+
+/** path -> hash, from a package's manifest. */
+function files(manifest) {
+	const out = new Map();
+	for (const line of manifest.split('\n')) {
+		const m = line.match(/^file ([0-9a-f]{64}) \d+ (.+)$/);
+		if (m) out.set(m[2], m[1]);
+	}
+	return out;
+}
+
+/** A `.pix` picture as an SVG's rects, run by run. */
+export function pixToSvg(pix, label) {
+	const lines = pix.split('\n').filter((l) => l && !l.startsWith('#'));
+	const size = lines.find((l) => l.startsWith('size '));
+	if (lines[0] !== 'pix 1' || !size) throw new Error(`${label}: not a pix 1 picture`);
+	const [, w, h] = size.split(' ').map(Number);
+	const colors = new Map();
+	const rows = [];
+	for (const l of lines.slice(lines.indexOf(size) + 1)) {
+		const c = l.match(/^(\S) (#[0-9a-fA-F]{6}|transparent)$/);
+		if (c && rows.length === 0) colors.set(c[1], c[2]);
+		else rows.push(l);
+	}
+	if (rows.length !== h || rows.some((r) => r.length !== w)) throw new Error(`${label}: its grid isn't ${w} by ${h}`);
+	let rects = '';
+	rows.forEach((row, y) => {
+		for (let x = 0; x < w; ) {
+			let end = x + 1;
+			while (end < w && row[end] === row[x]) end++;
+			const fill = colors.get(row[x]);
+			if (!fill) throw new Error(`${label}: no colour for ${row[x]}`);
+			if (fill !== 'transparent') rects += `<rect x="${x}" y="${y}" width="${end - x}" height="1" fill="${fill}"/>`;
+			x = end;
+		}
+	});
+	return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" shape-rendering="crispEdges" role="img" aria-label="${label}">${rects}</svg>`;
+}
+
+export async function games() {
+	const catalog = parse(await text('catalog.toml')).package ?? [];
+	const list = [];
+	for (const p of catalog.filter((c) => c.kind === 'game')) {
+		const have = files(await text(`packages/${p.id}`));
+		const pkg = parse(await text(`blobs/${have.get('package.toml')}`));
+		const title = pkg.open?.title ?? p.title;
+		const art = [...have.keys()].find((f) => /^open\/themes\/[^/]+\/picture-title-.*\.pix$/.test(f));
+		list.push({
+			name: p.name,
+			title,
+			version: p.latest,
+			play: `${RUNNER}/p?g=${p.name}`,
+			picture: art ? pixToSvg(await text(`blobs/${have.get(art)}`), `The title screen of ${title}`) : null,
+			free: Boolean(pkg.open),
+			original: pkg.rom ? p.title : null,
+			howToGet: pkg.rom?.how_to_get?.trim() ?? null,
+			themes: catalog
+				// A theme the open version already wears changes nothing, so it isn't offered.
+				.filter((c) => c.kind === 'content' && c.for_games.includes(p.name) && !have.has(`open/themes/${c.name.split('/')[1]}/theme.toml`))
+				.map((c) => ({ title: c.title, play: `${RUNNER}/p?g=${p.name}&c=${c.name}` })),
+		});
+	}
+	if (list.length === 0) throw new Error('the registry lists no games');
+	return list;
+}
