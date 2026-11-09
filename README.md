@@ -13,7 +13,7 @@ eval "$($GP_HOME/bin/gp worker env NAME --shell)"
 # change the game, then
 just check
 git diff > "$GP_WORKER_OUT/fix.patch"
-gp model gate donkey-kong --patch "$GP_WORKER_OUT/fix.patch" -m "Donkey Kong: ..."
+gp model gate donkey-kong --patch "$GP_WORKER_OUT/fix.patch" --onto main -m "Donkey Kong: ..."
 ```
 
 The gate scores the game's corpus before and after the patch, and lands it only if no clip got worse. Never push, never use `--no-verify`, and keep ROMs and anything made from them out of this repo.
