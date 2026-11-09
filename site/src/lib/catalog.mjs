@@ -62,7 +62,9 @@ export async function games() {
 			name: p.name,
 			title,
 			version: p.latest,
-			play: `${RUNNER}/p?g=${p.name}`,
+			// The plain address opens the open version and offers a kept ROM. A link
+			// naming the game would start a kept ROM at once, under this card's title.
+			play: pkg.open ? `${RUNNER}/` : `${RUNNER}/p?g=${p.name}`,
 			picture: art ? pixToSvg(await text(`blobs/${have.get(art)}`), `The title screen of ${title}`) : null,
 			free: Boolean(pkg.open),
 			original: pkg.rom ? p.title : null,
