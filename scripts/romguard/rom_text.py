@@ -130,7 +130,7 @@ def load_registry(root):
 
 
 def gp_home():
-    return Path(os.environ.get("GP_HOME") or Path.home() / ".game-printer")
+    return Path(os.environ.get("GP_HOME") or Path.home() / ".gameprinter")
 
 
 def rom_dir():

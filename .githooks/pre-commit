@@ -68,7 +68,7 @@ git diff --cached --numstat --no-renames --diff-filter=ACMRT -z | while IFS= rea
 done || exit 1
 
 # ROM data typed out as numbers. Needs python3 only when $GP_ROM_DIR exists.
-rom_dir="${GP_ROM_DIR:-${GP_HOME:-$HOME/.game-printer}/roms}"
+rom_dir="${GP_ROM_DIR:-${GP_HOME:-$HOME/.gameprinter}/roms}"
 if [ -d "$rom_dir" ]; then
   if ! command -v python3 >/dev/null; then
     echo "pre-commit: python3 (3.11 or newer) is needed to check staged text for ROM bytes, since $rom_dir exists" >&2
