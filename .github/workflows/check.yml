@@ -74,6 +74,11 @@ jobs:
           channel="$(sed -n 's/^channel = "\(.*\)"/\1/p' "$RUNNER_TEMP/kit/rust-toolchain.toml")"
           rustup toolchain install "$channel" --profile minimal --target wasm32-unknown-unknown
           "$RUNNER_TEMP/tool/target/debug/gp" game build donkey-kong --kit "$RUNNER_TEMP/kit" -o "$RUNNER_TEMP/module.wasm"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: module
+          path: ${{ runner.temp }}/module.wasm
+          retention-days: 1
       - name: The same bytes as the first machine
         env:
           WANT: ${{ needs.kit.outputs.hash }}
@@ -82,11 +87,6 @@ jobs:
           echo "first machine:  $WANT"
           echo "second machine: $got"
           [ -n "$WANT" ] && [ "$got" = "$WANT" ]
-      - uses: actions/upload-artifact@v4
-        with:
-          name: module
-          path: ${{ runner.temp }}/module.wasm
-          retention-days: 1
   rom:
     # The runner on the user's machine, which holds the ROMs. They are read
     # there and never leave it. Pushes only, so no outside code runs here.
