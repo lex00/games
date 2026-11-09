@@ -14,7 +14,7 @@ title = "Donkey Kong: Original Edition"
 tier = "commercial"
 model = "model.toml"
 contract = "fidelity.toml"
-clips = "clips.toml"
+clips = "corpus.toml"
 game = "donkey-kong"
 
 [source]
@@ -138,6 +138,6 @@ crate = "ext"
 # (docs/formats/scoring-corpus.md); the records are in evidence/.
 [scored_against]
 corpus = "donkey-kong-oe-25m"
-version = "6.0.0"
-hash = "5ba9574ad55865ab903a0f2d850a758cfaacbb1ac3e5347f04c1410eb659f9cc"
+version = "7.0.0"
+hash = "b3:398917c60adc61e56813f24a30c80221d9268bf6dba77d6da80b51bb5aaa6fd3"
 path = "."

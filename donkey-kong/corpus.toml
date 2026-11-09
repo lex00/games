@@ -1,135 +1,1108 @@
-# A scoring corpus (docs/formats/scoring-corpus.md): the clip set beside it
-# (clips.toml) with a name, a version and the hash of its recipes. Recipes,
-# hashes and metadata only: `gp corpus verify` makes every clip again from
-# your own ROM. `gp corpus bump` suggests the next version.
+# The corpus plan (format 1.0.0): the recipes that make this game's clips.
+# Each clip is presses from power-on (start, its frames are where the clip
+# starts) and presses from there, as canonical `.presses` files in inputs/,
+# with a frame count. Curves are not kept here: `gp game score` derives them
+# from your own ROM.
+
 [corpus]
-format = "0.5.0"
+format = "1.0.0"
 name = "donkey-kong-oe-25m"
-version = "6.0.0"
+version = "7.0.0"
 title = "Donkey Kong: Original Edition, 25m"
-hash = "5ba9574ad55865ab903a0f2d850a758cfaacbb1ac3e5347f04c1410eb659f9cc"
-metadata = "09cb071a76b6e6b65a98c49fbf250cbbb12beff44c60449cd6bf8fb2f2b8a445"
+recipes = "b3:398917c60adc61e56813f24a30c80221d9268bf6dba77d6da80b51bb5aaa6fd3"
 
 [target]
 game = "donkey-kong-oe"
 rom = "45440d8ef512b4660dce0c753e110004aef96fa30f2967f9260e946d808db07d"
 
 [needs]
-generator = ""
 mapping = "22"
 
-[recipes]
-"dk.clear-25m-scene.001" = "9bbf90eacf14713494214af97f42755d8537e9cf42d1d78e616c95d199110bbd"
-"dk.clear-25m.001" = "3342cc71a920d470b1bef77f13c43727bbdfd06b3092d90f5a2ec02a91611ce8"
-"dk.climb-ladder.001" = "2961f814e5017e214eba76d3c996e11ac2786d85218bf63f7be3e831a1becb50"
-"dk.climb-ladder.006" = "3d614026fdfd44bc1e18e509c6c87016f3a87d7ebf0c4623d28e270b9f909648"
-"dk.climb-ladder.008" = "0312822eb012cd0ff2e6c2cd464f58c2320c30dadeb463c5f4b0818aa5968391"
-"dk.crowded-top.001" = "158052dfba16afdd70c22780742dac88cd93f0b6d2bdcfa669ecac95e7ff9a33"
-"dk.crowded-top.002" = "c3a10028a92b5882e922d3b002973bf7b0b9884f81b6afb5ba49bbd2e6590bc1"
-"dk.crowded-top.003" = "051fc90e47cb2f12e40f902e599f7bcde034dd822adcb857c607ea214e09884c"
-"dk.crowded-top.004" = "b10190ce382c1bce4d1e9b7d0f9d06f340c799e0e309965c766ff0fd034beeaf"
-"dk.double-barrel-jump.001" = "acca1126d905e2b97d25ae25fa71d8c384c7ce991b420f082b570394ef9e9d80"
-"dk.double-barrel-jump.002" = "2a7e56e42210059daf6c0512c8caaff684c61adbdd2dbdf2b1dd415c4b756f12"
-"dk.double-barrel-jump.003" = "05fc61baeece500b1340d409f3a6d5bc55819d6056fb578e5d38ead5aff791a0"
-"dk.fall-too-far.001" = "67d9f2850a65a7b902e5828c5632f8138942305b861ab55d7f2d8bb061952e04"
-"dk.game-over.001" = "447864eea877eeda9f18142f33ab7fecd41990402f42ab22cfee4f7aa1988d59"
-"dk.gameb-d1.001" = "445f55183b51f4e4b42c3a56beb53c5507fb5e622f54eaf32b57612c51bfb25e"
-"dk.gameb-d1.002" = "8aadcb9cf133ae3fada3b6817eabe98168234ff9f8ea503c169cba1af2b1187d"
-"dk.hammer.005" = "d56523e148227b5504028f28ca6df822a394db32b61a695b7b6b828ee4a5dc0a"
-"dk.hammer.007" = "1178e4f92400a637f4a26a6582699cc3a03c1a84615e86c463ddbb3eead8ea95"
-"dk.hammer.013" = "01061bee82fd39807f5f50be67c776d805797c1802fea27b90e8cf8c043de504"
-"dk.hammer.016" = "d0f96e80bd8047fa8a1edc4e3e694c0a0050b826a4832100c5c44d04480e2ab9"
-"dk.hammer.023" = "d8dbd3445296036476dbd351ae25d2310d6fb63e3524b17924db8e91df69ad82"
-"dk.hammer.028" = "b417266eb9aa7ea60b63e97d7522ebcb1a308addfa5d6c3f3053374508a3775b"
-"dk.m100-bonus-out.001" = "10fd436ce5decb7e529bfeab590256bbf4f065be8670c3022e7d546a6e185566"
-"dk.m100-clear.001" = "d152c872b44a35c44fa514dad77a2c9b05288b79cacb666c62929ccb256ff3de"
-"dk.m100-fall.002" = "b5e5f36b0c397c46e12242394cf7b8748396fee87e8717b6d7cc24ac235806ea"
-"dk.m100-fall.003" = "b93ad4a0b7756bbffaf96baa40ed7c68cdd12df73f7fbb6db506341552903a9a"
-"dk.m100-fires.001" = "84564400c9ba7dfabdf82dc14791f906fdf0728c9241e50000c851d3c729fcc9"
-"dk.m100-game-over.001" = "d4b9c2e8ab0dca2538547a95e4375543861528f3b6f9bb150a477f96bbb7f7e2"
-"dk.m100-gap.001" = "01a081eb7c40c48a8121fe9e81f67acd147382818455ddc2a3e2c330385246ee"
-"dk.m100-gap.002" = "7a8c19daef63b304062893613e9c16017386366259a6081d9dfc7afc7c456a3e"
-"dk.m100-hammer.001" = "a0801fa4955afe65979d261ca87ebd5c85373be4c67b18f91efe88df380679de"
-"dk.m100-hammer.002" = "e79125cea4301f8635625ce046283e8c1c6680f26b0e0ba128993c521de4e052"
-"dk.m100-hammer.003" = "de646aa887ed565834cc854fed5cf482ac92601fd603d85d88589f3d65b7a475"
-"dk.m100-kong.001" = "ce4cacd8581bd989becdf366f8fc8c07781ea4bd8c4e59328be624829704fdfd"
-"dk.m100.001" = "7e9978977670cd091c33c90bcff9075634800e08d9bd0a3d6ab2ed71c1b5276a"
-"dk.m50-bonus-out.001" = "f58f3f625a62ac10c67d14df6f74ec7f968ba7de9892f8339b1e89df811fccef"
-"dk.m50-clear-late.001" = "6c15013acc5a2f958c6d1aaf526044519cd7288cf26d9ed84e61b13cbb27e857"
-"dk.m50-girder3.001" = "79a0e951a274f62dd56245e5a93c8a07fbc4eb777a1b2d6c3e42b49edc8585b3"
-"dk.m50-girder3.003" = "bb5acbdcca59524527461905b3b08850e4451d2fd6c0dc03f8aae7dfafb96fa0"
-"dk.m50-girder3.004" = "bca7a8673f4a7d49ac9b62ae249b64cf57d337128d7a41c6ffbb3472e9baa239"
-"dk.m50-hammer-smash.003" = "e09bc56ce568241d3d1eaebb1b646c1e2a78e41b4b760b44e1c6172af0f36abc"
-"dk.m50-hammer-smash.004" = "d31c76b8d5054139ccd1c19b2d0bfb9f7ab3c959681d2c2d8e9b300805e010dc"
-"dk.m50-hammer2.011" = "af618f60da0a0cd61001d9d3c1dd26cbec841506d3f63112f898c29eed666838"
-"dk.m50-ladders.001" = "414307848e81acc93e951e6e87e15606f05eef499fe7b6d1f519e6bfa7cad802"
-"dk.m50-ladders.005" = "75b5165a66788e43bd7de82e9e60444b9841d067ae3c306ef4300c4ae1c44996"
-"dk.m50-middle.001" = "92b788c858cc2a8f31118044cba09b46545439997f13f7795c47babfae20ceb8"
-"dk.m50-mladder.001" = "86f8b84189171d26856ed82b32997faedc881b635bcaa4834abe1fc181619d26"
-"dk.m50-mladder.007" = "bde92a948e8a0a7575d201557724a1be08445f3b69e8e37b6eea6c0af267acb9"
-"dk.m50-pie-points.001" = "3d69cc65c99417ff5714380fb644f2c9375b112735353041b56e8b761a89f2ed"
-"dk.m50-start.001" = "bfce238446ecb4fd8a8d060ba4122d5aed2b8b16f0d2e511ab2671f93d3786f0"
-"dk.m50-walk.001" = "d2c6208a65b39ec389f9e17dec6a65feba935a5f86b9ddc3ea17c6ffaad39019"
-"dk.m75-bonus-out.001" = "fd49cb0a3122459897bc7a749c7c9a0d775cbff19462463760fcd34d40cc9df3"
-"dk.m75-clear.001" = "149bd9f51e1eacfba28caa25868765ca8ee796219dcd3208e5a8ddab02d6b331"
-"dk.m75-fall.002" = "9bb2775dd6a21c513ae04c37356e4189fc183aa633613800be1fa7de27d8a6f5"
-"dk.m75-fire.001" = "e9c533fd8b846224d1c3f269f4ec1ef462c9d692fff0d22f590f98698c143db1"
-"dk.m75-game-over.001" = "50c01477a00dbe40fe94930fdbe58734ac2d73dd8855f50fa508e0ddf81b139a"
-"dk.m75-harvest.002" = "6c02011b0db5558dd0378c668d12dfe97c050dd81c639c92452128ccbd6e25bf"
-"dk.m75-harvest.003" = "6490df3afbb22354c8add8d077b7b598c21af20316ddfabc79aec4746a7477da"
-"dk.m75-prize.002" = "50347417fa886c20b7c5517710e9fdaf95bf8f1d3a0e1fe6db106c3dd7c73790"
-"dk.m75-spring.001" = "e789f265722b6e35f0585354d48d07a1a793312efb329defc8965e35ff8ae876"
-"dk.m75.002" = "4a555c936dcc2f5f4878e5070077a90836cef260f308a22fed6a280200399050"
-"dk.m75.016" = "144999f28b1f461229aaf13b5fd60a206e2d47fcecaba4e27807f20810c4d60f"
-"dk.m75.023" = "021969c95a1684aa0283fdcfc726f428408064c2fb0025f116d996af597ac39e"
-"dk.m75.036" = "76eb1a4918a38f0a02fc4b33f07a5fea1c64f0d2004357ba27526a5744d99317"
-"dk.m75.037" = "60aebce1a7df3d01f2285bcd6345d269ecd0356d73957cf0a8f91c24ecc3f48a"
-"dk.m75.046" = "7340c645e36ab7f8c7331d63f66f866521db49720357b7e74753e000a0003cf1"
-"dk.m75.047" = "0edbe56536051bf4c6384f9ed796d18a109b2a20d2c5e75def9d6ce1f189cd8c"
-"dk.m75.053" = "e17de9ecaa383a9b3566f6b7271dbd7914f9aa8dcd45f1abc9cfe7cd4d6bc1d1"
-"dk.m75.060" = "dd97e1449da147ae69e6508dbda7bff312ae6fa6e5d752d4e7604917d207ff48"
-"dk.points.004" = "4f2172cc2efb0ad9325a0a469fce587f2b8d5bec899c8e581a8de85333c50a95"
-"dk.points.005" = "35078620176cbed29c3d1749cb95710847c5f081737bd2dcc870f2adaac8cdc1"
-"dk.second-straight.001" = "6768f3df0ff2fc96e904894e92f7298378913c4490c5f0f548676950c2aee486"
-"dk.third-points.001" = "43676fe00b98e46d63487a54cc3182611412d3ec986ac79374cff3d4cd56d551"
-"dk.title.001" = "b4f98a1d4c189d708c9fc31036c691b68714e42d75a75fdfac154d5e187bfb2a"
-"dk.title.006" = "5ac81f4d06dfe7711761751193446cddac43c708926e6fdfbe86c5f5bbb269bd"
-"dk.title.007" = "1a263bba79e6ebfee0cff8687b779c7bcf9c06eece227239aea533cc2a45ea31"
-"dk.title.008" = "bf6aba6045d1c20729a20ef8a545c8d125a93285a0247ba5c897350895cd05d4"
-"dk.title.009" = "9b8c6a07e827b0b9db6db9e2f8117535dd4bd0152092e684945eaff66477679a"
-"dk.top-hammer.001" = "f702afa928cd4f26c10f37dd19c2d782228851ccb73e9868c7f4816ad892b2b3"
-"dk.two-players.001" = "2b8f3d4ae4c1b6cd69d70ebdfcda47929c7f019b72f585f905706d3e61b92502"
-"dk.untaken-crowded.002" = "e7fa335ab58bd0504a205979ac6f7ef8f802c8f2d44140fa61d49c1c1ebf443e"
-"dk.untaken-hammer-edge.001" = "6ee501643cc5519250bc8870f23fc30959fcd3ed99afa0065a00df94d3e0963b"
-"dk.untaken-hammer-used.001" = "78ac90e272dba6ea8be79550737d2ccbb4bb2b7bf5737c13228523d8ab074e10"
-"dk.untaken-hammer-used.002" = "3d6a51409771f145e1c407143d912600397114a2b045055561387b6ced05dfb4"
-"dk.untaken-jump-fall.001" = "eeda68db7cfd9c37a6294cac20632b32decf0e5782dd1b2a46125661c458b689"
-"dk.untaken-jump-x141.001" = "257d547239d566bbbb92e32a6c182f8f21e3812d936ecd708ea5182b5e727831"
-"dk.walk-sweep.001" = "7003d75a24ddc86ec98f4fd5595a93a4af23ce41ca13879b026db08f52f7be97"
-"dk.walk-sweep.004" = "8b1fbfbeded04ddbff407f8164ac3dfdbc19a2cec6c692420623232a61f38d77"
-"dk.walk.001" = "f5398b0d653723ecf164896f5dad24e570f899a8f5fe2b0b81ab85643125672f"
-"dk.wall-jump.002" = "6a3001b8a5a86356d01d817e5bfce3620a2f53a67e4339aa04cd22c35c4f71dd"
-"dk.wall-jump.003" = "ca67dcc1c4539433c5fbaa78a8408fefb18a0d2613f6f5dd367b8a5e53941084"
-"dk.wall-jump.006" = "9b84fed88004841acf03ba60619c72c32aa1f74714a5d60256def9c014fb9838"
-"dk.wall-jump.007" = "c6db21a6e114bc04f7dfb8e9ba303e6e33876329db84ab07c905a78bec1ed4b4"
-"donkey-kong-oe.death-redraw.001" = "25440337332f6432a2b05748ba52b7837f32c5e30ed9f41a1714ef569f2d3477"
-"donkey-kong-oe.death-redraw.002" = "43c44e7d9fd3f842cf007c64992ca5ded585275928dc5eb9e5bde605d97f80df"
-"donkey-kong-oe.diff-100m.001" = "a183dc626500f05af412aa0ea4df164242882353b34680b0e1022b1e2ee13669"
-"donkey-kong-oe.diff-100m.002" = "9fe2a11a5667a0ee6bea83ce9b12057a74d60f08e4d99efbda9ed5d9dd3ed72f"
-"donkey-kong-oe.diff-100m.003" = "496dec91cd8dd99895232bfb6af222b215d91e6e0acba65664f8c5475c98b2f7"
-"donkey-kong-oe.diff-100m.004" = "c732115b9875bd208008346c1d097079146cc0c373f925314a5a6ac8502b5dde"
-"donkey-kong-oe.diff-25m-d2.001" = "d4771426f2b199f212ca8f8df8cbbedf9ac8c7730a92bf2bef1c49538b0df443"
-"donkey-kong-oe.diff-25m-d3.001" = "6ba74184956fa01f8fdf5368df84e32807490968c5b8b02d36f84fb8af5cb45b"
-"donkey-kong-oe.diff-25m-d4.001" = "23bd13b3890279246099bb3a581f7286b70178cc4238f7318197732afce55baa"
-"donkey-kong-oe.diff-50m-d2.001" = "dccbaea3c477013953a4ab5e6be6d7136e35b28d9b0ee48c8a42f93c8530671b"
-"donkey-kong-oe.diff-50m-d3.001" = "707b8936c10788ac328b44c5b24fa4839c8f2c8e310b9d262f6928356cc9fd44"
-"donkey-kong-oe.diff-50m-d4.001" = "9e6d661193815403230a177c10a59d1a396bc8bcb626276ecc4fa82aec85fa57"
-"donkey-kong-oe.diff-75m.001" = "1fefc99a769d743b4e94a06eee319dfb35587140d3dd274c6db3e38b1a05e8e3"
-"donkey-kong-oe.diff-75m.002" = "9a888529282a57217db3c1020e3dbeb3bade897fe45666dce7029031e35c8cd9"
-"donkey-kong-oe.diff-75m.003" = "ff9fe78a35a63785ae8f922be2f886ff106f9fa1aa8896c5bdc87fa1f35a3583"
-"donkey-kong-oe.diff-75m.004" = "f95c4cd7b0cbfc567ccb661755de684f73f39df64091c26ce5cee5ada0a1d239"
-"donkey-kong-oe.over75-start.001" = "ed8a42be7e1385e26c41e46079411a2ccfbc39e8bc719abd525d100b9fad84cc"
-"donkey-kong-oe.two-p-clear.001" = "7d9f720ab8723544d553f5f74b4b771aac499ab244df17f9c37c16cd29a73abb"
+[import]
+why = "a clip of the {session} mechanic session"
+
+[[import.exclude]]
+what = "clear-25m"
+why = "sessions from before the corpus 4.0.0 cut; their clips were never in the reduced set"
+
+[[import.exclude]]
+what = "clear-25m-scene"
+why = "as above"
+
+[[import.exclude]]
+what = "climb-ladder"
+why = "as above"
+
+[[import.exclude]]
+what = "lad50-grab"
+why = "as above"
+
+[[import.exclude]]
+what = "lad50-mladder"
+why = "as above"
+
+[[import.exclude]]
+what = "top-hammer"
+why = "as above"
+
+[[import.exclude]]
+what = "walk"
+why = "as above"
+
+[[import.exclude]]
+what = "sealed-run"
+why = "a sealed run"
+
+[[import.exclude]]
+what = "current"
+why = "the page's scratch session"
+
+[[clip]]
+id = "dk.walk.001"
+name = "walk 001: walk"
+source = "played"
+start = "inputs/dk.walk.001.start.presses"
+presses = "inputs/dk.walk.001.presses"
+frames = 352
+why = "a clip of the walk mechanic session, 25m"
+
+[[clip]]
+id = "dk.climb-ladder.001"
+name = "climb-ladder 001: climb ladder"
+source = "played"
+start = "inputs/dk.climb-ladder.001.start.presses"
+presses = "inputs/dk.climb-ladder.001.presses"
+frames = 276
+why = "a clip of the climb-ladder mechanic session, 25m"
+
+[[clip]]
+id = "dk.climb-ladder.006"
+name = "climb-ladder 006: ladder-zip probe: the user's play to frame 1391, then Down from frame 1392 at the foot of the ladder at x 200 on the bottom girder. Frame 1391"
+source = "played"
+start = "inputs/dk.climb-ladder.006.start.presses"
+presses = "inputs/dk.climb-ladder.006.presses"
+frames = 160
+why = "a clip of the climb-ladder mechanic session, 25m"
+
+[[clip]]
+id = "dk.climb-ladder.008"
+name = "climb-ladder 008: probe climb-stop-3: Up held on the broken ladder at x 80 on girder 3 (and 184 on girder 4, 104 on girder 5, the next probes): the climb stops "
+source = "played"
+start = "inputs/dk.climb-ladder.008.start.presses"
+presses = "inputs/dk.climb-ladder.008.presses"
+frames = 919
+why = "a clip of the climb-ladder mechanic session"
+
+[[clip]]
+id = "dk.double-barrel-jump.001"
+name = "double-barrel-jump 001: barrel down loadder"
+source = "played"
+start = "inputs/dk.double-barrel-jump.001.start.presses"
+presses = "inputs/dk.double-barrel-jump.001.presses"
+frames = 58
+why = "a clip of the double-barrel-jump mechanic session, 25m"
+
+[[clip]]
+id = "dk.double-barrel-jump.002"
+name = "double-barrel-jump 002: double barrel jump"
+source = "played"
+start = "inputs/dk.double-barrel-jump.002.start.presses"
+presses = "inputs/dk.double-barrel-jump.002.presses"
+frames = 133
+why = "a clip of the double-barrel-jump mechanic session, 25m"
+
+[[clip]]
+id = "dk.double-barrel-jump.003"
+name = "double-barrel-jump 003: fireball climbs ladder"
+source = "played"
+start = "inputs/dk.double-barrel-jump.003.start.presses"
+presses = "inputs/dk.double-barrel-jump.003.presses"
+frames = 465
+why = "a clip of the double-barrel-jump mechanic session, 25m; re-cut on donkey-kong-oe to the attract demo its random bytes led to (original frames 36840 to 37304, its jumps, its death and its end), since this ROM is on the title at donkey-kong-ju's frames"
+
+[[clip]]
+id = "dk.fall-too-far.001"
+name = "fall-too-far 001: probe: walking off the girder's right end, a 23 px drop, dies"
+source = "played"
+start = "inputs/dk.fall-too-far.001.start.presses"
+presses = "inputs/dk.fall-too-far.001.presses"
+frames = 215
+why = "a clip of the fall-too-far mechanic session, 25m"
+
+[[clip]]
+id = "dk.hammer.005"
+name = "hammer 005: probe: the user's hammer clip 1 to frame 9070, then Left held: Mario walks off the girder's left end holding the hammer (9086: $96 10 -> 1 -> 8, $A0"
+source = "played"
+start = "inputs/dk.hammer.005.start.presses"
+presses = "inputs/dk.hammer.005.presses"
+frames = 600
+why = "a clip of the hammer mechanic session, 25m"
+
+[[clip]]
+id = "dk.hammer.007"
+name = "hammer 007: probe hammer-on-wrap: F = 3: a pickup on the frame the divider $34 wraps: $D635 sets $3F to 75 in Mario's routine and the timers ($F4AC, at $CF27) r"
+source = "played"
+start = "inputs/dk.hammer.007.start.presses"
+presses = "inputs/dk.hammer.007.presses"
+frames = 835
+why = "a clip of the hammer mechanic session"
+
+[[clip]]
+id = "dk.hammer.013"
+name = "hammer 013: probe hammer-jump-left-edge: F = 3: a walking jump left from x 36 into each hammer: Mario turns at the screen's left edge and comes down at x 27, wh"
+source = "played"
+start = "inputs/dk.hammer.013.start.presses"
+presses = "inputs/dk.hammer.013.presses"
+frames = 822
+why = "a clip of the hammer mechanic session"
+
+[[clip]]
+id = "dk.hammer.016"
+name = "hammer 016: probe hammer-pause-lockout: Start in a jump to the hammer with Kong's throw timer at 2: it reads 1 after the unpause frame, holds through the 64 fra"
+source = "played"
+start = "inputs/dk.hammer.016.start.presses"
+presses = "inputs/dk.hammer.016.presses"
+frames = 961
+why = "a clip of the hammer mechanic session"
+
+[[clip]]
+id = "dk.hammer.023"
+name = "hammer 023: probe hammer-hold-stand-taps: F = 3, W = 20: each hammer held standing, its swing idling, with short taps each way and A: barrels on the girder abov"
+source = "played"
+start = "inputs/dk.hammer.023.start.presses"
+presses = "inputs/dk.hammer.023.presses"
+frames = 1562
+why = "a clip of the hammer mechanic session"
+
+[[clip]]
+id = "dk.hammer.028"
+name = "hammer 028: probe hammer-hold-mid-21: hammer clip 21 from frame 3135, standing with Left and Up held on girder 5 with the hammer held: a start inside the hold, "
+source = "played"
+start = "inputs/dk.hammer.028.start.presses"
+presses = "inputs/dk.hammer.028.presses"
+frames = 180
+why = "a clip of the hammer mechanic session"
+
+[[clip]]
+id = "dk.top-hammer.001"
+name = "top-hammer 001: upper hamemer - also has fireballs moving"
+source = "played"
+start = "inputs/dk.top-hammer.001.start.presses"
+presses = "inputs/dk.top-hammer.001.presses"
+frames = 893
+why = "a clip of the top-hammer mechanic session, 25m"
+
+[[clip]]
+id = "dk.game-over.001"
+name = "game-over 001: game over"
+source = "played"
+start = "inputs/dk.game-over.001.start.presses"
+presses = "inputs/dk.game-over.001.presses"
+frames = 618
+why = "a clip of the game-over mechanic session, 25m"
+
+[[clip]]
+id = "dk.clear-25m.001"
+name = "clear-25m 001: planned run: the user's ladder path, then five ladders and the barrels jumped, to Pauline; 25m cleared by climbing"
+source = "played"
+start = "inputs/dk.clear-25m.001.start.presses"
+presses = "inputs/dk.clear-25m.001.presses"
+frames = 2142
+why = "a clip of the clear-25m mechanic session, 25m"
+
+[[clip]]
+id = "dk.title.001"
+name = "title 001: probe title-idle-demo: the title from power-on, left alone: drawn on frame 4 with the cursor on 1 PLAYER GAME A; the demo begins 32 slow-timer wraps "
+source = "played"
+start = "inputs/dk.title.001.start.presses"
+presses = []
+frames = 1400
+why = "a clip of the title mechanic session"
+
+[[clip]]
+id = "dk.title.006"
+name = "title 006: probe title-menu: N = 4: Select N times on the title, then Start: the cursor steps 16 down a press and wraps; the line sets game A or B ($50 bit 0) a"
+source = "played"
+start = "inputs/dk.title.006.start.presses"
+presses = "inputs/dk.title.006.presses"
+frames = 805
+why = "a clip of the title mechanic session"
+
+[[clip]]
+id = "dk.title.007"
+name = "title 007: probe title-select-held: Select held moves the cursor once, and holds the idle timer at 64 while held ($C95D), so the demo waits 64 wraps from its re"
+source = "played"
+start = "inputs/dk.title.007.start.presses"
+presses = "inputs/dk.title.007.presses"
+frames = 1160
+why = "a clip of the title mechanic session"
+
+[[clip]]
+id = "dk.title.008"
+name = "title 008: probe demo-select: Select during the demo goes back to the title at once ($CE8B -> $CF2B)"
+source = "played"
+start = "inputs/dk.title.008.start.presses"
+presses = "inputs/dk.title.008.presses"
+frames = 821
+why = "a clip of the title mechanic session"
+
+[[clip]]
+id = "dk.title.009"
+name = "title 009: probe demo-start: Start during the demo begins a game of the line the cursor is on ($CF42 -> $C98A)"
+source = "played"
+start = "inputs/dk.title.009.start.presses"
+presses = "inputs/dk.title.009.presses"
+frames = 1401
+why = "a clip of the title mechanic session"
+
+[[clip]]
+id = "dk.two-players.001"
+name = "two-players 001: probe two-players-turns: a 2 PLAYER GAME A left alone: each death hands the turn over, the lives kept per player; after player 1's last life pl"
+source = "played"
+start = "inputs/dk.two-players.001.start.presses"
+presses = "inputs/dk.two-players.001.presses"
+frames = 6083
+why = "a clip of the two-players mechanic session"
+
+[[clip]]
+id = "dk.clear-25m-scene.001"
+name = "clear-25m-scene 001: 25m cleared at Pauline's ladder (x 145) with 3,700 bonus, through the clear scene (Kong carries Pauline off) to 50m's setup"
+source = "played"
+start = "inputs/dk.clear-25m-scene.001.start.presses"
+presses = "inputs/dk.clear-25m-scene.001.presses"
+frames = 1519
+why = "a clip of the clear-25m-scene mechanic session"
+
+[[clip]]
+id = "dk.m50-start.001"
+name = "m50-start 001: 50m from its setup, Mario standing: Kong's beats from his wait $44 alone ($EB22-$EB4F), Pauline's calls, the bonus"
+source = "played"
+start = "inputs/dk.m50-start.001.start.presses"
+presses = []
+frames = 400
+why = "a clip of the m50-start mechanic session"
+
+[[clip]]
+id = "dk.m50-walk.001"
+name = "m50-walk 001: 50m's bottom girder: a walk to each end ($C1B6-$C1B7 hold Mario between sprite x 8 and 232), and jumps where he stands"
+source = "played"
+start = "inputs/dk.m50-walk.001.start.presses"
+presses = "inputs/dk.m50-walk.001.presses"
+frames = 781
+why = "a clip of the m50-walk mechanic session"
+
+[[clip]]
+id = "dk.walk-sweep.001"
+name = "walk-sweep 001: girder 2, six right and three left across the girder and back"
+source = "played"
+start = "inputs/dk.walk-sweep.001.start.presses"
+presses = "inputs/dk.walk-sweep.001.presses"
+frames = 2384
+why = "a cell of the 25m walk sweep (probes.toml, walk-sweep): a route from power-on found by a search over the waits before each ladder"
+
+[[clip]]
+id = "dk.walk-sweep.004"
+name = "walk-sweep 004: girder 5, running jumps across the girder and back"
+source = "played"
+start = "inputs/dk.walk-sweep.004.start.presses"
+presses = "inputs/dk.walk-sweep.004.presses"
+frames = 1362
+why = "a cell of the 25m walk sweep (probes.toml, walk-sweep): a route from power-on found by a search over the waits before each ladder"
+
+[[clip]]
+id = "dk.wall-jump.002"
+name = "wall-jump 002: probe wall-jump-g1-right-0-1: girder 1: a running jump held into the right edge, taking off 0 px from it after 1 more frames held"
+source = "played"
+start = "inputs/dk.wall-jump.002.start.presses"
+presses = "inputs/dk.wall-jump.002.presses"
+frames = 329
+why = "a clip of the wall-jump mechanic session"
+
+[[clip]]
+id = "dk.wall-jump.003"
+name = "wall-jump 003: probe wall-jump-g1-right-1-0: girder 1: a running jump held into the right edge, taking off 1 px from it after 0 more frames held"
+source = "played"
+start = "inputs/dk.wall-jump.003.start.presses"
+presses = "inputs/dk.wall-jump.003.presses"
+frames = 327
+why = "a clip of the wall-jump mechanic session"
+
+[[clip]]
+id = "dk.wall-jump.006"
+name = "wall-jump 006: probe wall-jump-g2-left-1-0: girder 2: a running jump held into the left edge, taking off 1 px from it after 0 more frames held"
+source = "played"
+start = "inputs/dk.wall-jump.006.start.presses"
+presses = "inputs/dk.wall-jump.006.presses"
+frames = 332
+why = "a clip of the wall-jump mechanic session"
+
+[[clip]]
+id = "dk.wall-jump.007"
+name = "wall-jump 007: probe wall-jump-g3-right-0-0: girder 3: a running jump held into the right edge, taking off 0 px from it after 0 more frames held"
+source = "played"
+start = "inputs/dk.wall-jump.007.start.presses"
+presses = "inputs/dk.wall-jump.007.presses"
+frames = 238
+why = "a clip of the wall-jump mechanic session"
+
+[[clip]]
+id = "dk.points.004"
+name = "points 004: probe points-wrap-then-second: the first 100 on a divider wrap frame (its timer 2 at 35787), a second 2 frames later in the second sprite (35789), b"
+source = "played"
+start = "inputs/dk.points.004.start.presses"
+presses = "inputs/dk.points.004.presses"
+frames = 137
+why = "a clip of the points mechanic session"
+
+[[clip]]
+id = "dk.points.005"
+name = "points 005: probe points-after-expiry: a 100 at 35777, its timer at 0 from 35809, and the next 100 at 35821 in the first sprite again"
+source = "played"
+start = "inputs/dk.points.005.start.presses"
+presses = "inputs/dk.points.005.presses"
+frames = 137
+why = "a clip of the points mechanic session"
+
+[[clip]]
+id = "dk.m50-hammer-smash.003"
+name = "m50-hammer-smash 003: probe m50-hammer-smash: N = 40, W = 200: 50m: the lower hammer taken from the lowest conveyor at x 122, W frames still, then a walk left o"
+source = "played"
+start = "inputs/dk.m50-hammer-smash.003.start.presses"
+presses = "inputs/dk.m50-hammer-smash.003.presses"
+frames = 1282
+why = "a clip of the m50-hammer-smash mechanic session"
+
+[[clip]]
+id = "dk.m50-hammer-smash.004"
+name = "m50-hammer-smash 004: probe m50-hammer-smash: N = 120, W = 0: 50m: the lower hammer taken from the lowest conveyor at x 122, W frames still, then a walk left of"
+source = "played"
+start = "inputs/dk.m50-hammer-smash.004.start.presses"
+presses = "inputs/dk.m50-hammer-smash.004.presses"
+frames = 1162
+why = "a clip of the m50-hammer-smash mechanic session"
+
+[[clip]]
+id = "dk.m50-pie-points.001"
+name = "m50-pie-points 001: probe m50-pie-points: W = 746: 50m: Mario at the lowest conveyor's right end jumps W frames after he steps off the ladder, over a pie coming"
+source = "played"
+start = "inputs/dk.m50-pie-points.001.start.presses"
+presses = "inputs/dk.m50-pie-points.001.presses"
+frames = 1726
+why = "a clip of the m50-pie-points mechanic session"
+
+[[clip]]
+id = "dk.m50-girder3.003"
+name = "m50-girder3 003: probe m50-girder3: X = 140: 50m: on girder 3 (from the lowest conveyor's ladder at x 80), a walk to x X and back: the prizes on it are taken on"
+source = "played"
+start = "inputs/dk.m50-girder3.003.start.presses"
+presses = "inputs/dk.m50-girder3.003.presses"
+frames = 543
+why = "a clip of the m50-girder3 mechanic session"
+
+[[clip]]
+id = "dk.m50-middle.001"
+name = "m50-middle 001: probe m50-middle: W = 0: 50m: on the middle conveyor (up the ladder at x 96 from girder 3), standing W frames: its left half carries Mario to th"
+source = "played"
+start = "inputs/dk.m50-middle.001.start.presses"
+presses = "inputs/dk.m50-middle.001.presses"
+frames = 1103
+why = "a clip of the m50-middle mechanic session"
+
+[[clip]]
+id = "dk.m50-girder3.001"
+name = "m50-girder3 001: 50m: on girder 3 (from the lowest conveyor's ladder at x 80), a walk to x X and back: the prizes on it are taken on an exact place ($EEF0, 800 "
+source = "played"
+start = "inputs/dk.m50-girder3.001.start.presses"
+presses = "inputs/dk.m50-girder3.001.presses"
+frames = 687
+why = "a clip of the m50-girder3 mechanic session"
+
+[[clip]]
+id = "dk.m50-girder3.004"
+name = "m50-girder3 004: 50m: on girder 3 (from the lowest conveyor's ladder at x 80), a walk to x X and back: the prizes on it are taken on an exact place ($EEF0, 800 "
+source = "played"
+start = "inputs/dk.m50-girder3.004.start.presses"
+presses = "inputs/dk.m50-girder3.004.presses"
+frames = 687
+why = "a clip of the m50-girder3 mechanic session"
+
+[[clip]]
+id = "dk.m50-hammer2.011"
+name = "m50-hammer2 011: 50m: the upper hammer taken on girder 3's left part after a jump over its gap, held W frames and walked right N frames: fires smashed ($ED38, $"
+source = "played"
+start = "inputs/dk.m50-hammer2.011.start.presses"
+presses = "inputs/dk.m50-hammer2.011.presses"
+frames = 1246
+why = "a clip of the m50-hammer2 mechanic session"
+
+[[clip]]
+id = "dk.m50-mladder.001"
+name = "m50-mladder 001: 50m: Mario up the left moving ladder from the middle conveyor (x 24): stopped at sprite y 71 while the ladder isn't up ($890F), on to the top g"
+source = "played"
+start = "inputs/dk.m50-mladder.001.start.presses"
+presses = "inputs/dk.m50-mladder.001.presses"
+frames = 1329
+why = "a clip of the m50-mladder mechanic session"
+
+[[clip]]
+id = "dk.m50-mladder.007"
+name = "m50-mladder 007: 50m: Mario up the right moving ladder (x 224): stopped at sprite y 71 while it isn't up ($890F, the ladder by his half of the screen), on to th"
+source = "played"
+start = "inputs/dk.m50-mladder.007.start.presses"
+presses = "inputs/dk.m50-mladder.007.presses"
+frames = 1389
+why = "a clip of the m50-mladder mechanic session"
+
+[[clip]]
+id = "dk.m50-ladders.001"
+name = "m50-ladders 001: 50m: girder 1's ladders (x 32, 96, 160, 216) climbed to the lowest conveyor and back down"
+source = "played"
+start = "inputs/dk.m50-ladders.001.start.presses"
+presses = "inputs/dk.m50-ladders.001.presses"
+frames = 236
+why = "a clip of the m50-ladders mechanic session"
+
+[[clip]]
+id = "dk.m50-ladders.005"
+name = "m50-ladders 005: 50m: the lowest conveyor's ladders up (x 80, 168) to girder 3 and back down"
+source = "played"
+start = "inputs/dk.m50-ladders.005.start.presses"
+presses = "inputs/dk.m50-ladders.005.presses"
+frames = 458
+why = "a clip of the m50-ladders mechanic session"
+
+[[clip]]
+id = "dk.m75-harvest.002"
+name = "75m from the 50m clear: starts in a death on the girder at y 176, x 86, then the restart (JU dk.harvest-m75.002's in-level presses)"
+source = "generated"
+start = "inputs/dk.m75-harvest.002.start.presses"
+presses = "inputs/dk.m75-harvest.002.presses"
+frames = 180
+why = "remade on OE from JU dk.harvest-m75.002 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+level = "m75"
+
+[[clip]]
+id = "dk.m75-harvest.003"
+name = "75m from the 50m clear: starts in a death on the girder at y 176, x 86, then the restart (JU dk.harvest-m75.003's in-level presses)"
+source = "generated"
+start = "inputs/dk.m75-harvest.003.start.presses"
+presses = "inputs/dk.m75-harvest.003.presses"
+frames = 180
+why = "remade on OE from JU dk.harvest-m75.003 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+level = "m75"
+
+[[clip]]
+id = "dk.m75.002"
+name = "75m from the 50m clear: jumps, dies (JU dk.m75.002's in-level presses)"
+source = "generated"
+start = "inputs/dk.m75.002.start.presses"
+presses = "inputs/dk.m75.002.presses"
+frames = 230
+why = "remade on OE from JU dk.m75.002 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+level = "m75"
+
+[[clip]]
+id = "dk.m75.016"
+name = "75m from the 50m clear: stands or walks on the lowest girder while the elevators, springs and fires run (JU dk.m75.016's in-level presses)"
+source = "generated"
+start = "inputs/dk.m75.016.start.presses"
+presses = "inputs/dk.m75.016.presses"
+frames = 180
+why = "remade on OE from JU dk.m75.016 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+level = "m75"
+
+[[clip]]
+id = "dk.m75.023"
+name = "75m from the 50m clear: jumps, rides the left elevator ($E834), dies, up to y 79 (JU dk.m75.023's in-level presses)"
+source = "generated"
+start = "inputs/dk.m75.023.start.presses"
+presses = "inputs/dk.m75.023.presses"
+frames = 762
+why = "remade on OE from JU dk.m75.023 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+level = "m75"
+
+[[clip]]
+id = "dk.m75.036"
+name = "75m from the 50m clear: jumps, rides the left elevator ($E834), up to y 87 (JU dk.m75.036's in-level presses)"
+source = "generated"
+start = "inputs/dk.m75.036.start.presses"
+presses = "inputs/dk.m75.036.presses"
+frames = 520
+why = "remade on OE from JU dk.m75.036 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+level = "m75"
+
+[[clip]]
+id = "dk.m75.037"
+name = "75m from the 50m clear: jumps, falls, dies (JU dk.m75.037's in-level presses)"
+source = "generated"
+start = "inputs/dk.m75.037.start.presses"
+presses = "inputs/dk.m75.037.presses"
+frames = 259
+why = "remade on OE from JU dk.m75.037 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+level = "m75"
+
+[[clip]]
+id = "dk.m75.046"
+name = "75m from the 50m clear: starts in the restart after a death, then climbs ladder 0 (JU dk.m75.046's in-level presses)"
+source = "generated"
+start = "inputs/dk.m75.046.start.presses"
+presses = "inputs/dk.m75.046.presses"
+frames = 266
+why = "remade on OE from JU dk.m75.046 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+level = "m75"
+
+[[clip]]
+id = "dk.m75.047"
+name = "75m from the 50m clear: jumps, falls, dies (JU dk.m75.047's in-level presses)"
+source = "generated"
+start = "inputs/dk.m75.047.start.presses"
+presses = "inputs/dk.m75.047.presses"
+frames = 212
+why = "remade on OE from JU dk.m75.047 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+level = "m75"
+
+[[clip]]
+id = "dk.m75.053"
+name = "75m from the 50m clear: stands or walks on the lowest girder while the elevators, springs and fires run (JU dk.m75.053's in-level presses)"
+source = "generated"
+start = "inputs/dk.m75.053.start.presses"
+presses = "inputs/dk.m75.053.presses"
+frames = 181
+why = "remade on OE from JU dk.m75.053 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+level = "m75"
+
+[[clip]]
+id = "dk.m75.060"
+name = "75m from the 50m clear: jumps, dies (JU dk.m75.060's in-level presses)"
+source = "generated"
+start = "inputs/dk.m75.060.start.presses"
+presses = "inputs/dk.m75.060.presses"
+frames = 207
+why = "remade on OE from JU dk.m75.060 in-level presses, started from dk.m50-clear.001 carried on into 75m"
+level = "m75"
+
+[[clip]]
+id = "dk.m75-clear.001"
+name = "75m cleared: ladders 0 and 1, the left elevator up ($E834), the jump to the middle girder, the right elevator down, the steps, ladder 8, the top girder and ladder 9 to Pauline; the clear scene ($8A81 with $450) and 100m's setup"
+source = "generated"
+start = "inputs/dk.m75-clear.001.start.presses"
+presses = "inputs/dk.m75-clear.001.presses"
+frames = 1600
+why = "made from the code: the route found frame by frame on OE from the 75m start dk.m50-clear.001 carries on into 75m (start frame 4151)"
+level = "m75"
+
+[[clip]]
+id = "dk.m75-prize.002"
+name = "75m: up the route to the steps, a falling spring waited out, girders 17 and 18, prize 1 taken at y 63, x 224 ($EF12, $CA)"
+source = "generated"
+start = "inputs/dk.m75-prize.002.start.presses"
+presses = "inputs/dk.m75-prize.002.presses"
+frames = 1250
+why = "made from the code: the route found frame by frame on OE from the 75m start dk.m50-clear.001 carries on into 75m (start frame 4151)"
+level = "m75"
+
+[[clip]]
+id = "dk.m75-fire.001"
+name = "75m: on the middle girder walked into the fire climbing ladder 3 (x 92): death and restart"
+source = "generated"
+start = "inputs/dk.m75-fire.001.start.presses"
+presses = "inputs/dk.m75-fire.001.presses"
+frames = 1020
+why = "made from the code: the route found frame by frame on OE from the 75m start dk.m50-clear.001 carries on into 75m (start frame 4151)"
+level = "m75"
+
+[[clip]]
+id = "dk.m75-fall.002"
+name = "75m: the jump off the right elevator to girder 15 too late: Mario falls past the girder and dies"
+source = "generated"
+start = "inputs/dk.m75-fall.002.start.presses"
+presses = "inputs/dk.m75-fall.002.presses"
+frames = 1300
+why = "made from the code: the route found frame by frame on OE from the 75m start dk.m50-clear.001 carries on into 75m (start frame 4151)"
+level = "m75"
+
+[[clip]]
+id = "dk.m75-spring.001"
+name = "75m: on the top girder walked left into a bouncing spring ($E981): death and restart"
+source = "generated"
+start = "inputs/dk.m75-spring.001.start.presses"
+presses = "inputs/dk.m75-spring.001.presses"
+frames = 1460
+why = "made from the code: the route found frame by frame on OE from the 75m start dk.m50-clear.001 carries on into 75m (start frame 4151)"
+level = "m75"
+
+[[clip]]
+id = "dk.m75-game-over.001"
+name = "75m: three falls off the left ledge: lives 2, 1, 0, then GAME OVER and the title"
+source = "generated"
+start = "inputs/dk.m75-game-over.001.start.presses"
+presses = "inputs/dk.m75-game-over.001.presses"
+frames = 3000
+why = "made from the code: the route found frame by frame on OE from the 75m start dk.m50-clear.001 carries on into 75m (start frame 4151)"
+level = "m75"
+
+[[clip]]
+id = "dk.m75-bonus-out.001"
+name = "75m: Mario left alone at the start until the bonus ($2E) runs out: death, then the restart"
+source = "generated"
+start = "inputs/dk.m75-bonus-out.001.start.presses"
+presses = []
+frames = 6700
+why = "made from the code: the route found frame by frame on OE from the 75m start dk.m50-clear.001 carries on into 75m (start frame 4151)"
+level = "m75"
+
+[[clip]]
+id = "dk.m100.001"
+name = "m100 001: 100m from its start, up the ladders at x 17, 225, 33 and 209, every rivet pulled ($C1-$C8), back down at x 177 and up at 73 to pull the last, to the clear ($D04C's $D063 loop finds all eight, $D086)"
+source = "played"
+start = "inputs/dk.m100.001.start.presses"
+presses = "inputs/dk.m100.001.presses"
+frames = 1855
+why = "100m's rivets and the clear, a route a search over waits found (w100)"
+
+[[clip]]
+id = "dk.m100-clear.001"
+name = "m100-clear 001: the last rivet (girder 5's left, $C7), the clear: $53 goes from 4 past the last stage to 1 and $54 (the round) to 1, the scene after 100m and round 2's 25m"
+source = "played"
+start = "inputs/dk.m100-clear.001.start.presses"
+presses = "inputs/dk.m100-clear.001.presses"
+frames = 1050
+why = "100m's clear, the ending and the loop to round 2 (w100)"
+
+[[clip]]
+id = "dk.m100-kong.001"
+name = "m100-kong 001: on girder 5 from the ladder at x 209, Mario walks left into Kong (x 149) and dies, and 100m starts again"
+source = "played"
+start = "inputs/dk.m100-kong.001.start.presses"
+presses = "inputs/dk.m100-kong.001.presses"
+frames = 720
+why = "100m's death to Kong on the top girder and the restart (w100)"
+
+[[clip]]
+id = "dk.m100-fires.001"
+name = "m100-fires 001: 100m from its start with nothing pressed: the fires appear ($E564's places) and wander the girders"
+source = "played"
+start = "inputs/dk.m100-fires.001.start.presses"
+presses = []
+frames = 900
+why = "100m's fires as they come out and roam, Mario still (w100)"
+
+[[clip]]
+id = "dk.m100-hammer.001"
+name = "m100-hammer 001: on girder 3 from the ladder at x 225, left over both rivets to x 23, a jump into the lower hammer (x 20, y 110 on screen; $0451), and the hammer's time with Mario still"
+source = "played"
+start = "inputs/dk.m100-hammer.001.start.presses"
+presses = "inputs/dk.m100-hammer.001.presses"
+frames = 520
+why = "100m's lower hammer taken and held to its end (w100)"
+
+[[clip]]
+id = "dk.m100-hammer.002"
+name = "m100-hammer 002: on girder 4, a jump into the upper hammer at x 124 ($0452), then a walk left into a fire, which the hammer smashes"
+source = "played"
+start = "inputs/dk.m100-hammer.002.start.presses"
+presses = "inputs/dk.m100-hammer.002.presses"
+frames = 420
+why = "100m's upper hammer and a fire smashed ($BF's steps, $AE the fire) (w100)"
+
+[[clip]]
+id = "dk.m100-gap.001"
+name = "m100-gap 001: girder 2's left rivet pulled walking right, then back left with a jump from x 86 that lands in the rivet's gap at x 64: the fall and the death"
+source = "played"
+start = "inputs/dk.m100-gap.001.start.presses"
+presses = "inputs/dk.m100-gap.001.presses"
+frames = 420
+why = "100m's rivet gap: a short jump falls through (w100)"
+
+[[clip]]
+id = "dk.m100-gap.002"
+name = "m100-gap 002: girder 2's left rivet pulled walking right, then back left with a jump from x 74 over the rivet's gap"
+source = "played"
+start = "inputs/dk.m100-gap.002.start.presses"
+presses = "inputs/dk.m100-gap.002.presses"
+frames = 120
+why = "100m's rivet gap jumped over (w100)"
+
+[[clip]]
+id = "dk.m100-game-over.001"
+name = "m100-game-over 001: on 100m's last life, standing at x 61, a fire kills Mario and the game ends ($4E set)"
+source = "played"
+start = "inputs/dk.m100-game-over.001.start.presses"
+presses = []
+frames = 700
+why = "100m's game over (w100)"
+
+[[clip]]
+id = "dk.gameb-d1.001"
+name = "gameb-d1 001: game B ($50 bit 0), round 1, so difficulty 1 ($EAF7: $50 & 1 + $54): 25m from its start up the ladders at x 201, 113, 201, 89 and 201, a jump over a barrel on the top girder and Pauline's ladder at x 145, the clear scene and 50m's setup"
+source = "played"
+start = "inputs/dk.gameb-d1.001.start.presses"
+presses = "inputs/dk.gameb-d1.001.presses"
+frames = 1816
+why = "game B's 25m at difficulty 1: Kong's timers and the barrels' tables by difficulty ($C443, $C44D, $C448) (w100)"
+
+[[clip]]
+id = "dk.gameb-d1.002"
+name = "gameb-d1 002: game B, round 1 (difficulty 1): 50m from its start up the ladders at x 97 and 81, a jump at x 72, the moving ladder at x 33 and the ladder at x 25 to the clear, the scene and 75m's setup"
+source = "played"
+start = "inputs/dk.gameb-d1.002.start.presses"
+presses = "inputs/dk.gameb-d1.002.presses"
+frames = 1155
+why = "game B's 50m at difficulty 1: the conveyors' pattern and the pies by difficulty ($858E, $8588, $86CE, $882D) (w100)"
+
+[[clip]]
+id = "dk.m100-fall.002"
+name = "m100-fall 002: from the top of the ladder at x 225 on girder 3, right off the girder's end at x 233: the fall to girder 2, the death and 100m again"
+source = "played"
+start = "inputs/dk.m100-fall.002.start.presses"
+presses = "inputs/dk.m100-fall.002.presses"
+frames = 560
+why = "100m: a walk off a girder's right end and the fall's death (w100)"
+
+[[clip]]
+id = "dk.m100-hammer.003"
+name = "m100-hammer 003: girder 3's rivets pulled walking left, the lower hammer taken at x 23, then right with the hammer into the gap at x 64 ($EF51 with $96 = 10): the fall and the death"
+source = "played"
+start = "inputs/dk.m100-hammer.003.start.presses"
+presses = "inputs/dk.m100-hammer.003.presses"
+frames = 560
+why = "100m: walking into a rivet's gap while holding the hammer (w100)"
+
+[[clip]]
+id = "dk.m100-fall.003"
+name = "m100-fall 003: up the ladders at x 121 and 97 (no rivet crossed), girder 3's left rivet pulled walking left, then right into its gap at x 64: Mario falls ($96 = 8) past girder 2's left rivet, which isn't pulled while he falls ($EEAC-$EEB0), lands and dies, and 100m starts again"
+source = "played"
+start = "inputs/dk.m100-fall.003.start.presses"
+presses = "inputs/dk.m100-fall.003.presses"
+frames = 560
+why = "100m: a rivet touched while falling, $EEB0 (w100)"
+
+[[clip]]
+id = "dk.m50-clear-late.001"
+name = "50m cleared with the bonus under 1000: up to the middle girder (x 76, y 127), a wait there of about 4050 frames while the bonus runs down ($D041's hurry jingle, $FC = $20, at bonus 900), then dk.m50-clear.001's way up the left moving ladder; cleared at bonus 800, the scene and 75m's setup"
+source = "generated"
+start = "inputs/dk.m50-clear-late.001.start.presses"
+presses = "inputs/dk.m50-clear-late.001.presses"
+frames = 5735
+why = "made from the code: dk.m50-clear.001's start (50m play, frame 3052), game A round 1"
+level = "m50"
+
+[[clip]]
+id = "dk.m50-bonus-out.001"
+name = "50m: the bonus runs out ($EBB6: $2E = 0 and $45 = 0 sets $96 = $FF): a wait on the middle girder (x 76, y 127), a step left at 5650 out of a fire's way, $D041's hurry jingle at bonus 900, the time-out death and the restart"
+source = "generated"
+start = "inputs/dk.m50-bonus-out.001.start.presses"
+presses = "inputs/dk.m50-bonus-out.001.presses"
+frames = 6550
+why = "made from the code: dk.m50-clear.001's start (50m play, frame 3052), game A round 1"
+level = "m50"
+
+[[clip]]
+id = "dk.m100-bonus-out.001"
+name = "100m: Mario left alone at the start after the 75m clear: a fire takes a life, then the bonus runs out ($EBB6, $2E = 0 and $45 = 0) with $D041's hurry jingle at bonus 900: the time-out death and the restart"
+source = "generated"
+start = "inputs/dk.m100-bonus-out.001.start.presses"
+presses = []
+frames = 8300
+why = "made from the code: dk.m75-clear.001's route carried on into 100m play (frame 5751), game A round 1"
+level = "m100"
+
+[[clip]]
+id = "dk.untaken-jump-fall.001"
+name = "untaken-jump-fall 001: 25m, a running jump off the girder's right end (x 215): the jump comes 16 px below its takeoff ($D5C6 sets $95 to $FF) and its landing kills ($D619 to $D642)"
+source = "played"
+start = "inputs/dk.untaken-jump-fall.001.start.presses"
+presses = "inputs/dk.untaken-jump-fall.001.presses"
+frames = 232
+why = "a jump that falls too far ($D5C6, $D619), taken by no clip before (w100)"
+
+[[clip]]
+id = "dk.untaken-jump-x141.001"
+name = "untaken-jump-x141 001: 100m girder 2 from the ladder at x 17, a running jump from x 132 that passes Mario's sprite x 136 ($D815: the hammer test's right bound on 50m and 100m)"
+source = "played"
+start = "inputs/dk.untaken-jump-x141.001.start.presses"
+presses = "inputs/dk.untaken-jump-x141.001.presses"
+frames = 330
+why = "a jump at the hammer test's bound $88 ($D817), taken by no clip before (w100)"
+
+[[clip]]
+id = "dk.untaken-hammer-used.001"
+name = "untaken-hammer-used 001: 100m, the lower hammer taken at x 23 on girder 3, held to its end, then a jump at the same place: its flag $0451 is 0, so nothing is taken ($D86A)"
+source = "played"
+start = "inputs/dk.untaken-hammer-used.001.start.presses"
+presses = "inputs/dk.untaken-hammer-used.001.presses"
+frames = 1260
+why = "a jump at the lower hammer's place after it was used ($D86A), taken by no clip before (w100)"
+
+[[clip]]
+id = "dk.untaken-hammer-used.002"
+name = "untaken-hammer-used 002: 100m, the upper hammer taken at x 124 on girder 4, a fire smashed walking left, the hammer held to its end, then back to x 124 and a jump: its flag $0452 is 0 ($D851)"
+source = "played"
+start = "inputs/dk.untaken-hammer-used.002.start.presses"
+presses = "inputs/dk.untaken-hammer-used.002.presses"
+frames = 1150
+why = "a jump at the upper hammer's place after it was used ($D851), taken by no clip before (w100)"
+
+[[clip]]
+id = "dk.untaken-hammer-edge.001"
+name = "untaken-hammer-edge 001: 100m, the lower hammer taken at x 23 on girder 3, then a walk left with it off the girder's left end: no ground under Mario ($D8EB not 0) off 25m, so the y step is skipped ($D729), the hammer is dropped ($D7BF) and he falls"
+source = "played"
+start = "inputs/dk.untaken-hammer-edge.001.start.presses"
+presses = "inputs/dk.untaken-hammer-edge.001.presses"
+frames = 500
+why = "a hammer walk off a girder's end off 25m ($D729), taken by no clip before (wholes)"
+
+[[clip]]
+id = "dk.untaken-crowded.002"
+name = "untaken-crowded 002: 25m, Mario on girder 3 waits 60 frames, takes the lower hammer at x 34 and holds it while five barrels are on girder 4 ($7E + 3 >= 5 with $96 = $0A and $59 = 3, $DF40-$DF5B): a barrel there is sent down through the girder ($DF8F: state $40, its stop in $C0)"
+source = "played"
+start = "inputs/dk.untaken-crowded.002.start.presses"
+presses = "inputs/dk.untaken-crowded.002.presses"
+frames = 760
+why = "the crowded girder with the hammer held ($DF5B and on), taken by no clip before (w100)"
+
+[[clip]]
+id = "dk.second-straight.001"
+name = "second-straight 001: 25m, game A round 1: clear-25m 001's path up to girder 3, then Mario climbs the ladder at x 196 to y 127 and stays on it (a barrel won't take a ladder with a climbing Mario 1 to 15 px under its top, the fires don't climb it) while the straight barrels come: slot 0's at 2629 turns $0421 from 1 to 3, and slot 0's next at 4037 finds 3 ($DAE8 taken) and sets it back to 1"
+source = "played"
+start = "inputs/dk.second-straight.001.start.presses"
+presses = "inputs/dk.second-straight.001.presses"
+frames = 2540
+why = "the second straight barrel after the drum is lit, its way read as 3 ($DAE8 taken), taken by no clip before (cstr)"
+
+[[clip]]
+id = "dk.third-points.001"
+name = "third-points 001: 25m, Mario walks right to x 149 on girder 1 and waits; two barrels rolling left on one spot come up behind him and he jumps left at x 149 (clip frame 1376). Mario moves 1 px every 2 frames and the barrels 1 a frame, so the sideways test ($9C < 3 and $9E = 0, $EC7A) pays each barrel on three frames: at 1989 both points sprites ($02C0, $02C8) are taken, and at 1991 and 1993 both are busy, so $CFC6 finds no free one and falls through $D005 four times; Mario lands at x 129 and lives"
+source = "played"
+start = "inputs/dk.third-points.001.start.presses"
+presses = "inputs/dk.third-points.001.presses"
+frames = 1440
+why = "a third points award while both points sprites are busy ($D005 falls through), taken by no clip before (cpts)"
+
+[[clip]]
+id = "dk.crowded-top.001"
+name = "crowded-top 001: 25m, Mario on girder 5 jumps the barrels at x 44, then walks to x 34 and takes the top hammer in a jump over a barrel as another barrel starts down the ladder at x 100: three barrels on girder 5 with the hammer held ($7E + 5 >= 5 with $96 = $0A and $59 = 5, $DF72-$DF78), and the rolling one there is sent down through the girder ($DF8F: state $40, its stop in $C0)"
+source = "played"
+start = "inputs/dk.crowded-top.001.start.presses"
+presses = "inputs/dk.crowded-top.001.presses"
+frames = 724
+why = "the crowded top girder with the top hammer held ($DF72 to $DF8F), taken by no clip before (ctop)"
+
+[[clip]]
+id = "dk.crowded-top.002"
+name = "crowded-top 002: 25m, as crowded-top 001 with other jump and tap times: when three barrels are on girder 5 and the top hammer is taken, slot 0 holds a barrel rolling on girder 1, so the scan passes it ($DF87 falls through) before it sends the rolling barrel on girder 5 down through the girder ($DF8F)"
+source = "played"
+start = "inputs/dk.crowded-top.002.start.presses"
+presses = "inputs/dk.crowded-top.002.presses"
+frames = 724
+why = "the crowded top girder's scan past a rolling barrel on another girder ($DF87 not taken), taken by no clip before (ctop)"
+
+[[clip]]
+id = "dk.crowded-top.003"
+name = "crowded-top 003: 25m, as untaken-crowded 002 (the lower hammer taken at x 34 on girder 3) with short walks each way while it is held: when three barrels are on girder 3, slot 0 is a rolling barrel whose girder is 0 and slot 1 one rolling on girder 5, so the scan passes both ($DF6A falls through) before it sends the rolling barrel on girder 3 down through the girder ($DF8F)"
+source = "played"
+start = "inputs/dk.crowded-top.003.start.presses"
+presses = "inputs/dk.crowded-top.003.presses"
+frames = 988
+why = "the lower hammer's crowded-girder scan past rolling barrels on other girders ($DF6A not taken), taken by no clip before (ctop)"
+
+[[clip]]
+id = "dk.crowded-top.004"
+name = "crowded-top 004: 25m, as untaken-crowded 002 (the lower hammer taken at x 34 on girder 3) with short walks each way while it is held: two barrels come down ladders onto girder 3 together while a third lands there, so for 14 frames girder 3 has three barrels and none rolling: the scan finds none and returns ($DF6F falls through), until the landed one rolls and is sent down through the girder ($DF8F)"
+source = "played"
+start = "inputs/dk.crowded-top.004.start.presses"
+presses = "inputs/dk.crowded-top.004.presses"
+frames = 1038
+why = "the lower hammer's crowded girder with no rolling barrel on it ($DF6F not taken), taken by no clip before (ctop)"
+
+[[clip]]
+id = "donkey-kong-oe.death-redraw.001"
+name = "death-redraw 001: probe death-redraw-100m: 100m: m100-hammer 003's presses played on: prize 1 taken, rivets 2 and 3 pulled, the lower hammer taken, a fall into "
+source = "played"
+start = "inputs/donkey-kong-oe.death-redraw.001.start.presses"
+presses = "inputs/donkey-kong-oe.death-redraw.001.presses"
+frames = 1790
+why = "a clip of the death-redraw mechanic session"
+
+[[clip]]
+id = "donkey-kong-oe.death-redraw.002"
+name = "death-redraw 002: probe death-redraw-25m: 25m: the lower hammer taken on girder 3, then Left held off girder 3's left end with it, the fall death, the redraw wi"
+source = "played"
+start = "inputs/donkey-kong-oe.death-redraw.002.start.presses"
+presses = "inputs/donkey-kong-oe.death-redraw.002.presses"
+frames = 919
+why = "a clip of the death-redraw mechanic session"
+
+[[clip]]
+id = "donkey-kong-oe.diff-25m-d2.001"
+name = "diff-25m-d2 001: probe diff-25m-d2: game B round 2 ($50 1, $54 1: difficulty 2): 25m up the ladders at x 201, 113, 201, 89 (two jumps on girder 4) and 201, two jumps on the top girder and Pauline's ladder at x 145: the clear, the bonus to 23,900 with the extra life, and 50m's setup"
+source = "played"
+start = "inputs/donkey-kong-oe.diff-25m-d2.001.start.presses"
+presses = "inputs/donkey-kong-oe.diff-25m-d2.001.presses"
+frames = 1841
+why = "25m at difficulty 2 (game B round 2): Kong's throws at C443[2] (120 frames) and the straight barrel's wait C44D[2] (40); guards 281afaa6 (the extra life on the clear's bonus frame) and 1efce64f (draws after its 3 lag frames)"
+
+[[clip]]
+id = "donkey-kong-oe.diff-50m-d2.001"
+name = "diff-50m-d2 001: probe diff-50m-d2: game B round 2 (difficulty 2): 50m from its start, up the ladders at x 97 and 81, a jump at x 72, the left moving ladder at x 33, then Left held on the top girder until pie 2 meets Mario (original frame 10661), the death and the restart"
+source = "played"
+start = "inputs/donkey-kong-oe.diff-50m-d2.001.start.presses"
+presses = "inputs/donkey-kong-oe.diff-50m-d2.001.presses"
+frames = 1251
+why = "50m at difficulty 2 (game B round 2): the conveyors' pattern $858E[2] and turns $8588[2], the pies' rows $86CE[2], the moving ladders' waits $882D[2] and $8832[2], the fire's wait C466[2]; guards ba5c89bb (the touch loop's $5D after the ride)"
+
+[[clip]]
+id = "donkey-kong-oe.diff-25m-d3.001"
+name = "diff-25m-d3 001: probe diff-25m-d3: game B round 3 ($50 1, $54 2: difficulty 3): 25m up the ladders at x 201, 113 (a jump on girder 3), 201 (two jumps on girder 4), 89 (two jumps on girder 5) and 201, two jumps on the top girder and Pauline's ladder at x 145: the clear and 50m's setup"
+source = "played"
+start = "inputs/donkey-kong-oe.diff-25m-d3.001.start.presses"
+presses = "inputs/donkey-kong-oe.diff-25m-d3.001.presses"
+frames = 1896
+why = "25m at difficulty 3 (game B round 3): Kong's throws at C443[3] (104 frames) and the straight barrel's wait C44D[3] (24), the values d = 4 reads too"
+
+[[clip]]
+id = "donkey-kong-oe.diff-50m-d3.001"
+name = "diff-50m-d3 001: probe diff-50m-d3: game B round 3 (difficulty 3): 50m up the ladders at x 97 and 81 against the conveyors, a jump at x 72, the left moving ladder at x 33, a jump on the top girder and the ladder at x 25: the clear and 75m's setup"
+source = "played"
+start = "inputs/donkey-kong-oe.diff-50m-d3.001.start.presses"
+presses = "inputs/donkey-kong-oe.diff-50m-d3.001.presses"
+frames = 1133
+why = "50m at difficulty 3 (game B round 3): the conveyors moving every frame ($858E[3]), the turns $8588[3] (64), the pies' rows $86CE[3], the moving ladders' waits $882D[3] and $8832[3] (18 and 12), the fire's wait C466[3] (8)"
+
+[[clip]]
+id = "donkey-kong-oe.diff-25m-d4.001"
+name = "diff-25m-d4 001: probe diff-25m-d4: game B round 4 ($50 1, $54 3: difficulty 4, the cap): 25m up the ladders at x 201, 113 (a jump on girder 3), 201 (two jumps on girder 4), 89 (a wait of 48 at its foot, three jumps on girder 5) and 201, two jumps on the top girder and Pauline's ladder at x 145: the clear and 50m's setup"
+source = "played"
+start = "inputs/donkey-kong-oe.diff-25m-d4.001.start.presses"
+presses = "inputs/donkey-kong-oe.diff-25m-d4.001.presses"
+frames = 1951
+why = "25m at difficulty 4, the cap: $EAF7's CPX #$04 falls through ($EB03), Kong's throws at C443[4] and the straight barrel's wait C44D[4]"
+
+[[clip]]
+id = "donkey-kong-oe.diff-50m-d4.001"
+name = "diff-50m-d4 001: probe diff-50m-d4: game B round 4 (difficulty 4): 50m up the ladders at x 97 and 81 against the conveyors, a jump at x 72, the left moving ladder at x 33, a jump on the top girder and the ladder at x 25: the clear and 75m's setup"
+source = "played"
+start = "inputs/donkey-kong-oe.diff-50m-d4.001.start.presses"
+presses = "inputs/donkey-kong-oe.diff-50m-d4.001.presses"
+frames = 1100
+why = "50m at difficulty 4: the tables by difficulty at their last row ($858E, $8588, $86CE, $882D, $8832) and the fire's wait C466[4] (1)"
+
+[[clip]]
+id = "donkey-kong-oe.diff-100m.001"
+name = "diff-100m 001: probe diff-100m-d1: game B round 1 (d = 1): 100m from its start, every rivet pulled up x 17, 225, 33 and 209, down 177 and up 73, the clear, the "
+source = "played"
+start = "inputs/donkey-kong-oe.diff-100m.001.start.presses"
+presses = "inputs/donkey-kong-oe.diff-100m.001.presses"
+frames = 2810
+why = "a clip of the diff-100m mechanic session"
+
+[[clip]]
+id = "donkey-kong-oe.diff-100m.002"
+name = "diff-100m 002: probe diff-100m-d2: game B round 2 (d = 2): 100m from its start, every rivet pulled up x 17, 225, 33 and 209, down 177 and up 73 with waits for t"
+source = "played"
+start = "inputs/donkey-kong-oe.diff-100m.002.start.presses"
+presses = "inputs/donkey-kong-oe.diff-100m.002.presses"
+frames = 2883
+why = "a clip of the diff-100m mechanic session"
+
+[[clip]]
+id = "donkey-kong-oe.diff-100m.003"
+name = "diff-100m 003: probe diff-100m-d3: game B round 3 (d = 3): 100m from its start, up x 17 and 225, hops left along girder 3 past the fires (the faster climb gates"
+source = "played"
+start = "inputs/donkey-kong-oe.diff-100m.003.start.presses"
+presses = "inputs/donkey-kong-oe.diff-100m.003.presses"
+frames = 3751
+why = "a clip of the diff-100m mechanic session"
+
+[[clip]]
+id = "donkey-kong-oe.diff-75m.001"
+name = "diff-75m 001: probe diff-75m-d1: game B round 1 (d = 1): 75m from its start over the lifts, the hammer jump, the ladders at x 97 and 177, Pauline's ladder at x "
+source = "played"
+start = "inputs/donkey-kong-oe.diff-75m.001.start.presses"
+presses = "inputs/donkey-kong-oe.diff-75m.001.presses"
+frames = 1485
+why = "a clip of the diff-75m mechanic session"
+
+[[clip]]
+id = "donkey-kong-oe.diff-75m.002"
+name = "diff-75m 002: probe diff-75m-d2: game B round 2 (d = 2): 75m from its start over the lifts (C45C, C461 by d: faster from 2), the hammer jump, the ladders at x 9"
+source = "played"
+start = "inputs/donkey-kong-oe.diff-75m.002.start.presses"
+presses = "inputs/donkey-kong-oe.diff-75m.002.presses"
+frames = 1200
+why = "a clip of the diff-75m mechanic session"
+
+[[clip]]
+id = "donkey-kong-oe.diff-75m.003"
+name = "diff-75m 003: probe diff-75m-d3: game B round 3 (d = 3): 75m from its start over the left lifts, the jump onto the right lifts 84 frames later than at d = 2 (C4"
+source = "played"
+start = "inputs/donkey-kong-oe.diff-75m.003.start.presses"
+presses = "inputs/donkey-kong-oe.diff-75m.003.presses"
+frames = 1288
+why = "a clip of the diff-75m mechanic session"
+
+[[clip]]
+id = "donkey-kong-oe.diff-100m.004"
+name = "diff-100m 004: probe diff-100m-d4: game B round 4 (d = 4, the cap): 100m from its start, up x 17, hops right along girder 2 and left along girder 3 past the fir"
+source = "played"
+start = "inputs/donkey-kong-oe.diff-100m.004.start.presses"
+presses = "inputs/donkey-kong-oe.diff-100m.004.presses"
+frames = 3910
+why = "a clip of the diff-100m mechanic session"
+
+[[clip]]
+id = "donkey-kong-oe.diff-75m.004"
+name = "diff-75m 004: probe diff-75m-d4: game B round 4 (d = 4, the cap): 75m from its start over the left lifts, the jump onto the right lifts (C45C, C461 by d), the h"
+source = "played"
+start = "inputs/donkey-kong-oe.diff-75m.004.start.presses"
+presses = "inputs/donkey-kong-oe.diff-75m.004.presses"
+frames = 1254
+why = "a clip of the diff-75m mechanic session"
+
+[[clip]]
+id = "donkey-kong-oe.over75-start.001"
+name = "over75-start 001: probe go75-start: game over on 75m, then Start at the title"
+source = "played"
+start = "inputs/donkey-kong-oe.over75-start.001.start.presses"
+presses = "inputs/donkey-kong-oe.over75-start.001.presses"
+frames = 1447
+why = "a clip of the over75-start mechanic session"
+
+[[clip]]
+id = "donkey-kong-oe.two-p-clear.001"
+name = "two-p-clear 001: probe two-p-clear: two players, game A: each loses two lives standing on 25m; player 1's last life clears 25m (ladders 201, 113, 201, 89, 201, "
+source = "played"
+start = "inputs/donkey-kong-oe.two-p-clear.001.start.presses"
+presses = "inputs/donkey-kong-oe.two-p-clear.001.presses"
+frames = 1758
+why = "a clip of the two-p-clear mechanic session"
+
+[[clip]]
+id = "donkey-kong-oe.m50-ladder-fire.001"
+name = "m50-ladder-fire 001: probe m50-ladder-fire: Y = 137: 50m: Mario up the ladder at x 80 from the lowest conveyor to y Y, short of girder 3, then still on it until"
+source = "played"
+start = "inputs/donkey-kong-oe.m50-ladder-fire.001.start.presses"
+presses = "inputs/donkey-kong-oe.m50-ladder-fire.001.presses"
+frames = 1406
+why = "a clip of the m50-ladder-fire mechanic session"
+
+[[clip]]
+id = "donkey-kong-oe.m50-ladder-fire.002"
+name = "m50-ladder-fire 002: probe m50-ladder-fire: Y = 141: 50m: Mario up the ladder at x 80 from the lowest conveyor to y Y, short of girder 3, then still on it until"
+source = "played"
+start = "inputs/donkey-kong-oe.m50-ladder-fire.002.start.presses"
+presses = "inputs/donkey-kong-oe.m50-ladder-fire.002.presses"
+frames = 2184
+why = "a clip of the m50-ladder-fire mechanic session"
+
+[[clip]]
+id = "donkey-kong-oe.m50-ladder-fire.003"
+name = "m50-ladder-fire 003: probe m50-ladder-fire: Y = 145: 50m: Mario up the ladder at x 80 from the lowest conveyor to y Y, short of girder 3, then still on it until"
+source = "played"
+start = "inputs/donkey-kong-oe.m50-ladder-fire.003.start.presses"
+presses = "inputs/donkey-kong-oe.m50-ladder-fire.003.presses"
+frames = 1746
+why = "a clip of the m50-ladder-fire mechanic session"
 
 [[changelog]]
 version = "1.0.0"
@@ -311,3 +1284,8 @@ version = "6.0.0"
 date = "2026-11-07"
 says = "Curves for over75-start and two-p-clear, measured on a run made from the current mapping"
 changed = ["dk.top-hammer.001", "donkey-kong-oe.over75-start.001", "donkey-kong-oe.two-p-clear.001"]
+
+[[changelog]]
+version = "7.0.0"
+date = "2026-11-08"
+says = "The corpus plan: curves leave the package and are derived (format 1.0.0); no clip or press changed"
