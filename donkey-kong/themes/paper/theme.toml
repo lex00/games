@@ -126,7 +126,7 @@ entry = "screen_75m"
 file = "picture-stage_screens-screen_75m.pix"
 origin = "generated"
 license = "CC0-1.0"
-sha256 = "e0a3563b3919c61560c4fe5c481010ea55f10221c7147b2862ba8a7b5e1db7d6"
+sha256 = "cfd3bdf0b632c10be3b58bb2b25d3c4994bbce96c232bb8e6357a4d3247ad015"
 generator = "gp theme paint --id paper --seed 1"
 
 [[restyle]]
