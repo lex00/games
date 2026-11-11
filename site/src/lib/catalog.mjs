@@ -77,7 +77,8 @@ export async function games() {
 			play: `${RUNNER}/`,
 			picture,
 			original: pkg.rom ? p.title : null,
-			howToGet: pkg.rom?.how_to_get?.trim() ?? null,
+			// The package wraps its text at a width; only a blank line is a break.
+			howToGet: pkg.rom?.how_to_get?.trim().replace(/([^\n])\n(?=[^\n])/g, '$1 ') ?? null,
 			themes: themes.map((c) => ({ title: c.title, play: `${RUNNER}/p?g=${p.name}&c=${c.name}` })),
 		});
 	}
