@@ -1,8 +1,0 @@
-tune 1
-# stage_music: written by gp theme paint, from the role's words
-step 7
-loop
-voice lead pluck 0.45
-notes B4:1 A4:1 A4:1 A4:2 A4:1 A4:1 B4:1 B4:2 F#5:1 C#6:1 B5:1 A5:2 F#5:1 A5:1 F#5:1 F#5:2 C#6:1 E6:1 B5:1 C#6:2 E6:1 F#6:1 F#6:1 E6:2 F#6:1 C#6:1 E6:1 E6:2 F#6:1 F#6:1 F#6:1 F#6:2
-voice bass soft 0.35
-notes A2:5 E3:5 A2:5 E3:5 A2:5 E3:5 A2:5 E3:5
