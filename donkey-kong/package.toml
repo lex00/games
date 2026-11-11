@@ -1,7 +1,7 @@
 # lex00/donkey-kong: the ROM option and its open version, one game.
 [package]
 name = "lex00/donkey-kong"
-version = "1.0.7"
+version = "1.0.8"
 kind = "game"
 title = "Donkey Kong"
 license = "Apache-2.0"
@@ -28,7 +28,7 @@ baselines = "open/baselines/"
 how_to_get = """
 Donkey Kong: Original Edition was sold for the Nintendo 3DS Virtual Console. This game reads
 a dump of that release, or of a cartridge you own, made with a dumping tool you trust.
-Without one, play Rivet Rodeo, this game's open version.
+The page plays only a ROM you load.
 """
 
 [[rom.entry]]
