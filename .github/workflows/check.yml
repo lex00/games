@@ -7,7 +7,16 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - run: sudo apt-get update -qq && sudo apt-get install -y -qq just
+      - name: Tools
+        run: |
+          # The runner's package mirror sometimes can't be reached for a minute
+          # ("Temporary failure resolving"): apt retries each download, and
+          # the install is tried three times before the job fails.
+          for try in 1 2 3; do
+            sudo apt-get -o Acquire::Retries=5 update -qq && sudo apt-get -o Acquire::Retries=5 install -y -qq just && break
+            [ "$try" = 3 ] && exit 1
+            sleep 30
+          done
       - run: just setup
       # gp is built from a private repo, so the package scan runs on the
       # runner below and in the commit hook; this job runs the rest.
@@ -63,8 +72,14 @@ jobs:
           tar -xzf "$RUNNER_TEMP/in/kit.tar.gz" -C "$RUNNER_TEMP/kit"
       - name: The build sandbox
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq bubblewrap
+          # The runner's package mirror sometimes can't be reached for a minute
+          # ("Temporary failure resolving"): apt retries each download, and
+          # the install is tried three times before the job fails.
+          for try in 1 2 3; do
+            sudo apt-get -o Acquire::Retries=5 update -qq && sudo apt-get -o Acquire::Retries=5 install -y -qq bubblewrap && break
+            [ "$try" = 3 ] && exit 1
+            sleep 30
+          done
           sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
       - name: Build gp
         run: cargo build -q -p gp-cli
