@@ -30,21 +30,39 @@ lifted_sha256 = "3471247780a92d9af74e2d7fd2713926229df71f2e94bb45162e5221bba129c
 
 # A ROM a person may load to play this model, which is not a source: no
 # tool scores, gates, records clips on or derives from it (docs/templates.md,
-# "ROMs to play"). Donkey Kong (JU) is this game's upper half without 50m
-# (the user's decision, ROADMAP.md 2026-11-04). Its assets are lifted
+# "ROMs to play"). Donkey Kong (JU) is this game's upper half without the
+# lower half Original Edition added (the user's decisions, ROADMAP.md
+# 2026-11-04 and 2026-11-11): it plays JU's game. Its assets are lifted
 # through its own asset map; `assets` names its asset each of this model's
 # assets it lacks takes instead (the title is an entry of its stage
-# screens, drawn with its one set of tiles), and the rest (50m's, the
-# jingles in the lower half) are filled from the paper version. `levels`
-# are the ones it has: the game passes over the others (stages.skip), so
-# a JU player goes 25m, 75m, 100m, as JU does.
+# screens, drawn with its one set of tiles). `levels` are the ones it has:
+# the game passes over the others (stages.skip), so a JU player goes 25m,
+# 75m, 100m, as JU does. Each `without` is something of this model's that
+# JU's game hasn't: its levels are passed over, its parts taken out of the
+# model, and the assets only it uses, which JU lacks, left blank. Nothing
+# is filled from anywhere else. package.toml's entry for donkey-kong-ju
+# says the same.
 [[loads]]
 source = "donkey-kong-ju"
 accepts = ["aa408f5a6b97c0d738e7e8b489a5617ad4a9ecdee2b05c4ee504210ce31b2825"]
 asset_map = "assets/donkey-kong-ju.toml"
-asset_map_sha256 = "4a968562f81777d7e2349f65543ead02b09ad7b15794d15c63299773dbba4383"
+asset_map_sha256 = "7ec34af7544259f4a6392a4493225ba71250503c0c36457ec81a1a5faa19b052"
 levels = ["main", "m75", "m100"]
 assets = { title_screens = "stage_screens", title_tiles = "tiles", title_sprite_tiles = "sprite_tiles" }
+
+# 50m, which Original Edition restored in its lower half.
+[[loads.without]]
+what = "50m"
+levels = ["m50"]
+blank = ["climb_tops_50m", "conveyor_pattern", "conveyor_turns", "fire_lists_50m", "ground_runs_50m", "ground_shapes_50m", "heights_50m", "ladder_shapes_50m", "ladder_waits_50m", "ladders_50m", "palettes_50m", "pie_row_masks", "stage_screens_50m"]
+
+# The stage-clear scene Original Edition added ($8A81, from its lower
+# half): Kong taking Pauline up. JU's game goes on from the clear with the
+# stage as it stands.
+[[loads.without]]
+what = "stage-clear scene"
+parts = ["clear_scene", "kong_carry", "pauline_carry"]
+blank = ["palette_scene", "scene_sprite_tiles"]
 
 # Every slot of the model and its role. Each is empty here and filled by
 # the recipe.

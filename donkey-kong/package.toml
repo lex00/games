@@ -1,7 +1,7 @@
-# lex00/donkey-kong: the ROM option and its open version, one game.
+# lex00/donkey-kong: Donkey Kong, played from a ROM the person loads.
 [package]
 name = "lex00/donkey-kong"
-version = "1.0.8"
+version = "1.0.9"
 kind = "game"
 title = "Donkey Kong"
 license = "Apache-2.0"
@@ -13,16 +13,7 @@ sim-api = "1"
 gp = ">=0.1.0, <0.2.0"
 
 [play]
-files = ["model.toml", "mapping.toml", "profiles.toml", "assets/", "themes/paper/",
-         "open/model.toml", "open/profiles.toml", "open/authored.toml", "open/themes/",
-         "play/"]
-
-[open]
-title = "Rivet Rodeo"
-model = "open/model.toml"
-derive = "model.toml"
-authored = "open/authored.toml"
-baselines = "open/baselines/"
+files = ["model.toml", "mapping.toml", "profiles.toml", "assets/", "play/"]
 
 [rom]
 how_to_get = """
@@ -57,16 +48,27 @@ prg_rom_bytes = 16384
 chr_rom_bytes = 8192
 board_status = "unverified"
 asset_map = "assets/donkey-kong-ju.toml"
-asset_map_sha256 = "4a968562f81777d7e2349f65543ead02b09ad7b15794d15c63299773dbba4383"
+asset_map_sha256 = "7ec34af7544259f4a6392a4493225ba71250503c0c36457ec81a1a5faa19b052"
 levels = ["main", "m75", "m100"]
 assets = { title_screens = "stage_screens", title_tiles = "tiles", title_sprite_tiles = "sprite_tiles" }
-fill_from = "open/"
-# Measured by game-printer's own lift of this ROM, 2026-11-08.
-lifted_sha256 = "b5ec0602d192f14527d336e6b28c0117f03d73f6d9592c18515d5f5df950adcb"
+lifted_sha256 = "e209d1a9b076dc52761ea4957da5d7461191d4ef81687f1388e5ef633d492ce8"
+
+# What Original Edition's model has that JU's game hasn't, as template.toml's
+# [[loads]] says: the page passes over the levels, takes the parts out of
+# the model and leaves the assets blank. Nothing is filled from elsewhere.
+[[rom.entry.without]]
+what = "50m"
+levels = ["m50"]
+blank = ["climb_tops_50m", "conveyor_pattern", "conveyor_turns", "fire_lists_50m", "ground_runs_50m", "ground_shapes_50m", "heights_50m", "ladder_shapes_50m", "ladder_waits_50m", "ladders_50m", "palettes_50m", "pie_row_masks", "stage_screens_50m"]
+
+[[rom.entry.without]]
+what = "stage-clear scene"
+parts = ["clear_scene", "kong_carry", "pauline_carry"]
+blank = ["palette_scene", "scene_sprite_tiles"]
 
 [hooks]
 crate = "ext"
-models = ["donkey_kong_oe", "rivet_rodeo"]
+models = ["donkey_kong_oe"]
 
 [corpus]
 name = "donkey-kong-oe-25m"

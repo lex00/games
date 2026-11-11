@@ -1,7 +1,0 @@
-tune 1
-# game_start: written by gp theme paint, from the role's words
-step 7
-voice lead pluck 0.45
-notes A4:1 B4:1 E5:1 B4:2 B4:1 A4:1 B4:1 B4:2 B4:1 A4:1 G4:1 G5:2
-voice bass soft 0.35
-notes G2:5 D3:5 G2:5

@@ -1,8 +1,0 @@
-# Derived by `gp template derive` from ../donkey-kong-oe/observe.toml and delta.toml: edit those, not this.
-model = "rivet_rodeo"
-schema = 0
-
-[level]
-names = [["0x01", "main"], ["0x02", "m50"], ["0x03", "m75"], ["0x04", "m100"]]
-ram = [83]
-when = "ram[0x0053] >= 1 && ram[0x0053] <= 4"

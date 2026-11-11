@@ -82,16 +82,29 @@ count = 7
 width = 4
 
 # The sound driver's data: the effects' pitch tables, the note periods,
-# the length tables, the songs' headers and notes and the jingles, $FAE5
-# to $FFF8, read by the driver at $FA48-$FE58 (traced reads of the user's
-# play and run 5658S). The dk_sound hook reads it by CPU address from
-# $FAE5 up.
+# the length tables, the songs' headers and notes and the jingles' start
+# table, $FAE5 to $FFD3, read by the driver at $FA48-$FE58 (traced reads of
+# the user's play and run 5658S). The dk_sound hook reads it by CPU address
+# from $FAE5 up.
 [[asset]]
 name = "sound_rom"
 format = "table"
-count = 1300
+count = 1263
 column = [
   { name = "byte", region = "prg", offset = 0x3AE5 },
+]
+
+# The jingles, $FFD4 to $FFF8, which the driver reads through $F5 and $F6:
+# its loads at $FD2B and $FD2F give $FFD4. 37 bytes, the same as the first
+# 37 of donkey-kong-oe's at $8340, which has 5 more: a jingle its start
+# table names for jingle 2 ($FFCF is $25 there, 0 here). The dk_sound hook
+# reads the table from the address those loads give (its rom_low table).
+[[asset]]
+name = "sound_jingles"
+format = "table"
+count = 37
+column = [
+  { name = "byte", region = "prg", offset = 0x3FD4 },
 ]
 
 # The attract demo's script: 20 entries, each a direction ($56: 1 right, 2
@@ -686,12 +699,22 @@ chunks = [
 part = "sound_rom.byte"
 region = "prg"
 offset = 0x3AE5
-len = 1300
-blake3 = "bec13db4752dbabeea20f9ab46ba755fcc121b9519bfc4854a73f09fe17c8ae4"
+len = 1263
+blake3 = "b0e1fc373b81f3c2048e3386642ec0dd33d1d572d52c1cd3095d1e9902a7ac03"
 chunks = [
   "bee9855dc395684e1cb2a01d2b295da3aa818c22e9b165d322b29e5e9a1e89d1cdc52aae4d0da26d56c956f8f63dd47ec3bb80243398d9bb23087352c83cb7f1e9ce169d0ddf363aaec98279b0d361c837e6896f847b419ba56b7edac0053a8cc592ca23af08eb817129208c86a6c2bdddd91417fd4bfcffadc7e352074315ca",
   "4b5863361f575c68b9baa1a44c9c300384c4dad8616707cc0c0af4078c973673173f53a16a61e600e73c3a279a293dd656864053d2d92e84a0f3a212bfebd6e4536c0b2ae20052f2be8eb54155d083d0b4366b5cf5bb15184aba2884891b018f4f8696d097ccc46bb69fbc396aa59c260d773e1205de9f3f0c44760f73333ceb",
-  "878b972a91b252e02da929ffccc4ff3670411023966407308a7e1e478565387e8f2987d984e67da93dd985fb59fe7af65d4175d78f659dcd03558c84caf042e84377a998369268ef",
+  "878b972a91b252e02da929ffccc4ff3670411023966407308a7e1e478565387e8f2987d984e67da93dd985fb59fe7af65d4175d78f659dcdde9acbcc",
+]
+
+[[content]]
+part = "sound_jingles.byte"
+region = "prg"
+offset = 0x3FD4
+len = 37
+blake3 = "877d523f5f36e0dbe8dcd3a89e943e4c0a7730ae0d7b8f903ad54197031aabf6"
+chunks = [
+  "edd4933c2501d437255c2a70",
 ]
 
 [[content]]

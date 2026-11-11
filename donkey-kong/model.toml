@@ -2,7 +2,7 @@
 schema = "0.4"
 name = "donkey_kong_oe"
 title = "Donkey Kong: Original Edition"
-description = "Donkey Kong: Original Edition (Nintendo, 2010, the NES Donkey Kong with the 50m stage restored). Its art, stages and tables are lifted from the person's own ROM through assets/donkey-kong-oe.toml. It runs the ext hooks in templates/donkey-kong-oe/ext (gp-ext-dk, registered for donkey_kong_oe in gp-exts). A Donkey Kong (JU) ROM may be loaded to play it, with 50m skipped (template.toml, [[loads]])."
+description = "Donkey Kong: Original Edition (Nintendo, 2010, the NES Donkey Kong with the 50m stage restored). Its art, stages and tables are lifted from the person's own ROM through assets/donkey-kong-oe.toml. It runs the ext hooks in templates/donkey-kong-oe/ext (gp-ext-dk, registered for donkey_kong_oe in gp-exts). A Donkey Kong (JU) ROM may be loaded to play it as JU's game, without 50m and the stage-clear scene (template.toml, [[loads]])."
 source = "donkey-kong-oe"
 view = "side"
 frame_rate = "39375000/655171"
@@ -5535,9 +5535,6 @@ hook_through_stops = true
 no_slot = true
 role = "npc"
 size = [1, 1]
-
-[entities.sound.ext_params]
-rom_low_base = 33600
 
 [entities.sound.ext_tables]
 code = "code_fa45.byte"

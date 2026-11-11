@@ -906,12 +906,15 @@ fn driver_state(counter: &dyn Fn(&str) -> Option<i64>) -> Sound {
     Sound::from_bytes(bytes)
 }
 
-/// A byte of the lifted `sound_rom` by its ROM address, or below
-/// [`ROM_BASE`] of the optional table `rom_low` from the address
-/// `rom_low_base` (donkey-kong-oe's jingles at $8340 in its lower bank).
+/// A byte of the lifted `sound_rom` by its ROM address, or, inside the
+/// optional table `rom_low` from the address the driver's jingle loads
+/// give, of that table: donkey-kong-oe's jingles at $8340 in its lower
+/// bank, donkey-kong-ju's at $FFD4, past the end of its `sound_rom`.
 fn rom_byte(table: &[i64], low: Option<(&[i64], u16)>, a: u16) -> u8 {
     let (table, base) = match low {
-        Some((low, base)) if a < ROM_BASE => (low, base),
+        Some((low, base)) if (base..).contains(&a) && usize::from(a - base) < low.len() => {
+            (low, base)
+        }
         _ => (table, ROM_BASE),
     };
     a.checked_sub(base)
@@ -937,12 +940,15 @@ fn reader<'a>(kind: &'a gp_sim::spec::Kind) -> Option<impl Fn(u16) -> u8 + 'a> {
     })
 }
 
-/// The kind's `rom_low` table and the address it starts at
-/// (`ext_params.rom_low_base`), when it has both.
+/// The kind's `rom_low` table and the address it starts at: the operands
+/// of the driver's jingle loads ([`at::JINGLE_LO`] and [`at::JINGLE_HI`])
+/// in `sound_rom`.
 fn low_rom(kind: &gp_sim::spec::Kind) -> Option<(&[i64], u16)> {
     let low = kind.ext_tables.get("rom_low")?;
-    let base = kind.ext_params.get("rom_low_base")?.floor();
-    Some((low.as_slice(), u16::try_from(base).ok()?))
+    let rom = kind.ext_tables.get("rom")?;
+    let base = u16::from(rom_byte(rom, None, at::JINGLE_LO))
+        | u16::from(rom_byte(rom, None, at::JINGLE_HI)) << 8;
+    Some((low.as_slice(), base))
 }
 
 /// Whether the game rule is in `title` or `title_draw`, the frames the
@@ -1069,6 +1075,24 @@ fn death(cx: &mut ExtCx<'_>) {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The jingles' table is read where the driver's loads point: below
+    /// `sound_rom` (donkey-kong-oe's $8340) or past its end
+    /// (donkey-kong-ju's $FFD4); an address outside both reads 0.
+    #[test]
+    fn the_jingles_table_is_read_where_the_driver_points() {
+        let rom: Vec<i64> = (0..0x10).map(|i| 0x10 + i).collect();
+        let low = [0xA0, 0xA1, 0xA2];
+        for base in [0x8340, ROM_BASE + 0x10] {
+            let r = |a: u16| rom_byte(&rom, Some((&low, base)), a);
+            assert_eq!(r(base), 0xA0);
+            assert_eq!(r(base + 2), 0xA2);
+            assert_eq!(r(base + 3), 0);
+            assert_eq!(r(ROM_BASE + 1), 0x11);
+            assert_eq!(r(0x8000), 0);
+        }
+        assert_eq!(rom_byte(&rom, None, ROM_BASE + 0x10), 0);
+    }
 
     /// The driver's cycles against the original's: each frame of
     /// `gp cycles split --ram-out` in `$GP_SOUND_SPLIT` (NAME.jsonl and

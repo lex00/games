@@ -55,7 +55,7 @@ source = "the model's play_gaps slot ($C0CF, $C0DF)"
 what = "The slope list"
 rule = "9 x places where a girder steps a pixel, shared by barrels and fires: a barrel on girders 2 to 5 steps at each, on girders 1 and 6 from the fifth on; a fire steps at 24 (in code) and at the list from its second. Each is a piece's step less 8, the middle of a 16 px sprite"
 slot = "play_tables"
-source = "$C1C4; gcFit's notes in scripts/rivet-rodeo/stage.py (in progress, 2026-11-04)"
+source = "$C1C4; gcFit's notes (2026-11-04)"
 
 [[data]]
 what = "Barrels' ladders"
@@ -197,7 +197,6 @@ source = "the model"
 [[limit]]
 what = "Space for the stage's picture"
 limit = "1258 bytes hold all five screens: 25m 449, 75m 177, 100m 268, the title 322, the status box 42. A new 25m with the others kept has 449 bytes; with 75m and 100m dropped, 894"
-why = "Rivet Rodeo's 25m picture is 569 bytes (120 over 449), its title 523"
 source = "the asset map (stage_screens: 1258 bytes, 5 entries); packP's pack, 2026-11-04"
 
 [[limit]]
@@ -210,15 +209,13 @@ name = "girders"
 what = "Girders, and the top platform"
 target = "6 + 1"
 within = "1"
-example = "6 + 1"
-source = "docs/originals.md, Rivet Rodeo's measures of 2026-11-03"
+source = "docs/originals.md"
 
 [[measure]]
 name = "slope_px_per_24"
 what = "Slope, pixels per 24 across, bottom to top"
 target = [-0.53, 0.88, -0.88, 0.88, -0.88, 0.83]
 within = "0.25 each"
-example = [-0.56, 0.88, -0.77, 0.88, -0.77, 0.69]
 source = "docs/originals.md"
 
 [[measure]]
@@ -226,7 +223,6 @@ name = "gaps"
 what = "Gaps between girders' middles, px"
 target = [31, 30, 30, 30, 29, 25]
 within = "8 px each"
-example = [30, 30, 30, 30, 30, 26]
 source = "docs/originals.md"
 
 [[measure]]
@@ -234,7 +230,6 @@ name = "ladders, broken"
 what = "Ladders, and how many are broken"
 target = "13, 4 (0.31)"
 within = "1 each"
-example = "13, 4 (0.31)"
 source = "docs/originals.md"
 
 [[measure]]
@@ -242,7 +237,6 @@ name = "things"
 what = "Hammers' heights over the bottom girder; their distance to the nearest ladder"
 target = "72, 129; 16, 16"
 within = "8 px"
-example = "75, 134; 16, 16"
 source = "docs/originals.md"
 
 [[measure]]
@@ -250,7 +244,6 @@ name = "climb_frames_min, climb_frames_median"
 what = "A climb, frames (fastest, median)"
 target = "68, 71"
 within = "not set: it follows the gaps"
-example = "68, 74"
 source = "docs/originals.md"
 
 [[measure]]
@@ -258,7 +251,6 @@ name = "route_frames"
 what = "The direct route to the top, frames"
 target = 1160
 within = "10%"
-example = 1148
 source = "docs/originals.md"
 
 [[measure]]
@@ -266,7 +258,6 @@ name = "leave_by_ladder_share"
 what = "Barrels leaving a girder by a ladder"
 target = 0.48
 within = "0.1"
-example = 0.40
 source = "docs/originals.md"
 
 [[measure]]
@@ -274,7 +265,6 @@ name = "throw_to_drum_median"
 what = "From the throw to the drum, median frames"
 target = 1003
 within = "10%"
-example = 982
 source = "docs/originals.md"
 
 [[measure]]
@@ -282,7 +272,6 @@ name = "jump_window_median"
 what = "The jump window over a barrel, median frames"
 target = 22
 within = "3 frames"
-example = 19
 source = "docs/originals.md"
 
 [[measure]]
@@ -290,12 +279,11 @@ name = "goal_height"
 what = "The goal over the bottom girder's middle, px"
 target = 186
 within = "not set"
-example = 187
 source = "docs/originals.md"
 
 [[verify]]
 step = "1. The model's own checks"
-how = "Write the stage as data (a derived template's authored.toml, as scripts/rivet-rodeo/stage.py does), then gp template derive T --write, gp template build T --write and gp template check T: every slot filled, the pins current"
+how = "Write the stage as data in a derived template's authored.toml, then gp template derive T --write, gp template build T --write and gp template check T: every slot filled, the pins current"
 
 [[verify]]
 step = "2. The play measures"
@@ -318,13 +306,8 @@ step = "6. A theme"
 how = "gp theme check T --theme DIR: a theme's floors and sprites must keep the stage's geometry (docs/theme-kit.md, \"Gameplay geometry\")"
 
 [[fit]]
-what = "Rivet Rodeo's girders as of 2026-11-03"
-rule = "9 runs (a run per flat stretch and slope), 54 bytes: 6 over the 48. They fit only rewritten: one run a row, as gcFit's redesign does"
-source = "packP's pack, 2026-11-04"
-
-[[fit]]
 what = "Shapes and heights"
-rule = "Rivet Rodeo needs 4 ground shapes against 25m's 3; packP moved the heights and shapes into 100m's ladder list and pointed 25m at them, which breaks 100m"
+rule = "A fourth ground shape has no room in 25m's 3: packP moved the heights and shapes into 100m's ladder list and pointed 25m at them, which breaks 100m"
 source = "packP's pack"
 
 [[fit]]
@@ -334,24 +317,5 @@ source = "packP's pack"
 
 [[fit]]
 what = "Fires' ladders and the third barrel ladder"
-rule = "Only by changing code: packP rewrote 12 numbers of the fire routine and 4 of the barrels' third-ladder test, and swapped the girder 3 and 5 branches. gcFit's redesign keeps them where the code has them instead, so no code changes"
+rule = "They move only by changing code: packP rewrote 12 numbers of the fire routine and 4 of the barrels' third-ladder test, and swapped the girder 3 and 5 branches. A stage that keeps them where the code has them needs no code changes"
 source = "packP's pack; gcFit's notes"
-
-[[fit]]
-what = "The stage's picture"
-rule = "569 bytes against 449: it fits only with 75m's and 100m's pictures dropped (1129 of 1258 bytes with Rivet Rodeo's title and status box)"
-source = "packP's pack"
-
-[[fit]]
-what = "Runs on the real engine"
-rule = "Rivet Rodeo packed, the same inputs run on the copy and on the model: the first splits Donkey Kong's own runs don't have came at model frame 640 (a climb: the hero's y 204 on the engine, 203 on the model), 705 (a jump: a sound), 811 (a start: a barrel) and 1079 (a climb: a death's wait)"
-source = "packP's runs, model frames, 2026-11-04"
-
-[example]
-template = "rivet-rodeo"
-text = [
-  "Rivet Rodeo is an original stage on this model (docs/originals.md). Its girders are 25m's in kind and spacing: six girders about 30 px apart at their middles, sloping a pixel each 24 px piece, the bottom one flat for its left half, and a top platform. Its ladders, hammers and start are its own places, and gp template check --original holds it apart from 25m: cells 0.472 at a shift of 2 cells, ladders 0.385 (5 of 13), both under the thresholds.",
-  "Against the format: it keeps the counts (13 ladders, 4 broken, 9 tops, 2 hammers), the slope list and the screen edges, so those slots pack into 25m's places. It breaks two rules: it writes its girders as 9 runs (a run per flat stretch and slope), where the format holds 8, one a row above the bottom; and its ladders don't stand where the code has the fires' ladders (x 92 and 196 from the bottom girder, 44 and 108 from the second) and the third barrel ladder. The model runs it anyway, since the model reads the runs and the fire params as data; the real engine does only with code changed (What fits, above).",
-  "Its measures land within the tolerances: the slopes within 0.14 (girder 6: 0.69 against 0.83), the gaps within 1 px, the route 1148 frames against 1160, the throw to the drum 982 against 1003, the jump window 19 against 22.",
-  "gcFit's redesign (in progress on 2026-11-04) keeps to every rule above: one run a row, girders 1 to 3 laid so the fires' ladders stand on them, a ladder where the third barrel ladder is on girders 4 and 5, and girder 6 64 px under the thrower.",
-]
