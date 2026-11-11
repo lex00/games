@@ -8,29 +8,29 @@ const list = await games();
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Games</title>
-		<meta name="description" content="Games you can play in your browser, free." />
+		<meta name="description" content="Games for the ROMs you own, played in your browser." />
 		<meta name="color-scheme" content="light dark" />
 	</head>
 	<body>
 		<header>
 			<h1>Games</h1>
-			<p>Free, in your browser, with nothing to install.</p>
+			<p>For the ROMs you own, in your browser, with nothing to install.</p>
 		</header>
 		<main>
 			{list.map((g) => (
 				<article>
-					{g.picture && <a class="art" href={g.play} set:html={g.picture} aria-label={`Play ${g.title}`} />}
+					{g.picture && <a class="art" href={g.play} aria-label={`Play ${g.title}`}><img src={g.picture.src} alt={g.picture.alt} /></a>}
 					<div class="about">
 						<h2>{g.title}</h2>
 						<a class="play" href={g.play}>Play</a>
 						{g.themes.length > 0 && (
 							<p class="themes">
-								Or play with the {g.themes.map((t, i) => <>{i > 0 && ', '}<a href={t.play}>{t.title}</a></>)} look
+								Looks: Original, {g.themes.map((t, i) => <>{i > 0 && ', '}<a href={t.play}>{t.title}</a></>)}
 							</p>
 						)}
 						{g.howToGet && (
-							<details>
-								<summary>Have your own copy of {g.original}?</summary>
+							<details open>
+								<summary>You need your own copy of {g.original}</summary>
 								<p>Press Play, then load your copy on the game page. It stays in your browser and is never uploaded.</p>
 								<p class="how">{g.howToGet}</p>
 							</details>
@@ -73,7 +73,7 @@ const list = await games();
 		background: var(--sheet); border: 1px solid var(--rule); border-radius: 0.5rem; padding: 1.25rem;
 	}
 	.art { display: block; line-height: 0; border-radius: 0.25rem; overflow: hidden; }
-	.art svg { width: 100%; height: auto; display: block; }
+	.art img { width: 100%; height: auto; display: block; }
 	h2 { margin: 0 0 1rem; font-size: clamp(1.75rem, 5vw, 2.5rem); line-height: 1.1; }
 	.play {
 		display: inline-block; padding: 0.7rem 2.2rem; border-radius: 0.4rem;

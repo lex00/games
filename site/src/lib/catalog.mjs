@@ -3,8 +3,8 @@
 // read the registry fails: it must never publish an empty or stale list.
 import { parse } from 'smol-toml';
 
-const REGISTRY = process.env.GP_REGISTRY ?? 'https://raw.githubusercontent.com/lex00/rivetrodeo/main';
-export const RUNNER = process.env.GP_RUNNER ?? 'https://rivet-rodeo.intentius.workers.dev';
+const REGISTRY = process.env.GP_REGISTRY ?? 'https://raw.githubusercontent.com/lex00/gp-registry/main';
+export const RUNNER = process.env.GP_RUNNER ?? 'https://nes-donkey-kong.intentius.workers.dev';
 
 async function text(key) {
 	const r = await fetch(`${REGISTRY}/${key}`);
@@ -56,23 +56,29 @@ export async function games() {
 	for (const p of catalog.filter((c) => c.kind === 'game')) {
 		const have = files(await text(`packages/${p.id}`));
 		const pkg = parse(await text(`blobs/${have.get('package.toml')}`));
-		const title = pkg.open?.title ?? p.title;
-		const art = [...have.keys()].find((f) => /^open\/themes\/[^/]+\/picture-title-.*\.pix$/.test(f));
+		const title = p.title;
+		const themes = catalog.filter((c) => c.kind === 'content' && c.for_games.includes(p.name));
+		// The card's picture: the first theme's preview.png (a theme's own art,
+		// never a picture of the original's), served from the registry.
+		let picture = null;
+		for (const c of themes) {
+			const tf = files(await text(`packages/${c.id}`));
+			if (tf.has('preview.png')) {
+				picture = { src: `${REGISTRY}/blobs/${tf.get('preview.png')}`, alt: `The title screen of ${title} in the ${c.title} look` };
+				break;
+			}
+		}
 		list.push({
 			name: p.name,
 			title,
 			version: p.latest,
-			// The plain address opens the open version and offers a kept ROM. A link
-			// naming the game would start a kept ROM at once, under this card's title.
-			play: pkg.open ? `${RUNNER}/` : `${RUNNER}/p?g=${p.name}`,
-			picture: art ? pixToSvg(await text(`blobs/${have.get(art)}`), `The title screen of ${title}`) : null,
-			free: Boolean(pkg.open),
+			// The page's plain address: it plays a ROM the visitor loads, or one kept
+			// from an earlier visit, in the page's own theme.
+			play: `${RUNNER}/`,
+			picture,
 			original: pkg.rom ? p.title : null,
 			howToGet: pkg.rom?.how_to_get?.trim() ?? null,
-			themes: catalog
-				// A theme the open version already wears changes nothing, so it isn't offered.
-				.filter((c) => c.kind === 'content' && c.for_games.includes(p.name) && !have.has(`open/themes/${c.name.split('/')[1]}/theme.toml`))
-				.map((c) => ({ title: c.title, play: `${RUNNER}/p?g=${p.name}&c=${c.name}` })),
+			themes: themes.map((c) => ({ title: c.title, play: `${RUNNER}/p?g=${p.name}&c=${c.name}` })),
 		});
 	}
 	if (list.length === 0) throw new Error('the registry lists no games');

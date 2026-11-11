@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 const html = readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8');
 const need = [
 	[/class="play"[^>]*href="https:\/\/[^"]+\/"|href="https:\/\/[^"]+\/"[^>]*class="play"/, 'a Play link to the game runner at its plain address'],
-	[/<svg[^>]*aria-label="The title screen of /, "a game's picture"],
+	[/<img[^>]*alt="The title screen of /, "a game's picture"],
 	[/href="https:\/\/lex00\.github\.io\/gameprinter\/"/, 'the link to the docs'],
 ];
 const missing = need.filter(([re]) => !re.test(html)).map(([, what]) => what);
