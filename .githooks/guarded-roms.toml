@@ -1,9 +1,804 @@
-# ROMs whose bytes must never be typed into this repo, by headerless SHA-256.
-# Hashes only: these are checked against the person's own files in $GP_ROM_DIR.
+# What the ROM-blocking hook guards (scripts/romguard/rom_text.py), by hash
+# only: never the games themselves. Each hash is checked against the
+# person's own files in $GP_ROM_DIR.
+#
+# [[source]]: a NES image by the SHA-256 of its PRG and CHR data, the iNES
+# header (and any trainer) removed, as `gp roms scan` prints it. Every
+# source the old tool's sources/nes.toml listed is here, so a game it
+# registered stays guarded before its package comes over. The hook also
+# reads roms/*.toml, */roms.toml and every package.toml's [[rom.entry]].
+#
+# [[chip]]: one chip of an arcade romset, by the SHA-1 MAME lists it by,
+# with where it loads, copied from gp-arcade's set table
+# (crates/gp-arcade/src/romset.rs, SETS and SSIO_PROM). A test in
+# crates/gp-arcade/tests/guarded_chips.rs fails when the two differ. The
+# games repo keeps the same file.
+
 [[source]]
-id = "donkey-kong-oe"
-sha256 = "45440d8ef512b4660dce0c753e110004aef96fa30f2967f9260e946d808db07d"
+id = "smb1-ntsc-prg0"
+sha256 = "fcb6a0ef3a20c19b356005fbb21dc8009563b1cb5a9aaebc8e9386b4a8c5912e"
+
+[[source]]
+id = "smb1-ntsc-prg1"
+sha256 = "6af245b3bbea315c9a2a85544f1325a2045d5427d1b84ebb780f54ccdef5fb2f"
+
+[[source]]
+id = "smb1-pal"
+sha256 = "6b3189414053f975bcac33eb51a1e9991e0d06f42abead7919969417cc26e2ad"
+
+[[source]]
+id = "mm2-usa"
+sha256 = "1e588d435e75d80c5c0b578b4fa8d196f2cf4346c11c9a7b7e435d768828ad01"
+
+[[source]]
+id = "kirby-usa-prg0"
+sha256 = "a6b81fec11c24a33fd763db5c28005e760a1614e70c1bb5ccde0bd4242431000"
+
+[[source]]
+id = "ninja-gaiden-usa"
+sha256 = "6799437d4122b81c86ae35cefe5b6ae6e10e6f9a9c7b3140dd569f717ba32b3d"
+
+[[source]]
+id = "smb2-usa-prg0"
+sha256 = "cba920f9394733c82253685d7783f26a3033ba58a94623e9abf7892329b969b9"
+
+[[source]]
+id = "c4-remastered-1"
+sha256 = "5434d3959d90892ec8a9a76b3ffb16477b5d4b48209988d52e0e598d7da3ce9c"
+
+[[source]]
+id = "c4-remastered-1-prg1"
+sha256 = "72f18a682c6609a7cb762414c89a6247297700884eed210e3f433ccb63c4c90b"
+
+[[source]]
+id = "gauntlet-usa"
+sha256 = "fd2a8520314fb183e15fd62f48df97f92eb9c81140da4e6ab9ff0386e4797071"
+
+[[source]]
+id = "gauntlet2-usa"
+sha256 = "ffa61d9f7bfb1d60662ddf246b21a8756d518292e8fdc0f58ac1c9b3fbad672d"
+
+[[source]]
+id = "qbert-usa"
+sha256 = "5fa346174b6b5a9dc2b5fe113ef8d8ac013a32b26dde6d5dfc9ed631d5e9af25"
+
+[[source]]
+id = "track-and-field-usa"
+sha256 = "a2812d80b3057aac9753f48247a7a46b29bea0b9aec04ca4c327180085c25b58"
 
 [[source]]
 id = "donkey-kong-ju"
 sha256 = "aa408f5a6b97c0d738e7e8b489a5617ad4a9ecdee2b05c4ee504210ce31b2825"
+
+[[source]]
+id = "donkey-kong-oe"
+sha256 = "45440d8ef512b4660dce0c753e110004aef96fa30f2967f9260e946d808db07d"
+
+[[chip]]
+set = "rbtapper"
+name = "rbtpg0.bin"
+region = "main"
+offset = 0
+size = 16384
+sha1 = "31b583c98e7c2cecab42223df8b5400004c9f3d3"
+
+[[chip]]
+set = "rbtapper"
+name = "rbtpg1.bin"
+region = "main"
+offset = 16384
+size = 16384
+sha1 = "7de10632b2538524fee418175e2cc41be9c8c0e8"
+
+[[chip]]
+set = "rbtapper"
+name = "rbtpg2.bin"
+region = "main"
+offset = 32768
+size = 16384
+sha1 = "b9878c8a61a98e787e547bb6ab81c809875891f3"
+
+[[chip]]
+set = "rbtapper"
+name = "rbtpg3.bin"
+region = "main"
+offset = 49152
+size = 8192
+sha1 = "ddb21e39ede2222cb2286ec9dba06341fe1c9db7"
+
+[[chip]]
+set = "rbtapper"
+name = "5788"
+region = "ssio"
+offset = 0
+size = 4096
+sha1 = "c2c94ab26ebce30ce4efc239e555c6368794d265"
+
+[[chip]]
+set = "rbtapper"
+name = "5787"
+region = "ssio"
+offset = 4096
+size = 4096
+sha1 = "f5c8585d443bca67d4065314a06431d1f104c553"
+
+[[chip]]
+set = "rbtapper"
+name = "5786"
+region = "ssio"
+offset = 8192
+size = 4096
+sha1 = "2a4dc0deca48f4d2ac9fe673ecb9548415c996a9"
+
+[[chip]]
+set = "rbtapper"
+name = "5785"
+region = "ssio"
+offset = 12288
+size = 4096
+sha1 = "a41323149c50adcae7675efcef69fd7d8365e527"
+
+[[chip]]
+set = "rbtapper"
+name = "rbtbg1.bin"
+region = "gfx1"
+offset = 0
+size = 16384
+sha1 = "9e96a3ff0b66a4b1d07fe86059f7dfab0d53231c"
+
+[[chip]]
+set = "rbtapper"
+name = "rbtbg0.bin"
+region = "gfx1"
+offset = 16384
+size = 16384
+sha1 = "a4b24fffbbe299e0c2058abe372f00954e5edf98"
+
+[[chip]]
+set = "rbtapper"
+name = "rbtfg1.bin"
+region = "gfx2"
+offset = 0
+size = 16384
+sha1 = "532239605b74b137cd0f6035a6bc7ac43f559d82"
+
+[[chip]]
+set = "rbtapper"
+name = "rbtfg0.bin"
+region = "gfx2"
+offset = 16384
+size = 16384
+sha1 = "3a8e3e927b0fd2d49222e417e4c1f28b5a45c6ca"
+
+[[chip]]
+set = "rbtapper"
+name = "rbtfg3.bin"
+region = "gfx2"
+offset = 32768
+size = 16384
+sha1 = "3811f499aa076fb81af42f7cb522879b0af50e37"
+
+[[chip]]
+set = "rbtapper"
+name = "rbtfg2.bin"
+region = "gfx2"
+offset = 49152
+size = 16384
+sha1 = "d02a306f8b32b3a097fc51e75e106a40fe942d35"
+
+[[chip]]
+set = "rbtapper"
+name = "rbtfg5.bin"
+region = "gfx2"
+offset = 65536
+size = 16384
+sha1 = "523efaba9a3cbe871868ee09caea062382f31fad"
+
+[[chip]]
+set = "rbtapper"
+name = "rbtfg4.bin"
+region = "gfx2"
+offset = 81920
+size = 16384
+sha1 = "e2a427324fc1d4422e50a1ab79822aff0290e109"
+
+[[chip]]
+set = "rbtapper"
+name = "rbtfg7.bin"
+region = "gfx2"
+offset = 98304
+size = 16384
+sha1 = "dab52db0bca13b9f3470060bc3babe4a6c2cdcc8"
+
+[[chip]]
+set = "rbtapper"
+name = "rbtfg6.bin"
+region = "gfx2"
+offset = 114688
+size = 16384
+sha1 = "400d390729601610b152e21da55399399830221f"
+
+[[chip]]
+set = "tapper"
+name = "tapper_c.p.u._pg_0_1c_1-27-84.1c"
+region = "main"
+offset = 0
+size = 16384
+sha1 = "ff5a729e36faea3758c8c7b345a42dd8bb465f44"
+
+[[chip]]
+set = "tapper"
+name = "tapper_c.p.u._pg_1_2c_1-27-84.2c"
+region = "main"
+offset = 16384
+size = 16384
+sha1 = "b9f0396e2eba5772deec4725c41fa9de49658e72"
+
+[[chip]]
+set = "tapper"
+name = "tapper_c.p.u._pg_2_3c_1-27-84.3c"
+region = "main"
+offset = 32768
+size = 16384
+sha1 = "434d3c27b9f1e43def081d79b9f56dbce93a9207"
+
+[[chip]]
+set = "tapper"
+name = "tapper_c.p.u._pg_3_4c_1-27-84.4c"
+region = "main"
+offset = 49152
+size = 8192
+sha1 = "5e4e2dc1703b39f588ba374f6a610f273d710532"
+
+[[chip]]
+set = "tapper"
+name = "tapper_sound_snd_0_a7_12-7-83.a7"
+region = "ssio"
+offset = 0
+size = 4096
+sha1 = "9e281c340b7702523c86d56317efad9e3688e585"
+
+[[chip]]
+set = "tapper"
+name = "tapper_sound_snd_1_a8_12-7-83.a8"
+region = "ssio"
+offset = 4096
+size = 4096
+sha1 = "14334b9d2bfece3fe5bda0cbd53158ead8d27e53"
+
+[[chip]]
+set = "tapper"
+name = "tapper_sound_snd_2_a9_12-7-83.a9"
+region = "ssio"
+offset = 8192
+size = 4096
+sha1 = "b38bba5f12516d899e023f99147868e3402fbd7b"
+
+[[chip]]
+set = "tapper"
+name = "tapper_sound_snd_3_a10_12-7-83.a10"
+region = "ssio"
+offset = 12288
+size = 4096
+sha1 = "0011407c1e886071282808c0a561789b1245a789"
+
+[[chip]]
+set = "tapper"
+name = "tapper_c.p.u._bg_1_6f_12-7-83.6f"
+region = "gfx1"
+offset = 0
+size = 16384
+sha1 = "eb30b9bb654324340f0fc5b44776ac2440c1e869"
+
+[[chip]]
+set = "tapper"
+name = "tapper_c.p.u._bg_0_5f_12-7-83.5f"
+region = "gfx1"
+offset = 16384
+size = 16384
+sha1 = "23e29ec942e1e7516ae8068837af2d1c79592378"
+
+[[chip]]
+set = "tapper"
+name = "tapper_video_fg_1_a7_12-7-83.a7"
+region = "gfx2"
+offset = 0
+size = 16384
+sha1 = "a38667573d235efe2dc515e52af05825fe4e0f30"
+
+[[chip]]
+set = "tapper"
+name = "tapper_video_fg_0_a8_12-7-83.a8"
+region = "gfx2"
+offset = 16384
+size = 16384
+sha1 = "2077f79177fda26f9c674b2ab525ec3833802059"
+
+[[chip]]
+set = "tapper"
+name = "tapper_video_fg_3_a5_12-7-83.a5"
+region = "gfx2"
+offset = 32768
+size = 16384
+sha1 = "930142dd73fb30c4d3ec09a1e37517c6c6774024"
+
+[[chip]]
+set = "tapper"
+name = "tapper_video_fg_2_a6_12-7-83.a6"
+region = "gfx2"
+offset = 49152
+size = 16384
+sha1 = "d553b8517c1d03a2be0b065f4da2fa99d9e6fb30"
+
+[[chip]]
+set = "tapper"
+name = "tapper_video_fg_5_a3_12-7-83.a3"
+region = "gfx2"
+offset = 65536
+size = 16384
+sha1 = "8aead89e1adaee5f0b679661c4bfba36e0d639e8"
+
+[[chip]]
+set = "tapper"
+name = "tapper_video_fg_4_a4_12-7-83.a4"
+region = "gfx2"
+offset = 81920
+size = 16384
+sha1 = "402c166d50b4a693959b3f0706a7931a5daef6ce"
+
+[[chip]]
+set = "tapper"
+name = "tapper_video_fg_7_a1_12-7-83.a1"
+region = "gfx2"
+offset = 98304
+size = 16384
+sha1 = "95879a455ecfe2e3de7fe2a75078f9e6934960f5"
+
+[[chip]]
+set = "tapper"
+name = "tapper_video_fg_6_a2_12-7-83.a2"
+region = "gfx2"
+offset = 114688
+size = 16384
+sha1 = "a24696f16d467d9eea4f25aef5f4c5ff55bf51ff"
+
+[[chip]]
+set = "tappera"
+name = "tapper_c.p.u._pg_0_1c_1-12-84.1c"
+region = "main"
+offset = 0
+size = 16384
+sha1 = "373e9a9d73b71e100c02862662d025f5ead2f94d"
+
+[[chip]]
+set = "tappera"
+name = "tapper_c.p.u._pg_1_2c_1-12-84.1c"
+region = "main"
+offset = 16384
+size = 16384
+sha1 = "e493e46fc70a765e54bfdd7ba7ca570e6a5c79d6"
+
+[[chip]]
+set = "tappera"
+name = "tapper_c.p.u._pg_2_3c_1-12-84.3c"
+region = "main"
+offset = 32768
+size = 16384
+sha1 = "cb46a2248289ced7282b1463f433dcb970c42c1a"
+
+[[chip]]
+set = "tappera"
+name = "tapper_c.p.u._pg_3_4c_1-12-84.4c"
+region = "main"
+offset = 49152
+size = 8192
+sha1 = "45bf1571a2418c7dc00ccc7061a3e04e65cb6bff"
+
+[[chip]]
+set = "tappera"
+name = "tapper_sound_snd_0_a7_12-7-83.a7"
+region = "ssio"
+offset = 0
+size = 4096
+sha1 = "9e281c340b7702523c86d56317efad9e3688e585"
+
+[[chip]]
+set = "tappera"
+name = "tapper_sound_snd_1_a8_12-7-83.a8"
+region = "ssio"
+offset = 4096
+size = 4096
+sha1 = "14334b9d2bfece3fe5bda0cbd53158ead8d27e53"
+
+[[chip]]
+set = "tappera"
+name = "tapper_sound_snd_2_a9_12-7-83.a9"
+region = "ssio"
+offset = 8192
+size = 4096
+sha1 = "b38bba5f12516d899e023f99147868e3402fbd7b"
+
+[[chip]]
+set = "tappera"
+name = "tapper_sound_snd_3_a10_12-7-83.a10"
+region = "ssio"
+offset = 12288
+size = 4096
+sha1 = "0011407c1e886071282808c0a561789b1245a789"
+
+[[chip]]
+set = "tappera"
+name = "tapper_c.p.u._bg_1_6f_12-7-83.6f"
+region = "gfx1"
+offset = 0
+size = 16384
+sha1 = "eb30b9bb654324340f0fc5b44776ac2440c1e869"
+
+[[chip]]
+set = "tappera"
+name = "tapper_c.p.u._bg_0_5f_12-7-83.5f"
+region = "gfx1"
+offset = 16384
+size = 16384
+sha1 = "23e29ec942e1e7516ae8068837af2d1c79592378"
+
+[[chip]]
+set = "tappera"
+name = "tapper_video_fg_1_a7_12-7-83.a7"
+region = "gfx2"
+offset = 0
+size = 16384
+sha1 = "a38667573d235efe2dc515e52af05825fe4e0f30"
+
+[[chip]]
+set = "tappera"
+name = "tapper_video_fg_0_a8_12-7-83.a8"
+region = "gfx2"
+offset = 16384
+size = 16384
+sha1 = "2077f79177fda26f9c674b2ab525ec3833802059"
+
+[[chip]]
+set = "tappera"
+name = "tapper_video_fg_3_a5_12-7-83.a5"
+region = "gfx2"
+offset = 32768
+size = 16384
+sha1 = "930142dd73fb30c4d3ec09a1e37517c6c6774024"
+
+[[chip]]
+set = "tappera"
+name = "tapper_video_fg_2_a6_12-7-83.a6"
+region = "gfx2"
+offset = 49152
+size = 16384
+sha1 = "d553b8517c1d03a2be0b065f4da2fa99d9e6fb30"
+
+[[chip]]
+set = "tappera"
+name = "tapper_video_fg_5_a3_12-7-83.a3"
+region = "gfx2"
+offset = 65536
+size = 16384
+sha1 = "8aead89e1adaee5f0b679661c4bfba36e0d639e8"
+
+[[chip]]
+set = "tappera"
+name = "tapper_video_fg_4_a4_12-7-83.a4"
+region = "gfx2"
+offset = 81920
+size = 16384
+sha1 = "402c166d50b4a693959b3f0706a7931a5daef6ce"
+
+[[chip]]
+set = "tappera"
+name = "tapper_video_fg_7_a1_12-7-83.a1"
+region = "gfx2"
+offset = 98304
+size = 16384
+sha1 = "95879a455ecfe2e3de7fe2a75078f9e6934960f5"
+
+[[chip]]
+set = "tappera"
+name = "tapper_video_fg_6_a2_12-7-83.a2"
+region = "gfx2"
+offset = 114688
+size = 16384
+sha1 = "a24696f16d467d9eea4f25aef5f4c5ff55bf51ff"
+
+[[chip]]
+set = "tapperg"
+name = "tapper_c.p.u._pg_0_1c_1-27-84.1c"
+region = "main"
+offset = 0
+size = 16384
+sha1 = "ff5a729e36faea3758c8c7b345a42dd8bb465f44"
+
+[[chip]]
+set = "tapperg"
+name = "tapper_c.p.u._pg_1_2c_1-27-84.2c"
+region = "main"
+offset = 16384
+size = 16384
+sha1 = "b9f0396e2eba5772deec4725c41fa9de49658e72"
+
+[[chip]]
+set = "tapperg"
+name = "tapper_c.p.u._pg_2_3c_1-27-84.3c"
+region = "main"
+offset = 32768
+size = 16384
+sha1 = "434d3c27b9f1e43def081d79b9f56dbce93a9207"
+
+[[chip]]
+set = "tapperg"
+name = "tapper_c.p.u._pg_3_4c_1-27-84.4c"
+region = "main"
+offset = 49152
+size = 8192
+sha1 = "5e4e2dc1703b39f588ba374f6a610f273d710532"
+
+[[chip]]
+set = "tapperg"
+name = "tapper_sound_snd_0_a7_12-7-83.a7"
+region = "ssio"
+offset = 0
+size = 4096
+sha1 = "9e281c340b7702523c86d56317efad9e3688e585"
+
+[[chip]]
+set = "tapperg"
+name = "tapper_sound_snd_1_a8_12-7-83.a8"
+region = "ssio"
+offset = 4096
+size = 4096
+sha1 = "14334b9d2bfece3fe5bda0cbd53158ead8d27e53"
+
+[[chip]]
+set = "tapperg"
+name = "tapper_sound_snd_2_a9_12-7-83.a9"
+region = "ssio"
+offset = 8192
+size = 4096
+sha1 = "b38bba5f12516d899e023f99147868e3402fbd7b"
+
+[[chip]]
+set = "tapperg"
+name = "tapper_sound_snd_3_a10_12-7-83.a10"
+region = "ssio"
+offset = 12288
+size = 4096
+sha1 = "0011407c1e886071282808c0a561789b1245a789"
+
+[[chip]]
+set = "tapperg"
+name = "tapper_c.p.u._bg_1_6f_12-7-83.6f"
+region = "gfx1"
+offset = 0
+size = 16384
+sha1 = "eb30b9bb654324340f0fc5b44776ac2440c1e869"
+
+[[chip]]
+set = "tapperg"
+name = "tapper_c.p.u._bg_0_5f_12-7-83.5f"
+region = "gfx1"
+offset = 16384
+size = 16384
+sha1 = "23e29ec942e1e7516ae8068837af2d1c79592378"
+
+[[chip]]
+set = "tapperg"
+name = "fg1_a7.128"
+region = "gfx2"
+offset = 0
+size = 16384
+sha1 = "7fd26cc8ff2faab86d04fcee2b5ec49ecf6b8143"
+
+[[chip]]
+set = "tapperg"
+name = "fg0_a8.128"
+region = "gfx2"
+offset = 16384
+size = 16384
+sha1 = "45df1ac033512be942460d678a7c1ba9dcef1937"
+
+[[chip]]
+set = "tapperg"
+name = "fg3_a5.128"
+region = "gfx2"
+offset = 32768
+size = 16384
+sha1 = "0b28e7e59eba983bc1929758f8dcaf315b7134a1"
+
+[[chip]]
+set = "tapperg"
+name = "fg2_a6.128"
+region = "gfx2"
+offset = 49152
+size = 16384
+sha1 = "faf631d4ee96edf6b2c4349780e2d89eaedf70ab"
+
+[[chip]]
+set = "tapperg"
+name = "fg5_a3.128"
+region = "gfx2"
+offset = 65536
+size = 16384
+sha1 = "9829c9574fff0803973246f9d22311ca76be4e58"
+
+[[chip]]
+set = "tapperg"
+name = "fg4_a4.128"
+region = "gfx2"
+offset = 81920
+size = 16384
+sha1 = "52672b853d67432fd80e4612fa54208c225d2444"
+
+[[chip]]
+set = "tapperg"
+name = "fg7_a1.128"
+region = "gfx2"
+offset = 98304
+size = 16384
+sha1 = "6fe170695386fc77310384a5590a7cc3671ae853"
+
+[[chip]]
+set = "tapperg"
+name = "fg6_a2.128"
+region = "gfx2"
+offset = 114688
+size = 16384
+sha1 = "5a6d30974e73f952694b8c09fb3a5393a76db4f2"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5791"
+region = "main"
+offset = 0
+size = 16384
+sha1 = "155dc1df977a474f3f1bd238d851c2ff8fe1faba"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5792"
+region = "main"
+offset = 16384
+size = 16384
+sha1 = "0eebe98be6c21d701c7b7fc6547b5c94f934f5ab"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5793"
+region = "main"
+offset = 32768
+size = 16384
+sha1 = "de365f4e567d93a9ed9672fabbc739a3a0d47d59"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5794"
+region = "main"
+offset = 49152
+size = 8192
+sha1 = "ee038443ae55598568bd1a53c0a671a2828d3949"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5788.h11.ic8"
+region = "ssio"
+offset = 0
+size = 4096
+sha1 = "c2c94ab26ebce30ce4efc239e555c6368794d265"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5787.h10.ic6"
+region = "ssio"
+offset = 4096
+size = 4096
+sha1 = "f5c8585d443bca67d4065314a06431d1f104c553"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5786.h9.ic5"
+region = "ssio"
+offset = 8192
+size = 4096
+sha1 = "2a4dc0deca48f4d2ac9fe673ecb9548415c996a9"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5785.h7.ic4"
+region = "ssio"
+offset = 12288
+size = 4096
+sha1 = "a41323149c50adcae7675efcef69fd7d8365e527"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5790"
+region = "gfx1"
+offset = 0
+size = 16384
+sha1 = "f976889b529937948043460679f84b962b4c12bc"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5789"
+region = "gfx1"
+offset = 16384
+size = 16384
+sha1 = "96b89dc08f2feeb9950fbbba43d0ee57a9e31804"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5795"
+region = "gfx2"
+offset = 0
+size = 16384
+sha1 = "3c26b0b0d903fb6782c6a1d72e32cd8c57ecad1f"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5796"
+region = "gfx2"
+offset = 16384
+size = 16384
+sha1 = "c613c2225eeff5cc65dc6ec301e616e54755b1c2"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5797"
+region = "gfx2"
+offset = 32768
+size = 16384
+sha1 = "ca54d1fa6704d38e65a4d2a94449ed8dd56cc94b"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5798"
+region = "gfx2"
+offset = 49152
+size = 16384
+sha1 = "1a6eac2a8fa99d86889d5042c6b64f828b3c5d65"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5799"
+region = "gfx2"
+offset = 65536
+size = 16384
+sha1 = "7f4260f4a4e8b33842355e9d8e859ffb9278c3c2"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5800"
+region = "gfx2"
+offset = 81920
+size = 16384
+sha1 = "251cf018da8db11c3844123255082146b22507e5"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5801"
+region = "gfx2"
+offset = 98304
+size = 16384
+sha1 = "e8ceabe94080eb28aa393b97ec54729cf8aba001"
+
+[[chip]]
+set = "sutapper"
+name = "epr-5802"
+region = "gfx2"
+offset = 114688
+size = 16384
+sha1 = "58ae647b4fd0f48af4158b85e29c813605d930d3"
+
+# The SSIO board's own PROM, in every set (no set lists it).
+[[chip]]
+set = "ssio"
+name = "82s123.12d"
+region = "ssio-prom"
+offset = 0
+size = 32
+sha1 = "9ac9b01d24affc0ee9227a4364c4fd8f8290343a"

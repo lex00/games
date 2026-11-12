@@ -1,18 +1,25 @@
 #!/usr/bin/env python3
-"""Refuse ROM data copied into text: AGENTS.md, "Never commit".
+"""Refuse ROM data in a commit: typed out as numbers, or a guarded file whole.
 
 The pre-commit hook catches game images and binary dumps by their contents.
-This catches the other way ROM data gets in: a table typed out as numbers in
-source, a hex dump in a doc, a byte string in a test. It reads the staged
-diff's added lines, finds runs of byte values written as numbers, and
-refuses any run that holds 16 or more consecutive bytes of a registered ROM
-present in $GP_ROM_DIR.
+This catches the other ways ROM data gets in:
+
+- by hash, always: a staged file (or a member of a staged zip) whose SHA-1
+  is a guarded arcade chip's, or whose SHA-256 (whole, or with an iNES
+  header taken off) is a guarded NES image's, under any name and even on
+  the binary allowlist. This needs no ROM on the machine.
+- typed out: a table typed out as numbers in source, a hex dump in a doc, a
+  byte string in a test. It reads the staged diff's added lines, finds runs
+  of byte values written as numbers, and refuses any run that holds 16 or
+  more consecutive bytes of a guarded ROM or arcade chip present in
+  $GP_ROM_DIR. With none present this part can't run, and the hook says so.
 
   rom_text.py staged
-      Checks the added lines of the staged diff (the pre-commit hook runs
-      this). Exits 0 when nothing matches or no registered ROM is present.
+      Checks the staged files' hashes and the added lines of the staged
+      diff (the pre-commit hook runs this), and says on stderr what it
+      could only guard by hash. Exits 0 when nothing matches.
   rom_text.py files PATH...
-      Checks whole files, every line, to audit a tree.
+      Checks whole files, their hashes and every line, to audit a tree.
 
 Byte values are read as:
   0x12, $12, 0A6h, \\x12         hex with a prefix or suffix
@@ -34,17 +41,29 @@ palette set four times), or a ramp whose steps are all one size (0 1 2 3,
 or the APU's triangle 3 2 1 0 0 1 2 3). These are in every ROM and in
 plenty of our own code.
 
+What is guarded is read from the repo, hashes only:
+  .githooks/guarded-roms.toml   [[source]] NES images by headerless SHA-256,
+                                [[chip]] arcade chips by SHA-1, with their set,
+                                region and offset (gp-arcade's set table)
+  roms/*.toml, */roms.toml      [[source]] NES images
+  package.toml, */package.toml  [[rom.entry]]: a NES entry's sha256; an arcade
+                                entry's `system` names a set whose chips are
+                                guarded (they must be in guarded-roms.toml)
+
 The ROMs are found by hash, as `gp` finds them: every file in $GP_ROM_DIR
-with an iNES header whose headerless SHA-256 is listed in .githooks/guarded-roms.toml or roms/*.toml.
-The ROMs' 16-byte windows are indexed once into
-$GP_HOME/work/rom-guard/ (sorted 8-byte prefixes, in a file named by the
-ROM's hash, or by a hash of the hashes for several ROMs) and reused on
-every later commit until the set of ROMs changes.
+with an iNES header whose headerless SHA-256 is guarded, and every guarded
+chip in a zip (a MAME romset) or loose file there, by its SHA-1. A set's
+chips that load one after another in a region are also read joined, so a
+table typed across two chips is found. The 16-byte windows are indexed once
+into $GP_HOME/work/rom-guard/ (sorted 8-byte prefixes, in a file named by the
+ROM's hash, or by a hash of the hashes for several) and reused on every
+later commit until the set of ROMs changes.
 
 A reviewed exception for a short excerpt (AGENTS.md allows "a few bytes" to
 document how revisions differ) goes in .githooks/rom-excerpt-allowlist as
 `<path> <sha256 of the matched bytes>`, which the refusal message prints.
-An exception covers at most MAX_EXCEPTION bytes.
+An exception covers at most MAX_EXCEPTION bytes. A whole guarded file has
+no exception.
 
 Exits 0 when nothing matches, 1 when something does, 2 when it can't run.
 """
@@ -54,6 +73,7 @@ import array
 import bisect
 import codecs
 import hashlib
+import io
 import os
 import re
 import subprocess
@@ -114,19 +134,68 @@ def identify_nes(data):
     return data[start:start + declared]
 
 
+class Registry:
+    """What the repo guards: NES images by headerless SHA-256 ({sha256: id})
+    and arcade chips by SHA-1 ({sha1: [chip row, ...]}, a row a set that
+    has the chip), plus notes on what it names and can't guard."""
+
+    def __init__(self):
+        self.nes = {}
+        self.chips = {}
+        self.notes = []
+
+    def __bool__(self):
+        return bool(self.nes or self.chips)
+
+
+def chip_label(rows):
+    """A chip for people: its file name and every set that has it."""
+    sets = sorted({r["set"] for r in rows})
+    return f"arcade chip {rows[0]['name']} ({', '.join(sets)})"
+
+
 def load_registry(root):
-    """{headerless sha256: id} from .githooks/guarded-roms.toml and roms/*.toml under `root`."""
+    """The Registry from .githooks/guarded-roms.toml, roms/*.toml,
+    */roms.toml and every package.toml's [[rom.entry]] under `root`."""
     import tomllib
 
-    sources = {}
-    for path in [root / ".githooks" / "guarded-roms.toml", *sorted((root / "roms").glob("*.toml"))]:
+    reg = Registry()
+    all_chips = []
+
+    def read(path):
+        with open(path, "rb") as f:
+            return tomllib.load(f)
+
+    lists = [root / ".githooks" / "guarded-roms.toml", *sorted((root / "roms").glob("*.toml")),
+             *sorted(root.glob("*/roms.toml"))]
+    for path in lists:
         if not path.is_file():
             continue
-        with open(path, "rb") as f:
-            for entry in tomllib.load(f).get("source", []):
-                if "sha256" in entry and "id" in entry:
-                    sources[entry["sha256"].lower()] = entry["id"]
-    return sources
+        data = read(path)
+        for entry in data.get("source", []):
+            if "sha256" in entry and "id" in entry:
+                reg.nes[entry["sha256"].lower()] = entry["id"]
+        for chip in data.get("chip", []):
+            if {"set", "name", "sha1"} <= chip.keys():
+                all_chips.append(chip)
+    by_set = {}
+    for chip in all_chips:
+        by_set.setdefault(chip["set"], []).append(chip)
+        reg.chips.setdefault(chip["sha1"].lower(), []).append(chip)
+    for path in [root / "package.toml", *sorted(root.glob("*/package.toml"))]:
+        if not path.is_file():
+            continue
+        for entry in read(path).get("rom", {}).get("entry", []):
+            platform = entry.get("platform", "nes")
+            if platform == "nes" and "sha256" in entry and "id" in entry:
+                reg.nes[entry["sha256"].lower()] = entry["id"]
+            elif platform == "arcade" and entry.get("system") not in by_set:
+                rel = path.relative_to(root)
+                reg.notes.append(
+                    f"{rel} names the arcade set {entry.get('system')!r}, whose chips "
+                    ".githooks/guarded-roms.toml doesn't list, so they aren't guarded"
+                )
+    return reg
 
 
 def gp_home():
@@ -137,27 +206,131 @@ def rom_dir():
     return Path(os.environ.get("GP_ROM_DIR") or gp_home() / "roms")
 
 
+def zip_members(data):
+    """[(name, bytes)] of a zip's files, or [] when it isn't one."""
+    import zipfile
+
+    try:
+        with zipfile.ZipFile(io.BytesIO(data)) as z:
+            return [(i.filename, z.read(i)) for i in z.infolist() if not i.is_dir()]
+    except (zipfile.BadZipFile, OSError, ValueError, NotImplementedError, EOFError):
+        return []
+
+
 def find_roms(folder, registry):
-    """[(source id, sha256, data)] for each registered source in `folder`."""
-    found = {}
+    """[(id, sha256, data)] for each guarded NES image and arcade chip in
+    `folder`, and for each run of a set's chips that load one after another
+    in a region (joined, so a table typed across two chips is found)."""
     if not registry or not folder.is_dir():
         return []
+    if isinstance(registry, dict):  # {sha256: id}, NES only
+        nes = registry
+        registry = Registry()
+        registry.nes = nes
+    found = {}
+    chips = {}  # sha1: data
+    sizes = {int(r["size"]) for rows in registry.chips.values() for r in rows if "size" in r}
     for dirpath, _dirs, files in os.walk(folder, followlinks=True):
         for name in sorted(files):
             path = Path(dirpath) / name
             try:
+                size = path.stat().st_size
                 with open(path, "rb") as f:
-                    if f.read(4) != b"NES\x1a":
-                        continue
-                    data = identify_nes(b"NES\x1a" + f.read())
+                    magic = f.read(4)
+                    if magic == b"NES\x1a" and registry.nes:
+                        data = identify_nes(magic + f.read())
+                        if data is None:
+                            continue
+                        sha = hashlib.sha256(data).hexdigest()
+                        if sha in registry.nes and sha not in found:
+                            found[sha] = (registry.nes[sha], sha, data)
+                    elif magic == b"PK\x03\x04" and registry.chips:
+                        for _, data in zip_members(magic + f.read()):
+                            sha1 = hashlib.sha1(data).hexdigest()
+                            if sha1 in registry.chips:
+                                chips[sha1] = data
+                    elif size in sizes:
+                        data = magic + f.read()
+                        sha1 = hashlib.sha1(data).hexdigest()
+                        if sha1 in registry.chips:
+                            chips[sha1] = data
             except OSError:
                 continue
-            if data is None:
+    for sha1, data in chips.items():
+        sha = hashlib.sha256(data).hexdigest()
+        found.setdefault(sha, (chip_label(registry.chips[sha1]), sha, data))
+    # The chips of each set that load one after another in a region, joined.
+    by_set = {}
+    for sha1, rows in registry.chips.items():
+        for r in rows:
+            if sha1 in chips and "region" in r and "offset" in r:
+                by_set.setdefault((r["set"], r["region"]), []).append((int(r["offset"]), sha1))
+    for (set_name, region), pieces in sorted(by_set.items()):
+        pieces.sort()
+        run = []
+        for off, sha1 in pieces + [(None, None)]:
+            if run and off is not None and run[-1][0] + len(chips[run[-1][1]]) == off:
+                run.append((off, sha1))
                 continue
-            sha = hashlib.sha256(data).hexdigest()
-            if sha in registry and sha not in found:
-                found[sha] = (registry[sha], sha, data)
+            if len(run) > 1:
+                data = b"".join(chips[s] for _, s in run)
+                sha = hashlib.sha256(data).hexdigest()
+                end = run[-1][0] + len(chips[run[-1][1]])
+                label = f"arcade set {set_name}, {region} 0x{run[0][0]:X}-0x{end - 1:X}"
+                found.setdefault(sha, (label, sha, data))
+            run = [(off, sha1)] if off is not None else []
     return sorted(found.values())
+
+
+def hash_refusals(path, data, registry):
+    """A message for each way `data`, a whole staged file, is a guarded ROM
+    or chip by its hash: itself, with an iNES header taken off, or a member
+    of a zip."""
+    out = []
+
+    def check(blob, where):
+        sha1 = hashlib.sha1(blob).hexdigest()
+        if sha1 in registry.chips:
+            out.append(f"pre-commit: refusing {path} ({where}{chip_label(registry.chips[sha1])}, by its SHA-1)")
+        sha = hashlib.sha256(blob).hexdigest()
+        if sha in registry.nes:
+            out.append(f"pre-commit: refusing {path} ({where}the PRG and CHR data of {registry.nes[sha]}, by its SHA-256)")
+        image = identify_nes(blob)
+        if image is not None:
+            sha = hashlib.sha256(image).hexdigest()
+            if sha in registry.nes:
+                out.append(f"pre-commit: refusing {path} ({where}an image of {registry.nes[sha]}, by its headerless SHA-256)")
+
+    check(data, "")
+    if data[:4] == b"PK\x03\x04":
+        for name, member in zip_members(data):
+            check(member, f"{name} in it is ")
+    return out
+
+
+def staged_blobs(root):
+    """(path, bytes) of each staged file the commit adds or changes."""
+    names = subprocess.run(
+        ["git", "diff", "--cached", "--name-only", "--no-renames", "--diff-filter=ACMRT", "-z"],
+        cwd=root, capture_output=True, check=True,
+    ).stdout.split(b"\0")
+    names = [n for n in names if n and b"\n" not in n]
+    if not names:
+        return
+    p = subprocess.run(
+        ["git", "cat-file", "--batch"], cwd=root, check=True, capture_output=True,
+        input=b"".join(b":" + n + b"\n" for n in names),
+    ).stdout
+    at = 0
+    for n in names:
+        end = p.index(b"\n", at)
+        header = p[at:end].split()
+        at = end + 1
+        if len(header) < 3 or header[1] == b"missing":
+            continue
+        size = int(header[2])
+        yield n.decode("utf-8", "surrogateescape"), p[at:at + size]
+        at += size + 1
 
 
 class Rom:
@@ -369,9 +542,14 @@ def check_text(path, text, first_line, index, allowed):
         if len(span) <= MAX_EXCEPTION and (path, digest) in allowed:
             continue
         line = first_line + text.count("\n", 0, offset)
+        # The same bytes in other guarded ROMs or chips (sets share code);
+        # a set's joined chips go without saying.
+        also = [r.id for r in index.roms
+                if r is not rom and not r.id.startswith("arcade set ") and r.data.find(span) >= 0]
+        more = f", also in {'; '.join(also)}" if also else ""
         out.append(
             f"pre-commit: refusing {path}:{line} ({len(span)} bytes of {rom.id} at ROM offset "
-            f"0x{at:X}, written as numbers; sha256 {digest})"
+            f"0x{at:X}{more}, written as numbers; sha256 {digest})"
         )
     return out
 
@@ -409,6 +587,20 @@ def staged_hunks(root):
         yield path, first, "\n".join(lines)
 
 
+def by_hash_only(registry, found, folder):
+    """What the typed-out check couldn't cover, for the hook to say: the
+    guarded NES images and arcade chips with none of their kind found."""
+    labels = [r[0] for r in found]
+    out = []
+    if registry.nes and not any(not l.startswith("arcade ") for l in labels):
+        out.append(f"no guarded NES ROM in {folder}: {len(registry.nes)} NES images guarded "
+                   "by hash only, typed-out bytes not checked")
+    if registry.chips and not any(l.startswith("arcade ") for l in labels):
+        out.append(f"no arcade romset in {folder}: {len(registry.chips)} arcade chips guarded "
+                   "by hash only, typed-out chip bytes not checked")
+    return out
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     p.add_argument("--root", type=Path, help="repo root (default: the current git work tree)")
@@ -430,24 +622,37 @@ def main(argv=None):
             raise CantRun("python3 3.11 or newer is needed (for tomllib)")
         except Exception as e:
             raise CantRun(f"reading the ROM lists: {e}")
-        found = find_roms(args.rom_dir or rom_dir(), registry)
-        if not found:
+        if not registry:
             return 0
-        cache = args.cache or gp_home() / "work" / "rom-guard"
-        index = Index([Rom(*r) for r in found], cache)
-        allowed = load_exceptions(root / ".githooks" / "rom-excerpt-allowlist")
-
-        if args.cmd == "staged":
-            texts = staged_hunks(root)
-        else:
-            texts = (
-                (os.path.relpath(path.resolve(), root.resolve()), 1,
-                 path.read_bytes().decode("utf-8", "surrogateescape"))
-                for path in args.paths
-            )
+        folder = args.rom_dir or rom_dir()
         per_file = {}
-        for path, first, text in texts:
-            per_file.setdefault(path, []).extend(check_text(path, text, first, index, allowed))
+        # By hash first: a guarded file whole, with no ROM needed here.
+        if args.cmd == "staged":
+            blobs = staged_blobs(root)
+        else:
+            blobs = ((os.path.relpath(path.resolve(), root.resolve()), path.read_bytes())
+                     for path in args.paths)
+        for path, data in blobs:
+            per_file.setdefault(path, []).extend(hash_refusals(path, data, registry))
+
+        found = find_roms(folder, registry)
+        if args.cmd == "staged":
+            for line in registry.notes + by_hash_only(registry, found, folder):
+                print(f"pre-commit: {line}", file=sys.stderr)
+        if found:
+            cache = args.cache or gp_home() / "work" / "rom-guard"
+            index = Index([Rom(*r) for r in found], cache)
+            allowed = load_exceptions(root / ".githooks" / "rom-excerpt-allowlist")
+            if args.cmd == "staged":
+                texts = staged_hunks(root)
+            else:
+                texts = (
+                    (os.path.relpath(path.resolve(), root.resolve()), 1,
+                     path.read_bytes().decode("utf-8", "surrogateescape"))
+                    for path in args.paths
+                )
+            for path, first, text in texts:
+                per_file.setdefault(path, []).extend(check_text(path, text, first, index, allowed))
     except CantRun as e:
         print(f"pre-commit: can't check staged text for ROM bytes: {e}", file=sys.stderr)
         return 2
@@ -467,6 +672,7 @@ def main(argv=None):
         "ROM data never goes in the repo, even typed out as numbers in source, docs or tests.\n"
         "Lift it through the game's asset map instead (gp assets lift, docs/assets.md) and read\n"
         "the lifted files from $GP_HOME/work at build or run time; tests use made-up tables.\n"
+        "A ROM image, dump or romset chip is never committed, under any name.\n"
         f"A reviewed excerpt of at most {MAX_EXCEPTION} bytes that AGENTS.md allows can be listed in\n"
         ".githooks/rom-excerpt-allowlist as `<path> <sha256>`, with a comment saying why.",
         file=sys.stderr,

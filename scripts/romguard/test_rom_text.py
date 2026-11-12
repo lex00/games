@@ -1,5 +1,7 @@
 """Tests for rom_text.py. Every ROM here is made up: seeded random bytes in an
-iNES header, registered in a throwaway roms/nes.toml. No game data."""
+iNES header, registered in a throwaway roms/nes.toml, and a made-up arcade
+set of seeded random chips in a zip, listed in a throwaway
+.githooks/guarded-roms.toml. No game data."""
 
 import contextlib
 import hashlib
@@ -9,6 +11,7 @@ import random
 import subprocess
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 import rom_text
@@ -263,6 +266,152 @@ class Staged(unittest.TestCase):
         code, err = self.f.run("staged")
         self.assertEqual(code, 1)
         self.assertIn("a.md:21 ", err)
+
+
+# A made-up arcade set: three chips of seeded random bytes, the first two
+# loading one after another in its "main" region, and a romset zip of them.
+CHIPS = [("made.1a", "main", 0, random.Random(3).randbytes(4096)),
+         ("made.2a", "main", 4096, random.Random(4).randbytes(4096)),
+         ("made.gfx", "gfx1", 0, random.Random(5).randbytes(2048))]
+
+
+def chip_rows(set_name="madeup"):
+    return "".join(
+        f'[[chip]]\nset = "{set_name}"\nname = "{n}"\nregion = "{r}"\noffset = {o}\n'
+        f'size = {len(d)}\nsha1 = "{hashlib.sha1(d).hexdigest()}"\n\n'
+        for n, r, o, d in CHIPS
+    )
+
+
+def romset_zip(compress=zipfile.ZIP_DEFLATED):
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", compress) as z:
+        for n, _, _, d in CHIPS:
+            z.writestr(n, d)
+    return buf.getvalue()
+
+
+class ArcadeFixture(Fixture):
+    """A Fixture whose repo guards the made-up set, and whose ROM folder
+    holds its romset (unless `romset` is False)."""
+
+    def __init__(self, romset=True):
+        super().__init__(register=False)
+        (self.root / ".githooks" / "guarded-roms.toml").write_text(chip_rows())
+        if romset:
+            (self.dir / "roms" / "arcade").mkdir()
+            (self.dir / "roms" / "arcade" / "madeup.zip").write_bytes(romset_zip())
+
+
+class Arcade(unittest.TestCase):
+    def test_a_chips_bytes_typed_out_as_a_hex_table_are_refused(self):
+        f = ArcadeFixture()
+        try:
+            data = CHIPS[2][3][100:132]
+            rows = "\n".join(" ".join(f"{b:02X}" for b in data[i:i + 8]) for i in range(0, 32, 8))
+            code, err = f.check(rows, name="table.md")
+            self.assertEqual(code, 1)
+            self.assertIn("32 bytes of arcade chip made.gfx (madeup)", err)
+            self.assertEqual(f.check(" ".join(f"{b:02X}" for b in data[:15]))[0], 0)
+        finally:
+            f.close()
+
+    def test_a_table_typed_across_two_chips_that_load_together_is_refused(self):
+        f = ArcadeFixture()
+        try:
+            data = CHIPS[0][3][-8:] + CHIPS[1][3][:8]
+            code, err = f.check(", ".join(f"0x{b:02X}" for b in data))
+            self.assertEqual(code, 1)
+            self.assertIn("arcade set madeup, main 0x0-0x1FFF", err)
+        finally:
+            f.close()
+
+    def test_loose_chip_files_count_as_a_romset(self):
+        f = ArcadeFixture(romset=False)
+        try:
+            (f.dir / "roms" / "loose").mkdir()
+            (f.dir / "roms" / "loose" / "made.gfx").write_bytes(CHIPS[2][3])
+            self.assertEqual(f.check(CHIPS[2][3][:16].hex())[0], 1)
+        finally:
+            f.close()
+
+    def test_a_chip_file_or_a_zip_of_it_is_refused_by_hash_with_no_romset_here(self):
+        f = ArcadeFixture(romset=False)
+        try:
+            (f.root / "art.png").write_bytes(CHIPS[0][3])
+            code, err = f.run("files", str(f.root / "art.png"))
+            self.assertEqual(code, 1)
+            self.assertIn("arcade chip made.1a (madeup), by its SHA-1", err)
+            (f.root / "stuff.zip").write_bytes(romset_zip(zipfile.ZIP_STORED))
+            code, err = f.run("files", str(f.root / "stuff.zip"))
+            self.assertEqual(code, 1)
+            self.assertIn("made.2a in it is arcade chip made.2a", err)
+            # Without the romset its bytes typed out can't be found.
+            self.assertEqual(f.check(CHIPS[2][3][:32].hex())[0], 0)
+        finally:
+            f.close()
+
+    def test_staged_says_what_is_guarded_by_hash_only(self):
+        f = ArcadeFixture(romset=False)
+        try:
+            subprocess.run(["git", "init", "-q"], cwd=f.root, check=True)
+            code, err = f.run("staged")
+            self.assertEqual(code, 0)
+            self.assertIn("3 arcade chips guarded by hash only, typed-out chip bytes not checked", err)
+            self.assertIn("NES images guarded by hash only", err)
+        finally:
+            f.close()
+        f = ArcadeFixture()
+        try:
+            subprocess.run(["git", "init", "-q"], cwd=f.root, check=True)
+            code, err = f.run("staged")
+            self.assertNotIn("arcade chips guarded by hash only", err)
+        finally:
+            f.close()
+
+
+class Registries(unittest.TestCase):
+    def test_package_entries_and_game_roms_lists_are_guarded(self):
+        f = Fixture(register=False)
+        try:
+            game = f.root / "some-game"
+            game.mkdir()
+            (game / "package.toml").write_text(
+                f'[rom]\n[[rom.entry]]\nid = "madeup-pkg"\nsha256 = "{SHA}"\nplatform = "nes"\n'
+            )
+            code, err = f.check(piece(16).hex())
+            self.assertEqual(code, 1)
+            self.assertIn("madeup-pkg", err)
+            (game / "package.toml").write_text("[package]\n")
+            (game / "roms.toml").write_text(f'[[source]]\nid = "madeup-game"\nsha256 = "{SHA}"\n')
+            code, err = f.check(piece(16).hex())
+            self.assertIn("madeup-game", err)
+        finally:
+            f.close()
+
+    def test_a_whole_nes_dump_is_refused_by_hash_with_no_rom_here(self):
+        f = Fixture()
+        try:
+            (f.root / "prg.bin").write_bytes(PRG + CHR)
+            code, err = f.run("--rom-dir", str(f.dir / "none"), "files", str(f.root / "prg.bin"))
+        finally:
+            f.close()
+        # --rom-dir given twice: argparse takes the last.
+        self.assertEqual(code, 1)
+        self.assertIn("the PRG and CHR data of madeup-ntsc", err)
+
+    def test_an_arcade_entry_whose_set_has_no_chips_listed_is_named(self):
+        f = Fixture(register=False)
+        try:
+            subprocess.run(["git", "init", "-q"], cwd=f.root, check=True)
+            (f.root / "package.toml").write_text(
+                '[rom]\n[[rom.entry]]\nid = "x"\nsha256 = "00"\nplatform = "arcade"\nsystem = "nosuchset"\n'
+            )
+            code, err = f.run("staged")
+            self.assertEqual(code, 0)
+            self.assertIn("'nosuchset', whose chips .githooks/guarded-roms.toml doesn't list", err)
+        finally:
+            f.close()
 
 
 if __name__ == "__main__":

@@ -19,6 +19,22 @@ open(sys.argv[2], "w").write("const T: [u8; 16] = [" + ", ".join(f"0x{b:02X}" fo
 open(sys.argv[3], "w").write("const T: [u8; 15] = [" + ", ".join(f"0x{b:02X}" for b in body[100:115]) + "];\n")
 open(sys.argv[4], "w").write(hashlib.sha256(body).hexdigest())
 PY
+# A made-up arcade set: two chips of seeded random bytes, as a romset zip in
+# the ROM folder and listed in this repo's .githooks/guarded-roms.toml.
+mkdir -p "$GP_ROM_DIR/arcade"
+python3 -I -B - "$GP_ROM_DIR/arcade/madeup.zip" "$data" <<'PY'
+import hashlib, random, sys, zipfile
+chips = [("made.1a", random.Random(8).randbytes(4096)), ("made.2a", random.Random(9).randbytes(4096))]
+with zipfile.ZipFile(sys.argv[1], "w") as z:
+    for n, d in chips:
+        z.writestr(n, d)
+d = sys.argv[2]
+open(f"{d}/chip.bin", "wb").write(chips[0][1])
+open(f"{d}/chip16.txt", "w").write("\n".join(" ".join(f"{b:02x}" for b in chips[1][1][i:i + 8]) for i in (512, 520)) + "\n")
+open(f"{d}/chips.toml", "w").write("".join(
+    f'[[chip]]\nset = "madeup"\nname = "{n}"\nregion = "main"\noffset = {i * 4096}\nsize = 4096\nsha1 = "{hashlib.sha1(c).hexdigest()}"\n'
+    for i, (n, c) in enumerate(chips)))
+PY
 cd "$repo"
 mkdir roms
 printf '[[source]]\nid = "madeup"\nsha256 = "%s"\n' "$(cat "$data/sha256")" > roms/nes.toml
@@ -93,6 +109,24 @@ cp "$data/bytes15.txt" table.rs
 expect accept "15 bytes of a registered ROM" table.rs
 cp "$data/bytes16.txt" table.rs
 GP_ROM_DIR="$data/none" expect accept "16 bytes of a ROM, with no ROM folder" table.rs
+
+# Arcade chips: guarded by SHA-1 from .githooks/guarded-roms.toml.
+mkdir -p .githooks art
+cp "$data/chips.toml" .githooks/guarded-roms.toml
+printf 'art/*.png\n' > .githooks/binary-allowlist
+git add .githooks && git commit -q --no-verify -m "the made-up set's hashes" >/dev/null
+cp "$data/chip.bin" art/title.png
+expect reject "an arcade chip on the binary allowlist, by its SHA-1" art/title.png
+cp "$data/chip.bin" art/title.png
+GP_ROM_DIR="$data/none" expect reject "an arcade chip by its SHA-1, with no ROM folder" art/title.png
+cp "$GP_ROM_DIR/arcade/madeup.zip" set.zip
+expect reject "a romset zip" set.zip
+cp "$data/chip16.txt" chip.md
+expect reject "16 bytes of an arcade chip typed out as a hex table" chip.md
+cp "$data/chip16.txt" chip.md
+GP_ROM_DIR="$data/none" expect accept "16 bytes of an arcade chip, with no romset here (hashes only)" chip.md
+git rm -q -r --cached .githooks >/dev/null && git commit -q --no-verify -m "made-up set gone" >/dev/null
+rm -rf .githooks art
 
 # The package scan: a package folder goes through $GP, and a failing scan or
 # no gp refuses the commit. Shims stand in for gp; the scan's own tests are in

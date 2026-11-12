@@ -9,9 +9,13 @@
 #     (a headerless PRG or CHR dump has no magic bytes, so this is the only
 #     check that catches one);
 #   - it's over 1MB (GP_ALLOW_LARGE=1 allows a large text file deliberately);
-#   - its added lines hold 16 or more consecutive bytes of a registered ROM
-#     in $GP_ROM_DIR, typed out as hex or decimal numbers
-#     (scripts/romguard/rom_text.py; skipped when no registered ROM is there);
+#   - it is (or a zip holding) a guarded NES image or arcade romset chip,
+#     by its hash, under any name, with no ROM needed on the machine;
+#   - its added lines hold 16 or more consecutive bytes of a guarded ROM or
+#     arcade chip in $GP_ROM_DIR, typed out as hex or decimal numbers
+#     (both in scripts/romguard/rom_text.py, which reads what is guarded from
+#     .githooks/guarded-roms.toml, roms/*.toml, */roms.toml and the package
+#     ROM entries; with no guarded ROM there it says it guards by hash only);
 #   - a package folder in the repo fails `gp package scan`.
 #
 # `just check` fails if this hook isn't enabled. Never bypass it with --no-verify.
@@ -67,15 +71,13 @@ git diff --cached --numstat --no-renames --diff-filter=ACMRT -z | while IFS= rea
   fi
 done || exit 1
 
-# ROM data typed out as numbers. Needs python3 only when $GP_ROM_DIR exists.
-rom_dir="${GP_ROM_DIR:-${GP_HOME:-$HOME/.gameprinter}/roms}"
-if [ -d "$rom_dir" ]; then
-  if ! command -v python3 >/dev/null; then
-    echo "pre-commit: python3 (3.11 or newer) is needed to check staged text for ROM bytes, since $rom_dir exists" >&2
-    exit 1
-  fi
-  python3 -I -B "$hooks/../scripts/romguard/rom_text.py" --root "$root" staged || exit 1
+# Guarded ROMs and chips by hash, and their bytes typed out as numbers.
+if ! command -v python3 >/dev/null; then
+  echo "pre-commit: python3 (3.11 or newer) is needed to check staged files for ROM data" >&2
+  exit 1
 fi
+GP_ROM_DIR="${GP_ROM_DIR:-${GP_HOME:-$HOME/.gameprinter}/roms}" \
+  python3 -I -B "$hooks/../scripts/romguard/rom_text.py" --root "$root" staged || exit 1
 
 # Every package folder in the repo goes through `gp package scan` as staged,
 # from a copy of the index, so what is scanned is what is committed. With no
