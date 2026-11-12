@@ -85,19 +85,32 @@ GP_ROM_DIR="${GP_ROM_DIR:-${GP_HOME:-$HOME/.gameprinter}/roms}" \
 # needs-rewrite item. A repo with no package folder has nothing to scan.
 packages="$(git ls-files -- 'package.toml' '*/package.toml')"
 if [ -n "$packages" ]; then
+  # Which gp scans: $GP when set; else the published one (`just publish` in
+  # gameprinter puts it at $GP_HOME/bin/gp), which is what the gate runs;
+  # else the newest of the debug builds next to this repo. A debug build
+  # left from an older checkout can be stale (it refused Tapper's arcade
+  # asset map), so it is the last resort, and the hook says which it used.
   gp="${GP:-}"
+  why="GP"
   if [ -z "$gp" ]; then
-    for candidate in "$root/target/debug/gp" "$root/../gameprinter/target/debug/gp"; do
-      if [ -x "$candidate" ]; then
-        gp="$candidate"
-        break
-      fi
-    done
+    published="${GP_HOME:-$HOME/.gameprinter}/bin/gp"
+    if [ -x "$published" ]; then
+      gp="$published"
+      why="the published gp"
+    else
+      for candidate in "$root/target/debug/gp" "$root/../gameprinter/target/debug/gp"; do
+        if [ -x "$candidate" ] && { [ -z "$gp" ] || [ "$candidate" -nt "$gp" ]; }; then
+          gp="$candidate"
+          why="the newest debug build; no published gp at $published"
+        fi
+      done
+    fi
   fi
   if [ ! -x "$gp" ]; then
-    echo "pre-commit: this repo has package folders and no built gp to scan them with; build it (cargo build -p gp-cli in the gameprinter repo) or set GP" >&2
+    echo "pre-commit: this repo has package folders and no gp to scan them with; publish one (just publish in the gameprinter repo), build it (cargo build -p gp-cli there) or set GP" >&2
     exit 1
   fi
+  echo "pre-commit: scanning packages with $gp ($why)" >&2
   staged="$(mktemp -d)"
   trap 'rm -rf "$staged"' EXIT
   git checkout-index -a --prefix="$staged/"
