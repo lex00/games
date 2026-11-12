@@ -1,0 +1,36 @@
+# Profiles for Tapper, written by gp game new. The model as written is
+# "retro", every switch off, and every comparison and score uses it.
+#
+# "normal" is the game with no lag and none of the console's quirks. It
+# turns nothing on yet. When the model gains an option for a quirk of the
+# original, add a switch that turns it off, in the group "timing" for
+# frame timing and lag, else in a group such as "fixes", and list it in
+# "normal".
+
+format = "0.2.0"
+
+[presets.normal]
+description = "No lag and no console quirks"
+switches = []
+
+# Tapper's board quirks (bring.md's table), each to be a switch in a group
+# "board" as soon as the model has the part that carries it. Retro is the
+# board's behaviour; Normal turns the quirk off. The first draft models
+# only the bartender's place, so none of them has a model path to switch
+# yet; each line says where its switch will go.
+#
+# - 30 Hz frame: model.frame_rate is 30. Normal at 60 needs every per-frame
+#   step halved, so it waits for the model's timers.
+# - Boot frames: the game reads nothing for its first 94 frames (the
+#   corpus pairing's k 94). The model starts after them; a switch to start
+#   at once goes with the attract mode and the game's start.
+# - 4-way joystick: MAME's filter (gp_arcade::FourWay) sits before the
+#   board, so clips hold what reached it. When a person plays the model,
+#   its input is to go through the same filter, with a switch to let
+#   diagonals through as the board takes them (tapper-diagonal-a).
+# - Watchdog: a tilt hangs the game and the board resets. Goes with the
+#   tilt and the reset, which the model doesn't have.
+# - Doubled tiles, sprite pixel 8, no sprite limit, the palette's ninth
+#   bit: the picture's; they go with the model's presentation.
+# - Sound: DC offset, duty volume, volume steps, stereo by chip: they go
+#   with the model's sound.

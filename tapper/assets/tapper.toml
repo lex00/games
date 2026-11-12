@@ -1,0 +1,28 @@
+# Arcade asset map for Tapper (gp_assets::arcade in gameprinter): its
+# pictures by graphics region and index, the same in every set listed,
+# lifted from whichever of them the player has. Colours come from the
+# board's palette RAM as the game runs, not from here.
+schema = 1
+platform = "arcade"
+source = "tapper"
+title = "Tapper"
+board = "mcr_91490"
+sets = ["rbtapper", "tapper", "tappera", "tapperg", "sutapper"]
+
+# gfx1: 1024 background tiles of 8 by 8, drawn doubled as 16 by 16.
+[[asset]]
+name = "tiles"
+format = "mcr-tiles"
+region = "gfx1"
+first = 0
+count = 1024
+per_row = 32
+
+# gfx2: 256 sprites of 32 by 32.
+[[asset]]
+name = "sprites"
+format = "mcr-sprites"
+region = "gfx2"
+first = 0
+count = 256
+per_row = 16

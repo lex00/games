@@ -1,0 +1,18 @@
+[package]
+name = "gp-ext-tapper"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.99"
+publish = false
+license = "Apache-2.0"
+
+# Tapper's hand-written behavior behind the model's `ext` hooks: the
+# bartender's walk, his move between bars and the step back after a mug is
+# sent. It depends on gp-sim only.
+[dependencies]
+gp-sim = { path = "../../../gameprinter/crates/gp-sim" }
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[workspace]

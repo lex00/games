@@ -1,0 +1,9 @@
+# What the tools read from Tapper beyond its state mapping, written by
+# gp game new. Add the level or stage byte once it's found, with the
+# source of each fact, as:
+# [level]
+# ram = [0x0000]
+# when = "ram[0x0000] >= 1"
+# names = [["0x01", "first"]]
+schema = 0
+model = "tapper"

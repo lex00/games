@@ -1,0 +1,135 @@
+[model]
+schema = "0.4"
+name = "tapper"
+title = "Tapper"
+description = "Tapper (tapper), a skeleton for the other genre written by gp game new. The system order is a placeholder until it's measured from the ROM's frame. The pad, the player and the empty level are placeholders too, so the model runs and its clips can be scored from the first one: their evidence says so, and each is replaced as it's measured"
+source = "tapper"
+view = "side"
+frame_rate = "30"
+systems = ["rules", "entity_states", "counters", "spawn", "platformer.player", "platformer.enemies", "platformer.contact", "exits", "camera"]
+
+[model.extensions]
+platformer = "0.4"
+
+[input]
+device = "arcade"
+
+[input.actions]
+button1 = "button1"
+coin = "coin"
+down = "down"
+left = "left"
+right = "right"
+start1 = "start1"
+up = "up"
+
+[entities.player]
+description = "The bartender, the game's object at E2E6 (y, flags, picture, x): walks along his bar, moves to the next bar's tap on up or down, pours at the tap and steps back when a mug is sent (tapper_bartender)"
+ext = "tapper_bartender"
+role = "player"
+size = [16, 16]
+
+[entities.player.ext_params]
+far_left = 32
+far_right = 232
+pour_frames = 8
+reach = 6
+row_height = 48
+row_top = 48
+send_step = 6
+stand_left = 16
+stand_right = 16
+switch_frames = 6
+walk_step = 2
+
+[entities.player.hitbox]
+h = 16
+w = 16
+x = 0
+y = 0
+
+[entities.tap]
+description = "A bar's tap, the game's objects at E346, E34A, E34E and E352 (one a bar, top first): its x and whether it is on the bar's left end (its flags' bit 4, the picture mirrored). Placed from the game's RAM when a clip starts; the bartender reads it"
+no_slot = true
+role = "npc"
+size = [16, 16]
+
+[entities.tap.hitbox]
+h = 1
+w = 1
+x = 0
+y = 0
+
+[levels.main]
+description = "The first level, not lifted yet: no tiles"
+empty = true
+size = [32, 30]
+tile_size = 16
+
+[[levels.main.spawn]]
+entity = "player"
+x = 0
+y = 0
+
+[[levels.main.spawn]]
+entity = "tap"
+x = 0
+y = 48
+
+[[levels.main.spawn]]
+entity = "tap"
+x = 0
+y = 96
+
+[[levels.main.spawn]]
+entity = "tap"
+x = 0
+y = 144
+
+[[levels.main.spawn]]
+entity = "tap"
+x = 0
+y = 192
+
+[present.screen]
+size = [512, 480]
+
+[evidence."entities.player"]
+source = "observed"
+confidence = 60
+note = "The bartender's walk, bar moves and step back after a send, measured on the MAME oracle's captures tapper-m3-five and tapper-diagonal-4way-a (gp-arcade matches both on every frame); the bars' far ends and a left tap's place are guesses, and his walk's bob, his pictures, the mugs, customers and tips aren't modelled yet"
+
+[[evidence."entities.player".refs]]
+at = "clip:tapper.score.001"
+
+[[evidence."entities.player".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."entities.tap"]
+source = "observed"
+confidence = 90
+note = "The taps' objects at E346 to E355 across tapper-m3b-cycle: x 225, 209, 193, 177 on the right in the saloon, 13, 29, 45, 61 on the left in the sports bar (flags 13), mixed in the punk and space bars"
+
+[[evidence."entities.tap".refs]]
+at = "clip:tapper.l1.001"
+
+[[evidence."entities.tap".refs]]
+at = "clip:tapper.l3.001"
+
+[[evidence."entities.tap".refs]]
+at = "clip:tapper.l6.001"
+
+[evidence.input]
+source = "inferred"
+confidence = 0
+note = "A placeholder from gp game new: nothing here is measured yet"
+
+[evidence."levels.main"]
+source = "inferred"
+confidence = 0
+note = "A placeholder from gp game new: nothing here is measured yet"
+
+[evidence."present.screen"]
+source = "inferred"
+confidence = 90
+note = "From the board, not this game: MAME 0.276's mcr.cpp: Midway MCR's screen is 512 by 480 at 30 frames a second, and gp-arcade's frames match MAME's"

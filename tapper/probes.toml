@@ -1,0 +1,6 @@
+# Probe recipes for Tapper (tapper), written empty by gp game new. Each is
+# a start and presses that reproduce an evidence clip, and the
+# measurements its evidence quotes with the value each must have.
+
+# RAM addresses by name, each from the model's evidence or the mapping.
+[watch]

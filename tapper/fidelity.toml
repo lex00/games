@@ -1,0 +1,10 @@
+[contract]
+schema = "0.2.0"
+model = "tapper"
+default = "exact"
+description = "Tapper: the original's play frame for frame through the state mapping, its random choices given. The corpus bars are what `gp corpus score` and `gp model gate` hold every clip to: the owner's bar for Donkey Kong (2026-11-02), every game's default until its own is set (written by gp game new)"
+
+[corpus]
+together = "100%"
+longest_stretch = "10s"
+note = "Every clip at 100% of its frames together straight through from its start, and each long run (over 600 frames) with a longest exact stretch of 10 s or more in resync mode"

@@ -1,0 +1,95 @@
+# lex00/tapper: written by gp game new. A commercial game: the package holds
+# no game data, only facts about the romset and the model made from it.
+[package]
+name = "lex00/tapper"
+version = "0.1.0"
+kind = "game"
+title = "Tapper"
+tier = "commercial"
+
+[rom]
+how_to_get = """
+A MAME romset of Tapper that you own: tapper.zip (scored, the regular art),
+or rbtapper, tapperg, sutapper or tappera, each known by its chips' SHA-1s
+whatever the files inside are named. Add it with `gp roms add`. The model is
+regular Tapper's game; each set draws it with its own pictures, lifted by
+region and index through the same asset map.
+"""
+
+# The romset's identity: the SHA-256 of its chips' SHA-1s, sorted
+# (gp_arcade::romset). The asset map names pictures by region and
+# index; lifted_sha256 is what it lifts from this set.
+[[rom.entry]]
+id = "tapper"
+role = "scored"
+title = "Tapper (Budweiser, 1/27/84)"
+sha256 = "1da6316bba4785d780b3df3dc2a46753c09215cfa009f6f69dfd58cf753f4da9"
+platform = "arcade"
+system = "tapper"
+board_status = "unverified"
+asset_map = "assets/tapper.toml"
+asset_map_sha256 = "919d7406893e284dcc3dad008c8a4e2a871a1d1657273131e1e4bf4542abe5d0"
+lifted_sha256 = "6fa26ec0e1d1c6aa72a3c821fb9f16c514c7b07429f8cebee4734e9df1ffa7e5"
+
+
+# The Root Beer set: the same RAM layout and the same score timeline as tapper in a scripted game, with its own art. Plays this model with its own pictures.
+[[rom.entry]]
+id = "rbtapper"
+role = "play"
+title = "Tapper (Root Beer)"
+sha256 = "05c721e1f53c60355abc0f38c4db05040b305118630b86e67721ced1bda22657"
+platform = "arcade"
+system = "rbtapper"
+board_status = "unverified"
+asset_map = "assets/tapper.toml"
+asset_map_sha256 = "919d7406893e284dcc3dad008c8a4e2a871a1d1657273131e1e4bf4542abe5d0"
+lifted_sha256 = "03ad878cb5d296376a2d8761b53f3c3b1ed40a3a066e9dfaeda0fc0aa905ed84"
+
+# tapper's program with other sprites (155 of 256 differ). Plays this model with its own pictures.
+[[rom.entry]]
+id = "tapperg"
+role = "play"
+title = "Tapper (Budweiser, 1/27/84 - Alternate graphics)"
+sha256 = "2f3673b7bc328ee950309e70bba40d435d44395ab943172d3122c0fc845b2b04"
+platform = "arcade"
+system = "tapperg"
+board_status = "unverified"
+asset_map = "assets/tapper.toml"
+asset_map_sha256 = "919d7406893e284dcc3dad008c8a4e2a871a1d1657273131e1e4bf4542abe5d0"
+lifted_sha256 = "f44d22f315c94a8176929e88c6f73e6afee55cb213e092728bfa2a854f62cfd3"
+
+# The Suntory set: the same RAM layout and score timeline as rbtapper in a scripted game, not proven the same game. Plays this model with its own pictures.
+[[rom.entry]]
+id = "sutapper"
+role = "play"
+title = "Tapper (Suntory)"
+sha256 = "a2155f0c657d23c0fabb0322ee7610a6dbf923a26f8517645886887b4fb1033c"
+platform = "arcade"
+system = "sutapper"
+board_status = "unverified"
+asset_map = "assets/tapper.toml"
+asset_map_sha256 = "919d7406893e284dcc3dad008c8a4e2a871a1d1657273131e1e4bf4542abe5d0"
+lifted_sha256 = "96b3969764c5f2bba95c236b4012fd8928d4479b2abfdad9476579cf44ca82c1"
+
+# An older revision of tapper's program that plays differently; with it a player gets this model's game, which is tapper's, in tappera's pictures.
+[[rom.entry]]
+id = "tappera"
+role = "play"
+title = "Tapper (Budweiser, 1/12/84)"
+sha256 = "479e70a7adcb16f4be27124580bd1acc6381843a1d5f1782869bfdce10098297"
+platform = "arcade"
+system = "tappera"
+board_status = "unverified"
+asset_map = "assets/tapper.toml"
+asset_map_sha256 = "919d7406893e284dcc3dad008c8a4e2a871a1d1657273131e1e4bf4542abe5d0"
+lifted_sha256 = "b4a02e27628db921e7932f69d365e6539c391890accf00f491b1a88014fb3884"
+
+
+[hooks]
+crate = "ext"
+models = ["tapper"]
+
+[corpus]
+name = "tapper"
+version = "0.2.0"
+recipes = "b3:92433893f80d810eabc9adf6c67e44b0b730daa893adeb668fa11c3631fbabdf"

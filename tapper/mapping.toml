@@ -1,0 +1,114 @@
+# An arcade original: ram[...] reads the main CPU's addresses (work RAM
+# at 0xE000 on Midway MCR).
+platform = "arcade"
+# The state mapping, written by gp game new: where the game's RAM holds
+# each part of the model's state. Nothing is mapped yet. Add the player's
+# place first, before the first clip: a clip scored over no fields agrees
+# on every frame, and the gate would then hold every clip to it.
+schema = 22
+model = "tapper"
+source = "tapper"
+description = "The bartender's place, measured"
+align = "polled"
+
+# The game keeps its objects as 4-byte slots at E262-E345 (y, flags, picture,
+# x), which the frame's work moves and the video routine copies to the
+# sprite RAM; nothing else holds the bartender's place. His slot is E2E6
+# (tapper-m3-five, 6,102 frames with him at a bar: no other byte follows
+# his x or his y). His bar is E6F9 (0 the top, 3 the bottom), which changes
+# on the frame his y does.
+
+[[field]]
+note = "The bartender's x: his slot's x, E2E9. Walking moves it 2 a frame; at a tap he stands at 209, 193, 177 and 161 on bars 0 to 3 of the saloon (tapper-m3-five, frames 1110 to 1190), 6 less once a mug is sent"
+path = "entities.player[0].x"
+ram = [0xE2E9]
+whole = true
+
+[[field.case]]
+unmeasured = "Out of a game (E3BD 1 in attract mode, 2 at game over) the slot holds the attract mode's objects"
+when = "ram[0xE3BD] != 0"
+
+[[field.case]]
+unmeasured = "Between levels, at a level's start and in a life lost, the slot holds no bartender at a bar: his y is no bar's row (48, 96, 144 or 192, give or take the 2 his walk bobs)"
+when = "!((ram[0xE2E6] >= 46 && ram[0xE2E6] <= 50) || (ram[0xE2E6] >= 94 && ram[0xE2E6] <= 98) || (ram[0xE2E6] >= 142 && ram[0xE2E6] <= 146) || (ram[0xE2E6] >= 190 && ram[0xE2E6] <= 194))"
+
+[[field]]
+note = "The bartender's y: his slot's y, E2E6: 48 times his bar plus 48, and while he walks it bobs a step every 3 frames, 0, +1, +2, +1 from where the walk started (tapper-diagonal-4way-a, frames 601 to 640)"
+path = "entities.player[0].y"
+ram = [0xE2E6]
+whole = true
+
+[[field.case]]
+unmeasured = "Out of a game (E3BD 1 in attract mode, 2 at game over) the slot holds the attract mode's objects"
+when = "ram[0xE3BD] != 0"
+
+[[field.case]]
+unmeasured = "Between levels, at a level's start and in a life lost, the slot holds no bartender at a bar"
+when = "!((ram[0xE2E6] >= 46 && ram[0xE2E6] <= 50) || (ram[0xE2E6] >= 94 && ram[0xE2E6] <= 98) || (ram[0xE2E6] >= 142 && ram[0xE2E6] <= 146) || (ram[0xE2E6] >= 190 && ram[0xE2E6] <= 194))"
+
+# Where a run leaves what the template holds: scoring stops at the first
+# frame out of scope. Set it once the level or stage byte is known, as:
+# [scope]
+# leaves = ["ram[0xE000]"]
+
+[[field]]
+note = "Not compared: the bartender's bar, E6F9 (0 the top, 3 the bottom), the tapper_bartender hook's word 0. It changes on the frame his y does (tapper-m3-five, frames 1116, 1136, 1153). Loaded so a clip's start knows his bar"
+path = "entities.player[0].ext[0]"
+presentation = true
+ram = [0xE6F9]
+
+[[field]]
+note = "Not compared: bar 0's tap, the object at E346: its x, E349. Loaded so the bartender knows where the bar's tap is; it blinks (y 0) but keeps its x"
+path = "entities.tap[0].x"
+presentation = true
+ram = [0xE349]
+
+[[field]]
+bits = [4, 5]
+note = "Not compared: bar 0's tap's side: bit 4 of its flags, E347, set (13) for a tap on the bar's left end, mirrored"
+path = "entities.tap[0].facing"
+presentation = true
+ram = [0xE347]
+values = ["right", "left"]
+
+[[field]]
+note = "Not compared: bar 1's tap, the object at E34A: its x, E34D. Loaded so the bartender knows where the bar's tap is; it blinks (y 0) but keeps its x"
+path = "entities.tap[1].x"
+presentation = true
+ram = [0xE34D]
+
+[[field]]
+bits = [4, 5]
+note = "Not compared: bar 1's tap's side: bit 4 of its flags, E34B, set (13) for a tap on the bar's left end, mirrored"
+path = "entities.tap[1].facing"
+presentation = true
+ram = [0xE34B]
+values = ["right", "left"]
+
+[[field]]
+note = "Not compared: bar 2's tap, the object at E34E: its x, E351. Loaded so the bartender knows where the bar's tap is; it blinks (y 0) but keeps its x"
+path = "entities.tap[2].x"
+presentation = true
+ram = [0xE351]
+
+[[field]]
+bits = [4, 5]
+note = "Not compared: bar 2's tap's side: bit 4 of its flags, E34F, set (13) for a tap on the bar's left end, mirrored"
+path = "entities.tap[2].facing"
+presentation = true
+ram = [0xE34F]
+values = ["right", "left"]
+
+[[field]]
+note = "Not compared: bar 3's tap, the object at E352: its x, E355. Loaded so the bartender knows where the bar's tap is; it blinks (y 0) but keeps its x"
+path = "entities.tap[3].x"
+presentation = true
+ram = [0xE355]
+
+[[field]]
+bits = [4, 5]
+note = "Not compared: bar 3's tap's side: bit 4 of its flags, E353, set (13) for a tap on the bar's left end, mirrored"
+path = "entities.tap[3].facing"
+presentation = true
+ram = [0xE353]
+values = ["right", "left"]
