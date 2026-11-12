@@ -10547,7 +10547,7 @@ note = "The NMI's play routine ($CE7C) calls $EBDA in place of $D175 while $58 i
 at = "clip:donkey-kong-ju-title-001"
 
 [[evidence."entities.demo".refs]]
-at = "assets/donkey-kong-ju.toml:102"
+at = "assets/donkey-kong-ju.toml:115"
 quote = 'name = "demo_script"'
 
 [evidence."entities.elevator"]
@@ -10704,7 +10704,7 @@ confidence = 90
 note = "Kong is background tiles in palette 2 at row 4, column 4; his poses are the asset map's kong_* rows, which $C815 writes, picked by $EB54 (the name table of every frame of recording dk-clear-25m against $36). $C815 copies a pose's pointer to $02-$03 and $F2D7 puts it in the buffer the NMI writes to the name table; $EBAB sets $0505 bit 4 for it. gp picture on the 60-clip corpus (2026-11-02): with the pose shown the frame $EB54 draws it, every turn of Kong's came a frame early (walk clip 1 at frames 54, 87, 120, 141 and 165); a frame later they all match. At a start, $44 tells the last pose: only the take ($EB74) sets it above $1A; the findings clips start in a death with $44 at 40 and $36 at 0, and the game shows the take"
 
 [[evidence."entities.kong.sprite".refs]]
-at = "assets/donkey-kong-ju.toml:144"
+at = "assets/donkey-kong-ju.toml:157"
 quote = 'name = "kong_stand"'
 
 [evidence."entities.kong_100m"]

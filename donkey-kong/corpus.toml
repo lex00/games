@@ -19,6 +19,7 @@ rom = "45440d8ef512b4660dce0c753e110004aef96fa30f2967f9260e946d808db07d"
 mapping = "22"
 
 [import]
+prefix = "donkey-kong-oe"
 why = "a clip of the {session} mechanic session"
 
 [[import.exclude]]
