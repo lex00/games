@@ -11,7 +11,19 @@ format = "0.2.0"
 
 [presets.normal]
 description = "No lag and no console quirks"
-switches = []
+switches = ["any_way_stick"]
+
+[[groups]]
+description = "The arcade board's and cabinet's quirks, off one at a time"
+name = "board"
+title = "Board"
+
+[[groups.switches]]
+description = "Two directions on the stick at once reach the game as they are, which takes right, then left, then down, then up, instead of the cabinet's four-way stick choosing one"
+name = "any_way_stick"
+
+[groups.switches.set]
+"entities.player.ext_params.four_way" = 0
 
 # Tapper's board quirks (bring.md's table), each to be a switch in a group
 # "board" as soon as the model has the part that carries it. Retro is the
@@ -24,10 +36,8 @@ switches = []
 # - Boot frames: the game reads nothing for its first 94 frames (the
 #   corpus pairing's k 94). The model starts after them; a switch to start
 #   at once goes with the attract mode and the game's start.
-# - 4-way joystick: MAME's filter (gp_arcade::FourWay) sits before the
-#   board, so clips hold what reached it. When a person plays the model,
-#   its input is to go through the same filter, with a switch to let
-#   diagonals through as the board takes them (tapper-diagonal-a).
+# - 4-way joystick: the switch any_way_stick above. Clips hold what reached
+#   the board, already one direction, so it changes no clip.
 # - Watchdog: a tilt hangs the game and the board resets. Goes with the
 #   tilt and the reset, which the model doesn't have.
 # - Doubled tiles, sprite pixel 8, no sprite limit, the palette's ninth

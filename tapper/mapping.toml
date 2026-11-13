@@ -15,11 +15,88 @@ align = "polled"
 # x), which the frame's work moves and the video routine copies to the
 # sprite RAM; nothing else holds the bartender's place. His slot is E2E6
 # (tapper-m3-five, 6,102 frames with him at a bar: no other byte follows
-# his x or his y). His bar is E6F9 (0 the top, 3 the bottom), which changes
-# on the frame his y does.
+# his x or his y). His bar is E6F9 (0 the bottom bar, 3 the top; up adds
+# one), which changes on the frame his y does. y counts up the screen:
+# 48 is the bottom bar.
+
+# The random draws (docs/formats/draws.md): every call of the random routine
+# $5FAC, which steps the register E390 with the Z80's R register ($5FBD)
+# and returns a number below B in A. Each site is the call (`call $5fac`);
+# the draw is A when the routine returns. Found with `gp interp draws --find`
+# on the corpus's longest clip log (tapper.bonus.006 from power-on, 27,749
+# frames: the register E390, 2,184 reads of $5FBD) and `gp model static`'s
+# list of the calls of $5FAC. The hooks don't draw yet; the lockstep records
+# them for the customers, mugs and tips to come.
+score_draws = true
+
+[[draws]]
+site = "customer_wait_start"
+pc = 0x09DE
+ram = 0xE390
+note = "A customer's first wait: below 20, plus twice (10 less its kind), into its frames left (+4). gp interp draws --find lists it among the reads stored for later (into E4B6 + 0x20 a customer)"
+
+[[draws]]
+site = "pushed_drink"
+pc = 0x106D
+ram = 0xE390
+note = "A customer reached by a mug: below 6, the drink's timer. --find: a read that decides nothing within its window"
+
+[[draws]]
+site = "throw_wait"
+pc = 0x10C6
+ram = 0xE390
+note = "A customer done drinking: below 15, plus 5, the frames before the empty mug comes. --find: stored for later"
+
+[[draws]]
+site = "arrival_slot"
+pc = 0x1523
+ram = 0xE390
+note = "Customers at a level's start: below 2, picks their places. gp model static lists this call of $5FAC; --find didn't reach it on its own in the 27,749-frame cycle"
+
+[[draws]]
+site = "arrival_wait"
+pc = 0x1B6C
+ram = 0xE390
+note = "A new customer: below 16, plus 16, its first wait. --find: stored for later"
+
+[[draws]]
+site = "move_picture"
+pc = 0x213B
+ram = 0xE390
+note = "A bar move's start: below 3, plus 4, into E72E. --find: stored for later"
+
+[[draws]]
+site = "bonus_shake"
+pc = 0x258A
+ram = 0xE390
+note = "The bonus round: below 5, which can is shaken. --find proposes it: it indexes the tables at $259D, $25AC and $25B8"
+
+[[draws]]
+site = "game_start"
+pc = 0x4AFA
+ram = 0xE390
+note = "A game's start: below 2, into E3ED. --find: stored for later"
+
+[[draws]]
+site = "attract_pick"
+pc = 0x4F35
+ram = 0xE390
+note = "Attract mode: below 4, not the last one (E719). --find proposes it"
+
+[[draws]]
+site = "attract_pick_2"
+pc = 0x5021
+ram = 0xE390
+note = "Attract mode, the second list: below 4, not the last one (E719). --find proposes it"
+
+[[draws]]
+site = "tip_kind"
+pc = 0x59F2
+ram = 0xE390
+note = "Every 16 frames of E3C4: below 3, picks from the table at $5A5C. gp model static lists this call; --find counts its reads under $5FAE, the call inside $5FAC"
 
 [[field]]
-note = "The bartender's x: his slot's x, E2E9. Walking moves it 2 a frame; at a tap he stands at 209, 193, 177 and 161 on bars 0 to 3 of the saloon (tapper-m3-five, frames 1110 to 1190), 6 less once a mug is sent"
+note = "The bartender's x: his slot's x, E2E9. Walking moves it 2 a frame; at a tap he stands at 209, 193, 177 and 161 on bars 0 (the bottom) to 3 of the saloon (tapper-m3-five, frames 1110 to 1190), 6 less once a mug is sent"
 path = "entities.player[0].x"
 ram = [0xE2E9]
 whole = true
@@ -33,7 +110,7 @@ unmeasured = "Between levels, at a level's start and in a life lost, the slot ho
 when = "!((ram[0xE2E6] >= 46 && ram[0xE2E6] <= 50) || (ram[0xE2E6] >= 94 && ram[0xE2E6] <= 98) || (ram[0xE2E6] >= 142 && ram[0xE2E6] <= 146) || (ram[0xE2E6] >= 190 && ram[0xE2E6] <= 194))"
 
 [[field]]
-note = "The bartender's y: his slot's y, E2E6: 48 times his bar plus 48, and while he walks it bobs a step every 3 frames, 0, +1, +2, +1 from where the walk started (tapper-diagonal-4way-a, frames 601 to 640)"
+note = "The bartender's y: his slot's y, E2E6: 48 times his bar plus 48, counting up the screen (48 the bottom bar, 192 the top), and while he walks it bobs a step every 3 frames, 0, +1, +2, +1 from where the walk started (tapper-diagonal-4way-a, frames 601 to 640)"
 path = "entities.player[0].y"
 ram = [0xE2E6]
 whole = true
@@ -52,7 +129,7 @@ when = "!((ram[0xE2E6] >= 46 && ram[0xE2E6] <= 50) || (ram[0xE2E6] >= 94 && ram[
 # leaves = ["ram[0xE000]"]
 
 [[field]]
-note = "Not compared: the bartender's bar, E6F9 (0 the top, 3 the bottom), the tapper_bartender hook's word 0. It changes on the frame his y does (tapper-m3-five, frames 1116, 1136, 1153). Loaded so a clip's start knows his bar"
+note = "Not compared: the bartender's bar, E6F9 (0 the bottom bar, 3 the top), the tapper_bartender hook's word 0. It changes on the frame his y does (tapper-m3-five, frames 1116, 1136, 1153). Loaded so a clip's start knows his bar"
 path = "entities.player[0].ext[0]"
 presentation = true
 ram = [0xE6F9]
@@ -112,3 +189,58 @@ path = "entities.tap[3].facing"
 presentation = true
 ram = [0xE353]
 values = ["right", "left"]
+
+[[field]]
+note = "Not compared: the bartender's bob, the hook's word 2: E727 (frames left to the next step, 2 to 0) plus 256 times E729 (the step, 0 to 3). Loaded so a start inside a walk bobs on the game's frame"
+path = "entities.player[0].ext[2]"
+presentation = true
+ram = [0xE727, 0xE729]
+
+[[field]]
+lookup = [[0, 1]]
+lookup_else = 0
+note = "Not compared: the flow's word 0, 1 on the frame the level setup ($4B3F) has cleared the level's RAM: E6F2 is 0 then and on no other frame of a game (tapper-m3b-cycle: the frame before each of the bartender's 18 appearances, and the wait before the first level). The bartender appears on the next"
+path = "entities.flow[0].ext[0]"
+presentation = true
+ram = [0xE6F2]
+
+[[field.case]]
+number = 0
+when = "ram[0xE3BD] != 0"
+
+[[field]]
+note = "Not compared: the level's layout, E3AF: bit k set puts bar k's tap on its left end. The setup reads it to draw the taps and to place the bartender ($4BF9)"
+path = "entities.flow[0].ext[1]"
+presentation = true
+ram = [0xE3AF]
+
+[[field]]
+digits = true
+note = "Not compared until the model keeps it: The score: six digits a byte, E3F5 to E3FA, most significant first (the points routine $5EF3 adds into E3FA and carries up; player 2's would be 6 bytes on, by E3F2)"
+path = "counters.score"
+presentation = true
+ram = [0xE3F5, 0xE3F6, 0xE3F7, 0xE3F8, 0xE3F9, 0xE3FA]
+
+[[field]]
+note = "Not compared until the model keeps it: Lives, E4A7: 3 at the start ($4B22), 1 less at a life lost ($23AF), 1 more at an extra life ($615D)"
+path = "counters.lives"
+presentation = true
+ram = [0xE4A7]
+
+[[field]]
+note = "Not compared until the model keeps it: Levels cleared, E4A8: 1 more at each level's end ($5681), bonus rounds included"
+path = "counters.cleared"
+presentation = true
+ram = [0xE4A8]
+
+[[field]]
+note = "Not compared until the model keeps it: The bar shown, E3B8: 0 to 3, set at each level's start from E4A8 ($3C60)"
+path = "counters.shown"
+presentation = true
+ram = [0xE3B8]
+
+[[field]]
+note = "Not compared until the model keeps it: The mode, E3BD: 0 in a game, 1 attract mode, 2 game over"
+path = "counters.mode"
+presentation = true
+ram = [0xE3BD]

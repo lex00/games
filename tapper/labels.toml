@@ -1,0 +1,275 @@
+# Tapper's RAM and routines, named while modelling it: names and our own
+# words only, from gp-arcade's write log and reading the code; no bytes of
+# the game.
+schema = 0
+game = "tapper"
+
+[[label]]
+name = "objects"
+addr = 0xE262
+size = 228
+description = "The object table: 4-byte sprites (y, flags, picture, x) the video routine copies to sprite RAM"
+
+[[label]]
+name = "customers"
+addr = 0xE262
+size = 128
+description = "Customers: 4 a bar, 8 bytes each (two sprites, head and body), at E262 + 0x20 x bar + 8 x i"
+
+[[label]]
+name = "bartender"
+addr = 0xE2E6
+size = 24
+description = "The bartender's object and its own bytes: y, flags, picture, x, then his extra sprites"
+
+[[label]]
+name = "mugs"
+addr = 0xE2FE
+size = 72
+description = "Mugs: 9 of 8 bytes; +0 y (row + 4), +3 x, +4 bar x 16 with bit 0 set for an empty mug coming back, bit 3 for a left-to-right one, +5 the slide's picture count"
+
+[[label]]
+name = "taps"
+addr = 0xE346
+size = 16
+description = "The four taps' objects, one a bar: x at +3, bit 4 of the flags (+1) set for a tap on the bar's left end"
+
+[[label]]
+name = "rng"
+addr = 0xE390
+size = 1
+description = "The random register: shifted, xored with 2B on a carry and with the Z80's R register ($5FBD)"
+
+[[label]]
+name = "move_speed"
+addr = 0xE3B3
+size = 1
+description = "Pixels a customer moves a frame while walking toward the bartender ($117F)"
+
+[[label]]
+name = "stick"
+addr = 0xE38E
+size = 1
+description = "The joystick and tap as read this frame, active high ($2B53): bit 0 right, 1 left, 2 down, 3 up, 4 tap"
+
+[[label]]
+name = "layout"
+addr = 0xE3AF
+size = 1
+description = "The level's tap layout: bit k set puts bar k's tap on its left end"
+
+[[label]]
+name = "shown"
+addr = 0xE3B8
+size = 1
+description = "The bar shown: 0 saloon, 1 sports bar, 2 punk bar, 3 space bar ($3C60)"
+
+[[label]]
+name = "mode"
+addr = 0xE3BD
+size = 1
+description = "0 in a game, 1 attract mode, 2 game over"
+
+[[label]]
+name = "player"
+addr = 0xE3F2
+size = 1
+description = "The player whose turn it is; each player's score is 6 bytes on"
+
+[[label]]
+name = "score"
+addr = 0xE3F5
+size = 6
+description = "The score, a decimal digit a byte, most significant first ($5EF3 adds into E3FA and carries up)"
+
+[[label]]
+name = "lives"
+addr = 0xE4A7
+size = 1
+description = "Lives left: 3 at a game's start, 1 less at a life lost ($23AF), 1 more at an extra life ($615D)"
+
+[[label]]
+name = "cleared"
+addr = 0xE4A8
+size = 1
+description = "Levels cleared, bonus rounds included ($5681)"
+
+[[label]]
+name = "customer_records"
+addr = 0xE4B2
+size = 512
+description = "Each customer's state, 0x20 bytes, at E4B2 + 0x80 x bar + 0x20 x i: +0 state (0 waiting, 5 walking, 1 pushed back by a mug, 2 drinking, 3 the empty mug thrown, 4 after, 6 blinking), +4 its frames left, +2 the wait, +13 bit 0 facing"
+
+[[label]]
+name = "level_ram"
+addr = 0xE6F2
+size = 66
+description = "Cleared by the level setup ($4B3F); E6F2 is 0 only on that frame in a game, 40 after"
+
+[[label]]
+name = "bar"
+addr = 0xE6F9
+size = 1
+description = "The bartender's bar, 0 the bottom bar to 3 the top; up adds one"
+
+[[label]]
+name = "pour"
+addr = 0xE715
+size = 1
+description = "The tap's count: 4 on its first frame ($121D), the mug full when it runs out"
+
+[[label]]
+name = "mug_full"
+addr = 0xE718
+size = 1
+description = "Set when the mug at the tap is full ($1268); let go, it is sent ($13CC)"
+
+[[label]]
+name = "move_count"
+addr = 0xE717
+size = 1
+description = "A bar move's frames: 7 at its start ($21A0), down 1 a frame ($21AC)"
+
+[[label]]
+name = "bob_count"
+addr = 0xE727
+size = 1
+description = "The walk's bob: 2, 1, 0 over the frames a direction is held"
+
+[[label]]
+name = "bob_step"
+addr = 0xE729
+size = 1
+description = "The walk's bob step, 0 to 3: 1 down, 1 down, 1 up, 1 up"
+
+[[label]]
+name = "stick_latch"
+addr = 0xE730
+size = 1
+description = "Set when a bar move starts ($215B); cleared only on a frame with no direction and no move ($06CB)"
+
+[[label]]
+name = "move_step"
+addr = 0xE731
+size = 1
+description = "A bar move's picture, 0 to 6; he lands at 6 ($21C2)"
+
+[[routine]]
+bank = 0
+size = 1
+name = "tilt"
+addr = 0x0158
+prg = 0x0158
+description = "The tilt check (CTC channel 1): feeds the watchdog while tilted, then hangs with interrupts off"
+
+[[routine]]
+bank = 0
+size = 1
+name = "stick_dispatch"
+addr = 0x06C2
+prg = 0x06C2
+description = "Reads E38E: right, left, down, up in that order, else the tap, a full mug's send, or idle"
+
+[[routine]]
+bank = 0
+size = 1
+name = "bar_tap_side"
+addr = 0x0FFB
+prg = 0x0FFB
+description = "Bit E6F9 of the layout E3AF: the tap's side for the bartender's bar"
+
+[[routine]]
+bank = 0
+size = 1
+name = "customer"
+addr = 0x100A
+prg = 0x100A
+description = "A customer's frame: jumps by its state (+0 of its record) through the table at $11F6"
+
+[[routine]]
+bank = 0
+size = 1
+name = "tap"
+addr = 0x1206
+prg = 0x1206
+description = "The tap held: puts the bartender at the tap and fills the mug"
+
+[[routine]]
+bank = 0
+size = 1
+name = "send"
+addr = 0x13CC
+prg = 0x13CC
+description = "A full mug let go: sends it along the bar and steps the bartender back"
+
+[[routine]]
+bank = 0
+size = 1
+name = "bar_move"
+addr = 0x214B
+prg = 0x214B
+description = "Up or down: starts or runs a bar move (E717, E730, E731)"
+
+[[routine]]
+bank = 0
+size = 1
+name = "read_stick"
+addr = 0x2B3B
+prg = 0x2B3B
+description = "Reads the player's port into E38E"
+
+[[routine]]
+bank = 0
+size = 1
+name = "level_setup"
+addr = 0x4B3F
+prg = 0x4B3F
+description = "A level's start: clears its RAM, waits a frame, draws the taps and puts the bartender at bar 2"
+
+[[routine]]
+bank = 0
+size = 1
+name = "clear"
+addr = 0x5DB8
+prg = 0x5DB8
+description = "Clears BC bytes from HL"
+
+[[routine]]
+bank = 0
+size = 1
+name = "add_points"
+addr = 0x5EF3
+prg = 0x5EF3
+description = "Adds points to the current player's score, digit by digit"
+
+[[routine]]
+bank = 0
+size = 1
+name = "random_below"
+addr = 0x5FAC
+prg = 0x5FAC
+description = "A random number below A, from $5FBD"
+
+[[routine]]
+bank = 0
+size = 1
+name = "random"
+addr = 0x5FBD
+prg = 0x5FBD
+description = "Steps the random register E390 with the R register"
+
+[[routine]]
+bank = 0
+size = 1
+name = "wait_frame"
+addr = 0x60F6
+prg = 0x60F6
+description = "Waits for the next frame"
+
+[[routine]]
+bank = 0
+size = 1
+name = "wait_frames"
+addr = 0x606B
+prg = 0x606B
+description = "Waits C frames"

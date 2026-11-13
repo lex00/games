@@ -23,6 +23,27 @@ right = "right"
 start1 = "start1"
 up = "up"
 
+[entities.flow]
+description = "The game's flow between plays, a body with no box: a level's start ($4B3F), which puts the taps by the level's layout and the bartender at bar 2 on the frame after the setup clears the level's RAM (tapper_flow)"
+ext = "tapper_flow"
+no_slot = true
+role = "npc"
+size = [1, 1]
+
+[entities.flow.ext_params]
+start_bar = 2
+start_left = 61
+start_right = 171
+tap_left = 13
+tap_right = 225
+tap_step = 16
+
+[entities.flow.hitbox]
+h = 1
+w = 1
+x = 0
+y = 0
+
 [entities.player]
 description = "The bartender, the game's object at E2E6 (y, flags, picture, x): walks along his bar, moves to the next bar's tap on up or down, pours at the tap and steps back when a mug is sent (tapper_bartender)"
 ext = "tapper_bartender"
@@ -30,15 +51,18 @@ role = "player"
 size = [16, 16]
 
 [entities.player.ext_params]
+bob_frames = 3
 far_left = 32
 far_right = 232
-pour_frames = 8
+four_way = 1
+pour_frames = 5
 reach = 6
+row_bottom = 48
 row_height = 48
-row_top = 48
 send_step = 6
 stand_left = 16
 stand_right = 16
+switch_busy = 7
 switch_frames = 6
 walk_step = 2
 
@@ -49,7 +73,7 @@ x = 0
 y = 0
 
 [entities.tap]
-description = "A bar's tap, the game's objects at E346, E34A, E34E and E352 (one a bar, top first): its x and whether it is on the bar's left end (its flags' bit 4, the picture mirrored). Placed from the game's RAM when a clip starts; the bartender reads it"
+description = "A bar's tap, the game's objects at E346, E34A, E34E and E352 (one a bar, bottom first): its x and whether it is on the bar's left end (its flags' bit 4, the picture mirrored). Placed from the game's RAM when a clip starts; the bartender reads it"
 no_slot = true
 role = "npc"
 size = [16, 16]
@@ -65,6 +89,11 @@ description = "The first level, not lifted yet: no tiles"
 empty = true
 size = [32, 30]
 tile_size = 16
+
+[[levels.main.spawn]]
+entity = "flow"
+x = 0
+y = 0
 
 [[levels.main.spawn]]
 entity = "player"
@@ -91,8 +120,34 @@ entity = "tap"
 x = 0
 y = 192
 
+[counters.cleared]
+description = "Levels cleared, E4A8: 0 at a game's start, one more at each level's end ($5681), bonus rounds included"
+
+[counters.lives]
+description = "Lives, E4A7: 3 at a game's start ($4B22), one less when a life is lost ($23AF), one more at each extra-life score ($615D)"
+
+[counters.mode]
+description = "E3BD: 0 in a game, 1 in attract mode ($4AB8, $4E3D), 2 at game over"
+
+[counters.score]
+description = "The score, six decimal digits a byte at E3F5 to E3FA, most significant first; the points routine at $5EF3 adds from the last digit up, carrying. Nothing in the model scores yet"
+
+[counters.shown]
+description = "The bar shown, E3B8: 0 the saloon, 1 the sports bar, 2 the punk bar, 3 the space bar, set at each level's start from the levels cleared ($3C60 to $3C78)"
+
 [present.screen]
 size = [512, 480]
+
+[evidence."entities.flow"]
+source = "observed"
+confidence = 80
+note = "The level setup at $4B3F (read from the code with gp-arcade's write log): it clears E6F2 to E733, waits a frame, and at $4BCB puts the bartender at bar 2; E6F2 is 0 only on the setup's frame in tapper-m3b-cycle's games"
+
+[[evidence."entities.flow".refs]]
+at = "clip:tapper.l1.001"
+
+[[evidence."entities.flow".refs]]
+at = "clip:tapper.l3.001"
 
 [evidence."entities.player"]
 source = "observed"
@@ -103,6 +158,112 @@ note = "The bartender's walk, bar moves and step back after a send, measured on 
 at = "clip:tapper.score.001"
 
 [[evidence."entities.player".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."entities.player.ext_params.bob_frames"]
+source = "observed"
+confidence = 80
+note = "His walk's bob moves him a pixel every 3 frames a direction is held: E727 counts 2, 1, 0 (gp model static: E727 set to 2 at $31E5 in $2EE0; tapper-diagonal-4way-a, frames 601 to 699)"
+
+[[evidence."entities.player.ext_params.bob_frames".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."entities.player.ext_params.far_left"]
+source = "inferred"
+confidence = 10
+note = "The bars' left end: a guess, not measured"
+
+[evidence."entities.player.ext_params.far_right"]
+source = "inferred"
+confidence = 10
+note = "The bars' right end: a guess, not measured"
+
+[evidence."entities.player.ext_params.four_way"]
+source = "observed"
+confidence = 90
+note = "The cabinet's stick moves four ways (MAME's PORT_4WAY filter, held to MAME with tapper-diagonal-4way-a): the profile switch any_way_stick turns it off, so the board sees two directions at once and takes them in its own order ($06FE: right, left, down, up)"
+
+[[evidence."entities.player.ext_params.four_way".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."entities.player.ext_params.pour_frames"]
+source = "observed"
+confidence = 90
+note = "5 frames held fill a mug: gp model static reads E715 set to 4 at $121F, and gp model blind's hold_frames is 5. gp model blind's pour_frames (12) and gp rule lane's (8) are the fewest frames held before a send they saw; the clips decide: with every counter left out of the mapping, 5 (or 2, rule lane's pour_least) scores 87.7% on the 52 clips, 8 86.6% and 12 85.6%"
+
+[[evidence."entities.player.ext_params.pour_frames".refs]]
+at = "rom:1da6316bba47 frames 321-645: gp model blind, the frames the held button counts before it acts"
+
+[evidence."entities.player.ext_params.reach"]
+source = "observed"
+confidence = 70
+note = "He can walk 6 past where he stands toward a tap on the bar's right end (183 on bar 2, tapper-diagonal-4way-a, frames 601 to 620)"
+
+[[evidence."entities.player.ext_params.reach".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."entities.player.ext_params.row_bottom"]
+source = "observed"
+confidence = 95
+note = "48 for bar 0, the bottom bar, and 48 more a bar up (row_height): gp model blind (row_first 48, row_height 48, y_up: y counts up the screen) and gp rule lane agree"
+
+[[evidence."entities.player.ext_params.row_bottom".refs]]
+at = "rom:1da6316bba47 frames 321-645: gp model blind, lane 0's y"
+
+[evidence."entities.player.ext_params.row_height"]
+source = "observed"
+confidence = 95
+note = "48: gp model blind and gp rule lane agree"
+
+[[evidence."entities.player.ext_params.row_height".refs]]
+at = "rom:1da6316bba47 frames 321-645: gp model blind, y's step from one lane to the next"
+
+[evidence."entities.player.ext_params.send_step"]
+source = "observed"
+confidence = 95
+note = "6 back from the tap when a full mug is let go: gp model blind and gp rule lane agree"
+
+[[evidence."entities.player.ext_params.send_step".refs]]
+at = "rom:1da6316bba47 frames 321-645: gp model blind, how far x steps back when the button is let go after it acted"
+
+[evidence."entities.player.ext_params.stand_left"]
+source = "inferred"
+confidence = 30
+note = "16 right of a tap on the bar's left end, mirrored from stand_right: no capture shows it yet"
+
+[evidence."entities.player.ext_params.stand_right"]
+source = "observed"
+confidence = 90
+note = "16 left of a tap on the bar's right end: gp rule lane (stand 16 px) agrees"
+
+[[evidence."entities.player.ext_params.stand_right".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."entities.player.ext_params.switch_busy"]
+source = "observed"
+confidence = 90
+note = "7: gp model static reads E717 set to 7 at $21A0 and counted down at $21AC. gp model blind says 6 and gp rule lane 9 (each counts the frames another press does nothing in its own way); the clips decide: with every counter left out of the mapping, 7 scores 87.7% on the 52 clips, 6 83.7% and 9 83.3%"
+
+[[evidence."entities.player.ext_params.switch_busy".refs]]
+at = "clip:tapper.l5.001"
+
+[evidence."entities.player.ext_params.switch_frames"]
+source = "observed"
+confidence = 95
+note = "6 frames from the press to the new bar: gp model blind, gp rule lane and gp model static ($21C0 compares E731 with 6) agree"
+
+[[evidence."entities.player.ext_params.switch_frames".refs]]
+at = "rom:1da6316bba47 frames 321-645: gp model blind, from the press to the lane changing"
+
+[evidence."entities.player.ext_params.walk_step"]
+source = "observed"
+confidence = 95
+note = "2 a frame: gp model blind (x's step a frame along the lane) and gp rule lane (2 px a frame, 29,869 of 29,985 frames in play) agree"
+
+[[evidence."entities.player.ext_params.walk_step".refs]]
+at = "rom:1da6316bba47 frames 321-645: gp model blind, x's step a frame along the lane"
+
+[[evidence."entities.player.ext_params.walk_step".refs]]
 at = "clip:tapper.l1.001"
 
 [evidence."entities.tap"]
