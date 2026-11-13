@@ -1,0 +1,133 @@
+# What each quest log row has to show, as tests on RAM, for gp mechanic
+# triage: the tools try each row first, and only what they can't get goes
+# to the person, with a start point near it. The names are probes.toml's
+# [watch] table (NES work RAM).
+
+[[item]]
+row = "title"
+goal = "drawn == 56"
+hold = 30
+do = "Let the title screen show"
+stop = "When the menu is drawn"
+
+[[item]]
+row = "walk"
+goal = "nogame == 0 and mode == 1 and stage == 1 and x >= 80"
+near = "nogame == 0 and mode == 1"
+do = "Walk Mario right along the bottom girder"
+stop = "After a few steps each way"
+
+[[item]]
+row = "jump"
+goal = "nogame == 0 and state == 4"
+near = "nogame == 0 and mode == 1"
+do = "Jump in place and while walking"
+stop = "After a couple of jumps"
+
+[[item]]
+row = "climb-ladder"
+goal = "nogame == 0 and state == 2"
+near = "nogame == 0 and mode == 1"
+do = "Climb the first whole ladder"
+stop = "At the top of it"
+
+[[item]]
+row = "barrels"
+goal = "nogame == 0 and slot0 == 1"
+near = "nogame == 0 and mode == 1"
+do = "Stand still and watch the barrels roll"
+stop = "After a barrel has rolled down two girders"
+
+[[item]]
+row = "die-barrel"
+goal = "nogame == 0 and state == 255"
+near = "nogame == 0 and mode == 1"
+after = 240
+do = "Let a barrel hit Mario"
+stop = "When play starts again"
+
+[[item]]
+row = "fall-too-far"
+goal = "nogame == 0 and fall == 255"
+near = "nogame == 0 and mode == 1"
+after = 240
+do = "Walk off a girder's end, or jump from high, and fall too far"
+stop = "When play starts again"
+
+[[item]]
+row = "hammer"
+goal = "nogame == 0 and state == 10"
+near = "nogame == 0 and mode == 1"
+do = "Jump up to the hammer and smash a barrel"
+stop = "When the hammer runs out"
+
+[[item]]
+row = "top-hammer"
+goal = "nogame == 0 and state == 10 and floor >= 5"
+near = "nogame == 0 and mode == 1 and floor >= 4"
+do = "Take the top hammer on 25m and smash barrels with it"
+stop = "When the hammer runs out"
+
+[[item]]
+row = "oil-drum"
+goal = "nogame == 0 and drum == 2"
+near = "nogame == 0 and mode == 1"
+do = "Watch the first barrel light the oil drum"
+stop = "When the first fire comes out"
+
+[[item]]
+row = "clear-25m"
+goal = "stage == 1 and clearing == 1"
+near = "nogame == 0 and mode == 1 and stage == 1 and floor >= 5"
+after = 300
+do = "Climb to Pauline"
+stop = "When 50m's intro shows"
+
+[[item]]
+row = "bonus-runs-out"
+goal = "nogame == 0 and mode == 1 and bonus == 0"
+hold = 2
+near = "nogame == 0 and mode == 1"
+after = 240
+do = "Stay alive somewhere safe until the bonus reaches 0"
+stop = "When Mario dies of it and play starts again"
+
+[[item]]
+row = "game-over"
+goal = "p1_over == 1"
+near = "nogame == 0 and mode == 1 and lives == 0"
+after = 300
+do = "Lose the last life"
+stop = "When the title comes back"
+
+[[item]]
+row = "game-b"
+goal = "mode_ab == 1 and mode == 1"
+do = "Pick game B on the title and start it"
+stop = "When play starts"
+
+[[item]]
+row = "two-players"
+goal = "players == 28 and mode == 1"
+do = "Pick a two-player game on the title and start it"
+stop = "When play starts"
+
+[[item]]
+row = "clear-75m"
+note = "Clearing 75m, the elevators: ride them up, past the springs, to Pauline"
+goal = "stage == 3 and clearing == 1"
+near = "nogame == 0 and mode == 1 and stage == 3"
+after = 300
+where = "75m, the elevators stage, a second before Mario can move"
+do = "Climb to Pauline at the top. Ride the elevators, and watch for the springs that bounce across the top"
+stop = "Mario reaches Pauline and the next stage's intro shows"
+
+[[item]]
+row = "clear-100m"
+note = "Clearing 100m: pull all eight rivets out while the fires chase Mario"
+goal = "stage == 4 and clearing == 1"
+near = "nogame == 0 and mode == 1 and stage == 4"
+after = 300
+where = "100m, the rivets stage, as play starts"
+do = "Walk over all eight rivets to pull them out, jumping the fires; two guard girder 5"
+stop = "Donkey Kong falls and the next stage's intro shows"
