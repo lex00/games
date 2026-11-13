@@ -1,0 +1,82 @@
+# What each quest log row has to show, as tests on RAM, for gp mechanic
+# triage: the tools try each row first, and only what they can't get
+# goes to the person, with a start point near it. Addresses are the main
+# CPU's (work RAM at 0xE000), from the autoplay example's table
+# (crates/gp-arcade/examples/autoplay.rs) and mapping.toml.
+
+[watch]
+lives = 0xE4A7     # spare lives
+cleared = 0xE4A8   # levels cleared
+barshown = 0xE3B8  # the bar shown: 0 the saloon, 1 the sports bar, ...
+mode = 0xE3BD      # 1 in attract, 0 in a game, 2 at game over
+pbar = 0xE6F9      # the bartender's bar, 0 the top to 3 the bottom
+px = 0xE2E9        # the bartender's x
+score4 = 0xE3F8    # a digit of the score (six, one a byte, from E3F5)
+
+[[item]]
+row = "title"
+goal = "mode == 1"
+hold = 30
+where = "Power-on"
+do = "Let the attract mode play"
+stop = "When the attract demo starts"
+
+[[item]]
+row = "move"
+goal = "mode == 0 and pbar == 0"
+near = "mode == 0"
+do = "Move the bartender up and down the bars and along one"
+stop = "After a few moves each way"
+
+[[item]]
+row = "enemies"
+# A customer walking along the top bar, past the middle.
+goal = "mode == 0 and @0 == 0x39 and @3 >= 0x70"
+slots = { at = 0xE262, stride = 4, count = 8 }
+near = "mode == 0"
+do = "Stand still at a tap and let the customers come"
+stop = "When one reaches the bartender's end"
+
+[[item]]
+row = "die"
+goal = "lives == 2 and mode == 0"
+near = "mode == 0 and lives == 3"
+do = "Lose a life: let a customer reach the end, or a mug fall"
+stop = "When play starts again"
+
+[[item]]
+row = "score"
+goal = "mode == 0 and score4 >= 1"
+near = "mode == 0"
+do = "Serve customers until points show"
+stop = "After the points go up"
+
+[[item]]
+row = "clear-stage"
+goal = "cleared >= 1"
+near = "mode == 0"
+after = 200
+do = "Serve every customer of the first stage"
+stop = "When the next stage's play starts"
+
+[[item]]
+row = "game-over"
+goal = "mode == 2"
+near = "mode == 0 and lives == 0"
+after = 300
+do = "Lose the last life"
+stop = "When the title comes back"
+
+[[item]]
+row = "drink-far-end"
+note = "A customer who catches a mug at the far end of bar 4 and drinks there, before being pushed back"
+# Bar 4 (the bottom, index 3): its objects are slots E2C2-E2E1, a customer
+# drinking is at y 0xC9 - 4, and the far end is the left, away from the taps.
+goal = "mode == 0 and @0 == 0xC5 and @3 < 0x30"
+slots = { at = 0xE2C2, stride = 4, count = 8 }
+hold = 4
+near = "mode == 0 and lives == 3 and cleared == 0 and barshown == 0 and px > 0"
+where = "The saloon, the first stage, a second after play starts, three spare lives"
+do = "On bar 4 (the bottom one), let a customer walk all the way to the far left end, then send him a mug there so he catches it and drinks at the end"
+stop = "Once he's drinking at the far end (the mug tilted up), then R"
+
