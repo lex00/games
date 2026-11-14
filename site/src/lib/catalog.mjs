@@ -57,7 +57,13 @@ export async function games() {
 		const have = files(await text(`packages/${p.id}`));
 		const pkg = parse(await text(`blobs/${have.get('package.toml')}`));
 		const title = p.title;
-		const themes = catalog.filter((c) => c.kind === 'content' && c.for_games.includes(p.name));
+		// A game's themes, with those from the game's own namespace first (for
+		// lex00/donkey-kong, lex00/turnips before a theme someone else made), then
+		// by title. The first is the look the card shows.
+		const own = (c) => c.name.split('/')[0] === p.name.split('/')[0];
+		const themes = catalog
+			.filter((c) => c.kind === 'content' && c.for_games.includes(p.name))
+			.sort((a, b) => own(b) - own(a) || a.title.localeCompare(b.title));
 		// The card's picture: the first theme's preview.png (a theme's own art,
 		// never a picture of the original's), served from the registry.
 		let picture = null;
