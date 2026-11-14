@@ -136,3 +136,18 @@ region = "maincpu"
 offset = 0x2003
 count = 4
 width = 8
+
+# The space bar's level end hops ($50EF): the bartender's steps along,
+# one signed byte a hop, 10 hops ($5180: ld hl,$519F, indexed by 10 less
+# B). rbtapper keeps it at $532F (its loop reads it at $5310); the other
+# sets at $519F (gp query on a recording of each).
+[[asset]]
+name = "hop_steps"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x519F
+count = 10
+width = 1
+
+[asset.at]
+rbtapper = 0x532F

@@ -50,6 +50,15 @@ description = "The level's end scripts by the game's draw E3ED and the levels cl
 source = "tapper"
 asset = "end_script_lists"
 
+[assets.hop_steps]
+kind = "rows"
+role = "behavior"
+description = "The bartender's steps along in the space bar's level end hops, a signed byte each (the program's table, lifted from the player's romset)"
+
+[assets.hop_steps.from]
+source = "tapper"
+asset = "hop_steps"
+
 [assets.level_times]
 kind = "rows"
 role = "behavior"
@@ -124,6 +133,7 @@ walk_frames = 12
 arrivals = "arrivals"
 customer_starts = "customer_starts"
 end_script_lists = "end_script_lists"
+hop_steps = "hop_steps"
 level_times = "level_times"
 record_blocks = "record_blocks"
 slide_objects = "slide_objects"
@@ -341,6 +351,14 @@ note = "gp code listing on tapper.l1.001 and tapper.l7.001: a level's end ($55F4
 [[evidence."assets.end_script_lists".refs]]
 at = "clip:tapper.l7.001"
 
+[evidence."assets.hop_steps"]
+source = "observed"
+confidence = 85
+note = "gp code listing on tapper.l10.001's end (frames 15680 to 15926): the end's script 3 ($564C calls $48D1) calls $50EF in the space bar ($48DA); its loop at $5160 reads the byte at $519F plus 10 less B ($5180 to $5189) and adds it to the bartender's x ($518B), y up and down by 5 ($516F to $517E), a wait of 5 each ($5194). The ten steps, lifted, match his x on frames 15874 to 15919 (gp query). The same bytes at $519F in the tapper, tappera, tapperg and sutapper sets, and at $532F in rbtapper, whose loop reads them at $5310 (gp query on a recording of each)"
+
+[[evidence."assets.hop_steps".refs]]
+at = "clip:tapper.l10.001"
+
 [evidence."assets.level_times"]
 source = "observed"
 confidence = 80
@@ -360,7 +378,7 @@ at = "clip:tapper.l8.001"
 [evidence."assets.slide_objects"]
 source = "observed"
 confidence = 85
-note = "gp code listing on tapper.l6.001's end: where the slide ends ($1F66 falls through) $1F75 copies 32 bytes from $2003 to E326 (ldir), four objects of 8 bytes over the mug slots 5 to 8, y 196, 100, 196 and 100 (gp query on tapper.die.001's and tapper.l6.001's recordings: on frames 1730 and 8961). The same bytes at $2003 in the tapper, rbtapper, tappera, tapperg and sutapper sets (gp query ram[0x2003..0x2023] on a recording of each)"
+note = "gp code listing on tapper.l6.001's end: where the slide ends ($1F66 falls through) $1F75 copies 32 bytes from $2003 to E326 (ldir), four objects of 8 bytes over the mug slots 5 to 8 (gp query on tapper.die.001's and tapper.l6.001's recordings: on frames 1730 and 8961). The same bytes at $2003 in the tapper, rbtapper, tappera, tapperg and sutapper sets (gp query ram[0x2003..0x2023] on a recording of each)"
 
 [[evidence."assets.slide_objects".refs]]
 at = "clip:tapper.l6.001"

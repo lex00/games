@@ -1180,6 +1180,35 @@ impl Ext for Bars {
                     }
                 }
             }
+            // Script 3 ($564C, $48D1): after $4603, $58C5 moves another
+            // object for 22 waits of 2 and $4708 turns the bartender's
+            // pictures; then in the space bar (E3B8 3, $48DA) $50EF: 10
+            // waits of 2 for another object, then the bartender hops 10
+            // times, 5 frames apart ($5160 to $519C): 5 up, then 5 down,
+            // and along by the program's table at $519F (signed, the
+            // hop_steps rows). 128 frames from the end's first $58C5
+            // starts, so the hops are on frames 192 to 237
+            // (tapper.l10.001: the first on 15874). In the other bars
+            // a draw from the Z80's refresh register ($48E7) picks $50EF or
+            // $51A9, which the model can't take (no draw site holds R).
+            let shown = (fb.ext[3] >> 8) & 3;
+            if script == 3
+                && shown == 3
+                && n >= 192
+                && (n - 192) % 5 == 0
+                && (n - 192) / 5 < 10
+                && let Some(pk) = player_k
+                && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == pk)
+            {
+                let k = (n - 192) / 5;
+                let steps = cx.table("hop_steps").to_vec();
+                let dx = steps.get(usize::try_from(k).unwrap_or(0)).map_or(0, |&v| if v >= 0x80 { v - 0x100 } else { v });
+                let dy = if k % 2 == 0 { 5 } else { -5 };
+                let mut pb = *pb;
+                pb.x = Fx::from_int((pb.x.floor() + dx) & 0xff);
+                pb.y = Fx::from_int(pb.y.floor() + dy);
+                cx.set_body(pid, pb);
+            }
             if (n == 56 || n == 109)
                 && let Some(pk) = player_k
                 && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == pk)
