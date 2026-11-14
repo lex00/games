@@ -1440,6 +1440,37 @@ impl Ext for Bars {
                 pb.y = Fx::from_int(pb.y.floor() + dy);
                 cx.set_body(pid, pb);
             }
+            // The script's step returns to $5656 (the game back in state
+            // 11, $231A): script 1 ($489A) after $5904's 21 waits of 2 and
+            // $45E3's 12 of 1, 182 from the end's first; script 3 after
+            // the interlude, 242 ($50EF) or 250 ($51A9). In the punk bar
+            // and the space bar $5E99 waits a frame ($5663). Then E4A8
+            // counts the level ($5681), and when the count mod 13 ($5F6C)
+            // is 2, 5, 9, or 0 past the first, $2500 starts the bonus round
+            // and its $5F31 empties every object, the bartender's too
+            // (tapper.l9.001, l13.001, l15.001: their last frame). Scripts
+            // 0, 2 and 4 aren't timed to their end yet.
+            let done = match script {
+                1 => Some(182),
+                3 if interlude_b => Some(250),
+                3 => Some(242),
+                _ => None,
+            };
+            let count = cleared + 1;
+            let bonus = matches!(count % 13, 2 | 5 | 9) || count % 13 == 0;
+            if bonus && done.is_some_and(|d| n == d + i64::from(shown == 2 || shown == 3)) {
+                for (id, _) in &bodies {
+                    removed.push(*id);
+                }
+                if let Some(pk) = player_k
+                    && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == pk)
+                {
+                    let mut pb = *pb;
+                    pb.x = Fx::ZERO;
+                    pb.y = Fx::ZERO;
+                    cx.set_body(pid, pb);
+                }
+            }
             if (n == 56 || n == 109)
                 && let Some(pk) = player_k
                 && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == pk)
