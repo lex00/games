@@ -4,6 +4,8 @@
 import { parse } from 'smol-toml';
 
 const REGISTRY = process.env.GP_REGISTRY ?? 'https://raw.githubusercontent.com/lex00/gp-registry/main';
+// The game runner: one page for every game, which takes the game from its
+// address (`/p?g=NAMESPACE/NAME`, with `&c=NAMESPACE/THEME` for a theme).
 export const RUNNER = process.env.GP_RUNNER ?? 'https://gameprinter.intentius.workers.dev';
 
 async function text(key) {
@@ -55,6 +57,8 @@ export async function games() {
 	const list = [];
 	for (const p of catalog.filter((c) => c.kind === 'game')) {
 		const have = files(await text(`packages/${p.id}`));
+		// Only a game with files the runner plays (its package's play/).
+		if (![...have.keys()].some((k) => k.startsWith('play/'))) continue;
 		const pkg = parse(await text(`blobs/${have.get('package.toml')}`));
 		const title = p.title;
 		// A game's themes, with those from the game's own namespace first (for
@@ -78,9 +82,10 @@ export async function games() {
 			name: p.name,
 			title,
 			version: p.latest,
-			// The page's plain address: it plays a ROM the visitor loads, or one kept
-			// from an earlier visit, in the page's own theme.
-			play: `${RUNNER}/`,
+			// The runner plays any game its registry offers, named in the address
+			// (`p?g=NAMESPACE/NAME`): it installs the game's package and plays a ROM
+			// the visitor loads, or one kept from an earlier visit.
+			play: `${RUNNER}/p?g=${p.name}`,
 			picture,
 			original: pkg.rom ? p.title : null,
 			// The package wraps its text at a width; only a blank line is a break.
