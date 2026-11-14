@@ -96,6 +96,21 @@ pc = 0x59F2
 ram = 0xE390
 note = "Every 16 frames of E3C4: 0 to 3, picks from the table at $5A5C. gp model static lists this call; --find counts its reads under $5FAE, the call inside $5FAC"
 
+# Two draws read the Z80's refresh register straight, not through $5FAC
+# (docs/formats/draws.md, a site that reads a register).
+
+[[draws]]
+site = "end_twice"
+pc = 0x467E
+reg = "r"
+note = "A level's end from the second level on (E4A8 not 0, $4678): ld a,r, and bit 0 at $4680; at 0 $4684 runs $4742 a second time, so the bartender's step away from the tap ($46B4) comes 53 frames later. On the frame $4742's last wait returns, 109 from the end's first"
+
+[[draws]]
+site = "end_interlude"
+pc = 0x48E7
+reg = "r"
+note = "End script 3 ($48D1) outside the space bar, when $2B58 finds no mug on the bartender's bar: ld a,r, and bit 0 at $48E9; at 1 the interlude is $51A9, at 0 $50EF (the space bar always runs $50EF). On the frame $58C5 returns, 172 from the end's first (53 more after a second $4742)"
+
 # The mugs: 8-byte objects from E2FE (y, flags, picture, x, then a
 # second sprite's), free while y is 0. gp track found them on tapper.l8.001
 # (6 slots, stride 8, x E301); gp labels propose shows the send ($13CC)

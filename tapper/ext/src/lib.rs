@@ -476,6 +476,16 @@ const BARS_PARAMS: &[Param] = &[
     Param::new("setup_late_bars", "count", ""),
 ];
 
+/// A level's end (the flow's sub 8): the draws it has taken, kept in the
+/// flow's word 3 above the script's frame count. `END_TWICE_KNOWN`: $467E
+/// has been reached (or wasn't, on the first level); `END_TWICE`: its bit
+/// ran $4742 a second time. `END_INTERLUDE_KNOWN`: $48DA has picked the
+/// interlude; `END_INTERLUDE_B`: it is $51A9, not $50EF.
+const END_TWICE_KNOWN: i64 = 1 << 40;
+const END_TWICE: i64 = 1 << 41;
+const END_INTERLUDE_KNOWN: i64 = 1 << 42;
+const END_INTERLUDE_B: i64 = 1 << 43;
+
 /// The random routine $5FAC's number for a site: the original's when the
 /// run has its draws, else one from the generator from 0 to `n`, the A
 /// it is called with ($5FB1 to $5FB4 return a number below A or equal to
@@ -907,6 +917,40 @@ impl Ext for Bars {
                 flow = Some((fid, fb));
             }
         }
+        // A start inside $51A9 (tapper.clear.004 starts in its wait at
+        // $521D): $232B's place (E3A9) and B (E39F) give its frame, as for
+        // $1CE1 above, counted as a level's end (sub 8) from $51A9's
+        // first, 172; the draws before it are taken.
+        if (state == 15 || state == 16)
+            && let Some((fid, mut fb)) = flow
+            && (fb.ext[3] >> 16) & 0xff != 8
+            && let ret @ 0x51A9..=0x52A5 = (fb.ext[1] >> 16) & 0xffff
+        {
+            let b = (fb.ext[1] >> 32) & 0xff;
+            let resume = match ret {
+                0x51EB => Some(2 * (10 - b + 1)),
+                0x5220 => Some(22),
+                0x5246 => Some(24),
+                0x5260 => Some(28),
+                0x52A3 => Some(28 + 5 * (10 - b + 1)),
+                _ => None,
+            };
+            if let Some(m) = resume {
+                let left = timers.iter().find(|(_, t)| t.ext[1] == 0x2346).map_or(0, |(_, t)| t.ext[0]);
+                let n = (172 + m - 1 - left).max(0);
+                fb.ext[3] = (fb.ext[3] & 0xff00)
+                    | state
+                    | (8 << 16)
+                    | (n << 24)
+                    | END_TWICE_KNOWN
+                    | END_INTERLUDE_KNOWN
+                    | END_INTERLUDE_B;
+                // The place is read once, at the start.
+                fb.ext[1] &= !(0xffff << 16);
+                cx.set_body(fid, fb);
+                flow = Some((fid, fb));
+            }
+        }
         // State 11 outside a level's setup is a level's end ($2304): its
         // script ($55F4) waits through states 15 and 16 ($232B, $2346,
         // $231A), and the game's clear ($5DB8) has emptied the bars by the
@@ -1231,15 +1275,28 @@ impl Ext for Bars {
             // first. $4742 then waits 2, 6 of 2, 15 and 6 of 4, and back in
             // $4603 he steps 1 away from the tap ($46B4 to $46BF: +1, or -1
             // when the tap is on the bar's left end, E3AD) 53 frames on.
-            // From the second level a random bit ($467E, the Z80's refresh
-            // register) can run $4742 a second time first; the model
-            // doesn't: tapper.l2.001 and l3.001 didn't.
+            // From the second level (E4A8 not 0, $4678) a draw from the
+            // Z80's refresh register ($467E, bit 0 at $4680) on the frame
+            // $4742 returns, 109 from the end's first, runs $4742 a second
+            // time at 0 ($4684): his step away from the tap and all that
+            // comes after it are 53 frames later. From bit 40 the flow's
+            // word 3 keeps the draws taken in this end (END_*).
             // The count takes 16 bits from bit 24: the scripts run past 255
             // frames.
             let n = ((fb.ext[3] >> 24) & 0xffff) + 1;
             if n <= 0xffff {
                 fb.ext[3] = (fb.ext[3] & !(0xffff << 24)) | (n << 24);
             }
+            if n == 109 && fb.ext[3] & END_TWICE_KNOWN == 0 {
+                fb.ext[3] |= END_TWICE_KNOWN;
+                if cleared != 0 && cx.draw("end_twice") & 1 == 0 {
+                    fb.ext[3] |= END_TWICE;
+                }
+            }
+            // The script's frame as if $4742 ran once: past the second
+            // run's start the frames of the second run come off, so the
+            // second run's $1351 (109, as 56) puts him where he stands.
+            let n = if n >= 109 && fb.ext[3] & END_TWICE != 0 { n - 53 } else { n };
             // After $4603 some lists go on ($5623: the list by E3ED, the
             // entry by the levels cleared mod 10, each a 5-byte step). The
             // last step, $5651, calls $48F5: after $4603 returns (15 and 4
@@ -1311,12 +1368,63 @@ impl Ext for Bars {
             // and along by the program's table at $519F (signed, the
             // hop_steps rows). 128 frames from the end's first $58C5
             // starts, so the hops are on frames 192 to 237
-            // (tapper.l10.001: the first on 15874). In the other bars
-            // a draw from the Z80's refresh register ($48E7) picks $50EF or
-            // $51A9, which the model can't take (no draw site holds R).
+            // (tapper.l10.001: the first on 15874). In the other bars, on
+            // the frame $58C5 returns (172), $2B58 looks for a mug on the
+            // bartender's bar (E6F9) in the 9 slots from E2FE (y not 0,
+            // its bar in the high nibble of +4) and runs $50EF if one is
+            // there; else a draw from the Z80's refresh register ($48E7,
+            // bit 0 at $48E9) picks $51A9 at 1 and $50EF at 0.
             let shown = (fb.ext[3] >> 8) & 3;
+            if script == 3 && shown != 3 && n == 172 && fb.ext[3] & END_INTERLUDE_KNOWN == 0 {
+                fb.ext[3] |= END_INTERLUDE_KNOWN;
+                let his_bar = player_k
+                    .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+                    .map_or(0, |b| b.ext[0]);
+                let mug_there = bodies
+                    .iter()
+                    .any(|(id, b)| b.kind == mug_k && !removed.contains(id) && b.y.floor() != 0 && (b.ext[3] >> 4) & 0xf == his_bar);
+                if !mug_there && cx.draw("end_interlude") & 1 != 0 {
+                    fb.ext[3] |= END_INTERLUDE_B;
+                }
+            }
+            let interlude_b = shown != 3 && fb.ext[3] & END_INTERLUDE_B != 0;
+            // $51A9, from 172: 10 waits of 2 for the other object (E356),
+            // then the bartender's pictures turn; 2 frames on ($5220) he
+            // is 5 higher and 5 along, away from the tap (E3AD); 2 more
+            // ($5249) he is where that object is, 16 above it, which is 9
+            // lower than before and 14 further along; 4 more ($5263) he
+            // hops 10 times, 5 frames apart: 5 up, then 5 down, and along
+            // by the hop_steps rows ($5286), as in $50EF
+            // (tapper.clear.004: $51A9 on 3286, the hops from 3314).
             if script == 3
-                && shown == 3
+                && interlude_b
+                && let Some(pk) = player_k
+                && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == pk)
+            {
+                let m = n - 172;
+                let left = Self::tap_left(cx, pb.ext[0]);
+                let away = if left { 1 } else { -1 };
+                let (dx, dy) = if m == 22 {
+                    (5 * away, 5)
+                } else if m == 24 {
+                    (14 * away, -9)
+                } else if m >= 28 && (m - 28) % 5 == 0 && (m - 28) / 5 < 10 {
+                    let k = (m - 28) / 5;
+                    let steps = cx.table("hop_steps").to_vec();
+                    let dx = steps.get(usize::try_from(k).unwrap_or(0)).map_or(0, |&v| if v >= 0x80 { v - 0x100 } else { v });
+                    (dx, if k % 2 == 0 { 5 } else { -5 })
+                } else {
+                    (0, 0)
+                };
+                if (dx, dy) != (0, 0) {
+                    let mut pb = *pb;
+                    pb.x = Fx::from_int((pb.x.floor() + dx) & 0xff);
+                    pb.y = Fx::from_int(pb.y.floor() + dy);
+                    cx.set_body(pid, pb);
+                }
+            }
+            if script == 3
+                && !interlude_b
                 && n >= 192
                 && (n - 192) % 5 == 0
                 && (n - 192) / 5 < 10
