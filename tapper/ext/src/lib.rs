@@ -1068,9 +1068,12 @@ impl Ext for Bars {
             }
         }
 
-        // $0B43: each customer's state. Its wait and drink are its slot's
-        // record's (E4B4, E4BB), which the speed-up changes.
-        for k in 0..bodies.len() {
+        // $0B43: each customer's state, in slot order from E262 with its
+        // record from E4B2. Its wait and drink are its slot's record's
+        // (E4B4, E4BB), which the speed-up changes.
+        let mut cust_order: Vec<usize> = (0..bodies.len()).filter(|&k| bodies[k].1.kind == cust_k).collect();
+        cust_order.sort_by_key(|&k| (bodies[k].1.ext[3] >> 16) & 0xff);
+        for k in cust_order {
             let (id, mut c) = bodies[k];
             if c.kind != cust_k || removed.contains(&id) {
                 continue;
