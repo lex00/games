@@ -1,0 +1,1059 @@
+# Donkey Kong: Original Edition's RAM and routines, named for scoring the
+# gaps detectors (truth/gaps.toml). Our own names and words, taken from what
+# the model, the state mapping and the hooks already say about the code
+# (model.toml's evidence notes, mapping.toml's field notes, ext/src); no
+# bytes of the game. Addresses are the CPU's; the 32 KB program is one bank
+# at $8000, so prg is the address less $8000.
+#
+# Pass it with --labels: `gp gaps all donkey-kong --labels
+# donkey-kong/truth/labels.toml --truth donkey-kong/truth/gaps.toml`. It is
+# not the package's labels.toml, so other gaps runs name things as before.
+#
+# A size marked "unsure" is worked out, not read off one store.
+schema = 0
+game = "donkey-kong-oe"
+bank_size = 32768
+
+# Zero page
+
+[[label]]
+name = "zp_temps"
+addr = 0x0000
+size = 15
+description = "Temporaries the routines load and store within a frame ($0A in the climb down at $D445, $01 at $D3AA). Unsure: that every byte of $00-$0E is only a temporary"
+
+[[label]]
+name = "jingle_parked"
+addr = 0x000F
+size = 1
+description = "The jingle $FC the pause stopped, kept until the unpause asks for it again ($CF7F)"
+
+[[label]]
+name = "joypad"
+addr = 0x0015
+size = 1
+description = "The pad as the game keeps it after $F549's direction latch"
+
+[[label]]
+name = "rand_bytes"
+addr = 0x0018
+size = 8
+description = "The random register, $18 the top byte; the barrels' ladder choice and the fires' choices read it ($19)"
+
+[[label]]
+name = "hiscore_bcd"
+addr = 0x0021
+size = 3
+description = "The top score, packed BCD, raised from the score at $D03E"
+
+[[label]]
+name = "score_bcd"
+addr = 0x0025
+size = 3
+description = "The score, packed BCD; $F342 adds into it"
+
+[[label]]
+name = "score_bcd_other"
+addr = 0x0029
+size = 3
+description = "The other player's score"
+
+[[label]]
+name = "bonus_bcd"
+addr = 0x002E
+size = 1
+description = "The bonus timer in hundreds, packed BCD"
+
+[[label]]
+name = "div11"
+addr = 0x0034
+size = 1
+description = "The 11-frame divider, 10 down to 0, that the slow timers step on"
+
+[[label]]
+name = "menu_wait"
+addr = 0x0035
+size = 1
+description = "The title's timer, 64 when Select moves the cursor"
+
+[[label]]
+name = "kong_throw_wait"
+addr = 0x0036
+size = 1
+description = "Kong's throw timer ($DA1D-$DA3B): at 0, with a barrel slot free, he throws"
+
+[[label]]
+name = "kong_drop_wait"
+addr = 0x0037
+size = 1
+description = "Kong's drop timer: 16 at a throw; the frame after it runs out the barrel is let go"
+
+[[label]]
+name = "drum_flame_wait"
+addr = 0x0038
+size = 1
+description = "The oil drum's flame timer"
+
+[[label]]
+name = "pauline_call_wait"
+addr = 0x0039
+size = 1
+description = "Frames until Pauline calls ($EA5F)"
+
+[[label]]
+name = "death_snd_wait"
+addr = 0x003A
+size = 1
+description = "The sound driver's wait for the death sound: $40 at the spin's first count"
+
+[[label]]
+name = "fire_aim_wait"
+addr = 0x003B
+size = 1
+description = "The fires' aim timer: a fire aims at Mario once until it runs out"
+
+[[label]]
+name = "hammer_wait"
+addr = 0x003F
+size = 1
+description = "The hammer's timer: $D635 sets it to 75 when Mario takes a hammer"
+
+[[label]]
+name = "new_fire_wait"
+addr = 0x0040
+size = 1
+description = "The slow timer until another fire comes out of the drum"
+
+[[label]]
+name = "points_wait"
+addr = 0x0041
+size = 2
+description = "The two points sprites' timers: $CFC6 sets the first to 3"
+
+[[label]]
+name = "slow_wait"
+addr = 0x0043
+size = 1
+description = "A slow timer, one a divider wrap: a straight barrel's, the stage clear's, a death's and the ending's waits"
+
+[[label]]
+name = "kong_pose_wait"
+addr = 0x0044
+size = 1
+description = "The slow timer Kong's poses wait on ($EB54), and the title's idle timer"
+
+[[label]]
+name = "bonus_wait"
+addr = 0x0045
+size = 1
+description = "The slow timer the bonus count waits on"
+
+[[label]]
+name = "mario_box"
+addr = 0x0046
+size = 4
+description = "Mario's touch box, x and y to x + 5 and y + 5 ($C196's offsets on the sprite's place); the hammer's hit point while he holds it ($EFF5)"
+
+[[label]]
+name = "no_game"
+addr = 0x004E
+size = 1
+description = "No game in play: the demo, the last life's wait and GAME OVER"
+
+[[label]]
+name = "game_ab"
+addr = 0x0050
+size = 1
+description = "Game A (0) or B (1)"
+
+[[label]]
+name = "players_12"
+addr = 0x0051
+size = 1
+description = "One player (24) or two (28), from the title ($C9A2-$C9AF)"
+
+[[label]]
+name = "turn_player"
+addr = 0x0052
+size = 1
+description = "Whose turn it is ($D156, $CAA4)"
+
+[[label]]
+name = "stage_no"
+addr = 0x0053
+size = 1
+description = "The stage: 1 25m, 2 50m, 3 75m, 4 100m; the fire code and the ladder lists choose by it"
+
+[[label]]
+name = "loops_done"
+addr = 0x0054
+size = 1
+description = "Loops cleared"
+
+[[label]]
+name = "lives_left"
+addr = 0x0055
+size = 1
+description = "Lives left"
+
+[[label]]
+name = "move_way"
+addr = 0x0056
+size = 1
+description = "The way Mario's routine reads: a jump's way across as it took off, the demo script's in the demo"
+
+[[label]]
+name = "pad_way"
+addr = 0x0057
+size = 1
+description = "Mario's facing from the pad: 1 right, 2 left ($D175)"
+
+[[label]]
+name = "demo_flag"
+addr = 0x0058
+size = 1
+description = "1 while the attract demo plays ($C957); Start doesn't pause then"
+
+[[label]]
+name = "mario_floor"
+addr = 0x0059
+size = 1
+description = "The floor Mario is on, whose girder pieces the ground test reads ($D91A, $E016)"
+
+[[label]]
+name = "mario_on_girder"
+addr = 0x005A
+size = 1
+description = "Set while Mario is on a girder; the ladder routine asks $D50A then"
+
+[[label]]
+name = "ladder_top_step"
+addr = 0x005B
+size = 1
+description = "The climb's step in a ladder's top zone ($D3D2, $D478)"
+
+[[label]]
+name = "ladder_step"
+addr = 0x005C
+size = 1
+description = "The climb's step, 1 to 6 ($D3FB, $D483, $D49F)"
+
+[[label]]
+name = "barrel_index"
+addr = 0x005D
+size = 1
+description = "The barrel loop's index ($EC44 clears it)"
+
+[[label]]
+name = "barrel_state"
+addr = 0x005E
+size = 9
+description = "Each barrel slot's state, $5E,X: 1 rolling, $80 held, $81 let go, $40 dropping through a crowded girder, $C0 a straight drop"
+
+[[label]]
+name = "barrel_floor"
+addr = 0x0068
+size = 9
+description = "Each barrel's girder, $68,X; DEC $68,X at $DBA9 as it goes down a ladder"
+
+[[label]]
+name = "barrel_picture"
+addr = 0x0072
+size = 9
+description = "Each barrel's sprite tile, $72,X ($DB27, $DBEE, $DC43, $DE5D)"
+
+[[label]]
+name = "girder_barrels"
+addr = 0x007E
+size = 1
+description = "Barrels on the girder below one at a ladder top: under 4 lets it go down. Unsure: whether $7E is one count or the first of several"
+
+[[label]]
+name = "walk_dir_step"
+addr = 0x0085
+size = 1
+description = "Which way the walk's picture goes from 4 ($D268, $D273)"
+
+[[label]]
+name = "step_count"
+addr = 0x0088
+size = 1
+description = "The 15-count step counter the walk, climb and jump step through $D9E6 and $D9E8"
+
+[[label]]
+name = "barrel_ladder_count"
+addr = 0x008A
+size = 9
+description = "Each barrel's counter down a ladder, $8A,X; on 75m $8A is the elevators' beat ($DFE8)"
+
+[[label]]
+name = "jump_land"
+addr = 0x0094
+size = 2
+description = "The jump's landing hold ($94, $F0 to $F4) and its takeoff height ($95)"
+
+[[label]]
+name = "mario_mode"
+addr = 0x0096
+size = 1
+description = "Mario's state: 1 walking, 2 climbing, 4 jumping, 8 falling, 10 with the hammer; 255 a death (six places store it)"
+
+[[label]]
+name = "walk_picture"
+addr = 0x0097
+size = 1
+description = "The walk's picture ($D250-$D26F)"
+
+[[label]]
+name = "spin_phase"
+addr = 0x0098
+size = 1
+description = "The death's phase: 0 to 4 while Mario spins, 255 while he lies still ($D0F8-$D11F)"
+
+[[label]]
+name = "walk_tick"
+addr = 0x009B
+size = 1
+description = "The walk's beat ($D239, $D244)"
+
+[[label]]
+name = "jump_toggle"
+addr = 0x009E
+size = 1
+description = "The jump's toggle: x moves on a frame it was 1"
+
+[[label]]
+name = "hammer_swing"
+addr = 0x009F
+size = 1
+description = "The hammer's swing, 1 to 6 ($D6F6-$D751)"
+
+[[label]]
+name = "hammer_held"
+addr = 0x00A0
+size = 1
+description = "The hammer touched or held, 1 or 2 ($D800-$D8AA); $D7E8 clears it"
+
+[[label]]
+name = "ladder_x"
+addr = 0x00A1
+size = 1
+description = "The ladder's x the climb puts Mario at (less 4, $D28B)"
+
+[[label]]
+name = "swing_shift"
+addr = 0x00A2
+size = 1
+description = "The standing swing's shift ($D6E8-$D6F4)"
+
+[[label]]
+name = "drum_lit"
+addr = 0x00AD
+size = 1
+description = "The oil drum: 0 unlit, 2 for 16 frames after a barrel goes in ($DBCD), then 3"
+
+[[label]]
+name = "fire_index"
+addr = 0x00AE
+size = 1
+description = "The fire loop's slot ($E1E5, $ED8A clear it)"
+
+[[label]]
+name = "fire_state"
+addr = 0x00AF
+size = 4
+description = "Each fire's state, $AF,X: the spawn sets it"
+
+[[label]]
+name = "pauline_turns"
+addr = 0x00B7
+size = 1
+description = "The times Pauline's body turned back in this call ($EA81)"
+
+[[label]]
+name = "pauline_walk"
+addr = 0x00B8
+size = 1
+description = "Pauline's step ($EAA1)"
+
+[[label]]
+name = "smash_phase"
+addr = 0x00BF
+size = 1
+description = "The hammer's smash, 1 to 11, 0 with none ($ED87, $EE4E)"
+
+[[label]]
+name = "barrel_stop"
+addr = 0x00C0
+size = 1
+description = "Where a barrel dropping through a crowded girder stops ($DFC0, cleared at $DF3D)"
+
+[[label]]
+name = "rivets_out"
+addr = 0x00C1
+size = 8
+description = "100m: each rivet removed ($C1 + its number, $EEBC)"
+
+[[label]]
+name = "prizes_taken"
+addr = 0x00C9
+size = 3
+description = "75m and 100m: each prize taken ($C9 + entry, $EF12)"
+
+[[label]]
+name = "lift_due"
+addr = 0x00D8
+size = 2
+description = "75m: a left platform due at the column's foot, a right one at its top"
+
+[[label]]
+name = "fire_turn_x"
+addr = 0x00DB
+size = 1
+description = "75m: the x a fire turns at on its girder; off 25m the ladder's stop y ($E730, $E7A3)"
+
+[[label]]
+name = "fire_moves"
+addr = 0x00E4
+size = 4
+description = "Each fire's move counter, 0 to 15, against its pattern ($E806)"
+
+[[label]]
+name = "fire_ladder_pause"
+addr = 0x00E8
+size = 4
+description = "Each fire's pause on a ladder"
+
+[[label]]
+name = "fire_aim_way"
+addr = 0x00EC
+size = 1
+description = "The way toward Mario a fire aimed at, once until $3B runs out"
+
+[[label]]
+name = "snd_engine"
+addr = 0x00F0
+size = 12
+description = "The sound driver's own bytes $F0-$FB: the effect playing, its counters, the song's pointer and offsets"
+
+[[label]]
+name = "snd_jingle_req"
+addr = 0x00FC
+size = 1
+description = "The jingle the game asks for, which it sets and clears itself: 2 the stage's loop, 64 the hammer's, 32 the hurry"
+
+[[label]]
+name = "snd_music_req"
+addr = 0x00FD
+size = 1
+description = "Music asked for this frame, a bit each"
+
+[[label]]
+name = "snd_fx2_req"
+addr = 0x00FE
+size = 1
+description = "Pulse 2 (bit 7) and triangle (bits 0 and 1) effects asked for this frame"
+
+[[label]]
+name = "snd_fx1_req"
+addr = 0x00FF
+size = 1
+description = "Pulse 1 effects asked for this frame, a bit each"
+
+# The sprite buffer: Donkey Kong keeps its objects' places here
+
+[[label]]
+name = "spr_mario"
+addr = 0x0200
+size = 16
+description = "Mario's four sprites; his place is $0203 + 5, $0200 + 5"
+
+[[label]]
+name = "spr_fires"
+addr = 0x0210
+size = 32
+description = "The fires' sprites, 16 bytes a slot (two on 25m)"
+
+[[label]]
+name = "spr_barrels"
+addr = 0x0230
+size = 144
+description = "The barrels' sprites, 16 bytes a slot, 9 slots"
+
+[[label]]
+name = "spr_points"
+addr = 0x02C0
+size = 16
+description = "The points sprites ($CFA8, $CFC6)"
+
+[[label]]
+name = "spr_hammers"
+addr = 0x02D0
+size = 16
+description = "The two hammers' sprites, $02D0 and $02D8"
+
+[[label]]
+name = "spr_drum"
+addr = 0x02E0
+size = 16
+description = "The oil drum's flame ($02E1 its first tile). Unsure: the slot's size"
+
+[[label]]
+name = "spr_pauline"
+addr = 0x02F0
+size = 16
+description = "Pauline's sprites ($02F1 her body's first tile, $EA7A)"
+
+[[label]]
+name = "nt_queue"
+addr = 0x0330
+size = 43
+description = "The buffer the NMI sends to the name table, $0330 its length: $F2D7 queues each column as its address, its count and its tiles. Unsure: the size, worked from Kong's six columns of four tiles"
+
+# Above the sprite buffer
+
+[[label]]
+name = "player_bank"
+addr = 0x0402
+size = 8
+description = "The other player's loops, lives, turns and extra-life flag ($0402,X to $0409)"
+
+[[label]]
+name = "barrel_roll_count"
+addr = 0x040D
+size = 9
+description = "Each barrel's rolling count, $040D,X ($DBEE)"
+
+[[label]]
+name = "jump_fraction"
+addr = 0x042D
+size = 1
+description = "The jump's arc's fraction of y ($EF72 for X = 0)"
+
+[[label]]
+name = "jump_speed"
+addr = 0x0435
+size = 2
+description = "The jump's speed down ($EF72)"
+
+[[label]]
+name = "hammer_flags"
+addr = 0x0451
+size = 2
+description = "The two hammers' flags: $D7D5 clears one and hides its sprite"
+
+[[label]]
+name = "conveyor_bytes"
+addr = 0x0483
+size = 9
+description = "50m's conveyors: the lowest's way, moving, phase, turn tests and pattern step ($84F6-$8755)"
+
+[[label]]
+name = "mladder_wait"
+addr = 0x0490
+size = 1
+description = "50m's moving ladders' divider ($8789)"
+
+[[label]]
+name = "pie_turn"
+addr = 0x0493
+size = 1
+description = "The first pie slot $895F copies into the sprite table at the frame's end, one further each frame"
+
+[[label]]
+name = "hiscores_ab"
+addr = 0x0507
+size = 4
+description = "Game A's and game B's top scores, their top two bytes ($CA64, $C9B1)"
+
+[[label]]
+name = "demo_steps"
+addr = 0x050B
+size = 4
+description = "The demo script's start flag, entry frames left, way and next entry ($EBDA, $CC3C)"
+
+[[label]]
+name = "menu_cursor"
+addr = 0x0511
+size = 1
+description = "The title's cursor sprite's y ($C96A-$C979)"
+
+[[label]]
+name = "kong_let_go"
+addr = 0x0515
+size = 1
+description = "A barrel let go since Kong's last throw pose ($DB1B, $EB5E)"
+
+[[label]]
+name = "start_pause"
+addr = 0x0516
+size = 1
+description = "The Start pause: $CF7A sets it, $CF69 clears it"
+
+[[label]]
+name = "title_song_wait"
+addr = 0x0518
+size = 1
+description = "Demos left before the title's song plays again ($C8FE, $CA26)"
+
+[[label]]
+name = "hammer_jingle_kept"
+addr = 0x0519
+size = 1
+description = "The jingle kept as Mario took the hammer ($D891), asked for again at its end ($D7EC)"
+
+[[label]]
+name = "snd_driver"
+addr = 0x0680
+size = 114
+description = "The sound driver's bytes from $0680 to $06F1: the jingle's offset, the length table, notes' frames left, the effects playing and the sweep"
+
+# Routines
+
+[[routine]]
+name = "play_frame"
+bank = 0
+addr = 0xCE7C
+prg = 0x4E7C
+size = 114
+description = "The NMI's play routine: calls the stage's routines each frame, $EBDA in place of $D175 in the demo"
+
+[[routine]]
+name = "stage_begin"
+bank = 0
+addr = 0xCC47
+prg = 0x4C47
+size = 16
+description = "The stage start: clears $59-$E1 and $040D-$0495"
+
+[[routine]]
+name = "pause_check"
+bank = 0
+addr = 0xCF42
+prg = 0x4F42
+size = 102
+description = "Start pauses and unpauses ($CF69, $CF7A), keeping the jingle at $0F"
+
+[[routine]]
+name = "points_pop"
+bank = 0
+addr = 0xCFC6
+prg = 0x4FC6
+size = 66
+description = "Shows a points sprite and sets its timer to 3"
+
+[[routine]]
+name = "top_score_check"
+bank = 0
+addr = 0xD032
+prg = 0x5032
+size = 15
+description = "Raises the top score from the score ($D03E)"
+
+[[routine]]
+name = "clear_pose"
+bank = 0
+addr = 0xD04C
+prg = 0x504C
+size = 54
+description = "The stage clear: Mario's standing picture, always mirrored ($D07F)"
+
+[[routine]]
+name = "death_run"
+bank = 0
+addr = 0xD0C0
+prg = 0x50C0
+size = 181
+description = "A death: the spin's pictures $70, $74, $78 and $6C on its counts ($D0F8-$D11F)"
+
+[[routine]]
+name = "pad_read"
+bank = 0
+addr = 0xD175
+prg = 0x5175
+size = 37
+description = "The pad routine, keeping Mario's facing $57"
+
+[[routine]]
+name = "walk_move"
+bank = 0
+addr = 0xD1CF
+prg = 0x51CF
+size = 188
+description = "The walk: the beat and the picture ($D239-$D273), asking for the step sound"
+
+[[routine]]
+name = "ladder_grab"
+bank = 0
+addr = 0xD28B
+prg = 0x528B
+size = 64
+description = "The walk's grab of a ladder of $C47B's list, putting Mario at its x less 4"
+
+[[routine]]
+name = "climb_up_check"
+bank = 0
+addr = 0xD37E
+prg = 0x537E
+size = 33
+description = "Up on a ladder ($D39C), by the way $56"
+
+[[routine]]
+name = "climb_up_move"
+bank = 0
+addr = 0xD3A0
+prg = 0x53A0
+size = 146
+description = "A move up: $49 through $D9E8, stopped by the stop boxes ($D3AF)"
+
+[[routine]]
+name = "climb_down_move"
+bank = 0
+addr = 0xD432
+prg = 0x5432
+size = 157
+description = "A move down ($D445): $24 and $49 through $D9E6"
+
+[[routine]]
+name = "ladder_tops_test"
+bank = 0
+addr = 0xD50A
+prg = 0x550A
+size = 61
+description = "Mario's feet box against the stage's ladder tops and, on 25m, the broken ladders' zones ($D53B)"
+
+[[routine]]
+name = "jump_move"
+bank = 0
+addr = 0xD547
+prg = 0x5547
+size = 175
+description = "The jump: its way across ($D57F) and its arc"
+
+[[routine]]
+name = "hammer_take"
+bank = 0
+addr = 0xD60D
+prg = 0x560D
+size = 67
+description = "Mario takes a hammer: its timer to 75 ($D635)"
+
+[[routine]]
+name = "hammer_swing_step"
+bank = 0
+addr = 0xD6C6
+prg = 0x56C6
+size = 249
+description = "The hammer's swing ($D6E8-$D751)"
+
+[[routine]]
+name = "hammer_drop"
+bank = 0
+addr = 0xD7BF
+prg = 0x57BF
+size = 51
+description = "The hammer's end: clears its flag and hides it ($D7D5), clears $A0 ($D7E8), asks for the kept jingle ($D7EC)"
+
+[[routine]]
+name = "hammer_touch_test"
+bank = 0
+addr = 0xD800
+prg = 0x5800
+size = 173
+description = "Mario touching or holding a hammer ($D800-$D8AA), keeping the jingle ($D891)"
+
+[[routine]]
+name = "ground_test"
+bank = 0
+addr = 0xD91A
+prg = 0x591A
+size = 118
+description = "The walk's ground test and the ladder routine's girder check: the girder pieces of floor $59"
+
+[[routine]]
+name = "kong_throw_check"
+bank = 0
+addr = 0xDA16
+prg = 0x5A16
+size = 54
+description = "Donkey Kong throws when a slot is free and $36 is 0 ($DA1D-$DA3B)"
+
+[[routine]]
+name = "barrel_slots"
+bank = 0
+addr = 0xDA4C
+prg = 0x5A4C
+size = 80
+description = "The barrel code's start, slot by slot ($DA4C-$DD8A)"
+
+[[routine]]
+name = "barrel_let_go"
+bank = 0
+addr = 0xDB00
+prg = 0x5B00
+size = 44
+description = "A barrel let go: its picture $84 ($DB27), the throw marked ($DB1B)"
+
+[[routine]]
+name = "barrel_roll"
+bank = 0
+addr = 0xDB2C
+prg = 0x5B2C
+size = 187
+description = "A rolling barrel: along its girder, down a ladder top (DEC $68,X at $DBA9), into the drum, which lights ($DBCD)"
+
+[[routine]]
+name = "barrel_ladder_down"
+bank = 0
+addr = 0xDC30
+prg = 0x5C30
+size = 57
+description = "A barrel down a ladder, a pixel on the even counts ($DC43)"
+
+[[routine]]
+name = "barrel_bounce"
+bank = 0
+addr = 0xDCD0
+prg = 0x5CD0
+size = 98
+description = "A barrel landing from a fall bounces ($DCD0)"
+
+[[routine]]
+name = "barrel_straight"
+bank = 0
+addr = 0xDD8B
+prg = 0x5D8B
+size = 232
+description = "A straight drop, a pixel a frame, a stop at each girder ($DD8B, $DE5D)"
+
+[[routine]]
+name = "barrel_crowd_drop"
+bank = 0
+addr = 0xDF07
+prg = 0x5F07
+size = 57
+description = "A barrel dropping through a crowded girder ($DF07)"
+
+[[routine]]
+name = "lift_beat_step"
+bank = 0
+addr = 0xDFE8
+prg = 0x5FE8
+size = 46
+description = "75m's elevators' beat ($DFE8 with $5D = 0)"
+
+[[routine]]
+name = "floor_lookup"
+bank = 0
+addr = 0xE016
+prg = 0x6016
+size = 50
+description = "The floor a y falls in (table $C0BC)"
+
+[[routine]]
+name = "drum_fire"
+bank = 0
+addr = 0xE19A
+prg = 0x619A
+size = 12
+description = "The oil drum's fire: nothing while unlit, then its two pictures in turn ($E19A)"
+
+[[routine]]
+name = "fire_loop"
+bank = 0
+addr = 0xE1E5
+prg = 0x61E5
+size = 4
+description = "The fire routine, slot by slot ($AE)"
+
+[[routine]]
+name = "fire_decide"
+bank = 0
+addr = 0xE2B6
+prg = 0x62B6
+size = 67
+description = "A fire's choice from the random byte: bob, right, left, a ladder or toward Mario"
+
+[[routine]]
+name = "fire_walk"
+bank = 0
+addr = 0xE368
+prg = 0x6368
+size = 51
+description = "A fire's walk along its girder"
+
+[[routine]]
+name = "fire_leave_drum"
+bank = 0
+addr = 0xE59F
+prg = 0x659F
+size = 19
+description = "A fire coming out of the drum"
+
+[[routine]]
+name = "fire_climb"
+bank = 0
+addr = 0xE626
+prg = 0x6626
+size = 71
+description = "A fire on a ladder"
+
+[[routine]]
+name = "pauline_call"
+bank = 0
+addr = 0xEA5F
+prg = 0x6A5F
+size = 66
+description = "Pauline calls when $39 runs out"
+
+[[routine]]
+name = "pauline_walk_step"
+bank = 0
+addr = 0xEAA1
+prg = 0x6AA1
+size = 44
+description = "Pauline's step"
+
+[[routine]]
+name = "kong_pose_pick"
+bank = 0
+addr = 0xEB06
+prg = 0x6B06
+size = 127
+description = "Kong's pose ($EB06 picks it, $EB54 draws it through the buffer at $0331)"
+
+[[routine]]
+name = "demo_input"
+bank = 0
+addr = 0xEBDA
+prg = 0x6BDA
+size = 79
+description = "The demo script's pad, in place of $D175 while $58 is set"
+
+[[routine]]
+name = "jump_over_test"
+bank = 0
+addr = 0xEC44
+prg = 0x6C44
+size = 4
+description = "Jumping over a barrel scores 100 ($EC44). Unsure: the evidence cites $EC44, where the barrel loop's index is cleared; the test may run on from it"
+
+[[routine]]
+name = "fire_touch_test"
+bank = 0
+addr = 0xED8A
+prg = 0x6D8A
+size = 59
+description = "Tests each fire's box against Mario's (table $C19E against $C196)"
+
+[[routine]]
+name = "fixed_hazard_test"
+bank = 0
+addr = 0xEDC5
+prg = 0x6DC5
+size = 71
+description = "Mario against one fixed box per stage ($EE07, $C423 and $C42B): the oil drum on 25m"
+
+[[routine]]
+name = "smash_tiles"
+bank = 0
+addr = 0xEE0C
+prg = 0x6E0C
+size = 17
+description = "A barrel breaking under the hammer: $30 and $34, then $38 and $3C"
+
+[[routine]]
+name = "smash_run"
+bank = 0
+addr = 0xEE29
+prg = 0x6E29
+size = 67
+description = "The smash's steps ($EE4E)"
+
+[[routine]]
+name = "rivet_prize_take"
+bank = 0
+addr = 0xEE79
+prg = 0x6E79
+size = 191
+description = "100m's rivets removed ($EEBC) and 75m's and 100m's prizes taken ($EF12)"
+
+[[routine]]
+name = "jump_arc"
+bank = 0
+addr = 0xEF72
+prg = 0x6F72
+size = 99
+description = "The jump's arc: adds the speed down to y with its fraction ($EF72 for X = 0)"
+
+[[routine]]
+name = "box_setup"
+bank = 0
+addr = 0xEFF3
+prg = 0x6FF3
+size = 111
+description = "Sets up a touch box from a sprite's place ($EFF5)"
+
+[[routine]]
+name = "nt_queue_add"
+bank = 0
+addr = 0xF2D7
+prg = 0x72D7
+size = 86
+description = "Queues a column for the name table in the buffer at $0331"
+
+[[routine]]
+name = "score_add"
+bank = 0
+addr = 0xF342
+prg = 0x7342
+size = 28
+description = "Adds points into the score $25-$27"
+
+[[routine]]
+name = "sound_step"
+bank = 0
+addr = 0xFA48
+prg = 0x7A48
+size = 62
+description = "The sound driver's step, once a frame at the start of the NMI"
+
+[[routine]]
+name = "sound_driver"
+bank = 0
+addr = 0xFBF2
+prg = 0x7BF2
+size = 615
+description = "The driver proper: pulse 1's effects from $FF, then pulse 2's, the triangle's, the jingle and the music"
+
+[[routine]]
+name = "belt_turns"
+bank = 0
+addr = 0x850E
+prg = 0x050E
+size = 122
+description = "50m: the lowest conveyor's turn tests ($850E)"
+
+[[routine]]
+name = "belt_beat"
+bank = 0
+addr = 0x8755
+prg = 0x0755
+size = 52
+description = "50m: the conveyors' pattern step ($8755)"
+
+[[routine]]
+name = "mladder_move"
+bank = 0
+addr = 0x8789
+prg = 0x0789
+size = 96
+description = "50m: the moving ladders ($8789)"
+
+[[routine]]
+name = "pie_sprites"
+bank = 0
+addr = 0x895F
+prg = 0x095F
+size = 112
+description = "50m: copies the pies into the sprite table, a slot further each frame ($895F)"

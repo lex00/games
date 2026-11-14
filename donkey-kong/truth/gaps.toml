@@ -1,0 +1,272 @@
+# What the gaps detectors should find in Donkey Kong: Original Edition, for
+# scoring them (gp gaps, docs/gaps.md "Scoring"). Written 2026-11-14 from the
+# code as the model already reads it: model.toml's evidence notes and
+# present.sound roles, mapping.toml's field notes, ext/src (sound.rs above
+# all), the static code map of `gp code listing` (routine entries only) and
+# the level kit's rules. Not from what the detectors print.
+#
+# Names are truth/labels.toml's (our own names for the game's RAM and
+# routines), so a run scores only with that file:
+#   gp gaps all donkey-kong --recording ID \
+#     --labels donkey-kong/truth/labels.toml --truth donkey-kong/truth/gaps.toml
+#
+# Each entry says where it came from. The format has no "unsure" mark, so an
+# entry that is a guess says "unsure" in its comment.
+
+schema = 0
+template = "donkey-kong"
+
+# The sound driver (ext/src/sound.rs, from $FA48 and $FBF2) takes requests
+# from four RAM bytes the game sets: $FF (pulse 1, a bit an effect), $FE
+# (pulse 2 bit 7, the triangle bits 0 and 1), $FD (music, a bit a tune) and
+# $FC (the jingle, a value, which the game sets and clears itself). The
+# effects' names and what asks for each are model.toml's present.sound roles.
+[sound]
+interfaces = ["snd_fx1_req", "snd_fx2_req", "snd_music_req", "snd_jingle_req"]
+# $FC's values are all loops: stage, hammer, hurry (present.sound roles).
+music = ["snd_jingle_req"]
+
+# Pulse 1 ($FF): sound.rs, effect 1 at $FB89, 2 at $FBC2, 4 at $FC28, 8 at $FC62.
+[[sound.effects]]
+via = "snd_fx1_req"
+id = 0x01
+name = "death"          # role death: the falling note after the spin
+
+[[sound.effects]]
+via = "snd_fx1_req"
+id = 0x02
+name = "smash"          # role smash: a barrel or a fire smashed by the hammer
+
+[[sound.effects]]
+via = "snd_fx1_req"
+id = 0x04
+name = "jump"           # role jump: the jump's first frame
+
+[[sound.effects]]
+via = "snd_fx1_req"
+id = 0x08
+name = "walk"           # role walk: every second step, every hammer move, every few rungs
+
+# Pulse 2 and the triangle ($FE): sound.rs's header.
+[[sound.effects]]
+via = "snd_fx2_req"
+id = 0x80
+name = "thump"          # role thump: Kong beating his chest, the drum flaring, a death's spin starting
+
+[[sound.effects]]
+via = "snd_fx2_req"
+id = 0x01
+name = "triangle_fx_a"  # unsure: sound.rs names triangle effects on bits 0 and 1 ($06A1) but no role says what asks for them
+
+[[sound.effects]]
+via = "snd_fx2_req"
+id = 0x02
+name = "triangle_fx_b"  # unsure: as triangle_fx_a
+
+# Music ($FD), a bit a tune: present.sound roles. $FD's bits 2 and 4 have no
+# role, so they aren't listed.
+[[sound.effects]]
+via = "snd_music_req"
+id = 0x80
+name = "title_tune"
+music = true
+
+[[sound.effects]]
+via = "snd_music_req"
+id = 0x01
+name = "game_start"
+music = true
+
+[[sound.effects]]
+via = "snd_music_req"
+id = 0x08
+name = "stage_intro"
+music = true
+
+[[sound.effects]]
+via = "snd_music_req"
+id = 0x02
+name = "clear"
+music = true
+
+[[sound.effects]]
+via = "snd_music_req"
+id = 0x40
+name = "pause_chime"    # role pause, music by its role's kind
+music = true
+
+[[sound.effects]]
+via = "snd_music_req"
+id = 0x20
+name = "jump_over"      # role jump_over: an effect asked for through the music byte
+
+# The jingle ($FC), a value: present.sound roles stage_music, hammer_music, hurry_music.
+[[sound.effects]]
+via = "snd_jingle_req"
+id = 0x02
+name = "stage_music"
+
+[[sound.effects]]
+via = "snd_jingle_req"
+id = 0x40
+name = "hammer_music"
+
+[[sound.effects]]
+via = "snd_jingle_req"
+id = 0x20
+name = "hurry_music"
+
+# What the player touches and the game's events, with the routines that
+# handle each (truth/labels.toml gives each routine's evidence) and the
+# sounds each asks for. Left out as in Moss Hop's set: the stage's start and
+# restart, the title and the demo (not elements).
+
+# The barrel code $DA4C-$DD8A (model.toml, evidence of entities.barrel).
+# A barrel touching Mario kills him, but the test that does it isn't placed
+# in what we know, so no routine stands for the touch.
+[[element]]
+name = "barrel"
+handlers = ["barrel_slots", "barrel_let_go", "barrel_roll", "barrel_ladder_down", "barrel_bounce", "barrel_straight", "barrel_crowd_drop"]
+
+# Jumping over a barrel scores 100 ($EC44, the barrel note; event
+# barrel.jumped). Unsure: whether $EC44 is the test's entry or a step in it.
+[[element]]
+name = "barrel jumped"
+handlers = ["jump_over_test", "score_add", "points_pop"]
+sounds = ["jump_over"]
+
+# Kong throws ($DA1D-$DA3B) and poses ($EB06, $EB54): the throw note.
+[[element]]
+name = "kong"
+handlers = ["kong_throw_check", "kong_pose_pick"]
+sounds = ["thump"]
+
+# The oil drum: its fire ($E19A) and the one fixed box per stage that kills
+# ($EE07: the drum on 25m). A barrel lights it in barrel_roll ($DBCD).
+[[element]]
+name = "oil drum"
+handlers = ["drum_fire", "fixed_hazard_test"]
+sounds = ["thump"]
+
+# The fires: the routine at $E1E5, out of the drum $E59F, the choice $E2B6,
+# the walk $E368, a ladder $E626, the touch $ED8A (the fire note).
+[[element]]
+name = "fire"
+handlers = ["fire_loop", "fire_leave_drum", "fire_decide", "fire_walk", "fire_climb", "fire_touch_test"]
+
+# The hammers: touched or held $D800-$D8AA, taken $D635, swung $D6F6-$D751,
+# put down $D7D5-$D7EC (mapping notes of hammer, hammer_touch, swing).
+[[element]]
+name = "hammer"
+handlers = ["hammer_touch_test", "hammer_take", "hammer_swing_step", "hammer_drop"]
+sounds = ["hammer_music"]
+
+# A barrel or a fire smashed: the smash's steps ($ED87, $EE4E) and the
+# breaking pictures ($EE0C).
+[[element]]
+name = "smash"
+handlers = ["smash_run", "smash_tiles"]
+sounds = ["smash"]
+
+# Ladders: the grab ($D28B), up ($D39C, $D3A0), down ($D445), the tops and
+# broken ladders' stops ($D50A, $D53B) (the climb's notes).
+[[element]]
+name = "ladder"
+handlers = ["ladder_grab", "climb_up_check", "climb_up_move", "climb_down_move", "ladder_tops_test"]
+sounds = ["walk"]
+
+# Girders: the walk ($D239-$D273) on the ground test ($D91A).
+[[element]]
+name = "girder"
+handlers = ["walk_move", "ground_test"]
+sounds = ["walk"]
+
+# The jump ($D57F, the arc $EF72).
+[[element]]
+name = "jump"
+handlers = ["jump_move", "jump_arc"]
+sounds = ["jump"]
+
+# A life lost: the spin ($D0F8-$D11F), then the falling note.
+[[element]]
+name = "death"
+handlers = ["death_run"]
+sounds = ["death", "thump"]
+
+# The top reached, the stage won: the clear's picture ($D07F) and the top
+# score raised ($D03E). Unsure: that these are the clear's handlers rather
+# than steps of the clear scene.
+[[element]]
+name = "stage clear"
+handlers = ["clear_pose", "top_score_check"]
+sounds = ["clear"]
+
+# Start pauses and unpauses ($CF69, $CF7A).
+[[element]]
+name = "pause"
+handlers = ["pause_check"]
+sounds = ["pause_chime"]
+
+# The bonus under 1000 starts the hurry loop; no routine for it is known.
+[[element]]
+name = "bonus low"
+sounds = ["hurry_music"]
+
+# 75m and 100m: prizes taken ($EF12) and 100m's rivets removed ($EEBC).
+[[element]]
+name = "rivet or prize"
+handlers = ["rivet_prize_take", "score_add"]
+
+# 75m's elevators ($DFE8).
+[[element]]
+name = "elevator"
+handlers = ["lift_beat_step"]
+
+# 50m's conveyors ($850E, $8755), moving ladders ($8789) and pies ($895F).
+[[element]]
+name = "conveyor"
+handlers = ["belt_turns", "belt_beat", "pie_sprites"]
+
+[[element]]
+name = "moving ladder"
+handlers = ["mladder_move"]
+
+# RAM that carries the game's behaviour, and bookkeeping that doesn't
+# (truth/labels.toml gives each byte's evidence). The sound requests
+# ($FC-$FF) are the interfaces above and in neither list.
+[ram]
+matter = [
+  # Scores, counters and the game's mode (mapping counters).
+  "hiscore_bcd", "score_bcd", "score_bcd_other", "bonus_bcd", "hiscores_ab", "player_bank",
+  "no_game", "game_ab", "players_12", "turn_player", "stage_no", "loops_done", "lives_left",
+  "demo_flag", "demo_steps", "start_pause", "menu_cursor", "menu_wait",
+  # Timers that set when things happen.
+  "kong_throw_wait", "kong_drop_wait", "drum_flame_wait", "pauline_call_wait", "fire_aim_wait",
+  "hammer_wait", "new_fire_wait", "points_wait", "slow_wait", "kong_pose_wait", "bonus_wait",
+  # Mario.
+  "mario_box", "move_way", "pad_way", "mario_floor", "mario_on_girder", "ladder_top_step",
+  "ladder_step", "walk_dir_step", "step_count", "jump_land", "mario_mode", "walk_picture",
+  "spin_phase", "walk_tick", "jump_toggle", "ladder_x", "jump_fraction", "jump_speed",
+  # The hammer.
+  "hammer_swing", "hammer_held", "swing_shift", "smash_phase", "hammer_flags",
+  # Barrels, the drum and Kong.
+  "barrel_state", "barrel_floor", "barrel_picture", "girder_barrels", "barrel_ladder_count",
+  "barrel_stop", "barrel_roll_count", "drum_lit", "kong_let_go",
+  # Fires.
+  "fire_state", "fire_turn_x", "fire_moves", "fire_ladder_pause", "fire_aim_way",
+  # Pauline, 50m, 75m and 100m.
+  "pauline_turns", "pauline_walk", "rivets_out", "prizes_taken", "lift_due", "conveyor_bytes",
+  "mladder_wait",
+  # The sprite buffer holds the objects' places (the mapping reads Mario,
+  # the hammers and Pauline from it).
+  "spr_mario", "spr_fires", "spr_barrels", "spr_points", "spr_hammers", "spr_drum", "spr_pauline",
+  # Unsure: the random register changes every frame, but the barrels' and
+  # fires' choices read it.
+  "rand_bytes",
+]
+bookkeeping = [
+  "zp_temps", "joypad", "div11", "barrel_index", "fire_index", "nt_queue", "pie_turn",
+  # The sound driver's own bytes and what the game keeps for it.
+  "snd_engine", "snd_driver", "death_snd_wait", "jingle_parked", "hammer_jingle_kept",
+  "title_song_wait",
+]
