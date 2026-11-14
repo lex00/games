@@ -1,0 +1,370 @@
+# The moments `gp theme look play --shots` pictures a theme at (docs: site themes.md,
+# "See it in the game"): routes from power-on, and frames of them. The routes are
+# the page check's (scripts/web/public/check-page.mjs, ROUTES) and a run that grabs
+# the hammer; the frames are the ones the hand checks of 2026-11-13 and 14 used.
+
+[[run]]
+name = "oe-route"
+rom = "donkey-kong-oe"
+frames = 7700
+holds = [
+  "start@40-44", "right@561-777", "up@778-847", "left@848-986", "up@987-1072", "right@1073-1091",
+  "up@1092-1177", "left@1178-1259", "right@1260-1277", "up@1278-1357", "right@1358-1520", "up@1521-1588",
+  "left@1589-1679", "up@1680-1753", "right@2156-2209", "up@2210-2304", "left@2315-2322", "up@2323-2440",
+  "left@2443-2455", "left+a@2456-2457", "left@2458-2499", "left@2532-2559", "up@2560-2678", "left@2681-2733",
+  "up@2734-2851", "right@3257-3260", "up@3261-3385", "right@3386-3395", "up@3396-3567", "right@3577-3582",
+  "right+a@3672-3672", "right@3673-3684", "right@3697-3714", "right+a@3715-3715", "right@3716-3755", "right@3952-3986",
+  "right+a@3987-3987", "right@3988-4026", "right+a@4027-4027", "right@4028-4047", "right@4067-4098", "right+a@4099-4099",
+  "right@4100-4119", "left@4141-4143", "up@4147-4257", "left@4287-4329", "up@4330-4407", "left@4808-4873",
+  "up@4874-4968", "right@4969-5279", "up@5280-5397", "left@5402-5688", "up@5689-5806", "right@5815-6077",
+  "up@6078-6195", "left@6196-6242", "down@6243-6340", "left@6341-6496", "up@6497-6572", "up@6573-6615",
+  "left@6616-6632",
+]
+
+[[run]]
+name = "oe-hammer"
+rom = "donkey-kong-oe"
+frames = 1700
+holds = [
+  "start@40-44", "right@561-777", "up@778-847", "left@848-986", "up@987-1072", "left@1073-1164",
+  "left+a@1165-1166", "left@1167-1175", "right@1176-1260",
+]
+
+[[shot]]
+name = "still"
+run = "oe-route"
+frame = 560
+shows = "the first stage at its start: the score line"
+
+[[shot]]
+name = "walk"
+run = "oe-route"
+frame = 685
+shows = "walking"
+
+[[shot]]
+name = "climb"
+run = "oe-route"
+frame = 810
+shows = "climbing a ladder"
+
+[[shot]]
+name = "lying"
+run = "oe-route"
+frame = 835
+shows = "over a ledge, lying"
+
+[[shot]]
+name = "play-900"
+run = "oe-route"
+frame = 900
+shows = "play"
+
+[[shot]]
+name = "play"
+run = "oe-route"
+frame = 1200
+shows = "play, barrels rolling"
+
+[[shot]]
+name = "bent"
+run = "oe-route"
+frame = 1335
+shows = "over a ledge, bent"
+
+[[shot]]
+name = "top-stand"
+run = "oe-route"
+frame = 1754
+shows = "at the top, the stage won"
+
+[[shot]]
+name = "clear-1800"
+run = "oe-route"
+frame = 1800
+shows = "after the stage is won"
+
+[[shot]]
+name = "clear-1900"
+run = "oe-route"
+frame = 1900
+shows = "after the stage is won"
+
+[[shot]]
+name = "hammer-up"
+run = "oe-hammer"
+frame = 1222
+shows = "the hammer up"
+
+[[shot]]
+name = "hammer-up2"
+run = "oe-hammer"
+frame = 1238
+shows = "the hammer up, a step on"
+
+[[shot]]
+name = "hammer-down"
+run = "oe-hammer"
+frame = 1262
+shows = "the hammer down"
+
+[[shot]]
+name = "jump-1167"
+run = "oe-hammer"
+frame = 1167
+shows = "a jump from a stride"
+
+[[shot]]
+name = "jump-1172"
+run = "oe-hammer"
+frame = 1172
+shows = "in the air"
+
+[[shot]]
+name = "jump-1180"
+run = "oe-hammer"
+frame = 1180
+shows = "landing"
+
+[[shot]]
+name = "top-back"
+run = "oe-route"
+frame = 2310
+shows = "at a ladder's top, from behind"
+
+[[shot]]
+name = "m50"
+run = "oe-route"
+frame = 2500
+shows = "50m"
+
+[[shot]]
+name = "m50-jump"
+run = "oe-route"
+frame = 2459
+shows = "a jump on 50m"
+
+[[shot]]
+name = "m50-late"
+run = "oe-route"
+frame = 2700
+shows = "50m later"
+
+[[shot]]
+name = "top-back2"
+run = "oe-route"
+frame = 3540
+shows = "at a ladder's top, from behind"
+
+[[shot]]
+name = "m75"
+run = "oe-route"
+frame = 3600
+shows = "75m"
+
+[[shot]]
+name = "m75-jump"
+run = "oe-route"
+frame = 3676
+shows = "a jump on 75m"
+
+[[shot]]
+name = "m100"
+run = "oe-route"
+frame = 5600
+shows = "100m"
+
+[[shot]]
+name = "end-sad"
+run = "oe-route"
+frame = 6600
+shows = "100m with the boss on top: the score line"
+
+[[shot]]
+name = "ending"
+run = "oe-route"
+frame = 6900
+shows = "the ending"
+
+[[shot]]
+name = "end-excited"
+run = "oe-route"
+frame = 6940
+shows = "the ending, a moment on"
+
+[[shot]]
+name = "end-overjoyed"
+run = "oe-route"
+frame = 6980
+shows = "the ending, later"
+
+[[shot]]
+name = "again"
+run = "oe-route"
+frame = 7620
+shows = "the next loop's first stage"
+
+[[run]]
+name = "ju-route"
+rom = "donkey-kong-ju"
+frames = 6578
+holds = [
+  "start@40-44", "right@561-777", "up@778-847", "left@848-986", "up@987-1072", "right@1073-1091",
+  "up@1092-1177", "left@1178-1241", "up@1242-1321", "right@1322-1484", "up@1485-1552", "left@1553-1592",
+  "left+a@1593-1593", "left@1594-1656", "up@1657-1729", "left+a@2134-2165", "up@2166-2173", "a@2182-2197",
+  "up@2198-2206", "left+a@2255-2278", "up@2279-2424", "right@2425-2436", "right+a@2453-2500", "right@2501-2512",
+  "down@2537-2540", "left@2541-2564", "right@2565-2570", "a@2571-2602", "up@2603-2604", "right+a@2605-2616",
+  "left+a@2617-2632", "down@2633-2638", "a@2639-2639", "left@2640-2663", "left+a@2664-2669", "a@2670-2701",
+  "right+a@2704-2707", "down@2708-2719", "down@2752-2763", "right+a@2764-2769", "a@2770-2793", "right@2794-2841",
+  "right+a@2842-2873", "down@2874-2885", "right+a@2886-2893", "right@2926-2949", "right@2956-2961", "right+a@2962-2977",
+  "right@2978-3000", "up@3001-3094", "left@3175-3218", "up@3219-3288", "left@3686-3751", "up@3752-3846",
+  "right@3847-4157", "up@4158-4275", "left@4280-4566", "up@4567-4684", "right@4693-4955", "up@4956-5073",
+  "left@5074-5120", "down@5121-5218", "left@5219-5374", "up@5375-5450", "up@5451-5493", "left@5494-5510",
+]
+
+[[run]]
+name = "ju-hammer"
+rom = "donkey-kong-ju"
+frames = 1700
+holds = [
+  "start@40-44", "right@561-777", "up@778-847", "left@848-986", "up@987-1072", "left@1073-1164",
+  "left+a@1165-1166", "left@1167-1175", "right@1176-1260",
+]
+
+[[shot]]
+name = "still"
+run = "ju-route"
+frame = 560
+shows = "the first stage at its start: the score line"
+
+[[shot]]
+name = "walk"
+run = "ju-route"
+frame = 685
+shows = "walking"
+
+[[shot]]
+name = "climb"
+run = "ju-route"
+frame = 810
+shows = "climbing a ladder"
+
+[[shot]]
+name = "lying"
+run = "ju-route"
+frame = 835
+shows = "over a ledge, lying"
+
+[[shot]]
+name = "play-900"
+run = "ju-route"
+frame = 900
+shows = "play"
+
+[[shot]]
+name = "play"
+run = "ju-route"
+frame = 1200
+shows = "play, barrels rolling"
+
+[[shot]]
+name = "ledge-1310"
+run = "ju-route"
+frame = 1310
+shows = "over a ledge"
+
+[[shot]]
+name = "ledge-1322"
+run = "ju-route"
+frame = 1322
+shows = "over a ledge"
+
+[[shot]]
+name = "jump-1596"
+run = "ju-route"
+frame = 1596
+shows = "a jump"
+
+[[shot]]
+name = "jump-1602"
+run = "ju-route"
+frame = 1602
+shows = "in the air"
+
+[[shot]]
+name = "top-stand"
+run = "ju-route"
+frame = 1730
+shows = "at the top, the stage won"
+
+[[shot]]
+name = "after-clear"
+run = "ju-route"
+frame = 1800
+shows = "after the stage is won"
+
+[[shot]]
+name = "hammer-up"
+run = "ju-hammer"
+frame = 1222
+shows = "the hammer up"
+
+[[shot]]
+name = "hammer-down"
+run = "ju-hammer"
+frame = 1262
+shows = "the hammer down"
+
+[[shot]]
+name = "jump-1172"
+run = "ju-hammer"
+frame = 1172
+shows = "in the air"
+
+[[shot]]
+name = "m75"
+run = "ju-route"
+frame = 2478
+shows = "75m"
+
+[[shot]]
+name = "m75-jump"
+run = "ju-route"
+frame = 2460
+shows = "a jump on 75m"
+
+[[shot]]
+name = "m100"
+run = "ju-route"
+frame = 4478
+shows = "100m"
+
+[[shot]]
+name = "end-sad"
+run = "ju-route"
+frame = 5478
+shows = "100m with the boss on top: the score line"
+
+[[shot]]
+name = "ending"
+run = "ju-route"
+frame = 5778
+shows = "the ending"
+
+[[shot]]
+name = "end-excited"
+run = "ju-route"
+frame = 5818
+shows = "the ending, a moment on"
+
+[[shot]]
+name = "end-overjoyed"
+run = "ju-route"
+frame = 5858
+shows = "the ending, later"
+
+[[shot]]
+name = "again"
+run = "ju-route"
+frame = 6498
+shows = "the next loop's first stage"
