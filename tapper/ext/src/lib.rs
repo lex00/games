@@ -136,7 +136,7 @@ impl Ext for Bartender {
         // State 11 too: a level's end ($0963 sets it the frame the last
         // customer is served), whose next frame doesn't run $0660
         // (tapper.l13.001: tap held on 20481, he stays at 187).
-        if [9, 11, 12, 15, 16].contains(&state) {
+        if [9, 11, 12, 13, 15, 16].contains(&state) {
             return;
         }
         // On the setup's own frame (the flow's word 2 at 4, set by
@@ -324,7 +324,10 @@ impl Ext for Bartender {
 /// bar 2's tap is on the left, y $90).
 ///
 /// Words: `ext[0]` 1 on the frame the setup cleared the level, `ext[1]`
-/// the layout.
+/// the layout in its low byte; above it, as the mapping loads them, the
+/// state a wait was called in (E3A8), where it goes on (E3A9) and its B
+/// (E39F), which `$232B` and `$5FE6` keep, and the lives (E4A7, bits 40
+/// to 47), which tapper_bars counts down.
 pub struct Flow;
 
 const FLOW_PARAMS: &[Param] = &[
@@ -375,7 +378,10 @@ impl Ext for Flow {
             // timers and first customers ($4E50, $4C19).
             cx.me.ext[2] = 1;
         }
-        let layout = cx.me.ext[1];
+        // The layout is the word's low byte; above it the mapping loads the
+        // wait's state and place (E3A8, E3A9, E39F) and the lives (E4A7)
+        // for tapper_bars.
+        let layout = cx.me.ext[1] & 0xff;
         let (Some(tap_kind), Some(player)) = (cx.kind("tap"), cx.kind("player")) else {
             return;
         };
@@ -425,7 +431,7 @@ impl Ext for Flow {
             like: "",
             about: "A level's start: the taps by the level's layout and the bartender at his starting bar",
             params: FLOW_PARAMS,
-            state: &["ext[0] the level was set up this frame", "ext[1] the layout"],
+            state: &["ext[0] the level was set up this frame", "ext[1] the layout (low byte), the wait's state E3A8, place E3A9 and B E39F, and the lives E4A7 above it"],
             writes: &["tap.x", "tap.facing", "player.x", "player.y", "player.ext"],
             built_from: &[Primitive::Condition, Primitive::Quantity],
             ..Record::EMPTY
@@ -537,7 +543,7 @@ impl Ext for Bars {
         let layout = cx
             .kind("flow")
             .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
-            .map_or(0, |b| b.ext[1]);
+            .map_or(0, |b| b.ext[1] & 0xff);
         let starts = cx.table("customer_starts").to_vec();
         let arrivals: Vec<i64> = cx
             .table("arrivals")
@@ -731,11 +737,56 @@ impl Ext for Bars {
         // (E397 10); in a life lost (15, 16) the bars
         // stand still while the timers count. The model doesn't change
         // the state yet: it keeps the one a clip started in.
-        let flow = cx
+        let mut flow = cx
             .kind("flow")
             .and_then(|k| cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == k))
             .map(|(i, b)| (i, *b));
         let state = flow.map_or(10, |(_, b)| b.ext[3] & 0xff);
+        // A start inside $1CE1's first waits (tapper.die.001 to die.003
+        // start on the last of its three waits of 2): $232B keeps the
+        // state the wait was called in at E3A8 (10, the play: $1CE1 runs
+        // from $0890), where it goes on at E3A9 and B at E39F ($5FE6), and
+        // its frames left are the timer for $2346. The script's frame
+        // count (the flow's word 3 from bit 24, sub 10) is where it goes on
+        // less the frames left: $1D4B after the wait of 30, $1D62 after
+        // each wait of 2, B counting them down from 3. The customer is the
+        // one at the bartender's end of his bar (E6F9, $08D9).
+        if (state == 15 || state == 16)
+            && let Some((fid, mut fb)) = flow
+            && (fb.ext[3] >> 16) & 0xff != 10
+            && (fb.ext[1] >> 8) & 0xff == 10
+            && let ret @ (0x1D4B | 0x1D62) = (fb.ext[1] >> 16) & 0xffff
+        {
+            let b = (fb.ext[1] >> 32) & 0xff;
+            let left = if state == 16 {
+                0
+            } else {
+                timers.iter().find(|(_, t)| t.ext[1] == 0x2346).map_or(0, |(_, t)| t.ext[0])
+            };
+            let resume = if ret == 0x1D4B { 30 } else { 30 + 2 * (4 - b) };
+            let n = (resume - 1 - left).max(0);
+            let rbar = player_k
+                .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+                .map_or(0, |b| b.ext[0] & 3);
+            let left_tap = Self::tap_left(cx, rbar);
+            let cust = bodies
+                .iter()
+                .filter(|(_, c)| c.kind == cust_k && Self::bar_of(cx, c.y.floor()) == rbar)
+                .map(|(_, c)| *c)
+                .reduce(|a, c| {
+                    let further = if left_tap { c.x.floor() < a.x.floor() } else { c.x.floor() > a.x.floor() };
+                    if further { c } else { a }
+                });
+            if let Some(c) = cust {
+                let ry = c.y.floor();
+                let rslot = (c.ext[3] >> 16) & 0xf;
+                fb.ext[3] = (fb.ext[3] & !(0xffff_00ff | (0xffff << 24))) | 15 | (10 << 16) | (n << 24);
+                fb.ext[2] = (fb.ext[2] & 0xffff) | ((ry & 0xff) << 16) | (rbar << 24) | (rslot << 32);
+                fb.ext[1] &= !0xff_ffff_ff00;
+                cx.set_body(fid, fb);
+                flow = Some((fid, fb));
+            }
+        }
         // State 11 outside a level's setup is a level's end ($2304): its
         // script ($55F4) waits through states 15 and 16 ($232B, $2346,
         // $231A), and the game's clear ($5DB8) has emptied the bars by the
@@ -775,7 +826,34 @@ impl Ext for Bars {
         // $5F31 empties the objects on the next frame.
         let mut end_spawn: Vec<Body> = Vec::new();
         let mut life_lost = state == 12 || state == 9;
-        if state == 12 && let Some((fid, mut fb)) = flow {
+        let lost_sub = flow.map_or(0, |(_, b)| (b.ext[3] >> 16) & 0xff);
+        // The lives (E4A7), in the flow's word 1 from bit 40.
+        let lives = flow.map_or(1, |(_, b)| (b.ext[1] >> 40) & 0xff);
+        if state == 12 && lost_sub == 3 && lives == 0 && let Some((fid, mut fb)) = flow {
+            // $2441 with no lives left ($244B): GAME OVER is drawn and
+            // the game waits 60 frames ($2467) and 60 more ($24D8); unless
+            // the bar shown is the sports bar, $24E2 calls $5E99, which
+            // waits a frame, and $24EE puts the game in state 13, the game
+            // over (tapper.l6.001: state 12 on 9009, 13 on 9131). Sub 11
+            // counts its frames from bit 24.
+            fb.ext[3] = (fb.ext[3] & !(0xffff_00ff | (0xffff << 24))) | 15 | (11 << 16) | (1 << 24);
+            cx.set_body(fid, fb);
+        } else if (state == 15 || state == 16 || state == 12) && lost_sub == 11 && let Some((fid, mut fb)) = flow {
+            let c = ((fb.ext[3] >> 24) & 0xffff) + 1;
+            let sports = (fb.ext[3] >> 8) & 3 == 1;
+            let st = if c == 122 || (c == 121 && sports) {
+                13
+            } else if c == 121 {
+                12
+            } else {
+                state
+            };
+            // State 13's first frame: sub 1 (the objects stay one more
+            // frame, then $2B82 empties them).
+            let next_sub = if st == 13 { 1 } else { 11 };
+            fb.ext[3] = (fb.ext[3] & !(0xffff_00ff | (0xffff << 24))) | st | (next_sub << 16) | ((c & 0xffff) << 24);
+            cx.set_body(fid, fb);
+        } else if state == 12 && let Some((fid, mut fb)) = flow {
             let sub = (fb.ext[3] >> 16) & 0xff;
             let mut e706 = (fb.ext[3] >> 24) & 0xff;
             let mut e709 = (fb.ext[2] >> 8) & 0xff;
@@ -793,6 +871,9 @@ impl Ext for Bars {
                     tip = None;
                     e706 = 13;
                     next_sub = 1;
+                    // $23AF: a life less.
+                    let l = ((fb.ext[1] >> 40) - 1).max(0) & 0xff;
+                    fb.ext[1] = (fb.ext[1] & !(0xff << 40)) | (l << 40);
                 }
                 1 => {
                     e706 = (e706 - 1) & 0xff;
@@ -893,13 +974,23 @@ impl Ext for Bars {
             // on the bar ($1F60, the bar's end from the table at $0977, or
             // $1F6B on a left-tap bar), slides 3 on the same frame and 3
             // more a frame for 3 frames ($1F80), and leaves the bar (y 0,
-            // $1FB9) on the next (tapper.l6.001 from 8846). What follows (a
-            // life lost's last step or game over, $2441) isn't modelled.
+            // $1FB9) on the next (tapper.l6.001 from 8846). Where the slide
+            // ends, $1F75 copies the four objects of the program's table at
+            // $2003 into the mug slots from E326 (the slide_objects rows,
+            // lifted from the player's romset). After he leaves, $1FBD
+            // moves his second sprite 4 frames and the customers' pictures
+            // turn 10 times, 4 frames apart ($1FE6 to $2000); $1CE1 returns
+            // 48 frames after the copy and the game goes on in state 12
+            // with E6FF 3 ($1D66, $1D6B), $2441 on the next frame
+            // (tapper.die.001: the copy on 1730, state 12 on 1778). The
+            // flow's word 2 keeps the customer's y (bit 16), the bar (24),
+            // the frames from the copy (26) and the customer's slot (32).
             let n = ((fb.ext[3] >> 24) & 0xff) + 1;
             let ry = (fb.ext[2] >> 16) & 0xff;
             let rbar = (fb.ext[2] >> 24) & 3;
-            let mut phase = (fb.ext[2] >> 26) & 7;
-            let rslot = (fb.ext[2] >> 29) & 0xf;
+            let mut phase = (fb.ext[2] >> 26) & 0x3f;
+            let rslot = (fb.ext[2] >> 32) & 0xf;
+            let mut lives_word = fb.ext[1];
             if let Some(pk) = player_k
                 && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == pk)
             {
@@ -925,6 +1016,9 @@ impl Ext for Bars {
                     if n == 36 {
                         pb.y = Fx::from_int(ry);
                         pb.x = Fx::from_int(if left { tx + 12 } else { tx - 8 });
+                        // $1D71: a life less (E4A7).
+                        let l = ((lives_word >> 40) - 1).max(0) & 0xff;
+                        lives_word = (lives_word & !(0xff << 40)) | (l << 40);
                     } else if n == 51 {
                         pb.y = Fx::from_int(pb.y.floor() - 5);
                         let nx = x + if left { 16 } else { -16 };
@@ -944,6 +1038,28 @@ impl Ext for Bars {
                             knock_at = Some(nx);
                         } else {
                             phase = 1;
+                            // $1F75: the table at $2003, 8 bytes an
+                            // object, over the mug slots 5 to 8 (E326 on);
+                            // a mug there is overwritten.
+                            let rows = cx.table("slide_objects").to_vec();
+                            for k in 0..4 {
+                                let Some(row) = rows.get(k * 8..k * 8 + 8) else { continue };
+                                let index = 6 + k as i64;
+                                let (oy, ox) = (Fx::from_int(row[0]), Fx::from_int(row[3]));
+                                if let Some((_, m)) = bodies
+                                    .iter_mut()
+                                    .find(|(id, b)| b.kind == mug_k && b.ext[2] == index && !removed.contains(id))
+                                {
+                                    m.x = ox;
+                                    m.y = oy;
+                                    m.ext[3] = 0x1000;
+                                } else {
+                                    let mut m = gp_sim::systems::new_body(cx.spec, cx.world, mug_k, ox, oy, false);
+                                    m.ext[2] = index;
+                                    m.ext[3] = 0x1000;
+                                    end_spawn.push(m);
+                                }
+                            }
                         }
                     } else if (1..4).contains(&phase) {
                         pb.x = Fx::from_int((x + step) & 0xff);
@@ -951,6 +1067,8 @@ impl Ext for Bars {
                     } else if phase == 4 {
                         pb.y = Fx::ZERO;
                         phase = 5;
+                    } else if phase >= 5 {
+                        phase += 1;
                     }
                     // Each step of the slide ($1E68 to $1EBB) knocks over
                     // the mugs of his bar he has reached: 8 short of him
@@ -972,7 +1090,14 @@ impl Ext for Bars {
             if n <= 255 {
                 fb.ext[3] = (fb.ext[3] & !0xff00_0000) | (n << 24);
             }
-            fb.ext[2] = (fb.ext[2] & !(7 << 26)) | (phase << 26);
+            fb.ext[1] = lives_word;
+            if phase >= 49 {
+                // $1CE1 returns: state 12, E6FF 3; the slide's words go.
+                fb.ext[3] = (fb.ext[3] & !(0xffff_00ff | (0xffff << 24))) | 12 | (3 << 16);
+                fb.ext[2] &= 0xffff;
+            } else {
+                fb.ext[2] = (fb.ext[2] & !(0x3f << 26)) | (phase << 26);
+            }
             cx.set_body(fid, fb);
         } else if (state == 15 || state == 16) && sub == 8 && let Some((fid, mut fb)) = flow {
             // The level's end script moves the bartender ($4603, the
@@ -1090,7 +1215,14 @@ impl Ext for Bars {
             }
             cx.set_body(fid, fb);
         }
-        let playing = !ending && !life_lost && ![15, 16].contains(&state);
+        let playing = !ending && !life_lost && ![13, 15, 16].contains(&state);
+        if state == 13
+            && let Some((fid, mut fb)) = flow
+            && (fb.ext[3] >> 16) & 0xff == 1
+        {
+            fb.ext[3] = (fb.ext[3] & !0x00ff_0000) | (2 << 16);
+            cx.set_body(fid, fb);
+        }
         if !playing && !life_lost {
             // A level's end ($55F4) empties the tip (E25E) and the
             // customers have all gone, but the mugs' slots (E2FE on) keep
@@ -1103,8 +1235,12 @@ impl Ext for Bars {
                 // be the next level's setup, which empties them.
                 let end_sub = flow.map_or(0, |(_, f)| (f.ext[3] >> 16) & 0xff);
                 let in_end = (state == 11 && end_sub == 9) || ([15, 16].contains(&state) && end_sub == 8);
-                // $1CE1 leaves the customers and mugs where they are.
-                let reached = [15, 16].contains(&state) && end_sub == 10;
+                // $1CE1 leaves the customers and mugs where they are, and
+                // so do $2441's waits before a game over (sub 11) and the
+                // game over's first frame (state 13, sub 1): $230F's
+                // $2B82 empties the objects on its second (tapper.l6.001:
+                // state 13 on 9131, the objects gone on 9133).
+                let reached = ([15, 16].contains(&state) && (end_sub == 10 || end_sub == 11)) || (state == 13 && end_sub == 1);
                 if !reached && (b.kind != mug_k || !in_end) {
                     removed.push(*id);
                 }
@@ -1473,7 +1609,7 @@ impl Ext for Bars {
             }
             tip = None;
             fb.ext[3] = (fb.ext[3] & !0xffff_00ff) | 15 | (10 << 16);
-            fb.ext[2] = (fb.ext[2] & 0xffff) | ((ry & 0xff) << 16) | ((rbar & 3) << 24) | (rslot << 29);
+            fb.ext[2] = (fb.ext[2] & 0xffff) | ((ry & 0xff) << 16) | ((rbar & 3) << 24) | (rslot << 32);
             cx.set_body(fid, fb);
             if let Some(pk) = player_k
                 && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == pk)

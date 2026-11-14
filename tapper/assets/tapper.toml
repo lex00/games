@@ -124,3 +124,15 @@ width = 2
 
 [asset.at]
 rbtapper = 0x5860
+
+# The four objects the slide copies into the mug slots from E326 when it
+# ends ($1F75: ld hl,$2003; ldir 32 bytes), 8 bytes an object (y, flags,
+# picture, x, then a second sprite's). The same place in every set listed
+# (gp query on recordings of each).
+[[asset]]
+name = "slide_objects"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2003
+count = 4
+width = 8

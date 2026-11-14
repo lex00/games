@@ -105,8 +105,8 @@ note = "Every 16 frames of E3C4: below 3, picks from the table at $5A5C. gp mode
 active = 0xE2FE
 active_stride = 8
 count = 9
-note = "The mugs from E2FE, 8 bytes a slot (gp track, gp labels propose, gp element inputs). A slot holds an object while its y isn't 0"
-vacant = "ram[0xE3BD] != 0 || !((ram[0xE2E6] >= 46 && ram[0xE2E6] <= 50) || (ram[0xE2E6] >= 94 && ram[0xE2E6] <= 98) || (ram[0xE2E6] >= 142 && ram[0xE2E6] <= 146) || (ram[0xE2E6] >= 190 && ram[0xE2E6] <= 194))"
+note = "The mugs from E2FE, 8 bytes a slot (gp track, gp labels propose, gp element inputs). A slot holds an object while its y isn't 0. The slots hold the play's objects while the bars are set up: the setup's $4D13 writes the bars' far ends from E366 (bar 0's x at E369) with the taps, and $5F31 empties them with every object from E18E (the next setup at $4B4D, the bonus round's and the game over's), after which the slots hold the scripts' pictures (the setup's intro at $5404, the bonus round). So the play's objects stay through a customer's slide ($1CE1, the bartender off his bar), a life lost ($236E) and a level's end until the clear, as the program leaves them (tapper.l6.001, tapper.die.001). The rule before this one read them empty whenever the bartender was off a bar's line"
+vacant = "ram[0xE3BD] != 0 || ram[0xE369] == 0"
 
 [[slots.level]]
 level = "main"
@@ -156,7 +156,7 @@ active_stride = 8
 count = 16
 name = "customers"
 note = "The customers: 8-byte objects from E262 (the customer's y, flags, picture, x, then its mug's), 4 a bar from the bottom, each with a 0x20-byte record from E4B2 ($0B43 walks both). A slot holds a customer while its y isn't 0"
-vacant = "ram[0xE3BD] != 0 || !((ram[0xE2E6] >= 46 && ram[0xE2E6] <= 50) || (ram[0xE2E6] >= 94 && ram[0xE2E6] <= 98) || (ram[0xE2E6] >= 142 && ram[0xE2E6] <= 146) || (ram[0xE2E6] >= 190 && ram[0xE2E6] <= 194))"
+vacant = "ram[0xE3BD] != 0 || ram[0xE369] == 0"
 
 [[slots.group.field]]
 note = "The customer's x"
@@ -208,7 +208,7 @@ active_stride = 8
 count = 1
 name = "tips"
 note = "The tip: the object at E25E (y, flags, picture, x), a tip while its picture E260 is $4D ($0B8C)"
-vacant = "ram[0xE3BD] != 0 || ram[0xE260] != 0x4D || !((ram[0xE2E6] >= 46 && ram[0xE2E6] <= 50) || (ram[0xE2E6] >= 94 && ram[0xE2E6] <= 98) || (ram[0xE2E6] >= 142 && ram[0xE2E6] <= 146) || (ram[0xE2E6] >= 190 && ram[0xE2E6] <= 194))"
+vacant = "ram[0xE260] != 0x4D || ram[0xE3BD] != 0 || ram[0xE369] == 0"
 
 [[slots.group.field]]
 note = "The tip's x"
@@ -470,10 +470,10 @@ number = 0
 when = "ram[0xE2E6] != 0 || (ram[0xE397] != 8 && ram[0xE397] != 9 && ram[0xE397] != 11)"
 
 [[field]]
-note = "Not compared: the level's layout, E3AF: bit k set puts bar k's tap on its left end. The setup reads it to draw the taps and to place the bartender ($4BF9)"
+note = "Not compared: the level's layout, E3AF: bit k set puts bar k's tap on its left end. The setup reads it to draw the taps and to place the bartender ($4BF9). Above it the wait a script is in: $232B keeps the state it was called in at E3A8 and where it goes on at E3A9, and $5FE6 its registers from E39D (B at E39F), so a start inside $1CE1 knows its frame; then the lives, E4A7 ($1D71, $23AF)"
 path = "entities.flow[0].ext[1]"
 presentation = true
-ram = [0xE3AF]
+ram = [0xE3AF, 0xE3A8, 0xE3A9, 0xE3AA, 0xE39F, 0xE4A7]
 
 [[field]]
 note = "Not compared: the game's state E397 at a clip's start (the main loop's dispatch at $22B2: 10 in play, 8 starting the first level, 11 the next one), which says when a level's setup runs against the frame's timers, and 256 times the bar shown, E3B8, whose records the setup copies in; above them a life lost's step E6FF and its count E706 ($236E)"
