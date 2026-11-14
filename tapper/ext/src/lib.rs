@@ -466,6 +466,7 @@ const BARS_PARAMS: &[Param] = &[
     Param::new("throw_spread", "count", ""),
     Param::new("after_throw", "frames", "frames"),
     Param::new("hand_reach", "fixed", "px"),
+    Param::new("catch_once", "flag", ""),
     Param::new("setup_late_bars", "count", ""),
 ];
 
@@ -924,8 +925,20 @@ impl Ext for Bars {
         }
         let playing = !ending && !life_lost && ![15, 16].contains(&state);
         if !playing && !life_lost {
-            for (id, _) in &bodies {
-                removed.push(*id);
+            // A level's end ($55F4) empties the tip (E25E) and the
+            // customers have all gone, but the mugs' slots (E2FE on) keep
+            // what they hold, standing still, until the next setup empties
+            // the objects ($5F31) (tapper.l5.001: two full mugs at E306
+            // and E30E through the end's waits).
+            for (id, b) in &bodies {
+                // Only in a level's end the model saw begin (sub 9 on its
+                // state 11 frame, then 8): a state 11 a clip starts in can
+                // be the next level's setup, which empties them.
+                let end_sub = flow.map_or(0, |(_, f)| (f.ext[3] >> 16) & 0xff);
+                let in_end = (state == 11 && end_sub == 9) || ([15, 16].contains(&state) && end_sub == 8);
+                if b.kind != mug_k || !in_end {
+                    removed.push(*id);
+                }
             }
             if let Some((Some(id), _)) = tip.take() {
                 tips_gone.push(id);
@@ -939,12 +952,26 @@ impl Ext for Bars {
         {
             let (px, py) = (pb.x.floor(), pb.y.floor());
             let reach = bp(cx, "hand_reach");
-            for (id, b) in bodies.iter().filter(|(_, b)| b.kind == mug_k) {
+            // The mugs in slot order (E2FE on), then the tip. After a catch
+            // the points call ($0BF2, $5EE7) leaves DE, which held his y and
+            // x ($0B6D, $0B6E), at $073C, so no later object that frame is
+            // within reach: one catch a frame, the tip after none
+            // (catch_once; tapper.l7.001: two empty mugs in reach on
+            // 11224, the second caught on 11225).
+            let once = bp(cx, "catch_once") != 0;
+            let mut mugs: Vec<&(usize, Body)> = bodies.iter().filter(|(_, b)| b.kind == mug_k).collect();
+            mugs.sort_by_key(|(_, b)| if b.ext[2] == 0 { 99 } else { b.ext[2] });
+            let mut caught = false;
+            for (id, b) in mugs {
+                if caught && once {
+                    break;
+                }
                 let (x, y) = (b.x.floor(), b.y.floor());
                 // $0BDC: an empty mug is one whose flags (+4) have bit 0.
                 let empty = b.ext[3] & 1 != 0;
                 if empty && (y - py).abs() < reach && (x - px).abs() < reach {
                     removed.push(*id);
+                    caught = true;
                 }
             }
             // $0B86 to $0BD4, after the mugs: a tip (picture $4D at
@@ -952,6 +979,7 @@ impl Ext for Bars {
             // goes down by one. Its points ($5EE7) and the show it starts
             // ($14E7) aren't modelled.
             if let Some((tid, t)) = tip
+                && !(caught && once)
                 && (t.y.floor() - py).abs() < reach
                 && (t.x.floor() - px).abs() < reach
             {
@@ -1235,7 +1263,7 @@ impl Ext for Bars {
                 t.ext[1] = 0;
                 timers_changed.push(n);
             }
-            fb.ext[3] = (fb.ext[3] & !0xffff_00ff) | 11;
+            fb.ext[3] = (fb.ext[3] & !0xffff_00ff) | 11 | (9 << 16);
             cx.set_body(fid, fb);
         }
         if fell && let Some((fid, mut fb)) = flow {

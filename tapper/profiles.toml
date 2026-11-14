@@ -11,7 +11,7 @@ format = "0.2.0"
 
 [presets.normal]
 description = "No lag and no console quirks"
-switches = ["any_way_stick"]
+switches = ["any_way_stick", "every_catch"]
 
 [[groups]]
 description = "The arcade board's and cabinet's quirks, off one at a time"
@@ -24,6 +24,18 @@ name = "any_way_stick"
 
 [groups.switches.set]
 "entities.player.ext_params.four_way" = 0
+
+[[groups]]
+description = "The original program's own slips, off one at a time"
+name = "fixes"
+title = "Fixes"
+
+[[groups.switches]]
+description = "The bartender catches every empty mug in reach on a frame, and a tip after them, instead of the original's one: its catch ($0B63) loses his place to the points call after the first ($0BF2, $5EE7)"
+name = "every_catch"
+
+[groups.switches.set]
+"entities.bars.ext_params.catch_once" = 0
 
 # Tapper's board quirks (bring.md's table), each to be a switch in a group
 # "board" as soon as the model has the part that carries it. Retro is the

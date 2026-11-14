@@ -89,6 +89,7 @@ after_throw = 14
 bar_inset = 16
 bar_left = 8
 bar_right = 201
+catch_once = 1
 catch_reach = 25
 drink_turns = 6
 hand_reach = 15
@@ -351,6 +352,14 @@ note = "Read with gp code listing on tapper.l8.001 (the routines the clip ran, w
 
 [[evidence."entities.bars".refs]]
 at = "clip:tapper.l8.001"
+
+[evidence."entities.bars.ext_params.catch_once"]
+source = "observed"
+confidence = 90
+note = "The catch ($0B63) loads the bartender's y and x into D and E ($0B6D, $0B6E) and checks the mug slots from E2FE, then the tip at E25E. A catch of an empty mug calls the points routine with DE at $073C ($0BF2, $5EE7) and the loop goes on with D and E not his: no later mug or tip that frame is within 15 of y 7, x 60, so he catches one object a frame (gp trace instructions on tapper.l7.001 frame 11224: the slot at E30E caught, the one at E316 compared with DE $073C and caught on 11225). 1 is the original; the profile switch every_catch (normal) sets 0"
+
+[[evidence."entities.bars.ext_params.catch_once".refs]]
+at = "clip:tapper.l7.001"
 
 [evidence."entities.bars.ext_params.setup_late_bars"]
 source = "observed"
