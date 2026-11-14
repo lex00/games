@@ -1036,7 +1036,13 @@ impl Ext for Bars {
                 continue;
             }
             let mx = b.x.floor();
-            for j in 0..bodies.len() {
+            // $0827: the customers' slots in order from E262, so of two
+            // customers in reach the lower slot takes the mug
+            // (tapper.l8.001, frame 12731: slot 8 at x 179 before slot 11
+            // at 182).
+            let mut by_slot: Vec<usize> = (0..bodies.len()).filter(|&j| bodies[j].1.kind == cust_k).collect();
+            by_slot.sort_by_key(|&j| (bodies[j].1.ext[3] >> 16) & 0xff);
+            for j in by_slot {
                 let (cid, mut c) = bodies[j];
                 if c.kind != cust_k || removed.contains(&cid) {
                     continue;
