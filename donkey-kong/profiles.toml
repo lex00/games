@@ -69,26 +69,37 @@ name = "climb_down_stops_at_floor"
 off = ["entities.player.climb.down_through"]
 
 [[groups.switches]]
-description = "After a death the stage starts again in about four seconds, not after the full spin and the eight-second wait"
+description = "After a death the spin plays to its end with its sound, as on the console, and the stage starts again about a second sooner"
 name = "quick_restart"
 
-# Every end of the spin (transitions 3 to 6: on its counts 4 and 12, the
-# last life's first, as the model orders them) a frame in, so the spin is
-# cut short; with a life left the wait is 20 wraps, not 32, still long
-# enough for the death's own steps at 19, 15 and 11 (the objects cleared,
-# the stage set up, the life taken), and its hand-over is kept; the last
-# life's end keeps its own (over_wait, GAME OVER). Until 2026-11-08 the
-# switch set transition 3 alone, the last life's end, and put the short
-# wait in place of its over_wait: the last death waited forever (the game
-# stopped, no GAME OVER; the user on 50m, "fireball hit me, then the game
-# froze"), and the other deaths kept the full spin and wait.
+# With a life left, the spin's two ends (transitions 4 and 6, on its counts
+# 4 and 12) keep the spin's own length, 120 frames from its first count, and
+# set the wait after it to 25 divider wraps, not 32: 265 to 275 frames
+# (about 4.5 seconds), not 342 to 352 (about 5.8). The wait keeps the
+# death's own steps at 19, 15 and 11 (the objects cleared, the stage set up
+# with its start tune, the life taken), and its hand-over. 25 is the
+# shortest wait that lets the death's sound finish whatever the divider's
+# phase: pulse 1's effect, asked for on the spin's second count, ends 90 or
+# 91 frames after the spin does (dk.fall-too-far.001 from power-on: the
+# spin ends at 1695, the effect's last write is at 1786), and the start
+# tune starts the frame after the wrap that takes the wait to 15, the 10th
+# wrap after the spin at 25, so 101 to 111 frames after it. At 24 it could
+# start at 90, a frame early; at 20, from 46, which cut the effect's last
+# note. The last life's ends (transitions 3 and 5) are the original's, its
+# spin and over_wait, so GAME OVER comes as on the console.
+#
+# History. Until 2026-11-08 the switch set transition 3 alone, the last
+# life's end, and put the short wait in place of its over_wait: the last
+# death waited forever (the game stopped, no GAME OVER; the user on 50m,
+# "fireball hit me, then the game froze"), and the other deaths kept the
+# full spin and wait. From 2026-11-08 to 2026-11-14 it also ended every
+# spin on its first count, 1 to 8 frames in (`after = 1` on transitions 3
+# to 6), which cut the spin and its sound in Normal; the owner read that as the death scene skipped
+# ("when retro toggles are disabled, it seems like the death scense for
+# kong get skippewwd").
 [groups.switches.set]
-"entities.player.machine.states.spinning.transition[3].after" = 1
-"entities.player.machine.states.spinning.transition[4].after" = 1
-"entities.player.machine.states.spinning.transition[4].do" = ["set:death_wait:20", "set:setup_wait:5", "set:over:1", "emit:turn.ended"]
-"entities.player.machine.states.spinning.transition[5].after" = 1
-"entities.player.machine.states.spinning.transition[6].after" = 1
-"entities.player.machine.states.spinning.transition[6].do" = ["set:death_wait:20", "set:setup_wait:5", "set:over:1", "emit:turn.ended"]
+"entities.player.machine.states.spinning.transition[4].do" = ["set:death_wait:25", "set:setup_wait:10", "set:over:1", "emit:turn.ended"]
+"entities.player.machine.states.spinning.transition[6].do" = ["set:death_wait:25", "set:setup_wait:10", "set:over:1", "emit:turn.ended"]
 
 [[groups.switches]]
 description = "Every direction held acts at once, not only the one already held: Up or Down added while walking takes a ladder at once"
