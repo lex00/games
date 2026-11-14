@@ -60,10 +60,10 @@ ram = 0xE390
 note = "A new customer: below 16, plus 16, its first wait. --find: stored for later"
 
 [[draws]]
-site = "move_picture"
+site = "tip_wait"
 pc = 0x213B
 ram = 0xE390
-note = "A bar move's start: below 3, plus 4, into E72E. --find: stored for later"
+note = "A tip left on the bar ($20DE): below 3, plus 4, into E72E, the customers' throws to the next tip"
 
 [[draws]]
 site = "bonus_shake"
@@ -94,6 +94,232 @@ site = "tip_kind"
 pc = 0x59F2
 ram = 0xE390
 note = "Every 16 frames of E3C4: below 3, picks from the table at $5A5C. gp model static lists this call; --find counts its reads under $5FAE, the call inside $5FAC"
+
+# The mugs: 8-byte objects from E2FE (y, flags, picture, x, then a
+# second sprite's), free while y is 0. gp track found them on tapper.l8.001
+# (6 slots, stride 8, x E301); gp labels propose shows the send ($13CC)
+# writing E2FE, E306 and E30E and the mugs' move ($0742) their x. Empty
+# mugs and tips use the same slots and aren't modelled yet: they read as
+# mugs that don't move.
+[slots]
+active = 0xE2FE
+active_stride = 8
+count = 9
+note = "The mugs from E2FE, 8 bytes a slot (gp track, gp labels propose, gp element inputs). A slot holds an object while its y isn't 0"
+vacant = "ram[0xE3BD] != 0 || !((ram[0xE2E6] >= 46 && ram[0xE2E6] <= 50) || (ram[0xE2E6] >= 94 && ram[0xE2E6] <= 98) || (ram[0xE2E6] >= 142 && ram[0xE2E6] <= 146) || (ram[0xE2E6] >= 190 && ram[0xE2E6] <= 194))"
+
+[[slots.level]]
+level = "main"
+when = "ram[0xE3BD] == 0"
+
+[[slots.field]]
+note = "The mug's x"
+path = "x"
+ram = [0xE301]
+stride = 8
+
+[[slots.field]]
+note = "The mug's y: its bar's line less 5 for a full mug (52, 100, 148, 196), less 3 for an empty one or a tip"
+path = "y"
+ram = [0xE2FE]
+stride = 8
+
+[[slots.field]]
+note = "Not compared: the fraction of the mug's x, its slot's +6 ($07CF)"
+path = "ext[1]"
+presentation = true
+ram = [0xE304]
+stride = 8
+
+[[slots.field]]
+index = true
+note = "Not compared: the mug's slot, plus 1: the send ($1468) and the throw ($10E2) take the first slot whose y is 0, so a slot emptied and taken on one frame is the same object"
+offset = 1
+path = "ext[2]"
+presentation = true
+ram = []
+
+[[slots.field]]
+note = "Not compared: the mug's flags (+4): bit 0 an empty mug, bit 3 moving left, its bar in the high nibble ($074F, $0762, $0777); set by the send ($1486 to $14C4) and the throw ($1108 to $1123)"
+path = "ext[3]"
+presentation = true
+ram = [0xE302]
+stride = 8
+
+[[slots.kind]]
+entity = "mug"
+ids = [0]
+
+[[slots.group]]
+active = 0xE262
+active_stride = 8
+count = 16
+name = "customers"
+note = "The customers: 8-byte objects from E262 (the customer's y, flags, picture, x, then its mug's), 4 a bar from the bottom, each with a 0x20-byte record from E4B2 ($0B43 walks both). A slot holds a customer while its y isn't 0"
+vacant = "ram[0xE3BD] != 0 || !((ram[0xE2E6] >= 46 && ram[0xE2E6] <= 50) || (ram[0xE2E6] >= 94 && ram[0xE2E6] <= 98) || (ram[0xE2E6] >= 142 && ram[0xE2E6] <= 146) || (ram[0xE2E6] >= 190 && ram[0xE2E6] <= 194))"
+
+[[slots.group.field]]
+note = "The customer's x"
+path = "x"
+ram = [0xE265]
+stride = 8
+
+[[slots.group.field]]
+note = "The customer's y: its bar's line, 57, 105, 153 or 201"
+path = "y"
+ram = [0xE262]
+stride = 8
+
+[[slots.group.field]]
+note = "Not compared: its state (+0) and facing (+0D, 1 on a bar whose tap is on the left)"
+path = "ext[0]"
+presentation = true
+ram = [0xE4B2, 0xE4BF]
+stride = 32
+
+[[slots.group.field]]
+note = "Not compared: its timer (+4)"
+path = "ext[1]"
+presentation = true
+ram = [0xE4B6]
+stride = 32
+
+[[slots.group.field]]
+note = "Not compared: its wait (+2) and drink (+9)"
+path = "ext[2]"
+presentation = true
+ram = [0xE4B4, 0xE4BB]
+stride = 32
+
+[[slots.group.field]]
+note = "Not compared: its drink's turn (+3), the turns left (+5) and its slot (+0C)"
+path = "ext[3]"
+presentation = true
+ram = [0xE4B5, 0xE4B7, 0xE4BE]
+stride = 32
+
+[[slots.group.kind]]
+entity = "customer"
+ids = [0]
+
+[[slots.group]]
+active = 0xE25E
+active_stride = 8
+count = 1
+name = "tips"
+note = "The tip: the object at E25E (y, flags, picture, x), a tip while its picture E260 is $4D ($0B8C)"
+vacant = "ram[0xE3BD] != 0 || ram[0xE260] != 0x4D || !((ram[0xE2E6] >= 46 && ram[0xE2E6] <= 50) || (ram[0xE2E6] >= 94 && ram[0xE2E6] <= 98) || (ram[0xE2E6] >= 142 && ram[0xE2E6] <= 146) || (ram[0xE2E6] >= 190 && ram[0xE2E6] <= 194))"
+
+[[slots.group.field]]
+note = "The tip's x"
+path = "x"
+ram = [0xE261]
+stride = 8
+
+[[slots.group.field]]
+note = "The tip's y: 8 above the customer that left it"
+path = "y"
+ram = [0xE25E]
+stride = 8
+
+[[slots.group.kind]]
+entity = "tip"
+ids = [0]
+
+[[slots.group]]
+active = 0xE41B
+active_stride = 6
+count = 24
+free = 0xFF
+name = "timers"
+vacant = "ram[0xE3BD] > 0xFF"
+note = "The game's timers ($603C sets one, $60C1 counts them each frame): 6 bytes each from E417, the frames left (+0, +1) and the routine (+3, +4). Every entry is carried, used or not ($603C takes the first idle one, so their order matters). Held, not measured"
+
+[[slots.group.field]]
+note = "Not compared: the frames left"
+path = "ext[0]"
+presentation = true
+ram = [0xE417, 0xE418]
+stride = 6
+
+[[slots.group.field]]
+note = "Not compared: the routine it runs"
+path = "ext[1]"
+presentation = true
+ram = [0xE41A, 0xE41B]
+stride = 6
+
+[[slots.group.kind]]
+entity = "timer"
+holds_slot = true
+ids = [0]
+
+[[slots.group]]
+active = 0xE4BA
+active_stride = 32
+count = 16
+free = 0xFF
+name = "records"
+vacant = "ram[0xE3BD] > 0xFF"
+note = "The customer slots' records, 0x20 bytes each from E4B2, kept while a customer is away. Held, not measured"
+
+[[slots.group.field]]
+note = "Not compared: the wait (+2) and the drink (+9)"
+path = "ext[0]"
+presentation = true
+ram = [0xE4B4, 0xE4BB]
+stride = 32
+
+[[slots.group.field]]
+note = "Not compared: the bar (+8) and the facing (+0D)"
+path = "ext[1]"
+presentation = true
+ram = [0xE4BA, 0xE4BF]
+stride = 32
+
+[[slots.group.field]]
+note = "Not compared: the slot's number (+0C)"
+path = "ext[2]"
+presentation = true
+ram = [0xE4BE]
+stride = 32
+
+[[slots.group.field]]
+note = "Not compared: the customer's picture set (+10); $DE stands 3 higher ($1B74) and reaches the bar's ends 4 sooner ($08C3, $08FD)"
+path = "ext[3]"
+presentation = true
+ram = [0xE4C2]
+stride = 32
+
+[[slots.group.kind]]
+entity = "record"
+holds_slot = true
+ids = [0]
+
+[[field]]
+note = "Not compared: the customers' walk a frame, E3B3 ($117F); the throws to the next tip E72E and the level's tips left E72F ($20DE); the tips setting E006, copied from the program's defaults at boot ($0517)"
+path = "entities.bars[0].ext[0]"
+presentation = true
+ram = [0xE3B3, 0xE72E, 0xE72F, 0xE006]
+
+[[field]]
+note = "Not compared: an empty mug's speed, E3B0 ($075C)"
+path = "entities.bars[0].ext[1]"
+presentation = true
+ram = [0xE3B0]
+
+[[field]]
+note = "Not compared: the respawn wait E3B1 ($091D), the levels cleared E4A8 and the level's row E4A9 ($4E50), for the arrivals"
+path = "entities.bars[0].ext[3]"
+presentation = true
+ram = [0xE3B1, 0xE3B2, 0xE4A8, 0xE4A9]
+
+[[field]]
+note = "Not compared: a full mug's speed, E6FE:E6FD, 8.8 ($07D2)"
+path = "entities.bars[0].ext[2]"
+presentation = true
+ram = [0xE6FD, 0xE6FE]
+signed = true
 
 [[field]]
 note = "The bartender's x: his slot's x, E2E9. Walking moves it 2 a frame; at a tap he stands at 209, 193, 177 and 161 on bars 0 (the bottom) to 3 of the saloon (tapper-m3-five, frames 1110 to 1190), 6 less once a mug is sent"
@@ -133,6 +359,30 @@ note = "Not compared: the bartender's bar, E6F9 (0 the bottom bar, 3 the top), t
 path = "entities.player[0].ext[0]"
 presentation = true
 ram = [0xE6F9]
+
+[[field]]
+note = "Not compared: bar 0's far end, the object at E366: its x, E369, written on the level setup's frame. The tip's place reads it ($2107 to $211D)"
+path = "entities.tap[0].ext[0]"
+presentation = true
+ram = [0xE369]
+
+[[field]]
+note = "Not compared: bar 1's far end, the object at E36A: its x, E36D, written on the level setup's frame. The tip's place reads it ($2107 to $211D)"
+path = "entities.tap[1].ext[0]"
+presentation = true
+ram = [0xE36D]
+
+[[field]]
+note = "Not compared: bar 2's far end, the object at E36E: its x, E371, written on the level setup's frame. The tip's place reads it ($2107 to $211D)"
+path = "entities.tap[2].ext[0]"
+presentation = true
+ram = [0xE371]
+
+[[field]]
+note = "Not compared: bar 3's far end, the object at E372: its x, E375, written on the level setup's frame. The tip's place reads it ($2107 to $211D)"
+path = "entities.tap[3].ext[0]"
+presentation = true
+ram = [0xE375]
 
 [[field]]
 note = "Not compared: bar 0's tap, the object at E346: its x, E349. Loaded so the bartender knows where the bar's tap is; it blinks (y 0) but keeps its x"
@@ -208,11 +458,22 @@ ram = [0xE6F2]
 number = 0
 when = "ram[0xE3BD] != 0"
 
+[[field.case]]
+note = "E6F2 is 0 too before a game's first setup has cleared it: in the boot (E397 0) and through the first level's intro ($5404, entered from the setup at $4B62 in a game). On the setup's own frame the game is in the setup's state (E397 8 for the first level, 9 or 11 for the next) and the objects from E18E, the bartender's at E2E6 among them, are empty: $5F31 clears them before the level's RAM ($4B4D, and $54DB at the intro's end)"
+number = 0
+when = "ram[0xE2E6] != 0 || (ram[0xE397] != 8 && ram[0xE397] != 9 && ram[0xE397] != 11)"
+
 [[field]]
 note = "Not compared: the level's layout, E3AF: bit k set puts bar k's tap on its left end. The setup reads it to draw the taps and to place the bartender ($4BF9)"
 path = "entities.flow[0].ext[1]"
 presentation = true
 ram = [0xE3AF]
+
+[[field]]
+note = "Not compared: the game's state E397 at a clip's start (the main loop's dispatch at $22B2: 10 in play, 8 starting the first level, 11 the next one), which says when a level's setup runs against the frame's timers, and 256 times the bar shown, E3B8, whose records the setup copies in; above them a life lost's step E6FF and its count E706 ($236E)"
+path = "entities.flow[0].ext[3]"
+presentation = true
+ram = [0xE397, 0xE3B8, 0xE6FF, 0xE706]
 
 [[field]]
 digits = true

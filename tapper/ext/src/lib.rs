@@ -24,6 +24,7 @@ pub fn exts() -> Exts {
     let mut out = Exts::new();
     out.insert("tapper_bartender".into(), Box::new(Bartender) as Box<dyn Ext>);
     out.insert("tapper_flow".into(), Box::new(Flow));
+    out.insert("tapper_bars".into(), Box::new(Bars));
     out
 }
 
@@ -94,6 +95,10 @@ const PARAMS: &[Param] = &[
     Param::new("pour_frames", "frames", "frames"),
     Param::new("bob_frames", "frames", "frames"),
     Param::new("four_way", "bool", ""),
+    Param::new("mug_speed", "fixed", "px/frame"),
+    Param::new("mug_out", "fixed", "px"),
+    Param::new("mug_out_left", "fixed", "px"),
+    Param::new("mug_above", "fixed", "px"),
 ];
 
 impl Bartender {
@@ -121,6 +126,25 @@ impl Bartender {
 
 impl Ext for Bartender {
     fn step(&self, cx: &mut ExtCx<'_>) {
+        // The play routine ($0660, from $22FC) runs only in play: in a life
+        // lost (state 12, then 9) and its waits (15, 16) he stands still.
+        let flow = cx
+            .kind("flow")
+            .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+            .copied();
+        let state = flow.map_or(10, |b| b.ext[3] & 0xff);
+        if [9, 12, 15, 16].contains(&state) {
+            return;
+        }
+        // On the setup's own frame (the flow's word 2 at 4, set by
+        // tapper_bars where the setup places him) the game is still in the
+        // setup's state (E397 9, 11 or 8): $0660 runs from the next frame,
+        // so a press on that frame is not seen (tapper.l13.001: up on
+        // 19672, the setup's frame, moves nothing; up on 19685 lands on
+        // 19692).
+        if flow.is_some_and(|b| b.ext[2] == 4) {
+            return;
+        }
         let bar = cx.me.ext[0];
         // ext[1]: frames left of a bar move times 8, plus the bar it goes
         // to times 2, plus the stick's latch (E730): set when a move
@@ -167,9 +191,65 @@ impl Ext for Bartender {
                     return;
                 }
                 if cx.me.ext[3] & 0xff >= p(cx, "pour_frames") {
-                    if let Some((_, left)) = tap {
+                    if let Some((tap_x, left)) = tap {
                         let step = p(cx, "send_step");
                         cx.me.x = Fx::from_int(cx.me.x.floor() + if left { step } else { -step });
+                        // The send ($13CC) puts a full mug in a free slot of
+                        // E2FE: 4 above his y ($149E), mug_out from the tap,
+                        // and sets its speed E6FE ($14D3); the mugs' move
+                        // ($0742) moves it on the same frame.
+                        if let Some(mug) = cx.kind("mug") {
+                            let speed = if left { p(cx, "mug_speed") } else { -p(cx, "mug_speed") };
+                            // $14C0 and $14CC: 24 left of a right-end tap,
+                            // 27 right of a left-end one.
+                            let x0 = if left { tap_x + p(cx, "mug_out_left") } else { tap_x - p(cx, "mug_out") };
+                            let y0 = cx.me.y.floor() + p(cx, "mug_above");
+                            let _ = speed;
+                            // The mugs' move (tapper_bars) moves it on this
+                            // frame, after the send.
+                            // $1468: the first mug slot from E2FE whose
+                            // y is 0 (the slot, plus one, in its word 2).
+                            let used: Vec<i64> = cx
+                                .world
+                                .bodies
+                                .iter()
+                                .filter(|b| b.alive && b.kind == mug)
+                                .map(|b| b.ext[2])
+                                .collect();
+                            if let Some(n) = (1..=9).find(|n| !used.contains(n)) {
+                                let id = cx.world.bodies.len();
+                                let mut b = gp_sim::systems::new_body(
+                                    cx.spec,
+                                    cx.world,
+                                    mug,
+                                    Fx::from_int(x0),
+                                    Fx::from_int(y0),
+                                    !left,
+                                );
+                                b.ext[2] = n;
+                                // $1486 to $14C4: its flags, the bar above
+                                // and bit 3 from a tap on the left.
+                                b.ext[3] = (bar << 4) | if left { 8 } else { 0 };
+                                cx.spawn(mug, b.x, b.y, b.facing_left);
+                                cx.set_body(id, b);
+                            }
+                            // $14D1: every full mug's speed, E6FE, is -5
+                            // from now (tapper_bars keeps it, its fraction
+                            // E6FD as it was).
+                            if let Some(bk) = cx.kind("bars")
+                                && let Some((id, b)) = cx
+                                    .world
+                                    .bodies
+                                    .iter()
+                                    .enumerate()
+                                    .find(|(_, b)| b.kind == bk)
+                                    .map(|(i, b)| (i, *b))
+                            {
+                                let mut b = b;
+                                b.ext[2] = (-speed.abs() << 8) | (b.ext[2] & 0xff);
+                                cx.set_body(id, b);
+                            }
+                        }
                     }
                 }
                 cx.me.ext[3] &= !0xff;
@@ -255,10 +335,43 @@ const FLOW_PARAMS: &[Param] = &[
 
 impl Ext for Flow {
     fn step(&self, cx: &mut ExtCx<'_>) {
-        if cx.me.ext[0] == 0 {
+        // The setup ($4B3F) is a script that waits through states 15 and
+        // 16 and comes back in its own state (9 or 11, kept at E3A8). A
+        // clip that starts as it comes back, with no bartender at a bar
+        // yet, gets him and the taps placed now ($4BCB), its timers being
+        // set already.
+        let player_y = cx
+            .kind("player")
+            .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+            .map_or(1, |b| b.y.floor());
+        if cx.me.ext[2] == 4 {
+            cx.me.ext[2] = 0;
+        }
+        let state = cx.me.ext[3] & 0xff;
+        // A level's setup has set its timers by then ($4E50: the waits'
+        // speed-up, $2023, is counting); a bonus round's or a level end's
+        // script hasn't.
+        let level_timers = cx.kind("timer").is_some_and(|k| {
+            cx.world
+                .bodies
+                .iter()
+                .any(|b| b.kind == k && b.alive && b.ext[1] == 0x2023 && b.ext[0] > 0)
+        });
+        let resumed =
+            cx.me.ext[0] == 0 && (state == 11 || state == 9) && player_y == 0 && level_timers;
+        if cx.me.ext[0] == 0 && !resumed {
             return;
         }
-        cx.me.ext[0] = 0;
+        if resumed {
+            cx.me.ext[3] = (cx.me.ext[3] & !0xff) | 10;
+            // For tapper_bars: the level's first customers ($4C19).
+            cx.me.ext[2] = 2;
+        } else {
+            cx.me.ext[0] = 0;
+            // For tapper_bars, which runs later this frame: the level's
+            // timers and first customers ($4E50, $4C19).
+            cx.me.ext[2] = 1;
+        }
         let layout = cx.me.ext[1];
         let (Some(tap_kind), Some(player)) = (cx.kind("tap"), cx.kind("player")) else {
             return;
@@ -312,6 +425,891 @@ impl Ext for Flow {
             state: &["ext[0] the level was set up this frame", "ext[1] the layout"],
             writes: &["tap.x", "tap.facing", "player.x", "player.y", "player.ext"],
             built_from: &[Primitive::Condition, Primitive::Quantity],
+            ..Record::EMPTY
+        }]
+    }
+}
+
+/// The bars' play each frame after the bartender's, in the order the
+/// play routine ($0660) calls it: the bartender catching empty mugs
+/// ($0B63), the mugs' move and customers catching full ones ($0742), the
+/// customers' states ($0B43, dispatched by state through $100A) and their
+/// ends of the bar ($0890). Mugs and customers are bodies without hooks of
+/// their own; this one body moves them all, so the order is the game's.
+///
+/// Words: `ext[0]` the customers' walk (E3B3), `ext[1]` an empty mug's
+/// speed (E3B0), `ext[2]` a full mug's (E6FE:E6FD, 8.8, signed).
+///
+/// A mug's words: `ext[1]` the fraction of its x (its slot's +6), `ext[2]`
+/// its slot plus one, `ext[3]` its flags (+4: bit 0 empty, bit 3 moving
+/// left, its bar above).
+///
+/// A customer's words (its record at E4B2 + 0x20 a customer): `ext[0]` its
+/// state plus 256 times its facing (+0, +0D: 1 on a bar whose tap is on the
+/// left), `ext[1]` its timer (+4), `ext[2]` its wait plus 256 times its
+/// drink (+2, +9), `ext[3]` its drink's turn plus 256 times the turns left
+/// (+3, +5).
+pub struct Bars;
+
+const BARS_PARAMS: &[Param] = &[
+    Param::new("line", "fixed", "px"),
+    Param::new("line_step", "fixed", "px"),
+    Param::new("bar_left", "fixed", "px"),
+    Param::new("bar_right", "fixed", "px"),
+    Param::new("bar_inset", "fixed", "px"),
+    Param::new("catch_reach", "fixed", "px"),
+    Param::new("walk_frames", "frames", "frames"),
+    Param::new("pushed_base", "frames", "frames"),
+    Param::new("pushed_spread", "count", ""),
+    Param::new("drink_turns", "count", ""),
+    Param::new("throw_base", "frames", "frames"),
+    Param::new("throw_spread", "count", ""),
+    Param::new("after_throw", "frames", "frames"),
+    Param::new("hand_reach", "fixed", "px"),
+    Param::new("setup_late_bars", "count", ""),
+];
+
+/// The random routine $5FAC's number for a site: the original's when the
+/// run has its draws, else one from the generator below `n`.
+fn draw_below(cx: &mut ExtCx<'_>, site: &str, n: i64) -> i64 {
+    match cx.scripted_draw(site) {
+        Some(v) => i64::from(v),
+        None => i64::from(cx.draw(site)) % n.max(1),
+    }
+}
+
+fn bp(cx: &ExtCx<'_>, name: &str) -> i64 {
+    let Some(k) = cx.kind("bars") else { return 0 };
+    cx.spec.kinds[k].ext_params.get(name).map_or(0, |v| v.floor())
+}
+
+impl Bars {
+    /// The bar a body on line y is at: 0 the bottom.
+    fn bar_of(cx: &ExtCx<'_>, y: i64) -> i64 {
+        let line = bp(cx, "line");
+        let step = bp(cx, "line_step");
+        (y - line + step / 2).div_euclid(step)
+    }
+    /// Bar `bar`'s ends: the code's table at $0977, 4 bytes a bar.
+    fn ends(cx: &ExtCx<'_>, bar: i64) -> (i64, i64) {
+        let inset = bp(cx, "bar_inset") * bar;
+        (bp(cx, "bar_left") + inset, bp(cx, "bar_right") - inset)
+    }
+    fn tap_left(cx: &ExtCx<'_>, bar: i64) -> bool {
+        cx.kind("tap").is_some_and(|k| {
+            cx.world
+                .bodies
+                .iter()
+                .filter(|b| b.kind == k)
+                .nth(usize::try_from(bar).unwrap_or(0))
+                .is_some_and(|b| b.facing_left)
+        })
+    }
+}
+
+impl Ext for Bars {
+    fn step(&self, cx: &mut ExtCx<'_>) {
+        use gp_sim::world::Body;
+        let (Some(mug_k), Some(cust_k)) = (cx.kind("mug"), cx.kind("customer")) else {
+            return;
+        };
+        let (timer_k, rec_k) = (cx.kind("timer"), cx.kind("record"));
+        let player_k = cx.kind("player");
+        let line = bp(cx, "line");
+        let step = bp(cx, "line_step");
+        let (mut walk, mut empty_speed, full_speed) = (cx.me.ext[0] & 0xff, cx.me.ext[1], cx.me.ext[2]);
+        // Word 0 above the walk: E72E (customers' throws left to the next
+        // tip), E72F (tips left this level) and E006 (the tips setting,
+        // copied from the program's defaults at boot by $0517).
+        let mut tip_count = (cx.me.ext[0] >> 8) & 0xff;
+        let mut tips_left = (cx.me.ext[0] >> 16) & 0xff;
+        let tip_setting = (cx.me.ext[0] >> 24) & 0xff;
+        let tip_k = cx.kind("tip");
+        // Word 3: E3B1 (the respawn wait), E4A8 (levels cleared), E4A9 (the
+        // level's row of level_times, from 1).
+        let mut w_word = cx.me.ext[3] & 0xffff;
+        let cleared = (cx.me.ext[3] >> 16) & 0xff;
+        let level = (cx.me.ext[3] >> 24) & 0xff;
+        let layout = cx
+            .kind("flow")
+            .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+            .map_or(0, |b| b.ext[1]);
+        let starts = cx.table("customer_starts").to_vec();
+        let arrivals: Vec<i64> = cx
+            .table("arrivals")
+            .chunks(2)
+            .map(|w| w[0] + 256 * w.get(1).copied().unwrap_or(0))
+            .collect();
+        let times = cx.table("level_times").to_vec();
+        let row_word = |row: i64, at: usize| -> i64 {
+            let base = usize::try_from((row - 1).max(0)).unwrap_or(0) * 12 + at;
+            times.get(base).copied().unwrap_or(0) + 256 * times.get(base + 1).copied().unwrap_or(0)
+        };
+        let of_kind = |cx: &ExtCx<'_>, k: Option<usize>| -> Vec<(usize, Body)> {
+            k.map(|k| {
+                cx.world
+                    .bodies
+                    .iter()
+                    .enumerate()
+                    .filter(|(_, b)| b.alive && b.kind == k)
+                    .map(|(i, b)| (i, *b))
+                    .collect()
+            })
+            .unwrap_or_default()
+        };
+        let mut timers = of_kind(cx, timer_k);
+        let mut recs = of_kind(cx, rec_k);
+        let mut bodies: Vec<(usize, Body)> = cx
+            .world
+            .bodies
+            .iter()
+            .enumerate()
+            .filter(|(_, b)| b.alive && (b.kind == mug_k || b.kind == cust_k))
+            .map(|(i, b)| (i, *b))
+            .collect();
+        let mut removed: Vec<usize> = Vec::new();
+        // The tip, the object at E25E (one at most): kept apart from the
+        // mugs and customers, and written back when the step ends.
+        let mut tip: Option<(Option<usize>, Body)> = of_kind(cx, tip_k).into_iter().next().map(|(i, b)| (Some(i), b));
+        let mut tips_gone: Vec<usize> = cx
+            .world
+            .bodies
+            .iter()
+            .enumerate()
+            .filter(|(_, b)| b.alive && Some(b.kind) == tip_k)
+            .map(|(i, _)| i)
+            .skip(1)
+            .collect();
+        // Bodies this step adds, with the ids they will have.
+        let mut next_id = cx.world.bodies.len();
+        let mut added: Vec<usize> = Vec::new();
+        let mut timers_changed: Vec<usize> = Vec::new();
+        let mut new_timers: Vec<Body> = Vec::new();
+        let rec_of = |recs: &[(usize, Body)], k: i64| recs.iter().position(|(_, r)| r.ext[2] == k);
+
+        // $603C: a timer for `routine` after `delay` frames, in the first
+        // idle entry of the list at E417.
+        let schedule = |timers: &mut Vec<(usize, Body)>,
+                            changed: &mut Vec<usize>,
+                            new_timers: &mut Vec<Body>,
+                            cx: &ExtCx<'_>,
+                            delay: i64,
+                            routine: i64| {
+            if let Some(n) = timers.iter().position(|(_, t)| t.ext[0] == 0) {
+                timers[n].1.ext[0] = delay & 0xffff;
+                timers[n].1.ext[1] = routine;
+                changed.push(n);
+            } else if let Some(k) = timer_k {
+                // A new entry: counted with the others from now on, and
+                // spawned when the step ends.
+                let mut t = gp_sim::systems::new_body(cx.spec, cx.world, k, Fx::ZERO, Fx::ZERO, false);
+                t.ext[0] = delay & 0xffff;
+                t.ext[1] = routine;
+                timers.push((usize::MAX, t));
+                let _ = new_timers;
+            }
+        };
+
+        // A level's start, the frame after the setup cleared its RAM: the
+        // full mug's speed back to -3 ($4C10), the level's timers ($4E50)
+        // and its first customers' arrivals 10 frames on ($4C19 to $4C43).
+        let mut full_speed = full_speed;
+        if let Some(fk) = cx.kind("flow")
+            && let Some((fid, fb)) = cx
+                .world
+                .bodies
+                .iter()
+                .enumerate()
+                .find(|(_, b)| b.kind == fk)
+                .map(|(i, b)| (i, *b))
+            && (fb.ext[2] == 1 || fb.ext[2] == 2)
+        {
+            // 1: the whole setup; 2: a setup coming back after its waits,
+            // whose records and level timers are in already.
+            let whole = fb.ext[2] == 1;
+            let mut fb = fb;
+            // 4: the setup's frame, for tapper_bartender (play from the
+            // next); tapper_flow clears it.
+            fb.ext[2] = 4;
+            // When the setup's timers count: the punk bar's and the space
+            // bar's setups (bar shown 2, 3) call $5E99 through $4937, which
+            // waits for the next frame ($60F6), so their timers count from
+            // the next frame; the saloon's and the sports bar's on this one
+            // (setup_late_bars, a bit a bar shown). A setup coming back
+            // after its waits sets them after the frame's count too.
+            let ptrs: Vec<i64> = cx
+                .table("start_list_ptrs")
+                .chunks(2)
+                .map(|w| w[0] + 256 * w.get(1).copied().unwrap_or(0))
+                .collect();
+            let lists = cx.table("start_lists").to_vec();
+            let first = ptrs.get(usize::try_from(cleared.min(9)).unwrap_or(0)).copied().unwrap_or(0)
+                - ptrs.first().copied().unwrap_or(0);
+            let first = usize::try_from(first).unwrap_or(usize::MAX);
+            let shown_bit = 1 << ((fb.ext[3] >> 8) & 3);
+            let late = i64::from(!whole || bp(cx, "setup_late_bars") & shown_bit != 0);
+            // Play from here (the game reaches state 10 a few frames on,
+            // playing all the while).
+            fb.ext[3] = (fb.ext[3] & !0xff) | 10;
+            // $4A65: the records of the bar shown, each slot's wait, drink,
+            // bar and number, and its facing from the layout.
+            let shown = usize::try_from((fb.ext[3] >> 8) & 3).unwrap_or(0);
+            let blocks = cx.table("record_blocks").to_vec();
+            // The records are carried in slot order; before a game's first
+            // setup their bytes are blank, so the n-th is slot n.
+            for (k, (_, r)) in recs.iter_mut().enumerate() {
+                let Some(rec) = blocks.get((shown * 16 + k) * 32..(shown * 16 + k + 1) * 32) else {
+                    continue;
+                };
+                let bar = rec[8];
+                let facing = (layout >> bar) & 1;
+                r.ext[0] = rec[2] | (rec[9] << 8);
+                r.ext[1] = bar | (facing << 8);
+                r.ext[2] = rec[12];
+                r.ext[3] = rec[16];
+            }
+            cx.set_body(fid, fb);
+            full_speed = -3 * 256;
+            cx.me.ext[2] = full_speed;
+            // $4B78 and $4E46: the customers' walk and an empty mug's speed
+            // back to 1.
+            walk = 1;
+            empty_speed = 1;
+            cx.me.ext[1] = 1;
+            // $4BD6: the first tip comes with the second throw.
+            tip_count = 2;
+            if whole {
+                // $588A: the level's tips, from the levels cleared and
+                // the setting E006.
+                tips_left = if cleared == 0 {
+                    1
+                } else {
+                    let b = match tip_setting {
+                        0 | 1 => cleared << 1,
+                        2..=5 => cleared,
+                        _ => cleared >> 1,
+                    } & 0xff;
+                    if b >= 5 { 4 } else if cleared == 1 { b + 1 } else { b }
+                };
+            }
+            if whole {
+                w_word = row_word(level, 0);
+                for (at, routine) in [(2, 0x2023), (4, 0x1B02), (6, 0x2209)] {
+                    let d = row_word(level, at);
+                    schedule(&mut timers, &mut timers_changed, &mut new_timers, cx, d + late, routine);
+                }
+            }
+            if whole && cleared >= 5 {
+                w_word = row_word(level, 8);
+                let d = row_word(level, 10);
+                schedule(&mut timers, &mut timers_changed, &mut new_timers, cx, d + late, 0x1B2E);
+            }
+            let mut i = first;
+            while let Some(&slot) = lists.get(i) {
+                if slot == 0xFF {
+                    break;
+                }
+                if let Some(&routine) = arrivals.get(usize::try_from(slot).unwrap_or(usize::MAX)) {
+                    schedule(&mut timers, &mut timers_changed, &mut new_timers, cx, 10 + late, routine);
+                }
+                i += 1;
+            }
+        }
+
+        // The play routine ($0660) runs only in the game's play state
+        // (E397 10); in a life lost (15, 16) the bars
+        // stand still while the timers count. The model doesn't change
+        // the state yet: it keeps the one a clip started in.
+        let flow = cx
+            .kind("flow")
+            .and_then(|k| cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == k))
+            .map(|(i, b)| (i, *b));
+        let state = flow.map_or(10, |(_, b)| b.ext[3] & 0xff);
+        // State 11 outside a level's setup is a level's end ($2304): its
+        // script ($55F4) waits through states 15 and 16 ($232B, $2346,
+        // $231A), and the game's clear ($5DB8) has emptied the bars by the
+        // first wait. In those waits (a level's end, a life lost) the slots
+        // hold the script's pictures, not customers or mugs.
+        let setting_up = flow.is_some_and(|(_, b)| b.ext[0] == 1 || b.ext[2] != 0);
+        // A setup coming back in state 11 has no bartender at a bar yet
+        // (tapper_flow places him); a level's end has him there.
+        let bartender_y = player_k
+            .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+            .map_or(0, |b| b.y.floor());
+        // A level's end has emptied the timers ($5DEC at $0969); a setup
+        // that waited for the next frame (the punk bar's $4942, called
+        // through $4937 at $4C4B, waits in $5E99 at $60F6) is still in state 11 with
+        // the bartender placed and the level's timers set: it reaches play
+        // ($4C6D) on the next frame.
+        let level_timers = timers.iter().any(|(_, t)| t.ext[1] == 0x2023 && t.ext[0] > 0);
+        let ending = state == 11 && !setting_up && bartender_y != 0 && !level_timers;
+        let finishing = state == 11 && !setting_up && bartender_y != 0 && level_timers;
+        if (ending || finishing) && let Some((fid, mut fb)) = flow {
+            fb.ext[3] = (fb.ext[3] & !0xff) | if ending { 15 } else { 10 };
+            cx.set_body(fid, fb);
+        }
+        // A mug fallen off a bar's end ($07A5, $081B) puts the game in state
+        // 12, a life lost: $236E steps it by E6FF. The bars stand still.
+        // 0 ($2389): the timers emptied ($5DEC) and the tip taken (E25E),
+        // E706 13. 1 ($23F5): the fallen mug drops 2 a frame while E706
+        // counts down. 2 ($241D): 12 more frames of its picture (E709).
+        // 3 ($2441): state 9, the level's setup again ($22F7, $4B3F), whose
+        // $5F31 empties the objects on the next frame.
+        let mut life_lost = state == 12 || state == 9;
+        if state == 12 && let Some((fid, mut fb)) = flow {
+            let sub = (fb.ext[3] >> 16) & 0xff;
+            let mut e706 = (fb.ext[3] >> 24) & 0xff;
+            let mut e709 = (fb.ext[2] >> 8) & 0xff;
+            let mut next_sub = sub;
+            match sub {
+                0 => {
+                    for (n, (_, t)) in timers.iter_mut().enumerate() {
+                        t.ext[0] = 0;
+                        t.ext[1] = 0;
+                        timers_changed.push(n);
+                    }
+                    if let Some((Some(id), _)) = tip.take() {
+                        tips_gone.push(id);
+                    }
+                    tip = None;
+                    e706 = 13;
+                    next_sub = 1;
+                }
+                1 => {
+                    e706 = (e706 - 1) & 0xff;
+                    if e706 != 0 {
+                        for (_, b) in bodies.iter_mut().filter(|(_, b)| b.kind == mug_k && b.ext[3] & 0x100 != 0) {
+                            b.y = Fx::from_int(b.y.floor() - 2);
+                        }
+                    } else {
+                        e706 = 1;
+                        e709 = 12;
+                        next_sub = 2;
+                    }
+                }
+                2 => {
+                    e706 = 1;
+                    e709 = (e709 - 1) & 0xff;
+                    if e709 == 0 {
+                        next_sub = 3;
+                    }
+                }
+                3 if (fb.ext[3] >> 8) & 3 != 1 => {
+                    // $24B9: unless the bar shown (E3B8) is the sports bar,
+                    // $24C0 calls $5E99, which empties the list at E11A and
+                    // waits for the next frame ($60F6, the main loop's own
+                    // frame wait), so $24CC comes a frame later
+                    // (tapper.l13.001: E6FF 3 on 19599, state 9 on 19601).
+                    next_sub = 6;
+                }
+                _ => {
+                    // $24CC: back to the level's setup (lives left; game
+                    // over isn't modelled).
+                    fb.ext[3] = (fb.ext[3] & !0xff) | 9;
+                    next_sub = 3;
+                }
+            }
+            fb.ext[3] = (fb.ext[3] & !0xffff_0000) | (next_sub << 16) | (e706 << 24);
+            fb.ext[2] = (fb.ext[2] & !0xff00) | (e709 << 8);
+            cx.set_body(fid, fb);
+        }
+        let sub = flow.map_or(0, |(_, b)| (b.ext[3] >> 16) & 0xff);
+        if state == 9 && sub == 3 && let Some((fid, mut fb)) = flow {
+            // The main loop reaches the setup ($22F7) a frame after $24D1.
+            fb.ext[3] = (fb.ext[3] & !0x00ff_0000) | (4 << 16);
+            cx.set_body(fid, fb);
+            life_lost = true;
+        } else if state == 9 && let Some((fid, mut fb)) = flow {
+            // $4B4D: the setup's $5F31 empties the objects, the bartender's
+            // among them; its waits ($232B) are states 15 and 16. The
+            // level's RAM is cleared ($4B65) after the bartender's walk on
+            // ($5404: waits of 2, 30 and 5 frames, and 100 more before a
+            // game's first level, $5575), so the setup's second half comes
+            // that many frames on.
+            for (id, _) in &bodies {
+                removed.push(*id);
+            }
+            if let Some((Some(id), _)) = tip.take() {
+                tips_gone.push(id);
+            }
+            tip = None;
+            if let Some(pk) = player_k
+                && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == pk)
+            {
+                let mut pb = *pb;
+                pb.y = Fx::ZERO;
+                pb.x = Fx::ZERO;
+                cx.set_body(pid, pb);
+            }
+            let wait = 2 + 30 + 5 + if cleared == 0 { 100 } else { 0 };
+            fb.ext[3] = (fb.ext[3] & !0xffff_00ff) | 15 | (5 << 16) | (wait << 24);
+            cx.set_body(fid, fb);
+            life_lost = true;
+        } else if (state == 15 || state == 16) && sub == 5 && let Some((fid, mut fb)) = flow {
+            let left = ((fb.ext[3] >> 24) & 0xff) - 1;
+            if left <= 0 && (fb.ext[3] >> 8) & 3 == 3 {
+                // The setup clears the level's RAM on this frame ($4B65) and
+                // waits for the next ($4B71). In the space bar (E3B8 3) $575B,
+                // called at $4B8B, then draws and waits 30 frames ($232B)
+                // and $5E99 waits one more ($60F6): the bartender comes 32
+                // frames after the clear, not 1 (tapper.l13.001: E6F2 0 on
+                // 19640, the bartender at his bar on 19672).
+                fb.ext[3] = (fb.ext[3] & !0xffff_0000) | (7 << 16) | (31 << 24);
+            } else if left <= 0 {
+                // The setup clears the level's RAM on this frame: tapper_flow
+                // places the bartender on the next, as at a level's start.
+                fb.ext[3] &= !0xffff_0000;
+                fb.ext[0] = 1;
+            } else {
+                fb.ext[3] = (fb.ext[3] & !0xff00_0000) | (left << 24);
+            }
+            cx.set_body(fid, fb);
+        } else if (state == 15 || state == 16) && sub == 7 && let Some((fid, mut fb)) = flow {
+            let left = ((fb.ext[3] >> 24) & 0xff) - 1;
+            if left <= 0 {
+                fb.ext[3] &= !0xffff_0000;
+                fb.ext[0] = 1;
+            } else {
+                fb.ext[3] = (fb.ext[3] & !0xff00_0000) | (left << 24);
+            }
+            cx.set_body(fid, fb);
+        }
+        let playing = !ending && !life_lost && ![15, 16].contains(&state);
+        if !playing && !life_lost {
+            for (id, _) in &bodies {
+                removed.push(*id);
+            }
+            if let Some((Some(id), _)) = tip.take() {
+                tips_gone.push(id);
+            }
+        }
+        let mut throws: Vec<Body> = Vec::new();
+        if playing {
+        // $0B63: the bartender catches an empty mug within 15 each way.
+        if let Some(pk) = player_k
+            && let Some(pb) = cx.world.bodies.iter().find(|b| b.kind == pk)
+        {
+            let (px, py) = (pb.x.floor(), pb.y.floor());
+            let reach = bp(cx, "hand_reach");
+            for (id, b) in bodies.iter().filter(|(_, b)| b.kind == mug_k) {
+                let (x, y) = (b.x.floor(), b.y.floor());
+                // $0BDC: an empty mug is one whose flags (+4) have bit 0.
+                let empty = b.ext[3] & 1 != 0;
+                if empty && (y - py).abs() < reach && (x - px).abs() < reach {
+                    removed.push(*id);
+                }
+            }
+            // $0B86 to $0BD4, after the mugs: a tip (picture $4D at
+            // E260) within reach is picked up and E72F, the tips left,
+            // goes down by one. Its points ($5EE7) and the show it starts
+            // ($14E7) aren't modelled.
+            if let Some((tid, t)) = tip
+                && (t.y.floor() - py).abs() < reach
+                && (t.x.floor() - px).abs() < reach
+            {
+                if let Some(id) = tid {
+                    tips_gone.push(id);
+                }
+                tip = None;
+                tips_left = (tips_left - 1) & 0xff;
+            }
+        }
+
+        // $0742: each mug moves, in slot order; a full one is caught by the
+        // first customer of its bar standing within reach ($0827 to $0871).
+        // A mug past its bar's end falls: an empty one past the bartender's
+        // end ($0790 to $07A2: 19 in from the left end moving left, 10 out
+        // from the right end moving right), a full one past the far end
+        // ($0804 to $0818: at the left end moving left, 28 out from the
+        // right end moving right). The game is then in state 12 and the
+        // mugs' move stops there ($07AE, $0824).
+        let mut order: Vec<usize> = (0..bodies.len()).filter(|&k| bodies[k].1.kind == mug_k).collect();
+        order.sort_by_key(|&k| if bodies[k].1.ext[2] == 0 { 99 } else { bodies[k].1.ext[2] });
+        let mut fell = false;
+        for k in order {
+            let (id, mut b) = bodies[k];
+            if b.kind != mug_k || removed.contains(&id) {
+                continue;
+            }
+            // $074F to $0766: the mug's flags (+4): bit 0 empty, bit 3
+            // moving left, its bar above.
+            let bar = (b.ext[3] >> 4) & 3;
+            let left_tap = b.ext[3] & 8 != 0;
+            let empty = b.ext[3] & 1 != 0;
+            let x16 = b.x.floor() * 256 + (b.ext[1] & 0xff);
+            let speed = if empty { empty_speed * 256 } else { full_speed };
+            let x16 = if left_tap { x16 - speed } else { x16 + speed };
+            b.x = Fx::from_int((x16 >> 8) & 0xff);
+            b.ext[1] = x16 & 0xff;
+            let h = b.x.floor();
+            let (lo, hi) = Self::ends(cx, bar);
+            let falls = match (empty, left_tap) {
+                (true, true) => (lo + 0x13) & 0xff >= h,
+                (true, false) => h > (hi + 0x0A) & 0xff,
+                (false, true) => h > (hi + 0x1C) & 0xff,
+                (false, false) => lo >= h,
+            };
+            if falls {
+                b.ext[3] |= 0x100;
+                bodies[k].1 = b;
+                fell = true;
+                break;
+            }
+            bodies[k].1 = b;
+            if empty {
+                continue;
+            }
+            let mx = b.x.floor();
+            for j in 0..bodies.len() {
+                let (cid, mut c) = bodies[j];
+                if c.kind != cust_k || removed.contains(&cid) {
+                    continue;
+                }
+                if Self::bar_of(cx, c.y.floor()) != bar {
+                    continue;
+                }
+                let d = (c.x.floor() + 8 - mx).rem_euclid(256);
+                if d >= bp(cx, "catch_reach") {
+                    continue;
+                }
+                let state = c.ext[0] & 0xff;
+                if ![5, 3, 4, 0].contains(&state) {
+                    continue;
+                }
+                // $09C7: pushed back, for 14 frames plus a draw below 20.
+                let r = draw_below(cx, "customer_wait_start", bp(cx, "pushed_spread"));
+                c.ext[0] = (c.ext[0] & !0xff) | 1;
+                c.ext[1] = bp(cx, "pushed_base") + r;
+                bodies[j].1 = c;
+                removed.push(id);
+                break;
+            }
+        }
+
+        // $0B43: each customer's state. Its wait and drink are its slot's
+        // record's (E4B4, E4BB), which the speed-up changes.
+        for k in 0..bodies.len() {
+            let (id, mut c) = bodies[k];
+            if c.kind != cust_k || removed.contains(&id) {
+                continue;
+            }
+            let slot = (c.ext[3] >> 16) & 0xff;
+            let rec_bar = rec_of(&recs, slot).map_or_else(|| Self::bar_of(cx, c.y.floor()), |n| recs[n].1.ext[1] & 0xff);
+            let (wait, drink) = match rec_of(&recs, slot) {
+                Some(n) => (recs[n].1.ext[0] & 0xff, (recs[n].1.ext[0] >> 8) & 0xff),
+                None => (c.ext[2] & 0xff, (c.ext[2] >> 8) & 0xff),
+            };
+            let state = c.ext[0] & 0xff;
+            let facing = (c.ext[0] >> 8) & 1;
+            let t = (c.ext[1] - 1) & 0xff;
+            c.ext[1] = t;
+            match state {
+                0 => {
+                    if t == 0 {
+                        c.ext[0] = (c.ext[0] & !0xff) | 5;
+                        c.ext[1] = bp(cx, "walk_frames");
+                    }
+                }
+                5 => {
+                    if t == 0 {
+                        c.ext[0] &= !0xff;
+                        c.ext[1] = wait;
+                    } else {
+                        let dx = if facing == 1 { -walk } else { walk };
+                        c.x = Fx::from_int((c.x.floor() + dx) & 0xff);
+                    }
+                }
+                1 => {
+                    if t == 0 {
+                        // $106B: a draw below 6, then drinking.
+                        let _ = cx.draw("pushed_drink");
+                        c.ext[0] = (c.ext[0] & !0xff) | 2;
+                        c.ext[1] = drink;
+                        c.ext[3] = (c.ext[3] & !0xffff) | drink | (bp(cx, "drink_turns") << 8);
+                    } else {
+                        let a = ((full_speed >> 8) + 2) & 0xff;
+                        let a = if facing == 1 { (256 - a) & 0xff } else { a };
+                        c.x = Fx::from_int((c.x.floor() + a) & 0xff);
+                    }
+                }
+                2 => {
+                    if t == 0 {
+                        let turns = (c.ext[3] >> 8) & 0xff;
+                        if turns != 0 {
+                            c.ext[1] = c.ext[3] & 0xff;
+                            c.ext[3] = (c.ext[3] & !0xffff) | (c.ext[3] & 0xff) | ((turns - 1) << 8);
+                        } else {
+                            // $10C0: the empty mug, 3 above the line where
+                            // the customer holds it, 16 toward the tap.
+                            let r = draw_below(cx, "throw_wait", bp(cx, "throw_spread"));
+                            c.ext[0] = (c.ext[0] & !0xff) | 3;
+                            c.ext[1] = r + bp(cx, "throw_base");
+                            let hx = c.x.floor() + if facing == 1 { -16 } else { 16 };
+                            // $10E2: the first of the 9 mug slots from E2FE
+                            // whose y is 0, none when all are taken. A slot
+                            // emptied earlier this frame is the same object
+                            // written again (its x's fraction, +6, kept).
+                            let held = |n: i64| {
+                                bodies.iter().any(|(id, b)| {
+                                    b.kind == mug_k && b.ext[2] == n + 1 && !removed.contains(id)
+                                }) || throws.iter().any(|b| b.ext[2] == n + 1)
+                            };
+                            // $1108 to $1123: its flags, the record's bar
+                            // above, empty, and moving left on a bar whose
+                            // tap is on the left.
+                            let flags = (rec_bar << 4) | 1 | if facing == 1 { 8 } else { 0 };
+                            if let Some(n) = (0..9).find(|&n| !held(n)) {
+                                let (x, y) = (Fx::from_int(hx & 0xff), Fx::from_int(c.y.floor() - 3));
+                                if let Some(j) = bodies.iter().position(|(id, b)| {
+                                    b.kind == mug_k && b.ext[2] == n + 1 && removed.contains(id)
+                                }) {
+                                    let id = bodies[j].0;
+                                    removed.retain(|r| *r != id);
+                                    let b = &mut bodies[j].1;
+                                    b.x = x;
+                                    b.y = y;
+                                    b.facing_left = facing == 1;
+                                    b.ext[3] = flags;
+                                } else {
+                                    let mut b = gp_sim::systems::new_body(cx.spec, cx.world, mug_k, x, y, facing == 1);
+                                    b.ext[2] = n + 1;
+                                    b.ext[3] = flags;
+                                    throws.push(b);
+                                }
+                            }
+                        }
+                    }
+                }
+                3 => {
+                    if t == 0 {
+                        c.ext[0] = (c.ext[0] & !0xff) | 4;
+                        c.ext[1] = bp(cx, "after_throw");
+                        // $20DE, called at $1142: while the level has tips
+                        // left (E72F), each throw counts E72E down; at 0 a
+                        // tip is left on the bar ($20F4: 8 above the
+                        // customer, 12 further from the far end's picture
+                        // when within 12 of it) and the count starts again
+                        // at a draw below 3 plus 4 ($213B).
+                        if tips_left != 0 {
+                            tip_count = (tip_count - 1) & 0xff;
+                            if tip_count == 0
+                                && let Some(tk) = tip_k
+                            {
+                                let bar = Self::bar_of(cx, c.y.floor());
+                                let left = Self::tap_left(cx, bar);
+                                // $2107 to $211D: the x of the bar's far
+                                // end, the object at E366 plus 4 a bar (the
+                                // tap's word 0).
+                                let end = cx.kind("tap").map_or(0, |k| {
+                                    cx.world
+                                        .bodies
+                                        .iter()
+                                        .filter(|b| b.kind == k)
+                                        .nth(usize::try_from(bar).unwrap_or(0))
+                                        .map_or(0, |b| b.ext[0])
+                                });
+                                let cxp = c.x.floor();
+                                // The sums are a byte's: a far end at 253
+                                // plus 12 is 9 ($2122, $212D).
+                                let x = if left {
+                                    if (end - 12) & 0xff >= cxp { cxp } else { cxp - 12 }
+                                } else if (end + 12) & 0xff < cxp {
+                                    cxp
+                                } else {
+                                    cxp + 12
+                                };
+                                // The same object, written again: a tip
+                                // still on the bar moves to the new place.
+                                let old = tip.take().and_then(|(id, _)| id);
+                                let nb = gp_sim::systems::new_body(
+                                    cx.spec,
+                                    cx.world,
+                                    tk,
+                                    Fx::from_int(x & 0xff),
+                                    Fx::from_int(c.y.floor() - 8),
+                                    false,
+                                );
+                                tip = Some((old, nb));
+                                let r = draw_below(cx, "tip_wait", 3);
+                                tip_count = r + 4;
+                            }
+                        }
+                    }
+                }
+                4 => {
+                    if t == 0 {
+                        c.ext[0] &= !0xff;
+                        c.ext[1] = wait;
+                    }
+                }
+                _ => {}
+            }
+            bodies[k].1 = c;
+        }
+
+        // $0890: a customer pushed past the bar's far end is served and
+        // goes, and its slot's arrival comes again after the respawn wait
+        // and 16 frames a level cleared ($091D to $094B).
+        for (id, c) in &bodies {
+            if c.kind != cust_k || removed.contains(id) {
+                continue;
+            }
+            let bar = Self::bar_of(cx, c.y.floor());
+            let (lo, hi) = Self::ends(cx, bar);
+            let x = c.x.floor();
+            // $08C3 and $08FD: a $DE customer's end is 4 further in.
+            let slot = (c.ext[3] >> 16) & 0xff;
+            let tall = rec_of(&recs, slot).is_some_and(|n| recs[n].1.ext[3] == 0xDE);
+            let (lo, hi) = if tall { (lo - 4, hi + 4) } else { (lo, hi) };
+            let served = if (c.ext[0] >> 8) & 1 == 0 { x < lo } else { x - 31 >= hi };
+            if served {
+                removed.push(*id);
+                let slot = usize::try_from((c.ext[3] >> 16) & 0xff).unwrap_or(0);
+                if let Some(&routine) = arrivals.get(slot) {
+                    let d = w_word + 16 * cleared.min(11);
+                    schedule(&mut timers, &mut timers_changed, &mut new_timers, cx, d, routine);
+                }
+            }
+        }
+
+        if fell && let Some((fid, mut fb)) = flow {
+            fb.ext[3] = (fb.ext[3] & !0xffff_00ff) | 12;
+            cx.set_body(fid, fb);
+        }
+        }
+
+        // $60C1, after the play routine: each timer counts down; at 0 its
+        // routine runs, so a customer arriving waits from the next frame. A customer
+        // slot's arrival ($15FF on), the waits' speed-up ($2023) and the
+        // respawn wait's changes ($1B2E, $1AE5); the rest aren't modelled.
+        let mut fired: Vec<i64> = Vec::new();
+        for n in 0..timers.len() {
+            let t = &mut timers[n].1;
+            if t.ext[0] > 0 {
+                t.ext[0] -= 1;
+                timers_changed.push(n);
+                if t.ext[0] == 0 {
+                    fired.push(t.ext[1]);
+                }
+            }
+        }
+        for routine in fired {
+            if let Some(k) = arrivals.iter().position(|&a| a == routine) {
+                // The slot's object from its start row; on a bar whose tap
+                // is on the left, mirrored ($190F: x = $EE - x).
+                let row = &starts[k * 8..k * 8 + 8];
+                // $1B74: a customer whose record's picture set is $DE
+                // stands 3 higher.
+                let tall = recs
+                    .iter()
+                    .find(|(_, r)| r.ext[2] == k as i64)
+                    .is_some_and(|(_, r)| r.ext[3] == 0xDE);
+                let (y, x0) = (row[0] - if tall { 3 } else { 0 }, row[3]);
+                let bar = Self::bar_of(cx, y);
+                let left = layout & (1 << bar) != 0;
+                let x = if left { 0xEE - x0 } else { x0 };
+                let mut c = gp_sim::systems::new_body(cx.spec, cx.world, cust_k, Fx::from_int(x), Fx::from_int(y), left);
+                // $1B58: waiting, for 16 frames and a draw below 16.
+                let r = draw_below(cx, "arrival_wait", 16);
+                c.ext[0] = i64::from(left) << 8;
+                c.ext[1] = r + 16;
+                c.ext[3] = (k as i64) << 16;
+                bodies.push((next_id, c));
+                added.push(next_id);
+                next_id += 1;
+            } else if routine == 0x2023 {
+                // $2023: every customer's wait shortens by 2, 4, 7 or 10 by
+                // its bar, unless it would reach 0; then again later.
+                for (_, r) in &mut recs {
+                    let wait = r.ext[0] & 0xff;
+                    let e = [2, 4, 7, 10][usize::try_from((r.ext[1] & 0xff).min(3)).unwrap_or(3)];
+                    let a = wait - e;
+                    if wait != 1 && a > 0 {
+                        r.ext[0] = (r.ext[0] & !0xff) | a;
+                    }
+                }
+                let d = row_word(level, 2);
+                schedule(&mut timers, &mut timers_changed, &mut new_timers, cx, d, 0x2023);
+            } else if routine == 0x1B2E {
+                w_word = (row_word(level, 0) + 0x5A) & 0xffff;
+                schedule(&mut timers, &mut timers_changed, &mut new_timers, cx, 0x1FE, 0x1AE5);
+            } else if routine == 0x1AE5 {
+                w_word = row_word(level, 0);
+            }
+        }
+
+        cx.me.ext[3] = w_word | (cleared << 16) | (level << 24);
+        cx.me.ext[0] = walk | (tip_count << 8) | (tips_left << 16) | (tip_setting << 24);
+        for (id, b) in &bodies {
+            if added.contains(id) {
+                continue;
+            }
+            if removed.contains(id) {
+                cx.remove(*id);
+            } else {
+                cx.set_body(*id, *b);
+            }
+        }
+        // New bodies, in the order their ids were given: each spawned,
+        // then given its words.
+        let mut spawned: Vec<Body> = bodies
+            .iter()
+            .filter(|(id, _)| added.contains(id))
+            .map(|(_, b)| *b)
+            .collect();
+        spawned.extend(throws);
+        spawned.extend(timers.iter().filter(|(id, _)| *id == usize::MAX).map(|(_, t)| *t));
+        let first = cx.world.bodies.len();
+        for b in &spawned {
+            cx.spawn(b.kind, b.x, b.y, b.facing_left);
+        }
+        for (n, b) in spawned.iter().enumerate() {
+            let mut b = *b;
+            if removed.contains(&(first + n)) {
+                b.alive = false;
+            }
+            cx.set_body(first + n, b);
+        }
+        timers_changed.sort_unstable();
+        timers_changed.dedup();
+        for n in timers_changed {
+            if timers[n].0 != usize::MAX {
+                cx.set_body(timers[n].0, timers[n].1);
+            }
+        }
+        for (id, r) in &recs {
+            cx.set_body(*id, *r);
+        }
+        // The tip last, so the ids given above stay as counted.
+        for id in tips_gone {
+            cx.remove(id);
+        }
+        match tip {
+            Some((Some(id), t)) => cx.set_body(id, t),
+            Some((None, t)) => {
+                let n = cx.world.bodies.len();
+                cx.spawn(t.kind, t.x, t.y, t.facing_left);
+                cx.set_body(n, t);
+            }
+            None => {}
+        }
+    }
+
+    fn describe(&self) -> Vec<Record> {
+        vec![Record {
+            name: "tapper.bars",
+            version: env!("CARGO_PKG_VERSION"),
+            carrier: Carrier::Entity,
+            system: "platformer.enemies",
+            class: "flow",
+            implementation: "gp-ext-tapper::Bars",
+            like: "",
+            about: "Each frame after the bartender: empty mugs caught, mugs moved and caught by customers, the customers' waits, walks, drinks and throws, and customers served off the bar's end",
+            params: BARS_PARAMS,
+            state: &["ext[0] walk, plus E72E, E72F and E006 a byte each above it", "ext[1] empty mug speed", "ext[2] full mug speed, 8.8"],
+            reads: &["mug", "customer", "player", "tap.facing", "tip"],
+            writes: &["mug", "customer", "tip"],
+            built_from: &[Primitive::Timer, Primitive::Condition, Primitive::Quantity],
             ..Record::EMPTY
         }]
     }

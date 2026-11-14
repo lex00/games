@@ -26,3 +26,87 @@ region = "gfx2"
 first = 0
 count = 256
 per_row = 16
+
+# The program's data tables the hooks read (gp_assets::arcade byte-rows),
+# by CPU address in maincpu, found with gp code listing and gp code tables
+# on tapper.l8.001; `at` gives a table's place in a set whose program keeps
+# it elsewhere (found the same way on that set).
+
+# Each customer slot's first object, 16 slots of 8 bytes (y, flags,
+# picture, x, then its mug's), copied in by the slot's arrival ($15FF on).
+[[asset]]
+name = "customer_starts"
+format = "byte-rows"
+region = "maincpu"
+offset = 0xC421
+count = 16
+width = 8
+
+[asset.at]
+tappera = 0xC411
+rbtapper = 0xC5A1
+
+# Each customer slot's arrival routine, a word a slot ($0987, read at $093C
+# and $4C34): a timer naming one of them brings that slot's customer.
+[[asset]]
+name = "arrivals"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x0987
+count = 16
+width = 2
+
+# The customer slots that arrive at a level's start: a word a level
+# (levels cleared, up to 9) pointing into the lists below ($4C19).
+[[asset]]
+name = "start_list_ptrs"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4CE5
+count = 10
+width = 2
+
+[asset.at]
+rbtapper = 0x4E75
+
+# The lists: slot numbers, each list ended by $FF ($4C2D).
+[[asset]]
+name = "start_lists"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4C83
+count = 98
+width = 1
+
+[asset.at]
+rbtapper = 0x4E13
+
+# A level's times, 12 bytes a level by E4A9 ($4E50): the respawn wait
+# (E3B1), the times to the waits' speed-up ($2023) and two other events
+# ($1B02, $2209), and from the sixth level on a second wait and when it
+# starts ($1B2E).
+[[asset]]
+name = "level_times"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4EAB
+count = 9
+width = 12
+
+[asset.at]
+rbtapper = 0x503B
+
+# The customer slots' records a level starts with, by the bar shown: four
+# blocks of 16 records of 32 bytes, copied to E4B2 by the setup ($4A65,
+# through the pointers at $4AA0, which point at these blocks in order).
+[[asset]]
+name = "record_blocks"
+format = "byte-rows"
+region = "maincpu"
+offset = 0xBC21
+count = 64
+width = 32
+
+[asset.at]
+tappera = 0xBC11
+rbtapper = 0xBDA1

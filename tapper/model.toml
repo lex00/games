@@ -23,6 +23,109 @@ right = "right"
 start1 = "start1"
 up = "up"
 
+[assets.arrivals]
+kind = "rows"
+role = "behavior"
+description = "Each customer slot's arrival routine, a word a slot: a timer naming one brings that slot's customer (the program's table, lifted from the player's romset)"
+
+[assets.arrivals.from]
+source = "tapper"
+asset = "arrivals"
+
+[assets.customer_starts]
+kind = "rows"
+role = "behavior"
+description = "Each customer slot's first object, 8 bytes a slot, copied in by its arrival (the program's table, lifted from the player's romset)"
+
+[assets.customer_starts.from]
+source = "tapper"
+asset = "customer_starts"
+
+[assets.level_times]
+kind = "rows"
+role = "behavior"
+description = "A level's times, 12 bytes a level: the respawn wait, the waits' speed-up and the second wait (the program's table, lifted from the player's romset)"
+
+[assets.level_times.from]
+source = "tapper"
+asset = "level_times"
+
+[assets.record_blocks]
+kind = "rows"
+role = "behavior"
+description = "The customer slots' records a level starts with, 16 of 32 bytes for each bar shown (the program's table, lifted from the player's romset)"
+
+[assets.record_blocks.from]
+source = "tapper"
+asset = "record_blocks"
+
+[assets.start_list_ptrs]
+kind = "rows"
+role = "behavior"
+description = "The customer slots that arrive at a level's start: a word a level pointing into start_lists (the program's table, lifted from the player's romset)"
+
+[assets.start_list_ptrs.from]
+source = "tapper"
+asset = "start_list_ptrs"
+
+[assets.start_lists]
+kind = "rows"
+role = "behavior"
+description = "The slot lists a level's start brings, each ended by $FF (the program's table, lifted from the player's romset)"
+
+[assets.start_lists.from]
+source = "tapper"
+asset = "start_lists"
+
+[entities.bars]
+description = "The bars' play each frame after the bartender's (tapper_bars): empty mugs caught by him ($0B63), mugs moved and caught by customers ($0742), the customers' states ($0B43) and their ends of the bar ($0890). A body with no box"
+ext = "tapper_bars"
+no_slot = true
+role = "npc"
+size = [1, 1]
+
+[entities.bars.ext_params]
+after_throw = 14
+bar_inset = 16
+bar_left = 8
+bar_right = 201
+catch_reach = 25
+drink_turns = 6
+hand_reach = 15
+line = 57
+line_step = 48
+pushed_base = 14
+pushed_spread = 20
+setup_late_bars = 12
+throw_base = 5
+throw_spread = 15
+walk_frames = 12
+
+[entities.bars.ext_rows]
+arrivals = "arrivals"
+customer_starts = "customer_starts"
+level_times = "level_times"
+record_blocks = "record_blocks"
+start_list_ptrs = "start_list_ptrs"
+start_lists = "start_lists"
+
+[entities.bars.hitbox]
+h = 1
+w = 1
+x = 0
+y = 0
+
+[entities.customer]
+description = "A customer, the game's objects from E262, 8 bytes each (the customer, then the mug it holds), 4 a bar, with its record at E4B2, 0x20 bytes each: waits, walks toward the tap, is pushed back by a mug it catches, drinks and throws the empty mug back (tapper_bars)"
+role = "npc"
+size = [16, 16]
+
+[entities.customer.hitbox]
+h = 16
+w = 16
+x = 0
+y = 0
+
 [entities.flow]
 description = "The game's flow between plays, a body with no box: a level's start ($4B3F), which puts the taps by the level's layout and the bartender at bar 2 on the frame after the setup clears the level's RAM (tapper_flow)"
 ext = "tapper_flow"
@@ -44,6 +147,17 @@ w = 1
 x = 0
 y = 0
 
+[entities.mug]
+description = "A mug, the game's objects from E2FE, 8 bytes each (y, flags, picture, x, then +4 flags and +6 the x's fraction): full ones sent by the bartender ($13CC), empty ones thrown back by customers ($10C0); tapper_bars moves them"
+role = "npc"
+size = [16, 16]
+
+[entities.mug.hitbox]
+h = 16
+w = 16
+x = 0
+y = 0
+
 [entities.player]
 description = "The bartender, the game's object at E2E6 (y, flags, picture, x): walks along his bar, moves to the next bar's tap on up or down, pours at the tap and steps back when a mug is sent (tapper_bartender)"
 ext = "tapper_bartender"
@@ -55,6 +169,10 @@ bob_frames = 3
 far_left = 32
 far_right = 232
 four_way = 1
+mug_above = 4
+mug_out = 24
+mug_out_left = 27
+mug_speed = 5
 pour_frames = 5
 reach = 6
 row_bottom = 48
@@ -72,8 +190,20 @@ w = 16
 x = 0
 y = 0
 
+[entities.record]
+description = "A customer slot's record at E4B2, 0x20 bytes each, kept while its customer is away: its wait and drink, bar and facing, and slot number; the waits' speed-up changes it. A body with no box, never measured"
+no_slot = true
+role = "npc"
+size = [1, 1]
+
+[entities.record.hitbox]
+h = 1
+w = 1
+x = 0
+y = 0
+
 [entities.tap]
-description = "A bar's tap, the game's objects at E346, E34A, E34E and E352 (one a bar, bottom first): its x and whether it is on the bar's left end (its flags' bit 4, the picture mirrored). Placed from the game's RAM when a clip starts; the bartender reads it"
+description = "A bar's tap, the game's objects at E346, E34A, E34E and E352 (one a bar, bottom first): its x and whether it is on the bar's left end (its flags' bit 4, the picture mirrored). Placed from the game's RAM when a clip starts; the bartender reads it. Its word 0 is the x of its bar's far end (the object at E366 plus 4 a bar), which the tip's place reads"
 no_slot = true
 role = "npc"
 size = [16, 16]
@@ -81,6 +211,29 @@ size = [16, 16]
 [entities.tap.hitbox]
 h = 1
 w = 1
+x = 0
+y = 0
+
+[entities.timer]
+description = "One of the game's 24 timers at E417, 6 bytes each (frames left, then the routine it runs): a start carries them in, and tapper_bars counts them down and runs the arrivals and the level's timed changes they name. A body with no box, never measured"
+no_slot = true
+role = "npc"
+size = [1, 1]
+
+[entities.timer.hitbox]
+h = 1
+w = 1
+x = 0
+y = 0
+
+[entities.tip]
+description = "A tip, the object at E25E (y, flags, picture $4D, x): left on the bar by a customer's throw while the level has tips left ($20DE), picked up by the bartender within reach ($0B86); tapper_bars places and takes it"
+role = "npc"
+size = [16, 16]
+
+[entities.tip.hitbox]
+h = 16
+w = 16
 x = 0
 y = 0
 
@@ -120,6 +273,11 @@ entity = "tap"
 x = 0
 y = 192
 
+[[levels.main.spawn]]
+entity = "bars"
+x = 0
+y = 0
+
 [counters.cleared]
 description = "Levels cleared, E4A8: 0 at a game's start, one more at each level's end ($5681), bonus rounds included"
 
@@ -138,6 +296,78 @@ description = "The bar shown, E3B8: 0 the saloon, 1 the sports bar, 2 the punk b
 [present.screen]
 size = [512, 480]
 
+[evidence."assets.arrivals"]
+source = "observed"
+confidence = 80
+note = "Found with gp code listing and gp code tables on tapper.l8.001; the asset map gives its place in each set"
+
+[[evidence."assets.arrivals".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."assets.customer_starts"]
+source = "observed"
+confidence = 80
+note = "Found with gp code listing and gp code tables on tapper.l8.001; the asset map gives its place in each set"
+
+[[evidence."assets.customer_starts".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."assets.level_times"]
+source = "observed"
+confidence = 80
+note = "Found with gp code listing and gp code tables on tapper.l8.001; the asset map gives its place in each set"
+
+[[evidence."assets.level_times".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."assets.record_blocks"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.l8.001: the setup's $4A65 copies 0x200 bytes to E4B2 from the block the pointers at $4AA0 name by E3B8, then sets each record's facing from E3AF"
+
+[[evidence."assets.record_blocks".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."assets.start_list_ptrs"]
+source = "observed"
+confidence = 80
+note = "Found with gp code listing and gp code tables on tapper.l8.001; the asset map gives its place in each set"
+
+[[evidence."assets.start_list_ptrs".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."assets.start_lists"]
+source = "observed"
+confidence = 80
+note = "Found with gp code listing and gp code tables on tapper.l8.001; the asset map gives its place in each set"
+
+[[evidence."assets.start_lists".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."entities.bars"]
+source = "observed"
+confidence = 60
+note = "Read with gp code listing on tapper.l8.001 (the routines the clip ran, with each branch's ways): the play routine $0660 calls $06A4, $0B63, $0742, $0B43, $0890 in that order; the bar ends are the table at $0977 (gp code tables, read through gp query's ram[] on the board): left 8, 24, 40, 56 and right 201, 185, 169, 153 for bars 0 to 3. A catch is the customer's x plus 8 less the mug's x below 25 ($0850) in states 0, 3, 4 or 5; pushed back 14 frames plus a draw below 20 ($09D3 to $09E2), at the full mug's speed plus 2 ($104D); 6 more turns of drinking ($1325); the empty mug 16 toward the tap and 3 above the line ($10F7), a wait of a draw below 15 plus 5 ($10C4); 14 frames after ($1134). New customers, tips, a mug falling and a customer reaching the bartender aren't modelled yet"
+
+[[evidence."entities.bars".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."entities.bars.ext_params.setup_late_bars"]
+source = "observed"
+confidence = 90
+note = "With the bar shown 2 or 3 (the punk bar: tapper.l6.001, l7.001, l8.001; the space bar: l10.001 to l13.001) the setup's timers count from the next frame, with 0 or 1 (l1 to l5, l14, l15) from the setup's own frame. The code says why: after the timers are set ($4C43) the setup calls $4937 ($4C4B), which by the bar shown (the table at $496E) returns at once for the saloon and the sports bar and runs a drawing routine for the punk bar and the space bar. Each of those starts with $5E99, which empties the list at E11A and then calls $60F6, the main loop's own frame wait (it spins until the interrupt sets E16C), so the rest of the setup and the main loop's next timer count ($60C1) come a frame later. A program wait, not a board quirk, so no switch"
+
+[[evidence."entities.bars.ext_params.setup_late_bars".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."entities.customer"]
+source = "observed"
+confidence = 60
+note = "gp code listing on tapper.l8.001: the customers' handlers, picked by state through $100A: waiting and then walking 12 frames, walking at E3B3 a frame, pushed back, drinking, and the two waits after the throw"
+
+[[evidence."entities.customer".refs]]
+at = "clip:tapper.l8.001"
+
 [evidence."entities.flow"]
 source = "observed"
 confidence = 80
@@ -148,6 +378,14 @@ at = "clip:tapper.l1.001"
 
 [[evidence."entities.flow".refs]]
 at = "clip:tapper.l3.001"
+
+[evidence."entities.mug"]
+source = "observed"
+confidence = 60
+note = "gp element inputs on tapper.l1.001: the send ($13CC, 'send' in labels.toml) writes the mug's y from the bartender's (+4, $149E) and the speed E6FE = $FB, -5 ($14D3); the mugs' move ($0742) adds E6FE:E6FD to x at $07CC to $07E8 every frame, from 201 on the send's frame (225, the tap, less 24) to 196 the same frame. Catching, empty mugs and breaking aren't modelled yet"
+
+[[evidence."entities.mug".refs]]
+at = "clip:tapper.l1.001"
 
 [evidence."entities.player"]
 source = "observed"
@@ -184,6 +422,38 @@ confidence = 90
 note = "The cabinet's stick moves four ways (MAME's PORT_4WAY filter, held to MAME with tapper-diagonal-4way-a): the profile switch any_way_stick turns it off, so the board sees two directions at once and takes them in its own order ($06FE: right, left, down, up)"
 
 [[evidence."entities.player.ext_params.four_way".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."entities.player.ext_params.mug_above"]
+source = "observed"
+confidence = 80
+note = "The mug's y is the bartender's plus 4 ($149E reads E2E6): 52 on bar 0 (gp element inputs, tapper.l1.001 frame 46)"
+
+[[evidence."entities.player.ext_params.mug_above".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."entities.player.ext_params.mug_out"]
+source = "observed"
+confidence = 60
+note = "The mug starts 24 left of a tap on the bar's right end: 201 on bar 0 of the saloon (tap 225), tapper.l1.001 frame 46. Mirrored for a left tap: not seen yet"
+
+[[evidence."entities.player.ext_params.mug_out".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."entities.player.ext_params.mug_out_left"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.l8.001: the send puts a mug sent from a tap on the bar's left end 27 right of it ($14CC: add $1B), and one from the right end 24 left ($14C0: add $E8); then E6FE, every full mug's speed, is -5 ($14D1)"
+
+[[evidence."entities.player.ext_params.mug_out_left".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."entities.player.ext_params.mug_speed"]
+source = "observed"
+confidence = 80
+note = "5 a frame: E6FE set to $FB at $14D3 by the send, added each frame at $07D2 (gp element inputs, tapper.l1.001 frames 46 to 48)"
+
+[[evidence."entities.player.ext_params.mug_speed".refs]]
 at = "clip:tapper.l1.001"
 
 [evidence."entities.player.ext_params.pour_frames"]
@@ -266,6 +536,14 @@ at = "rom:1da6316bba47 frames 321-645: gp model blind, x's step a frame along th
 [[evidence."entities.player.ext_params.walk_step".refs]]
 at = "clip:tapper.l1.001"
 
+[evidence."entities.record"]
+source = "observed"
+confidence = 70
+note = "gp code listing on tapper.l8.001: each customer slot's 0x20-byte record from E4B2 keeps its wait (+2, read at $1196 and $1152), drink (+9, $1074), bar (+8), slot number (+0C, read at $093C) and facing (+0D); $2023 shortens the wait by 2, 4, 7 or 10 by bar"
+
+[[evidence."entities.record".refs]]
+at = "clip:tapper.l8.001"
+
 [evidence."entities.tap"]
 source = "observed"
 confidence = 90
@@ -279,6 +557,22 @@ at = "clip:tapper.l3.001"
 
 [[evidence."entities.tap".refs]]
 at = "clip:tapper.l6.001"
+
+[evidence."entities.timer"]
+source = "observed"
+confidence = 70
+note = "gp code listing on tapper.l8.001: $603C puts a routine and its frames in the first free 6-byte entry of 24 from E417; $60C1 counts each down every frame and jumps to its routine at 0 ($60EB: the customer slots' arrivals $15FF on, $2023, $1B2E, $1AE5 and others)"
+
+[[evidence."entities.timer".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."entities.tip"]
+source = "observed"
+confidence = 70
+note = "gp code listing on tapper.l7.001: a customer done with its throw ($1130) calls $20DE: while E72F (the level's tips, set by $588A from the levels cleared and the setting E006: 1 on the first level, else the levels cleared, doubled for E006 below 2, halved from 6, one more after the first level, 4 at most) isn't 0, E72E counts down, from 2 at the setup ($4BD6); at 0 the tip goes in E25E, 8 above the customer, picture $4D, and E72E is a draw below 3 plus 4 ($213B). The bartender's catch ($0B63) checks it after the mugs and picks it up within 15 each way, taking one from E72F ($0BD4). Its points ($5EE7 with $0C07) and the show it starts ($14E7) aren't modelled"
+
+[[evidence."entities.tip".refs]]
+at = "clip:tapper.l7.001"
 
 [evidence.input]
 source = "inferred"
