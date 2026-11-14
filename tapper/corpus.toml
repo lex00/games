@@ -9,7 +9,7 @@ format = "1.0.0"
 name = "tapper"
 version = "0.2.0"
 title = "Tapper"
-recipes = "b3:92433893f80d810eabc9adf6c67e44b0b730daa893adeb668fa11c3631fbabdf"
+recipes = "b3:308b3cedbdbdfac8fcd775f6fc6775fb15bf7069712d6130767a6939f0e6a683"
 
 [target]
 game = "tapper"
@@ -540,3 +540,13 @@ version = "0.2.0"
 date = "2026-11-12"
 says = "The 52 clips of Tapper milestone 3: every level 1 to 15, the five bonus rounds, each between-level sequence, deaths, game over and the attract mode, cut from MAME-checked plays"
 added = ["tapper.attract.001", "tapper.bonus.001", "tapper.bonus.002", "tapper.bonus.003", "tapper.bonus.004", "tapper.bonus.005", "tapper.bonus.006", "tapper.clear.001", "tapper.clear.002", "tapper.clear.003", "tapper.clear.004", "tapper.clear.005", "tapper.clear.006", "tapper.clear.007", "tapper.clear.008", "tapper.clear.009", "tapper.clear.010", "tapper.clear.011", "tapper.clear.012", "tapper.clear.013", "tapper.clear.014", "tapper.clear.015", "tapper.clear.016", "tapper.clear.017", "tapper.clear.018", "tapper.clear.019", "tapper.clear.020", "tapper.clear.021", "tapper.clear.022", "tapper.die.001", "tapper.die.002", "tapper.die.003", "tapper.gameover.001", "tapper.gameover.002", "tapper.l1.001", "tapper.l10.001", "tapper.l11.001", "tapper.l12.001", "tapper.l13.001", "tapper.l14.001", "tapper.l15.001", "tapper.l2.001", "tapper.l3.001", "tapper.l4.001", "tapper.l5.001", "tapper.l6.001", "tapper.l6.002", "tapper.l7.001", "tapper.l8.001", "tapper.l9.001", "tapper.score.001", "tapper.start.001"]
+
+[[clip]]
+id = "tapper.tip.001"
+name = "Bar 4, level 10, a tip picked up"
+source = "generated"
+start = "inputs/tapper.tip.001.start.presses"
+presses = "inputs/tapper.tip.001.presses"
+frames = 74
+why = "the bartender walks from his tap to a tip a customer left and picks it up ($0BC3 falls through to $0BC5): a scripted log, the auto-player's tapper-cycle run to frame 15100, then left held 30 frames"
+level = "bar4"

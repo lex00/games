@@ -48,10 +48,10 @@ ram = 0xE390
 note = "A customer done drinking: below 15, plus 5, the frames before the empty mug comes. --find: stored for later"
 
 [[draws]]
-site = "arrival_slot"
+site = "tip_show_pick"
 pc = 0x1523
 ram = 0xE390
-note = "Customers at a level's start: below 2, picks their places. gp model static lists this call of $5FAC; --find didn't reach it on its own in the 27,749-frame cycle"
+note = "A tip picked up starts the show ($0BD8 calls $14E7): eight draws below 2, each picking one of two customer slots ($1526 to $1538) that turns to watch (state 6, $1553). gp model static lists this call of $5FAC; --find didn't reach it in the 27,749-frame cycle, where no tip is picked up; tapper.tip.001 runs it (gp code listing). Named arrival_slot before, for a level's start, which it isn't"
 
 [[draws]]
 site = "arrival_wait"
