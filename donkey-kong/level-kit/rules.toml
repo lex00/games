@@ -83,9 +83,9 @@ source = "$C4CB, $C4D1, $C4E3; packP's pack"
 
 [[data]]
 what = "The stage's picture"
-rule = "PPU update strings that draw the girders, ladders and drum, with 25m's palettes: what the screen shows. Play never reads it, so it must agree with the girders and ladders above"
+rule = "PPU update strings that draw the girders, ladders and drum, with 25m's palettes: what the screen shows. On the real engine play never reads it: the walk and the climb read the girder runs and ladder lists above ($D91A, $D28B, $D50A). On the model it is also the stage's tiles, and the climb reads its ladder and girder tiles: a climb goes on while the row under the hero's feet is a ladder or a girder tile. So it must agree with the girders and ladders above, or the model and the engine climb differently"
 slot = "stage_screens"
-source = "the asset map: entry screen_25m"
+source = "the asset map: entry screen_25m; the model's evidence levels.main (the layout is screen_25m) and the climb's note (the row under Mario's feet); ext/src/mario.rs climb_by_stops"
 
 [[data]]
 what = "The attract demo"

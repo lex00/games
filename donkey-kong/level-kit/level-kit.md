@@ -36,6 +36,12 @@ What `m50` starts with (the model's spawns, places in pixels from the level's to
 | `belt_ends` | npc | 8 | 104 |
 | `mladder` | npc | 20 | 71 |
 | `mladder` | npc | 220 | 71 |
+| `kong_carry` | npc | 0 | 0 |
+| `kong_carry` | npc | 0 | 0 |
+| `kong_carry` | npc | 0 | 0 |
+| `kong_carry` | npc | 0 | 0 |
+| `kong_carry` | npc | 0 | 0 |
+| `pauline_carry` | npc | 0 | 0 |
 
 What `m75` starts with (the model's spawns, places in pixels from the level's top left):
 
@@ -48,6 +54,14 @@ What `m75` starts with (the model's spawns, places in pixels from the level's to
 | `elevator` | npc | 48 | 168 |
 | `elevator` | npc | 112 | 112 |
 | `elevator` | npc | 112 | 160 |
+| `fire` | enemy | 76 | 159 |
+| `fire` | enemy | 204 | 103 |
+| `kong_carry` | npc | 0 | 0 |
+| `kong_carry` | npc | 0 | 0 |
+| `kong_carry` | npc | 0 | 0 |
+| `kong_carry` | npc | 0 | 0 |
+| `kong_carry` | npc | 0 | 0 |
+| `pauline_carry` | npc | 0 | 0 |
 
 What `main` starts with (the model's spawns, places in pixels from the level's top left):
 
@@ -59,6 +73,12 @@ What `main` starts with (the model's spawns, places in pixels from the level's t
 | `kong` | enemy | 32 | 32 |
 | `oil_drum` | hazard | 32 | 192 |
 | `pauline` | npc | 80 | 25 |
+| `kong_carry` | npc | 0 | 0 |
+| `kong_carry` | npc | 0 | 0 |
+| `kong_carry` | npc | 0 | 0 |
+| `kong_carry` | npc | 0 | 0 |
+| `kong_carry` | npc | 0 | 0 |
+| `pauline_carry` | npc | 0 | 0 |
 
 ## What's data and what's fixed in code
 
@@ -77,7 +97,7 @@ A stage changes what is data. What the code fixes, a stage keeps to: change it a
 | data | Broken ladders' stops | A box at the top of each broken ladder that stops the hero's climb: x, y, 0, ended by $FE | `play_tables` | $C161; packP's pack |
 | data | Straight drops | Three ways a barrel can drop straight down the stage, each 5 rows where it stops | `play_tables` | three tables after the slope list; the barrel's straight*_stop params |
 | data | Hammers and the hero's start | Two hammers, an x and a y each; the hero's start as its sprite's x (the model's x less 5) and y | `play_tables_c2f0` | $C4CB, $C4D1, $C4E3; packP's pack |
-| data | The stage's picture | PPU update strings that draw the girders, ladders and drum, with 25m's palettes: what the screen shows. Play never reads it, so it must agree with the girders and ladders above | `stage_screens` | the asset map: entry screen_25m |
+| data | The stage's picture | PPU update strings that draw the girders, ladders and drum, with 25m's palettes: what the screen shows. On the real engine play never reads it: the walk and the climb read the girder runs and ladder lists above ($D91A, $D28B, $D50A). On the model it is also the stage's tiles, and the climb reads its ladder and girder tiles: a climb goes on while the row under the hero's feet is a ladder or a girder tile. So it must agree with the girders and ladders above, or the model and the engine climb differently | `stage_screens` | the asset map: entry screen_25m; the model's evidence levels.main (the layout is screen_25m) and the climb's note (the row under Mario's feet); ext/src/mario.rs climb_by_stops |
 | data | The attract demo | The demo's moves: up to 20 holds, a way and a frame count each | `demo_script` | the model's demo_script slot |
 | code | Rows of runs | The ground test reads row 1 as two runs at the list's start and row n (2 to 7) as one run at byte 12 + 6(n - 2): the bottom girder has exactly 2 runs and every other row exactly 1, 8 runs in all |  | $D91A; packP's pack, gcFit's notes |
 | code | Sloped ends | A run is one straight slope of 24 px pieces, each a pixel higher than the last in its direction, so a girder above the bottom slopes from end to end; a flat part needs a run of its own, which only the bottom row has (25m's: flat to x 128, then sloped) |  | gcFit's notes |
@@ -167,19 +187,19 @@ The touch boxes are the model's, as its touch tests read them. The theme kit (`t
 
 `gp level measure --template T` prints each under its name. A stage of this kind should land within the tolerance of each target.
 
-| Measure | What | Target | Within | Source |
-|---|---|---|---|---|
-| `girders` | Girders, and the top platform | 6 + 1 | 1 | docs/originals.md |
-| `slope_px_per_24` | Slope, pixels per 24 across, bottom to top | -0.53, 0.88, -0.88, 0.88, -0.88, 0.83 | 0.25 each | docs/originals.md |
-| `gaps` | Gaps between girders' middles, px | 31, 30, 30, 30, 29, 25 | 8 px each | docs/originals.md |
-| `ladders, broken` | Ladders, and how many are broken | 13, 4 (0.31) | 1 each | docs/originals.md |
-| `things` | Hammers' heights over the bottom girder; their distance to the nearest ladder | 72, 129; 16, 16 | 8 px | docs/originals.md |
-| `climb_frames_min, climb_frames_median` | A climb, frames (fastest, median) | 68, 71 | not set: it follows the gaps | docs/originals.md |
-| `route_frames` | The direct route to the top, frames | 1160 | 10% | docs/originals.md |
-| `leave_by_ladder_share` | Barrels leaving a girder by a ladder | 0.48 | 0.1 | docs/originals.md |
-| `throw_to_drum_median` | From the throw to the drum, median frames | 1003 | 10% | docs/originals.md |
-| `jump_window_median` | The jump window over a barrel, median frames | 22 | 3 frames | docs/originals.md |
-| `goal_height` | The goal over the bottom girder's middle, px | 186 | not set | docs/originals.md |
+| Measure | What | Target | Within | Worked example | Source |
+|---|---|---|---|---|---|
+| `girders` | Girders, and the top platform | 6 + 1 | 1 |  | docs/originals.md |
+| `slope_px_per_24` | Slope, pixels per 24 across, bottom to top | -0.53, 0.88, -0.88, 0.88, -0.88, 0.83 | 0.25 each |  | docs/originals.md |
+| `gaps` | Gaps between girders' middles, px | 31, 30, 30, 30, 29, 25 | 8 px each |  | docs/originals.md |
+| `ladders, broken` | Ladders, and how many are broken | 13, 4 (0.31) | 1 each |  | docs/originals.md |
+| `things` | Hammers' heights over the bottom girder; their distance to the nearest ladder | 72, 129; 16, 16 | 8 px |  | docs/originals.md |
+| `climb_frames_min, climb_frames_median` | A climb, frames (fastest, median) | 68, 71 | not set: it follows the gaps |  | docs/originals.md |
+| `route_frames` | The direct route to the top, frames | 1160 | 10% |  | docs/originals.md |
+| `leave_by_ladder_share` | Barrels leaving a girder by a ladder | 0.48 | 0.1 |  | docs/originals.md |
+| `throw_to_drum_median` | From the throw to the drum, median frames | 1003 | 10% |  | docs/originals.md |
+| `jump_window_median` | The jump window over a barrel, median frames | 22 | 3 frames |  | docs/originals.md |
+| `goal_height` | The goal over the bottom girder's middle, px | 186 | not set |  | docs/originals.md |
 
 ## Originality
 
