@@ -760,7 +760,7 @@ impl Ext for Bars {
                 // The level's end script ($55F4, then the level's own, as
                 // $4603) starts on this frame: its frames are counted from
                 // 1 in the flow's word 3 (sub 8).
-                (fb.ext[3] & !0xffff_00ff) | 15 | (8 << 16) | (1 << 24)
+                (fb.ext[3] & 0xff00) | 15 | (8 << 16) | (1 << 24)
             } else {
                 (fb.ext[3] & !0xff) | 10
             };
@@ -773,6 +773,7 @@ impl Ext for Bars {
         // counts down. 2 ($241D): 12 more frames of its picture (E709).
         // 3 ($2441): state 9, the level's setup again ($22F7, $4B3F), whose
         // $5F31 empties the objects on the next frame.
+        let mut end_spawn: Vec<Body> = Vec::new();
         let mut life_lost = state == 12 || state == 9;
         if state == 12 && let Some((fid, mut fb)) = flow {
             let sub = (fb.ext[3] >> 16) & 0xff;
@@ -985,9 +986,74 @@ impl Ext for Bars {
             // From the second level a random bit ($467E, the Z80's refresh
             // register) can run $4742 a second time first; the model
             // doesn't: tapper.l2.001 and l3.001 didn't.
-            let n = ((fb.ext[3] >> 24) & 0xff) + 1;
-            if n <= 255 {
-                fb.ext[3] = (fb.ext[3] & !0xff00_0000) | (n << 24);
+            // The count takes 16 bits from bit 24: the scripts run past 255
+            // frames.
+            let n = ((fb.ext[3] >> 24) & 0xffff) + 1;
+            if n <= 0xffff {
+                fb.ext[3] = (fb.ext[3] & !(0xffff << 24)) | (n << 24);
+            }
+            // After $4603 some lists go on ($5623: the list by E3ED, the
+            // entry by the levels cleared mod 10, each a 5-byte step). The
+            // last step, $5651, calls $48F5: after $4603 returns (15 and 4
+            // more frames from the step, 128 from the end's first) $594D
+            // lifts the object at E356, 6 above the bartender, 10 a time
+            // every 2 frames until it is at least $EE, waits 20, 40 and 40,
+            // and calls $4546, which puts an object in the mug slot at E326
+            // at y 255 and his x, drops it 4 a frame until 5 above him
+            // ($45A5), and empties it 60 frames later ($45BF to $45D7)
+            // (tapper.l7.001: the end on 11860, the object on 12126).
+            let words: Vec<i64> = cx
+                .table("end_script_lists")
+                .chunks(2)
+                .map(|w| w[0] + 256 * w.get(1).copied().unwrap_or(0))
+                .collect();
+            let base = words.iter().copied().min().unwrap_or(0);
+            let list = cx
+                .kind("tap")
+                .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+                .map_or(0, |b| b.ext[1] & 1);
+            let script = words
+                .get(usize::try_from(list * 10 + cleared % 10).unwrap_or(0))
+                .map_or(0, |w| (w - base) / 5);
+            if script == 4
+                && n > 109
+                && let Some(pk) = player_k
+                && let Some(pb) = cx.world.bodies.iter().find(|b| b.kind == pk)
+            {
+                let (bx, by) = (pb.x.floor(), pb.y.floor());
+                let y0 = by + 6;
+                let k = (238 - y0 + 9).max(10) / 10;
+                let t = 109 + 19 + 2 * k + 100;
+                let slot5 = bodies.iter().position(|(id, b)| b.kind == mug_k && b.ext[2] == 6 && !removed.contains(id));
+                if n == t {
+                    if let Some(j) = slot5 {
+                        let b = &mut bodies[j].1;
+                        b.x = Fx::from_int(bx);
+                        b.y = Fx::from_int(255);
+                        b.ext[3] = 0x400;
+                    } else {
+                        let mut b = gp_sim::systems::new_body(cx.spec, cx.world, mug_k, Fx::from_int(bx), Fx::from_int(255), false);
+                        b.ext[2] = 6;
+                        b.ext[3] = 0x400;
+                        end_spawn.push(b);
+                    }
+                } else if n > t
+                    && let Some(j) = slot5
+                    && bodies[j].1.ext[3] & 0x400 != 0
+                {
+                    let b = &mut bodies[j].1;
+                    let y = b.y.floor();
+                    if b.ext[3] & 0x800 == 0 {
+                        let ny = y - 4;
+                        b.y = Fx::from_int(ny);
+                        if ny - 5 < by {
+                            b.ext[3] |= 0x800;
+                            b.ext[1] = n;
+                        }
+                    } else if n == b.ext[1] + 60 {
+                        removed.push(bodies[j].0);
+                    }
+                }
             }
             if (n == 56 || n == 109)
                 && let Some(pk) = player_k
@@ -1503,6 +1569,7 @@ impl Ext for Bars {
             .map(|(_, b)| *b)
             .collect();
         spawned.extend(throws);
+        spawned.extend(end_spawn);
         spawned.extend(timers.iter().filter(|(id, _)| *id == usize::MAX).map(|(_, t)| *t));
         let first = cx.world.bodies.len();
         for b in &spawned {

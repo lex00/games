@@ -367,6 +367,12 @@ presentation = true
 ram = [0xE369]
 
 [[field]]
+note = "Not compared: the game's draw at its start, E3ED (0 or 1), which picks the list of the level's end scripts ($5623)"
+path = "entities.tap[0].ext[1]"
+presentation = true
+ram = [0xE3ED]
+
+[[field]]
 note = "Not compared: bar 1's far end, the object at E36A: its x, E36D, written on the level setup's frame. The tip's place reads it ($2107 to $211D)"
 path = "entities.tap[1].ext[0]"
 presentation = true

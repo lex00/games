@@ -41,6 +41,15 @@ description = "Each customer slot's first object, 8 bytes a slot, copied in by i
 source = "tapper"
 asset = "customer_starts"
 
+[assets.end_script_lists]
+kind = "rows"
+role = "behavior"
+description = "The level's end scripts by the game's draw E3ED and the levels cleared: two lists of ten words naming each script's step (the program's table, lifted from the player's romset)"
+
+[assets.end_script_lists.from]
+source = "tapper"
+asset = "end_script_lists"
+
 [assets.level_times]
 kind = "rows"
 role = "behavior"
@@ -105,6 +114,7 @@ walk_frames = 12
 [entities.bars.ext_rows]
 arrivals = "arrivals"
 customer_starts = "customer_starts"
+end_script_lists = "end_script_lists"
 level_times = "level_times"
 record_blocks = "record_blocks"
 start_list_ptrs = "start_list_ptrs"
@@ -312,6 +322,14 @@ note = "Found with gp code listing and gp code tables on tapper.l8.001; the asse
 
 [[evidence."assets.customer_starts".refs]]
 at = "clip:tapper.l8.001"
+
+[evidence."assets.end_script_lists"]
+source = "observed"
+confidence = 85
+note = "gp code listing on tapper.l1.001 and tapper.l7.001: a level's end ($55F4) reads the pointer at $56CA by E3ED ($5623), takes the word by the levels cleared mod 10 ($5632 to $5637) and jumps to it ($60B8): one of five steps 5 bytes apart, each a call and a jump. Read from the player's romset (the tapper set at $56D0, rbtapper at $5860 by gp query on its recording)"
+
+[[evidence."assets.end_script_lists".refs]]
+at = "clip:tapper.l7.001"
 
 [evidence."assets.level_times"]
 source = "observed"

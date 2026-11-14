@@ -110,3 +110,17 @@ width = 32
 [asset.at]
 tappera = 0xBC11
 rbtapper = 0xBDA1
+
+# The level's end scripts, two lists (by E3ED, drawn at a game's start)
+# of ten words by the levels cleared ($5623: $56CA points at them), each a
+# 5-byte step that calls the script; five such steps, 5 bytes apart.
+[[asset]]
+name = "end_script_lists"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x56D0
+count = 20
+width = 2
+
+[asset.at]
+rbtapper = 0x5860
