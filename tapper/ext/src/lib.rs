@@ -133,7 +133,10 @@ impl Ext for Bartender {
             .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
             .copied();
         let state = flow.map_or(10, |b| b.ext[3] & 0xff);
-        if [9, 12, 15, 16].contains(&state) {
+        // State 11 too: a level's end ($0963 sets it the frame the last
+        // customer is served), whose next frame doesn't run $0660
+        // (tapper.l13.001: tap held on 20481, he stays at 187).
+        if [9, 11, 12, 15, 16].contains(&state) {
             return;
         }
         // On the setup's own frame (the flow's word 2 at 4, set by
@@ -693,17 +696,24 @@ impl Ext for Bars {
                     if b >= 5 { 4 } else if cleared == 1 { b + 1 } else { b }
                 };
             }
+            // $4E46 sets the level's timers at $4B80, before $575B: in the
+            // space bar (shown 3) that draws and waits 30 frames ($232B)
+            // and $5E99 one more before the bartender and the arrivals
+            // ($4BCB, $4C2D), and the main loop counts the timers ($60C1)
+            // through those waits, so they have counted 32 frames by then
+            // (tapper.l13.001: set on 19641, the arrivals on 19672).
+            let ahead = if shown == 3 { 32 } else { 0 };
             if whole {
                 w_word = row_word(level, 0);
                 for (at, routine) in [(2, 0x2023), (4, 0x1B02), (6, 0x2209)] {
                     let d = row_word(level, at);
-                    schedule(&mut timers, &mut timers_changed, &mut new_timers, cx, d + late, routine);
+                    schedule(&mut timers, &mut timers_changed, &mut new_timers, cx, (d + late - ahead).max(1), routine);
                 }
             }
             if whole && cleared >= 5 {
                 w_word = row_word(level, 8);
                 let d = row_word(level, 10);
-                schedule(&mut timers, &mut timers_changed, &mut new_timers, cx, d + late, 0x1B2E);
+                schedule(&mut timers, &mut timers_changed, &mut new_timers, cx, (d + late - ahead).max(1), 0x1B2E);
             }
             let mut i = first;
             while let Some(&slot) = lists.get(i) {
