@@ -21,7 +21,8 @@ align = "polled"
 
 # The random draws (docs/formats/draws.md): every call of the random routine
 # $5FAC, which steps the register E390 with the Z80's R register ($5FBD)
-# and returns a number below B in A. Each site is the call (`call $5fac`);
+# and returns a number from 0 to the A it was called with, in A ($5FB1 to
+# $5FB4). Each site is the call (`call $5fac`);
 # the draw is A when the routine returns. Found with `gp interp draws --find`
 # on the corpus's longest clip log (tapper.bonus.006 from power-on, 27,749
 # frames: the register E390, 2,184 reads of $5FBD) and `gp model static`'s
@@ -33,67 +34,67 @@ score_draws = true
 site = "customer_wait_start"
 pc = 0x09DE
 ram = 0xE390
-note = "A customer's first wait: below 20, plus twice (10 less its kind), into its frames left (+4). gp interp draws --find lists it among the reads stored for later (into E4B6 + 0x20 a customer)"
+note = "A customer's first wait: 0 to 20, plus twice (10 less its kind), into its frames left (+4). gp interp draws --find lists it among the reads stored for later (into E4B6 + 0x20 a customer)"
 
 [[draws]]
 site = "pushed_drink"
 pc = 0x106D
 ram = 0xE390
-note = "A customer reached by a mug: below 6, the drink's timer. --find: a read that decides nothing within its window"
+note = "A customer reached by a mug: 0 to 6, the drink's timer. --find: a read that decides nothing within its window"
 
 [[draws]]
 site = "throw_wait"
 pc = 0x10C6
 ram = 0xE390
-note = "A customer done drinking: below 15, plus 5, the frames before the empty mug comes. --find: stored for later"
+note = "A customer done drinking: 0 to 15, plus 5, the frames before the empty mug comes. --find: stored for later"
 
 [[draws]]
 site = "tip_show_pick"
 pc = 0x1523
 ram = 0xE390
-note = "A tip picked up starts the show ($0BD8 calls $14E7): eight draws below 2, each picking one of two customer slots ($1526 to $1538) that turns to watch (state 6, $1553). gp model static lists this call of $5FAC; --find didn't reach it in the 27,749-frame cycle, where no tip is picked up; tapper.tip.001 runs it (gp code listing). Named arrival_slot before, for a level's start, which it isn't"
+note = "A tip picked up starts the show ($0BD8 calls $14E7): eight draws, each 0 to 2 ($5FAC returns at most its A), that step through the customer slots ($1526 to $1538); a customer reached that isn't in state 1, 2 or 3 turns to watch (state 6, $1553). gp model static lists this call of $5FAC; --find didn't reach it in the 27,749-frame cycle, where no tip is picked up; tapper.tip.001 runs it (gp code listing). Named arrival_slot before, for a level's start, which it isn't"
 
 [[draws]]
 site = "arrival_wait"
 pc = 0x1B6C
 ram = 0xE390
-note = "A new customer: below 16, plus 16, its first wait. --find: stored for later"
+note = "A new customer: 0 to 16, plus 16, its first wait. --find: stored for later"
 
 [[draws]]
 site = "tip_wait"
 pc = 0x213B
 ram = 0xE390
-note = "A tip left on the bar ($20DE): below 3, plus 4, into E72E, the customers' throws to the next tip"
+note = "A tip left on the bar ($20DE): 0 to 3, plus 4, into E72E, the customers' throws to the next tip"
 
 [[draws]]
 site = "bonus_shake"
 pc = 0x258A
 ram = 0xE390
-note = "The bonus round: below 5, which can is shaken. --find proposes it: it indexes the tables at $259D, $25AC and $25B8"
+note = "The bonus round: 0 to 5, which can is shaken. --find proposes it: it indexes the tables at $259D, $25AC and $25B8"
 
 [[draws]]
 site = "game_start"
 pc = 0x4AFA
 ram = 0xE390
-note = "A game's start: below 2, into E3ED. --find: stored for later"
+note = "A game's start: 0 to 2, into E3ED. --find: stored for later"
 
 [[draws]]
 site = "attract_pick"
 pc = 0x4F35
 ram = 0xE390
-note = "Attract mode: below 4, not the last one (E719). --find proposes it"
+note = "Attract mode: 0 to 4, not the last one (E719). --find proposes it"
 
 [[draws]]
 site = "attract_pick_2"
 pc = 0x5021
 ram = 0xE390
-note = "Attract mode, the second list: below 4, not the last one (E719). --find proposes it"
+note = "Attract mode, the second list: 0 to 4, not the last one (E719). --find proposes it"
 
 [[draws]]
 site = "tip_kind"
 pc = 0x59F2
 ram = 0xE390
-note = "Every 16 frames of E3C4: below 3, picks from the table at $5A5C. gp model static lists this call; --find counts its reads under $5FAE, the call inside $5FAC"
+note = "Every 16 frames of E3C4: 0 to 3, picks from the table at $5A5C. gp model static lists this call; --find counts its reads under $5FAE, the call inside $5FAC"
 
 # The mugs: 8-byte objects from E2FE (y, flags, picture, x, then a
 # second sprite's), free while y is 0. gp track found them on tapper.l8.001
@@ -227,6 +228,52 @@ entity = "tip"
 ids = [0]
 
 [[slots.group]]
+active = 0xE23E
+active_stride = 4
+count = 9
+name = "dancers"
+note = "The dancers of the show a tip starts: 4-byte objects from E23E (y, flags, picture, x), the last the tip's object E25E. The pickup copies the bar shown's first picture over the nine ($150F), $0C25 the next every 6 frames ($0C62) and ends the show 255 frames on, their y 0 ($0C75). A slot holds a dancer while its y isn't 0, in a show (E70F, which only $14E7, $0C72 and the level's clear at $4B65 write)"
+vacant = "ram[0xE70F] == 0"
+
+[[slots.group.field]]
+note = "The dancer's x"
+path = "x"
+ram = [0xE241]
+stride = 4
+
+[[slots.group.field]]
+note = "The dancer's y"
+path = "y"
+ram = [0xE23E]
+stride = 4
+
+[[slots.group.field]]
+index = true
+note = "Not compared: the dancer's slot, plus 1"
+offset = 1
+path = "ext[0]"
+presentation = true
+ram = []
+
+[[slots.group.field]]
+note = "Not compared: the dancer's flags"
+path = "ext[1]"
+presentation = true
+ram = [0xE23F]
+stride = 4
+
+[[slots.group.field]]
+note = "Not compared: the dancer's picture"
+path = "ext[2]"
+presentation = true
+ram = [0xE240]
+stride = 4
+
+[[slots.group.kind]]
+entity = "dancer"
+ids = [0]
+
+[[slots.group]]
 active = 0xE41B
 active_stride = 6
 count = 24
@@ -303,10 +350,10 @@ presentation = true
 ram = [0xE3B3, 0xE72E, 0xE72F, 0xE006]
 
 [[field]]
-note = "Not compared: an empty mug's speed, E3B0 ($075C)"
+note = "Not compared: an empty mug's speed, E3B0 ($075C); above it the show a tip starts ($14E7, counted by $0C25): E70F on, E712 its frames left, E70E the frames to the dancers' next picture and E710 that picture's place in the bar's list"
 path = "entities.bars[0].ext[1]"
 presentation = true
-ram = [0xE3B0]
+ram = [0xE3B0, 0xE70F, 0xE712, 0xE70E, 0xE710]
 
 [[field]]
 note = "Not compared: the respawn wait E3B1 ($091D), the levels cleared E4A8 and the level's row E4A9 ($4E50), for the arrivals"

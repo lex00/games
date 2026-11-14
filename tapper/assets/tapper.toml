@@ -46,6 +46,16 @@ width = 8
 tappera = 0xC411
 rbtapper = 0xC5A1
 
+# Each bar's ends, 4 bytes a bar from the bottom: the left end at +1, the
+# right at +2 (read by $0742 at $0774 and $0890 at $08AB).
+[[asset]]
+name = "bar_ends"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x0977
+count = 4
+width = 4
+
 # Each customer slot's arrival routine, a word a slot ($0987, read at $093C
 # and $4C34): a timer naming one of them brings that slot's customer.
 [[asset]]
@@ -151,3 +161,45 @@ width = 1
 
 [asset.at]
 rbtapper = 0x532F
+# The show a tip starts ($14E7): the dancers' first picture by the bar
+# shown, through the words at $15F5 by E3B8 ($1500 to $1515: ld hl,$15F5,
+# then 36 bytes to E23E). The words name four pictures of 36 bytes in a
+# row from $155A, the same place in every set listed (gp query on a
+# recording of each); the hook takes each word less the first.
+[[asset]]
+name = "show_first_ptrs"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x15F5
+count = 4
+width = 2
+[[asset]]
+name = "show_first"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x155A
+count = 144
+width = 1
+# The show's next pictures ($0C25, every 6 frames): the words at $0C99 by
+# E3B8 ($0C38 to $0C46) each name a list of eight words, by E710, naming
+# 36 bytes to copy to E23E ($0C5C to $0C68). The lists and the pictures
+# follow from the first word's place, 856 bytes; rbtapper keeps the words
+# at $0C94 (its $0C25 reads them at $0C38), and the lists from $0C9E.
+[[asset]]
+name = "show_lists"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x0C99
+count = 4
+width = 2
+[asset.at]
+rbtapper = 0x0C94
+[[asset]]
+name = "show_pictures"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x0CA3
+count = 856
+width = 1
+[asset.at]
+rbtapper = 0x0C9E

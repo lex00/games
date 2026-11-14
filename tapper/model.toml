@@ -32,6 +32,15 @@ description = "Each customer slot's arrival routine, a word a slot: a timer nami
 source = "tapper"
 asset = "arrivals"
 
+[assets.bar_ends]
+kind = "rows"
+role = "behavior"
+description = "Each bar's ends, 4 bytes a bar from the bottom: the left end at +1, the right at +2 (the program's table, lifted from the player's romset)"
+
+[assets.bar_ends.from]
+source = "tapper"
+asset = "bar_ends"
+
 [assets.customer_starts]
 kind = "rows"
 role = "behavior"
@@ -77,6 +86,42 @@ description = "The customer slots' records a level starts with, 16 of 32 bytes f
 source = "tapper"
 asset = "record_blocks"
 
+[assets.show_first]
+kind = "rows"
+role = "behavior"
+description = "The dancers' first picture in the show a tip starts, 36 bytes (9 objects of y, flags, picture, x) for each bar shown (the program's table, lifted from the player's romset)"
+
+[assets.show_first.from]
+source = "tapper"
+asset = "show_first"
+
+[assets.show_first_ptrs]
+kind = "rows"
+role = "behavior"
+description = "The address of each bar shown's first picture of the dancers, a word a bar (the program's table, lifted from the player's romset)"
+
+[assets.show_first_ptrs.from]
+source = "tapper"
+asset = "show_first_ptrs"
+
+[assets.show_lists]
+kind = "rows"
+role = "behavior"
+description = "The address of each bar shown's list of the dancers' pictures, a word a bar (the program's table, lifted from the player's romset)"
+
+[assets.show_lists.from]
+source = "tapper"
+asset = "show_lists"
+
+[assets.show_pictures]
+kind = "rows"
+role = "behavior"
+description = "The dancers' lists and pictures: each bar shown's list of eight addresses, then its pictures of 36 bytes (the program's table, lifted from the player's romset)"
+
+[assets.show_pictures.from]
+source = "tapper"
+asset = "show_pictures"
+
 [assets.slide_objects]
 kind = "rows"
 role = "behavior"
@@ -113,9 +158,6 @@ size = [1, 1]
 
 [entities.bars.ext_params]
 after_throw = 14
-bar_inset = 16
-bar_left = 8
-bar_right = 201
 catch_once = 1
 catch_reach = 25
 drink_turns = 6
@@ -131,11 +173,16 @@ walk_frames = 12
 
 [entities.bars.ext_rows]
 arrivals = "arrivals"
+bar_ends = "bar_ends"
 customer_starts = "customer_starts"
 end_script_lists = "end_script_lists"
 hop_steps = "hop_steps"
 level_times = "level_times"
 record_blocks = "record_blocks"
+show_first = "show_first"
+show_first_ptrs = "show_first_ptrs"
+show_lists = "show_lists"
+show_pictures = "show_pictures"
 slide_objects = "slide_objects"
 start_list_ptrs = "start_list_ptrs"
 start_lists = "start_lists"
@@ -152,6 +199,17 @@ role = "npc"
 size = [16, 16]
 
 [entities.customer.hitbox]
+h = 16
+w = 16
+x = 0
+y = 0
+
+[entities.dancer]
+description = "A dancer of the show a tip starts: one of the 9 objects from E23E (y, flags, picture, x), the last the tip's object E25E. The pickup copies the bar shown's first picture over them ($150F), $0C25 the bar's next every 6 frames ($0C62), and they go when the show ends 255 frames on ($0C75) or when a level's end, a slide, a life lost or a setup empties the objects. Word 0 is the slot plus 1, word 1 the flags, word 2 the picture; tapper_bars moves them"
+role = "npc"
+size = [16, 16]
+
+[entities.dancer.hitbox]
 h = 16
 w = 16
 x = 0
@@ -335,6 +393,14 @@ note = "Found with gp code listing and gp code tables on tapper.l8.001; the asse
 [[evidence."assets.arrivals".refs]]
 at = "clip:tapper.l8.001"
 
+[evidence."assets.bar_ends"]
+source = "observed"
+confidence = 85
+note = "gp code listing over the corpus: the mugs' move ($0742) and the customers' ends ($0890) read the table at $0977 by the bar times 4 ($0774, $08AB), the left end at +1 ($078B, $08B8) and the right at +2 ($0792, $08D1). The same place in the tapper, rbtapper and tappera sets (gp query on a recording of each)"
+
+[[evidence."assets.bar_ends".refs]]
+at = "clip:tapper.l8.001"
+
 [evidence."assets.customer_starts"]
 source = "observed"
 confidence = 80
@@ -375,6 +441,38 @@ note = "gp code listing on tapper.l8.001: the setup's $4A65 copies 0x200 bytes t
 [[evidence."assets.record_blocks".refs]]
 at = "clip:tapper.l8.001"
 
+[evidence."assets.show_first"]
+source = "observed"
+confidence = 85
+note = "gp code listing on tapper.tip.001: the show ($14E7) takes the word at $15F5 by E3B8 ($1500 to $150E) and copies 36 bytes from it to E23E ($150F to $1515). The four words name pictures in a row from $155A in the tapper, rbtapper and tappera sets (gp query on a recording of each); the hook takes each word less the first. The dancers' places match on every frame of tapper.tip.001 and tip.002"
+
+[[evidence."assets.show_first".refs]]
+at = "clip:tapper.tip.001"
+
+[evidence."assets.show_first_ptrs"]
+source = "observed"
+confidence = 85
+note = "gp code listing on tapper.tip.001: ld hl,$15F5 at $1505, indexed by E3B8 twice ($1500 to $1508); the same place in the tapper, rbtapper and tappera sets (gp query on a recording of each)"
+
+[[evidence."assets.show_first_ptrs".refs]]
+at = "clip:tapper.tip.001"
+
+[evidence."assets.show_lists"]
+source = "observed"
+confidence = 85
+note = "gp code listing on tapper.tip.001: $0C25 takes the word at $0C99 by E3B8 ($0C38 to $0C46), a list of eight words indexed by E710 ($0C4A to $0C5F); rbtapper keeps it at $0C94, its $0C25 reading it at $0C38 (gp query on its recording)"
+
+[[evidence."assets.show_lists".refs]]
+at = "clip:tapper.tip.001"
+
+[evidence."assets.show_pictures"]
+source = "observed"
+confidence = 85
+note = "gp code listing on tapper.tip.001: each list's word names 36 bytes copied to E23E every 6 frames ($0C5C to $0C68). The lists and pictures follow the first list's place ($0CA3, rbtapper $0C9E), 856 bytes in every set (gp query on a recording of each); the hook takes each word less the first list's. The dancers' places match on every frame of tapper.tip.001 and tip.002"
+
+[[evidence."assets.show_pictures".refs]]
+at = "clip:tapper.tip.001"
+
 [evidence."assets.slide_objects"]
 source = "observed"
 confidence = 85
@@ -402,7 +500,7 @@ at = "clip:tapper.l8.001"
 [evidence."entities.bars"]
 source = "observed"
 confidence = 60
-note = "Read with gp code listing on tapper.l8.001 (the routines the clip ran, with each branch's ways): the play routine $0660 calls $06A4, $0B63, $0742, $0B43, $0890 in that order; the bar ends are the table at $0977 (gp code tables, read through gp query's ram[] on the board): left 8, 24, 40, 56 and right 201, 185, 169, 153 for bars 0 to 3. A catch is the customer's x plus 8 less the mug's x below 25 ($0850) in states 0, 3, 4 or 5; pushed back 14 frames plus a draw below 20 ($09D3 to $09E2), at the full mug's speed plus 2 ($104D); 6 more turns of drinking ($1325); the empty mug 16 toward the tap and 3 above the line ($10F7), a wait of a draw below 15 plus 5 ($10C4); 14 frames after ($1134). New customers, tips, a mug falling and a customer reaching the bartender aren't modelled yet. A level ends when its last customer on the bars is served: $0963 takes one from E711 (one more at each arrival, $160F) and at 0 empties the timers ($5DEC) and sets state 11; the end's script ($55F4, then $4603 after levels 1 to 3) puts the bartender where he stands at his tap 56 frames on ($4742, $1351, the table at $C4A1) and steps him 1 away from the tap 53 frames after that ($46BF); tapper.l1.001 to l3.001 A customer's slide ($1CE1, gp code listing on tapper.l6.001's end): its waits keep where they go on (E3A9, B at E39F, $232B and $5FE6), so a start inside them takes its frame from there; where the slide ends $1F75 copies the four objects at $2003 into the mug slots from E326; $1F80 (4 frames), $1FBD (4) and ten waits of 4 ($1FE6) bring its return 48 frames after the copy, in state 12 with E6FF 3, and $2441 follows: with lives left $24C0 to $24D1 (state 9), with none ($244B) waits of 60 ($2467) and 60 ($24D8), $5E99 unless the sports bar, and state 13 ($24EE). The game over's objects stay two frames in state 13, then $230F's $2B82 empties them (observed on tapper.l6.001 and tapper.gameover.001, frames 9131 to 9133 and 3548 to 3550, not read in $2B82). Lives are the loaded E4A7 less those the model takes ($1D71, $23AF); an extra life ($615D) isn't modelled"
+note = "Read with gp code listing on tapper.l8.001 (the routines the clip ran, with each branch's ways): the play routine $0660 calls $06A4, $0B63, $0742, $0B43, $0890 in that order; the bar ends are the table at $0977, 4 bytes a bar, the left end at +1 and the right at +2 ($078B to $079D, $08B8 to $08D2), lifted from the player's romset (assets.bar_ends). A catch is the customer's x plus 8 less the mug's x below 25 ($0850) in states 0, 3, 4 or 5; pushed back 14 frames plus a draw of 0 to 20 ($09D3 to $09E2), at the full mug's speed plus 2 ($104D); 6 more turns of drinking ($1325); the empty mug 16 toward the tap and 3 above the line ($10F7), a wait of a draw of 0 to 15 plus 5 ($10C4); 14 frames after ($1134). New customers, tips, a mug falling and a customer reaching the bartender aren't modelled yet. A level ends when its last customer on the bars is served: $0963 takes one from E711 (one more at each arrival, $160F) and at 0 empties the timers ($5DEC) and sets state 11; the end's script ($55F4, then $4603 after levels 1 to 3) puts the bartender where he stands at his tap 56 frames on ($4742, $1351, the table at $C4A1) and steps him 1 away from the tap 53 frames after that ($46BF); tapper.l1.001 to l3.001 A customer's slide ($1CE1, gp code listing on tapper.l6.001's end): its waits keep where they go on (E3A9, B at E39F, $232B and $5FE6), so a start inside them takes its frame from there; where the slide ends $1F75 copies the four objects at $2003 into the mug slots from E326; $1F80 (4 frames), $1FBD (4) and ten waits of 4 ($1FE6) bring its return 48 frames after the copy, in state 12 with E6FF 3, and $2441 follows: with lives left $24C0 to $24D1 (state 9), with none ($244B) waits of 60 ($2467) and 60 ($24D8), $5E99 unless the sports bar, and state 13 ($24EE). The game over's objects stay two frames in state 13, then $230F's $2B82 empties them (observed on tapper.l6.001 and tapper.gameover.001, frames 9131 to 9133 and 3548 to 3550, not read in $2B82). Lives are the loaded E4A7 less those the model takes ($1D71, $23AF); an extra life ($615D) isn't modelled"
 
 [[evidence."entities.bars".refs]]
 at = "clip:tapper.l8.001"
@@ -426,10 +524,18 @@ at = "clip:tapper.l8.001"
 [evidence."entities.customer"]
 source = "observed"
 confidence = 60
-note = "gp code listing on tapper.l8.001: the customers' handlers, picked by state through $100A: waiting and then walking 12 frames, walking at E3B3 a frame, pushed back, drinking, and the two waits after the throw"
+note = "gp code listing on tapper.l8.001: the customers' handlers, picked by state through $100A: waiting and then walking 12 frames, walking at E3B3 a frame, pushed back, drinking, and the two waits after the throw. gp code listing on tapper.tip.001 and tip.002: a tip picked up turns customers to watch the show ($14E7): eight draws at $1523, each 0 to 2 ($5FAC returns at most its A: $5FB1 to $5FB4 return on carry or zero), step through the slots from E262 and E4B2 ($1526 to $1538); a customer reached that isn't in state 1, 2 or 3 ($153A to $1547) takes state 6 and a timer of 255 ($154F, $1553), its picture from its record's +1B. State 6 ($11AA) stands, mirrored while bit 2 of the timer is 0, and at 0 waits again with its slot's wait ($11CA to $11EA). A mug passes one in state 6 ($0827 catches in states 0, 3, 4 and 5 only)"
 
 [[evidence."entities.customer".refs]]
 at = "clip:tapper.l8.001"
+
+[evidence."entities.dancer"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.tip.001 and tip.002 (gp code listing over the whole corpus finds E70F read only at $0C25): $14E7 sets E70F 1, E70E 6 and E712 255 ($14F1 to $14FD) and copies the bar shown's first picture over the 9 objects from E23E ($1500 to $1515). $0C25, the play routine's call after $0890, counts E712 down each frame; at 0 the show ends ($0C71 to $0C81: E70F 0, the objects' y 0); else E70E counts down and at 0 E710 steps 0 to 7 and the bar's next picture is copied ($0C38 to $0C68), E70E 6 again. On the pickup's frame both count once (gp query on tip.002's recording: E70E 5 and E712 254 on 15120, the next picture on 15125). $1CE1, $2389 and the level's end ($5604) empty the 9 objects; $1CE1 doesn't come back to the play routine ($232B jumps to $22A3), so its frame doesn't count. E70F, E710 and E712 stay through a life lost until the setup's clear of E6F2 to E733 ($4B65; tip.002: 0 on 15249, state 9). The last object is the tip's, E25E, so a tip left in the show is gone at the next picture, and every picture's copy ends a tip unless it holds $4D there. tip.002 runs from the pickup through a mug falling (15182) to the setup; the show's own end at 255 frames isn't in a clip"
+
+[[evidence."entities.dancer".refs]]
+at = "clip:tapper.tip.002"
 
 [evidence."entities.flow"]
 source = "observed"
@@ -632,7 +738,7 @@ at = "clip:tapper.l8.001"
 [evidence."entities.tip"]
 source = "observed"
 confidence = 70
-note = "gp code listing on tapper.l7.001: a customer done with its throw ($1130) calls $20DE: while E72F (the level's tips, set by $588A from the levels cleared and the setting E006: 1 on the first level, else the levels cleared, doubled for E006 below 2, halved from 6, one more after the first level, 4 at most) isn't 0, E72E counts down, from 2 at the setup ($4BD6); at 0 the tip goes in E25E, 8 above the customer, picture $4D, and E72E is a draw below 3 plus 4 ($213B). The bartender's catch ($0B63) checks it after the mugs and picks it up within 15 each way, taking one from E72F ($0BD4). Its points ($5EE7 with $0C07) and the show it starts ($14E7) aren't modelled"
+note = "gp code listing on tapper.l7.001: a customer done with its throw ($1130) calls $20DE: while E72F (the level's tips, set by $588A from the levels cleared and the setting E006: 1 on the first level, else the levels cleared, doubled for E006 below 2, halved from 6, one more after the first level, 4 at most) isn't 0, E72E counts down, from 2 at the setup ($4BD6); at 0 the tip goes in E25E, 8 above the customer, picture $4D, and E72E is a draw of 0 to 3 plus 4 ($213B). The bartender's catch ($0B63) checks it after the mugs and picks it up within 15 each way, taking one from E72F ($0BD4). Its points ($5EE7 with $0C07) aren't modelled: nothing in the model scores yet. The pickup starts the show ($0BD8 calls $14E7): see entities.customer and entities.dancer"
 
 [[evidence."entities.tip".refs]]
 at = "clip:tapper.l7.001"

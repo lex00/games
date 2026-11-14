@@ -463,9 +463,6 @@ pub struct Bars;
 const BARS_PARAMS: &[Param] = &[
     Param::new("line", "fixed", "px"),
     Param::new("line_step", "fixed", "px"),
-    Param::new("bar_left", "fixed", "px"),
-    Param::new("bar_right", "fixed", "px"),
-    Param::new("bar_inset", "fixed", "px"),
     Param::new("catch_reach", "fixed", "px"),
     Param::new("walk_frames", "frames", "frames"),
     Param::new("pushed_base", "frames", "frames"),
@@ -480,11 +477,66 @@ const BARS_PARAMS: &[Param] = &[
 ];
 
 /// The random routine $5FAC's number for a site: the original's when the
-/// run has its draws, else one from the generator below `n`.
-fn draw_below(cx: &mut ExtCx<'_>, site: &str, n: i64) -> i64 {
+/// run has its draws, else one from the generator from 0 to `n`, the A
+/// it is called with ($5FB1 to $5FB4 return a number below A or equal to
+/// it, else halve the rest and try again).
+fn draw_at_most(cx: &mut ExtCx<'_>, site: &str, n: i64) -> i64 {
     match cx.scripted_draw(site) {
         Some(v) => i64::from(v),
-        None => i64::from(cx.draw(site)) % n.max(1),
+        None => i64::from(cx.draw(site)) % (n.max(0) + 1),
+    }
+}
+
+/// The show a tip starts ($14E7) and $0C25 runs each frame of play: the
+/// bars hook's word 1 above the empty mug's speed.
+#[derive(Clone, Copy)]
+struct Show {
+    /// E70F: the show is on.
+    on: bool,
+    /// E712: frames left.
+    left: i64,
+    /// E70E: frames to the dancers' next picture.
+    tick: i64,
+    /// E710: the next picture's place in the bar's list, 0 to 7.
+    picture: i64,
+}
+
+impl Show {
+    fn word(&self) -> i64 {
+        (i64::from(self.on) << 8) | (self.left << 16) | (self.tick << 24) | (self.picture << 32)
+    }
+}
+
+/// A little-endian word of a lifted table.
+fn word_at(t: &[i64], at: usize) -> i64 {
+    t.get(at).copied().unwrap_or(0) + 256 * t.get(at + 1).copied().unwrap_or(0)
+}
+
+/// A picture of the dancers, 36 bytes (9 objects of y, flags, picture, x)
+/// for bar shown `bar`: the show's first ($1500 to $1515, through the
+/// words at $15F5 by E3B8) when `n` is None, else the n-th of the bar's
+/// list ($0C38 to $0C68, through the words at $0C99 by E3B8 to a list of
+/// eight words). Each table is the program's, lifted from the player's
+/// romset; a word is an address, taken from the first word of its table
+/// to find the bytes lifted from there on.
+fn show_picture(cx: &ExtCx<'_>, bar: i64, n: Option<i64>) -> Option<Vec<i64>> {
+    let bar = usize::try_from(bar & 3).ok()?;
+    let at = |ptrs: &[i64], bytes: &[i64], addr: i64| -> Option<Vec<i64>> {
+        let off = usize::try_from(addr - word_at(ptrs, 0)).ok()?;
+        bytes.get(off..off + 36).map(<[i64]>::to_vec)
+    };
+    match n {
+        None => {
+            let ptrs = cx.table("show_first_ptrs");
+            at(ptrs, cx.table("show_first"), word_at(ptrs, 2 * bar))
+        }
+        Some(n) => {
+            let ptrs = cx.table("show_lists");
+            let bytes = cx.table("show_pictures");
+            let list = usize::try_from(word_at(ptrs, 2 * bar) - word_at(ptrs, 0)).ok()?;
+            let addr = word_at(bytes, list + 2 * usize::try_from(n & 7).ok()?);
+            at(ptrs, bytes, addr)
+        }
     }
 }
 
@@ -500,11 +552,54 @@ impl Bars {
         let step = bp(cx, "line_step");
         (y - line + step / 2).div_euclid(step)
     }
-    /// Bar `bar`'s ends: the code's table at $0977, 4 bytes a bar.
+    /// Bar `bar`'s ends: the code's table at $0977, 4 bytes a bar, its
+    /// left end at +1 and its right at +2 ($078B to $079D, $08B8 to
+    /// $08D2), lifted from the player's romset.
     fn ends(cx: &ExtCx<'_>, bar: i64) -> (i64, i64) {
-        let inset = bp(cx, "bar_inset") * bar;
-        (bp(cx, "bar_left") + inset, bp(cx, "bar_right") - inset)
+        let row = usize::try_from(bar & 3).unwrap_or(0) * 4;
+        let t = cx.table("bar_ends");
+        (t.get(row + 1).copied().unwrap_or(0), t.get(row + 2).copied().unwrap_or(0))
     }
+    /// A picture copied over the dancers' 9 objects ($150F or $0C62,
+    /// ldir): an object whose y is 0 is none.
+    fn put_picture(cx: &ExtCx<'_>, dk: usize, dancers: &mut [Option<gp_sim::world::Body>; 9], pic: &[i64]) {
+        for (s, d) in dancers.iter_mut().enumerate() {
+            let Some(o) = pic.get(s * 4..s * 4 + 4) else { continue };
+            if o[0] == 0 {
+                *d = None;
+                continue;
+            }
+            let (x, y) = (Fx::from_int(o[3]), Fx::from_int(o[0]));
+            let mut b = d.unwrap_or_else(|| gp_sim::systems::new_body(cx.spec, cx.world, dk, x, y, false));
+            b.x = x;
+            b.y = y;
+            b.ext[0] = s as i64 + 1;
+            b.ext[1] = o[1];
+            b.ext[2] = o[2];
+            *d = Some(b);
+        }
+    }
+
+    /// The last dancer is the tip's object, E25E: once a picture is
+    /// copied over it, the tip is what it holds, a tip only while its
+    /// picture is $4D ($0B8C).
+    fn tip_from_dancers(
+        cx: &ExtCx<'_>,
+        tip_k: Option<usize>,
+        dancers: &[Option<gp_sim::world::Body>; 9],
+        tip: &mut Option<(Option<usize>, gp_sim::world::Body)>,
+        tips_gone: &mut Vec<usize>,
+    ) {
+        if let Some((Some(id), _)) = tip.take() {
+            tips_gone.push(id);
+        }
+        if let (Some(d), Some(tk)) = (dancers[8], tip_k)
+            && d.ext[2] == 0x4D
+        {
+            *tip = Some((None, gp_sim::systems::new_body(cx.spec, cx.world, tk, d.x, d.y, false)));
+        }
+    }
+
     fn tap_left(cx: &ExtCx<'_>, bar: i64) -> bool {
         cx.kind("tap").is_some_and(|k| {
             cx.world
@@ -527,7 +622,30 @@ impl Ext for Bars {
         let player_k = cx.kind("player");
         let line = bp(cx, "line");
         let step = bp(cx, "line_step");
-        let (mut walk, mut empty_speed, full_speed) = (cx.me.ext[0] & 0xff, cx.me.ext[1], cx.me.ext[2]);
+        let (mut walk, mut empty_speed, full_speed) = (cx.me.ext[0] & 0xff, cx.me.ext[1] & 0xff, cx.me.ext[2]);
+        // Word 1 above the empty mug's speed: the show a tip starts
+        // ($14E7, run by $0C25): E70F (on), E712 (frames left), E70E
+        // (frames to the dancers' next picture) and E710 (that picture's
+        // place in the bar's list), a byte each.
+        let mut show = Show {
+            on: (cx.me.ext[1] >> 8) & 0xff != 0,
+            left: (cx.me.ext[1] >> 16) & 0xff,
+            tick: (cx.me.ext[1] >> 24) & 0xff,
+            picture: (cx.me.ext[1] >> 32) & 0xff,
+        };
+        // The dancers, the 9 objects from E23E (y, flags, picture, x), by
+        // slot; the last is the tip's object, E25E.
+        let dancer_k = cx.kind("dancer");
+        let mut dancer_ids: [Option<usize>; 9] = [None; 9];
+        let mut dancers: [Option<Body>; 9] = [None; 9];
+        if let Some(dk) = dancer_k {
+            for (i, b) in cx.world.bodies.iter().enumerate().filter(|(_, b)| b.alive && b.kind == dk) {
+                if let Some(n) = usize::try_from(b.ext[0] - 1).ok().filter(|&n| n < 9) {
+                    dancer_ids[n] = Some(i);
+                    dancers[n] = Some(*b);
+                }
+            }
+        }
         // Word 0 above the walk: E72E (customers' throws left to the next
         // tip), E72F (tips left this level) and E006 (the tips setting,
         // copied from the program's defaults at boot by $0517).
@@ -686,6 +804,8 @@ impl Ext for Bars {
             walk = 1;
             empty_speed = 1;
             cx.me.ext[1] = 1;
+            // $4B65 clears E6F2 to E733, the show's bytes among them.
+            show = Show { on: false, left: 0, tick: 0, picture: 0 };
             // $4BD6: the first tip comes with the second throw.
             tip_count = 2;
             if whole {
@@ -869,6 +989,8 @@ impl Ext for Bars {
                         tips_gone.push(id);
                     }
                     tip = None;
+                    // $238C to $2398: the 9 objects from E23E, the dancers.
+                    dancers = [None; 9];
                     e706 = 13;
                     next_sub = 1;
                     // $23AF: a life less.
@@ -933,6 +1055,7 @@ impl Ext for Bars {
                 tips_gone.push(id);
             }
             tip = None;
+            dancers = [None; 9];
             if let Some(pk) = player_k
                 && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == pk)
             {
@@ -1277,6 +1400,11 @@ impl Ext for Bars {
             if let Some((Some(id), _)) = tip.take() {
                 tips_gone.push(id);
             }
+            // The level's end empties the 9 objects from E23E with the tip
+            // ($5604), $1CE1 and $2389 do too, and the setup's $5F31 every
+            // object: the dancers are gone, and the show stands still
+            // until the setup clears it with the level's RAM ($4B65).
+            dancers = [None; 9];
         }
         let mut throws: Vec<Body> = Vec::new();
         if playing {
@@ -1310,8 +1438,8 @@ impl Ext for Bars {
             }
             // $0B86 to $0BD4, after the mugs: a tip (picture $4D at
             // E260) within reach is picked up and E72F, the tips left,
-            // goes down by one. Its points ($5EE7) and the show it starts
-            // ($14E7) aren't modelled.
+            // goes down by one. Its points ($5EE7 with DE $0C07) aren't
+            // modelled: nothing in the model scores yet.
             if let Some((tid, t)) = tip
                 && !(caught && once)
                 && (t.y.floor() - py).abs() < reach
@@ -1322,6 +1450,40 @@ impl Ext for Bars {
                 }
                 tip = None;
                 tips_left = (tips_left - 1) & 0xff;
+                // $0BD8 calls the show, $14E7: the dancers' first picture
+                // ($14F1 to $1515, see show_picture) and eight draws at $1523,
+                // each 0 to 2 ($5FAC returns at most its A), that step
+                // through the customer slots from E262 and E4B2 ($1526 to
+                // $1538: 8 bytes and 32 a step). A customer in the slot
+                // reached that isn't pushed back, drinking or about to
+                // throw (states 1, 2 and 3, $153A to $1547) turns to watch:
+                // state 6, its timer 255 ($154F, $1553). A slot reached
+                // twice is set again; a slot with no customer is set too,
+                // and its arrival writes state 0 ($1B66).
+                let mut slot = 0;
+                for _ in 0..8 {
+                    slot += draw_at_most(cx, "tip_show_pick", 2);
+                    if let Some(j) = bodies.iter().position(|(id, b)| {
+                        b.kind == cust_k && !removed.contains(id) && (b.ext[3] >> 16) & 0xff == slot
+                    }) {
+                        let c = &mut bodies[j].1;
+                        if !matches!(c.ext[0] & 0xff, 1..=3) {
+                            c.ext[0] = (c.ext[0] & !0xff) | 6;
+                            c.ext[1] = 0xFF;
+                        }
+                    }
+                }
+                // $14F1 to $1515: the show on for 255 frames, the
+                // dancers' next picture in 6, and their first picture,
+                // the bar shown's, over the 9 objects from E23E.
+                show = Show { on: true, left: 0xFF, tick: 6, picture: show.picture };
+                let shown = flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 3);
+                if let Some(dk) = dancer_k
+                    && let Some(pic) = show_picture(cx, shown, None)
+                {
+                    Self::put_picture(cx, dk, &mut dancers, &pic);
+                    Self::tip_from_dancers(cx, tip_k, &dancers, &mut tip, &mut tips_gone);
+                }
             }
         }
 
@@ -1392,8 +1554,8 @@ impl Ext for Bars {
                 if ![5, 3, 4, 0].contains(&state) {
                     continue;
                 }
-                // $09C7: pushed back, for 14 frames plus a draw below 20.
-                let r = draw_below(cx, "customer_wait_start", bp(cx, "pushed_spread"));
+                // $09C7: pushed back, for 14 frames plus a draw of 0 to 20.
+                let r = draw_at_most(cx, "customer_wait_start", bp(cx, "pushed_spread"));
                 c.ext[0] = (c.ext[0] & !0xff) | 1;
                 c.ext[1] = bp(cx, "pushed_base") + r;
                 bodies[j].1 = c;
@@ -1440,7 +1602,7 @@ impl Ext for Bars {
                 }
                 1 => {
                     if t == 0 {
-                        // $106B: a draw below 6, then drinking.
+                        // $106B: a draw of 0 to 6, then drinking.
                         let _ = cx.draw("pushed_drink");
                         c.ext[0] = (c.ext[0] & !0xff) | 2;
                         c.ext[1] = drink;
@@ -1460,7 +1622,7 @@ impl Ext for Bars {
                         } else {
                             // $10C0: the empty mug, 3 above the line where
                             // the customer holds it, 16 toward the tap.
-                            let r = draw_below(cx, "throw_wait", bp(cx, "throw_spread"));
+                            let r = draw_at_most(cx, "throw_wait", bp(cx, "throw_spread"));
                             c.ext[0] = (c.ext[0] & !0xff) | 3;
                             c.ext[1] = r + bp(cx, "throw_base");
                             let hx = c.x.floor() + if facing == 1 { -16 } else { 16 };
@@ -1508,7 +1670,7 @@ impl Ext for Bars {
                         // tip is left on the bar ($20F4: 8 above the
                         // customer, 12 further from the far end's picture
                         // when within 12 of it) and the count starts again
-                        // at a draw below 3 plus 4 ($213B).
+                        // at a draw of 0 to 3 plus 4 ($213B).
                         if tips_left != 0 {
                             tip_count = (tip_count - 1) & 0xff;
                             if tip_count == 0
@@ -1549,13 +1711,23 @@ impl Ext for Bars {
                                     false,
                                 );
                                 tip = Some((old, nb));
-                                let r = draw_below(cx, "tip_wait", 3);
+                                let r = draw_at_most(cx, "tip_wait", 3);
                                 tip_count = r + 4;
                             }
                         }
                     }
                 }
                 4 => {
+                    if t == 0 {
+                        c.ext[0] &= !0xff;
+                        c.ext[1] = wait;
+                    }
+                }
+                // $11AA: watching the show, standing, its picture
+                // mirrored while bit 2 of its timer is 0 ($11B2 to $11C5);
+                // at 0 back to waiting with its slot's wait ($11CA to
+                // $11EA), 255 frames after the pickup.
+                6 => {
                     if t == 0 {
                         c.ext[0] &= !0xff;
                         c.ext[1] = wait;
@@ -1620,6 +1792,48 @@ impl Ext for Bars {
             fb.ext[3] = (fb.ext[3] & !0xffff_00ff) | 11 | (9 << 16);
             cx.set_body(fid, fb);
         }
+        // $0C25, after $0890: the show. A tip left on the bar in it ($20F4)
+        // is the last dancer's object until the next picture is copied over
+        // it. $1CE1 doesn't come back to the play routine ($232B goes to
+        // the main loop, $22A3), so a frame that starts it doesn't count.
+        if show.on
+            && reach_end.is_none()
+            && let Some(dk) = dancer_k
+        {
+            if let Some((_, t)) = tip {
+                let mut d = dancers[8]
+                    .unwrap_or_else(|| gp_sim::systems::new_body(cx.spec, cx.world, dk, t.x, t.y, false));
+                d.x = t.x;
+                d.y = t.y;
+                d.ext[0] = 9;
+                d.ext[2] = 0x4D;
+                dancers[8] = Some(d);
+            }
+            show.left = (show.left - 1) & 0xff;
+            if show.left == 0 {
+                // $0C71 to $0C81: the show ends, the 9 objects' y 0, the
+                // tip's with them.
+                show.on = false;
+                dancers = [None; 9];
+                if let Some((Some(id), _)) = tip.take() {
+                    tips_gone.push(id);
+                }
+                tip = None;
+            } else {
+                show.tick = (show.tick - 1) & 0xff;
+                if show.tick == 0 {
+                    // $0C38 to $0C6C: the bar's next picture, every 6
+                    // frames, its place in the list counting 0 to 7.
+                    show.picture = (show.picture + 1) & 7;
+                    let shown = flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 3);
+                    if let Some(pic) = show_picture(cx, shown, Some(show.picture)) {
+                        Self::put_picture(cx, dk, &mut dancers, &pic);
+                        Self::tip_from_dancers(cx, tip_k, &dancers, &mut tip, &mut tips_gone);
+                    }
+                    show.tick = 6;
+                }
+            }
+        }
         // $1CE1, a customer at the bartender's end: it empties the timers
         // ($5DEC), the objects from E23E with the tip ($1CE9 to $1CF5) and
         // waits ($232B): the game is in states 15 and 16 from this frame,
@@ -1637,6 +1851,7 @@ impl Ext for Bars {
                 tips_gone.push(id);
             }
             tip = None;
+            dancers = [None; 9];
             fb.ext[3] = (fb.ext[3] & !0xffff_00ff) | 15 | (10 << 16);
             fb.ext[2] = (fb.ext[2] & 0xffff) | ((ry & 0xff) << 16) | ((rbar & 3) << 24) | (rslot << 32);
             cx.set_body(fid, fb);
@@ -1685,8 +1900,8 @@ impl Ext for Bars {
                 let left = layout & (1 << bar) != 0;
                 let x = if left { 0xEE - x0 } else { x0 };
                 let mut c = gp_sim::systems::new_body(cx.spec, cx.world, cust_k, Fx::from_int(x), Fx::from_int(y), left);
-                // $1B58: waiting, for 16 frames and a draw below 16.
-                let r = draw_below(cx, "arrival_wait", 16);
+                // $1B58: waiting, for 16 frames and a draw of 0 to 16.
+                let r = draw_at_most(cx, "arrival_wait", 16);
                 c.ext[0] = i64::from(left) << 8;
                 c.ext[1] = r + 16;
                 c.ext[3] = (k as i64) << 16;
@@ -1716,6 +1931,7 @@ impl Ext for Bars {
 
         cx.me.ext[3] = w_word | (cleared << 16) | (level << 24);
         cx.me.ext[0] = walk | (tip_count << 8) | (tips_left << 16) | (tip_setting << 24);
+        cx.me.ext[1] = (cx.me.ext[1] & 0xff) | show.word();
         for (id, b) in &bodies {
             if added.contains(id) {
                 continue;
@@ -1761,14 +1977,30 @@ impl Ext for Bars {
         for id in tips_gone {
             cx.remove(id);
         }
+        // Bodies spawned this step take their ids in order from here.
+        let mut n = first + spawned.len();
         match tip {
             Some((Some(id), t)) => cx.set_body(id, t),
             Some((None, t)) => {
-                let n = cx.world.bodies.len();
                 cx.spawn(t.kind, t.x, t.y, t.facing_left);
                 cx.set_body(n, t);
+                n += 1;
             }
             None => {}
+        }
+        // The dancers, by slot: an object kept is the same body, one whose
+        // y became 0 goes.
+        for (id, d) in dancer_ids.iter().zip(dancers.iter()) {
+            match (id, d) {
+                (Some(id), Some(b)) => cx.set_body(*id, *b),
+                (Some(id), None) => cx.remove(*id),
+                (None, Some(b)) => {
+                    cx.spawn(b.kind, b.x, b.y, b.facing_left);
+                    cx.set_body(n, *b);
+                    n += 1;
+                }
+                (None, None) => {}
+            }
         }
     }
 
@@ -1781,11 +2013,11 @@ impl Ext for Bars {
             class: "flow",
             implementation: "gp-ext-tapper::Bars",
             like: "",
-            about: "Each frame after the bartender: empty mugs caught, mugs moved and caught by customers, the customers' waits, walks, drinks and throws, and customers served off the bar's end",
+            about: "Each frame after the bartender: empty mugs caught, a tip picked up and the show it starts, mugs moved and caught by customers, the customers' waits, walks, drinks, throws and watching, and customers served off the bar's end",
             params: BARS_PARAMS,
-            state: &["ext[0] walk, plus E72E, E72F and E006 a byte each above it", "ext[1] empty mug speed", "ext[2] full mug speed, 8.8"],
-            reads: &["mug", "customer", "player", "tap.facing", "tip"],
-            writes: &["mug", "customer", "tip"],
+            state: &["ext[0] walk, plus E72E, E72F and E006 a byte each above it", "ext[1] empty mug speed, then the show's E70F, E712, E70E and E710 a byte each above it", "ext[2] full mug speed, 8.8"],
+            reads: &["mug", "customer", "player", "tap.facing", "tip", "dancer"],
+            writes: &["mug", "customer", "tip", "dancer"],
             built_from: &[Primitive::Timer, Primitive::Condition, Primitive::Quantity],
             ..Record::EMPTY
         }]
