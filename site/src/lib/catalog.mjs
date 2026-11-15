@@ -4,7 +4,7 @@
 import { parse } from 'smol-toml';
 
 const REGISTRY = process.env.GP_REGISTRY ?? 'https://raw.githubusercontent.com/lex00/gp-registry/main';
-export const RUNNER = process.env.GP_RUNNER ?? 'https://nes-donkey-kong.intentius.workers.dev';
+export const RUNNER = process.env.GP_RUNNER ?? 'https://gameprinter.intentius.workers.dev';
 
 async function text(key) {
 	const r = await fetch(`${REGISTRY}/${key}`);
