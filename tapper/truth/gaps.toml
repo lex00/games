@@ -1,0 +1,94 @@
+# What the gaps detectors should find in Tapper, for scoring them (gp gaps,
+# docs/gaps.md "Scoring"). Written 2026-11-14 from what is already known of
+# the code: tapper/labels.toml (each name's address and words), the state
+# mapping's field notes, ~/.gameprinter/notes/arcade/RESEARCH.md and the
+# addresses in the games repo's Tapper commit messages. Not from what the
+# detectors print.
+#
+# The names are labels.toml's, which `gp gaps` reads from the package, so a
+# run needs only --truth:
+#   gp gaps all tapper --recording ID --truth tapper/truth/gaps.toml
+#
+# The scorer resolves a handler only through a routine label. Routines the
+# commit messages name but labels.toml doesn't (a tip picked up $0BC5 and its
+# show $14E7, a life lost $23AF, an extra life $615D, a level's end $5681 and
+# $489A, a customer's slide to its end $1CE1, a mug falling off a bar's end)
+# can't be entries here until they are labelled; each is listed below as a
+# comment where it belongs.
+#
+# The format has no "unsure" mark, so an entry that is a guess says "unsure"
+# in its comment.
+
+schema = 0
+template = "tapper"
+
+# Sound: the main CPU asks the sound board (SSIO: a Z80 and two AY-8910s,
+# RESEARCH.md) through its latch, and nothing we have labelled names how the
+# game's code asks for a sound (no RAM queue or play-sound routine is known).
+# So the set names no interface and no effect. This is a gap in the set, not
+# a claim that Tapper has no sound: the sound and effects scores mean nothing
+# for Tapper until the request path is read and labelled.
+[sound]
+interfaces = []
+
+# The bartender: the stick's dispatch ($06C2: right, left, down, up, else the
+# tap, a send or idle) and a move between bars ($214B; E717, E730, E731).
+[[element]]
+name = "bartender"
+handlers = ["stick_dispatch", "bar_move"]
+
+# The tap: held, it puts the bartender at the tap and fills the mug ($1206,
+# E715, E718); the tap's side for his bar ($0FFB).
+[[element]]
+name = "tap"
+handlers = ["tap", "bar_tap_side"]
+
+# A full mug let go: sent along the bar ($13CC). Unlabelled, so left out:
+# a mug falling off a bar's end and the life lost after it.
+[[element]]
+name = "full mug"
+handlers = ["send"]
+
+# A customer: its frame by its state through the table at $11F6 ($100A):
+# waiting, walking, pushed back by a mug, drinking, the empty mug back.
+# Unlabelled, so left out: the slide to the bar's end ($1CE1), the lower slot
+# taking a mug when two are in reach ($0827), a customer taking the
+# bartender down the bar ($08D2).
+[[element]]
+name = "customer"
+handlers = ["customer"]
+
+# Points: added digit by digit ($5EF3), for a customer served, an empty mug
+# caught and a tip. Unsure: whether add_points belongs to one element (the
+# scorer counts it once, wherever it is called from).
+[[element]]
+name = "points"
+handlers = ["add_points"]
+
+# Left out because no label names their routines yet: a tip picked up
+# ($0BC5) and the show it starts ($14E7, $1523, $11AA); a life lost ($23AF);
+# an extra life ($615D); a level's end ($5681, $489A, $5656) and the bonus
+# round ($5F31); the game over ($2441).
+
+# RAM that carries the game's behaviour, and bookkeeping that doesn't, by
+# labels.toml's names. The tables (objects, customer_records, level_ram)
+# hold the game's objects and the level's state.
+[ram]
+matter = [
+  # The objects and their records (labels.toml: E262 on, E4B2 on).
+  "objects", "customers", "bartender", "mugs", "taps", "customer_records",
+  # The level and the game (E3AF, E3B8, E3BD, E3F2, E3F5, E4A7, E4A8, E3B3).
+  "layout", "shown", "mode", "player", "score", "lives", "cleared", "move_speed",
+  # The bartender's moves and the tap (E6F9 on).
+  "bar", "pour", "mug_full", "move_count", "move_step", "bob_count", "bob_step", "stick_latch",
+  # Unsure: level_ram (E6F2, 66 bytes) is the block the level setup clears;
+  # most of it is the level's state, but not every byte is known.
+  "level_ram",
+  # Unsure: the random register changes every frame, but customers'
+  # arrivals and the end interludes read it ($5FAC, $5FBD).
+  "rng",
+]
+bookkeeping = [
+  # The joystick as read this frame ($2B53): the controller's copy.
+  "stick",
+]
