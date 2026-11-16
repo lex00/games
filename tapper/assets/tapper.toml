@@ -464,6 +464,55 @@ width = 1
 [asset.at]
 rbtapper = 0x4C71
 
+# The logo's colours ($3D76): palette RAM's F840 and F84C set ($3D79, $3D7E),
+# F822 to F83D zeroed, then from 16 frames on each of the twelve odd bytes
+# from F823 lit ($FF, $3DA4) and, six frames later, dimmed ($C4, $3DA2), the
+# letters shimmering one by one. rbtapper's logo cycles six of its own, at
+# its own places; these are the bytes it starts from.
+[[asset]]
+name = "logo_color_zero"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3D7A
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x3D90
+
+[[asset]]
+name = "logo_color_7c"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3D7F
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x3D95
+
+[[asset]]
+name = "logo_color_lit"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3DA5
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x3DB8
+
+[[asset]]
+name = "logo_color_dim"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3DA3
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x3DC3
+
 # The credit line the frame's interrupt writes in attract mode ($03EA, E3BD 1):
 # CREDIT, the credits as a digit, and one of three lines by the credits, each
 # through the text routine's $0350; sutapper's from its own places.

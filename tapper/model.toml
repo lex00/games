@@ -329,6 +329,42 @@ description = "The lives: the cells high byte ($5D4F) and the tile ($5D52)"
 source = "tapper"
 asset = "lives_codes"
 
+[assets.logo_color_7c]
+kind = "rows"
+role = "graphics"
+description = "The logo's colours: the byte $3D76 writes into palette RAM's F84C"
+
+[assets.logo_color_7c.from]
+source = "tapper"
+asset = "logo_color_7c"
+
+[assets.logo_color_dim]
+kind = "rows"
+role = "graphics"
+description = "The logo's colours: the byte $3D76's loop dims a letter's colour to ($3DA2)"
+
+[assets.logo_color_dim.from]
+source = "tapper"
+asset = "logo_color_dim"
+
+[assets.logo_color_lit]
+kind = "rows"
+role = "graphics"
+description = "The logo's colours: the byte $3D76's loop lights a letter's colour with ($3DA4)"
+
+[assets.logo_color_lit.from]
+source = "tapper"
+asset = "logo_color_lit"
+
+[assets.logo_color_zero]
+kind = "rows"
+role = "graphics"
+description = "The logo's colours: the zero $3D76 writes into palette RAM's F840"
+
+[assets.logo_color_zero.from]
+source = "tapper"
+asset = "logo_color_zero"
+
 [assets.points_bonus]
 kind = "rows"
 role = "behavior"
@@ -1268,10 +1304,1929 @@ value = 1
 [[levels.main.present.board.looks]]
 screen = "screen_attract_logo"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "attract_screen"
 value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 0
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 17
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_lit"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 17
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 23
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_lit"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 23
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 29
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_lit"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 29
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 35
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_lit"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 35
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 41
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_lit"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 41
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 47
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_lit"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 47
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 53
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_lit"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 53
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 59
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_lit"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 59
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 65
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_lit"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 65
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 71
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_lit"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 71
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 77
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_lit"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 77
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 83
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_lit"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 83
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 89
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 89
 
 [[levels.main.present.board.looks]]
 screen = "screen_attract_demo"
@@ -3179,6 +5134,38 @@ note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stage
 
 [[evidence."assets.lives_codes".refs]]
 at = "clip:tapper.l1.001"
+
+[evidence."assets.logo_color_7c"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input, palette RAM F800 to F87F: F840 and F84C set and F822 to F83D zeroed as the logo starts (frame 147), then F823 + 2k lit $FF at 17 + 6k frames into the attract and dimmed $C4 six later, to F83B at 95; rbtapper's logo cycles six of its own ($3DB2), so its shimmer isn't the model's"
+
+[[evidence."assets.logo_color_7c".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.logo_color_dim"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input, palette RAM F800 to F87F: F840 and F84C set and F822 to F83D zeroed as the logo starts (frame 147), then F823 + 2k lit $FF at 17 + 6k frames into the attract and dimmed $C4 six later, to F83B at 95; rbtapper's logo cycles six of its own ($3DB2), so its shimmer isn't the model's"
+
+[[evidence."assets.logo_color_dim".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.logo_color_lit"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input, palette RAM F800 to F87F: F840 and F84C set and F822 to F83D zeroed as the logo starts (frame 147), then F823 + 2k lit $FF at 17 + 6k frames into the attract and dimmed $C4 six later, to F83B at 95; rbtapper's logo cycles six of its own ($3DB2), so its shimmer isn't the model's"
+
+[[evidence."assets.logo_color_lit".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.logo_color_zero"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input, palette RAM F800 to F87F: F840 and F84C set and F822 to F83D zeroed as the logo starts (frame 147), then F823 + 2k lit $FF at 17 + 6k frames into the attract and dimmed $C4 six later, to F83B at 95; rbtapper's logo cycles six of its own ($3DB2), so its shimmer isn't the model's"
+
+[[evidence."assets.logo_color_zero".refs]]
+at = "clip:tapper.attract.001"
 
 [evidence."assets.points_bonus"]
 source = "observed"
