@@ -573,3 +573,9 @@ note = "Not compared until the model keeps it: The mode, E3BD: 0 in a game, 1 at
 path = "counters.mode"
 presentation = true
 ram = [0xE3BD]
+
+[[field]]
+note = "Not compared: the sound requests' state as the frame ends, loaded at a clip's start so the next send's turn bit is the game's: E111, the bit the send ($03D9) flips on latch 0; E099, coins counted the send hasn't answered ($0380); E011, the credits. The queue itself (E114, E0E1) isn't loaded: every request the model sends is one its hooks made"
+path = "entities.sound[0].ext[0]"
+presentation = true
+ram = [0xE111, 0xE099, 0xE011]

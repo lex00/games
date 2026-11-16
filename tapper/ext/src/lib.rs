@@ -6,6 +6,7 @@
 //! | Hook | Entity | What it does |
 //! |---|---|---|
 //! | `tapper_bartender` | player | Walks along his bar, moves to the next bar's tap when the stick is pushed up or down, and steps back from the tap when a mug is sent |
+//! | `tapper_sound` | sound | The main CPU's requests to the sound board: the queue the hooks fill as the game's code asks, sent to the board's latches at each frame's start ([`sound`]) |
 //!
 //! The bartender's words: `ext[0]` his bar (0 the bottom bar on the screen,
 //! 3 the top; the game's E6F9; up adds one), `ext[1]` frames left before he lands at
@@ -19,12 +20,16 @@
 use gp_sim::mechanic::{Carrier, Param, Primitive, Record};
 use gp_sim::{Ext, ExtCx, Exts, Fx};
 
+mod sound;
+use sound::ask;
+
 /// Every hook, by the name the model's `ext` gives it.
 pub fn exts() -> Exts {
     let mut out = Exts::new();
     out.insert("tapper_bartender".into(), Box::new(Bartender) as Box<dyn Ext>);
     out.insert("tapper_flow".into(), Box::new(Flow));
     out.insert("tapper_bars".into(), Box::new(Bars));
+    out.insert("tapper_sound".into(), Box::new(sound::Sound));
     out
 }
 
@@ -144,8 +149,12 @@ impl Ext for Bartender {
         // setup's state (E397 9, 11 or 8): $0660 runs from the next frame,
         // so a press on that frame is not seen (tapper.l13.001: up on
         // 19672, the setup's frame, moves nothing; up on 19685 lands on
-        // 19692).
-        if flow.is_some_and(|b| b.ext[2] == 4) {
+        // 19692). That is the space bar's setup (E3B8 3), which waits a
+        // frame more ($5E99); in the saloon $0660 runs on that frame
+        // already (tapper-first: the tap held through the saloon's setup
+        // after a life lost, on 1444, puts him at the tap on 1445 and
+        // pours from there), so only the space bar's waits it.
+        if flow.is_some_and(|b| b.ext[2] == 4 && (b.ext[3] >> 8) & 3 == 3) {
             return;
         }
         let bar = cx.me.ext[0];
@@ -162,6 +171,11 @@ impl Ext for Bartender {
             let left = cx.me.ext[1] >> 3;
             let to = (cx.me.ext[1] >> 1) & 3;
             if left == p(cx, "switch_busy") - p(cx, "switch_frames") {
+                // $21C2 calls $0A8E as he lands: $0D after a move up (E733
+                // 1, $0711), $0E after one down ($0A97, $0A9E; the
+                // `sound_customers` rows are the program from $090D).
+                let up = to == (cx.me.ext[0] + 1) % 4;
+                ask(cx, "sound_customers", &[if up { 0x192 } else { 0x18B }]);
                 cx.me.ext[0] = to;
                 if let Some(x) = Self::stand(cx, to) {
                     cx.me.x = Fx::from_int(x);
@@ -191,6 +205,18 @@ impl Ext for Bartender {
                         cx.me.x = Fx::from_int(x);
                     }
                     cx.me.ext[3] += 1;
+                    // The pour's sounds ($1206): its first frame sets E715
+                    // to 4; on each of the next three a stream picture
+                    // asks for $38 the first time and $39 after ($12E2,
+                    // $12DB), and on the fourth the mug is full: $30 and
+                    // $3A ($125E, $1295). The `sound_bar` rows are the
+                    // program from $125E.
+                    match cx.me.ext[3] & 0xff {
+                        2 => ask(cx, "sound_bar", &[0x85]),
+                        3 | 4 => ask(cx, "sound_bar", &[0x7E]),
+                        5 => ask(cx, "sound_bar", &[0x01, 0x38]),
+                        _ => {}
+                    }
                     return;
                 }
                 if cx.me.ext[3] & 0xff >= p(cx, "pour_frames") {
@@ -235,6 +261,8 @@ impl Ext for Bartender {
                                 b.ext[3] = (bar << 4) | if left { 8 } else { 0 };
                                 cx.spawn(mug, b.x, b.y, b.facing_left);
                                 cx.set_body(id, b);
+                                // $14DB: the mug sent asks for $12.
+                                ask(cx, "sound_bar", &[0x27E]);
                             }
                             // $14D1: every full mug's speed, E6FE, is -5
                             // from now (tapper_bars keeps it, its fraction
@@ -766,6 +794,13 @@ impl Ext for Bars {
             // whose records and level timers are in already.
             let whole = fb.ext[2] == 1;
             let mut fb = fb;
+            // The setup's sounds, on this frame either way (after the
+            // space bar's waits at $4B8B): $4B9A asks for 2, then after the
+            // arrivals $4C4E for 2 and $4C56 for the bar shown's byte of
+            // the table at $4C71 (the `sound_game` rows are the program
+            // from $4B34).
+            let shown_now = (fb.ext[3] >> 8) & 3;
+            ask(cx, "sound_game", &[0x67, 0x11B, 0x13D + shown_now]);
             // 4: the setup's frame, for tapper_bartender (play from the
             // next); tapper_flow clears it.
             fb.ext[2] = 4;
@@ -795,6 +830,15 @@ impl Ext for Bars {
             let blocks = cx.table("record_blocks").to_vec();
             // The records are carried in slot order; before a game's first
             // setup their bytes are blank, so the n-th is slot n.
+            // A run from power-on has no records yet (a clip's start
+            // carries them): the setup's copy makes all 16, new bodies
+            // spawned when the step ends.
+            if let Some(rk) = rec_k {
+                while recs.len() < 16 {
+                    let r = gp_sim::systems::new_body(cx.spec, cx.world, rk, Fx::ZERO, Fx::ZERO, false);
+                    recs.push((usize::MAX, r));
+                }
+            }
             for (k, (_, r)) in recs.iter_mut().enumerate() {
                 let Some(rec) = blocks.get((shown * 16 + k) * 32..(shown * 16 + k + 1) * 32) else {
                     continue;
@@ -993,6 +1037,10 @@ impl Ext for Bars {
         let lost_sub = flow.map_or(0, |(_, b)| (b.ext[3] >> 16) & 0xff);
         // The lives (E4A7), in the flow's word 1 from bit 40.
         let lives = flow.map_or(1, |(_, b)| (b.ext[1] >> 40) & 0xff);
+        // $2441 asks for 2 as it starts, lives left or not.
+        if state == 12 && lost_sub == 3 {
+            ask(cx, "sound_life", &[0x58]);
+        }
         if state == 12 && lost_sub == 3 && lives == 0 && let Some((fid, mut fb)) = flow {
             // $2441 with no lives left ($244B): GAME OVER is drawn and
             // the game waits 60 frames ($2467) and 60 more ($24D8); unless
@@ -1037,6 +1085,9 @@ impl Ext for Bars {
                     dancers = [None; 9];
                     e706 = 13;
                     next_sub = 1;
+                    // $23EA: the mug's fall asks for $1A (the
+                    // `sound_life` rows are the program from $23EA).
+                    ask(cx, "sound_life", &[0x01]);
                     // $23AF: a life less.
                     let l = ((fb.ext[1] >> 40) - 1).max(0) & 0xff;
                     fb.ext[1] = (fb.ext[1] & !(0xff << 40)) | (l << 40);
@@ -1051,6 +1102,8 @@ impl Ext for Bars {
                         e706 = 1;
                         e709 = 12;
                         next_sub = 2;
+                        // $2402: its crash asks for $1B.
+                        ask(cx, "sound_life", &[0x19]);
                     }
                 }
                 2 => {
@@ -1085,6 +1138,21 @@ impl Ext for Bars {
             fb.ext[3] = (fb.ext[3] & !0x00ff_0000) | (4 << 16);
             cx.set_body(fid, fb);
             life_lost = true;
+        } else if state == 8 && let Some((fid, mut fb)) = flow
+            && fb.ext[0] == 0
+            && fb.ext[2] == 0
+        {
+            // A game's start ($4AEF, state 8) goes to the first level's
+            // setup as a life lost's does, through the bartender's walk on
+            // and the 100 frames before a game's first level, but nothing
+            // is emptied: he stands where the attract left him until the
+            // setup puts him at his bar (tapper-first: the start on 961,
+            // the level's RAM cleared on 1099, the setup on 1100). The
+            // setup runs in state 8 too, from the frame it clears the
+            // level (the flow's word 0) to its own (word 2): not a start.
+            let wait = 2 + 30 + 5 + 100;
+            fb.ext[3] = (fb.ext[3] & !0xffff_00ff) | 15 | (5 << 16) | (wait << 24);
+            cx.set_body(fid, fb);
         } else if state == 9 && let Some((fid, mut fb)) = flow {
             // $4B4D: the setup's $5F31 empties the objects, the bartender's
             // among them; its waits ($232B) are states 15 and 16. The
@@ -1905,6 +1973,8 @@ impl Ext for Bars {
                 break;
             }
             if served {
+                // $090D: a customer served asks for $1E.
+                ask(cx, "sound_customers", &[0x01]);
                 served_any = true;
                 removed.push(*id);
                 let slot = usize::try_from((c.ext[3] >> 16) & 0xff).unwrap_or(0);
@@ -2025,6 +2095,12 @@ impl Ext for Bars {
         }
         for routine in fired {
             if let Some(k) = arrivals.iter().position(|&a| a == routine) {
+                // The arrival routine's first instruction asks for a
+                // sound ($15FF: `ld c,N`, then $606B); the
+                // `sound_arrivals` rows are the program from the first
+                // arrival routine.
+                let first = arrivals.iter().copied().min().unwrap_or(routine);
+                ask(cx, "sound_arrivals", &[routine - first + 1]);
                 // The slot's object from its start row; on a bar whose tap
                 // is on the left, mirrored ($190F: x = $EE - x).
                 let row = &starts[k * 8..k * 8 + 8];
@@ -2091,6 +2167,7 @@ impl Ext for Bars {
         spawned.extend(throws);
         spawned.extend(end_spawn);
         spawned.extend(timers.iter().filter(|(id, _)| *id == usize::MAX).map(|(_, t)| *t));
+        spawned.extend(recs.iter().filter(|(id, _)| *id == usize::MAX).map(|(_, r)| *r));
         let first = cx.world.bodies.len();
         for b in &spawned {
             cx.spawn(b.kind, b.x, b.y, b.facing_left);
@@ -2109,7 +2186,7 @@ impl Ext for Bars {
                 cx.set_body(timers[n].0, timers[n].1);
             }
         }
-        for (id, r) in &recs {
+        for (id, r) in recs.iter().filter(|(id, _)| *id != usize::MAX) {
             cx.set_body(*id, *r);
         }
         // The tip last, so the ids given above stay as counted.

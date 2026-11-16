@@ -131,6 +131,78 @@ description = "The four objects a customer's slide leaves in the mug slots from 
 source = "tapper"
 asset = "slide_objects"
 
+[assets.sound_arrivals]
+kind = "rows"
+role = "behavior"
+description = "The customer slots' arrival routines from $15FF, each asking with its first instruction for the arrival's sound (the program's code, lifted from the player's romset)"
+
+[assets.sound_arrivals.from]
+source = "tapper"
+asset = "sound_arrivals"
+
+[assets.sound_bar]
+kind = "rows"
+role = "behavior"
+description = "The program from $125E to $14DC: the pour's requests and the mug sent's (the program's code, lifted from the player's romset)"
+
+[assets.sound_bar.from]
+source = "tapper"
+asset = "sound_bar"
+
+[assets.sound_boot]
+kind = "rows"
+role = "behavior"
+description = "The program from $00B9: the boot's last requests (the program's code, lifted from the player's romset)"
+
+[assets.sound_boot.from]
+source = "tapper"
+asset = "sound_boot"
+
+[assets.sound_check]
+kind = "rows"
+role = "behavior"
+description = "The program from $CFC5: the boot's sound check, its requests and the four bytes it writes to the latches (the program's code, lifted from the player's romset)"
+
+[assets.sound_check.from]
+source = "tapper"
+asset = "sound_check"
+
+[assets.sound_coin]
+kind = "rows"
+role = "behavior"
+description = "The program from $0387: a coin counted's requests (the program's code, lifted from the player's romset)"
+
+[assets.sound_coin.from]
+source = "tapper"
+asset = "sound_coin"
+
+[assets.sound_customers]
+kind = "rows"
+role = "behavior"
+description = "The program from $090D to $0A9F: a customer served's request and the bartender landing's (the program's code, lifted from the player's romset)"
+
+[assets.sound_customers.from]
+source = "tapper"
+asset = "sound_customers"
+
+[assets.sound_game]
+kind = "rows"
+role = "behavior"
+description = "The program from $4B34 to $4C74: a game's start's requests and a level's setup's, with the table of the bar shown's at $4C71 (the program's code, lifted from the player's romset)"
+
+[assets.sound_game.from]
+source = "tapper"
+asset = "sound_game"
+
+[assets.sound_life]
+kind = "rows"
+role = "behavior"
+description = "The program from $23EA to $2442: a life lost's requests (the program's code, lifted from the player's romset)"
+
+[assets.sound_life.from]
+source = "tapper"
+asset = "sound_life"
+
 [assets.start_list_ptrs]
 kind = "rows"
 role = "behavior"
@@ -291,6 +363,37 @@ w = 1
 x = 0
 y = 0
 
+[entities.sound]
+description = "The main CPU's requests to the sound board, a body with no box: the hooks queue each byte as the game's code asks ($606B, the queue at E0E1), and the frame's interrupt sends up to three to latches 1 to 3 at the next frame's start with E111's turn bit to latch 0 ($0379); the boot's sound check, a coin and a game's start ask from here (tapper_sound). Every byte is read from the program's code (the sound_* rows)"
+ext = "tapper_sound"
+hook_frame_start = true
+no_slot = true
+role = "npc"
+size = [1, 1]
+
+[entities.sound.ext_params]
+check_first = 1
+check_patterns = 12
+check_ready = 49
+check_second = 6
+check_step = 6
+
+[entities.sound.ext_rows]
+sound_arrivals = "sound_arrivals"
+sound_bar = "sound_bar"
+sound_boot = "sound_boot"
+sound_check = "sound_check"
+sound_coin = "sound_coin"
+sound_customers = "sound_customers"
+sound_game = "sound_game"
+sound_life = "sound_life"
+
+[entities.sound.hitbox]
+h = 1
+w = 1
+x = 0
+y = 0
+
 [entities.tap]
 description = "A bar's tap, the game's objects at E346, E34A, E34E and E352 (one a bar, bottom first): its x and whether it is on the bar's left end (its flags' bit 4, the picture mirrored). Placed from the game's RAM when a clip starts; the bartender reads it. Its word 0 is the x of its bar's far end (the object at E366 plus 4 a bar), which the tip's place reads"
 no_slot = true
@@ -334,6 +437,11 @@ tile_size = 16
 
 [[levels.main.spawn]]
 entity = "flow"
+x = 0
+y = 0
+
+[[levels.main.spawn]]
+entity = "sound"
 x = 0
 y = 0
 
@@ -480,6 +588,70 @@ note = "gp code listing on tapper.l6.001's end: where the slide ends ($1F66 fall
 
 [[evidence."assets.slide_objects".refs]]
 at = "clip:tapper.l6.001"
+
+[evidence."assets.sound_arrivals"]
+source = "observed"
+confidence = 80
+note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-first.input): every byte the main CPU queued at E0E1 ($6092) and the call of $606B it came from, with the `ld c,N` before it in gp code listing; each set's place found by its code around the calls"
+
+[[evidence."assets.sound_arrivals".refs]]
+at = "clip:tapper.score.001"
+
+[evidence."assets.sound_bar"]
+source = "observed"
+confidence = 80
+note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-first.input): every byte the main CPU queued at E0E1 ($6092) and the call of $606B it came from, with the `ld c,N` before it in gp code listing; each set's place found by its code around the calls"
+
+[[evidence."assets.sound_bar".refs]]
+at = "clip:tapper.score.001"
+
+[evidence."assets.sound_boot"]
+source = "observed"
+confidence = 80
+note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-first.input): every byte the main CPU queued at E0E1 ($6092) and the call of $606B it came from, with the `ld c,N` before it in gp code listing; each set's place found by its code around the calls"
+
+[[evidence."assets.sound_boot".refs]]
+at = "clip:tapper.score.001"
+
+[evidence."assets.sound_check"]
+source = "observed"
+confidence = 80
+note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-first.input): every byte the main CPU queued at E0E1 ($6092) and the call of $606B it came from, with the `ld c,N` before it in gp code listing; each set's place found by its code around the calls"
+
+[[evidence."assets.sound_check".refs]]
+at = "clip:tapper.score.001"
+
+[evidence."assets.sound_coin"]
+source = "observed"
+confidence = 80
+note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-first.input): every byte the main CPU queued at E0E1 ($6092) and the call of $606B it came from, with the `ld c,N` before it in gp code listing; each set's place found by its code around the calls"
+
+[[evidence."assets.sound_coin".refs]]
+at = "clip:tapper.score.001"
+
+[evidence."assets.sound_customers"]
+source = "observed"
+confidence = 80
+note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-first.input): every byte the main CPU queued at E0E1 ($6092) and the call of $606B it came from, with the `ld c,N` before it in gp code listing; each set's place found by its code around the calls"
+
+[[evidence."assets.sound_customers".refs]]
+at = "clip:tapper.score.001"
+
+[evidence."assets.sound_game"]
+source = "observed"
+confidence = 80
+note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-first.input): every byte the main CPU queued at E0E1 ($6092) and the call of $606B it came from, with the `ld c,N` before it in gp code listing; each set's place found by its code around the calls"
+
+[[evidence."assets.sound_game".refs]]
+at = "clip:tapper.score.001"
+
+[evidence."assets.sound_life"]
+source = "observed"
+confidence = 80
+note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-first.input): every byte the main CPU queued at E0E1 ($6092) and the call of $606B it came from, with the `ld c,N` before it in gp code listing; each set's place found by its code around the calls"
+
+[[evidence."assets.sound_life".refs]]
+at = "clip:tapper.score.001"
 
 [evidence."assets.start_list_ptrs"]
 source = "observed"
@@ -712,6 +884,22 @@ note = "gp code listing on tapper.l8.001: each customer slot's 0x20-byte record 
 
 [[evidence."entities.record".refs]]
 at = "clip:tapper.l8.001"
+
+[evidence."entities.sound"]
+source = "observed"
+confidence = 80
+note = "The send at $0379 (from the interrupt $00D8, at $0137) and the queue $606B fills, read with gp code listing; gp interp compare holds the model's requests to the machine's latch writes (gp-arcade's latch_events) on tapper-first frame by frame"
+
+[[evidence."entities.sound".refs]]
+at = "clip:tapper.score.001"
+
+[evidence."entities.sound.ext_params.check_first"]
+source = "observed"
+confidence = 80
+note = "The boot's sound check ($CFC5) asks for 2 on the model's first frame (the machine's 95th, gp-arcade's write log on tapper-first: $6092 writes E0E1), 2 and 1 five frames on (100, after six calls of the frame wait $DB69), writes its four patterns to the latches every six frames from 106 ($D000), and $00B9 asks for 2 on 143 and for 2 and 3 on 144, once the sound board has answered ($D036)"
+
+[[evidence."entities.sound.ext_params.check_first".refs]]
+at = "clip:tapper.score.001"
 
 [evidence."entities.tap"]
 source = "observed"

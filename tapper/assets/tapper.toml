@@ -203,3 +203,92 @@ count = 856
 width = 1
 [asset.at]
 rbtapper = 0x0C9E
+# The code that asks the sound board for sounds (the sound hook, ext/src/
+# sound.rs): each a stretch of the program from an `ld c,N` the code asks
+# with ($606B takes C), so the request bytes are the player's romset's.
+# Found with gp code listing and gp-arcade's write log on tapper-first (the
+# queue at E0E1 and the calls that fill it); each set's place by its code
+# around them (rbtapper's $606B is at $61EB, so its calls differ there).
+#
+# $0387 and $038C: a coin counted asks for 2 and 9 ($0379, the frame's
+# send).
+[[asset]]
+name = "sound_coin"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x0387
+count = 7
+width = 1
+[asset.at]
+sutapper = 0x0393
+# $00B9 to $00C6: the boot's last requests, 2, 2 and 3 (the second 2 is
+# C left from the first).
+[[asset]]
+name = "sound_boot"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x00B9
+count = 13
+width = 1
+# $CFC5 to $D06D: the boot's sound check, 2, then 2 and 1, and the four
+# bytes at $D06A it writes to all four latches.
+[[asset]]
+name = "sound_check"
+format = "byte-rows"
+region = "maincpu"
+offset = 0xCFC5
+count = 169
+width = 1
+[asset.at]
+rbtapper = 0xD145
+tappera = 0xCFB5
+# $4B34 to $4C74: a game's start (2 and 2A at $4B34 and $4B39) and a
+# level's setup (2 at $4B9A and $4C4E, then the bar shown's byte of the
+# table at $4C71, $4C56).
+[[asset]]
+name = "sound_game"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4B34
+count = 321
+width = 1
+[asset.at]
+rbtapper = 0x4CC4
+# $125E to $14DC: the pour ($30 and $3A when the mug is full, $39 and $38
+# for the stream, $125E to $12E2) and the mug sent ($12 at $14DB).
+[[asset]]
+name = "sound_bar"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x125E
+count = 639
+width = 1
+[asset.at]
+rbtapper = 0x1259
+# $090D to $0A9F: a customer served at the bar's far end ($1E at $090D),
+# and the bartender landing at another bar ($0E at $0A97, $0D at $0A9E).
+[[asset]]
+name = "sound_customers"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x090D
+count = 403
+width = 1
+# $23EA to $2442: a life lost's mug falling ($1A), its crash ($1B at
+# $2402) and $2441's 2.
+[[asset]]
+name = "sound_life"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x23EA
+count = 89
+width = 1
+# $15FF to $18DF: the 16 customer slots' arrival routines (the arrivals
+# table's words), each starting `ld c,N` with N the arrival's request.
+[[asset]]
+name = "sound_arrivals"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x15FF
+count = 737
+width = 1
