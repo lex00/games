@@ -30,6 +30,8 @@ pub fn exts() -> Exts {
     out.insert("tapper_flow".into(), Box::new(Flow));
     out.insert("tapper_bars".into(), Box::new(Bars));
     out.insert("tapper_sound".into(), Box::new(sound::Sound));
+    out.insert("tapper_bar_end".into(), Box::new(BarEnd));
+    out.insert("tapper_bartender_part".into(), Box::new(BartenderPart));
     out
 }
 
@@ -85,6 +87,356 @@ fn four_way(word: &mut i64, held: [bool; 4]) -> [bool; 4] {
 /// The bartender ($E2E6's object).
 pub struct Bartender;
 
+/// Which branch of the play routine's $06A4 ran for the bartender this
+/// frame, for his pictures (draw_pose).
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+enum Pose {
+    /// The play routine didn't run.
+    Still,
+    /// The setup's own frame, on which the hook doesn't move him.
+    SetupFrame,
+    /// It ran and changed none of his objects (a move's last frame, a
+    /// stick held after a move).
+    Play,
+    /// $214B's start of a move to another bar.
+    SwitchStart,
+    /// A move's frame with its step E731 (1 to 6; 6 lands, $0A8E).
+    Switch(i64),
+    /// The tap held ($1206).
+    Pour,
+    /// Neither stick nor tap: $13CC with a mug to send (E718), else $2085
+    /// while the pour's count E715 runs, else $2231.
+    Rest,
+    /// The send ($13CC), when he steps back from the tap.
+    Sent,
+    /// The walk ($19EF left, $1C02 right), with the bob's new step on a
+    /// frame E727 ran out.
+    Walk { left: bool, step: Option<i64> },
+}
+
+/// One of the game's 4-byte objects: y, flags, picture, x.
+#[derive(Clone, Copy, Default, Debug)]
+struct Obj {
+    y: i64,
+    flags: i64,
+    pic: i64,
+    x: i64,
+}
+
+/// A byte of a routine the model lifts as a row of its code's bytes
+/// (`table`, from tapper's address `start`): the byte at `at`, an
+/// instruction's immediate.
+fn imm(cx: &ExtCx<'_>, table: &str, start: i64, at: i64) -> i64 {
+    usize::try_from(at - start).ok().and_then(|k| cx.table(table).get(k).copied()).unwrap_or(0)
+}
+
+/// The bartender's six objects after the play routine's branch `ev` ran:
+/// his own (E2E6, whose y and x the hook keeps and whose flags and
+/// picture are word 2's bytes 2 and 3) and five bodies of kind
+/// bartender_part (E2EA on), set as $06A4's routines set them. The
+/// routines' state is word 2's bytes 4 to 7: E706 (standing's wait),
+/// E715 (the pour's count), E714 (the mug full; bit 1 E72C, the frame
+/// after a send, which $06B5 skips) and E718 (a mug to send). Out of play
+/// they stay as they are, the scripts' pictures not being modelled, and
+/// go when his object is emptied (a setup's $5F31) or out of a game.
+fn draw_pose(cx: &mut ExtCx<'_>, ev: Pose, x_before: i64, spawned: usize) {
+    let Some(pk) = cx.kind("bartender_part") else { return };
+    let mut ids: [Option<usize>; 5] = [None; 5];
+    let mut parts = [Obj::default(); 5];
+    for (id, b) in cx.world.bodies.iter().enumerate() {
+        if b.alive && b.kind == pk && (1..=5).contains(&b.ext[1]) {
+            let k = usize::try_from(b.ext[1] - 1).unwrap_or(0);
+            ids[k] = Some(id);
+            parts[k] = Obj { y: b.y.floor(), flags: b.ext[0] & 0xff, pic: (b.ext[0] >> 8) & 0xff, x: b.x.floor() };
+        }
+    }
+    let w = cx.me.ext[2];
+    let byte = |n: u32| (w >> (8 * n)) & 0xff;
+    let mut me = Obj { y: cx.me.y.floor(), flags: byte(2), pic: byte(3), x: cx.me.x.floor() };
+    let (mut e706, mut e715, mut e714, mut e718) = (byte(4), byte(5), byte(6), byte(7));
+    let bar = cx.me.ext[0] & 3;
+    let tap = Bartender::tap(cx, bar);
+    let (tap_x, tap_left) = tap.unwrap_or((0, false));
+    // $0679 puts the bar's tap back (its y from $4DCC), $1BD4 hides it
+    // while he pours: his objects draw it then.
+    let mut tap_y: Option<i64> = None;
+    let hide = cx.counter("mode").is_some_and(|m| m != 0) || me.y == 0;
+    let hold = e714 & 2 != 0;
+    e714 &= 1;
+    if hide {
+        for o in &mut parts {
+            o.y = 0;
+        }
+    } else if hold && ev != Pose::Still {
+        // $06B5: the frame after a send runs none of it.
+    } else {
+        match ev {
+            Pose::Still | Pose::Play => {}
+            Pose::SwitchStart => {
+                const S: i64 = 0x214B;
+                let f = if tap_left { imm(cx, "bartender_switch", S, 0x2175) } else { imm(cx, "bartender_switch", S, 0x2171) };
+                me.flags = f;
+                parts[4].flags = f;
+                parts[2].y = 0;
+                parts[4].pic = imm(cx, "bartender_switch", S, 0x2183);
+                e715 = 0;
+                e714 = 0;
+                tap_y = Some(1);
+                me.pic = cx.table("bartender_switch_pictures").first().copied().unwrap_or(0);
+                parts[0].y = 0;
+                parts[1].y = 0;
+            }
+            Pose::Switch(k) if k >= 6 => {
+                // $0A8E: at the next bar's tap.
+                const S: i64 = 0x0A8E;
+                parts[4].y = (me.y - imm(cx, "bartender_land", S, 0x0B0C)) & 0xff;
+                parts[4].pic = imm(cx, "bartender_land", S, 0x0B13);
+                parts[4].x = me.x;
+                me.pic = cx.table("bartender_switch_pictures").get(6).copied().unwrap_or(me.pic);
+            }
+            Pose::Switch(k) => {
+                me.pic = usize::try_from(k).ok().and_then(|k| cx.table("bartender_switch_pictures").get(k).copied()).unwrap_or(me.pic);
+                if me.pic == imm(cx, "bartender_switch", 0x214B, 0x21D6) {
+                    parts[4].y = 0;
+                }
+            }
+            Pose::Pour => {
+                // $1206: $1BD4 hides the tap, $1351 the pose at it.
+                tap_y = Some(0);
+                const P: i64 = 0x1351;
+                let f = if tap_left { imm(cx, "bartender_pour", P, 0x1383) } else { imm(cx, "bartender_pour", P, 0x1371) };
+                me.flags = f;
+                me.pic = imm(cx, "bartender_pour", P, 0x136B);
+                for k in [0, 1, 4] {
+                    parts[k].flags = f;
+                }
+                parts[4].x = me.x;
+                let mut x1 = me.x + imm(cx, "bartender_pour", P, 0x1394);
+                if tap_left {
+                    x1 -= imm(cx, "bartender_pour", P, 0x139A);
+                }
+                parts[0].x = x1 & 0xff;
+                parts[1].x = x1 & 0xff;
+                parts[0].pic = imm(cx, "bartender_pour", P, 0x13A4);
+                parts[0].y = me.y;
+                parts[4].y = (me.y - imm(cx, "bartender_pour", P, 0x13BA)) & 0xff;
+                parts[1].y = (parts[4].y + imm(cx, "bartender_pour", P, 0x13BF)) & 0xff;
+                parts[1].pic = imm(cx, "bartender_pour", P, 0x13C6);
+                parts[4].pic = imm(cx, "bartender_pour", P, 0x13CA);
+                const T: i64 = 0x1206;
+                let at_tap = |cx: &ExtCx<'_>, plus: i64| (tap_x + if tap_left { imm(cx, "bartender_tap", T, plus) } else { 0 }) & 0xff;
+                if e715 != 0 {
+                    e715 -= 1;
+                    if e715 == 0 {
+                        // $125E: the mug is full; the full mug on the bar.
+                        e714 = 1;
+                        e718 = 1;
+                        parts[2] = Obj {
+                            y: parts[0].y,
+                            flags: imm(cx, "bartender_tap", T, 0x1294),
+                            pic: imm(cx, "bartender_tap", T, 0x128D),
+                            x: at_tap(cx, 0x1282),
+                        };
+                    } else {
+                        // $129D: the handle's picture mirrored each frame.
+                        parts[3].flags ^= imm(cx, "bartender_tap", T, 0x12A1);
+                        parts[3].y = parts[0].y;
+                    }
+                } else if e714 == 0 {
+                    // $121D: the pour starts, the tap's handle down.
+                    e715 = imm(cx, "bartender_tap", T, 0x121E);
+                    parts[3] = Obj {
+                        y: parts[0].y,
+                        flags: imm(cx, "bartender_tap", T, 0x1249),
+                        pic: imm(cx, "bartender_tap", T, 0x1245),
+                        x: at_tap(cx, 0x123E),
+                    };
+                }
+            }
+            Pose::Sent | Pose::Rest if e718 != 0 && e714 != 0 => {
+                // $13CC: he steps back (the hook moves him) with the mug
+                // gone from his hands. With E714 0 (he walked away from
+                // the tap with the mug full) it runs $2231 instead.
+                tap_y = Some(1);
+                const S: i64 = 0x13CC;
+                e714 = 0;
+                e715 = 0;
+                e718 = 0;
+                parts[1].y = 0;
+                parts[2].y = 0;
+                parts[3].y = 0;
+                if tap_left {
+                    let f = imm(cx, "bartender_send", S, 0x1434);
+                    me.flags = f;
+                    parts[4].flags = f;
+                    parts[0].flags = f;
+                    parts[4].x = (me.x - imm(cx, "bartender_send", S, 0x1436)) & 0xff;
+                    parts[0].x = (parts[4].x - imm(cx, "bartender_send", S, 0x143F)) & 0xff;
+                } else {
+                    parts[4].x = (me.x + imm(cx, "bartender_send", S, 0x1421)) & 0xff;
+                    parts[0].x = (parts[4].x + imm(cx, "bartender_send", S, 0x1426)) & 0xff;
+                }
+                parts[4].pic = imm(cx, "bartender_send", S, 0x144A);
+                me.pic = imm(cx, "bartender_send", S, 0x144C);
+                parts[0].pic = imm(cx, "bartender_send", S, 0x1451);
+                e714 |= 2;
+            }
+            Pose::Sent | Pose::Rest if e718 == 0 && e715 != 0 => {
+                // $2085: let go before the mug is full.
+                const S: i64 = 0x2085;
+                me.pic = imm(cx, "bartender_wait", S, 0x2088);
+                parts[0].pic = imm(cx, "bartender_wait", S, 0x208C);
+                parts[1].pic = imm(cx, "bartender_wait", S, 0x2094);
+                let (f1, f2) = if tap_left { (0x20C9, 0x20D0) } else { (0x2090, 0x2098) };
+                parts[0].flags = imm(cx, "bartender_wait", S, f1);
+                parts[1].flags = imm(cx, "bartender_wait", S, f2);
+                parts[0].x = tap_x;
+                parts[1].x = tap_x;
+                parts[1].y = (me.y + imm(cx, "bartender_wait", S, 0x20D5)) & 0xff;
+                parts[3].y = 0;
+            }
+            // The setup's frame in the hook is the play routine's first
+            // in the original (tapper.poweron.001: E706 6 on 1101, the
+            // frame after $4BCB put him at the tap).
+            Pose::Sent | Pose::Rest | Pose::SetupFrame => {
+                // $2231: standing, his picture and his head's changing
+                // every E706 frames.
+                const S: i64 = 0x2231;
+                parts[3].y = 0;
+                parts[2].y = 0;
+                let due = if e706 == 0 {
+                    true
+                } else {
+                    e706 -= 1;
+                    e706 == 0
+                };
+                if due {
+                    tap_y = Some(1);
+                    parts[1].y = 0;
+                    parts[0].y = 0;
+                    parts[4].x = me.x;
+                    parts[4].y = (me.y - imm(cx, "bartender_idle", S, 0x226E)) & 0xff;
+                    let (a, b, t) = if me.pic == imm(cx, "bartender_idle", S, 0x227A) {
+                        (0x227E, 0x2280, 0x2288)
+                    } else {
+                        (0x228E, 0x2290, 0x2298)
+                    };
+                    me.pic = imm(cx, "bartender_idle", S, a);
+                    parts[4].pic = imm(cx, "bartender_idle", S, b);
+                    e706 = imm(cx, "bartender_idle", S, t);
+                }
+            }
+            Pose::Walk { left, step } => {
+                tap_y = Some(1);
+                e715 = 0;
+                let dx = me.x - x_before;
+                if let Some(next) = step {
+                    // $1A24: the step's pictures from the row at $1AD5
+                    // (four bytes a step, the last the bob), arms and head
+                    // put on him again.
+                    let (name, s): (&str, i64) = if left { ("bartender_walk_left", 0x19EF) } else { ("bartender_walk_right", 0x1C02) };
+                    let row = |cx: &ExtCx<'_>, n: i64| imm(cx, "bartender_walk_left", 0x19EF, 0x1AD5 + 4 * next + n);
+                    me.pic = row(cx, 0);
+                    parts[0].pic = row(cx, 1);
+                    parts[4].pic = row(cx, 2);
+                    let dy = row(cx, 3);
+                    let dy = if dy >= 0x80 { dy - 0x100 } else { dy };
+                    if left {
+                        let or = imm(cx, name, s, 0x1A3A);
+                        me.flags |= or;
+                        parts[0].flags = imm(cx, name, s, 0x1A46);
+                        parts[4].flags |= or;
+                    } else {
+                        me.flags = imm(cx, name, s, 0x1C4C);
+                        parts[0].flags = imm(cx, name, s, 0x1C55);
+                        parts[4].flags = imm(cx, name, s, 0x1C5E);
+                    }
+                    parts[4].y = (parts[4].y + dy) & 0xff;
+                    parts[0].y = (me.y + imm(cx, name, s, if left { 0x1A6F } else { 0x1C7A })) & 0xff;
+                    parts[4].x = x_before;
+                    parts[0].x = (x_before + imm(cx, name, s, if left { 0x1A7A } else { 0x1C85 })) & 0xff;
+                    parts[1].y = 0;
+                    parts[2].y = 0;
+                    parts[3].y = 0;
+                    e714 = 0;
+                }
+                parts[0].x = (parts[0].x + dx) & 0xff;
+                parts[4].x = (parts[4].x + dx) & 0xff;
+            }
+        }
+    }
+    cx.me.ext[2] = (w & 0xffff) | (me.flags << 16) | (me.pic << 24) | (e706 << 32) | (e715 << 40) | (e714 << 48) | (e718 << 56);
+    if let Some(v) = tap_y
+        && let Some(tk) = cx.kind("tap")
+        && let Some((id, t)) = cx.world.bodies.iter().enumerate().filter(|(_, b)| b.kind == tk).nth(usize::try_from(bar).unwrap_or(0))
+    {
+        // $0679: the tap's y from its bar's row of $4DCC.
+        let y = if v == 0 {
+            0
+        } else {
+            cx.table("bar_objects").get(usize::try_from(bar * 4).unwrap_or(0)).copied().unwrap_or(t.y.floor())
+        };
+        if t.y.floor() != y {
+            let mut t = *t;
+            t.y = Fx::from_int(y);
+            cx.set_body(id, t);
+        }
+    }
+    // Spawned bodies take their ids in order from the world's end, after
+    // any mug the send put in this frame.
+    let mut fresh = cx.world.bodies.len() + spawned;
+    for (k, o) in parts.iter().enumerate() {
+        let word = o.flags | (o.pic << 8);
+        match ids[k] {
+            Some(id) => {
+                let b = cx.world.bodies[id];
+                if b.y.floor() != o.y || b.x.floor() != o.x || b.ext[0] != word {
+                    let mut b = b;
+                    b.y = Fx::from_int(o.y);
+                    b.x = Fx::from_int(o.x);
+                    b.ext[0] = word;
+                    cx.set_body(id, b);
+                }
+            }
+            None if o.y != 0 => {
+                let mut b = gp_sim::systems::new_body(cx.spec, cx.world, pk, Fx::from_int(o.x), Fx::from_int(o.y), false);
+                b.ext[0] = word;
+                b.ext[1] = k as i64 + 1;
+                cx.spawn(pk, b.x, b.y, false);
+                cx.set_body(fresh, b);
+                fresh += 1;
+            }
+            None => {}
+        }
+    }
+}
+
+/// One of the bartender's other five objects (E2EA on): tapper_bartender
+/// sets them; on their own they stand still.
+pub struct BartenderPart;
+
+impl Ext for BartenderPart {
+    fn step(&self, _cx: &mut ExtCx<'_>) {}
+
+    fn describe(&self) -> Vec<Record> {
+        vec![Record {
+            name: "tapper.bartender_part",
+            version: env!("CARGO_PKG_VERSION"),
+            carrier: Carrier::Entity,
+            system: "platformer.player",
+            class: "flow",
+            implementation: "gp-ext-tapper::BartenderPart",
+            like: "",
+            about: "One of the bartender's other five objects (E2EA to E2FD), which tapper_bartender sets as the play routine's $06A4 does",
+            params: &[],
+            state: &["ext[0] flags plus 256 times the picture", "ext[1] its object's place from E2EA, plus 1"],
+            writes: &[],
+            built_from: &[Primitive::Condition],
+            ..Record::EMPTY
+        }]
+    }
+}
+
 const PARAMS: &[Param] = &[
     Param::new("walk_step", "fixed", "px/frame"),
     Param::new("switch_frames", "frames", "frames"),
@@ -131,6 +483,37 @@ impl Bartender {
 
 impl Ext for Bartender {
     fn step(&self, cx: &mut ExtCx<'_>) {
+        let mut ev = Pose::Still;
+        let mut spawned = 0;
+        let x_before = cx.me.x.floor();
+        Self::act(cx, &mut ev, &mut spawned);
+        draw_pose(cx, ev, x_before, spawned);
+    }
+
+    fn describe(&self) -> Vec<Record> {
+        vec![Record {
+            name: "tapper.bartender",
+            version: env!("CARGO_PKG_VERSION"),
+            carrier: Carrier::Entity,
+            system: "platformer.player",
+            class: "mover",
+            implementation: "gp-ext-tapper::Bartender",
+            like: "player-physics",
+            about: "Walks along his bar, moves to the next bar's tap on up or down, and steps back from the tap when a mug is sent; his six objects' pictures as the play routine sets them",
+            params: PARAMS,
+            state: &["ext[0] bar", "ext[1] move frames left x8 plus the bar moving to x2 plus the stick latch", "ext[2] bob count plus 256 x bob phase; byte 2 his flags and byte 3 his picture (E2E7, E2E8), the board sprite's; bytes 4 to 7 E706, E715, E714 (bit 1: the frame after a send, E72C) and E718", "ext[3] tap held (low byte), the 4-way filter's state above"],
+            reads: &["action", "tap.x", "tap.facing"],
+            writes: &["self.x", "self.y", "self.facing", "bartender_part", "tap.y"],
+            built_from: &[Primitive::InputBinding, Primitive::Timer, Primitive::Condition, Primitive::Quantity],
+            ..Record::EMPTY
+        }]
+    }
+}
+
+impl Bartender {
+    /// The play routine's bartender ($06A4): his move, and in `ev` which
+    /// of its branches ran, for his pictures.
+    fn act(cx: &mut ExtCx<'_>, ev: &mut Pose, spawned: &mut usize) {
         // The play routine ($0660, from $22FC) runs only in play: in a life
         // lost (state 12, then 9) and its waits (15, 16) he stands still.
         let flow = cx
@@ -138,6 +521,11 @@ impl Ext for Bartender {
             .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
             .copied();
         let state = flow.map_or(10, |b| b.ext[3] & 0xff);
+        // Out of a game (the attract mode, a game over) and on a game's
+        // start (state 8) the play routine doesn't run.
+        if cx.counter("mode").is_some_and(|m| m != 0) || state == 8 {
+            return;
+        }
         // State 11 too: a level's end ($0963 sets it the frame the last
         // customer is served), whose next frame doesn't run $0660
         // (tapper.l13.001: tap held on 20481, he stays at 187).
@@ -155,8 +543,10 @@ impl Ext for Bartender {
         // after a life lost, on 1444, puts him at the tap on 1445 and
         // pours from there), so only the space bar's waits it.
         if flow.is_some_and(|b| b.ext[2] == 4 && (b.ext[3] >> 8) & 3 == 3) {
+            *ev = Pose::SetupFrame;
             return;
         }
+        *ev = Pose::Play;
         let bar = cx.me.ext[0];
         // ext[1]: frames left of a bar move times 8, plus the bar it goes
         // to times 2, plus the stick's latch (E730): set when a move
@@ -170,6 +560,9 @@ impl Ext for Bartender {
             cx.me.ext[1] -= 8;
             let left = cx.me.ext[1] >> 3;
             let to = (cx.me.ext[1] >> 1) & 3;
+            // $214B's step E731 counts up from 0 as E717 counts down from
+            // switch_busy; on E717's last frame nothing changes.
+            *ev = if left == 0 { Pose::Play } else { Pose::Switch(p(cx, "switch_busy") - left) };
             if left == p(cx, "switch_busy") - p(cx, "switch_frames") {
                 // $21C2 calls $0A8E as he lands: $0D after a move up (E733
                 // 1, $0711), $0E after one down ($0A97, $0A9E; the
@@ -217,9 +610,12 @@ impl Ext for Bartender {
                         5 => ask(cx, "sound_bar", &[0x01, 0x38]),
                         _ => {}
                     }
+                    *ev = Pose::Pour;
                     return;
                 }
+                *ev = Pose::Rest;
                 if cx.me.ext[3] & 0xff >= p(cx, "pour_frames") {
+                    *ev = Pose::Sent;
                     if let Some((tap_x, left)) = tap {
                         let step = p(cx, "send_step");
                         cx.me.x = Fx::from_int(cx.me.x.floor() + if left { step } else { -step });
@@ -263,6 +659,7 @@ impl Ext for Bartender {
                                 cx.set_body(id, b);
                                 // $14DB: the mug sent asks for $12.
                                 ask(cx, "sound_bar", &[0x27E]);
+                                *spawned += 1;
                             }
                             // $14D1: every full mug's speed, E6FE, is -5
                             // from now (tapper_bars keeps it, its fraction
@@ -287,6 +684,7 @@ impl Ext for Bartender {
             }
             Some(d @ (2 | 3)) => {
                 if latch == 0 {
+                    *ev = Pose::SwitchStart;
                     // Up takes him to the bar above on the screen (one
                     // more), down to the one below, round the four.
                     let to = (bar + if d == 3 { 1 } else { 3 }) % 4;
@@ -306,13 +704,14 @@ impl Ext for Bartender {
                 // he stops or changes bar (tapper-diagonal-4way-a, frames
                 // 601 to 699).
                 let (count, phase) = (cx.me.ext[2] & 0xff, (cx.me.ext[2] >> 8) & 3);
+                *ev = Pose::Walk { left: !right, step: if count == 0 { Some((phase + 1) & 3) } else { None } };
                 if count == 0 {
                     let next = (phase + 1) & 3;
                     let dy = if next == 1 || next == 2 { 1 } else { -1 };
                     cx.me.y = Fx::from_int(cx.me.y.floor() + dy);
-                    cx.me.ext[2] = p(cx, "bob_frames") - 1 + (next << 8);
+                    cx.me.ext[2] = (cx.me.ext[2] & !0xffff) | (p(cx, "bob_frames") - 1 + (next << 8));
                 } else {
-                    cx.me.ext[2] = count - 1 + (phase << 8);
+                    cx.me.ext[2] = (cx.me.ext[2] & !0xffff) | (count - 1 + (phase << 8));
                 }
                 let step = p(cx, "walk_step");
                 let x = cx.me.x.floor() + if right { step } else { -step };
@@ -322,25 +721,6 @@ impl Ext for Bartender {
                 cx.me.facing_left = !right;
             }
         }
-    }
-
-    fn describe(&self) -> Vec<Record> {
-        vec![Record {
-            name: "tapper.bartender",
-            version: env!("CARGO_PKG_VERSION"),
-            carrier: Carrier::Entity,
-            system: "platformer.player",
-            class: "mover",
-            implementation: "gp-ext-tapper::Bartender",
-            like: "player-physics",
-            about: "Walks along his bar, moves to the next bar's tap on up or down, and steps back from the tap when a mug is sent",
-            params: PARAMS,
-            state: &["ext[0] bar", "ext[1] move frames left x8 plus the bar moving to x2 plus the stick latch", "ext[2] bob count plus 256 x bob phase", "ext[3] tap held (low byte), the 4-way filter's state above"],
-            reads: &["action", "tap.x", "tap.facing"],
-            writes: &["self.x", "self.y", "self.facing"],
-            built_from: &[Primitive::InputBinding, Primitive::Timer, Primitive::Condition, Primitive::Quantity],
-            ..Record::EMPTY
-        }]
     }
 }
 
@@ -367,8 +747,197 @@ const FLOW_PARAMS: &[Param] = &[
     Param::new("tap_step", "fixed", "px"),
 ];
 
+/// The flow's word 2 from bit 40: the frames since the attract mode's
+/// logo began (sub 0 of the attract, 16 bits), and a flag for the frame a
+/// game started on, which tapper_bars reads.
+const ATTRACT_SHIFT: u32 = 40;
+const ATTRACT_MASK: i64 = 0xffff << ATTRACT_SHIFT;
+const STARTED: i64 = 1 << 56;
+
+impl Flow {
+    /// The coin routine ($0213, four times a frame from the CTC's
+    /// interrupt at $0158): the coin switch (port 0 bit 0, low while a
+    /// coin is held) is taken as settled when two reads agree ($021A),
+    /// and a credit is counted when it settles let go after a coin
+    /// ($0229 to $0231), so on the frame the coin is let go. Coins go
+    /// toward a credit by the defaults' coins a credit (E000) and give
+    /// their credits a coin (E001, $0242 to $0255); at most 9 ($0164).
+    /// With coin_on_press (Normal) the credit comes on the frame the coin
+    /// goes in.
+    fn coin(cx: &mut ExtCx<'_>) -> i64 {
+        let held = cx.held("coin");
+        let was = cx.counter("coin_held").unwrap_or(0) != 0;
+        let on_press = p(cx, "coin_on_press") != 0;
+        let counts = if on_press { held && !was } else { !held && was };
+        if counts {
+            let defaults = cx.table("defaults");
+            let (per_credit, per_coin) = (
+                defaults.first().copied().unwrap_or(1),
+                defaults.get(1).copied().unwrap_or(1),
+            );
+            let coins = cx.counter("coins").unwrap_or(0) + 1;
+            let mut credits = cx.counter("credits").unwrap_or(0);
+            if coins < per_credit {
+                cx.set_counter("coins", coins);
+            } else {
+                credits += per_coin;
+                cx.set_counter("coins", 0);
+            }
+            cx.set_counter("credits", credits.min(9));
+            cx.set_counter("coin_held", i64::from(held));
+            return credits.min(9);
+        }
+        cx.set_counter("coin_held", i64::from(held));
+        cx.counter("credits").unwrap_or(0)
+    }
+
+    /// Out of a game: the boot's wait, the attract mode and the start
+    /// ($584F) that begins a game. True when the frame is done.
+    /// `now` is the credits after this frame's coin; $584F reads them
+    /// before it (the main loop's pass comes first in the frame).
+    fn out_of_game(cx: &mut ExtCx<'_>, now: i64) -> bool {
+        let mode = cx.counter("mode").unwrap_or(0);
+        let state = cx.me.ext[3] & 0xff;
+        cx.me.ext[2] &= !STARTED;
+        // The main loop ($22A3) calls $584F before its dispatch, except
+        // on a frame a routine goes on after a frame's wait of its own
+        // ($60F6, not the main loop's $232B): the attract's logo after
+        // $3D91, its demo after $2F45 and after $3324 and $3342, and the
+        // game over's after $2B82's $5E99 and $2C76's and $2CA2's waits.
+        let t = (cx.me.ext[2] & ATTRACT_MASK) >> ATTRACT_SHIFT;
+        let main_loop = match mode {
+            1 => {
+                // This frame's place in the attract mode.
+                let t = t + 1;
+                let demo_waits = p(cx, "demo_waits_at");
+                !(t == p(cx, "logo_wait_at") || t == p(cx, "demo_wait_at") || t == demo_waits || t == demo_waits + 1)
+            }
+            // The game over: its count is word 3 from bit 24 (sub 2).
+            2 => state != 13 || (cx.me.ext[3] >> 24) & 0xffff >= 3,
+            _ => false,
+        };
+        let credits = cx.counter("credits").unwrap_or(0);
+        if main_loop && credits > 0 && cx.held("start1") {
+            // $5860: a credit for a one-player game, state 8 ($5874);
+            // the dispatch then runs $4AEF, the game's start: E3ED from
+            // a draw of 0 to 2 ($4AFA), the level row from the defaults'
+            // E006 ($4B08), the lives from their E005 ($4B1F), out of the
+            // attract mode (E3BD 0, $4B31), and $4AEF's clear of E3EC to
+            // E6F1 ($4AF5) puts the levels cleared, the score and the
+            // customers' records at 0. Then $4B3F, the level's setup:
+            // the bar shown from no levels cleared ($3C48) and a frame's
+            // wait in $5E99 ($4B47); tapper_bars goes on from the next.
+            cx.set_counter("credits", now - 1);
+            cx.set_counter("mode", 0);
+            cx.set_counter("cleared", 0);
+            cx.set_counter("score", 0);
+            let defaults = cx.table("defaults").to_vec();
+            let lives = defaults.get(5).copied().unwrap_or(3);
+            let row = defaults.get(6).copied().unwrap_or(1);
+            cx.set_counter("lives", lives);
+            let draw = draw_at_most(cx, "game_start", 2);
+            cx.me.ext[3] = 8;
+            cx.me.ext[2] = STARTED;
+            cx.me.ext[1] = (cx.me.ext[1] & 0xff) | (lives << 40);
+            cx.me.ext[0] = 0;
+            if let Some(tk) = cx.kind("tap")
+                && let Some((id, b)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == tk)
+            {
+                let mut b = *b;
+                b.ext[1] = draw;
+                cx.set_body(id, b);
+            }
+            if let Some(bk) = cx.kind("bars")
+                && let Some((id, b)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == bk)
+            {
+                let mut b = *b;
+                // Word 3: the levels cleared 0 and the level row; word 0:
+                // the tips setting is E006 too.
+                b.ext[3] = row << 24;
+                b.ext[0] = (b.ext[0] & 0xffff) | (row << 24);
+                cx.set_body(id, b);
+            }
+            // The customers' records, 16 of 0x20 bytes from E4B2: blank,
+            // so slot n's is the n-th until the setup copies the bar's in.
+            if let Some(rk) = cx.kind("record") {
+                let have = cx.world.bodies.iter().filter(|b| b.alive && b.kind == rk).count();
+                for _ in have..16 {
+                    cx.spawn(rk, Fx::ZERO, Fx::ZERO, false);
+                }
+            }
+            return true;
+        }
+        match (mode, state) {
+            // Power-on: the boot ($0000) tests the RAM, copies the
+            // defaults when the battery-backed settings fail their check
+            // ($048A), clears the RAM ($005E) and waits on the sound
+            // board's answers ($CFC5, a frame each $DB69), then the main
+            // loop starts in state 0 (the boot_wait's frames, the first
+            // 94 of the board's being before the model's first). The tips
+            // setting E006 comes from the defaults ($0517).
+            (0, 0) => {
+                // The model's first frame is 1.
+                if cx.frame <= 1
+                    && let Some(bk) = cx.kind("bars")
+                    && let Some((id, b)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == bk)
+                {
+                    let row = cx.table("defaults").get(6).copied().unwrap_or(1);
+                    let mut b = *b;
+                    b.ext[0] = (b.ext[0] & 0xffff) | (row << 24);
+                    cx.set_body(id, b);
+                }
+                if i64::try_from(cx.frame).unwrap_or(i64::MAX) >= p(cx, "boot_wait") {
+                    Self::attract(cx, credits);
+                }
+                true
+            }
+            // State 0 after a game over ($4A27): $22B8 again.
+            (2, 0) => {
+                Self::attract(cx, credits);
+                true
+            }
+            (1, _) => {
+                // The attract mode: the logo ($3D76, state 1) for
+                // attract_demo frames, then $4AAA and the demo ($3CD8,
+                // state 6) to attract_play, then the demo's game (states
+                // 2, 3 and 4), which isn't modelled: the model stays in
+                // state 3 until a start.
+                let t = t + 1;
+                let st = if t >= p(cx, "attract_play") {
+                    3
+                } else if t >= p(cx, "attract_demo") {
+                    6
+                } else if t == p(cx, "attract_demo") - 1 {
+                    5
+                } else {
+                    1
+                };
+                cx.me.ext[3] = (cx.me.ext[3] & !0xff) | st;
+                cx.me.ext[2] = (cx.me.ext[2] & !ATTRACT_MASK) | ((t.min(0xffff)) << ATTRACT_SHIFT);
+                true
+            }
+            _ => false,
+        }
+    }
+
+    /// $22B8 in state 0: with no credits $4E2C, the attract mode's logo
+    /// (E3BD 1, state 1); with credits $4AAA, straight to the demo (state
+    /// 6). Every object goes ($5F31).
+    fn attract(cx: &mut ExtCx<'_>, credits: i64) {
+        cx.set_counter("mode", 1);
+        let t = if credits > 0 { p(cx, "attract_demo") } else { 0 };
+        cx.me.ext[3] = (cx.me.ext[3] & !0xff) | if credits > 0 { 6 } else { 1 };
+        cx.me.ext[2] = (t << ATTRACT_SHIFT) & ATTRACT_MASK;
+        cx.me.ext[0] = 0;
+    }
+}
+
 impl Ext for Flow {
     fn step(&self, cx: &mut ExtCx<'_>) {
+        let credits = Self::coin(cx);
+        if Self::out_of_game(cx, credits) {
+            return;
+        }
         // The setup ($4B3F) is a script that waits through states 15 and
         // 16 and comes back in its own state (9 or 11, kept at E3A8). A
         // clip that starts as it comes back, with no bartender at a bar
@@ -414,6 +983,14 @@ impl Ext for Flow {
             return;
         };
         let step = p(cx, "tap_step");
+        // $4D13 (the setup's $5DF6): each bar's tap (E346 + 4 a bar) and
+        // far end (E366 + 4 a bar) from the bar_objects row of its side,
+        // y, flags, picture and x; in the sports and the space bar (E3B8
+        // 1, 3) the far end 7 further out, and 2 more in the sports bar
+        // ($4D89 to $4DBE). The tap keeps its flags and picture in word
+        // 2 for its board sprite, the far end's x in word 0.
+        let objects = cx.table("bar_objects").to_vec();
+        let shown = (cx.me.ext[3] >> 8) & 3;
         let mut k = 0;
         for (id, b) in cx.world.bodies.iter().enumerate() {
             if b.kind == tap_kind && k < 4 {
@@ -425,9 +1002,66 @@ impl Ext for Flow {
                     p(cx, "tap_right") - step * k
                 });
                 t.facing_left = left;
+                let row = usize::from(left) * 48 + usize::try_from(k).unwrap_or(0) * 4;
+                if let (Some(tap), Some(end)) = (objects.get(row..row + 4), objects.get(row + 32..row + 36)) {
+                    t.y = Fx::from_int(tap[0]);
+                    t.ext[2] = (t.ext[2] & !0xffff) | tap[1] | (tap[2] << 8);
+                    let mut far = end[3];
+                    if shown == 1 || shown == 3 {
+                        if shown == 1 {
+                            far += 2;
+                        }
+                        far = if end[1] & 0x10 != 0 { far + 7 } else { far - 7 };
+                    }
+                    t.ext[0] = far & 0xff;
+                }
                 cx.set_body(id, t);
                 k += 1;
             }
+        }
+        // The end pieces and far ends ($4D13's second and third groups, to
+        // E356 and E366), as bodies of kind bar_end in that order; the far
+        // ends 7 further out in the sports and the space bar, as the taps'
+        // word 0 has them.
+        let mut spawned = 0;
+        if let Some(ek) = cx.kind("bar_end") {
+            let old: Vec<usize> = cx
+                .world
+                .bodies
+                .iter()
+                .enumerate()
+                .filter(|(_, b)| b.alive && b.kind == ek)
+                .map(|(i, _)| i)
+                .collect();
+            for id in old {
+                cx.remove(id);
+            }
+            let mut ends: Vec<gp_sim::world::Body> = Vec::new();
+            for group in [16usize, 32] {
+                for bar in 0..4usize {
+                    let left = layout & (1 << bar) != 0;
+                    let at = usize::from(left) * 48 + group + bar * 4;
+                    let Some(o) = objects.get(at..at + 4) else { continue };
+                    if o[0] == 0 {
+                        continue;
+                    }
+                    let mut x = o[3] + if group == 32 && shown == 1 { 2 } else { 0 };
+                    if group == 32 && (shown == 1 || shown == 3) {
+                        x = if o[1] & 0x10 != 0 { x + 7 } else { x - 7 };
+                    }
+                    let mut b = gp_sim::systems::new_body(cx.spec, cx.world, ek, Fx::from_int(x & 0xff), Fx::from_int(o[0]), false);
+                    b.ext[0] = o[1] | (o[2] << 8);
+                    b.ext[1] = i64::try_from((group - 16) / 4 + bar + 1).unwrap_or(0);
+                    ends.push(b);
+                }
+            }
+            // Spawned bodies take their ids in order from the world's end.
+            let first = cx.world.bodies.len();
+            for (n, b) in ends.iter().enumerate() {
+                cx.spawn(ek, b.x, b.y, false);
+                cx.set_body(first + n, *b);
+            }
+            spawned = ends.len();
         }
         let bar = p(cx, "start_bar");
         let left = layout & (1 << bar) != 0;
@@ -443,8 +1077,47 @@ impl Ext for Flow {
             let bottom = cx.spec.kinds[player].ext_params.get("row_bottom").map_or(48, |v| v.floor());
             let h = cx.spec.kinds[player].ext_params.get("row_height").map_or(48, |v| v.floor());
             b.y = Fx::from_int(bottom + h * bar);
-            b.ext = [bar, 0, 0, 0];
+            // $4BCB: his flags and picture (word 2's bytes 2 and 3) and
+            // his head (E2FA) 16 above him, flags mirrored when the bar's
+            // tap is on the left; the play routine's state after them is
+            // the level's RAM, cleared.
+            const S: i64 = 0x4BCB;
+            let flags = imm(cx, "bartender_setup", S, if left { 0x4C03 } else { 0x4BE0 });
+            let pic = imm(cx, "bartender_setup", S, 0x4BF8);
+            b.ext = [bar, 0, (flags << 16) | (pic << 24), 0];
             cx.set_body(id, b);
+            let head = Obj {
+                y: imm(cx, "bartender_setup", S, 0x4BEC),
+                flags: imm(cx, "bartender_setup", S, if left { 0x4C0F } else { 0x4BF0 }),
+                pic: imm(cx, "bartender_setup", S, 0x4BF4),
+                x: b.x.floor(),
+            };
+            if let Some(pk) = cx.kind("bartender_part") {
+                let mut have = [false; 5];
+                let parts: Vec<(usize, gp_sim::world::Body)> =
+                    cx.world.bodies.iter().enumerate().filter(|(_, p)| p.alive && p.kind == pk).map(|(i, p)| (i, *p)).collect();
+                for (pid, mut p) in parts {
+                    let k = p.ext[1] - 1;
+                    if let Some(h) = usize::try_from(k).ok().and_then(|k| have.get_mut(k)) {
+                        *h = true;
+                    }
+                    if k == 4 {
+                        p.y = Fx::from_int(head.y);
+                        p.x = Fx::from_int(head.x);
+                        p.ext[0] = head.flags | (head.pic << 8);
+                    } else {
+                        p.y = Fx::ZERO;
+                    }
+                    cx.set_body(pid, p);
+                }
+                if !have[4] {
+                    let mut p = gp_sim::systems::new_body(cx.spec, cx.world, pk, Fx::from_int(head.x), Fx::from_int(head.y), false);
+                    p.ext[0] = head.flags | (head.pic << 8);
+                    p.ext[1] = 5;
+                    cx.spawn(pk, p.x, p.y, false);
+                    cx.set_body(cx.world.bodies.len() + spawned, p);
+                }
+            }
         }
     }
 
@@ -462,6 +1135,33 @@ impl Ext for Flow {
             state: &["ext[0] the level was set up this frame", "ext[1] the layout (low byte), the wait's state E3A8, place E3A9 and B E39F, and the lives E4A7 above it"],
             writes: &["tap.x", "tap.facing", "player.x", "player.y", "player.ext"],
             built_from: &[Primitive::Condition, Primitive::Quantity],
+            ..Record::EMPTY
+        }]
+    }
+}
+
+/// A bar's end piece or far end (E356 on): tapper_flow puts them in with
+/// the setup's $4D13 and tapper_bars takes them away at a level's end and
+/// at the next setup; between those they stand still.
+pub struct BarEnd;
+
+impl Ext for BarEnd {
+    fn step(&self, _cx: &mut ExtCx<'_>) {}
+
+    fn describe(&self) -> Vec<Record> {
+        vec![Record {
+            name: "tapper.bar_end",
+            version: env!("CARGO_PKG_VERSION"),
+            carrier: Carrier::Entity,
+            system: "platformer.enemies",
+            class: "flow",
+            implementation: "gp-ext-tapper::BarEnd",
+            like: "",
+            about: "A bar's end piece or far end, standing where the setup put it ($4D13) until a level's end or the next setup empties it",
+            params: &[],
+            state: &["ext[0] flags plus 256 times the picture", "ext[1] its object's place from E356, plus 1"],
+            writes: &[],
+            built_from: &[Primitive::Condition],
             ..Record::EMPTY
         }]
     }
@@ -578,6 +1278,188 @@ fn show_picture(cx: &ExtCx<'_>, bar: i64, n: Option<i64>) -> Option<Vec<i64>> {
     }
 }
 
+/// The flow's flag for the frame a game started on (tapper_flow's
+/// STARTED), 0 without a flow.
+fn fb_started(flow: Option<(usize, gp_sim::world::Body)>) -> i64 {
+    flow.map_or(0, |(_, b)| b.ext[2] & STARTED)
+}
+
+/// The bonus round's state in the flow's word 2 from bit 40: the can
+/// with no shake (3 bits, E262 + 8 a can, +5 0), the last pick of the
+/// shuffle (E719, 3 bits), the pointer (E6FB, 3 bits) and the cans shaken
+/// (6 bits, a can a bit); the round's frame
+/// count is word 3 from bit 24, the loop's count B from bit 40 and its
+/// next frame from bit 48.
+const BONUS_MASK: i64 = 0x7fff << 40;
+
+/// The bonus round ($2500), sub 12 of a level's end, a frame: true on the
+/// frame it returns. Its frames are counted from the frame $5681 counted
+/// the level (0): $5E99 and $60F6 wait a frame each and $252C 20, the
+/// cans' objects go in ($255F, from $2A15 to E262) and $2579 waits 30;
+/// then five shakes 29 frames apart from 53 ($2585 to $2656): each draws
+/// a can of 0 to 5 ($258A, again while it is one already shaken, +5 of
+/// its object), rises 16 frames, waits 5 and two of 2 and 2. The cans
+/// move 50 frames and blink 40 ($2659 to $26A7), and the shuffle starts
+/// at 288: 16 swaps of a pair of cans, 9 frames each with fewer than 6
+/// levels cleared ($4F17), else 5 ($5003); the first pair is the one the
+/// unshaken can starts ($2AE5: its number, 5 taken as 4), each later one
+/// a draw of 0 to 4 not the last ($4F35 or $5021, again while it is the
+/// same), naming in bonus_pairs two cans each swapped with the next
+/// ($4F17) or one ($5003); a swap trades the cans' places and shakes. Then $26E3 waits 10, the
+/// pointer goes to 5 ($2720) and waits 8, and the choice ($26F7): a read
+/// of the stick each 2 frames, B counting 255 down; right moves the
+/// pointer one on (round from 5 to 0, $2720) and left one back ($2714),
+/// each waiting 8 and taking one from B; the button, or B at 0, chooses
+/// ($2787): 20 frames on, the unshaken can wins ($27C2: 70 frames to
+/// $296F) and another loses ($284D: 160, tapper-bonus.002's second
+/// round); $296F waits 15 and returns.
+fn bonus_round(cx: &mut ExtCx<'_>, fb: &mut gp_sim::world::Body, cleared: i64, points: &mut i64) -> bool {
+    let c = ((fb.ext[3] >> 24) & 0xffff) + 1;
+    fb.ext[3] = (fb.ext[3] & !(0xffff << 24)) | (c << 24);
+    let field = |w: i64, at: u32| (w >> at) & 7;
+    let mut unshaken = field(fb.ext[2], 40);
+    let mut pick = field(fb.ext[2], 43);
+    let mut ptr = field(fb.ext[2], 46);
+    let mut shaken = (fb.ext[2] >> 49) & 0x3f;
+    let fast = cleared >= 6;
+    let d = if fast { 5 } else { 9 };
+    let shuffle_end = 288 + 16 * d;
+    let mut done = false;
+    // $256A numbers the cans (E700 on): the bonus round's stage is up,
+    // until the next setup's $5DF6.
+    if c == 23 {
+        cx.set_counter("bonus", 1);
+    }
+    if (53..53 + 5 * 29).contains(&c) && (c - 53) % 29 == 0 {
+        loop {
+            let k = draw_at_most(cx, "bonus_shake", 5);
+            if shaken & (1 << k) == 0 {
+                shaken |= 1 << k;
+                break;
+            }
+        }
+        if (c - 53) / 29 == 4 {
+            unshaken = (0..6).find(|k| shaken & (1 << k) == 0).unwrap_or(0);
+        }
+    } else if c >= 288 && c < shuffle_end && (c - 288) % d == 0 {
+        let j = (c - 288) / d;
+        pick = if j == 0 {
+            if unshaken == 5 { 4 } else { unshaken }
+        } else {
+            let site = if fast { "attract_pick_2" } else { "attract_pick" };
+            loop {
+                let v = draw_at_most(cx, site, 4);
+                if v != pick {
+                    break v;
+                }
+            }
+        };
+        let pairs = flow_table(cx, "bonus_pairs");
+        let can = |w: usize| -> i64 {
+            let a = pairs.get(2 * w).copied().unwrap_or(0) + 256 * pairs.get(2 * w + 1).copied().unwrap_or(0);
+            (a - 0xE262).div_euclid(8)
+        };
+        // Each word names a can whose object trades places and shakes
+        // with the next can's ($4FB1 to $4FF6: ix and ix+8, iy and
+        // iy+8; $50C1 to $50E2: ix and ix+8).
+        let p = usize::try_from(pick).unwrap_or(0);
+        let firsts = if fast { vec![can(p)] } else { vec![can(2 * p), can(2 * p + 1)] };
+        for a in firsts {
+            if unshaken == a {
+                unshaken = a + 1;
+            } else if unshaken == a + 1 {
+                unshaken = a;
+            }
+        }
+    } else if c == shuffle_end + 10 {
+        ptr = 5;
+        // The first read of the stick, 8 on, B 254.
+        fb.ext[3] = (fb.ext[3] & !(0xff << 40 | 0xffff << 48)) | (254 << 40) | ((c + 8) << 48);
+    } else if c > shuffle_end + 10 {
+        let b = (fb.ext[3] >> 40) & 0xff;
+        let next = (fb.ext[3] >> 48) & 0xffff;
+        // Once chosen, B is 0 and next is the choice's frame plus 0x8000.
+        if c == next && b != 0 {
+            let (b2, then, choose) = if cx.held("button1") {
+                (b, c, true)
+            } else if cx.held("right") || cx.held("left") {
+                ptr = if cx.held("right") { (ptr + 1) % 6 } else { (ptr + 5) % 6 };
+                (b - 1, c + 8, b - 1 == 0)
+            } else {
+                (b - 1, c + 2, b - 1 == 0)
+            };
+            let at = if choose { then } else { 0 };
+            fb.ext[3] = (fb.ext[3] & !(0xff << 40 | 0xffff << 48))
+                | (if choose { 0 } else { b2 } << 40)
+                | (if choose { at + 0x8000 } else { then } << 48);
+        } else if next >= 0x8000 {
+            // Chosen at next less 0x8000: 20 frames to the check, then
+            // the win's 70 or the loss's 160, and $296F's 15.
+            let at = next - 0x8000;
+            let length = 20 + if ptr == unshaken { 70 } else { 160 } + 15;
+            // $2820: the win's points, on the frame of the check.
+            if c == at + 20 && ptr == unshaken {
+                *points += points_of(cx.table("points_bonus"));
+            }
+            if c == at + length {
+                done = true;
+            }
+        }
+    }
+    fb.ext[2] = (fb.ext[2] & !BONUS_MASK) | (unshaken << 40) | (pick << 43) | (ptr << 46) | (shaken << 49);
+    done
+}
+
+/// The bars' end pieces and far ends (kind bar_end) go: a level's end
+/// ($5615) and a setup's $5F31 empty E356 on.
+fn bar_ends_go(cx: &mut ExtCx<'_>) {
+    if let Some(ek) = cx.kind("bar_end") {
+        let ids: Vec<usize> = cx
+            .world
+            .bodies
+            .iter()
+            .enumerate()
+            .filter(|(_, b)| b.alive && b.kind == ek)
+            .map(|(i, _)| i)
+            .collect();
+        for id in ids {
+            cx.remove(id);
+        }
+    }
+}
+
+/// The counter screen from the counter stage: $5DF6 takes the stage's
+/// word from the words at $61ED (stage_screens, lifted) and loads the
+/// screen it names; the looks list the screens by address, so the screen
+/// is the word's place among the table's words.
+fn set_screen(cx: &mut ExtCx<'_>) {
+    let Some(stage) = cx.counter("stage") else { return };
+    let rows = cx.table("stage_screens");
+    let words: Vec<i64> = rows.chunks(2).map(|w| w[0] | (w.get(1).copied().unwrap_or(0) << 8)).collect();
+    let Some(&word) = usize::try_from(stage).ok().and_then(|n| words.get(n)) else { return };
+    let mut below: Vec<i64> = words.iter().copied().filter(|&w| w < word).collect();
+    below.sort_unstable();
+    below.dedup();
+    let screen = i64::try_from(below.len()).unwrap_or(0);
+    if cx.counter("screen") != Some(screen) {
+        cx.set_counter("screen", screen);
+    }
+}
+
+/// An entry of a points table as a number: six digits a byte, the most
+/// significant first.
+fn points_of(row: &[i64]) -> i64 {
+    row.iter().take(6).fold(0, |n, d| n * 10 + d)
+}
+
+/// A table the model gives the flow's hook (tapper_flow), for the bars'.
+fn flow_table(cx: &ExtCx<'_>, name: &str) -> Vec<i64> {
+    cx.kind("flow")
+        .and_then(|k| cx.spec.kinds[k].ext_tables.get(name))
+        .cloned()
+        .unwrap_or_default()
+}
+
 fn bp(cx: &ExtCx<'_>, name: &str) -> i64 {
     let Some(k) = cx.kind("bars") else { return 0 };
     cx.spec.kinds[k].ext_params.get(name).map_or(0, |v| v.floor())
@@ -656,7 +1538,15 @@ impl Ext for Bars {
         let (Some(mug_k), Some(cust_k)) = (cx.kind("mug"), cx.kind("customer")) else {
             return;
         };
+        set_screen(cx);
+        // The attract mode (E3BD 1) plays the demo's game, which isn't
+        // modelled (tapper_flow keeps its time).
+        if cx.counter("mode") == Some(1) {
+            return;
+        }
         let (timer_k, rec_k) = (cx.kind("timer"), cx.kind("record"));
+        // The points this frame adds to the score ($5EE7).
+        let mut points = 0;
         let player_k = cx.kind("player");
         let line = bp(cx, "line");
         let step = bp(cx, "line_step");
@@ -694,8 +1584,8 @@ impl Ext for Bars {
         // Word 3: E3B1 (the respawn wait), E4A8 (levels cleared), E4A9 (the
         // level's row of level_times, from 1).
         let mut w_word = cx.me.ext[3] & 0xffff;
-        let cleared = (cx.me.ext[3] >> 16) & 0xff;
-        let level = (cx.me.ext[3] >> 24) & 0xff;
+        let mut cleared = (cx.me.ext[3] >> 16) & 0xff;
+        let mut level = (cx.me.ext[3] >> 24) & 0xff;
         let layout = cx
             .kind("flow")
             .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
@@ -1014,6 +1904,11 @@ impl Ext for Bars {
         let level_timers = timers.iter().any(|(_, t)| t.ext[1] == 0x2023 && t.ext[0] > 0);
         let ending = state == 11 && !setting_up && bartender_y != 0 && !level_timers;
         let finishing = state == 11 && !setting_up && bartender_y != 0 && level_timers;
+        if ending {
+            bar_ends_go(cx);
+            // $55FF: the level's points.
+            points += points_of(cx.table("points_level"));
+        }
         if (ending || finishing) && let Some((fid, mut fb)) = flow {
             fb.ext[3] = if ending {
                 // The level's end script ($55F4, then the level's own, as
@@ -1033,7 +1928,14 @@ impl Ext for Bars {
         // 3 ($2441): state 9, the level's setup again ($22F7, $4B3F), whose
         // $5F31 empties the objects on the next frame.
         let mut end_spawn: Vec<Body> = Vec::new();
-        let mut life_lost = state == 12 || state == 9;
+        // State 8, a game's start ($4AEF, then the setup $4B3F), is a
+        // setup as after a life lost.
+        // Not on the frame a setup places the bartender (the flow's word
+        // 2 at 1 or 2 from tapper_flow, this hook's step above having
+        // set state 10 for the frame after): a clip can start there, in
+        // state 8 (tapper.l1.001).
+        let game_start = state == 8 && flow.is_some_and(|(_, b)| b.ext[2] & 0xff == 0);
+        let mut life_lost = state == 12 || state == 9 || game_start;
         let lost_sub = flow.map_or(0, |(_, b)| (b.ext[3] >> 16) & 0xff);
         // The lives (E4A7), in the flow's word 1 from bit 40.
         let lives = flow.map_or(1, |(_, b)| (b.ext[1] >> 40) & 0xff);
@@ -1138,22 +2040,7 @@ impl Ext for Bars {
             fb.ext[3] = (fb.ext[3] & !0x00ff_0000) | (4 << 16);
             cx.set_body(fid, fb);
             life_lost = true;
-        } else if state == 8 && let Some((fid, mut fb)) = flow
-            && fb.ext[0] == 0
-            && fb.ext[2] == 0
-        {
-            // A game's start ($4AEF, state 8) goes to the first level's
-            // setup as a life lost's does, through the bartender's walk on
-            // and the 100 frames before a game's first level, but nothing
-            // is emptied: he stands where the attract left him until the
-            // setup puts him at his bar (tapper-first: the start on 961,
-            // the level's RAM cleared on 1099, the setup on 1100). The
-            // setup runs in state 8 too, from the frame it clears the
-            // level (the flow's word 0) to its own (word 2): not a start.
-            let wait = 2 + 30 + 5 + 100;
-            fb.ext[3] = (fb.ext[3] & !0xffff_00ff) | 15 | (5 << 16) | (wait << 24);
-            cx.set_body(fid, fb);
-        } else if state == 9 && let Some((fid, mut fb)) = flow {
+        } else if (state == 9 || (game_start && fb_started(flow) == 0)) && let Some((fid, mut fb)) = flow {
             // $4B4D: the setup's $5F31 empties the objects, the bartender's
             // among them; its waits ($232B) are states 15 and 16. The
             // level's RAM is cleared ($4B65) after the bartender's walk on
@@ -1168,6 +2055,7 @@ impl Ext for Bars {
             }
             tip = None;
             dancers = [None; 9];
+            bar_ends_go(cx);
             if let Some(pk) = player_k
                 && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == pk)
             {
@@ -1177,11 +2065,41 @@ impl Ext for Bars {
                 cx.set_body(pid, pb);
             }
             let wait = 2 + 30 + 5 + if cleared == 0 { 100 } else { 0 };
-            fb.ext[3] = (fb.ext[3] & !0xffff_00ff) | 15 | (5 << 16) | (wait << 24);
+            // $4B44's $3C48: the bar shown by the levels cleared, counted
+            // in 13s ($3C55 to $3C76: 0 and 1 the saloon, 2 to 4 the sports
+            // bar, 5 to 8 the punk bar, 9 to 12 the space bar). $4B4A's
+            // $5DEC empties the timers. $4B50's $2EC3: the level's layout
+            // from the layouts rows by the levels cleared, from 26 on
+            // 13 to 25 again ($2EC6 to $2ED3), into E3AF.
+            let in13 = cleared.rem_euclid(26) % 13;
+            let shown = match in13 {
+                0 | 1 => 0,
+                2..=4 => 1,
+                5..=8 => 2,
+                _ => 3,
+            };
+            fb.ext[3] = (fb.ext[3] & !0xffff_ffff) | 15 | (shown << 8) | (5 << 16) | (wait << 24);
+            let at = if cleared < 26 { cleared } else { in13 + 13 };
+            let layouts = flow_table(cx, "layouts");
+            if let Some(&l) = layouts.get(usize::try_from(at).unwrap_or(0)) {
+                fb.ext[1] = (fb.ext[1] & !0xff) | l;
+            }
+            for (n, (_, t)) in timers.iter_mut().enumerate() {
+                t.ext[0] = 0;
+                t.ext[1] = 0;
+                timers_changed.push(n);
+            }
             cx.set_body(fid, fb);
             life_lost = true;
         } else if (state == 15 || state == 16) && sub == 5 && let Some((fid, mut fb)) = flow {
             let left = ((fb.ext[3] >> 24) & 0xff) - 1;
+            if left <= 0 {
+                // $4B6E's $5DF6 draws the level's stage, its screen's
+                // place among the words at $61ED by the levels cleared.
+                let stage = if cleared < 26 { cleared } else { cleared.rem_euclid(26) % 13 + 13 };
+                cx.set_counter("stage", stage);
+                cx.set_counter("bonus", 0);
+            }
             if left <= 0 && (fb.ext[3] >> 8) & 3 == 3 {
                 // The setup clears the level's RAM on this frame ($4B65) and
                 // waits for the next ($4B71). In the space bar (E3B8 3) $575B,
@@ -1516,17 +2434,51 @@ impl Ext for Bars {
             // counts the level ($5681), and when the count mod 13 ($5F6C)
             // is 2, 5, 9, or 0 past the first, $2500 starts the bonus round
             // and its $5F31 empties every object, the bartender's too
-            // (tapper.l9.001, l13.001, l15.001: their last frame). Scripts
-            // 0, 2 and 4 aren't timed to their end yet.
+            // (tapper.l9.001, l13.001, l15.001: their last frame). Script
+            // 0 ($563D) returns 219 from the end's first and script 2
+            // ($5647) 185 (tapper-cycle: the levels cleared 0 and 10, and
+            // 1, 7 and 11 with $4742 twice); script 4 when $4546's object
+            // goes, 60 frames after it lands (tapper-cycle: levels cleared
+            // 3, 6 and 13).
+            let by = player_k
+                .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+                .map_or(0, |b| b.y.floor());
             let done = match script {
+                0 => Some(219),
                 1 => Some(182),
+                2 => Some(185),
                 3 if interlude_b => Some(250),
                 3 => Some(242),
+                4 => {
+                    let k = (238 - (by + 6) + 9).max(10) / 10;
+                    Some(109 + 19 + 2 * k + 100 + (250 - by).div_euclid(4) + 1 + 60)
+                }
                 _ => None,
             };
             let count = cleared + 1;
             let bonus = matches!(count % 13, 2 | 5 | 9) || count % 13 == 0;
-            if bonus && done.is_some_and(|d| n == d + i64::from(shown == 2 || shown == 3)) {
+            let returns = done.is_some_and(|d| n == d + i64::from(shown == 2 || shown == 3));
+            if returns {
+                // $5681: a level more. Without a bonus round $56A0's $2EA1:
+                // from 6 levels cleared, on an even count, the level row
+                // (E4A9) one more, at most 9 (E70C, $4E4B). Then $2304
+                // goes on to the setup ($22F7, $4B3F), whose $5E99 waits
+                // this frame: state 8 here, as a game's start, so the
+                // setup runs from the next.
+                cleared = count & 0xff;
+                if !bonus {
+                    if count >= 6 && count % 2 == 0 {
+                        level = (level + 1).min(9);
+                    }
+                    fb.ext[3] = (fb.ext[3] & 0xff00) | 8;
+                } else {
+                    // $2500, the bonus round (sub 12, bonus_round counts
+                    // it from bit 24).
+                    fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (12 << 16);
+                    fb.ext[2] &= !BONUS_MASK;
+                }
+            }
+            if bonus && returns {
                 for (id, _) in &bodies {
                     removed.push(*id);
                 }
@@ -1564,6 +2516,18 @@ impl Ext for Bars {
                 }
             }
             cx.set_body(fid, fb);
+        } else if (state == 15 || state == 16) && sub == 12 && let Some((fid, mut fb)) = flow {
+            let next = bonus_round(cx, &mut fb, cleared, &mut points);
+            if next {
+                // $2500 returns to $569D: $56A0's $2EA1, then the setup
+                // ($2304, $22F7), state 8 as at a level's end.
+                if cleared >= 6 && cleared % 2 == 0 {
+                    level = (level + 1).min(9);
+                }
+                fb.ext[3] = (fb.ext[3] & 0xff00) | 8;
+                fb.ext[2] &= !BONUS_MASK;
+            }
+            cx.set_body(fid, fb);
         } else if (state == 15 || state == 16) && sub == 7 && let Some((fid, mut fb)) = flow {
             let left = ((fb.ext[3] >> 24) & 0xff) - 1;
             if left <= 0 {
@@ -1579,7 +2543,35 @@ impl Ext for Bars {
             && let Some((fid, mut fb)) = flow
             && (fb.ext[3] >> 16) & 0xff == 1
         {
-            fb.ext[3] = (fb.ext[3] & !0x00ff_0000) | (2 << 16);
+            // The count from bit 24 starts again for the game over's wait.
+            fb.ext[3] = (fb.ext[3] & !(0x00ff_0000 | (0xffff << 24))) | (2 << 16);
+            cx.set_body(fid, fb);
+        } else if state == 13
+            && let Some((fid, mut fb)) = flow
+            && (fb.ext[3] >> 16) & 0xff == 2
+        {
+            // $230F: $49E5 and its $2B82, which waits a frame ($5E99),
+            // puts the game in its game over (E3BD 2, $2B90, on the frame
+            // after the objects go) and, the score having a place in the
+            // high scores (a fresh board's are all 0), waits for the
+            // initials 1200 frames ($2CA7, the timer for $2D59, with a
+            // wait of 1 each frame at $2CF7) after two frames of its own
+            // ($2C76, $2CA2); then state 0 ($4A27), whose $22B8 starts
+            // the attract mode. The initials aren't modelled: a stick or
+            // button in them is not seen.
+            let c = ((fb.ext[3] >> 24) & 0xffff) + 1;
+            if c == 1 {
+                cx.set_counter("mode", 2);
+            }
+            let wait = cx
+                .kind("flow")
+                .and_then(|k| cx.spec.kinds[k].ext_params.get("game_over_wait"))
+                .map_or(1203, |v| v.floor());
+            fb.ext[3] = if c >= wait {
+                fb.ext[3] & !(0xffff_00ff | (0xffff << 24))
+            } else {
+                (fb.ext[3] & !(0xffff << 24)) | ((c & 0xffff) << 24)
+            };
             cx.set_body(fid, fb);
         }
         if !playing && !life_lost {
@@ -1641,6 +2633,7 @@ impl Ext for Bars {
                 if empty && (y - py).abs() < reach && (x - px).abs() < reach {
                     removed.push(*id);
                     caught = true;
+                    points += points_of(cx.table("points_catch"));
                 }
             }
             // $0B86 to $0BD4, after the mugs: a tip (picture $4D at
@@ -1657,6 +2650,7 @@ impl Ext for Bars {
                 }
                 tip = None;
                 tips_left = (tips_left - 1) & 0xff;
+                points += points_of(cx.table("points_tip"));
                 // $0BD8 calls the show, $14E7: the dancers' first picture
                 // ($14F1 to $1515, see show_picture) and eight draws at $1523,
                 // each 0 to 2 ($5FAC returns at most its A), that step
@@ -1977,6 +2971,8 @@ impl Ext for Bars {
                 ask(cx, "sound_customers", &[0x01]);
                 served_any = true;
                 removed.push(*id);
+                let shown = usize::try_from(flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 3)).unwrap_or(0);
+                points += cx.table("points_served").get(shown * 6..shown * 6 + 6).map_or(0, points_of);
                 let slot = usize::try_from((c.ext[3] >> 16) & 0xff).unwrap_or(0);
                 if let Some(&routine) = arrivals.get(slot) {
                     let d = w_word + 16 * cleared.min(11);
@@ -2117,7 +3113,13 @@ impl Ext for Bars {
                 let mut c = gp_sim::systems::new_body(cx.spec, cx.world, cust_k, Fx::from_int(x), Fx::from_int(y), left);
                 // $1B58: waiting, for 16 frames and a draw of 0 to 16.
                 let r = draw_at_most(cx, "arrival_wait", 16);
-                c.ext[0] = i64::from(left) << 8;
+                // Its object's flags and picture as the start row has them
+                // (+1, +2, copied in by the arrival), mirrored on a bar
+                // whose tap is on the left (bit 4), in bytes 2 and 3 for
+                // its board sprite; how a customer's picture changes as it
+                // walks and drinks isn't modelled.
+                let flags = row[1] | if left { 0x10 } else { 0 };
+                c.ext[0] = (i64::from(left) << 8) | (flags << 16) | (row[2] << 24);
                 c.ext[1] = r + 16;
                 c.ext[3] = (k as i64) << 16;
                 bodies.push((next_id, c));
@@ -2145,6 +3147,21 @@ impl Ext for Bars {
         }
 
         cx.me.ext[3] = w_word | (cleared << 16) | (level << 24);
+        // $5EE7 adds only in a game (E3BD 0, $5EEB).
+        if points != 0 && cx.counter("mode") == Some(0) {
+            let score = cx.counter("score").unwrap_or(0);
+            cx.set_counter("score", (score + points) % 1_000_000);
+        }
+        // The counters the board's HUD and its looks read: the levels
+        // cleared, the lives and the bar shown as the hooks keep them.
+        if cx.counter("mode") == Some(0) {
+            cx.set_counter("cleared", cleared);
+            if let Some(fb) = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)) {
+                let (lives, shown) = ((fb.ext[1] >> 40) & 0xff, (fb.ext[3] >> 8) & 3);
+                cx.set_counter("lives", lives);
+                cx.set_counter("shown", shown);
+            }
+        }
         cx.me.ext[0] = walk | (tip_count << 8) | (tips_left << 16) | (tip_setting << 24);
         cx.me.ext[1] = (cx.me.ext[1] & 0xff) | show.word();
         for (id, b) in &bodies {

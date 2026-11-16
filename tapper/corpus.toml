@@ -9,7 +9,7 @@ format = "1.0.0"
 name = "tapper"
 version = "0.2.0"
 title = "Tapper"
-recipes = "b3:ebe890806899765260bd3cf87d5600b3339868ed20f9697a768f499a042a13b4"
+recipes = "b3:a00c26a892512cb77ae0dfd8a2ba245f6155d8a46efd3ff1f9d367ad1b9beae2"
 
 [target]
 game = "tapper"
@@ -560,3 +560,13 @@ presses = "inputs/tapper.tip.002.presses"
 frames = 364
 why = "the show a tip starts ($14E7) to its end: $0C25 counts E712 down 255 frames, the customers who watch stand 255 frames ($11AA), then the dancers go ($0C71); tapper.tip.001's log with the bartender left standing 330 frames"
 level = "bar4"
+
+[[clip]]
+id = "tapper.poweron.001"
+name = "From power-on to the attract mode again"
+source = "generated"
+start = "inputs/tapper.poweron.001.start.presses"
+presses = "inputs/tapper.poweron.001.presses"
+frames = 10000
+why = "the model's own start: the boot, the attract mode, a coin and the start, levels 1 to 3 and the bonus round played, three lives lost in level 4, the game over's wait and the attract mode twice more"
+level = "saloon"

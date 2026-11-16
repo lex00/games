@@ -32,6 +32,15 @@ description = "Each customer slot's arrival routine, a word a slot: a timer nami
 source = "tapper"
 asset = "arrivals"
 
+[assets.bar_colors]
+kind = "rows"
+role = "palettes"
+description = "Each bar's two colours, palette RAM's $60 and $6C, which a level's start writes by the bar shown ($570C)"
+
+[assets.bar_colors.from]
+source = "tapper"
+asset = "bar_colors"
+
 [assets.bar_ends]
 kind = "rows"
 role = "behavior"
@@ -41,6 +50,159 @@ description = "Each bar's ends, 4 bytes a bar from the bottom: the left end at +
 source = "tapper"
 asset = "bar_ends"
 
+[assets.bar_objects]
+kind = "rows"
+role = "behavior"
+description = "The bars' taps, end pieces and far ends the setup puts in ($4D13), a row for taps on the right end and one for the left, 4 bytes an object (the program's table, lifted from the player's romset)"
+
+[assets.bar_objects.from]
+source = "tapper"
+asset = "bar_objects"
+
+[assets.bartender_idle]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: $2231, standing: the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.bartender_idle.from]
+source = "tapper"
+asset = "bartender_idle"
+
+[assets.bartender_land]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: $0A8E, his landing at the next bar's tap: the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.bartender_land.from]
+source = "tapper"
+asset = "bartender_land"
+
+[assets.bartender_pour]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: $1351, his pose at the tap: the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.bartender_pour.from]
+source = "tapper"
+asset = "bartender_pour"
+
+[assets.bartender_send]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: $13CC, the send: the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.bartender_send.from]
+source = "tapper"
+asset = "bartender_send"
+
+[assets.bartender_setup]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: $4BCB, the setup putting him at his first bar's tap, his flags, picture and head: the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.bartender_setup.from]
+source = "tapper"
+asset = "bartender_setup"
+
+[assets.bartender_switch]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: $214B, the move to another bar: the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.bartender_switch.from]
+source = "tapper"
+asset = "bartender_switch"
+
+[assets.bartender_switch_pictures]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: the pictures $214B and $0A8E give him by the switch's step (E731) as he moves to another bar, a table (lifted from the player's romset)"
+
+[assets.bartender_switch_pictures.from]
+source = "tapper"
+asset = "bartender_switch_pictures"
+
+[assets.bartender_tap]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: $1206, the tap held: the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.bartender_tap.from]
+source = "tapper"
+asset = "bartender_tap"
+
+[assets.bartender_wait]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: $2085, a pour let go before the mug is full: the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.bartender_wait.from]
+source = "tapper"
+asset = "bartender_wait"
+
+[assets.bartender_walk_left]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: $19EF, the walk left, and the walk's pictures at $1AD5 after it: the code's own bytes, its immediates and the table read by their places (lifted from the player's romset)"
+
+[assets.bartender_walk_left.from]
+source = "tapper"
+asset = "bartender_walk_left"
+
+[assets.bartender_walk_right]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: $1C02, the walk right: the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.bartender_walk_right.from]
+source = "tapper"
+asset = "bartender_walk_right"
+
+[assets.board_palette]
+kind = "board-palette"
+role = "palettes"
+description = "The 64 colours a level's setup loads into palette RAM ($4B58: $616D through $600F)"
+
+[assets.board_palette.from]
+source = "tapper"
+asset = "palette"
+
+[assets.board_sprites]
+kind = "board-sprites"
+role = "graphics"
+description = "The board's sprites (gfx2), what the bodies are drawn with"
+
+[assets.board_sprites.from]
+source = "tapper"
+asset = "sprites"
+
+[assets.board_tiles]
+kind = "board-tiles"
+role = "graphics"
+description = "The board's background tiles (gfx1), what the stage is drawn with"
+
+[assets.board_tiles.from]
+source = "tapper"
+asset = "tiles"
+
+[assets.bonus_colors]
+kind = "rows"
+role = "palettes"
+description = "The bonus round pokes ($250C, $2511)"
+
+[assets.bonus_colors.from]
+source = "tapper"
+asset = "bonus_colors"
+
+[assets.bonus_pairs]
+kind = "rows"
+role = "behavior"
+description = "The bonus round's cans to swap, a word a row naming a can's object (E262 + 8 a can): the slow shuffle ($4F17) takes rows 2k and 2k+1 for a pick k, the fast one ($5003) row k and the can after it (the program's table, lifted from the player's romset)"
+
+[assets.bonus_pairs.from]
+source = "tapper"
+asset = "bonus_pairs"
+
 [assets.customer_starts]
 kind = "rows"
 role = "behavior"
@@ -49,6 +211,15 @@ description = "Each customer slot's first object, 8 bytes a slot, copied in by i
 [assets.customer_starts.from]
 source = "tapper"
 asset = "customer_starts"
+
+[assets.defaults]
+kind = "rows"
+role = "behavior"
+description = "The board's settings at power-on with no battery-backed RAM, 94 bytes copied to E000 by the boot ($0505 to $0517): the coins a credit (+0), the credits a coin (+1), the lives (+5) and the level row a game starts at (+6) (the program's table, lifted from the player's romset)"
+
+[assets.defaults.from]
+source = "tapper"
+asset = "defaults"
 
 [assets.end_script_lists]
 kind = "rows"
@@ -68,6 +239,33 @@ description = "The bartender's steps along in the space bar's level end hops, a 
 source = "tapper"
 asset = "hop_steps"
 
+[assets.intro_colors]
+kind = "rows"
+role = "palettes"
+description = "The colours the level's intro pokes over the palette ($540A to $5414): the code's bytes from $540B"
+
+[assets.intro_colors.from]
+source = "tapper"
+asset = "intro_colors"
+
+[assets.layouts]
+kind = "rows"
+role = "behavior"
+description = "Each level's layout by the levels cleared, a byte: bit k puts bar k's tap on its left end ($2EC3 into E3AF) (the program's table, lifted from the player's romset)"
+
+[assets.layouts.from]
+source = "tapper"
+asset = "layouts"
+
+[assets.level_codes]
+kind = "rows"
+role = "graphics"
+description = "The level number: the code added to a digit ($5D9E) and the high byte ($5DA2)"
+
+[assets.level_codes.from]
+source = "tapper"
+asset = "level_codes"
+
 [assets.level_times]
 kind = "rows"
 role = "behavior"
@@ -77,6 +275,60 @@ description = "A level's times, 12 bytes a level: the respawn wait, the waits' s
 source = "tapper"
 asset = "level_times"
 
+[assets.lives_codes]
+kind = "rows"
+role = "graphics"
+description = "The lives: the cells high byte ($5D4F) and the tile ($5D52)"
+
+[assets.lives_codes.from]
+source = "tapper"
+asset = "lives_codes"
+
+[assets.points_bonus]
+kind = "rows"
+role = "behavior"
+description = "The points for the bonus round won ($2820), a digit a byte, six to an entry, which $5EE7 adds to the score (the program's table, lifted from the player's romset)"
+
+[assets.points_bonus.from]
+source = "tapper"
+asset = "points_bonus"
+
+[assets.points_catch]
+kind = "rows"
+role = "behavior"
+description = "The points for an empty mug caught ($0BF5), a digit a byte, six to an entry, which $5EE7 adds to the score (the program's table, lifted from the player's romset)"
+
+[assets.points_catch.from]
+source = "tapper"
+asset = "points_catch"
+
+[assets.points_level]
+kind = "rows"
+role = "behavior"
+description = "The points for a level's end ($55FF), a digit a byte, six to an entry, which $5EE7 adds to the score (the program's table, lifted from the player's romset)"
+
+[assets.points_level.from]
+source = "tapper"
+asset = "points_level"
+
+[assets.points_served]
+kind = "rows"
+role = "behavior"
+description = "The points for a customer served, by the bar shown ($095C), a digit a byte, six to an entry, which $5EE7 adds to the score (the program's table, lifted from the player's romset)"
+
+[assets.points_served.from]
+source = "tapper"
+asset = "points_served"
+
+[assets.points_tip]
+kind = "rows"
+role = "behavior"
+description = "The points for a tip picked up ($0BCC), a digit a byte, six to an entry, which $5EE7 adds to the score (the program's table, lifted from the player's romset)"
+
+[assets.points_tip.from]
+source = "tapper"
+asset = "points_tip"
+
 [assets.record_blocks]
 kind = "rows"
 role = "behavior"
@@ -85,6 +337,114 @@ description = "The customer slots' records a level starts with, 16 of 32 bytes f
 [assets.record_blocks.from]
 source = "tapper"
 asset = "record_blocks"
+
+[assets.score_codes]
+kind = "rows"
+role = "graphics"
+description = "The score digits: the tile code the score routine adds a digit to ($05F6) and the cells' high byte ($05FA), the code's own bytes"
+
+[assets.score_codes.from]
+source = "tapper"
+asset = "score_codes"
+
+[assets.screen_69a1]
+kind = "board-screen"
+role = "layout"
+description = "A stage's screen at $69A1, one of those $5DF6 picks from the words at $61ED; counter screen 1, its place among them by address"
+
+[assets.screen_69a1.from]
+source = "tapper"
+asset = "screen_69a1"
+
+[assets.screen_7121]
+kind = "board-screen"
+role = "layout"
+description = "A stage's screen at $7121, one of those $5DF6 picks from the words at $61ED; counter screen 2, its place among them by address"
+
+[assets.screen_7121.from]
+source = "tapper"
+asset = "screen_7121"
+
+[assets.screen_78a1]
+kind = "board-screen"
+role = "layout"
+description = "A stage's screen at $78A1, one of those $5DF6 picks from the words at $61ED; counter screen 3, its place among them by address"
+
+[assets.screen_78a1.from]
+source = "tapper"
+asset = "screen_78a1"
+
+[assets.screen_8021]
+kind = "board-screen"
+role = "layout"
+description = "A stage's screen at $8021, one of those $5DF6 picks from the words at $61ED; counter screen 4, its place among them by address"
+
+[assets.screen_8021.from]
+source = "tapper"
+asset = "screen_8021"
+
+[assets.screen_87a1]
+kind = "board-screen"
+role = "layout"
+description = "A stage's screen at $87A1, one of those $5DF6 picks from the words at $61ED; counter screen 5, its place among them by address"
+
+[assets.screen_87a1.from]
+source = "tapper"
+asset = "screen_87a1"
+
+[assets.screen_8f21]
+kind = "board-screen"
+role = "layout"
+description = "A stage's screen at $8F21, one of those $5DF6 picks from the words at $61ED; counter screen 6, its place among them by address"
+
+[assets.screen_8f21.from]
+source = "tapper"
+asset = "screen_8f21"
+
+[assets.screen_96a1]
+kind = "board-screen"
+role = "layout"
+description = "A stage's screen at $96A1, one of those $5DF6 picks from the words at $61ED; counter screen 7, its place among them by address"
+
+[assets.screen_96a1.from]
+source = "tapper"
+asset = "screen_96a1"
+
+[assets.screen_9e21]
+kind = "board-screen"
+role = "layout"
+description = "A stage's screen at $9E21, one of those $5DF6 picks from the words at $61ED; counter screen 8, its place among them by address"
+
+[assets.screen_9e21.from]
+source = "tapper"
+asset = "screen_9e21"
+
+[assets.screen_a5a1]
+kind = "board-screen"
+role = "layout"
+description = "A stage's screen at $A5A1, one of those $5DF6 picks from the words at $61ED; counter screen 9, its place among them by address"
+
+[assets.screen_a5a1.from]
+source = "tapper"
+asset = "screen_a5a1"
+
+[assets.screen_bonus]
+kind = "board-screen"
+role = "layout"
+description = "The bonus round stage ($2546)"
+
+[assets.screen_bonus.from]
+source = "tapper"
+asset = "screen_bonus"
+
+[assets.screen_saloon]
+kind = "board-screen"
+role = "layout"
+description = "The saloon's screen, which the vblank's $5D19 copies into video RAM from the pointer $5DF6 picks at $61ED; counter screen 0, the first of the screens by address"
+
+[assets.screen_saloon.from]
+source = "tapper"
+asset = "screen_saloon"
 
 [assets.show_first]
 kind = "rows"
@@ -203,6 +563,24 @@ description = "The program from $23EA to $2442: a life lost's requests (the prog
 source = "tapper"
 asset = "sound_life"
 
+[assets.space_colors]
+kind = "rows"
+role = "palettes"
+description = "The space bar pokes ($573E to $574D)"
+
+[assets.space_colors.from]
+source = "tapper"
+asset = "space_colors"
+
+[assets.stage_screens]
+kind = "rows"
+role = "behavior"
+description = "The words $5DF6 picks a stage's screen from by the stage (E395), lifted from the player's romset: tapper_bars sets the counter screen to the place of the stage's word among them, by address"
+
+[assets.stage_screens.from]
+source = "tapper"
+asset = "stage_screens"
+
 [assets.start_list_ptrs]
 kind = "rows"
 role = "behavior"
@@ -220,6 +598,29 @@ description = "The slot lists a level's start brings, each ended by $FF (the pro
 [assets.start_lists.from]
 source = "tapper"
 asset = "start_lists"
+
+[entities.bar_end]
+description = "The bars' end pieces and far ends, the objects from E356 (y, flags, picture, x), 4 bytes each, a bar's at 4 times its number and its far end 16 on: put in by the setup's $4D13 from the bar_objects rows (tapper_flow), gone at a level's end ($5615) and at the next setup ($5F31). Word 0 is the flags and 256 times the picture. Drawn, never compared"
+ext = "tapper_bar_end"
+no_slot = true
+role = "npc"
+size = [16, 16]
+
+[entities.bar_end.board_sprite]
+slot = "board_sprites"
+
+[entities.bar_end.board_sprite.flags]
+word = 0
+
+[entities.bar_end.board_sprite.picture]
+byte = 1
+word = 0
+
+[entities.bar_end.hitbox]
+h = 1
+w = 1
+x = 0
+y = 0
 
 [entities.bars]
 description = "The bars' play each frame after the bartender's (tapper_bars): empty mugs caught by him ($0B63), mugs moved and caught by customers ($0742), the customers' states ($0B43) and their ends of the bar ($0890). A body with no box"
@@ -250,12 +651,18 @@ customer_starts = "customer_starts"
 end_script_lists = "end_script_lists"
 hop_steps = "hop_steps"
 level_times = "level_times"
+points_bonus = "points_bonus"
+points_catch = "points_catch"
+points_level = "points_level"
+points_served = "points_served"
+points_tip = "points_tip"
 record_blocks = "record_blocks"
 show_first = "show_first"
 show_first_ptrs = "show_first_ptrs"
 show_lists = "show_lists"
 show_pictures = "show_pictures"
 slide_objects = "slide_objects"
+stage_screens = "stage_screens"
 start_list_ptrs = "start_list_ptrs"
 start_lists = "start_lists"
 
@@ -265,10 +672,44 @@ w = 1
 x = 0
 y = 0
 
+[entities.bartender_part]
+description = "The bartender's other five objects, E2EA to E2FD (y, flags, picture, x), 4 bytes each: his arms and the mug at the tap, the tap's handle and the full mug, his head. tapper_bartender sets them as the play routine's $06A4 does: standing ($2231), at the tap ($1206, $1351, $2085), the send ($13CC), the move to another bar ($214B, $0A8E) and the walk ($19EF, $1C02); a y of 0 hides one. Word 0 is the flags and 256 times the picture, word 1 the object's place plus 1. Drawn, never compared"
+ext = "tapper_bartender_part"
+no_slot = true
+role = "npc"
+size = [16, 16]
+
+[entities.bartender_part.board_sprite]
+slot = "board_sprites"
+
+[entities.bartender_part.board_sprite.flags]
+word = 0
+
+[entities.bartender_part.board_sprite.picture]
+byte = 1
+word = 0
+
+[entities.bartender_part.hitbox]
+h = 1
+w = 1
+x = 0
+y = 0
+
 [entities.customer]
 description = "A customer, the game's objects from E262, 8 bytes each (the customer, then the mug it holds), 4 a bar, with its record at E4B2, 0x20 bytes each: waits, walks toward the tap, is pushed back by a mug it catches, drinks and throws the empty mug back (tapper_bars)"
 role = "npc"
 size = [16, 16]
+
+[entities.customer.board_sprite]
+slot = "board_sprites"
+
+[entities.customer.board_sprite.flags]
+byte = 2
+word = 0
+
+[entities.customer.board_sprite.picture]
+byte = 3
+word = 0
 
 [entities.customer.hitbox]
 h = 16
@@ -281,6 +722,15 @@ description = "A dancer of the show a tip starts: one of the 9 objects from E23E
 role = "npc"
 size = [16, 16]
 
+[entities.dancer.board_sprite]
+slot = "board_sprites"
+
+[entities.dancer.board_sprite.flags]
+word = 1
+
+[entities.dancer.board_sprite.picture]
+word = 2
+
 [entities.dancer.hitbox]
 h = 16
 w = 16
@@ -288,19 +738,34 @@ x = 0
 y = 0
 
 [entities.flow]
-description = "The game's flow between plays, a body with no box: a level's start ($4B3F), which puts the taps by the level's layout and the bartender at bar 2 on the frame after the setup clears the level's RAM (tapper_flow)"
+description = "The game's flow between plays, a body with no box (tapper_flow): from power-on the boot's wait, the attract mode, the coins and the start ($584F) that begins a game ($4AEF); a level's start ($4B3F), which puts the taps by the level's layout and the bartender at bar 2 on the frame after the setup clears the level's RAM; and the game over's wait back to the attract mode ($2B82)"
 ext = "tapper_flow"
 no_slot = true
 role = "npc"
 size = [1, 1]
 
 [entities.flow.ext_params]
+attract_demo = 216
+attract_play = 933
+boot_wait = 52
+coin_on_press = 0
+demo_wait_at = 217
+demo_waits_at = 812
+game_over_wait = 1203
+logo_wait_at = 2
 start_bar = 2
 start_left = 61
 start_right = 171
 tap_left = 13
 tap_right = 225
 tap_step = 16
+
+[entities.flow.ext_rows]
+bar_objects = "bar_objects"
+bartender_setup = "bartender_setup"
+bonus_pairs = "bonus_pairs"
+defaults = "defaults"
+layouts = "layouts"
 
 [entities.flow.hitbox]
 h = 1
@@ -313,6 +778,16 @@ description = "A mug, the game's objects from E2FE, 8 bytes each (y, flags, pict
 role = "npc"
 size = [16, 16]
 
+[entities.mug.board_sprite]
+slot = "board_sprites"
+
+[entities.mug.board_sprite.flags]
+word = 0
+
+[entities.mug.board_sprite.picture]
+byte = 1
+word = 0
+
 [entities.mug.hitbox]
 h = 16
 w = 16
@@ -324,6 +799,17 @@ description = "The bartender, the game's object at E2E6 (y, flags, picture, x): 
 ext = "tapper_bartender"
 role = "player"
 size = [16, 16]
+
+[entities.player.board_sprite]
+slot = "board_sprites"
+
+[entities.player.board_sprite.flags]
+byte = 2
+word = 2
+
+[entities.player.board_sprite.picture]
+byte = 3
+word = 2
 
 [entities.player.ext_params]
 bob_frames = 3
@@ -344,6 +830,19 @@ stand_right = 16
 switch_busy = 7
 switch_frames = 6
 walk_step = 2
+
+[entities.player.ext_rows]
+bar_objects = "bar_objects"
+bartender_idle = "bartender_idle"
+bartender_land = "bartender_land"
+bartender_pour = "bartender_pour"
+bartender_send = "bartender_send"
+bartender_switch = "bartender_switch"
+bartender_switch_pictures = "bartender_switch_pictures"
+bartender_tap = "bartender_tap"
+bartender_wait = "bartender_wait"
+bartender_walk_left = "bartender_walk_left"
+bartender_walk_right = "bartender_walk_right"
 
 [entities.player.hitbox]
 h = 16
@@ -400,6 +899,16 @@ no_slot = true
 role = "npc"
 size = [16, 16]
 
+[entities.tap.board_sprite]
+slot = "board_sprites"
+
+[entities.tap.board_sprite.flags]
+word = 2
+
+[entities.tap.board_sprite.picture]
+byte = 1
+word = 2
+
 [entities.tap.hitbox]
 h = 1
 w = 1
@@ -423,6 +932,15 @@ description = "A tip, the object at E25E (y, flags, picture $4D, x): left on the
 role = "npc"
 size = [16, 16]
 
+[entities.tip.board_sprite]
+slot = "board_sprites"
+
+[entities.tip.board_sprite.flags]
+number = 3
+
+[entities.tip.board_sprite.picture]
+number = 77
+
 [entities.tip.hitbox]
 h = 16
 w = 16
@@ -434,6 +952,1284 @@ description = "The first level, not lifted yet: no tiles"
 empty = true
 size = [32, 30]
 tile_size = 16
+
+[levels.main.present.board]
+palette = "board_palette"
+screen = "screen_saloon"
+tiles = "board_tiles"
+
+[[levels.main.present.board.counters]]
+at = [3, 1]
+counter = "score"
+digits = 6
+
+[levels.main.present.board.counters.high]
+column = 4
+slot = "score_codes"
+
+[levels.main.present.board.counters.tile]
+slot = "score_codes"
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "mode"
+value = 0
+
+[[levels.main.present.board.counters]]
+at = [23, 1]
+counter = "score_2"
+digits = 6
+
+[levels.main.present.board.counters.high]
+column = 4
+slot = "score_codes"
+
+[levels.main.present.board.counters.tile]
+slot = "score_codes"
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "mode"
+value = 0
+
+[[levels.main.present.board.counters]]
+at = [28, 27]
+counter = "cleared"
+digits = 2
+plus = 1
+
+[levels.main.present.board.counters.high]
+column = 4
+slot = "level_codes"
+
+[levels.main.present.board.counters.tile]
+slot = "level_codes"
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "mode"
+value = 0
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.looks]]
+palette = "board_palette"
+screen = "screen_bonus"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 109
+column = 5
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "bonus"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_saloon"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 0
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 0
+
+[[levels.main.present.board.looks]]
+screen = "screen_saloon"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 0
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_saloon"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 0
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_saloon"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 0
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_69a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 0
+
+[[levels.main.present.board.looks]]
+screen = "screen_69a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_69a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_69a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_7121"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 0
+
+[[levels.main.present.board.looks]]
+screen = "screen_7121"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_7121"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_7121"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_78a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 0
+
+[[levels.main.present.board.looks]]
+screen = "screen_78a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_78a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_78a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_8021"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 4
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 0
+
+[[levels.main.present.board.looks]]
+screen = "screen_8021"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 4
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_8021"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 4
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_8021"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 4
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_87a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 5
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 0
+
+[[levels.main.present.board.looks]]
+screen = "screen_87a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 5
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_87a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 5
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_87a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 5
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_8f21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 6
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 0
+
+[[levels.main.present.board.looks]]
+screen = "screen_8f21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 6
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_8f21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 6
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_8f21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 6
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_96a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 7
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 0
+
+[[levels.main.present.board.looks]]
+screen = "screen_96a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 7
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_96a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 7
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_96a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 7
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_9e21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 8
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 0
+
+[[levels.main.present.board.looks]]
+screen = "screen_9e21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 8
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_9e21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 8
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_9e21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 8
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_a5a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 9
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 0
+
+[[levels.main.present.board.looks]]
+screen = "screen_a5a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 1
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 9
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_a5a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 9
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_a5a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 9
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.palette_writes]]
+at = 0
+slot = "intro_colors"
+
+[[levels.main.present.board.palette_writes]]
+at = 64
+slot = "intro_colors"
+
+[[levels.main.present.board.palette_writes]]
+at = 77
+column = 8
+slot = "intro_colors"
+
+[[levels.main.present.board.repeats]]
+at = [8, 2]
+counter = "lives"
+most = 8
+plus = -1
+step = [-1, 0]
+
+[levels.main.present.board.repeats.high]
+slot = "lives_codes"
+
+[levels.main.present.board.repeats.tile]
+column = 3
+slot = "lives_codes"
+
+[[levels.main.present.board.repeats.when]]
+cmp = "=="
+counter = "mode"
+value = 0
+
+[levels.main.present.sprite_order.bar_end]
+at = 115
+step = 1
+word = 1
+
+[levels.main.present.sprite_order.bartender_part]
+at = 88
+step = 1
+word = 1
+
+[levels.main.present.sprite_order.customer]
+at = 54
+step = 2
+
+[levels.main.present.sprite_order.dancer]
+at = 45
+step = 1
+word = 0
+
+[levels.main.present.sprite_order.mug]
+at = 93
+step = 2
+word = 2
+
+[levels.main.present.sprite_order.player]
+at = 87
+step = 1
+
+[levels.main.present.sprite_order.tap]
+at = 111
+step = 1
+
+[levels.main.present.sprite_order.tip]
+at = 53
+step = 1
 
 [[levels.main.spawn]]
 entity = "flow"
@@ -475,8 +2271,20 @@ entity = "bars"
 x = 0
 y = 0
 
+[counters.bonus]
+description = "1 from the bonus round's start ($2500, called at $569D) to its end, which the hooks keep: no RAM byte marks the bonus round by itself"
+
 [counters.cleared]
 description = "Levels cleared, E4A8: 0 at a game's start, one more at each level's end ($5681), bonus rounds included"
+
+[counters.coin_held]
+description = "The coin switch as the coin routine last saw it settled, 1 while a coin is held: E097 0 ($0213 to $0229, read four times a frame by the CTC's interrupt at $0158; 1 from the boot, $0095)"
+
+[counters.coins]
+description = "Coins put in toward the next credit, E012 ($0242 to $0255): at the coins a credit (the defaults' E000) they become the credits a coin (E001)"
+
+[counters.credits]
+description = "Credits, E011: one more at each coin with the defaults' coinage ($024C to $0253), at most 9 ($0164), one less at a one-player start ($5860)"
 
 [counters.lives]
 description = "Lives, E4A7: 3 at a game's start ($4B22), one less when a life is lost ($23AF), one more at each extra-life score ($615D)"
@@ -485,10 +2293,19 @@ description = "Lives, E4A7: 3 at a game's start ($4B22), one less when a life is
 description = "E3BD: 0 in a game, 1 in attract mode ($4AB8, $4E3D), 2 at game over"
 
 [counters.score]
-description = "The score, six decimal digits a byte at E3F5 to E3FA, most significant first; the points routine at $5EF3 adds from the last digit up, carrying. Nothing in the model scores yet"
+description = "The score, six decimal digits a byte at E3F5 to E3FA, most significant first; the points routine at $5EE7 adds an entry of the points rows from the last digit up, carrying (tapper_bars), only in a game (E3BD 0, $5EEB)"
+
+[counters.score_2]
+description = "Player 2's score, 0 in a one-player game: $05D5 draws it from E3EF at F06E"
+
+[counters.screen]
+description = "The stage's screen, 0 to 9: the place of the word $5DF6 takes for the stage (counter stage) among the words at $61ED, by address, as the screens are listed; tapper_bars sets it each frame from the lifted words. The looks pick the screen by it and the bar's colours ($570C) by the bar shown"
 
 [counters.shown]
 description = "The bar shown, E3B8: 0 the saloon, 1 the sports bar, 2 the punk bar, 3 the space bar, set at each level's start from the levels cleared ($3C60 to $3C78)"
+
+[counters.stage]
+description = "The stage the setup's $5DF6 shows, the place of its screen among the words at $61ED: the levels cleared, from 26 on 13 to 25 again ($5DFC to $5E0B), which tapper_bars keeps"
 
 [present.screen]
 size = [512, 480]
@@ -501,6 +2318,14 @@ note = "Found with gp code listing and gp code tables on tapper.l8.001; the asse
 [[evidence."assets.arrivals".refs]]
 at = "clip:tapper.l8.001"
 
+[evidence."assets.bar_colors"]
+source = "observed"
+confidence = 80
+note = "A level's start writes palette RAM $60 and $6C from $5751 by the bar shown E3B8 ($570C to $5725, tapper-cycle frames 1099 and 1100)"
+
+[[evidence."assets.bar_colors".refs]]
+at = "clip:tapper.l1.001"
+
 [evidence."assets.bar_ends"]
 source = "observed"
 confidence = 85
@@ -509,6 +2334,142 @@ note = "gp code listing over the corpus: the mugs' move ($0742) and the customer
 [[evidence."assets.bar_ends".refs]]
 at = "clip:tapper.l8.001"
 
+[evidence."assets.bar_objects"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.start.001: $4D13 copies three 16-byte groups to E346, E356 and E366 from $4DCC (taps on the right) or $4DFC (on the left) by E3AF's bit for each bar; rbtapper's at $4F5C (its code found by its bytes)"
+
+[[evidence."assets.bar_objects".refs]]
+at = "clip:tapper.start.001"
+
+[evidence."assets.bartender_idle"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes on E2E6 to E2FD over tapper.poweron.001, l1.001 and l3.001, and the routines' listings (--routine) on those and tapper.tip.001: $06A4 calls $214B, $1206, $13CC, $2085, $2231, $19EF and $1C02, which write the six objects; gp query on tapper-poweron-proof and tapper-tip-show frame by frame; each set's place from its own code, found by its bytes"
+
+[[evidence."assets.bartender_idle".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.bartender_land"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes on E2E6 to E2FD over tapper.poweron.001, l1.001 and l3.001, and the routines' listings (--routine) on those and tapper.tip.001: $06A4 calls $214B, $1206, $13CC, $2085, $2231, $19EF and $1C02, which write the six objects; gp query on tapper-poweron-proof and tapper-tip-show frame by frame; each set's place from its own code, found by its bytes"
+
+[[evidence."assets.bartender_land".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.bartender_pour"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes on E2E6 to E2FD over tapper.poweron.001, l1.001 and l3.001, and the routines' listings (--routine) on those and tapper.tip.001: $06A4 calls $214B, $1206, $13CC, $2085, $2231, $19EF and $1C02, which write the six objects; gp query on tapper-poweron-proof and tapper-tip-show frame by frame; each set's place from its own code, found by its bytes"
+
+[[evidence."assets.bartender_pour".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.bartender_send"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes on E2E6 to E2FD over tapper.poweron.001, l1.001 and l3.001, and the routines' listings (--routine) on those and tapper.tip.001: $06A4 calls $214B, $1206, $13CC, $2085, $2231, $19EF and $1C02, which write the six objects; gp query on tapper-poweron-proof and tapper-tip-show frame by frame; each set's place from its own code, found by its bytes"
+
+[[evidence."assets.bartender_send".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.bartender_setup"]
+source = "observed"
+confidence = 80
+note = "gp code listing --routine 4B3F on tapper.poweron.001, frames 1090 to 1102: $4BCB to $4C10 write E2E6 to E2E9 and E2FA to E2FD once a setup"
+
+[[evidence."assets.bartender_setup".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.bartender_switch"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes on E2E6 to E2FD over tapper.poweron.001, l1.001 and l3.001, and the routines' listings (--routine) on those and tapper.tip.001: $06A4 calls $214B, $1206, $13CC, $2085, $2231, $19EF and $1C02, which write the six objects; gp query on tapper-poweron-proof and tapper-tip-show frame by frame; each set's place from its own code, found by its bytes"
+
+[[evidence."assets.bartender_switch".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.bartender_switch_pictures"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes on E2E6 to E2FD over tapper.poweron.001, l1.001 and l3.001, and the routines' listings (--routine) on those and tapper.tip.001: $06A4 calls $214B, $1206, $13CC, $2085, $2231, $19EF and $1C02, which write the six objects; gp query on tapper-poweron-proof and tapper-tip-show frame by frame; each set's place from its own code, found by its bytes"
+
+[[evidence."assets.bartender_switch_pictures".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.bartender_tap"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes on E2E6 to E2FD over tapper.poweron.001, l1.001 and l3.001, and the routines' listings (--routine) on those and tapper.tip.001: $06A4 calls $214B, $1206, $13CC, $2085, $2231, $19EF and $1C02, which write the six objects; gp query on tapper-poweron-proof and tapper-tip-show frame by frame; each set's place from its own code, found by its bytes"
+
+[[evidence."assets.bartender_tap".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.bartender_wait"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes on E2E6 to E2FD over tapper.poweron.001, l1.001 and l3.001, and the routines' listings (--routine) on those and tapper.tip.001: $06A4 calls $214B, $1206, $13CC, $2085, $2231, $19EF and $1C02, which write the six objects; gp query on tapper-poweron-proof and tapper-tip-show frame by frame; each set's place from its own code, found by its bytes"
+
+[[evidence."assets.bartender_wait".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.bartender_walk_left"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes on E2E6 to E2FD over tapper.poweron.001, l1.001 and l3.001, and the routines' listings (--routine) on those and tapper.tip.001: $06A4 calls $214B, $1206, $13CC, $2085, $2231, $19EF and $1C02, which write the six objects; gp query on tapper-poweron-proof and tapper-tip-show frame by frame; each set's place from its own code, found by its bytes"
+
+[[evidence."assets.bartender_walk_left".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.bartender_walk_right"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes on E2E6 to E2FD over tapper.poweron.001, l1.001 and l3.001, and the routines' listings (--routine) on those and tapper.tip.001: $06A4 calls $214B, $1206, $13CC, $2085, $2231, $19EF and $1C02, which write the six objects; gp query on tapper-poweron-proof and tapper-tip-show frame by frame; each set's place from its own code, found by its bytes"
+
+[[evidence."assets.bartender_walk_right".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.board_palette"]
+source = "observed"
+confidence = 80
+note = "A level's setup loads palette RAM from $616D ($4B58 calls $600F, 64 colours of two bytes); gp-arcade's writes example on tapper-cycle, frame 962"
+
+[[evidence."assets.board_palette".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.board_sprites"]
+source = "observed"
+confidence = 80
+note = "The board's gfx2 sprites, lifted by the arcade map's `sprites`"
+
+[[evidence."assets.board_sprites".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.board_tiles"]
+source = "observed"
+confidence = 80
+note = "The board's gfx1 tiles, lifted by the arcade map's `tiles`"
+
+[[evidence."assets.board_tiles".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.bonus_colors"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.bonus_colors".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.bonus_pairs"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.bonus.001 and the later rounds: $4F17 reads two words a pick from $2AD1 ($4F3E), $5003 one ($502A); each names a can's object swapped with the next. rbtapper's at $2AE5 (its code found by its bytes). The model's first bonus round returns on the original's frame in tapper.poweron.001"
+
+[[evidence."assets.bonus_pairs".refs]]
+at = "clip:tapper.poweron.001"
+
 [evidence."assets.customer_starts"]
 source = "observed"
 confidence = 80
@@ -516,6 +2477,14 @@ note = "Found with gp code listing and gp code tables on tapper.l8.001; the asse
 
 [[evidence."assets.customer_starts".refs]]
 at = "clip:tapper.l8.001"
+
+[evidence."assets.defaults"]
+source = "observed"
+confidence = 85
+note = "gp code listing on tapper.start.001 from power-on: $048A checks the battery-backed settings at E000 and, failing, $0505 copies 94 bytes from $0526 to E000 ($0517); the coin routine reads E000 and E001 ($0242, $024F), the game's start E005 and E006 ($4B1F, $4B08). The place found by its code's bytes in a recording of each set ($0532 in sutapper)"
+
+[[evidence."assets.defaults".refs]]
+at = "clip:tapper.start.001"
 
 [evidence."assets.end_script_lists"]
 source = "observed"
@@ -533,6 +2502,30 @@ note = "gp code listing on tapper.l10.001's end (frames 15680 to 15926): the end
 [[evidence."assets.hop_steps".refs]]
 at = "clip:tapper.l10.001"
 
+[evidence."assets.intro_colors"]
+source = "observed"
+confidence = 80
+note = "The level's intro writes one byte to palette RAM $00 and $40 and another to $4D after the load (the immediates of its two loads of A) ($540A to $5414, tapper-cycle frame 962)"
+
+[[evidence."assets.intro_colors".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.layouts"]
+source = "observed"
+confidence = 85
+note = "gp code listing --writes E3AF over the corpus: the setup's $2EC3 (from $4B50) reads ld hl,$4CF9 by E4A8 ($2ED5); rbtapper's at $4E89 (its code found by its bytes). The model's own levels take these layouts on every frame of tapper.poweron.001"
+
+[[evidence."assets.layouts".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.level_codes"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.level_codes".refs]]
+at = "clip:tapper.l1.001"
+
 [evidence."assets.level_times"]
 source = "observed"
 confidence = 80
@@ -541,6 +2534,54 @@ note = "Found with gp code listing and gp code tables on tapper.l8.001; the asse
 [[evidence."assets.level_times".refs]]
 at = "clip:tapper.l8.001"
 
+[evidence."assets.lives_codes"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.lives_codes".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.points_bonus"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes E3FA on tapper.poweron.001: $5EE7 adds six digit bytes from DE to E3F5..E3FA, called from $095C, $0BF5, $2820 and $55FF (and $0BCC for a tip); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.points_bonus".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.points_catch"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes E3FA on tapper.poweron.001: $5EE7 adds six digit bytes from DE to E3F5..E3FA, called from $095C, $0BF5, $2820 and $55FF (and $0BCC for a tip); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.points_catch".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.points_level"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes E3FA on tapper.poweron.001: $5EE7 adds six digit bytes from DE to E3F5..E3FA, called from $095C, $0BF5, $2820 and $55FF (and $0BCC for a tip); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.points_level".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.points_served"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes E3FA on tapper.poweron.001: $5EE7 adds six digit bytes from DE to E3F5..E3FA, called from $095C, $0BF5, $2820 and $55FF (and $0BCC for a tip); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.points_served".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.points_tip"]
+source = "observed"
+confidence = 80
+note = "gp code listing --writes E3FA on tapper.poweron.001: $5EE7 adds six digit bytes from DE to E3F5..E3FA, called from $095C, $0BF5, $2820 and $55FF (and $0BCC for a tip); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.points_tip".refs]]
+at = "clip:tapper.poweron.001"
+
 [evidence."assets.record_blocks"]
 source = "observed"
 confidence = 80
@@ -548,6 +2589,102 @@ note = "gp code listing on tapper.l8.001: the setup's $4A65 copies 0x200 bytes t
 
 [[evidence."assets.record_blocks".refs]]
 at = "clip:tapper.l8.001"
+
+[evidence."assets.score_codes"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.score_codes".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.screen_69a1"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.screen_69a1".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.screen_7121"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.screen_7121".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.screen_78a1"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.screen_78a1".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.screen_8021"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.screen_8021".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.screen_87a1"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.screen_87a1".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.screen_8f21"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.screen_8f21".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.screen_96a1"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.screen_96a1".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.screen_9e21"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.screen_9e21".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.screen_a5a1"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.screen_a5a1".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.screen_bonus"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.screen_bonus".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.screen_saloon"]
+source = "observed"
+confidence = 80
+note = "The vblank's $5D19 copies $780 bytes from the pointer at E395 into video RAM; the level's setup $5DF6 sets it from $61ED by the levels cleared, $6221 for the first (tapper-cycle, frame 1099)"
+
+[[evidence."assets.screen_saloon".refs]]
+at = "clip:tapper.l1.001"
 
 [evidence."assets.show_first"]
 source = "observed"
@@ -653,6 +2790,22 @@ note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-firs
 [[evidence."assets.sound_life".refs]]
 at = "clip:tapper.score.001"
 
+[evidence."assets.space_colors"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stages), $2546 (the bonus round's), $05D5, $5D45 and $5D8C (the HUD's codes), $570C and $2500 (the colours); each set's place from its own code, found by its bytes in a recording of each"
+
+[[evidence."assets.space_colors".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.stage_screens"]
+source = "observed"
+confidence = 70
+note = "gp code listing over the corpus: $5DF6 reads a word at $61ED by the stage and loads the screen it names; the 26 words name the 10 screens of the screen_ assets, the same in tapper, rbtapper and tappera by address order (each set's place from its own code, found by its bytes)"
+
+[[evidence."assets.stage_screens".refs]]
+at = "clip:tapper.l1.001"
+
 [evidence."assets.start_list_ptrs"]
 source = "observed"
 confidence = 80
@@ -668,6 +2821,14 @@ note = "Found with gp code listing and gp code tables on tapper.l8.001; the asse
 
 [[evidence."assets.start_lists".refs]]
 at = "clip:tapper.l8.001"
+
+[evidence."entities.bar_end"]
+source = "observed"
+confidence = 70
+note = "The objects from E356, 4 bytes each, gp query on tapper-l7-set and tapper-l10-set; $4D13 writes them from $4DCC or $4DFC (gp code listing on tapper.start.001), $55F4 empties them at $5615"
+
+[[evidence."entities.bar_end".refs]]
+at = "clip:tapper.l7.001"
 
 [evidence."entities.bars"]
 source = "observed"
@@ -693,6 +2854,14 @@ note = "With the bar shown 2 or 3 (the punk bar: tapper.l6.001, l7.001, l8.001; 
 [[evidence."entities.bars.ext_params.setup_late_bars".refs]]
 at = "clip:tapper.l8.001"
 
+[evidence."entities.bartender_part"]
+source = "observed"
+confidence = 70
+note = "The objects from E2EA, 4 bytes each, gp query on tapper-poweron-proof (frames 1100 to 1500, 2900 to 4300) and tapper-tip-show (15080 to 15200, the walk); the routines that write them from gp code listing --writes"
+
+[[evidence."entities.bartender_part".refs]]
+at = "clip:tapper.poweron.001"
+
 [evidence."entities.customer"]
 source = "observed"
 confidence = 60
@@ -712,10 +2881,13 @@ at = "clip:tapper.tip.002"
 [evidence."entities.flow"]
 source = "observed"
 confidence = 80
-note = "The level setup at $4B3F (read from the code with gp-arcade's write log): it clears E6F2 to E733, waits a frame, and at $4BCB puts the bartender at bar 2; E6F2 is 0 only on the setup's frame in tapper-m3b-cycle's games"
+note = "The level setup at $4B3F (read from the code with gp-arcade's write log): it clears E6F2 to E733, waits a frame, and at $4BCB puts the bartender at bar 2; E6F2 is 0 only on the setup's frame in tapper-m3b-cycle's games. From power-on (gp code listing and gp query --frames --changed on tapper-idle-9000, tapper-gameover1-long and tapper-cycle): the boot's state 0 to the original's frame 146 (the model's 52, boot_wait), the attract mode's logo ($3D76, state 1, 215 frames, attract_demo less 1), $4AAA (state 5) and the demo ($3CD8, state 6, to attract_play), the frames whose main loop doesn't run $584F (logo_wait_at, demo_wait_at, demo_waits_at and the one after), the coin routine $0213 and the start $584F; the game over's 1200-frame initials wait ($2CA7) and state 0 at game_over_wait. The model's own start agrees on every frame of tapper.poweron.001"
 
 [[evidence."entities.flow".refs]]
 at = "clip:tapper.l1.001"
+
+[[evidence."entities.flow".refs]]
+at = "clip:tapper.poweron.001"
 
 [[evidence."entities.flow".refs]]
 at = "clip:tapper.l3.001"

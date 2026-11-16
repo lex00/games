@@ -162,6 +162,13 @@ presentation = true
 ram = [0xE302]
 stride = 8
 
+[[slots.field]]
+note = "Not compared: the mug's flags (+1) and picture (+2), as the board reads them from sprite RAM: its board sprite's word"
+path = "ext[0]"
+presentation = true
+ram = [0xE2FF, 0xE300]
+stride = 8
+
 [[slots.kind]]
 entity = "mug"
 ids = [0]
@@ -190,8 +197,8 @@ stride = 8
 note = "Not compared: its state (+0) and facing (+0D, 1 on a bar whose tap is on the left)"
 path = "ext[0]"
 presentation = true
-ram = [0xE4B2, 0xE4BF]
-stride = 32
+ram = [0xE4B2, 0xE4BF, 0xE263, 0xE264]
+strides = [32, 32, 8, 8]
 
 [[slots.group.field]]
 note = "Not compared: its timer (+4)"
@@ -358,6 +365,74 @@ entity = "record"
 holds_slot = true
 ids = [0]
 
+[[slots.group]]
+active = 0xE356
+active_stride = 4
+count = 8
+name = "bar_ends"
+presentation = true
+vacant = "ram[0xE3BD] != 0"
+note = "The bars' end pieces and far ends from E356, 4 bytes each ($4D13 puts them in, $5615 and $5F31 empty them): drawn by the board, never compared"
+
+[[slots.group.field]]
+path = "x"
+ram = [0xE359]
+stride = 4
+
+[[slots.group.field]]
+path = "y"
+ram = [0xE356]
+stride = 4
+
+[[slots.group.field]]
+path = "ext[0]"
+ram = [0xE357, 0xE358]
+stride = 4
+
+[[slots.group.field]]
+index = true
+offset = 1
+path = "ext[1]"
+ram = []
+
+[[slots.group.kind]]
+entity = "bar_end"
+ids = [0]
+
+[[slots.group]]
+active = 0xE2EA
+active_stride = 4
+count = 5
+name = "bartender_parts"
+presentation = true
+vacant = "ram[0xE3BD] != 0"
+note = "The bartender's other five objects, E2EA to E2FD, 4 bytes each (tapper_bartender sets them by the play routine's $06A4): drawn by the board, never compared"
+
+[[slots.group.field]]
+path = "x"
+ram = [0xE2ED]
+stride = 4
+
+[[slots.group.field]]
+path = "y"
+ram = [0xE2EA]
+stride = 4
+
+[[slots.group.field]]
+path = "ext[0]"
+ram = [0xE2EB, 0xE2EC]
+stride = 4
+
+[[slots.group.field]]
+index = true
+offset = 1
+path = "ext[1]"
+ram = []
+
+[[slots.group.kind]]
+entity = "bartender_part"
+ids = [0]
+
 [[field]]
 note = "Not compared: the customers' walk a frame, E3B3 ($117F); the throws to the next tip E72E and the level's tips left E72F ($20DE); the tips setting E006, copied from the program's defaults at boot ($0517)"
 path = "entities.bars[0].ext[0]"
@@ -390,6 +465,10 @@ ram = [0xE2E9]
 whole = true
 
 [[field.case]]
+unmeasured = "A game's first frame (E397 8, set by the start at $5876): the setup ($4B3F) waits a frame in $5E99 before $5F31 empties the objects, so the slot still holds the attract demo's bartender, which the model doesn't run"
+when = "ram[0xE397] == 8"
+
+[[field.case]]
 unmeasured = "Out of a game (E3BD 1 in attract mode, 2 at game over) the slot holds the attract mode's objects"
 when = "ram[0xE3BD] != 0"
 
@@ -402,6 +481,10 @@ note = "The bartender's y: his slot's y, E2E6: 48 times his bar plus 48, countin
 path = "entities.player[0].y"
 ram = [0xE2E6]
 whole = true
+
+[[field.case]]
+unmeasured = "A game's first frame (E397 8, set by the start at $5876): the setup ($4B3F) waits a frame in $5E99 before $5F31 empties the objects, so the slot still holds the attract demo's bartender, which the model doesn't run"
+when = "ram[0xE397] == 8"
 
 [[field.case]]
 unmeasured = "Out of a game (E3BD 1 in attract mode, 2 at game over) the slot holds the attract mode's objects"
@@ -509,10 +592,10 @@ ram = [0xE353]
 values = ["right", "left"]
 
 [[field]]
-note = "Not compared: the bartender's bob, the hook's word 2: E727 (frames left to the next step, 2 to 0) plus 256 times E729 (the step, 0 to 3). Loaded so a start inside a walk bobs on the game's frame"
+note = "Not compared: the bartender's bob, the hook's word 2: E727 (frames left to the next step, 2 to 0) plus 256 times E729 (the step, 0 to 3). Loaded so a start inside a walk bobs on the game's frame. Bytes 2 and 3 are his object's flags and picture (E2E7, E2E8), as the board reads them, for his board sprite; bytes 4 to 7 the play routine's E706 (standing's wait), E715 (the pour's count), E714 (the mug full) and E718 (a mug to send), which choose his pictures"
 path = "entities.player[0].ext[2]"
 presentation = true
-ram = [0xE727, 0xE729]
+ram = [0xE727, 0xE729, 0xE2E7, 0xE2E8, 0xE706, 0xE715, 0xE714, 0xE718]
 
 [[field]]
 lookup = [[0, 1]]
@@ -579,3 +662,85 @@ note = "Not compared: the sound requests' state as the frame ends, loaded at a c
 path = "entities.sound[0].ext[0]"
 presentation = true
 ram = [0xE111, 0xE099, 0xE011]
+
+[[field]]
+note = "Not compared: bar 0's tap's flags and picture, its board sprite's word"
+path = "entities.tap[0].ext[2]"
+presentation = true
+ram = [0xE347, 0xE348]
+
+[[field]]
+note = "Not compared: bar 0's tap's y, where the board draws it"
+path = "entities.tap[0].y"
+presentation = true
+ram = [0xE346]
+
+[[field]]
+note = "Not compared: bar 1's tap's flags and picture, its board sprite's word"
+path = "entities.tap[1].ext[2]"
+presentation = true
+ram = [0xE34B, 0xE34C]
+
+[[field]]
+note = "Not compared: bar 1's tap's y, where the board draws it"
+path = "entities.tap[1].y"
+presentation = true
+ram = [0xE34A]
+
+[[field]]
+note = "Not compared: bar 2's tap's flags and picture, its board sprite's word"
+path = "entities.tap[2].ext[2]"
+presentation = true
+ram = [0xE34F, 0xE350]
+
+[[field]]
+note = "Not compared: bar 2's tap's y, where the board draws it"
+path = "entities.tap[2].y"
+presentation = true
+ram = [0xE34E]
+
+[[field]]
+note = "Not compared: bar 3's tap's flags and picture, its board sprite's word"
+path = "entities.tap[3].ext[2]"
+presentation = true
+ram = [0xE353, 0xE354]
+
+[[field]]
+note = "Not compared: bar 3's tap's y, where the board draws it"
+path = "entities.tap[3].y"
+presentation = true
+ram = [0xE352]
+
+[[field]]
+note = "Not compared: credits, E011 (the coin routine $0213 adds them, $5860 takes one at a start). Loaded so a start in the attract mode knows whether a start button begins a game"
+path = "counters.credits"
+presentation = true
+ram = [0xE011]
+
+[[field]]
+note = "Not compared: coins toward the next credit, E012 ($0242 to $0255)"
+path = "counters.coins"
+presentation = true
+ram = [0xE012]
+
+[[field]]
+lookup = [[0, 1]]
+lookup_else = 0
+note = "Not compared: the coin switch as the coin routine last saw it settled, E097: 0 while a coin is held, so the counter is 1 then; a credit comes when it is let go ($0229)"
+path = "counters.coin_held"
+presentation = true
+ram = [0xE097]
+
+[[field]]
+note = "Not compared: the stage shown, the levels cleared E4A8 as the setup's $5DF6 takes it to pick the screen from the words at $61ED (from 26 on the hooks count 13 to 25 again); between a level's end ($5681) and the next setup's $5DF6 the screen is still the last level's. Loaded so a clip's start draws its stage"
+path = "counters.stage"
+presentation = true
+ram = [0xE4A8]
+
+[[field]]
+lookup = [[5, 1]]
+lookup_else = 0
+note = "Not compared: 1 in the bonus round: $256A numbers the cans 0 to 5 in E700 to E705, which the next setup's $4B65 clears; E705 holds nothing else in a game (tapper-cycle: 5 only from each round's $256A to the setup after it)"
+path = "counters.bonus"
+presentation = true
+ram = [0xE705]

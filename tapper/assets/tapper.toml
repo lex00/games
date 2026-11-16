@@ -292,3 +292,481 @@ region = "maincpu"
 offset = 0x15FF
 count = 737
 width = 1
+
+
+# The board's 64 colours as the program loads them into palette RAM at a
+# level's setup ($4B58: hl = $616D, call $600F). rbtapper loads it from
+# $62ED and tappera from $615D (the same instruction in each set's program).
+[[asset]]
+name = "palette"
+format = "mcr-palette"
+region = "maincpu"
+offset = 0x616D
+
+[asset.at]
+rbtapper = 0x62ED
+tappera = 0x615D
+
+# The saloon's screen, the first of the stages the setup's $5DF6 picks by
+# the levels cleared from the pointers at $61ED; the vblank's $5D19 copies
+# it into video RAM. rbtapper's pointers ($636D) and tappera's name
+# $63A1 and $6211 first.
+[[asset]]
+name = "screen_saloon"
+format = "mcr-screen"
+region = "maincpu"
+offset = 0x6221
+
+[asset.at]
+rbtapper = 0x63A1
+tappera = 0x6211
+
+# The colours the level's intro pokes over the loaded palette ($540A to
+# $5414: two loads of A, each stored into palette RAM, at $F800 and $F840
+# from the first and at $F84D from the second): the code's own bytes from
+# $540B, the first and the ninth of the row.
+[[asset]]
+name = "intro_colors"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x540B
+count = 1
+width = 9
+
+[asset.at]
+rbtapper = 0x559B
+
+# Each bar's two colours, which a level's start ($570C) writes into palette
+# RAM's $60 and $6C by the bar shown (E3B8): a row a bar.
+[[asset]]
+name = "bar_colors"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x5751
+count = 4
+width = 2
+
+[asset.at]
+rbtapper = 0x58E1
+
+# The settings a board starts with when its battery-backed RAM fails the
+# check at boot ($048A to $0504): $0505 copies these 94 bytes to E000
+# ($0511: ld hl,$0526; ldir at $0517) and clears the next 63. Among them
+# the coins a credit (E000) and the credits a coin (E001), read by the coin
+# routine ($0242 to $0253), the lives (E005, $4B1F) and the level row a
+# game starts at (E006, $4B08), which is also the tips setting ($588A).
+# The same place in the tapper, rbtapper, tappera and tapperg sets;
+# sutapper copies from $0532 ($051A: ld hl,$0532), with the same bytes
+# (gp query on a recording of each).
+[[asset]]
+name = "defaults"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x0526
+count = 1
+width = 94
+
+[asset.at]
+sutapper = 0x0532
+
+# Each level's layout, a byte a level by the levels cleared: bit k set
+# puts bar k's tap on its left end. The setup's $2EC3 reads it into E3AF
+# ($2ED5: ld hl,$4CF9, by E4A8, which from 26 on counts 13 to 25 again).
+# rbtapper keeps it at $4E89 ($2EE9 reads it); the other sets at $4CF9
+# (the code found by its bytes in a recording of each).
+[[asset]]
+name = "layouts"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4CF9
+count = 26
+width = 1
+
+[asset.at]
+rbtapper = 0x4E89
+
+# The bars' objects the setup's $4D13 copies in, by each bar's side
+# (E3AF): a row for taps on the right end ($4DCC) and one for taps on
+# the left ($4DFC), each three groups of 16 bytes: the four taps (to
+# E346), the four end pieces (to E356) and the four far ends (to E366),
+# 4 bytes an object (y, flags, picture, x), a bar's at 4 times its
+# number. rbtapper keeps them at $4F5C ($4EB1); the other sets at $4DCC
+# (the code found by its bytes in a recording of each).
+[[asset]]
+name = "bar_objects"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4DCC
+count = 2
+width = 48
+
+[asset.at]
+rbtapper = 0x4F5C
+
+# The bonus round's pairs of cans to swap ($4F17 and $5003, both from
+# $2AD1): five entries of two words in $4F17 (ld hl,$2AD1 at $4F3E, 4
+# bytes a pick: the two cans' objects, E262 + 8 a can), the first five
+# words in $5003 (at $502A, 2 bytes a pick: a can and the next). rbtapper
+# keeps it at $2AE5 ($50CE, $51BA); the other sets at $2AD1 (the code
+# found by its bytes in a recording of each).
+[[asset]]
+name = "bonus_pairs"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2AD1
+count = 10
+width = 2
+
+[asset.at]
+rbtapper = 0x2AE5
+
+# The other stages: $5DF6 takes a stage's screen from the words at $61ED
+# by the levels cleared (E4A8, from 26 on counted 13 to 25 again, as
+# $2EC3 counts the layouts) into E395. Each set's own words name its
+# screens: rbtapper's at $636D ($5F79), tappera's at $61DD ($5DE9), the
+# others' at $61ED (the code found by its bytes in a recording of each).
+# The words $5DF6 takes a stage's screen from, by the stage (E395), 26
+# of them: the hooks read which screen each stage shows from the player's
+# romset, by its place among the screens' pointers.
+[[asset]]
+name = "stage_screens"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x61ED
+count = 26
+width = 2
+
+[asset.at]
+rbtapper = 0x636D
+tappera = 0x61DD
+
+[[asset]]
+name = "screen_69a1"
+format = "mcr-screen"
+region = "maincpu"
+offset = 0x69A1
+
+[asset.at]
+rbtapper = 0x6B21
+tappera = 0x6991
+
+[[asset]]
+name = "screen_7121"
+format = "mcr-screen"
+region = "maincpu"
+offset = 0x7121
+
+[asset.at]
+rbtapper = 0x72A1
+tappera = 0x7111
+
+[[asset]]
+name = "screen_78a1"
+format = "mcr-screen"
+region = "maincpu"
+offset = 0x78A1
+
+[asset.at]
+rbtapper = 0x7A21
+tappera = 0x7891
+
+[[asset]]
+name = "screen_87a1"
+format = "mcr-screen"
+region = "maincpu"
+offset = 0x87A1
+
+[asset.at]
+rbtapper = 0x8921
+tappera = 0x8791
+
+[[asset]]
+name = "screen_8021"
+format = "mcr-screen"
+region = "maincpu"
+offset = 0x8021
+
+[asset.at]
+rbtapper = 0x81A1
+tappera = 0x8011
+
+[[asset]]
+name = "screen_8f21"
+format = "mcr-screen"
+region = "maincpu"
+offset = 0x8F21
+
+[asset.at]
+rbtapper = 0x90A1
+tappera = 0x8F11
+
+[[asset]]
+name = "screen_96a1"
+format = "mcr-screen"
+region = "maincpu"
+offset = 0x96A1
+
+[asset.at]
+rbtapper = 0x9821
+tappera = 0x9691
+
+[[asset]]
+name = "screen_9e21"
+format = "mcr-screen"
+region = "maincpu"
+offset = 0x9E21
+
+[asset.at]
+rbtapper = 0x9FA1
+tappera = 0x9E11
+
+[[asset]]
+name = "screen_a5a1"
+format = "mcr-screen"
+region = "maincpu"
+offset = 0xA5A1
+
+[asset.at]
+rbtapper = 0xA721
+tappera = 0xA591
+
+# The bonus round's screen: $2546 puts ld de,$AD21 in E395. rbtapper's at
+# $AEA1 ($254B), tappera's at $AD11 ($2546).
+[[asset]]
+name = "screen_bonus"
+format = "mcr-screen"
+region = "maincpu"
+offset = 0xAD21
+
+[asset.at]
+rbtapper = 0xAEA1
+tappera = 0xAD11
+
+# The HUD's tile codes as the vblank writes them, the code's own bytes:
+# the score's ($05D5: a digit added to the byte at $05F6, the cells' high
+# byte at $05FA), the lives' ($5D45: the high byte at $5D50, the tile at
+# $5D53) and the level number's ($5D8C: the byte added at $5D9F, the high
+# byte at $5DA3). sutapper's score code at $0602; rbtapper's lives and
+# level at $5ED0 and $5F1F, tappera's at $5D40 and $5D8F (the code found
+# by its bytes in a recording of each).
+[[asset]]
+name = "score_codes"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x05F6
+count = 1
+width = 5
+
+[asset.at]
+sutapper = 0x0602
+
+[[asset]]
+name = "lives_codes"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x5D50
+count = 1
+width = 4
+
+[asset.at]
+rbtapper = 0x5ED0
+tappera = 0x5D40
+
+[[asset]]
+name = "level_codes"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x5D9F
+count = 1
+width = 5
+
+[asset.at]
+rbtapper = 0x5F1F
+tappera = 0x5D8F
+
+# The space bar's palette pokes ($570C from $573E: the code's own bytes,
+# the first, sixth and eleventh of the row). rbtapper's at $58CF.
+[[asset]]
+name = "space_colors"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x573F
+count = 1
+width = 11
+
+[asset.at]
+rbtapper = 0x58CF
+
+# The bonus round's palette pokes ($250C and $2511: the first and the
+# sixth byte of the row), the same place in every set listed.
+[[asset]]
+name = "bonus_colors"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x250D
+count = 1
+width = 6
+
+# The points the routine at $5EE7 adds to the score (E3F5 to E3FA), a
+# digit a byte, six to an entry, from the entry DE names: a customer
+# served ($094E: ld hl,$09BF, the words there naming the four entries
+# from $09A7 by the bar shown), an empty mug caught ($0BF2: $073C), a tip
+# ($0BC9: $0C07), the bonus round won ($281D: $297B) and a level's end
+# ($55FC: $56A4). rbtapper keeps the tip's at $0C02, the bonus round's at
+# $2989 and the level end's at $5834; the other sets as tapper (the code
+# found by its bytes in a recording of each).
+[[asset]]
+name = "points_served"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x09A7
+count = 4
+width = 6
+
+[[asset]]
+name = "points_catch"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x073C
+count = 1
+width = 6
+
+[[asset]]
+name = "points_tip"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x0C07
+count = 1
+width = 6
+
+[asset.at]
+rbtapper = 0x0C02
+
+[[asset]]
+name = "points_bonus"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x297B
+count = 1
+width = 6
+
+[asset.at]
+rbtapper = 0x2989
+
+[[asset]]
+name = "points_level"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x56A4
+count = 1
+width = 6
+
+[asset.at]
+rbtapper = 0x5834
+
+# The bartender's six objects (E2E6 to E2FD): the routines that set their
+# pictures, flags and places, as rows of the code's own bytes, so the hook
+# reads each picture number and offset from the player's romset at the
+# place its instruction holds it, and the switch's pictures ($0735).
+# rbtapper keeps $1206, $1351 and $13CC 5 bytes lower; the other sets as
+# tapper (the code found by its bytes, its addresses aside).
+
+[[asset]]
+name = "bartender_switch_pictures"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x0735
+count = 1
+width = 7
+
+[[asset]]
+name = "bartender_land"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x0A8E
+count = 1
+width = 181
+
+[[asset]]
+name = "bartender_tap"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x1206
+count = 1
+width = 262
+
+[asset.at]
+rbtapper = 0x1201
+
+[[asset]]
+name = "bartender_pour"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x1351
+count = 1
+width = 123
+
+[asset.at]
+rbtapper = 0x134C
+
+[[asset]]
+name = "bartender_send"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x13CC
+count = 1
+width = 283
+
+[asset.at]
+rbtapper = 0x13C7
+
+[[asset]]
+name = "bartender_walk_left"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x19EF
+count = 1
+width = 246
+
+[[asset]]
+name = "bartender_walk_right"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x1C02
+count = 1
+width = 223
+
+[[asset]]
+name = "bartender_wait"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2085
+count = 1
+width = 89
+
+[[asset]]
+name = "bartender_switch"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x214B
+count = 1
+width = 152
+
+[[asset]]
+name = "bartender_idle"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2231
+count = 1
+width = 109
+
+[[asset]]
+name = "bartender_setup"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4BCB
+count = 1
+width = 69
+
+[asset.at]
+rbtapper = 0x4D5B

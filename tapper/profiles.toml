@@ -11,7 +11,7 @@ format = "0.2.0"
 
 [presets.normal]
 description = "No lag and no console quirks"
-switches = ["any_way_stick", "every_catch"]
+switches = ["any_way_stick", "every_catch", "no_boot_test", "coin_on_press"]
 
 [[groups]]
 description = "The arcade board's and cabinet's quirks, off one at a time"
@@ -24,6 +24,20 @@ name = "any_way_stick"
 
 [groups.switches.set]
 "entities.player.ext_params.four_way" = 0
+
+[[groups.switches]]
+description = "The attract mode from the first frame, instead of after the boot's wait on the sound board's answers ($CFC5, 52 frames after the model's first, in which a start isn't taken)"
+name = "no_boot_test"
+
+[groups.switches.set]
+"entities.flow.ext_params.boot_wait" = 0
+
+[[groups.switches]]
+description = "A coin's credit on the frame it goes in, instead of the coin routine's on the frame its switch is let go ($0213 takes the switch let go after a coin as the coin)"
+name = "coin_on_press"
+
+[groups.switches.set]
+"entities.flow.ext_params.coin_on_press" = 1
 
 [[groups]]
 description = "The original program's own slips, off one at a time"
@@ -46,8 +60,10 @@ name = "every_catch"
 # - 30 Hz frame: model.frame_rate is 30. Normal at 60 needs every per-frame
 #   step halved, so it waits for the model's timers.
 # - Boot frames: the game reads nothing for its first 94 frames (the
-#   corpus pairing's k 94). The model starts after them; a switch to start
-#   at once goes with the attract mode and the game's start.
+#   corpus pairing's k 94). The model starts after them, then waits the
+#   sound board's test (boot_wait); no_boot_test above starts the attract
+#   mode at once.
+# - Coin switch: a credit when the coin is let go; coin_on_press above.
 # - 4-way joystick: the switch any_way_stick above. Clips hold what reached
 #   the board, already one direction, so it changes no clip.
 # - Watchdog: a tilt hangs the game and the board resets. Goes with the
