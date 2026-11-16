@@ -628,16 +628,24 @@ ram = [0xE397, 0xE3B8, 0xE6FF, 0xE706]
 
 [[field]]
 digits = true
-note = "Not compared until the model keeps it: The score: six digits a byte, E3F5 to E3FA, most significant first (the points routine $5EF3 adds into E3FA and carries up; player 2's would be 6 bytes on, by E3F2)"
+note = "The score: six digits a byte, E3F5 to E3FA, most significant first (the points routine $5EF3 adds into E3FA and carries up; player 2's would be 6 bytes on, by E3F2)"
 path = "counters.score"
-presentation = true
 ram = [0xE3F5, 0xE3F6, 0xE3F7, 0xE3F8, 0xE3F9, 0xE3FA]
 
 [[field]]
-note = "Not compared until the model keeps it: Lives, E4A7: 3 at the start ($4B22), 1 less at a life lost ($23AF), 1 more at an extra life ($615D)"
+note = "Lives, E4A7: 3 at the start ($4B22), 1 less at a life lost ($23AF), 1 more at an extra life ($615D)"
 path = "counters.lives"
-presentation = true
 ram = [0xE4A7]
+
+[[field.case]]
+unmeasured = "Outside a game (E3BD not 0) the attract mode's demo game plays with the lives as the last game left them and takes one at its own mug's fall ($23AF, 0 to 255); the model doesn't play the demo game"
+when = "ram[0xE3BD] != 0"
+
+[[field]]
+note = "Not compared: the extra lives given, E3F3 ($6158), loaded so a clip's start knows which extra-life scores it has passed"
+path = "counters.lives_given"
+presentation = true
+ram = [0xE3F3]
 
 [[field]]
 note = "Not compared until the model keeps it: Levels cleared, E4A8: 1 more at each level's end ($5681), bonus rounds included"

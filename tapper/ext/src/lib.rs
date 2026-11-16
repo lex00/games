@@ -31,6 +31,7 @@ pub fn exts() -> Exts {
     out.insert("tapper_bars".into(), Box::new(Bars));
     out.insert("tapper_sound".into(), Box::new(sound::Sound));
     out.insert("tapper_bar_end".into(), Box::new(BarEnd));
+    out.insert("tapper_bonus_object".into(), Box::new(BonusObject));
     out.insert("tapper_bartender_part".into(), Box::new(BartenderPart));
     out
 }
@@ -1234,6 +1235,13 @@ impl Ext for Flow {
             cx.me.ext[2] = 0;
         }
         let state = cx.me.ext[3] & 0xff;
+        // In play the loaded wait (E3A8, E3A9, E39F, read only at a start
+        // inside a script) is spent: cleared, so a level's end later in a
+        // clip is a level's end (tapper_bars gives its points only when the
+        // wait isn't one of the end's, $232B in state 11).
+        if state == 10 && cx.me.ext[1] & 0xff_ffff_ff00 != 0 {
+            cx.me.ext[1] &= !0xff_ffff_ff00;
+        }
         // A level's setup has set its timers by then ($4E50: the waits'
         // speed-up, $2023, is counting); a bonus round's or a level end's
         // script hasn't.
@@ -1428,6 +1436,34 @@ impl Ext for Flow {
 /// at the next setup; between those they stand still.
 pub struct BarEnd;
 
+/// A sprite object of the bonus round (the cans, the bandit and his
+/// hand, the bartender, the opened can): placed and moved by tapper_bars
+/// as $2500 to $296F write them, by its object's place from E18E (its
+/// word 1, plus 1).
+pub struct BonusObject;
+
+impl Ext for BonusObject {
+    fn step(&self, _cx: &mut ExtCx<'_>) {}
+
+    fn describe(&self) -> Vec<Record> {
+        vec![Record {
+            name: "tapper.bonus_object",
+            version: env!("CARGO_PKG_VERSION"),
+            carrier: Carrier::Entity,
+            system: "platformer.enemies",
+            class: "flow",
+            implementation: "gp-ext-tapper::BonusObject",
+            like: "",
+            about: "A sprite object of the bonus round, placed and moved by the bars' hook as the round's code writes it",
+            params: &[],
+            state: &["ext[0] flags plus 256 times the picture", "ext[1] its object's place from E18E, plus 1"],
+            writes: &[],
+            built_from: &[Primitive::Condition],
+            ..Record::EMPTY
+        }]
+    }
+}
+
 impl Ext for BarEnd {
     fn step(&self, _cx: &mut ExtCx<'_>) {}
 
@@ -1570,10 +1606,31 @@ fn fb_started(flow: Option<(usize, gp_sim::world::Body)>) -> i64 {
 /// The bonus round's state in the flow's word 2 from bit 40: the can
 /// with no shake (3 bits, E262 + 8 a can, +5 0), the last pick of the
 /// shuffle (E719, 3 bits), the pointer (E6FB, 3 bits) and the cans shaken
-/// (6 bits, a can a bit); the round's frame
+/// (6 bits, a can a bit) and the can the shake now under way took (3
+/// bits, from bit 55); the round's frame
 /// count is word 3 from bit 24, the loop's count B from bit 40 and its
 /// next frame from bit 48.
-const BONUS_MASK: i64 = 0x7fff << 40;
+const BONUS_MASK: i64 = 0x3_ffff << 40;
+
+/// The frames the bandit walks off after the last shake ($2669 to
+/// $2680): 2 a frame from that can's place (bonus_bandit_places) until
+/// his x is below bonus_bandit_stop.
+fn bandit_walk(cx: &ExtCx<'_>, shaking: i64) -> i64 {
+    let k = usize::try_from(shaking).unwrap_or(0);
+    let tx = cx.table("bonus_bandit_places").get(2 * k + 1).copied().unwrap_or(0);
+    let stop = byte_of(cx, "bandit_stop");
+    let mut steps = 1;
+    while tx - 2 * steps >= stop && steps < 128 {
+        steps += 1;
+    }
+    steps
+}
+
+/// The round's frame the shuffle starts on: the last shake ends at 198,
+/// then the walk off and the blink's 40 ($2684).
+fn shuffle_start(cx: &ExtCx<'_>, shaking: i64) -> i64 {
+    198 + bandit_walk(cx, shaking) + 40
+}
 
 /// The bonus round ($2500), sub 12 of a level's end, a frame: true on the
 /// frame it returns. Its frames are counted from the frame $5681 counted
@@ -1581,9 +1638,10 @@ const BONUS_MASK: i64 = 0x7fff << 40;
 /// cans' objects go in ($255F, from $2A15 to E262) and $2579 waits 30;
 /// then five shakes 29 frames apart from 53 ($2585 to $2656): each draws
 /// a can of 0 to 5 ($258A, again while it is one already shaken, +5 of
-/// its object), rises 16 frames, waits 5 and two of 2 and 2. The cans
-/// move 50 frames and blink 40 ($2659 to $26A7), and the shuffle starts
-/// at 288: 16 swaps of a pair of cans, 9 frames each with fewer than 6
+/// its object), rises 16 frames, waits 5 and two of 2 and 2. The bandit
+/// walks off from the last can's place ($2669 to $2680, bandit_walk) and
+/// blinks 40 ($2684 to $26A7), and the shuffle starts after
+/// (shuffle_start): 16 swaps of a pair of cans, 9 frames each with fewer than 6
 /// levels cleared ($4F17), else 5 ($5003); the first pair is the one the
 /// unshaken can starts ($2AE5: its number, 5 taken as 4), each later one
 /// a draw of 0 to 4 not the last ($4F35 or $5021, again while it is the
@@ -1604,9 +1662,11 @@ fn bonus_round(cx: &mut ExtCx<'_>, fb: &mut gp_sim::world::Body, cleared: i64, p
     let mut pick = field(fb.ext[2], 43);
     let mut ptr = field(fb.ext[2], 46);
     let mut shaken = (fb.ext[2] >> 49) & 0x3f;
+    let mut shaking = field(fb.ext[2], 55);
     let fast = cleared >= 6;
     let d = if fast { 5 } else { 9 };
-    let shuffle_end = 288 + 16 * d;
+    let start = if c >= 198 { shuffle_start(cx, shaking) } else { i64::MAX / 2 };
+    let shuffle_end = start + 16 * d;
     let mut done = false;
     // $256A numbers the cans (E700 on): the bonus round's stage is up,
     // until the next setup's $5DF6.
@@ -1618,14 +1678,15 @@ fn bonus_round(cx: &mut ExtCx<'_>, fb: &mut gp_sim::world::Body, cleared: i64, p
             let k = draw_at_most(cx, "bonus_shake", 5);
             if shaken & (1 << k) == 0 {
                 shaken |= 1 << k;
+                shaking = k;
                 break;
             }
         }
         if (c - 53) / 29 == 4 {
             unshaken = (0..6).find(|k| shaken & (1 << k) == 0).unwrap_or(0);
         }
-    } else if c >= 288 && c < shuffle_end && (c - 288) % d == 0 {
-        let j = (c - 288) / d;
+    } else if c >= start && c < shuffle_end && (c - start) % d == 0 {
+        let j = (c - start) / d;
         pick = if j == 0 {
             if unshaken == 5 { 4 } else { unshaken }
         } else {
@@ -1689,8 +1750,197 @@ fn bonus_round(cx: &mut ExtCx<'_>, fb: &mut gp_sim::world::Body, cleared: i64, p
             }
         }
     }
-    fb.ext[2] = (fb.ext[2] & !BONUS_MASK) | (unshaken << 40) | (pick << 43) | (ptr << 46) | (shaken << 49);
+    fb.ext[2] = (fb.ext[2] & !BONUS_MASK) | (unshaken << 40) | (pick << 43) | (ptr << 46) | (shaken << 49) | (shaking << 55);
     done
+}
+
+/// A sprite object of the bonus round as the game keeps it: its address
+/// (E18E on), y, flags, picture and x. A y of 0 is no picture.
+#[derive(Clone, Copy)]
+struct BonusObj {
+    at: i64,
+    y: i64,
+    flags: i64,
+    pic: i64,
+    x: i64,
+}
+
+/// A one-byte table's byte (an immediate the round's code writes, lifted
+/// from the player's romset).
+fn byte_of(cx: &ExtCx<'_>, name: &str) -> i64 {
+    cx.table(name).first().copied().unwrap_or(0)
+}
+
+/// The bonus round's pictures on the round's frame (`bonus_round`'s
+/// count), as $2500 to $296F write them, and the line of text it shows
+/// (counter bonus_text). The objects from E262 come in at frame 23
+/// ($255F: bonus_objects, the six cans of two sprites each and the
+/// bartender's four); each shake (from 53, 29 frames) puts the bandit
+/// (E226, E22A) at the shaken can's place from bonus_bandit_places
+/// ($25A3), moves his first sprite 16 frames ($25D4), shows his hand
+/// (E35A) 5 ($25E3) and shakes the can twice, hiding it 2 frames of
+/// each 4 ($260B to $2645). Then he walks off 2 a frame ($2669) to
+/// bonus_bandit_stop and blinks five times of 8 ($2684). Each swap of the
+/// shuffle ($4F17 with 9 frames, $5003 with 5) lifts the next can, moves
+/// the pair 8 a frame across and puts it down; their places come back as
+/// the objects trade. The bartender stands at the pointer's can ($2720)
+/// from 10 frames after the shuffle; a choice ($2787) changes his
+/// pictures for 20 frames, then a win ($27C2) opens the can (E2AA) and a
+/// loss ($284D) sprays it first.
+fn bonus_scene(cx: &ExtCx<'_>, fb: &gp_sim::world::Body, cleared: i64, done: bool) -> (Vec<BonusObj>, i64) {
+    let c = (fb.ext[3] >> 24) & 0xffff;
+    if done || c < 23 {
+        return (Vec::new(), 0);
+    }
+    let table = cx.table("bonus_objects");
+    let mut objs: Vec<BonusObj> = (0..16)
+        .map(|i| {
+            let r = table.get(i * 4..i * 4 + 4).unwrap_or(&[0, 0, 0, 0]);
+            BonusObj { at: 0xE262 + 4 * i as i64, y: r[0], flags: r[1], pic: r[2], x: r[3] }
+        })
+        .collect();
+    let places = cx.table("bonus_bandit_places");
+    let place = |k: i64| -> (i64, i64) {
+        let k = usize::try_from(k).unwrap_or(0);
+        (places.get(2 * k).copied().unwrap_or(0), places.get(2 * k + 1).copied().unwrap_or(0))
+    };
+    let field = |at: u32| (fb.ext[2] >> at) & 7;
+    let (unshaken, pick, ptr, shaking) = (field(40), field(43), field(46), field(55));
+    let fast = cleared >= 6;
+    let d = if fast { 5 } else { 9 };
+    let start = if c >= 198 { shuffle_start(cx, shaking) } else { i64::MAX / 2 };
+    let shuffle_end = start + 16 * d;
+    let mut text = 0;
+    let bf = byte_of(cx, "bandit_flags");
+    let hf = byte_of(cx, "hand_flags");
+    // The bandit's two sprites and his hand.
+    let mut bandit = [BonusObj { at: 0xE226, y: 0, flags: bf, pic: 0, x: 0 }, BonusObj { at: 0xE22A, y: 0, flags: bf, pic: 0, x: 0 }];
+    let mut hand = BonusObj { at: 0xE35A, y: 0, flags: hf, pic: 0, x: 0 };
+    if c < 53 {
+        // $253D: the round's first line while the cans wait ($2579).
+        text = 1;
+    } else if c < 53 + 5 * 29 {
+        let f = (c - 53) % 29;
+        let (ty, tx) = place(shaking);
+        let shake = matches!(f, 21 | 22 | 25 | 26);
+        bandit[0] = BonusObj {
+            y: ty + f.min(15) + 1,
+            pic: byte_of(cx, if shake { "bandit_pic_shake" } else { "bandit_pic_top" }),
+            x: tx,
+            ..bandit[0]
+        };
+        if f < 16 {
+            bandit[1] = BonusObj { y: ty, pic: byte_of(cx, "bandit_pic_bottom"), x: tx, ..bandit[1] };
+        } else {
+            hand = if shake {
+                BonusObj { y: ty + 32, pic: byte_of(cx, "hand_pic_shake"), x: tx, ..hand }
+            } else {
+                BonusObj { y: ty + 16, pic: byte_of(cx, "hand_pic"), x: (tx + 16) & 0xff, ..hand }
+            };
+            if shake {
+                objs[usize::try_from(2 * shaking).unwrap_or(0)].y = 0;
+            }
+        }
+    } else {
+        // The walk off ($2655 to $2680) from the last shake's place, then
+        // the blink ($2684 to $26A7), then standing there.
+        let (ty, tx) = place(shaking);
+        let steps = bandit_walk(cx, shaking);
+        let w = (c - 198 + 1).min(steps);
+        let blink = c - 198 - steps;
+        let off = (0..40).contains(&blink) && blink % 8 < 4;
+        bandit[0] = BonusObj {
+            y: ty + 16,
+            pic: byte_of(cx, if off { "bandit_pic_shake" } else { "bandit_pic_top" }),
+            x: (tx - 2 * w) & 0xff,
+            ..bandit[0]
+        };
+        if !off {
+            bandit[1] = BonusObj { y: ty + 16, pic: byte_of(cx, "bandit_pic_walk"), x: (tx + 16 - 2 * w) & 0xff, ..bandit[1] };
+        }
+    }
+    // The shuffle's swap under way: the pair or pairs it names, each can
+    // and the one after it.
+    if (start..shuffle_end).contains(&c) {
+        let f = (c - start) % d;
+        let pairs = flow_table(cx, "bonus_pairs");
+        let can = |w: usize| -> i64 {
+            let a = pairs.get(2 * w).copied().unwrap_or(0) + 256 * pairs.get(2 * w + 1).copied().unwrap_or(0);
+            (a - 0xE262).div_euclid(8)
+        };
+        let p = usize::try_from(pick).unwrap_or(0);
+        let firsts = if fast { vec![can(p)] } else { vec![can(2 * p), can(2 * p + 1)] };
+        let (lift, across) = if fast {
+            (if f == 4 { 0 } else { 8 }, 8 * f.clamp(0, 3))
+        } else {
+            (4 * (f + 1).min(3).min(9 - f - 1).max(0), 8 * (f - 2).clamp(0, 3))
+        };
+        for a in firsts {
+            let (ia, ib) = (usize::try_from(2 * a).unwrap_or(0), usize::try_from(2 * a + 2).unwrap_or(0));
+            if ib < 12 {
+                objs[ib].y -= lift;
+                objs[ib].x = (objs[ib].x - across) & 0xff;
+                objs[ia].x = (objs[ia].x + across) & 0xff;
+            }
+        }
+    }
+    if c >= shuffle_end {
+        let next = (fb.ext[3] >> 48) & 0xffff;
+        let at = (next >= 0x8000).then_some(next - 0x8000);
+        if c >= shuffle_end + 10 {
+            // $2720: the bartender at the pointer's can.
+            let (ty, tx) = place(ptr);
+            let names = match at {
+                Some(at) if c >= at + 20 && ptr == unshaken => ["bartender_pic_win_1", "bartender_pic_win_2", "bartender_pic_win_3"],
+                Some(at) if c >= at + 76 && ptr != unshaken => ["bartender_pic_lose_1", "bartender_pic_lose_2", "bartender_pic_lose_3"],
+                Some(_) => ["bartender_pic_open_1", "bartender_pic_open_2", "bartender_pic_open_3"],
+                None => ["bartender_pic_wait_1", "bartender_pic_wait_2", "bartender_pic_wait_3"],
+            };
+            let (fl, fr) = (byte_of(cx, "bartender_flags"), byte_of(cx, "bartender_flags_right"));
+            let pics = names.map(|n| byte_of(cx, n));
+            objs[12] = BonusObj { at: 0xE292, y: ty + 16, flags: fl, pic: pics[0], x: (tx + 5) & 0xff };
+            objs[13] = BonusObj { at: 0xE296, y: ty + 16, flags: fl, pic: pics[1], x: (tx + 21) & 0xff };
+            objs[14] = BonusObj { at: 0xE29A, y: ty + 32, flags: fl, pic: pics[2], x: (tx + 5) & 0xff };
+            objs[15] = BonusObj { at: 0xE29E, y: ty + 32, flags: fr, pic: pics[2], x: (tx + 21) & 0xff };
+        }
+        text = 2;
+        if let Some(at) = at
+            && c >= at + 20
+        {
+            let k = usize::try_from(2 * ptr).unwrap_or(0);
+            let (cy, cxp) = (objs[k].y, objs[k].x);
+            let beer = |dy: i64, pic: &str, dx: i64| BonusObj {
+                at: 0xE2AA,
+                y: cy + dy,
+                flags: byte_of(cx, "beer_flags"),
+                pic: byte_of(cx, pic),
+                x: (cxp + dx) & 0xff,
+            };
+            if ptr == unshaken {
+                // $27C2: the can opened, the win's lines, then the second
+                // blinking every 10 frames from 10 on ($282E).
+                objs.push(beer(16, "beer_pic", -11));
+                objs[k].y = 0;
+                let t = c - at - 20;
+                text = if t < 10 || ((t - 10) / 10) % 2 == 1 { 3 } else { 4 };
+            } else {
+                // $284D: the can's top for 2 frames, the spray, then the
+                // can opened and the loss's line ($28F2).
+                text = 0;
+                if c < at + 22 {
+                    objs.push(beer(2, "beer_pic_spray", -2));
+                } else if c >= at + 76 {
+                    objs.push(beer(16, "beer_pic", -11));
+                    objs[k].y = 0;
+                    text = 5;
+                }
+            }
+        }
+    }
+    objs.extend(bandit);
+    objs.push(hand);
+    objs.retain(|o| o.y != 0);
+    (objs, text)
 }
 
 /// The bars' end pieces and far ends (kind bar_end) go: a level's end
@@ -1875,6 +2125,9 @@ impl Ext for Bars {
         // slot; the last is the tip's object, E25E.
         let dancer_k = cx.kind("dancer");
         let mut dancer_ids: [Option<usize>; 9] = [None; 9];
+        // The bonus round's pictures this frame (bonus_scene), with its line
+        // of text; None out of the round.
+        let mut bonus_objs: Option<(Vec<BonusObj>, i64)> = None;
         let mut dancers: [Option<Body>; 9] = [None; 9];
         if let Some(dk) = dancer_k {
             for (i, b) in cx.world.bodies.iter().enumerate().filter(|(_, b)| b.alive && b.kind == dk) {
@@ -2115,7 +2368,23 @@ impl Ext for Bars {
             .kind("flow")
             .and_then(|k| cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == k))
             .map(|(i, b)| (i, *b));
-        let state = flow.map_or(10, |(_, b)| b.ext[3] & 0xff);
+        let mut state = flow.map_or(10, |(_, b)| b.ext[3] & 0xff);
+        // A start inside the bonus round ($2500): $232B's place (E3A9)
+        // gives its frame. At $252F the wait of 20 at $252C has just ended
+        // (E397 back to the state it was called in): the round's frame 22,
+        // the cans' objects coming in on the next ($255F). Every bonus clip
+        // starts there.
+        if let Some((fid, mut fb)) = flow
+            && (fb.ext[3] >> 16) & 0xff != 12
+            && (fb.ext[1] >> 16) & 0xffff == 0x252F
+        {
+            fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (12 << 16) | (22 << 24);
+            fb.ext[2] &= !BONUS_MASK;
+            fb.ext[1] &= !(0xffff << 16);
+            cx.set_body(fid, fb);
+            flow = Some((fid, fb));
+            state = 15;
+        }
         // A start inside $1CE1's first waits (tapper.die.001 to die.003
         // start on the last of its three waits of 2): $232B keeps the
         // state the wait was called in at E3A8 (10, the play: $1CE1 runs
@@ -2215,9 +2484,20 @@ impl Ext for Bars {
         let ending = state == 11 && !setting_up && bartender_y != 0 && !level_timers;
         let finishing = state == 11 && !setting_up && bartender_y != 0 && level_timers;
         if ending {
+            // $55FF: the level's points, once: a clip that starts inside
+            // the end's script (its waits put the game back in state 11,
+            // $231A) has had them, and its bar ends are gone ($5615 empties
+            // them as the script starts, so none load).
+            let ends_up = cx.kind("bar_end").is_some_and(|ek| cx.world.bodies.iter().any(|b| b.alive && b.kind == ek));
+            // A start in the setup after the script (its last wait, $232B,
+            // called in state 11, E3A8, with where it went on, E3A9, loaded
+            // into the flow's word 1) has had them too: the bar ends are
+            // back there ($4D13).
+            let resumed = flow.is_some_and(|(_, b)| (b.ext[1] >> 8) & 0xff == 11 && (b.ext[1] >> 16) & 0xffff != 0);
             bar_ends_go(cx);
-            // $55FF: the level's points.
-            points += points_of(cx.table("points_level"));
+            if ends_up && !resumed {
+                points += points_of(cx.table("points_level"));
+            }
         }
         if (ending || finishing) && let Some((fid, mut fb)) = flow {
             fb.ext[3] = if ending {
@@ -2308,9 +2588,11 @@ impl Ext for Bars {
                     // $23EA: the mug's fall asks for $1A (the
                     // `sound_life` rows are the program from $23EA).
                     ask(cx, "sound_life", &[0x01]);
-                    // $23AF: a life less.
-                    let l = ((fb.ext[1] >> 40) - 1).max(0) & 0xff;
+                    // $23AF: a life less, a byte's (dec (hl): 0 less 1 is
+                    // 255), counted on this frame.
+                    let l = (((fb.ext[1] >> 40) & 0xff) - 1) & 0xff;
                     fb.ext[1] = (fb.ext[1] & !(0xff << 40)) | (l << 40);
+                    lives_now = Some(l);
                 }
                 1 => {
                     e706 = (e706 - 1) & 0xff;
@@ -2508,7 +2790,7 @@ impl Ext for Bars {
                         pb.x = Fx::from_int(if left { tx + 12 } else { tx - 8 });
                         // $1D71: a life less (E4A7), counted on this frame
                         // (the HUD counters below read the flow as it was).
-                        let l = ((lives_word >> 40) - 1).max(0) & 0xff;
+                        let l = (((lives_word >> 40) & 0xff) - 1) & 0xff;
                         lives_word = (lives_word & !(0xff << 40)) | (l << 40);
                         lives_now = Some(l);
                     } else if n == 51 {
@@ -2836,6 +3118,16 @@ impl Ext for Bars {
                     // it from bit 24).
                     fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (12 << 16);
                     fb.ext[2] &= !BONUS_MASK;
+                    // $2500's $5F31 empties the objects, the taps among
+                    // them, until the next setup puts them back.
+                    if let Some(tk) = cx.kind("tap") {
+                        let taps: Vec<(usize, Body)> =
+                            cx.world.bodies.iter().enumerate().filter(|(_, b)| b.kind == tk).map(|(i, b)| (i, *b)).collect();
+                        for (id, mut t) in taps {
+                            t.y = Fx::ZERO;
+                            cx.set_body(id, t);
+                        }
+                    }
                 }
             }
             if bonus && returns {
@@ -2884,6 +3176,7 @@ impl Ext for Bars {
             cx.set_body(fid, fb);
         } else if (state == 15 || state == 16) && sub == 12 && let Some((fid, mut fb)) = flow {
             let next = bonus_round(cx, &mut fb, cleared, &mut points);
+            bonus_objs = Some(bonus_scene(cx, &fb, cleared, next));
             if next {
                 // $2500 returns to $569D: $56A0's $2EA1, then the setup
                 // ($2304, $22F7), state 8 as at a level's end.
@@ -3601,7 +3894,52 @@ impl Ext for Bars {
         // $5EE7 adds only in a game (E3BD 0, $5EEB).
         if points != 0 && cx.counter("mode") == Some(0) {
             let score = cx.counter("score").unwrap_or(0);
-            cx.set_counter("score", (score + points) % 1_000_000);
+            let new = (score + points) % 1_000_000;
+            cx.set_counter("score", new);
+            // $5F23: past 999,999 the extra lives given count from 0 again.
+            let mut given = if score + points >= 1_000_000 { 0 } else { cx.counter("lives_given").unwrap_or(0) };
+            // $05D1 calls $6104 after a frame's points: the score in
+            // thousands, less the first setting (E05C), and then each step
+            // of the second (E05D), is the extra lives due; $6143 gives
+            // those not given yet, one more life each (E4A7) and a request
+            // to the sound board.
+            let defaults = cx.table("defaults").to_vec();
+            let (first, step) = (defaults.get(0x5C).copied().unwrap_or(0), defaults.get(0x5D).copied().unwrap_or(0));
+            let thousands = new / 1000;
+            let due = if first == 0 || thousands < first {
+                0
+            } else if step == 0 {
+                1
+            } else {
+                1 + (thousands - first) / step
+            };
+            if due > given
+                && let Some(fk) = cx.kind("flow")
+                && let Some(fid) = cx.world.bodies.iter().position(|b| b.kind == fk)
+            {
+                let mut fb = cx
+                    .requests()
+                    .iter()
+                    .rev()
+                    .find_map(|r| match r {
+                        gp_sim::ext::Request::SetBody(i, b) if *i == fid => Some(*b),
+                        _ => None,
+                    })
+                    .unwrap_or(cx.world.bodies[fid]);
+                while due > given {
+                    given += 1;
+                    let l = (((fb.ext[1] >> 40) & 0xff) + 1) & 0xff;
+                    fb.ext[1] = (fb.ext[1] & !(0xff << 40)) | (l << 40);
+                    lives_now = Some(l);
+                    // E391 has the HUD draw the lives again ($6160).
+                    cx.set_counter("lives_shown", l);
+                    ask(cx, "sound_extra_life", &[0]);
+                }
+                cx.set_body(fid, fb);
+            }
+            if cx.counter("lives_given") != Some(given) {
+                cx.set_counter("lives_given", given);
+            }
         }
         // The counters the board's HUD and its looks read: the levels
         // cleared, the lives and the bar shown as the hooks keep them.
@@ -3689,6 +4027,39 @@ impl Ext for Bars {
                     n += 1;
                 }
                 (None, None) => {}
+            }
+        }
+        // The bonus round's objects, by address: one kept is the same
+        // body, one gone (y 0, or out of the round) is removed.
+        if let Some(ok) = cx.kind("bonus_object") {
+            let (want, text) = bonus_objs.unwrap_or_default();
+            if cx.counter("bonus_text") != Some(text) {
+                cx.set_counter("bonus_text", text);
+            }
+            let have: Vec<(usize, Body)> =
+                cx.world.bodies.iter().enumerate().filter(|(_, b)| b.alive && b.kind == ok).map(|(i, b)| (i, *b)).collect();
+            // Word 1 is the object's place from E18E, plus 1: its sprite
+            // RAM entry (present.sprite_order).
+            let key = |at: i64| (at - 0xE18E) / 4 + 1;
+            for (id, b) in &have {
+                match want.iter().find(|o| key(o.at) == b.ext[1]) {
+                    Some(o) => {
+                        let mut b = *b;
+                        b.x = Fx::from_int(o.x);
+                        b.y = Fx::from_int(o.y);
+                        b.ext[0] = o.flags | (o.pic << 8);
+                        cx.set_body(*id, b);
+                    }
+                    None => cx.remove(*id),
+                }
+            }
+            for o in want.iter().filter(|o| !have.iter().any(|(_, b)| b.ext[1] == key(o.at))) {
+                let mut b = gp_sim::systems::new_body(cx.spec, cx.world, ok, Fx::from_int(o.x), Fx::from_int(o.y), false);
+                b.ext[0] = o.flags | (o.pic << 8);
+                b.ext[1] = key(o.at);
+                cx.spawn(ok, b.x, b.y, false);
+                cx.set_body(n, b);
+                n += 1;
             }
         }
     }

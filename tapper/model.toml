@@ -32,6 +32,60 @@ description = "Each customer slot's arrival routine, a word a slot: a timer nami
 source = "tapper"
 asset = "arrivals"
 
+[assets.bandit_flags]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the bandit's sprites' flags ($25C2)"
+
+[assets.bandit_flags.from]
+source = "tapper"
+asset = "bandit_flags"
+
+[assets.bandit_pic_bottom]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the bandit's second sprite's picture as he comes in ($25CE)"
+
+[assets.bandit_pic_bottom.from]
+source = "tapper"
+asset = "bandit_pic_bottom"
+
+[assets.bandit_pic_shake]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the bandit's first sprite while he shakes and blinks ($260D, $2690)"
+
+[assets.bandit_pic_shake.from]
+source = "tapper"
+asset = "bandit_pic_shake"
+
+[assets.bandit_pic_top]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the bandit's first sprite's picture ($25CA)"
+
+[assets.bandit_pic_top.from]
+source = "tapper"
+asset = "bandit_pic_top"
+
+[assets.bandit_pic_walk]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the bandit's second sprite as he walks off ($265F)"
+
+[assets.bandit_pic_walk.from]
+source = "tapper"
+asset = "bandit_pic_walk"
+
+[assets.bandit_stop]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the x below which his walk off stops ($267E)"
+
+[assets.bandit_stop.from]
+source = "tapper"
+asset = "bandit_stop"
+
 [assets.bar_colors]
 kind = "rows"
 role = "palettes"
@@ -59,6 +113,24 @@ description = "The bars' taps, end pieces and far ends the setup puts in ($4D13)
 source = "tapper"
 asset = "bar_objects"
 
+[assets.bartender_flags]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the bartender's sprites' flags in the round ($275B)"
+
+[assets.bartender_flags.from]
+source = "tapper"
+asset = "bartender_flags"
+
+[assets.bartender_flags_right]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: his fourth sprite's flags, mirrored ($2766)"
+
+[assets.bartender_flags_right.from]
+source = "tapper"
+asset = "bartender_flags_right"
+
 [assets.bartender_idle]
 kind = "rows"
 role = "graphics"
@@ -76,6 +148,114 @@ description = "The bartender's pictures: $0A8E, his landing at the next bar's ta
 [assets.bartender_land.from]
 source = "tapper"
 asset = "bartender_land"
+
+[assets.bartender_pic_lose_1]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: his first picture after a loss's spray ($28FB)"
+
+[assets.bartender_pic_lose_1.from]
+source = "tapper"
+asset = "bartender_pic_lose_1"
+
+[assets.bartender_pic_lose_2]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: his second picture after a loss's spray ($28FF)"
+
+[assets.bartender_pic_lose_2.from]
+source = "tapper"
+asset = "bartender_pic_lose_2"
+
+[assets.bartender_pic_lose_3]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: his lower pictures after a loss's spray ($2905)"
+
+[assets.bartender_pic_lose_3.from]
+source = "tapper"
+asset = "bartender_pic_lose_3"
+
+[assets.bartender_pic_open_1]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: his first picture opening the can ($2791)"
+
+[assets.bartender_pic_open_1.from]
+source = "tapper"
+asset = "bartender_pic_open_1"
+
+[assets.bartender_pic_open_2]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: his second picture opening the can ($2795)"
+
+[assets.bartender_pic_open_2.from]
+source = "tapper"
+asset = "bartender_pic_open_2"
+
+[assets.bartender_pic_open_3]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: his lower pictures opening the can ($279B)"
+
+[assets.bartender_pic_open_3.from]
+source = "tapper"
+asset = "bartender_pic_open_3"
+
+[assets.bartender_pic_wait_1]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: his first picture at a can ($276B)"
+
+[assets.bartender_pic_wait_1.from]
+source = "tapper"
+asset = "bartender_pic_wait_1"
+
+[assets.bartender_pic_wait_2]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: his second picture at a can ($276F)"
+
+[assets.bartender_pic_wait_2.from]
+source = "tapper"
+asset = "bartender_pic_wait_2"
+
+[assets.bartender_pic_wait_3]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: his lower pictures at a can ($2775)"
+
+[assets.bartender_pic_wait_3.from]
+source = "tapper"
+asset = "bartender_pic_wait_3"
+
+[assets.bartender_pic_win_1]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: his first picture on a win ($27EF)"
+
+[assets.bartender_pic_win_1.from]
+source = "tapper"
+asset = "bartender_pic_win_1"
+
+[assets.bartender_pic_win_2]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: his second picture on a win ($27F3)"
+
+[assets.bartender_pic_win_2.from]
+source = "tapper"
+asset = "bartender_pic_win_2"
+
+[assets.bartender_pic_win_3]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: his lower pictures on a win ($27F9)"
+
+[assets.bartender_pic_win_3.from]
+source = "tapper"
+asset = "bartender_pic_win_3"
 
 [assets.bartender_pour]
 kind = "rows"
@@ -158,6 +338,33 @@ description = "The bartender's pictures: $1C02, the walk right: the code's own b
 source = "tapper"
 asset = "bartender_walk_right"
 
+[assets.beer_flags]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the opened can's flags (E2AA, $280B)"
+
+[assets.beer_flags.from]
+source = "tapper"
+asset = "beer_flags"
+
+[assets.beer_pic]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the opened can's picture ($280F)"
+
+[assets.beer_pic.from]
+source = "tapper"
+asset = "beer_pic"
+
+[assets.beer_pic_spray]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the sprayed can's top on a loss ($288D)"
+
+[assets.beer_pic_spray.from]
+source = "tapper"
+asset = "beer_pic_spray"
+
 [assets.board_palette]
 kind = "board-palette"
 role = "palettes"
@@ -185,6 +392,15 @@ description = "The board's background tiles (gfx1), what the stage is drawn with
 source = "tapper"
 asset = "tiles"
 
+[assets.bonus_bandit_places]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: each can's place for the bandit and the bartender, y and x ($25A3, $272C)"
+
+[assets.bonus_bandit_places.from]
+source = "tapper"
+asset = "bonus_bandit_places"
+
 [assets.bonus_colors]
 kind = "rows"
 role = "palettes"
@@ -194,6 +410,15 @@ description = "The bonus round pokes ($250C, $2511)"
 source = "tapper"
 asset = "bonus_colors"
 
+[assets.bonus_objects]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the objects $255F copies to E262 as the round starts: the six cans, two sprites each, and the bartender's four (y, flags, picture, x)"
+
+[assets.bonus_objects.from]
+source = "tapper"
+asset = "bonus_objects"
+
 [assets.bonus_pairs]
 kind = "rows"
 role = "behavior"
@@ -202,6 +427,87 @@ description = "The bonus round's cans to swap, a word a row naming a can's objec
 [assets.bonus_pairs.from]
 source = "tapper"
 asset = "bonus_pairs"
+
+[assets.bonus_text_color]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the high byte the round's lines are drawn with, E38F ($2538)"
+
+[assets.bonus_text_color.from]
+source = "tapper"
+asset = "bonus_text_color"
+
+[assets.bonus_text_help_1]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the first line after the shuffle ($26BF)"
+
+[assets.bonus_text_help_1.from]
+source = "tapper"
+asset = "bonus_text_help_1"
+
+[assets.bonus_text_help_2]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the second line after the shuffle ($26C8)"
+
+[assets.bonus_text_help_2.from]
+source = "tapper"
+asset = "bonus_text_help_2"
+
+[assets.bonus_text_help_3]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the third line after the shuffle ($26D1)"
+
+[assets.bonus_text_help_3.from]
+source = "tapper"
+asset = "bonus_text_help_3"
+
+[assets.bonus_text_help_4]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the fourth line after the shuffle ($26DA)"
+
+[assets.bonus_text_help_4.from]
+source = "tapper"
+asset = "bonus_text_help_4"
+
+[assets.bonus_text_lose]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the loss's line ($28F2)"
+
+[assets.bonus_text_lose.from]
+source = "tapper"
+asset = "bonus_text_lose"
+
+[assets.bonus_text_watch]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the round's first line, which $253D queues"
+
+[assets.bonus_text_watch.from]
+source = "tapper"
+asset = "bonus_text_watch"
+
+[assets.bonus_text_win_1]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the win's first line ($27C2)"
+
+[assets.bonus_text_win_1.from]
+source = "tapper"
+asset = "bonus_text_win_1"
+
+[assets.bonus_text_win_2]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the win's second line, which blinks ($27CB, $2830)"
+
+[assets.bonus_text_win_2.from]
+source = "tapper"
+asset = "bonus_text_win_2"
 
 [assets.credit_color]
 kind = "rows"
@@ -364,6 +670,33 @@ description = "The life lost: a full mug's picture as it falls ($23E6)"
 [assets.fall_picture_full.from]
 source = "tapper"
 asset = "fall_picture_full"
+
+[assets.hand_flags]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the bandit's hand's flags ($25F9)"
+
+[assets.hand_flags.from]
+source = "tapper"
+asset = "hand_flags"
+
+[assets.hand_pic]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the bandit's hand's picture ($25F5)"
+
+[assets.hand_pic.from]
+source = "tapper"
+asset = "hand_pic"
+
+[assets.hand_pic_shake]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the hand's picture as it shakes the can ($261F)"
+
+[assets.hand_pic_shake.from]
+source = "tapper"
+asset = "hand_pic_shake"
 
 [assets.hop_steps]
 kind = "rows"
@@ -797,6 +1130,15 @@ description = "The program from $090D to $0A9F: a customer served's request and 
 source = "tapper"
 asset = "sound_customers"
 
+[assets.sound_extra_life]
+kind = "rows"
+role = "behavior"
+description = "The extra life's request to the sound board, the byte $6166 loads for $606B (the program's code, lifted from the player's romset)"
+
+[assets.sound_extra_life.from]
+source = "tapper"
+asset = "sound_extra_life"
+
 [assets.sound_game]
 kind = "rows"
 role = "behavior"
@@ -1069,13 +1411,42 @@ walk_frames = 12
 
 [entities.bars.ext_rows]
 arrivals = "arrivals"
+bandit_flags = "bandit_flags"
+bandit_pic_bottom = "bandit_pic_bottom"
+bandit_pic_shake = "bandit_pic_shake"
+bandit_pic_top = "bandit_pic_top"
+bandit_pic_walk = "bandit_pic_walk"
+bandit_stop = "bandit_stop"
 bar_ends = "bar_ends"
+bartender_flags = "bartender_flags"
+bartender_flags_right = "bartender_flags_right"
+bartender_pic_lose_1 = "bartender_pic_lose_1"
+bartender_pic_lose_2 = "bartender_pic_lose_2"
+bartender_pic_lose_3 = "bartender_pic_lose_3"
+bartender_pic_open_1 = "bartender_pic_open_1"
+bartender_pic_open_2 = "bartender_pic_open_2"
+bartender_pic_open_3 = "bartender_pic_open_3"
+bartender_pic_wait_1 = "bartender_pic_wait_1"
+bartender_pic_wait_2 = "bartender_pic_wait_2"
+bartender_pic_wait_3 = "bartender_pic_wait_3"
+bartender_pic_win_1 = "bartender_pic_win_1"
+bartender_pic_win_2 = "bartender_pic_win_2"
+bartender_pic_win_3 = "bartender_pic_win_3"
+beer_flags = "beer_flags"
+beer_pic = "beer_pic"
+beer_pic_spray = "beer_pic_spray"
+bonus_bandit_places = "bonus_bandit_places"
+bonus_objects = "bonus_objects"
 customer_starts = "customer_starts"
+defaults = "defaults"
 end_script_lists = "end_script_lists"
 fall_crash_pictures = "fall_crash_pictures"
 fall_picture_crash = "fall_picture_crash"
 fall_picture_empty = "fall_picture_empty"
 fall_picture_full = "fall_picture_full"
+hand_flags = "hand_flags"
+hand_pic = "hand_pic"
+hand_pic_shake = "hand_pic_shake"
 hop_steps = "hop_steps"
 level_times = "level_times"
 mug_flags = "mug_flags"
@@ -1123,6 +1494,29 @@ byte = 1
 word = 0
 
 [entities.bartender_part.hitbox]
+h = 1
+w = 1
+x = 0
+y = 0
+
+[entities.bonus_object]
+description = "A sprite object of the bonus round ($2500 to $296F): the cans, the bandit and his hand, the bartender and the opened can, 4 bytes each (y, flags, picture, x) from E226 to E35A. tapper_bars places and moves them as the round's code writes them, by place. Word 0 is the flags and 256 times the picture, word 1 the object's place from E18E plus 1, its sprite RAM entry as for the other kinds. Drawn, never compared"
+ext = "tapper_bonus_object"
+no_slot = true
+role = "npc"
+size = [16, 16]
+
+[entities.bonus_object.board_sprite]
+slot = "board_sprites"
+
+[entities.bonus_object.board_sprite.flags]
+word = 0
+
+[entities.bonus_object.board_sprite.picture]
+byte = 1
+word = 0
+
+[entities.bonus_object.hitbox]
 h = 1
 w = 1
 x = 0
@@ -1331,6 +1725,7 @@ sound_boot = "sound_boot"
 sound_check = "sound_check"
 sound_coin = "sound_coin"
 sound_customers = "sound_customers"
+sound_extra_life = "sound_extra_life"
 sound_game = "sound_game"
 sound_life = "sound_life"
 
@@ -4602,6 +4997,158 @@ counter = "mode"
 value = 0
 
 [[levels.main.present.board.texts]]
+at = [8, 25]
+
+[levels.main.present.board.texts.high]
+slot = "bonus_text_color"
+
+[levels.main.present.board.texts.text]
+slot = "bonus_text_watch"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "bonus_text"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = "<="
+counter = "bonus_text"
+value = 1
+
+[[levels.main.present.board.texts]]
+at = [10, 24]
+
+[levels.main.present.board.texts.high]
+slot = "bonus_text_color"
+
+[levels.main.present.board.texts.text]
+slot = "bonus_text_help_1"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "bonus_text"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = "<="
+counter = "bonus_text"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [8, 25]
+
+[levels.main.present.board.texts.high]
+slot = "bonus_text_color"
+
+[levels.main.present.board.texts.text]
+slot = "bonus_text_help_2"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "bonus_text"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = "<="
+counter = "bonus_text"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [10, 27]
+
+[levels.main.present.board.texts.high]
+slot = "bonus_text_color"
+
+[levels.main.present.board.texts.text]
+slot = "bonus_text_help_3"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "bonus_text"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = "<="
+counter = "bonus_text"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [10, 28]
+
+[levels.main.present.board.texts.high]
+slot = "bonus_text_color"
+
+[levels.main.present.board.texts.text]
+slot = "bonus_text_help_4"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "bonus_text"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = "<="
+counter = "bonus_text"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [8, 24]
+
+[levels.main.present.board.texts.high]
+slot = "bonus_text_color"
+
+[levels.main.present.board.texts.text]
+slot = "bonus_text_win_1"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "bonus_text"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = "<="
+counter = "bonus_text"
+value = 4
+
+[[levels.main.present.board.texts]]
+at = [8, 26]
+
+[levels.main.present.board.texts.high]
+slot = "bonus_text_color"
+
+[levels.main.present.board.texts.text]
+slot = "bonus_text_win_2"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "bonus_text"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = "<="
+counter = "bonus_text"
+value = 3
+
+[[levels.main.present.board.texts]]
+at = [8, 24]
+
+[levels.main.present.board.texts.high]
+slot = "bonus_text_color"
+
+[levels.main.present.board.texts.text]
+slot = "bonus_text_lose"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "bonus_text"
+value = 5
+
+[[levels.main.present.board.texts.when]]
+cmp = "<="
+counter = "bonus_text"
+value = 5
+
+[[levels.main.present.board.texts]]
 at = [2, 27]
 
 [levels.main.present.board.texts.high]
@@ -4929,6 +5476,11 @@ at = 88
 step = 1
 word = 1
 
+[levels.main.present.sprite_order.bonus_object]
+at = 1
+step = 1
+word = 1
+
 [levels.main.present.sprite_order.customer]
 at = 54
 step = 2
@@ -5004,6 +5556,9 @@ description = "The attract mode's screen: 1 the logo's ($3D76), 2 the demo's ($4
 [counters.bonus]
 description = "1 from the bonus round's start ($2500, called at $569D) to its end, which the hooks keep: no RAM byte marks the bonus round by itself"
 
+[counters.bonus_text]
+description = "The bonus round's line of text: 1 its first ($253D), 2 the four after the shuffle ($26BF), 3 the win's two, 4 the win's first alone as the second blinks ($2830), 5 the loss's ($28F2), 0 none; tapper_bars sets it each frame"
+
 [counters.cleared]
 description = "Levels cleared, E4A8: 0 at a game's start, one more at each level's end ($5681), bonus rounds included"
 
@@ -5018,6 +5573,9 @@ description = "Credits, E011: one more at each coin with the defaults' coinage (
 
 [counters.lives]
 description = "Lives, E4A7: 3 at a game's start ($4B22), one less when a life is lost ($23AF), one more at each extra-life score ($615D)"
+
+[counters.lives_given]
+description = "The extra lives given, E3F3: $6143 gives one more each time the score in thousands passes the first setting (E05C) and then each step of the second (E05D) beyond it, after each frame's points ($05D1); 0 again when the score rolls over ($5F23)"
 
 [counters.lives_shown]
 description = "The lives the HUD shows: E4A7 as the copy of a screen ($5CED) last drew them ($5D21, one fewer mug for player 1), at a level's setup ($4B6E's $5DF6) and the tip show's end ($0C95), so a life lost shows only from the next setup; -1 until the hooks first set it"
@@ -5052,6 +5610,54 @@ note = "Found with gp code listing and gp code tables on tapper.l8.001; the asse
 [[evidence."assets.arrivals".refs]]
 at = "clip:tapper.l8.001"
 
+[evidence."assets.bandit_flags"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bandit_flags".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bandit_pic_bottom"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bandit_pic_bottom".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bandit_pic_shake"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bandit_pic_shake".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bandit_pic_top"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bandit_pic_top".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bandit_pic_walk"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bandit_pic_walk".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bandit_stop"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bandit_stop".refs]]
+at = "clip:tapper.bonus.001"
+
 [evidence."assets.bar_colors"]
 source = "observed"
 confidence = 80
@@ -5076,6 +5682,22 @@ note = "gp code listing on tapper.start.001: $4D13 copies three 16-byte groups t
 [[evidence."assets.bar_objects".refs]]
 at = "clip:tapper.start.001"
 
+[evidence."assets.bartender_flags"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bartender_flags".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bartender_flags_right"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bartender_flags_right".refs]]
+at = "clip:tapper.bonus.001"
+
 [evidence."assets.bartender_idle"]
 source = "observed"
 confidence = 80
@@ -5091,6 +5713,102 @@ note = "gp code listing --writes on E2E6 to E2FD over tapper.poweron.001, l1.001
 
 [[evidence."assets.bartender_land".refs]]
 at = "clip:tapper.poweron.001"
+
+[evidence."assets.bartender_pic_lose_1"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bartender_pic_lose_1".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bartender_pic_lose_2"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bartender_pic_lose_2".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bartender_pic_lose_3"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bartender_pic_lose_3".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bartender_pic_open_1"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bartender_pic_open_1".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bartender_pic_open_2"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bartender_pic_open_2".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bartender_pic_open_3"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bartender_pic_open_3".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bartender_pic_wait_1"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bartender_pic_wait_1".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bartender_pic_wait_2"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bartender_pic_wait_2".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bartender_pic_wait_3"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bartender_pic_wait_3".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bartender_pic_win_1"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bartender_pic_win_1".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bartender_pic_win_2"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bartender_pic_win_2".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bartender_pic_win_3"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bartender_pic_win_3".refs]]
+at = "clip:tapper.bonus.001"
 
 [evidence."assets.bartender_pour"]
 source = "observed"
@@ -5164,6 +5882,30 @@ note = "gp code listing --writes on E2E6 to E2FD over tapper.poweron.001, l1.001
 [[evidence."assets.bartender_walk_right".refs]]
 at = "clip:tapper.poweron.001"
 
+[evidence."assets.beer_flags"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.beer_flags".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.beer_pic"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.beer_pic".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.beer_pic_spray"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.beer_pic_spray".refs]]
+at = "clip:tapper.bonus.001"
+
 [evidence."assets.board_palette"]
 source = "observed"
 confidence = 80
@@ -5188,6 +5930,14 @@ note = "The board's gfx1 tiles, lifted by the arcade map's `tiles`"
 [[evidence."assets.board_tiles".refs]]
 at = "clip:tapper.l1.001"
 
+[evidence."assets.bonus_bandit_places"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bonus_bandit_places".refs]]
+at = "clip:tapper.bonus.001"
+
 [evidence."assets.bonus_colors"]
 source = "observed"
 confidence = 70
@@ -5196,6 +5946,14 @@ note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stage
 [[evidence."assets.bonus_colors".refs]]
 at = "clip:tapper.l1.001"
 
+[evidence."assets.bonus_objects"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bonus_objects".refs]]
+at = "clip:tapper.bonus.001"
+
 [evidence."assets.bonus_pairs"]
 source = "observed"
 confidence = 80
@@ -5203,6 +5961,78 @@ note = "gp code listing on tapper.bonus.001 and the later rounds: $4F17 reads tw
 
 [[evidence."assets.bonus_pairs".refs]]
 at = "clip:tapper.poweron.001"
+
+[evidence."assets.bonus_text_color"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bonus_text_color".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bonus_text_help_1"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bonus_text_help_1".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bonus_text_help_2"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bonus_text_help_2".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bonus_text_help_3"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bonus_text_help_3".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bonus_text_help_4"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bonus_text_help_4".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bonus_text_lose"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bonus_text_lose".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bonus_text_watch"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bonus_text_watch".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bonus_text_win_1"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bonus_text_win_1".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bonus_text_win_2"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.bonus_text_win_2".refs]]
+at = "clip:tapper.bonus.001"
 
 [evidence."assets.credit_color"]
 source = "observed"
@@ -5347,6 +6177,30 @@ note = "gp code listing of $236E to $243A, the life lost: the fallen mug (E71B) 
 
 [[evidence."assets.fall_picture_full".refs]]
 at = "clip:tapper.die.001"
+
+[evidence."assets.hand_flags"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.hand_flags".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.hand_pic"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.hand_pic".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.hand_pic_shake"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
+
+[[evidence."assets.hand_pic_shake".refs]]
+at = "clip:tapper.bonus.001"
 
 [evidence."assets.hop_steps"]
 source = "observed"
@@ -5732,6 +6586,14 @@ note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-firs
 [[evidence."assets.sound_customers".refs]]
 at = "clip:tapper.score.001"
 
+[evidence."assets.sound_extra_life"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.l6.002's log: at frame 8723 the points routine ($5F1A) makes the score 20050, and the same frame $6158 counts E3F3 to 1 and $615D puts E4A7 to 3; gp code listing shows $6143 asking for the byte $6166 loads, at $62E6 in rbtapper and $6156 in tappera"
+
+[[evidence."assets.sound_extra_life".refs]]
+at = "clip:tapper.l6.002"
+
 [evidence."assets.sound_game"]
 source = "observed"
 confidence = 80
@@ -5979,6 +6841,14 @@ note = "The objects from E2EA, 4 bytes each, gp query on tapper-poweron-proof (f
 
 [[evidence."entities.bartender_part".refs]]
 at = "clip:tapper.poweron.001"
+
+[evidence."entities.bonus_object"]
+source = "observed"
+confidence = 70
+note = "The bonus round's objects from E226 to E35A, 4 bytes each, gp-arcade's writes example on tapper.bonus.001's log (frames 1700 to 2870): $255F copies E262 to E2A1 in from $2A15, $25B1 to $2669 write E226, E22A and E35A, $4F5D to $4FF6 the cans, $273B to $27FD E292 to E29E and $2809 E2AA (gp code listing of $2500 to $296F)"
+
+[[evidence."entities.bonus_object".refs]]
+at = "clip:tapper.bonus.001"
 
 [evidence."entities.customer"]
 source = "observed"

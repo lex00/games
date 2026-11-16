@@ -570,6 +570,430 @@ width = 1
 [asset.at]
 rbtapper = 0x07C8
 
+# The extra life's request ($6166, ld c,$0A): $6143 asks the sound board
+# for it as it gives the life.
+[[asset]]
+name = "sound_extra_life"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x6167
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x62E7
+tappera = 0x6157
+
+# The bonus round ($2500 to $296F): its objects, the bandit's places, its
+# lines of text and the bytes its code writes into the sprites. rbtapper's
+# copy has a few more instructions, so its offsets are its own.
+[[asset]]
+name = "bonus_objects"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2A15
+count = 16
+width = 4
+
+[asset.at]
+rbtapper = 0x2A29
+
+[[asset]]
+name = "bonus_bandit_places"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2AC5
+count = 6
+width = 2
+
+[asset.at]
+rbtapper = 0x2AD9
+
+[[asset]]
+name = "bonus_text_watch"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x29C4
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x29D2
+
+[[asset]]
+name = "bonus_text_help_1"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2981
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x298F
+
+[[asset]]
+name = "bonus_text_help_2"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x298E
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x299C
+
+[[asset]]
+name = "bonus_text_help_3"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x29D6
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x29E4
+
+[[asset]]
+name = "bonus_text_help_4"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x29E3
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x29F1
+
+[[asset]]
+name = "bonus_text_win_1"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x29A0
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x29AE
+
+[[asset]]
+name = "bonus_text_win_2"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2A03
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x2A17
+
+[[asset]]
+name = "bonus_text_lose"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x29B2
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x29C0
+
+[[asset]]
+name = "bonus_text_color"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2539
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x253E
+
+[[asset]]
+name = "bandit_flags"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x25C5
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x25CF
+
+[[asset]]
+name = "bandit_pic_top"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x25CD
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x25D7
+
+[[asset]]
+name = "bandit_pic_bottom"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x25D1
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x25DB
+
+[[asset]]
+name = "bandit_pic_shake"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2610
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x261A
+
+[[asset]]
+name = "bandit_pic_walk"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2662
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x2670
+
+[[asset]]
+name = "bandit_stop"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x267F
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x268D
+
+[[asset]]
+name = "hand_flags"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x25FC
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x2606
+
+[[asset]]
+name = "hand_pic"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x25F8
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x2602
+
+[[asset]]
+name = "hand_pic_shake"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2622
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x262C
+
+[[asset]]
+name = "bartender_flags"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x275C
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x276A
+
+[[asset]]
+name = "bartender_flags_right"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2767
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x2775
+
+[[asset]]
+name = "bartender_pic_wait_1"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x276E
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x277C
+
+[[asset]]
+name = "bartender_pic_wait_2"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2772
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x2780
+
+[[asset]]
+name = "bartender_pic_wait_3"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2778
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x2786
+
+[[asset]]
+name = "bartender_pic_open_1"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2794
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x27A2
+
+[[asset]]
+name = "bartender_pic_open_2"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2798
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x27A6
+
+[[asset]]
+name = "bartender_pic_open_3"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x279E
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x27AC
+
+[[asset]]
+name = "bartender_pic_win_1"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x27F2
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x2800
+
+[[asset]]
+name = "bartender_pic_win_2"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x27F6
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x2804
+
+[[asset]]
+name = "bartender_pic_win_3"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x27FC
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x280A
+
+[[asset]]
+name = "bartender_pic_lose_1"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x28FE
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x290C
+
+[[asset]]
+name = "bartender_pic_lose_2"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2902
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x2910
+
+[[asset]]
+name = "bartender_pic_lose_3"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2908
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x2916
+
+[[asset]]
+name = "beer_flags"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x280C
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x281A
+
+[[asset]]
+name = "beer_pic"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2810
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x281E
+
+[[asset]]
+name = "beer_pic_spray"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x288E
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x289C
+
 # The logo's colours ($3D76): palette RAM's F840 and F84C set ($3D79, $3D7E),
 # F822 to F83D zeroed, then from 16 frames on each of the twelve odd bytes
 # from F823 lit ($FF, $3DA4) and, six frames later, dimmed ($C4, $3DA2), the
