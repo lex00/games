@@ -1,0 +1,27 @@
+# This game's bench (gameprinter's `gp bench clips tapper` and `gp
+# bench scratch tapper`, its docs/benchmarks.md), read from here by
+# the bench runner. Paths are under the games checkout ($GP_GAMES_DIR, else
+# ../games beside the gameprinter repo). The answer key is the package's
+# own hand-written model and state mapping; the game has no source, so the
+# rows game-printer graded against Moss Hop's source say they need one.
+# Nothing here is ROM data.
+
+[bench]
+template = "tapper"
+seeds = [1, 2]
+dense_budget = 400
+dense_keep = 15
+
+[wrong_model]
+says = "the bartender's hitbox one pixel taller"
+set = { "entities.player.hitbox.h" = 17 }
+
+[grade]
+model = "tapper"
+
+[scratch]
+rounds = 2
+# Stage 0: the static harvest from the ROM alone, its facts in its own
+# names (no answer key is read).
+static_command = ["model", "static", "{rom}", "--model", "{model}"]
+recordings = 4
