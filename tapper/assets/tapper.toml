@@ -440,6 +440,28 @@ width = 2
 rbtapper = 0x636D
 tappera = 0x61DD
 
+# The attract mode's two screens, each the address $5CED copies $780 bytes
+# from once E395 holds it: the logo's, which $3D76 sets ($3D8A), and the
+# demo's, which $4AAA sets ($4AE7). rbtapper's program sets them from its
+# own places.
+[[asset]]
+name = "screen_attract_logo"
+format = "mcr-screen"
+region = "maincpu"
+offset = 0x3DC6
+
+[asset.at]
+rbtapper = 0x3EF5
+
+[[asset]]
+name = "screen_attract_demo"
+format = "mcr-screen"
+region = "maincpu"
+offset = 0x347F
+
+[asset.at]
+rbtapper = 0x3496
+
 [[asset]]
 name = "screen_69a1"
 format = "mcr-screen"

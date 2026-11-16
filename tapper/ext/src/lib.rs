@@ -932,10 +932,27 @@ impl Flow {
     }
 }
 
+/// The counter attract_screen, which picks the attract mode's screen: the
+/// logo's until attract_demo frames in, then the demo's ($4AAA), and 0 out
+/// of the attract mode.
+fn set_attract_screen(cx: &mut ExtCx<'_>) {
+    let t = (cx.me.ext[2] & ATTRACT_MASK) >> ATTRACT_SHIFT;
+    let s = match cx.counter("mode") {
+        Some(1) if t >= p(cx, "attract_demo") => 2,
+        Some(1) => 1,
+        _ => 0,
+    };
+    if cx.counter("attract_screen") != Some(s) {
+        cx.set_counter("attract_screen", s);
+    }
+}
+
 impl Ext for Flow {
     fn step(&self, cx: &mut ExtCx<'_>) {
         let credits = Self::coin(cx);
-        if Self::out_of_game(cx, credits) {
+        let done = Self::out_of_game(cx, credits);
+        set_attract_screen(cx);
+        if done {
             return;
         }
         // The setup ($4B3F) is a script that waits through states 15 and

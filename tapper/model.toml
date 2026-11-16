@@ -428,6 +428,24 @@ description = "A stage's screen at $A5A1, one of those $5DF6 picks from the word
 source = "tapper"
 asset = "screen_a5a1"
 
+[assets.screen_attract_demo]
+kind = "board-screen"
+role = "layout"
+description = "The attract mode's demo screen, the two bars and the board the demo writes on, which $4AAA has $5CED copy (E395 = $347F)"
+
+[assets.screen_attract_demo.from]
+source = "tapper"
+asset = "screen_attract_demo"
+
+[assets.screen_attract_logo]
+kind = "board-screen"
+role = "layout"
+description = "The attract mode's logo screen, which $3D76 has $5CED copy (E395 = $3DC6)"
+
+[assets.screen_attract_logo.from]
+source = "tapper"
+asset = "screen_attract_logo"
+
 [assets.screen_bonus]
 kind = "board-screen"
 role = "layout"
@@ -1014,6 +1032,22 @@ value = 0
 cmp = "=="
 counter = "bonus"
 value = 0
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_demo"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
 
 [[levels.main.present.board.looks]]
 palette = "board_palette"
@@ -2271,6 +2305,9 @@ entity = "bars"
 x = 0
 y = 0
 
+[counters.attract_screen]
+description = "The attract mode's screen: 1 the logo's ($3D76), 2 the demo's ($4AAA) from attract_demo frames in, 0 out of the attract mode (E3BD not 1); tapper_flow sets it each frame from the attract's frames, and the looks pick the screen by it"
+
 [counters.bonus]
 description = "1 from the bonus round's start ($2500, called at $569D) to its end, which the hooks keep: no RAM byte marks the bonus round by itself"
 
@@ -2669,6 +2706,22 @@ note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stage
 
 [[evidence."assets.screen_a5a1".refs]]
 at = "clip:tapper.l1.001"
+
+[evidence."assets.screen_attract_demo"]
+source = "observed"
+confidence = 70
+note = "gp code listing --writes F100, F300 and F500 over tapper.attract.001: the screen is copied by $5CED's ldir from E395, which $4AAA sets to $347F ($4AE7); rbtapper's program sets $3496, read from its own listing"
+
+[[evidence."assets.screen_attract_demo".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.screen_attract_logo"]
+source = "observed"
+confidence = 70
+note = "gp code listing --writes F100, F300 and F500 over tapper.attract.001: the screen is copied by $5CED's ldir from E395, which $3D76 sets to $3DC6 ($3D8A); rbtapper's program sets $3EF5, read from its own listing"
+
+[[evidence."assets.screen_attract_logo".refs]]
+at = "clip:tapper.attract.001"
 
 [evidence."assets.screen_bonus"]
 source = "observed"
