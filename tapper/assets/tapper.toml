@@ -1107,6 +1107,97 @@ rbtapper = 0x2531
 # (the cleared screen's colour), $5412's ld a,$87 into F84D (its lines'),
 # the two lines it queues ($5425 at row 11, $542E at row 9, column 2) and
 # the colour byte the setup gives its lines ($4B53's ld a,$20).
+# The first level's instructions ($5512): its lines, queued for $0350
+# by $5F44, and the six sprites it copies into the customer slots ($55DC,
+# 24 bytes). rbtapper's are $190 on.
+[[asset]]
+name = "instr_text_1"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x557F
+count = 1
+width = 24
+
+[asset.at]
+rbtapper = 0x570F
+
+[[asset]]
+name = "instr_text_2"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x5597
+count = 1
+width = 24
+
+[asset.at]
+rbtapper = 0x5727
+
+[[asset]]
+name = "instr_text_3"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x55C1
+count = 1
+width = 24
+
+[asset.at]
+rbtapper = 0x5751
+
+[[asset]]
+name = "instr_text_4"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x55AF
+count = 1
+width = 24
+
+[asset.at]
+rbtapper = 0x573F
+
+[[asset]]
+name = "instr_text_5"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x55B8
+count = 1
+width = 24
+
+[asset.at]
+rbtapper = 0x5748
+
+[[asset]]
+name = "instr_text_7"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x55CA
+count = 1
+width = 24
+
+[asset.at]
+rbtapper = 0x575A
+
+[[asset]]
+name = "instr_text_8"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x55D3
+count = 1
+width = 24
+
+[asset.at]
+rbtapper = 0x5763
+
+[[asset]]
+name = "instr_objects"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x55DC
+count = 1
+width = 24
+
+[asset.at]
+rbtapper = 0x576C
+
 [[asset]]
 name = "intro_back_color"
 format = "byte-rows"

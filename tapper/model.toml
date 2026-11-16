@@ -761,6 +761,78 @@ description = "The bartender's steps along in the space bar's level end hops, a 
 source = "tapper"
 asset = "hop_steps"
 
+[assets.instr_objects]
+kind = "rows"
+role = "graphics"
+description = "The first level's instructions: the six sprites $5512 copies into the customer slots ($5567 to $5570)"
+
+[assets.instr_objects.from]
+source = "tapper"
+asset = "instr_objects"
+
+[assets.instr_text_1]
+kind = "rows"
+role = "graphics"
+description = "The first level's instructions: a line $5512 queues ($5F44)"
+
+[assets.instr_text_1.from]
+source = "tapper"
+asset = "instr_text_1"
+
+[assets.instr_text_2]
+kind = "rows"
+role = "graphics"
+description = "The first level's instructions: a line $5512 queues ($5F44)"
+
+[assets.instr_text_2.from]
+source = "tapper"
+asset = "instr_text_2"
+
+[assets.instr_text_3]
+kind = "rows"
+role = "graphics"
+description = "The first level's instructions: a line $5512 queues ($5F44)"
+
+[assets.instr_text_3.from]
+source = "tapper"
+asset = "instr_text_3"
+
+[assets.instr_text_4]
+kind = "rows"
+role = "graphics"
+description = "The first level's instructions: a line $5512 queues ($5F44)"
+
+[assets.instr_text_4.from]
+source = "tapper"
+asset = "instr_text_4"
+
+[assets.instr_text_5]
+kind = "rows"
+role = "graphics"
+description = "The first level's instructions: a line $5512 queues ($5F44)"
+
+[assets.instr_text_5.from]
+source = "tapper"
+asset = "instr_text_5"
+
+[assets.instr_text_7]
+kind = "rows"
+role = "graphics"
+description = "The first level's instructions: a line $5512 queues ($5F44)"
+
+[assets.instr_text_7.from]
+source = "tapper"
+asset = "instr_text_7"
+
+[assets.instr_text_8]
+kind = "rows"
+role = "graphics"
+description = "The first level's instructions: a line $5512 queues ($5F44)"
+
+[assets.instr_text_8.from]
+source = "tapper"
+asset = "instr_text_8"
+
 [assets.interlude_code]
 kind = "rows"
 role = "behavior"
@@ -1578,6 +1650,7 @@ hand_flags = "hand_flags"
 hand_pic = "hand_pic"
 hand_pic_shake = "hand_pic_shake"
 hop_steps = "hop_steps"
+instr_objects = "instr_objects"
 interlude_code = "interlude_code"
 interlude_start = "interlude_start"
 level_times = "level_times"
@@ -1774,6 +1847,26 @@ layouts = "layouts"
 [entities.flow.hitbox]
 h = 1
 w = 1
+x = 0
+y = 0
+
+[entities.legend]
+description = "A sprite of the first level's instructions ($5512): the six objects it copies into the customer slots from $55DC (y, flags, picture, x), shown for its 100 frames until $5F31 empties them. Word 1 is the flags, word 2 the picture; tapper_bars puts them in and takes them away. Drawn, never compared"
+role = "npc"
+size = [16, 16]
+
+[entities.legend.board_sprite]
+slot = "board_sprites"
+
+[entities.legend.board_sprite.flags]
+word = 1
+
+[entities.legend.board_sprite.picture]
+word = 2
+
+[entities.legend.hitbox]
+h = 16
+w = 16
 x = 0
 y = 0
 
@@ -8559,6 +8652,198 @@ counter = "intro"
 value = 2
 
 [[levels.main.present.board.texts]]
+at = [2, 5]
+
+[levels.main.present.board.texts.high]
+slot = "intro_text_high"
+
+[levels.main.present.board.texts.text]
+slot = "instr_text_1"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "intro"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 102
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "cleared"
+value = 0
+
+[[levels.main.present.board.texts]]
+at = [2, 7]
+
+[levels.main.present.board.texts.high]
+slot = "intro_text_high"
+
+[levels.main.present.board.texts.text]
+slot = "instr_text_2"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "intro"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 102
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "cleared"
+value = 0
+
+[[levels.main.present.board.texts]]
+at = [14, 10]
+
+[levels.main.present.board.texts.high]
+slot = "intro_text_high"
+
+[levels.main.present.board.texts.text]
+slot = "instr_text_3"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "intro"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 102
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "cleared"
+value = 0
+
+[[levels.main.present.board.texts]]
+at = [14, 13]
+
+[levels.main.present.board.texts.high]
+slot = "intro_text_high"
+
+[levels.main.present.board.texts.text]
+slot = "instr_text_4"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "intro"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 102
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "cleared"
+value = 0
+
+[[levels.main.present.board.texts]]
+at = [14, 16]
+
+[levels.main.present.board.texts.high]
+slot = "intro_text_high"
+
+[levels.main.present.board.texts.text]
+slot = "instr_text_5"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "intro"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 102
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "cleared"
+value = 0
+
+[[levels.main.present.board.texts]]
+at = [14, 19]
+
+[levels.main.present.board.texts.high]
+slot = "intro_text_high"
+
+[levels.main.present.board.texts.text]
+slot = "instr_text_3"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "intro"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 102
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "cleared"
+value = 0
+
+[[levels.main.present.board.texts]]
+at = [14, 22]
+
+[levels.main.present.board.texts.high]
+slot = "intro_text_high"
+
+[levels.main.present.board.texts.text]
+slot = "instr_text_7"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "intro"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 102
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "cleared"
+value = 0
+
+[[levels.main.present.board.texts]]
+at = [13, 25]
+
+[levels.main.present.board.texts.high]
+slot = "intro_text_high"
+
+[levels.main.present.board.texts.text]
+slot = "instr_text_8"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "intro"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 102
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "cleared"
+value = 0
+
+[[levels.main.present.board.texts]]
 at = [2, 9]
 
 [levels.main.present.board.texts.high]
@@ -10032,6 +10317,70 @@ note = "gp code listing on tapper.l10.001's end (frames 15680 to 15926): the end
 [[evidence."assets.hop_steps".refs]]
 at = "clip:tapper.l10.001"
 
+[evidence."assets.instr_objects"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: $5404 calls $5512 while E4A8 is 0 ($541D); it queues eight lines ($551F to $5564), copies 24 bytes from $55DC to E262 ($5567) and waits 100 frames ($5575) before $5FFD and $5F31; rbtapper's operands are $190 on ($56AF to $5702). tapper.start.001 shows the screen"
+
+[[evidence."assets.instr_objects".refs]]
+at = "clip:tapper.start.001"
+
+[evidence."assets.instr_text_1"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: $5404 calls $5512 while E4A8 is 0 ($541D); it queues eight lines ($551F to $5564), copies 24 bytes from $55DC to E262 ($5567) and waits 100 frames ($5575) before $5FFD and $5F31; rbtapper's operands are $190 on ($56AF to $5702). tapper.start.001 shows the screen"
+
+[[evidence."assets.instr_text_1".refs]]
+at = "clip:tapper.start.001"
+
+[evidence."assets.instr_text_2"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: $5404 calls $5512 while E4A8 is 0 ($541D); it queues eight lines ($551F to $5564), copies 24 bytes from $55DC to E262 ($5567) and waits 100 frames ($5575) before $5FFD and $5F31; rbtapper's operands are $190 on ($56AF to $5702). tapper.start.001 shows the screen"
+
+[[evidence."assets.instr_text_2".refs]]
+at = "clip:tapper.start.001"
+
+[evidence."assets.instr_text_3"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: $5404 calls $5512 while E4A8 is 0 ($541D); it queues eight lines ($551F to $5564), copies 24 bytes from $55DC to E262 ($5567) and waits 100 frames ($5575) before $5FFD and $5F31; rbtapper's operands are $190 on ($56AF to $5702). tapper.start.001 shows the screen"
+
+[[evidence."assets.instr_text_3".refs]]
+at = "clip:tapper.start.001"
+
+[evidence."assets.instr_text_4"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: $5404 calls $5512 while E4A8 is 0 ($541D); it queues eight lines ($551F to $5564), copies 24 bytes from $55DC to E262 ($5567) and waits 100 frames ($5575) before $5FFD and $5F31; rbtapper's operands are $190 on ($56AF to $5702). tapper.start.001 shows the screen"
+
+[[evidence."assets.instr_text_4".refs]]
+at = "clip:tapper.start.001"
+
+[evidence."assets.instr_text_5"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: $5404 calls $5512 while E4A8 is 0 ($541D); it queues eight lines ($551F to $5564), copies 24 bytes from $55DC to E262 ($5567) and waits 100 frames ($5575) before $5FFD and $5F31; rbtapper's operands are $190 on ($56AF to $5702). tapper.start.001 shows the screen"
+
+[[evidence."assets.instr_text_5".refs]]
+at = "clip:tapper.start.001"
+
+[evidence."assets.instr_text_7"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: $5404 calls $5512 while E4A8 is 0 ($541D); it queues eight lines ($551F to $5564), copies 24 bytes from $55DC to E262 ($5567) and waits 100 frames ($5575) before $5FFD and $5F31; rbtapper's operands are $190 on ($56AF to $5702). tapper.start.001 shows the screen"
+
+[[evidence."assets.instr_text_7".refs]]
+at = "clip:tapper.start.001"
+
+[evidence."assets.instr_text_8"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: $5404 calls $5512 while E4A8 is 0 ($541D); it queues eight lines ($551F to $5564), copies 24 bytes from $55DC to E262 ($5567) and waits 100 frames ($5575) before $5FFD and $5F31; rbtapper's operands are $190 on ($56AF to $5702). tapper.start.001 shows the screen"
+
+[[evidence."assets.instr_text_8".refs]]
+at = "clip:tapper.start.001"
+
 [evidence."assets.interlude_code"]
 source = "observed"
 confidence = 70
@@ -10765,6 +11114,14 @@ at = "clip:tapper.poweron.001"
 
 [[evidence."entities.flow".refs]]
 at = "clip:tapper.l3.001"
+
+[evidence."entities.legend"]
+source = "observed"
+confidence = 70
+note = "gp code listing: $5404 calls $5512 while E4A8 is 0 ($541D); $5567 copies 24 bytes from $55DC to E262 on, six sprites (y, flags, picture, x), the board drawing them from the customer slots; $5575 waits 100 frames, then $5FFD clears the screen and $5F31 empties the objects. tapper.start.001 shows the six (a mug, four customers, a tip) beside their points"
+
+[[evidence."entities.legend".refs]]
+at = "clip:tapper.start.001"
 
 [evidence."entities.mug"]
 source = "observed"

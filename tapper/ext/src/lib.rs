@@ -2759,6 +2759,16 @@ impl Ext for Bars {
             tip = None;
             dancers = [None; 9];
             bar_ends_go(cx);
+            // The taps go with the other objects, until the stage's $4D13
+            // puts them back (tapper_flow).
+            if let Some(tk) = cx.kind("tap") {
+                let taps: Vec<(usize, Body)> =
+                    cx.world.bodies.iter().enumerate().filter(|(_, b)| b.kind == tk).map(|(i, b)| (i, *b)).collect();
+                for (id, mut t) in taps {
+                    t.y = Fx::ZERO;
+                    cx.set_body(id, t);
+                }
+            }
             if let Some(pk) = player_k
                 && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == pk)
             {
@@ -2806,6 +2816,29 @@ impl Ext for Bars {
             let intro = if left > 0 { total - left + 1 } else { 0 };
             if cx.counter("intro") != Some(intro) {
                 cx.set_counter("intro", intro);
+            }
+            // $5512, a game's first level: on the intro's frame 2 it copies
+            // six sprites into the customer slots ($5567, from $55DC: y,
+            // flags, picture, x each), and 100 frames on ($5575) $5F31
+            // empties them.
+            if cleared == 0
+                && let Some(lk) = cx.kind("legend")
+            {
+                if intro == 2 {
+                    let objs = cx.table("instr_objects").to_vec();
+                    for o in objs.chunks(4).filter(|o| o.len() == 4 && o[0] != 0) {
+                        let mut b = gp_sim::systems::new_body(cx.spec, cx.world, lk, Fx::from_int(o[3]), Fx::from_int(o[0]), false);
+                        b.ext[1] = o[1];
+                        b.ext[2] = o[2];
+                        end_spawn.push(b);
+                    }
+                } else if intro == 102 || intro == 0 {
+                    let ids: Vec<usize> =
+                        cx.world.bodies.iter().enumerate().filter(|(_, b)| b.alive && b.kind == lk).map(|(i, _)| i).collect();
+                    for id in ids {
+                        cx.remove(id);
+                    }
+                }
             }
             if left <= 0 {
                 // $4B6E's $5DF6 draws the level's stage, its screen's
