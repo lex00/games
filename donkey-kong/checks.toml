@@ -1,0 +1,19 @@
+# What gameprinter's own checks play on this game. gameprinter knows no
+# game by name: its checks find this folder in the games checkout and read
+# the game's facts here and in corpus.toml, roms.toml and profiles.toml.
+
+# gameprinter's crates/gp-cli/tests/profiles.rs (`just check-roms`): the
+# preset `profile` (profiles.toml) on corpus clip `clip` replays to its own
+# state hashes, and none of them is retro's. The clip runs more than
+# `min_frames` frames from power-on: here Mario takes the hammer and
+# swings it while he walks.
+[profiles]
+profile = "normal"
+clip = "dk.hammer.005"
+min_frames = 9000
+
+# gameprinter's crates/gp-cli/tests/clip_agree.rs (`just check-roms`):
+# `gp clip score` and `gp corpus score` agree on these corpus clips. A
+# short walk, and a hammer clip with a presses file and random draws.
+[clip_agree]
+clips = ["dk.walk.001", "dk.hammer.005"]

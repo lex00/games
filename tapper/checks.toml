@@ -1,0 +1,22 @@
+# What gameprinter's own checks play on this game. gameprinter knows no
+# game by name: its checks find this folder in the games checkout and read
+# the game's facts here and in roms.toml, package.toml and labels.toml.
+
+# The mechanic page check (gameprinter's scripts/web/check-mechanic.mjs,
+# its arcade part). It plays the package's `play` set (package.toml), and
+# its ROM set picker starts on the `scored` one. The clip it records must
+# be play: on every frame of it the label `playing` names (labels.toml)
+# reads `value`, and the label `moves` names takes two values or more,
+# none over `max`. Its input logs have the board's `columns`, and the
+# page's X key presses the column `button`.
+[mechanic_page]
+playing = { label = "mode", value = 0 }
+moves = { label = "bar", max = 3 }
+columns = "CSRLDUT"
+button = "T"
+
+# gameprinter's `just web-parity-arcade` (its scripts/web/parity-arcade.sh):
+# the model in the page's player against the native run on these corpus
+# clips, from the original's state at each one's start.
+[web_parity]
+clips = ["tapper.l1.001", "tapper.die.001", "tapper.clear.001"]
