@@ -1961,6 +1961,54 @@ fn bar_ends_go(cx: &mut ExtCx<'_>) {
     }
 }
 
+/// The frame's palette cycles ($01CC, from the interrupt every frame while
+/// E410 is set): a step of the running lists when their wait (E121) goes
+/// below 0, the step's colour written and its frames waited; a list's 0
+/// starts it again ($01ED). The punk bar's lamps (cycle_lamps) and the
+/// space bar's three lights, whose lists step together (cycle_space_1 gives
+/// their frames). A setup's $5EA9 starts them on the frame after it asked
+/// (cycle_on 2); the looks write the colours of the step last written.
+fn palette_cycles(cx: &mut ExtCx<'_>) {
+    let c = |cx: &ExtCx<'_>, n: &str| cx.counter(n).unwrap_or(0);
+    let (mut on, mut list, mut index, mut wait, mut step) =
+        (c(cx, "cycle_on"), c(cx, "cycle_list"), c(cx, "cycle_index"), c(cx, "cycle_wait"), c(cx, "cycle_step"));
+    // A clip's start loads the pointer's low byte and the list's start:
+    // the step the pointer stands at, from them.
+    let start = c(cx, "cycle_start");
+    if start != 0 {
+        index = ((index - start) & 0xff) / 3;
+        step = index;
+        let shown = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).map_or(0, |b| (b.ext[3] >> 8) & 3);
+        list = if on != 0 && shown >= 2 { shown } else { 0 };
+        cx.set_counter("cycle_start", 0);
+    }
+    if on == 1 && list >= 2 {
+        let rows = cx.table(if list == 2 { "cycle_lamps" } else { "cycle_space_1" }).to_vec();
+        wait = (wait - 1) & 0xff;
+        if wait >= 0x80 {
+            let row = |i: i64| rows.get(usize::try_from(i * 3).unwrap_or(usize::MAX)).copied().unwrap_or(0);
+            let mut i = index;
+            if row(i) == 0 {
+                i = 0;
+            }
+            wait = row(i);
+            step = i + 1;
+            index = i + 1;
+        }
+    } else if on == 2 {
+        // $5EA9, the frame after the setup's $5E99: the lists from their
+        // start, stepped from the next frame.
+        on = 1;
+        index = 0;
+        wait = 0;
+    }
+    for (n, v) in [("cycle_on", on), ("cycle_list", list), ("cycle_index", index), ("cycle_wait", wait), ("cycle_step", step)] {
+        if cx.counter(n) != Some(v) {
+            cx.set_counter(n, v);
+        }
+    }
+}
+
 /// The counter screen from the counter stage: $5DF6 takes the stage's
 /// word from the words at $61ED (stage_screens, lifted) and loads the
 /// screen it names; the looks list the screens by address, so the screen
@@ -2096,6 +2144,7 @@ impl Ext for Bars {
             return;
         };
         set_screen(cx);
+        palette_cycles(cx);
         // The attract mode (E3BD 1) plays the demo's game, which isn't
         // modelled (tapper_flow keeps its time).
         if cx.counter("mode") == Some(1) {
@@ -2254,6 +2303,13 @@ impl Ext for Bars {
             // from $4B34).
             let shown_now = (fb.ext[3] >> 8) & 3;
             ask(cx, "sound_game", &[0x67, 0x11B, 0x13D + shown_now]);
+            // $4C4B's $4937: the punk bar's and the space bar's setups
+            // empty the palette cycles ($5E99) and add their own on the
+            // next frame ($5EA9); the others leave them as they are.
+            if shown_now >= 2 {
+                cx.set_counter("cycle_on", 2);
+                cx.set_counter("cycle_list", shown_now);
+            }
             // 4: the setup's frame, for tapper_bartender (play from the
             // next); tapper_flow clears it.
             fb.ext[2] = 4;
@@ -2545,6 +2601,10 @@ impl Ext for Bars {
         } else if (state == 15 || state == 16 || state == 12) && lost_sub == 11 && let Some((fid, mut fb)) = flow {
             let c = ((fb.ext[3] >> 24) & 0xffff) + 1;
             let sports = (fb.ext[3] >> 8) & 3 == 1;
+            if c == 121 && !sports {
+                // $24E2's $5E99 empties the palette cycles.
+                cx.set_counter("cycle_on", 0);
+            }
             let st = if c == 122 || (c == 121 && sports) {
                 13
             } else if c == 121 {
@@ -2637,6 +2697,7 @@ impl Ext for Bars {
                     // frame wait), so $24CC comes a frame later
                     // (tapper.l13.001: E6FF 3 on 19599, state 9 on 19601).
                     next_sub = 6;
+                    cx.set_counter("cycle_on", 0);
                 }
                 _ => {
                     // $24CC: back to the level's setup (lives left; game
@@ -3209,6 +3270,8 @@ impl Ext for Bars {
             && let Some((fid, mut fb)) = flow
             && (fb.ext[3] >> 16) & 0xff == 2
         {
+            // $2B82's $5E99 empties the palette cycles.
+            cx.set_counter("cycle_on", 0);
             // $230F: $49E5 and its $2B82, which waits a frame ($5E99),
             // puts the game in its game over (E3BD 2, $2B90, on the frame
             // after the objects go) and, the score having a place in the

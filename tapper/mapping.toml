@@ -434,6 +434,30 @@ entity = "bartender_part"
 ids = [0]
 
 [[field]]
+note = "Not compared: 1 while the palette cycles run ($01CC). Loaded so a clip's start shows the lamps as they stand"
+path = "counters.cycle_on"
+presentation = true
+ram = [0xE410]
+
+[[field]]
+note = "Not compared: the frames to the cycles' next step (E11A + 7). Loaded so a clip's start shows the lamps as they stand"
+path = "counters.cycle_wait"
+presentation = true
+ram = [0xE121]
+
+[[field]]
+note = "Not compared: the cycles' pointer's low byte (E11A + 5); the hooks count its step from cycle_start. Loaded so a clip's start shows the lamps as they stand"
+path = "counters.cycle_index"
+presentation = true
+ram = [0xE11F]
+
+[[field]]
+note = "Not compared: the cycles' list start's low byte (E11A + 3). Loaded so a clip's start shows the lamps as they stand"
+path = "counters.cycle_start"
+presentation = true
+ram = [0xE11D]
+
+[[field]]
 note = "Not compared: the customers' walk a frame, E3B3 ($117F); the throws to the next tip E72E and the level's tips left E72F ($20DE); the tips setting E006, copied from the program's defaults at boot ($0517)"
 path = "entities.bars[0].ext[0]"
 presentation = true

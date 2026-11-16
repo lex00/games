@@ -545,6 +545,42 @@ description = "Each customer slot's first object, 8 bytes a slot, copied in by i
 source = "tapper"
 asset = "customer_starts"
 
+[assets.cycle_lamps]
+kind = "rows"
+role = "graphics"
+description = "A palette cycle: the punk bar's lamps ($4942): 3-byte steps, frames to wait, the offset from the base F8A2 and the colour"
+
+[assets.cycle_lamps.from]
+source = "tapper"
+asset = "cycle_lamps"
+
+[assets.cycle_space_1]
+kind = "rows"
+role = "graphics"
+description = "A palette cycle: the space bar's first light ($494F, base F8A2)"
+
+[assets.cycle_space_1.from]
+source = "tapper"
+asset = "cycle_space_1"
+
+[assets.cycle_space_2]
+kind = "rows"
+role = "graphics"
+description = "A palette cycle: the space bar's second light ($495B, base F8A4)"
+
+[assets.cycle_space_2.from]
+source = "tapper"
+asset = "cycle_space_2"
+
+[assets.cycle_space_3]
+kind = "rows"
+role = "graphics"
+description = "A palette cycle: the space bar's third light ($4964, base F8BA)"
+
+[assets.cycle_space_3.from]
+source = "tapper"
+asset = "cycle_space_3"
+
 [assets.defaults]
 kind = "rows"
 role = "behavior"
@@ -1438,6 +1474,8 @@ beer_pic_spray = "beer_pic_spray"
 bonus_bandit_places = "bonus_bandit_places"
 bonus_objects = "bonus_objects"
 customer_starts = "customer_starts"
+cycle_lamps = "cycle_lamps"
+cycle_space_1 = "cycle_space_1"
 defaults = "defaults"
 end_script_lists = "end_script_lists"
 fall_crash_pictures = "fall_crash_pictures"
@@ -3894,6 +3932,11 @@ column = 1
 row = 2
 slot = "bar_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+slot = "cycle_lamps"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -3903,6 +3946,335 @@ value = 0
 cmp = "=="
 counter = "shown"
 value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_saloon"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 1
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 0
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_saloon"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 2
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 0
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_saloon"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 3
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 0
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 4
+
+[[levels.main.present.board.looks]]
+screen = "screen_saloon"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 0
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_saloon"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 0
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_saloon"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 1
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 1
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 1
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 0
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_saloon"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 0
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
 
 [[levels.main.present.board.looks]]
 screen = "screen_saloon"
@@ -4007,6 +4379,11 @@ column = 1
 row = 2
 slot = "bar_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+slot = "cycle_lamps"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -4016,6 +4393,335 @@ value = 1
 cmp = "=="
 counter = "shown"
 value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_69a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 1
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_69a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 2
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_69a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 3
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 4
+
+[[levels.main.present.board.looks]]
+screen = "screen_69a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_69a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_69a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 1
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 1
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 1
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_69a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
 
 [[levels.main.present.board.looks]]
 screen = "screen_69a1"
@@ -4120,6 +4826,11 @@ column = 1
 row = 2
 slot = "bar_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+slot = "cycle_lamps"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -4129,6 +4840,335 @@ value = 2
 cmp = "=="
 counter = "shown"
 value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_7121"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 1
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_7121"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 2
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_7121"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 3
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 4
+
+[[levels.main.present.board.looks]]
+screen = "screen_7121"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_7121"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_7121"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 1
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 1
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 1
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_7121"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
 
 [[levels.main.present.board.looks]]
 screen = "screen_7121"
@@ -4233,6 +5273,11 @@ column = 1
 row = 2
 slot = "bar_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+slot = "cycle_lamps"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -4242,6 +5287,335 @@ value = 3
 cmp = "=="
 counter = "shown"
 value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_78a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 1
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_78a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 2
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_78a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 3
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 4
+
+[[levels.main.present.board.looks]]
+screen = "screen_78a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_78a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_78a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 1
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 1
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 1
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_78a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
 
 [[levels.main.present.board.looks]]
 screen = "screen_78a1"
@@ -4346,6 +5720,11 @@ column = 1
 row = 2
 slot = "bar_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+slot = "cycle_lamps"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -4355,6 +5734,335 @@ value = 4
 cmp = "=="
 counter = "shown"
 value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_8021"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 1
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 4
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_8021"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 2
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 4
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_8021"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 3
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 4
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 4
+
+[[levels.main.present.board.looks]]
+screen = "screen_8021"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 4
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_8021"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 4
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_8021"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 1
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 1
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 1
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 4
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_8021"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 4
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
 
 [[levels.main.present.board.looks]]
 screen = "screen_8021"
@@ -4459,6 +6167,11 @@ column = 1
 row = 2
 slot = "bar_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+slot = "cycle_lamps"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -4468,6 +6181,335 @@ value = 5
 cmp = "=="
 counter = "shown"
 value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_87a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 1
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 5
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_87a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 2
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 5
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_87a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 3
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 5
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 4
+
+[[levels.main.present.board.looks]]
+screen = "screen_87a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 5
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_87a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 5
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_87a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 1
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 1
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 1
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 5
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_87a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 5
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
 
 [[levels.main.present.board.looks]]
 screen = "screen_87a1"
@@ -4572,6 +6614,11 @@ column = 1
 row = 2
 slot = "bar_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+slot = "cycle_lamps"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -4581,6 +6628,335 @@ value = 6
 cmp = "=="
 counter = "shown"
 value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_8f21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 1
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 6
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_8f21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 2
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 6
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_8f21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 3
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 6
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 4
+
+[[levels.main.present.board.looks]]
+screen = "screen_8f21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 6
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_8f21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 6
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_8f21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 1
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 1
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 1
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 6
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_8f21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 6
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
 
 [[levels.main.present.board.looks]]
 screen = "screen_8f21"
@@ -4685,6 +7061,11 @@ column = 1
 row = 2
 slot = "bar_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+slot = "cycle_lamps"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -4694,6 +7075,335 @@ value = 7
 cmp = "=="
 counter = "shown"
 value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_96a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 1
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 7
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_96a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 2
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 7
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_96a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 3
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 7
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 4
+
+[[levels.main.present.board.looks]]
+screen = "screen_96a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 7
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_96a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 7
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_96a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 1
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 1
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 1
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 7
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_96a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 7
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
 
 [[levels.main.present.board.looks]]
 screen = "screen_96a1"
@@ -4798,6 +7508,11 @@ column = 1
 row = 2
 slot = "bar_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+slot = "cycle_lamps"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -4807,6 +7522,335 @@ value = 8
 cmp = "=="
 counter = "shown"
 value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_9e21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 1
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 8
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_9e21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 2
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 8
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_9e21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 3
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 8
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 4
+
+[[levels.main.present.board.looks]]
+screen = "screen_9e21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 8
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_9e21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 8
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_9e21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 1
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 1
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 1
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 8
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_9e21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 8
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
 
 [[levels.main.present.board.looks]]
 screen = "screen_9e21"
@@ -4911,6 +7955,11 @@ column = 1
 row = 2
 slot = "bar_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+slot = "cycle_lamps"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -4920,6 +7969,335 @@ value = 9
 cmp = "=="
 counter = "shown"
 value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_a5a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 1
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 9
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_a5a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 2
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 9
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
+
+[[levels.main.present.board.looks]]
+screen = "screen_a5a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+column = 2
+row = 3
+slot = "cycle_lamps"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 9
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 4
+
+[[levels.main.present.board.looks]]
+screen = "screen_a5a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 2
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 9
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_a5a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 9
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 1
+
+[[levels.main.present.board.looks]]
+screen = "screen_a5a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 1
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 1
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 1
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 9
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 2
+
+[[levels.main.present.board.looks]]
+screen = "screen_a5a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 108
+column = 1
+row = 3
+slot = "bar_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 5
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 10
+slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+column = 2
+row = 2
+slot = "cycle_space_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+column = 2
+row = 2
+slot = "cycle_space_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
+column = 2
+row = 2
+slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 9
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "shown"
+value = 3
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "cycle_step"
+value = 3
 
 [[levels.main.present.board.looks]]
 screen = "screen_a5a1"
@@ -5571,6 +8949,24 @@ description = "Coins put in toward the next credit, E012 ($0242 to $0255): at th
 [counters.credits]
 description = "Credits, E011: one more at each coin with the defaults' coinage ($024C to $0253), at most 9 ($0164), one less at a one-player start ($5860)"
 
+[counters.cycle_index]
+description = "The next step of the cycles' lists, as their pointer (E11F) stands from their start (E11D), 3 bytes a step"
+
+[counters.cycle_list]
+description = "The cycles running: 2 the punk bar's lamps, 3 the space bar's three lights, as the setup's $4937 chose them by the bar shown; 0 none"
+
+[counters.cycle_on]
+description = "1 while the frame's palette cycles run ($01CC, E410): set by $5EA9 as a punk or space bar's setup adds them ($4937), 0 after $5E99 empties them (a life lost outside the sports bar, $24C0; the game over, $24E2)"
+
+[counters.cycle_start]
+description = "The low byte of the cycles' list start (E11D) as a clip's start loads it, so the hooks can count the pointer's step from it; 0 once counted"
+
+[counters.cycle_step]
+description = "The step of the cycles last written, plus 1 (the looks write its colours); 0 before the first"
+
+[counters.cycle_wait]
+description = "The frames to the cycles' next step, E121 ($01E1 counts it down; at below 0 the step's colour is written and the step's frames begin)"
+
 [counters.lives]
 description = "Lives, E4A7: 3 at a game's start ($4B22), one less when a life is lost ($23AF), one more at each extra-life score ($615D)"
 
@@ -6064,6 +9460,38 @@ confidence = 80
 note = "Found with gp code listing and gp code tables on tapper.l8.001; the asset map gives its place in each set"
 
 [[evidence."assets.customer_starts".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."assets.cycle_lamps"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.l8.001's log: $020C writes palette RAM F8A3 (F823 mirrored) through the punk bar's lamp list, a step every 9 frames; gp code listing shows $4937's setups for the bar shown and the lists' places in rbtapper ($4AD2 to $4AFA)"
+
+[[evidence."assets.cycle_lamps".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."assets.cycle_space_1"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.l8.001's log: $020C writes palette RAM F8A3 (F823 mirrored) through the punk bar's lamp list, a step every 9 frames; gp code listing shows $4937's setups for the bar shown and the lists' places in rbtapper ($4AD2 to $4AFA)"
+
+[[evidence."assets.cycle_space_1".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."assets.cycle_space_2"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.l8.001's log: $020C writes palette RAM F8A3 (F823 mirrored) through the punk bar's lamp list, a step every 9 frames; gp code listing shows $4937's setups for the bar shown and the lists' places in rbtapper ($4AD2 to $4AFA)"
+
+[[evidence."assets.cycle_space_2".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."assets.cycle_space_3"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.l8.001's log: $020C writes palette RAM F8A3 (F823 mirrored) through the punk bar's lamp list, a step every 9 frames; gp code listing shows $4937's setups for the bar shown and the lists' places in rbtapper ($4AD2 to $4AFA)"
+
+[[evidence."assets.cycle_space_3".refs]]
 at = "clip:tapper.l8.001"
 
 [evidence."assets.defaults"]

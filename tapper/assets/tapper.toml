@@ -994,6 +994,55 @@ width = 1
 [asset.at]
 rbtapper = 0x289C
 
+# The palette cycles a level's setup starts ($4937, by the bar shown; the
+# frame's $01CC steps them): lists of 3-byte steps, frames to wait, the
+# byte's offset from the cycle's base and the colour byte, to a 0 that
+# starts the list again ($01ED). The punk bar's lamps ($4942) and the space
+# bar's three ($494F).
+[[asset]]
+name = "cycle_lamps"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4978
+count = 5
+width = 3
+
+[asset.at]
+rbtapper = 0x4B08
+
+[[asset]]
+name = "cycle_space_1"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4985
+count = 4
+width = 3
+
+[asset.at]
+rbtapper = 0x4B15
+
+[[asset]]
+name = "cycle_space_2"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x498F
+count = 4
+width = 3
+
+[asset.at]
+rbtapper = 0x4B1F
+
+[[asset]]
+name = "cycle_space_3"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4999
+count = 4
+width = 3
+
+[asset.at]
+rbtapper = 0x4B29
+
 # The logo's colours ($3D76): palette RAM's F840 and F84C set ($3D79, $3D7E),
 # F822 to F83D zeroed, then from 16 frames on each of the twelve odd bytes
 # from F823 lit ($FF, $3DA4) and, six frames later, dimmed ($C4, $3DA2), the
