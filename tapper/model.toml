@@ -275,6 +275,42 @@ description = "The level's end scripts by the game's draw E3ED and the levels cl
 source = "tapper"
 asset = "end_script_lists"
 
+[assets.fall_crash_pictures]
+kind = "rows"
+role = "graphics"
+description = "The life lost: a fallen mug's crash, a picture a frame ($242A, the table at $24F4)"
+
+[assets.fall_crash_pictures.from]
+source = "tapper"
+asset = "fall_crash_pictures"
+
+[assets.fall_picture_crash]
+kind = "rows"
+role = "graphics"
+description = "The life lost: a fallen mug's picture after its rise ($2407)"
+
+[assets.fall_picture_crash.from]
+source = "tapper"
+asset = "fall_picture_crash"
+
+[assets.fall_picture_empty]
+kind = "rows"
+role = "graphics"
+description = "The life lost: an empty mug's picture as it falls ($23B0)"
+
+[assets.fall_picture_empty.from]
+source = "tapper"
+asset = "fall_picture_empty"
+
+[assets.fall_picture_full]
+kind = "rows"
+role = "graphics"
+description = "The life lost: a full mug's picture as it falls ($23E6)"
+
+[assets.fall_picture_full.from]
+source = "tapper"
+asset = "fall_picture_full"
+
 [assets.hop_steps]
 kind = "rows"
 role = "behavior"
@@ -973,6 +1009,10 @@ arrivals = "arrivals"
 bar_ends = "bar_ends"
 customer_starts = "customer_starts"
 end_script_lists = "end_script_lists"
+fall_crash_pictures = "fall_crash_pictures"
+fall_picture_crash = "fall_picture_crash"
+fall_picture_empty = "fall_picture_empty"
+fall_picture_full = "fall_picture_full"
 hop_steps = "hop_steps"
 level_times = "level_times"
 mug_flags = "mug_flags"
@@ -5152,6 +5192,38 @@ note = "gp code listing on tapper.l1.001 and tapper.l7.001: a level's end ($55F4
 
 [[evidence."assets.end_script_lists".refs]]
 at = "clip:tapper.l7.001"
+
+[evidence."assets.fall_crash_pictures"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $236E to $243A, the life lost: the fallen mug (E71B) gets its picture there, rises 2 a frame for 13 frames, then crashes through the table at $24F4 a frame a picture while E709 counts 12 down; the same code and offsets in every set"
+
+[[evidence."assets.fall_crash_pictures".refs]]
+at = "clip:tapper.die.001"
+
+[evidence."assets.fall_picture_crash"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $236E to $243A, the life lost: the fallen mug (E71B) gets its picture there, rises 2 a frame for 13 frames, then crashes through the table at $24F4 a frame a picture while E709 counts 12 down; the same code and offsets in every set"
+
+[[evidence."assets.fall_picture_crash".refs]]
+at = "clip:tapper.die.001"
+
+[evidence."assets.fall_picture_empty"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $236E to $243A, the life lost: the fallen mug (E71B) gets its picture there, rises 2 a frame for 13 frames, then crashes through the table at $24F4 a frame a picture while E709 counts 12 down; the same code and offsets in every set"
+
+[[evidence."assets.fall_picture_empty".refs]]
+at = "clip:tapper.die.001"
+
+[evidence."assets.fall_picture_full"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $236E to $243A, the life lost: the fallen mug (E71B) gets its picture there, rises 2 a frame for 13 frames, then crashes through the table at $24F4 a frame a picture while E709 counts 12 down; the same code and offsets in every set"
+
+[[evidence."assets.fall_picture_full".refs]]
+at = "clip:tapper.die.001"
 
 [evidence."assets.hop_steps"]
 source = "observed"

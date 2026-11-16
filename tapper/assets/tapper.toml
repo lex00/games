@@ -464,6 +464,41 @@ width = 1
 [asset.at]
 rbtapper = 0x4C71
 
+# A fallen mug's pictures ($236E, the life lost): $10 for an empty one
+# ($23B0), $14 for a full one ($23E6); after its 13-frame rise $11 ($2407),
+# then the crash, a picture a frame from the 11 at $24F4 ($242A).
+[[asset]]
+name = "fall_picture_empty"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x23B1
+count = 1
+width = 1
+
+[[asset]]
+name = "fall_picture_full"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x23E9
+count = 1
+width = 1
+
+[[asset]]
+name = "fall_picture_crash"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2408
+count = 1
+width = 1
+
+[[asset]]
+name = "fall_crash_pictures"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x24F4
+count = 11
+width = 1
+
 # A mug's sprite: the send ($13CC) gives a full mug flags $03 ($14A1),
 # $13 moving left ($14C8), and picture $0E ($14A5); the move ($07B1)
 # flips a full mug's picture between $0E and $16 ($07BE) every 6 frames;

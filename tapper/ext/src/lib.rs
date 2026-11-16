@@ -2015,6 +2015,14 @@ impl Ext for Bars {
                     dancers = [None; 9];
                     e706 = 13;
                     next_sub = 1;
+                    // $23B0 to $23E6: the fallen mug's picture, $10
+                    // empty, $14 full (bit 0 of its +4).
+                    let one = |n: &str| cx.table(n).first().copied().unwrap_or(0);
+                    let (empty_pic, full_pic) = (one("fall_picture_empty"), one("fall_picture_full"));
+                    for (_, b) in bodies.iter_mut().filter(|(_, b)| b.kind == mug_k && b.ext[3] & 0x100 != 0) {
+                        let pic = if b.ext[3] & 1 != 0 { empty_pic } else { full_pic };
+                        b.ext[0] = (b.ext[0] & !0xff00) | (pic << 8);
+                    }
                     // $23EA: the mug's fall asks for $1A (the
                     // `sound_life` rows are the program from $23EA).
                     ask(cx, "sound_life", &[0x01]);
@@ -2032,6 +2040,11 @@ impl Ext for Bars {
                         e706 = 1;
                         e709 = 12;
                         next_sub = 2;
+                        // $2407: after its rise, picture $11.
+                        let pic = cx.table("fall_picture_crash").first().copied().unwrap_or(0);
+                        for (_, b) in bodies.iter_mut().filter(|(_, b)| b.kind == mug_k && b.ext[3] & 0x100 != 0) {
+                            b.ext[0] = (b.ext[0] & !0xff00) | (pic << 8);
+                        }
                         // $2402: its crash asks for $1B.
                         ask(cx, "sound_life", &[0x19]);
                     }
@@ -2041,6 +2054,16 @@ impl Ext for Bars {
                     e709 = (e709 - 1) & 0xff;
                     if e709 == 0 {
                         next_sub = 3;
+                    } else {
+                        // $242A: the crash, a picture a frame from the
+                        // table at $24F4 (its +5 counts them, from 0 as
+                        // E709 counts 11 down).
+                        let k = usize::try_from(11 - e709).unwrap_or(0);
+                        if let Some(&pic) = cx.table("fall_crash_pictures").get(k) {
+                            for (_, b) in bodies.iter_mut().filter(|(_, b)| b.kind == mug_k && b.ext[3] & 0x100 != 0) {
+                                b.ext[0] = (b.ext[0] & !0xff00) | (pic << 8);
+                            }
+                        }
                     }
                 }
                 3 if (fb.ext[3] >> 8) & 3 != 1 => {
