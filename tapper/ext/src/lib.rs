@@ -655,6 +655,13 @@ impl Bartender {
                                 // $1486 to $14C4: its flags, the bar above
                                 // and bit 3 from a tap on the left.
                                 b.ext[3] = (bar << 4) | if left { 8 } else { 0 };
+                                // $14A1 to $14C8: its sprite's flags ($13
+                                // moving left) and picture; $14D6: 6 frames
+                                // to its next picture (+5).
+                                let one = |n: &str| cx.table(n).first().copied().unwrap_or(0);
+                                let flags = if left { one("mug_flags_left") } else { one("mug_flags") };
+                                b.ext[0] = flags | (one("mug_picture_full") << 8);
+                                b.ext[1] = one("mug_flip_frames") << 8;
                                 cx.spawn(mug, b.x, b.y, b.facing_left);
                                 cx.set_body(id, b);
                                 // $14DB: the mug sent asks for $12.
@@ -2730,11 +2737,25 @@ impl Ext for Bars {
             let bar = (b.ext[3] >> 4) & 3;
             let left_tap = b.ext[3] & 8 != 0;
             let empty = b.ext[3] & 1 != 0;
+            if !empty {
+                let left = ((b.ext[1] >> 8) - 1) & 0xff;
+                let left = if left == 0 {
+                    let one = |n: &str| cx.table(n).first().copied().unwrap_or(0);
+                    let full = one("mug_picture_full");
+                    let pic = (b.ext[0] >> 8) & 0xff;
+                    let next = if pic == full { one("mug_picture_slosh") } else { full };
+                    b.ext[0] = (b.ext[0] & 0xff) | (next << 8);
+                    one("mug_flip_frames")
+                } else {
+                    left
+                };
+                b.ext[1] = (b.ext[1] & 0xff) | (left << 8);
+            }
             let x16 = b.x.floor() * 256 + (b.ext[1] & 0xff);
             let speed = if empty { empty_speed * 256 } else { full_speed };
             let x16 = if left_tap { x16 - speed } else { x16 + speed };
             b.x = Fx::from_int((x16 >> 8) & 0xff);
-            b.ext[1] = x16 & 0xff;
+            b.ext[1] = (b.ext[1] & !0xff) | (x16 & 0xff);
             let h = b.x.floor();
             let (lo, hi) = Self::ends(cx, bar);
             let falls = match (empty, left_tap) {
@@ -2878,6 +2899,11 @@ impl Ext for Bars {
                             // above, empty, and moving left on a bar whose
                             // tap is on the left.
                             let flags = (rec_bar << 4) | 1 | if facing == 1 { 8 } else { 0 };
+                            // $1100 to $111F: its sprite's picture and
+                            // flags ($13 moving left).
+                            let one = |n: &str| cx.table(n).first().copied().unwrap_or(0);
+                            let sprite = if facing == 1 { one("mug_flags_left") } else { one("mug_flags") }
+                                | (one("mug_picture_empty") << 8);
                             if let Some(n) = (0..9).find(|&n| !held(n)) {
                                 let (x, y) = (Fx::from_int(hx & 0xff), Fx::from_int(c.y.floor() - 3));
                                 if let Some(j) = bodies.iter().position(|(id, b)| {
@@ -2890,10 +2916,12 @@ impl Ext for Bars {
                                     b.y = y;
                                     b.facing_left = facing == 1;
                                     b.ext[3] = flags;
+                                    b.ext[0] = sprite;
                                 } else {
                                     let mut b = gp_sim::systems::new_body(cx.spec, cx.world, mug_k, x, y, facing == 1);
                                     b.ext[2] = n + 1;
                                     b.ext[3] = flags;
+                                    b.ext[0] = sprite;
                                     throws.push(b);
                                 }
                             }
@@ -3183,6 +3211,7 @@ impl Ext for Bars {
                 let bar = Self::bar_of(cx, y);
                 let left = layout & (1 << bar) != 0;
                 let x = if left { 0xEE - x0 } else { x0 };
+                let shown = usize::try_from(flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 3)).unwrap_or(0);
                 let mut c = gp_sim::systems::new_body(cx.spec, cx.world, cust_k, Fx::from_int(x), Fx::from_int(y), left);
                 // $1B58: waiting, for 16 frames and a draw of 0 to 16.
                 let r = draw_at_most(cx, "arrival_wait", 16);
@@ -3191,10 +3220,12 @@ impl Ext for Bars {
                 // whose tap is on the left (bit 4), in bytes 2 and 3 for
                 // its board sprite; how a customer's picture changes as it
                 // walks and drinks isn't modelled.
-                let flags = row[1] | if left { 0x10 } else { 0 };
+                // $1B58: its flags' low nibble is its record's +07 (its
+                // colours), over the start row's, mirrored ($190F).
+                let rec7 = cx.table("record_blocks").get((shown * 16 + k) * 32 + 7).copied().unwrap_or(row[1] & 0xf);
+                let flags = ((row[1] | if left { 0x10 } else { 0 }) & 0xf0) | rec7;
                 // $161B: its picture is its record's +10, not the start
                 // row's.
-                let shown = usize::try_from(flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 3)).unwrap_or(0);
                 let pic = cx.table("record_blocks").get((shown * 16 + k) * 32 + 0x10).copied().unwrap_or(row[2]);
                 c.ext[0] = (i64::from(left) << 8) | (flags << 16) | (pic << 24);
                 c.ext[1] = r + 16;

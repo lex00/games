@@ -365,6 +365,60 @@ description = "The logo's colours: the zero $3D76 writes into palette RAM's F840
 source = "tapper"
 asset = "logo_color_zero"
 
+[assets.mug_flags]
+kind = "rows"
+role = "graphics"
+description = "The mugs: a mug's sprite flags as the send ($14A1) and the throw ($1104) set them"
+
+[assets.mug_flags.from]
+source = "tapper"
+asset = "mug_flags"
+
+[assets.mug_flags_left]
+kind = "rows"
+role = "graphics"
+description = "The mugs: a mug's sprite flags moving left, as the send ($14C8) and the throw ($111F) set them"
+
+[assets.mug_flags_left.from]
+source = "tapper"
+asset = "mug_flags_left"
+
+[assets.mug_flip_frames]
+kind = "rows"
+role = "graphics"
+description = "The mugs: the frames between a full mug's pictures, as the move counts them ($07C7; the send's $14D6 starts the count the same)"
+
+[assets.mug_flip_frames.from]
+source = "tapper"
+asset = "mug_flip_frames"
+
+[assets.mug_picture_empty]
+kind = "rows"
+role = "graphics"
+description = "The mugs: an empty mug's picture, as the throw sets it ($1100)"
+
+[assets.mug_picture_empty.from]
+source = "tapper"
+asset = "mug_picture_empty"
+
+[assets.mug_picture_full]
+kind = "rows"
+role = "graphics"
+description = "The mugs: a full mug's picture, as the send sets it ($14A5)"
+
+[assets.mug_picture_full.from]
+source = "tapper"
+asset = "mug_picture_full"
+
+[assets.mug_picture_slosh]
+kind = "rows"
+role = "graphics"
+description = "The mugs: a full mug's other picture, which the move flips it to every 6 frames ($07BE)"
+
+[assets.mug_picture_slosh.from]
+source = "tapper"
+asset = "mug_picture_slosh"
+
 [assets.points_bonus]
 kind = "rows"
 role = "behavior"
@@ -921,6 +975,12 @@ customer_starts = "customer_starts"
 end_script_lists = "end_script_lists"
 hop_steps = "hop_steps"
 level_times = "level_times"
+mug_flags = "mug_flags"
+mug_flags_left = "mug_flags_left"
+mug_flip_frames = "mug_flip_frames"
+mug_picture_empty = "mug_picture_empty"
+mug_picture_full = "mug_picture_full"
+mug_picture_slosh = "mug_picture_slosh"
 points_bonus = "points_bonus"
 points_catch = "points_catch"
 points_level = "points_level"
@@ -1113,6 +1173,12 @@ bartender_tap = "bartender_tap"
 bartender_wait = "bartender_wait"
 bartender_walk_left = "bartender_walk_left"
 bartender_walk_right = "bartender_walk_right"
+mug_flags = "mug_flags"
+mug_flags_left = "mug_flags_left"
+mug_flip_frames = "mug_flip_frames"
+mug_picture_empty = "mug_picture_empty"
+mug_picture_full = "mug_picture_full"
+mug_picture_slosh = "mug_picture_slosh"
 
 [entities.player.hitbox]
 h = 16
@@ -1206,7 +1272,7 @@ size = [16, 16]
 slot = "board_sprites"
 
 [entities.tip.board_sprite.flags]
-number = 3
+number = 0
 
 [entities.tip.board_sprite.picture]
 number = 77
@@ -5166,6 +5232,54 @@ note = "gp-arcade's writes example on tapper/inputs/oracle/first.input, palette 
 
 [[evidence."assets.logo_color_zero".refs]]
 at = "clip:tapper.attract.001"
+
+[evidence."assets.mug_flags"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.l8.001's log: the send ($1498 to $14D8) writes the new mug's flags and picture, and the move ($07B1) flips a full mug's picture every 6 frames (+5); gp code listing shows the same bytes at rbtapper's offsets"
+
+[[evidence."assets.mug_flags".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."assets.mug_flags_left"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.l8.001's log: the send ($1498 to $14D8) writes the new mug's flags and picture, and the move ($07B1) flips a full mug's picture every 6 frames (+5); gp code listing shows the same bytes at rbtapper's offsets"
+
+[[evidence."assets.mug_flags_left".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."assets.mug_flip_frames"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.l8.001's log: the send ($1498 to $14D8) writes the new mug's flags and picture, and the move ($07B1) flips a full mug's picture every 6 frames (+5); gp code listing shows the same bytes at rbtapper's offsets"
+
+[[evidence."assets.mug_flip_frames".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."assets.mug_picture_empty"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.l8.001's log: the send ($1498 to $14D8) writes the new mug's flags and picture, and the move ($07B1) flips a full mug's picture every 6 frames (+5); gp code listing shows the same bytes at rbtapper's offsets"
+
+[[evidence."assets.mug_picture_empty".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."assets.mug_picture_full"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.l8.001's log: the send ($1498 to $14D8) writes the new mug's flags and picture, and the move ($07B1) flips a full mug's picture every 6 frames (+5); gp code listing shows the same bytes at rbtapper's offsets"
+
+[[evidence."assets.mug_picture_full".refs]]
+at = "clip:tapper.l8.001"
+
+[evidence."assets.mug_picture_slosh"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.l8.001's log: the send ($1498 to $14D8) writes the new mug's flags and picture, and the move ($07B1) flips a full mug's picture every 6 frames (+5); gp code listing shows the same bytes at rbtapper's offsets"
+
+[[evidence."assets.mug_picture_slosh".refs]]
+at = "clip:tapper.l8.001"
 
 [evidence."assets.points_bonus"]
 source = "observed"

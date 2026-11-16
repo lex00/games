@@ -141,10 +141,10 @@ ram = [0xE2FE]
 stride = 8
 
 [[slots.field]]
-note = "Not compared: the fraction of the mug's x, its slot's +6 ($07CF)"
+note = "Not compared: the fraction of the mug's x, its slot's +6 ($07CF), and the frames to a full mug's next picture, +5 ($07B1)"
 path = "ext[1]"
 presentation = true
-ram = [0xE304]
+ram = [0xE304, 0xE303]
 stride = 8
 
 [[slots.field]]
