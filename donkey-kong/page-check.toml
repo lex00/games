@@ -1,0 +1,216 @@
+# What the public page's check (the tools' scripts/web/public/check-page.mjs,
+# docs/web.md "Checks") holds this game to: facts about the game, never bytes
+# of it. The check reads this file from every game folder of the games
+# checkout (--games DIR, else $GP_GAMES_DIR, else `games` beside the tools).
+# Each [[route]] and [[load]] is keyed by `rom`, an id of roms.toml's
+# [[source]] (the lift's template of that ROM). Holds are theme-shots.toml's
+# syntax: "right+a@100-120" holds Right and A from frame 100 to 120, both
+# included. A route's `run` names theme-shots.toml's [[run]] whose holds and
+# frames it plays, so the presses are written once; a route may instead give
+# `holds` and `frames` of its own.
+
+[page]
+# What the header must never name, matched without case: the game's
+# characters.
+characters = ["mario", "pauline", "jumpman"]
+# The game's maker, which a page about another game must not name.
+owner = "Nintendo"
+
+# "What is this?" (check-page.mjs, what-is-this): a click on the player
+# names it by these words first. The section plays the first route's first
+# stage, past `after`.
+[what_is_this]
+player = "Mario"
+after = 900
+
+# Each ROM's game played from power-on through every stage it has, in the
+# real game's order (`plays`, the model's levels), to the last stage's
+# ending and the first stage a loop on. Each [[route.stage]] is one stage:
+# `level` the model's level that plays it, `start` a frame at its start
+# with the player standing at `player`, `shot` a frame of it with `kinds`
+# about, `clear` the frame the player finishes it (the stage counter moves
+# on: the goal on 25m, 50m and 75m, the last rivet on 100m), with the
+# player at a y of `top` or less. `ending` is a frame of the last stage's
+# ending with `kinds` about, and `again` a frame of the next loop's first
+# stage, with the player at its start. `left_out` names the rules and entity
+# kinds of the model the ROM's game hasn't, which the lifted model must not
+# have and no frame may show.
+#
+# Original Edition's run: 25m by the route `gp level measure --clears`
+# found (worker relfix, 2026-11-07), then the original's own presses from
+# dk.m100-clear.001's start (power-on to 100m's last rivet on the real
+# game) for 50m, dk.m75-clear.001's for 75m and dk.m100-clear.001's again
+# with that clip's own for 100m and the ending, each moved to the frame the
+# stage starts on in the model (gp interp run on the model, 2026-11-07).
+[[route]]
+rom = "donkey-kong-oe"
+run = "oe-route"
+plays = ["main", "m50", "m75", "m100"]
+ending = { frame = 6900, kinds = ["heart", "kong_fallen", "ending_mario"] }
+again = { frame = 7620, player = [53, 204] }
+# A game lost standing still at the first stage's start in a profile: its
+# last death ends in GAME OVER and the title, whose demo then walks the
+# player to `player` by `frame`. In Normal the last death held the game for
+# good until 2026-11-08 (quick_restart, profiles.toml). Since 2026-11-14
+# Normal's deaths play their whole spin (games bd0815f), so the demo walks
+# the player there 473 frames later than before.
+game_over = { profile = "normal", holds = ["start@40-44"], frames = 3500, frame = 3273, player = [195, 201] }
+
+[[route.stage]]
+name = "25m"
+level = "main"
+start = 550
+player = [53, 204]
+shot = 1200
+kinds = ["kong", "barrel", "oil_drum"]
+clear = 1754
+top = 40
+
+[[route.stage]]
+name = "50m"
+level = "m50"
+start = 2156
+player = [61, 204]
+shot = 2500
+kinds = ["kong_50m", "pie", "conveyor"]
+clear = 2852
+top = 60
+
+[[route.stage]]
+name = "75m"
+level = "m75"
+start = 3256
+player = [21, 188]
+shot = 3600
+kinds = ["kong_75m", "elevator", "spring"]
+clear = 4401
+top = 40
+
+[[route.stage]]
+name = "100m"
+level = "m100"
+start = 4807
+player = [61, 204]
+shot = 5600
+kinds = ["kong_100m", "fire"]
+clear = 6633
+top = 60
+
+# Deaths the route doesn't play: `holds` from power-on, the player dead by
+# frame `hit` at `at` (its body still there, the game holding), back at its
+# start `player` on `level` by frame `restart`, the game stepping on after.
+# This one: the route to 50m and up its second ladder (x 81), stopped a step
+# short of girder 3; a fire coming down from the middle conveyor meets the
+# player there (the owner, 2026-11-08: "scaling the top of the 2nd ladder,
+# fireball hit me, then the game froze").
+[[route.death]]
+name = "50m: a fire at the top of the ladder at x 81"
+level = "m50"
+holds = [
+  "start@40-44", "right@561-777", "up@778-847", "left@848-986", "up@987-1072", "right@1073-1091",
+  "up@1092-1177", "left@1178-1259", "right@1260-1277", "up@1278-1357", "right@1358-1520", "up@1521-1588",
+  "left@1589-1679", "up@1680-1753", "right@2156-2209", "up@2210-2304", "left@2315-2322", "up@2323-2425",
+]
+at = [81, 137]
+hit = 3660
+restart = 4104
+player = [61, 204]
+frames = 4400
+
+# A Donkey Kong (JU) ROM plays Original Edition's model (template.toml's
+# [[loads]]) over JU's own lifted tables, which move its barrels and 75m
+# otherwise, so it has a run of its own. Until 2026-11-06 JU had a model and
+# a route of its own; from then until 2026-11-07 the check gave it Original
+# Edition's run, which dies on JU's 25m. Its 25m is the route `gp level
+# measure --clears 1` finds on JU's lift; its 75m is the one worker relfix's
+# search of the page's module found, moved to the frame 75m starts on; its
+# 100m and ending are Original Edition's presses from dk.m100-clear.001,
+# moved so the first one lands on the first frame the player moves on JU's
+# 100m as on Original Edition's (3686 and 4808). Each start was read off the
+# page's module (relfix's tools, gp_web.wasm under Node). Found again on
+# 2026-11-07 when JU's map gained the code from $C707 on (code_c707,
+# code_c735, code_c74e): it had been zeros, and JU's own code moves the
+# barrels on 25m.
+[[route]]
+rom = "donkey-kong-ju"
+run = "ju-route"
+plays = ["main", "m75", "m100"]
+# Original Edition's stage-clear scene, Kong taking Pauline up: JU's game
+# goes on from the clear with the stage as it stands.
+left_out = ["clear_scene", "kong_carry", "pauline_carry"]
+ending = { frame = 5778, kinds = ["heart", "kong_fallen", "ending_mario"] }
+again = { frame = 6498, player = [53, 204] }
+
+[[route.stage]]
+name = "25m"
+level = "main"
+start = 550
+player = [53, 204]
+shot = 1200
+kinds = ["kong", "barrel", "oil_drum"]
+clear = 1730
+top = 40
+
+[[route.stage]]
+name = "75m"
+level = "m75"
+start = 2134
+player = [21, 188]
+shot = 2478
+kinds = ["kong_75m", "elevator", "spring"]
+clear = 3288
+top = 40
+
+[[route.stage]]
+name = "100m"
+level = "m100"
+start = 3685
+player = [61, 204]
+shot = 4478
+kinds = ["kong_100m", "fire"]
+clear = 5511
+top = 60
+
+# A ROM a template only loads to play ([[loads]]; docs/web.md, "ROMs to
+# play") has its own asset map and not every slot of the template's model:
+# the assets of what its game does without ([[loads.without]]) are left
+# blank, and nothing is filled from anywhere else. Its lift's counts:
+# `found` of `of` assets from the ROM, `blank` left blank, and `without`
+# what the page names as missing from the ROM's game. A template's own ROM
+# is held to every asset found.
+[[load]]
+rom = "donkey-kong-ju"
+found = 57
+of = 72
+blank = 15
+without = ["50m", "stage-clear scene"]
+
+# The two made-up large-art themes of the page check (the tools'
+# scripts/web/test-themes.py: acme/harbor-lights and test/paper-moon), drawn
+# from plain shapes for this game's pictures. Each entry is pictures of
+# `size` game pixels: `name` with {n} put for each number from n[0] to n[1],
+# or the names in `names`; each is the game's picture name in colouring 0
+# (the theme gives the same picture to colourings 1 to 3), from the game's
+# theme kit as `gp theme look check` names each pose's picture. Names in
+# `empty` are poses the kit says to draw as nothing. The stages, the belt
+# ends, the score display and the title screen are left as the game draws
+# them, so `gp theme look check` names those seven slots as still to draw
+# and finds nothing else wrong but three bodies' feet rows (warnings).
+[test_themes]
+empty = ["frame-81-0.png", "frame-107-0.png"]
+pictures = [
+  { what = "rolling hazard", size = [16, 16], name = "frame-{n}-0.png", n = [0, 8] },
+  { what = "lift platform", size = [16, 8], name = "frame-{n}-0.png", n = [20, 20] },
+  { what = "wandering flame", size = [16, 16], name = "frame-{n}-0.png", n = [22, 26] },
+  { what = "smashing tool", size = [8, 16], name = "frame-{n}-0.png", n = [38, 39] },
+  { what = "big foe", size = [48, 32], name = "frame-{n}-0.png", n = [41, 52] },
+  { what = "sliding ladder", size = [16, 16], name = "frame-{n}-0.png", n = [69, 69] },
+  { what = "fire source flames", size = [16, 8], name = "frame-{n}-0.png", n = [71, 72] },
+  { what = "the one to rescue", size = [16, 24], name = "frame-{n}-0.png", n = [73, 74] },
+  { what = "sliding hazard", size = [16, 16], name = "frame-{n}-0.png", n = [77, 81] },
+  { what = "hero", size = [16, 16], name = "frame-{n}-0.png", n = [82, 102] },
+  { what = "bouncing hazard", size = [16, 16], name = "frame-{n}-0.png", n = [104, 104] },
+  { what = "points", size = [16, 8], name = "frame-{n}-0.png", n = [106, 107] },
+  { what = "cursor", size = [8, 8], names = ["screen-11-sprite-0.png", "screen-16-sprite-0.png"] },
+  { what = "digits", size = [8, 8], name = "glyph-0-3-{n}.png", n = [30, 39] },
+]

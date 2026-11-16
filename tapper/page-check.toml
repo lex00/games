@@ -1,0 +1,42 @@
+# What the public page's check (the tools' scripts/web/public/check-page.mjs,
+# docs/web.md "Checks") holds this game to: facts about the game, never bytes
+# of it. The check reads this file from every game folder of the games
+# checkout (--games DIR, else $GP_GAMES_DIR, else `games` beside the tools).
+# The game's name, title and sets come from package.toml and roms.toml: the
+# set package.toml's [[rom.entry]] calls "scored" is the zip the arcade
+# sections play, found in $GP_ROM_DIR/arcade by its MAME name (the roms.toml
+# id).
+
+[page]
+# The game's maker, which a page about another game must not name.
+owner = "Bally Midway"
+
+# The arcade sections (arcade-*).
+[arcade]
+# A set the lift refuses as not drawn right yet once its places are taken
+# out of the asset maps (the tools' scripts/web/test-registry.sh makes that
+# copy of the game, test/arcade-unplaced; check-page.mjs, arcade-unplaced).
+# A roms.toml id.
+unplaced = "rbtapper"
+# The board's picture, in its pixels.
+screen = [512, 480]
+
+# arcade-theme: the game played from the scored set with one made-up theme,
+# `flat`, that draws the player as a flat square (`script` in this folder
+# makes the build: script OUT; check-page.mjs --arcade-theme OUT). The run:
+# a coin and the start as the corpus's start of play has them, then play to
+# `frames`. Holds use the cabinet's columns: coin, start, right, left, down,
+# up and the button.
+[arcade.theme]
+script = "scripts/page-theme.sh"
+frames = 700
+holds = ["coin@124-134", "start@195-201"]
+# Where the board draws the player's sprite, from the entity's place in the
+# model (x and y taken mod 256): x plus origin[0], and origin[1] less y, in
+# the game's units, `scale` board pixels each; `size` is the theme's square
+# in board pixels, drawn in `colour`.
+entity = "player"
+origin = [-3, 241]
+scale = 2
+size = [32, 32]
+colour = [200, 40, 160]

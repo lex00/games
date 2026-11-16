@@ -1,0 +1,78 @@
+# The public page's picture references for this game (the tools' docs/web.md,
+# "Picture references"): the page check (scripts/web/public/check-page.mjs)
+# reads this file from every game folder of the games checkout, plays each
+# moment in the page's game frame to its frame (the section's run: a ROM
+# version's route in page-check.toml) and compares the SHA-256 of the game
+# canvas's RGBA pixels with `sha256`. A difference fails the section naming
+# the moment, with old, new and diff pictures in $GP_HOME/work/page-shots/.
+# When a change is meant:
+#   just web-page accept-pictures
+# writes the new hashes here (and `state`, what the frame's state says).
+# A moment with `pending` is played but not compared, and accept leaves it
+# without a hash: remove the line once its reason is gone, then accept.
+# `shows` is what a person sees there; the rest is written by accept.
+
+moment oe-stand
+  section pictures-rom-45440d8e
+  frame   550
+  shows   Donkey Kong: Original Edition's 25m in the ROM's art, Mario standing at the bottom
+  pending waiting for branch mariopic/fix (Mario's standing picture)
+
+moment oe-walk
+  section pictures-rom-45440d8e
+  frame   640
+  shows   Donkey Kong: Original Edition's 25m in the ROM's art, Mario walking right
+  pending waiting for branch mariopic/fix (Mario's standing picture)
+
+moment oe-jump-points
+  section pictures-rom-45440d8e
+  frame   1541
+  press   a@1512-1513
+  shows   Original Edition's 25m in the ROM's art: Mario landing from a jump over a barrel on girder 5, its 100 where the barrel was, the barrel over the 100's lower part as the original draws it (the earlier sprite on top), Mario over both
+  state   level main, player at 206,69
+  size    256x224
+  sha256  417c2b627162972986b3c6cce6115defdb61b81b3d64975ff26eac859a677938
+
+moment ju-ending
+  section pictures-rom-aa408f5a
+  frame   5778
+  shows   Donkey Kong (JU)'s 100m ending in the ROM's art: Kong fallen on the stacked girders, the middle ladders gone, the heart between Mario and Pauline on the top girder
+  state   level m100, player at 165,53
+  size    256x224
+  sha256  367b255cba14848746ba55cbb25add31a9ced859438ea392b0ec5f04b04758d2
+
+moment oe-fall-turnips
+  section pictures-rom-45440d8e
+  frame   6760
+  look    turnips
+  shows   Original Edition's 100m ending in the Turnips look: the thrower falling from the top, the middle girders and ladders cleared, the girders stacked at the bottom
+  state   level m100, player at 61,52
+  size    1536x1344
+  sha256  c8ea652dfa84178f03b60a820a95fe6704761750fbd54100868e676e75fa7608
+
+moment oe-ending-turnips
+  section pictures-rom-45440d8e
+  frame   6900
+  look    turnips
+  shows   Original Edition's 100m ending in the Turnips look: the heart between the hero and the friend, the thrower fallen on its head on the girders the ending stacks, the girder laid under the friend, the middle girders and ladders cleared (thin edges of the stage picture left)
+  state   level m100, player at 165,53
+  size    1536x1344
+  sha256  f0a76f81d9403236db1889c83e593cf2b26b9666c7617752e4e42090ed1afa3c
+
+moment ju-turnips-25m
+  section pictures-rom-aa408f5a
+  frame   1200
+  look    turnips
+  shows   Donkey Kong (JU)'s 25m in the Turnips look: the hero walking on girder 4, the friend at the top, the thrower at the top left, barrels rolling (issue 13: on JU the theme drew a ladder piece for the hero and a carrying pose for the friend)
+  state   level main, player at 114,112
+  size    1536x1344
+  sha256  2b9b1482056e43d7ec452a8f9dc597c1987c25a9b1fe8cd199697d7f5e0d220b
+
+moment ju-turnips-75m
+  section pictures-rom-aa408f5a
+  frame   2478
+  look    turnips
+  shows   Donkey Kong (JU)'s 75m in the Turnips look: the hero climbing by the left lift, the friend at the top, the thrower, springs and lifts in 75m's own colors (issue 13: on JU 75m took Original Edition's 50m palette set's pictures)
+  state   level m75, player at 45,136
+  size    1536x1344
+  sha256  92d258d9c2c3e7e730b3df98e3fe8c26281c89a4143976ee772e5975a78cf971
