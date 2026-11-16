@@ -49,3 +49,11 @@ source = "tappera"
 accepts = ["479e70a7adcb16f4be27124580bd1acc6381843a1d5f1782869bfdce10098297"]
 asset_map = "assets/tapper.toml"
 asset_map_sha256 = "919d7406893e284dcc3dad008c8a4e2a871a1d1657273131e1e4bf4542abe5d0"
+
+# The scoring corpus this game's scores are against
+# (docs/formats/scoring-corpus.md); the records are in evidence/.
+[scored_against]
+corpus = "tapper"
+version = "0.2.0"
+hash = "b3:8c94bcdd7d2a0d9dc5ab05d7c0e248737ef3445e0f5159e7f1d4e480c9fa2e4c"
+path = "."
