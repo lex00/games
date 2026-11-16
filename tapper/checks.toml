@@ -20,3 +20,10 @@ button = "T"
 # clips, from the original's state at each one's start.
 [web_parity]
 clips = ["tapper.l1.001", "tapper.die.001", "tapper.clear.001"]
+
+# The game's auto-player (gameprinter's `gp mechanic autoplay`, which
+# `gp mechanic triage` runs): a cargo package in this folder that gp builds
+# and runs with the player's own flags (`--rom ZIP --out NAME [--search]
+# ...`; `--help` lists them).
+[autoplay]
+manifest = "autoplay/Cargo.toml"

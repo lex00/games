@@ -1,0 +1,21 @@
+[package]
+name = "gp-autoplay-tapper"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.99"
+publish = false
+license = "Apache-2.0"
+
+# Tapper's auto-player, a game-side driver: it reads the board's RAM by
+# Tapper's own layout and decides each frame's presses, to make long input
+# logs. gameprinter's `gp mechanic autoplay` builds and runs it, as this
+# folder's checks.toml [autoplay] says, and `gp mechanic triage` runs that.
+# It depends on the board (gp-arcade) only.
+[dependencies]
+gp-arcade = { path = "../../../gameprinter/crates/gp-arcade" }
+gp-runtime = { path = "../../../gameprinter/crates/gp-runtime" }
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[workspace]
