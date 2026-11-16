@@ -1757,7 +1757,7 @@ impl Ext for Bars {
                 let bar = rec[8];
                 let facing = (layout >> bar) & 1;
                 r.ext[0] = rec[2] | (rec[9] << 8);
-                r.ext[1] = bar | (facing << 8);
+                r.ext[1] = bar | (facing << 8) | (rec[14] << 16);
                 r.ext[2] = rec[12];
                 r.ext[3] = rec[16];
             }
@@ -2780,6 +2780,15 @@ impl Ext for Bars {
                 let r = draw_at_most(cx, "customer_wait_start", bp(cx, "pushed_spread"));
                 c.ext[0] = (c.ext[0] & !0xff) | 1;
                 c.ext[1] = bp(cx, "pushed_base") + r;
+                // $09E5: pushed back, the record's +14 picture.
+                let slot = (c.ext[3] >> 16) & 0xff;
+                let shown = usize::try_from(flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 3)).unwrap_or(0);
+                if let Some(p) = usize::try_from(slot)
+                    .ok()
+                    .and_then(|k| cx.table("record_blocks").get((shown * 16 + k) * 32 + 0x14).copied())
+                {
+                    c.ext[0] = (c.ext[0] & !(0xff << 24)) | (p << 24);
+                }
                 bodies[j].1 = c;
                 removed.push(id);
                 break;
@@ -2791,6 +2800,14 @@ impl Ext for Bars {
         // (E4B4, E4BB), which the speed-up changes.
         let mut cust_order: Vec<usize> = (0..bodies.len()).filter(|&k| bodies[k].1.kind == cust_k).collect();
         cust_order.sort_by_key(|&k| (bodies[k].1.ext[3] >> 16) & 0xff);
+        // The bar shown's records (record_blocks), whose bytes give a
+        // customer's pictures as its state changes ($1016 to $11EA).
+        let shown_now = usize::try_from(flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 3)).unwrap_or(0);
+        let blocks = cx.table("record_blocks").to_vec();
+        let block_of = |slot: i64| -> Option<&[i64]> {
+            let k = usize::try_from(slot).ok()?;
+            blocks.get((shown_now * 16 + k) * 32..(shown_now * 16 + k + 1) * 32)
+        };
         for k in cust_order {
             let (id, mut c) = bodies[k];
             if c.kind != cust_k || removed.contains(&id) {
@@ -2956,6 +2973,41 @@ impl Ext for Bars {
                     }
                 }
                 _ => {}
+            }
+            // The picture ($1016 to $11EA): each state's from the
+            // record's bytes as it starts; while waiting (bit 0 flipped
+            // every +0A frames) and walking (+0F), counted in the record's
+            // +0E, which the record keeps while its customer is away.
+            if let Some(b) = block_of(slot) {
+                let ns = c.ext[0] & 0xff;
+                let mut pic = (c.ext[0] >> 24) & 0xff;
+                let n = rec_of(&recs, slot);
+                let mut ctr = n.map_or(0, |n| (recs[n].1.ext[1] >> 16) & 0xff);
+                match (state, ns) {
+                    (0, 5) => {
+                        pic = b[0x10];
+                        ctr = b[0x0F];
+                    }
+                    (5 | 4 | 6, 0) => {
+                        pic = b[0x12];
+                        ctr = b[0x0A];
+                    }
+                    (1, 2) => pic = b[0x15],
+                    (2, 3) => pic = b[0x14],
+                    (3, 4) => pic = b[0x16],
+                    (0, 0) | (5, 5) => {
+                        ctr = (ctr - 1) & 0xff;
+                        if ctr == 0 {
+                            pic ^= 1;
+                            ctr = if state == 0 { b[0x0A] } else { b[0x0F] };
+                        }
+                    }
+                    _ => {}
+                }
+                c.ext[0] = (c.ext[0] & !(0xff << 24)) | (pic << 24);
+                if let Some(n) = n {
+                    recs[n].1.ext[1] = (recs[n].1.ext[1] & !(0xff << 16)) | (ctr << 16);
+                }
             }
             bodies[k].1 = c;
         }
@@ -3140,7 +3192,11 @@ impl Ext for Bars {
                 // its board sprite; how a customer's picture changes as it
                 // walks and drinks isn't modelled.
                 let flags = row[1] | if left { 0x10 } else { 0 };
-                c.ext[0] = (i64::from(left) << 8) | (flags << 16) | (row[2] << 24);
+                // $161B: its picture is its record's +10, not the start
+                // row's.
+                let shown = usize::try_from(flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 3)).unwrap_or(0);
+                let pic = cx.table("record_blocks").get((shown * 16 + k) * 32 + 0x10).copied().unwrap_or(row[2]);
+                c.ext[0] = (i64::from(left) << 8) | (flags << 16) | (pic << 24);
                 c.ext[1] = r + 16;
                 c.ext[3] = (k as i64) << 16;
                 bodies.push((next_id, c));

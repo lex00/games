@@ -340,10 +340,10 @@ ram = [0xE4B4, 0xE4BB]
 stride = 32
 
 [[slots.group.field]]
-note = "Not compared: the bar (+8) and the facing (+0D)"
+note = "Not compared: the bar (+8), the facing (+0D) and the frames to the picture's next flip (+0E, $1032 and $116C)"
 path = "ext[1]"
 presentation = true
-ram = [0xE4BA, 0xE4BF]
+ram = [0xE4BA, 0xE4BF, 0xE4C0]
 stride = 32
 
 [[slots.group.field]]
