@@ -1,0 +1,38 @@
+# The MAME captures `gp oracle golden` and `gp oracle check` hold gp-arcade
+# to on this game (gameprinter's docs/oracle-mame.md, "Captures the repo
+# names"), and the ones gameprinter's `just check-all` plays against MAME
+# (its mame-NAME steps). A capture is derived from the ROM, so it lives on
+# each machine at $GP_HOME/work/oracle/NAME, never in a repo. This file
+# holds only how to make each one again and the hash it must have.
+#
+# input is the input log, from this game's folder. To make a capture, from
+# a gameprinter checkout, with the romset in $GP_ROM_DIR:
+#   just mame-build
+#   just mame-record $GP_ROM_DIR/arcade/SYSTEM.zip GAME/INPUT NAME 0
+# The 0 asks for no pictures, which change the files the hash covers.
+#
+# sha256 is the SHA-256 of the capture's digest lines (`shasum -a 256`'s
+# "HASH  ./FILE" for ay.tsv, capture.txt, frames.tsv and ram.bin, those it
+# has, in that order): the SHA256SUMS file `just mame-record` writes, when
+# the capture has no pictures and no sound.wav. input_sha256 is the input
+# log's own SHA-256.
+
+schema = 0
+
+[[capture]]
+name = "tapper-first-sound"
+system = "rbtapper"
+mame = "0.276"
+input = "inputs/oracle/first.input"
+input_sha256 = "ce4905b1aea87f8f6fae6ff3afba9c354cc6376820ecf3962041addd23e53d73"
+frames = 1511
+sha256 = "508b41335418afb93046da781da7895bdf4cb0edeafbe63a046b87a049b552aa"
+
+[[capture]]
+name = "tapper-m3b-cycle"
+system = "tapper"
+mame = "0.276"
+input = "inputs/oracle/cycle.input"
+input_sha256 = "65449785db8bb38c23f200606b673f1a74b1021b3099f5f81e66ad42284bdd33"
+frames = 27819
+sha256 = "f0356501de772f9563cbb951e826045fb645fdd4803c211774b7294878c5453f"
