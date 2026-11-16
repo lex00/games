@@ -203,6 +203,33 @@ description = "The bonus round's cans to swap, a word a row naming a can's objec
 source = "tapper"
 asset = "bonus_pairs"
 
+[assets.credit_color]
+kind = "rows"
+role = "graphics"
+description = "$03F6's ld (hl),$20: the colour $03EA writes the credit line in"
+
+[assets.credit_color.from]
+source = "tapper"
+asset = "credit_color"
+
+[assets.credit_digit]
+kind = "rows"
+role = "graphics"
+description = "$040B's add a,$30: the tile code the credits' digit is drawn from"
+
+[assets.credit_digit.from]
+source = "tapper"
+asset = "credit_digit"
+
+[assets.credit_digit_color]
+kind = "rows"
+role = "graphics"
+description = "$0415's ld (hl),$20: the high byte beside the credits' digit"
+
+[assets.credit_digit_color.from]
+source = "tapper"
+asset = "credit_digit_color"
+
 [assets.customer_starts]
 kind = "rows"
 role = "behavior"
@@ -220,6 +247,24 @@ description = "The board's settings at power-on with no battery-backed RAM, 94 b
 [assets.defaults.from]
 source = "tapper"
 asset = "defaults"
+
+[assets.demo_color_1]
+kind = "rows"
+role = "graphics"
+description = "$4AAA's byte into palette RAM's F840 ($92 in tapper)"
+
+[assets.demo_color_1.from]
+source = "tapper"
+asset = "demo_color_1"
+
+[assets.demo_color_2]
+kind = "rows"
+role = "graphics"
+description = "$4AAA's byte into palette RAM's F84D"
+
+[assets.demo_color_2.from]
+source = "tapper"
+asset = "demo_color_2"
 
 [assets.end_script_lists]
 kind = "rows"
@@ -635,6 +680,24 @@ description = "The colour byte of the attract's lines: $3C7C's ld a,$20, the col
 source = "tapper"
 asset = "text_color_logo"
 
+[assets.text_credit]
+kind = "rows"
+role = "graphics"
+description = "The credit line's string at $0454: CREDIT, $03EA's first line"
+
+[assets.text_credit.from]
+source = "tapper"
+asset = "text_credit"
+
+[assets.text_credits]
+kind = "rows"
+role = "graphics"
+description = "The credit line's string at $045B: with two or more ($0446)"
+
+[assets.text_credits.from]
+source = "tapper"
+asset = "text_credits"
+
 [assets.text_demo_1]
 kind = "rows"
 role = "graphics"
@@ -725,6 +788,15 @@ description = "A line of the attract mode's demo, the string at $33E9 its text r
 source = "tapper"
 asset = "text_demo_9"
 
+[assets.text_insert_coin]
+kind = "rows"
+role = "graphics"
+description = "The credit line's string at $047E: with no credits ($0424)"
+
+[assets.text_insert_coin.from]
+source = "tapper"
+asset = "text_insert_coin"
+
 [assets.text_logo_1]
 kind = "rows"
 role = "graphics"
@@ -751,6 +823,15 @@ description = "A line of the attract mode's logo, the string at $3CC4 its text r
 [assets.text_logo_3.from]
 source = "tapper"
 asset = "text_logo_3"
+
+[assets.text_one_credit]
+kind = "rows"
+role = "graphics"
+description = "The credit line's string at $046F: with one credit ($0437)"
+
+[assets.text_one_credit.from]
+source = "tapper"
+asset = "text_one_credit"
 
 [entities.bar_end]
 description = "The bars' end pieces and far ends, the objects from E356 (y, flags, picture, x), 4 bytes each, a bar's at 4 times its number and its far end 16 on: put in by the setup's $4D13 from the bar_objects rows (tapper_flow), gone at a level's end ($5615) and at the next setup ($5F31). Word 0 is the flags and 256 times the picture. Drawn, never compared"
@@ -1168,6 +1249,22 @@ cmp = "=="
 counter = "bonus"
 value = 0
 
+[[levels.main.present.board.counters]]
+at = [9, 27]
+counter = "credits"
+digits = 1
+
+[levels.main.present.board.counters.high]
+slot = "credit_digit_color"
+
+[levels.main.present.board.counters.tile]
+slot = "credit_digit"
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "mode"
+value = 1
+
 [[levels.main.present.board.looks]]
 screen = "screen_attract_logo"
 
@@ -1178,6 +1275,14 @@ value = 1
 
 [[levels.main.present.board.looks]]
 screen = "screen_attract_demo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "demo_color_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 77
+slot = "demo_color_2"
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
@@ -2365,6 +2470,77 @@ counter = "mode"
 value = 0
 
 [[levels.main.present.board.texts]]
+at = [2, 27]
+
+[levels.main.present.board.texts.high]
+slot = "credit_color"
+
+[levels.main.present.board.texts.text]
+slot = "text_credit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "mode"
+value = 1
+
+[[levels.main.present.board.texts]]
+at = [15, 27]
+
+[levels.main.present.board.texts.high]
+slot = "credit_color"
+
+[levels.main.present.board.texts.text]
+slot = "text_insert_coin"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "mode"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "credits"
+value = 0
+
+[[levels.main.present.board.texts]]
+at = [13, 27]
+
+[levels.main.present.board.texts.high]
+slot = "credit_color"
+
+[levels.main.present.board.texts.text]
+slot = "text_one_credit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "mode"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "credits"
+value = 1
+
+[[levels.main.present.board.texts]]
+at = [11, 27]
+
+[levels.main.present.board.texts.high]
+slot = "credit_color"
+
+[levels.main.present.board.texts.text]
+slot = "text_credits"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "mode"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "credits"
+value = 2
+
+[[levels.main.present.board.texts]]
 at = [5, 23]
 
 [levels.main.present.board.texts.high]
@@ -2892,6 +3068,30 @@ note = "gp code listing on tapper.bonus.001 and the later rounds: $4F17 reads tw
 [[evidence."assets.bonus_pairs".refs]]
 at = "clip:tapper.poweron.001"
 
+[evidence."assets.credit_color"]
+source = "observed"
+confidence = 70
+note = "gp code listing --writes F6C4 and F6DE over tapper.attract.001: $0350 called from $0405 and $044C in $03EA, the frame's credit line in attract mode; sutapper's places from its own listing"
+
+[[evidence."assets.credit_color".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.credit_digit"]
+source = "observed"
+confidence = 70
+note = "gp code listing --writes F6C4 and F6DE over tapper.attract.001: $0350 called from $0405 and $044C in $03EA, the frame's credit line in attract mode; sutapper's places from its own listing"
+
+[[evidence."assets.credit_digit".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.credit_digit_color"]
+source = "observed"
+confidence = 70
+note = "gp code listing --writes F6C4 and F6DE over tapper.attract.001: $0350 called from $0405 and $044C in $03EA, the frame's credit line in attract mode; sutapper's places from its own listing"
+
+[[evidence."assets.credit_digit_color".refs]]
+at = "clip:tapper.attract.001"
+
 [evidence."assets.customer_starts"]
 source = "observed"
 confidence = 80
@@ -2907,6 +3107,22 @@ note = "gp code listing on tapper.start.001 from power-on: $048A checks the batt
 
 [[evidence."assets.defaults".refs]]
 at = "clip:tapper.start.001"
+
+[evidence."assets.demo_color_1"]
+source = "observed"
+confidence = 70
+note = "gp code listing: $4AAA loads the palette from $616D ($600F) and pokes F840 and F84D ($4AD8 to $4AE1); rbtapper's at $4C6B and $4C70"
+
+[[evidence."assets.demo_color_1".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.demo_color_2"]
+source = "observed"
+confidence = 70
+note = "gp code listing: $4AAA loads the palette from $616D ($600F) and pokes F840 and F84D ($4AD8 to $4AE1); rbtapper's at $4C6B and $4C70"
+
+[[evidence."assets.demo_color_2".refs]]
+at = "clip:tapper.attract.001"
 
 [evidence."assets.end_script_lists"]
 source = "observed"
@@ -3276,6 +3492,22 @@ note = "gp code listing: $3C7C's ld a,$20, the colour the logo's lines are writt
 [[evidence."assets.text_color_logo".refs]]
 at = "clip:tapper.attract.001"
 
+[evidence."assets.text_credit"]
+source = "observed"
+confidence = 70
+note = "gp code listing --writes F6C4 and F6DE over tapper.attract.001: $0350 called from $0405 and $044C in $03EA, the frame's credit line in attract mode; sutapper's places from its own listing"
+
+[[evidence."assets.text_credit".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_credits"]
+source = "observed"
+confidence = 70
+note = "gp code listing --writes F6C4 and F6DE over tapper.attract.001: $0350 called from $0405 and $044C in $03EA, the frame's credit line in attract mode; sutapper's places from its own listing"
+
+[[evidence."assets.text_credits".refs]]
+at = "clip:tapper.attract.001"
+
 [evidence."assets.text_demo_1"]
 source = "observed"
 confidence = 70
@@ -3356,6 +3588,14 @@ note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text
 [[evidence."assets.text_demo_9".refs]]
 at = "clip:tapper.attract.001"
 
+[evidence."assets.text_insert_coin"]
+source = "observed"
+confidence = 70
+note = "gp code listing --writes F6C4 and F6DE over tapper.attract.001: $0350 called from $0405 and $044C in $03EA, the frame's credit line in attract mode; sutapper's places from its own listing"
+
+[[evidence."assets.text_insert_coin".refs]]
+at = "clip:tapper.attract.001"
+
 [evidence."assets.text_logo_1"]
 source = "observed"
 confidence = 70
@@ -3378,6 +3618,14 @@ confidence = 70
 note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text queue at E0A9 takes $3CC4 for row 25, column 6, 2 frames into the attract mode; rbtapper's $3CDA from its own listing, its calls lined up with tapper's"
 
 [[evidence."assets.text_logo_3".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_one_credit"]
+source = "observed"
+confidence = 70
+note = "gp code listing --writes F6C4 and F6DE over tapper.attract.001: $0350 called from $0405 and $044C in $03EA, the frame's credit line in attract mode; sutapper's places from its own listing"
+
+[[evidence."assets.text_one_credit".refs]]
 at = "clip:tapper.attract.001"
 
 [evidence."entities.bar_end"]

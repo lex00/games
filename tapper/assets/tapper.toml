@@ -440,6 +440,113 @@ width = 2
 rbtapper = 0x636D
 tappera = 0x61DD
 
+# $4ADB's ld (hl),$92 into palette RAM's F840: a colour the attract demo ($4AAA) pokes after loading the palette.
+[[asset]]
+name = "demo_color_1"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4ADC
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x4C6C
+
+# $4AE0's ld (hl),$C7 into palette RAM's F84D: a colour the attract demo ($4AAA) pokes after loading the palette.
+[[asset]]
+name = "demo_color_2"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4AE1
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x4C71
+
+# The credit line the frame's interrupt writes in attract mode ($03EA, E3BD 1):
+# CREDIT, the credits as a digit, and one of three lines by the credits, each
+# through the text routine's $0350; sutapper's from its own places.
+[[asset]]
+name = "text_credit"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x0454
+count = 1
+width = 32
+
+[asset.at]
+sutapper = 0x0460
+
+[[asset]]
+name = "text_insert_coin"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x047E
+count = 1
+width = 32
+
+[asset.at]
+sutapper = 0x048A
+
+[[asset]]
+name = "text_one_credit"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x046F
+count = 1
+width = 32
+
+[asset.at]
+sutapper = 0x047B
+
+[[asset]]
+name = "text_credits"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x045B
+count = 1
+width = 32
+
+[asset.at]
+sutapper = 0x0467
+
+# $03F6's ld (hl),$20: the colour $03EA writes the credit line in.
+[[asset]]
+name = "credit_color"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x03F7
+count = 1
+width = 1
+
+[asset.at]
+sutapper = 0x0403
+
+# $040B's add a,$30: the tile code the credits' digit is drawn from.
+[[asset]]
+name = "credit_digit"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x040C
+count = 1
+width = 1
+
+[asset.at]
+sutapper = 0x0418
+
+# $0415's ld (hl),$20: the high byte beside the credits' digit.
+[[asset]]
+name = "credit_digit_color"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x0416
+count = 1
+width = 1
+
+[asset.at]
+sutapper = 0x0422
+
 # The attract mode's lines of text, each a string the program queues for
 # its text routine ($5F44, drawn by $0350 in the frame's interrupt: a byte
 # a cell up to a zero, a space as tile 0): the logo's three ($3C7C) and the
