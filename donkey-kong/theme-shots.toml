@@ -1,6 +1,7 @@
 # The moments `gp theme look play --shots` pictures a theme at (docs: site themes.md,
-# "See it in the game"): routes from power-on, and frames of them. The routes are
-# the page check's (scripts/web/public/check-page.mjs, ROUTES) and a run that grabs
+# "See it in the game"): routes from power-on, and frames of them. oe-route and
+# ju-route are also the page check's routes: page-check.toml's [[route]] names them
+# by `run`, so their presses are written here once. oe-hammer is a run that grabs
 # the hammer; the frames are the ones the hand checks of 2026-11-13 and 14 used.
 
 [[run]]
