@@ -1155,6 +1155,90 @@ width = 262
 [asset.at]
 rbtapper = 0x1201
 
+# A level's end: the scripts' code, their immediates read by their places
+# (the bartender's pictures and flags): $4603 and $4742, the tails' $4708,
+# $489A and $48FC ($467B on), $491B, $4546's drop, $594D's lift and the
+# hops of $50EF and $51A9. rbtapper's copies sit at their own shifts.
+# A customer's slide ($1CE1): his pictures and flags as he is taken and
+# 15 frames on, the code's own bytes from $1D72, its immediates read by
+# their places. rbtapper's copy is at the same place.
+[[asset]]
+name = "slide_pose"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x1D72
+count = 1
+width = 244
+
+[asset.at]
+rbtapper = 0x1D72
+
+[[asset]]
+name = "end_pose_a"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4603
+count = 1
+width = 104
+
+[asset.at]
+rbtapper = 0x477F
+
+[[asset]]
+name = "end_pose_b"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x467B
+count = 1
+width = 672
+
+[asset.at]
+rbtapper = 0x47FD
+
+[[asset]]
+name = "end_pose_c"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x491B
+count = 1
+width = 4
+
+[asset.at]
+rbtapper = 0x4AA1
+
+[[asset]]
+name = "end_drop"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4546
+count = 1
+width = 124
+
+[asset.at]
+rbtapper = 0x46C2
+
+[[asset]]
+name = "end_lift"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x594D
+count = 1
+width = 144
+
+[asset.at]
+rbtapper = 0x5ACD
+
+[[asset]]
+name = "end_hops"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x50EF
+count = 1
+width = 304
+
+[asset.at]
+rbtapper = 0x527F
+
 [[asset]]
 name = "bartender_pour"
 format = "byte-rows"

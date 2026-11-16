@@ -266,6 +266,60 @@ description = "$4AAA's byte into palette RAM's F84D"
 source = "tapper"
 asset = "demo_color_2"
 
+[assets.end_drop]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: a level's end, $4546: his pictures as the dropped object starts and lands, the code's own bytes (lifted from the player's romset)"
+
+[assets.end_drop.from]
+source = "tapper"
+asset = "end_drop"
+
+[assets.end_hops]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: a level's end, $50EF and $51A9: his and his head's pictures for the hops, the code's own bytes (lifted from the player's romset)"
+
+[assets.end_hops.from]
+source = "tapper"
+asset = "end_hops"
+
+[assets.end_lift]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: a level's end, $594D: his pictures while the object above him lifts, the code's own bytes (lifted from the player's romset)"
+
+[assets.end_lift.from]
+source = "tapper"
+asset = "end_lift"
+
+[assets.end_pose_a]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: a level's end, $4603: his pictures as the script starts, the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.end_pose_a.from]
+source = "tapper"
+asset = "end_pose_a"
+
+[assets.end_pose_b]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: a level's end, $467B on ($4687 to $48FC with $4742 and $4708): his pictures through the script and its tails, the code's own bytes (lifted from the player's romset)"
+
+[assets.end_pose_b.from]
+source = "tapper"
+asset = "end_pose_b"
+
+[assets.end_pose_c]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: a level's end, $491B: his last picture in script 0, the code's own bytes (lifted from the player's romset)"
+
+[assets.end_pose_c.from]
+source = "tapper"
+asset = "end_pose_c"
+
 [assets.end_script_lists]
 kind = "rows"
 role = "behavior"
@@ -679,6 +733,15 @@ description = "The four objects a customer's slide leaves in the mug slots from 
 [assets.slide_objects.from]
 source = "tapper"
 asset = "slide_objects"
+
+[assets.slide_pose]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: a customer's slide, $1CE1 from $1D72: as he is taken and 15 frames on, the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.slide_pose.from]
+source = "tapper"
+asset = "slide_pose"
 
 [assets.sound_arrivals]
 kind = "rows"
@@ -1213,12 +1276,20 @@ bartender_tap = "bartender_tap"
 bartender_wait = "bartender_wait"
 bartender_walk_left = "bartender_walk_left"
 bartender_walk_right = "bartender_walk_right"
+end_drop = "end_drop"
+end_hops = "end_hops"
+end_lift = "end_lift"
+end_pose_a = "end_pose_a"
+end_pose_b = "end_pose_b"
+end_pose_c = "end_pose_c"
+end_script_lists = "end_script_lists"
 mug_flags = "mug_flags"
 mug_flags_left = "mug_flags_left"
 mug_flip_frames = "mug_flip_frames"
 mug_picture_empty = "mug_picture_empty"
 mug_picture_full = "mug_picture_full"
 mug_picture_slosh = "mug_picture_slosh"
+slide_pose = "slide_pose"
 
 [entities.player.hitbox]
 h = 16
@@ -5189,6 +5260,54 @@ note = "gp code listing: $4AAA loads the palette from $616D ($600F) and pokes F8
 [[evidence."assets.demo_color_2".refs]]
 at = "clip:tapper.attract.001"
 
+[evidence."assets.end_drop"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on the level clips' logs (tapper.l1.001, l3, l4, l5, l7, l10, l11): the bartender's objects E2E6 to E2FD as each end script writes them, by the script's frame; gp code listing places each immediate, and finds rbtapper's copy at its own shift"
+
+[[evidence."assets.end_drop".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.end_hops"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on the level clips' logs (tapper.l1.001, l3, l4, l5, l7, l10, l11): the bartender's objects E2E6 to E2FD as each end script writes them, by the script's frame; gp code listing places each immediate, and finds rbtapper's copy at its own shift"
+
+[[evidence."assets.end_hops".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.end_lift"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on the level clips' logs (tapper.l1.001, l3, l4, l5, l7, l10, l11): the bartender's objects E2E6 to E2FD as each end script writes them, by the script's frame; gp code listing places each immediate, and finds rbtapper's copy at its own shift"
+
+[[evidence."assets.end_lift".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.end_pose_a"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on the level clips' logs (tapper.l1.001, l3, l4, l5, l7, l10, l11): the bartender's objects E2E6 to E2FD as each end script writes them, by the script's frame; gp code listing places each immediate, and finds rbtapper's copy at its own shift"
+
+[[evidence."assets.end_pose_a".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.end_pose_b"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on the level clips' logs (tapper.l1.001, l3, l4, l5, l7, l10, l11): the bartender's objects E2E6 to E2FD as each end script writes them, by the script's frame; gp code listing places each immediate, and finds rbtapper's copy at its own shift"
+
+[[evidence."assets.end_pose_b".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.end_pose_c"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on the level clips' logs (tapper.l1.001, l3, l4, l5, l7, l10, l11): the bartender's objects E2E6 to E2FD as each end script writes them, by the script's frame; gp code listing places each immediate, and finds rbtapper's copy at its own shift"
+
+[[evidence."assets.end_pose_c".refs]]
+at = "clip:tapper.l1.001"
+
 [evidence."assets.end_script_lists"]
 source = "observed"
 confidence = 85
@@ -5556,6 +5675,14 @@ note = "gp code listing on tapper.l6.001's end: where the slide ends ($1F66 fall
 
 [[evidence."assets.slide_objects".refs]]
 at = "clip:tapper.l6.001"
+
+[evidence."assets.slide_pose"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.die.001's log: the bartender's objects as $1CE1 writes them, his pictures at $1D72 and $1DF6, his head sliding 16 along from him ($1ED5 to $1EE4) and 4 frames past him at the bar's end ($1FC1); gp code listing finds rbtapper's copy at the same place"
+
+[[evidence."assets.slide_pose".refs]]
+at = "clip:tapper.die.001"
 
 [evidence."assets.sound_arrivals"]
 source = "observed"

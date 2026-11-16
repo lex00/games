@@ -112,6 +112,13 @@ enum Pose {
     /// The walk ($19EF left, $1C02 right), with the bob's new step on a
     /// frame E727 ran out.
     Walk { left: bool, step: Option<i64> },
+    /// A level's end script (tapper_bars counts it in the flow's word 3):
+    /// its frame as if $4742 ran once, the script, $51A9 in place of
+    /// $50EF, and script 4's frames: $4546's start and the drop's landing.
+    End { n: i64, script: i64, interlude_b: bool, drop: i64, land: i64 },
+    /// A customer's slide ($1CE1, the flow's sub 10): its frame and the
+    /// phase past the bar's end, as tapper_bars counts them.
+    Slide { n: i64, phase: i64 },
 }
 
 /// One of the game's 4-byte objects: y, flags, picture, x.
@@ -128,6 +135,240 @@ struct Obj {
 /// instruction's immediate.
 fn imm(cx: &ExtCx<'_>, table: &str, start: i64, at: i64) -> i64 {
     usize::try_from(at - start).ok().and_then(|k| cx.table(table).get(k).copied()).unwrap_or(0)
+}
+
+/// $1351: his pose at the tap, his arms and head on him.
+fn at_tap_pose(cx: &ExtCx<'_>, me: &mut Obj, parts: &mut [Obj; 5], tap_left: bool) {
+    const P: i64 = 0x1351;
+    let f = if tap_left { imm(cx, "bartender_pour", P, 0x1383) } else { imm(cx, "bartender_pour", P, 0x1371) };
+    me.flags = f;
+    me.pic = imm(cx, "bartender_pour", P, 0x136B);
+    for k in [0, 1, 4] {
+        parts[k].flags = f;
+    }
+    parts[4].x = me.x;
+    let mut x1 = me.x + imm(cx, "bartender_pour", P, 0x1394);
+    if tap_left {
+        x1 -= imm(cx, "bartender_pour", P, 0x139A);
+    }
+    parts[0].x = x1 & 0xff;
+    parts[1].x = x1 & 0xff;
+    parts[0].pic = imm(cx, "bartender_pour", P, 0x13A4);
+    parts[0].y = me.y;
+    parts[4].y = (me.y - imm(cx, "bartender_pour", P, 0x13BA)) & 0xff;
+    parts[1].y = (parts[4].y + imm(cx, "bartender_pour", P, 0x13BF)) & 0xff;
+    parts[1].pic = imm(cx, "bartender_pour", P, 0x13C6);
+    parts[4].pic = imm(cx, "bartender_pour", P, 0x13CA);
+}
+
+/// $2085: the tap let go before the mug is full.
+fn let_go_pose(cx: &ExtCx<'_>, me: &mut Obj, parts: &mut [Obj; 5], tap_x: i64, tap_left: bool) {
+    const S: i64 = 0x2085;
+    me.pic = imm(cx, "bartender_wait", S, 0x2088);
+    parts[0].pic = imm(cx, "bartender_wait", S, 0x208C);
+    parts[1].pic = imm(cx, "bartender_wait", S, 0x2094);
+    let (f1, f2) = if tap_left { (0x20C9, 0x20D0) } else { (0x2090, 0x2098) };
+    parts[0].flags = imm(cx, "bartender_wait", S, f1);
+    parts[1].flags = imm(cx, "bartender_wait", S, f2);
+    parts[0].x = tap_x;
+    parts[1].x = tap_x;
+    parts[1].y = (me.y + imm(cx, "bartender_wait", S, 0x20D5)) & 0xff;
+    parts[3].y = 0;
+}
+
+/// A customer's slide ($1CE1) at its frame `n`: his pictures as he is
+/// taken ($1D72 to $1DD8) and 15 frames on ($1DF6 to $1E5F). tapper_bars,
+/// which moves him after this hook runs, places his arm and head
+/// (`place_parts`).
+fn slide_pose(cx: &ExtCx<'_>, me: &mut Obj, parts: &mut [Obj; 5], left: bool, n: i64, phase: i64) {
+    let c = |at: i64| imm(cx, "slide_pose", 0x1D72, at);
+    let along = if left { -0x10 } else { 0x10 };
+    // Set again while they aren't, so a start inside the slide's waits
+    // (tapper.die.001) has them too.
+    if (36..51).contains(&n) && me.pic != c(0x1D75) {
+        me.pic = c(0x1D75);
+        parts[4].pic = c(0x1D79);
+        parts[0].pic = c(0x1D7D);
+        let f = if left { c(0x1DD7) } else { c(0x1DBC) };
+        me.flags = f;
+        parts[4].flags = f;
+        parts[0].flags = if left { c(0x1DCE) } else { c(0x1D89) };
+        for k in 1..4 {
+            parts[k].y = 0;
+        }
+    } else if n >= 51 && phase < 4 && me.pic != c(0x1DFD) {
+        parts[0].y = 0;
+        me.pic = c(0x1DFD);
+        parts[4].pic = c(0x1E01);
+        let f = if left { c(0x1E5E) } else { c(0x1E42) };
+        me.flags = f;
+        parts[4].flags = f;
+    }
+    let _ = along;
+}
+
+/// A level's end script's pictures at its frame `n` (counted as tapper_bars
+/// counts it, as if $4742 ran once), set as the script sets them; between
+/// its steps his objects stay. tapper_bars moves him. In rbtapper the end
+/// waves his picture where tapper mirrors him ($47E7), which the model
+/// doesn't follow.
+fn end_script_pose(
+    cx: &ExtCx<'_>,
+    me: &mut Obj,
+    parts: &mut [Obj; 5],
+    tap_y: &mut Option<i64>,
+    (tap_x, left): (i64, bool),
+    (n, script, interlude_b, drop, land): (i64, i64, bool, i64, i64),
+) {
+    let a = |at: i64| imm(cx, "end_pose_a", 0x4603, at);
+    let b = |at: i64| imm(cx, "end_pose_b", 0x467B, at);
+    // The sprite's mirror bit, which the scripts flip ($466E, $4783, $492F).
+    const MIRROR: i64 = 0x10;
+    // $4603, 15 frames in: standing, his arms and the rest gone, his head
+    // above him ($4625 to $4653), and the tap back ($0679).
+    if n == 16 {
+        me.pic = a(0x462C);
+        me.flags = a(0x4630);
+        parts[4].pic = a(0x4634);
+        parts[4].flags = a(0x4638);
+        parts[4].x = (me.x - 3) & 0xff;
+        parts[4].y = (me.y - 0x10) & 0xff;
+        for o in parts.iter_mut().take(4) {
+            o.y = 0;
+        }
+        *tap_y = Some(1);
+    }
+    // $4665: mirrored 4 times, 10 frames apart.
+    if [26, 36, 46, 56].contains(&n) {
+        me.flags ^= MIRROR;
+    }
+    // $4742: the tap hidden ($1BD4), the pose at it ($1351) and the tap's
+    // handle down beside him ($4749 to $476F: 2 further on a bar whose tap
+    // is on the left).
+    let at_tap = (tap_x + if left { 2 } else { 0 }) & 0xff;
+    if n == 56 {
+        *tap_y = Some(0);
+        at_tap_pose(cx, me, parts, left);
+        parts[3] = Obj { y: parts[0].y, flags: b(0x476B), pic: b(0x4767), x: at_tap };
+    }
+    // $477D: the handle mirrored 6 times, 2 frames apart.
+    if (58..=68).contains(&n) && n % 2 == 0 {
+        parts[3].flags ^= MIRROR;
+        parts[3].y = parts[0].y;
+    }
+    // $47DF: the full mug, then the let-go ($2085) and the tap back.
+    if n == 70 {
+        parts[2] = Obj { y: parts[0].y, flags: b(0x4808), pic: b(0x4801), x: at_tap };
+        let_go_pose(cx, me, parts, tap_x, left);
+        *tap_y = Some(1);
+    }
+    // $4815, 15 frames on: the mug in his hand, his arm 16 toward the
+    // far end, his head 2 back ($4844).
+    if n == 85 {
+        parts[1].y = 0;
+        parts[2].y = 0;
+        parts[3].y = 0;
+        me.pic = b(0x4822);
+        parts[0].x = (me.x + if left { -0x10 } else { 0x10 }) & 0xff;
+        parts[0].pic = b(0x4839);
+        parts[0].y = (me.y + 1) & 0xff;
+        parts[4].x = (parts[4].x + if left { 2 } else { -2 }) & 0xff;
+    }
+    // Back in $4603 ($4687 to $46E7): the mug slid along the bar.
+    if n == 109 {
+        parts[0].y = 0;
+        me.pic = b(0x468E);
+    }
+    if n == 124 {
+        me.pic = b(0x46CF);
+    }
+    if n == 128 {
+        me.pic = b(0x46EA);
+    }
+    // $4708, scripts 0 and 3 after $58C5 (172): his arm out by his head.
+    if (script == 0 || script == 3) && n == 172 {
+        me.pic = b(0x470B);
+        parts[4].pic = b(0x470F);
+        parts[0].pic = b(0x4713);
+        parts[0].y = parts[4].y;
+        if left {
+            parts[0].x = (parts[4].x - 8) & 0xff;
+            parts[0].flags = b(0x473B);
+            parts[4].x = (parts[0].x + 0x10) & 0xff;
+        } else {
+            parts[0].x = (parts[4].x + 8) & 0xff;
+            parts[4].x = (parts[0].x - 0x10) & 0xff;
+        }
+    }
+    match script {
+        // $4881: $45E3 (12 frames), then $48FC.
+        0 => {
+            if n == 184 {
+                parts[0].y = 0;
+                parts[4].x = (parts[4].x + if left { -8 } else { 8 }) & 0xff;
+                me.pic = b(0x4910);
+                parts[4].pic = b(0x4914);
+            }
+            if n == 199 {
+                me.pic = imm(cx, "end_pose_c", 0x491B, 0x491E);
+            }
+            if n == 209 || n == 219 {
+                me.flags ^= MIRROR;
+            }
+        }
+        // $489A: after $5904 (170) his arm up, then $45E3.
+        1 => {
+            if n == 170 {
+                me.pic = b(0x48A3);
+                parts[4].pic = b(0x48A7);
+                parts[0].pic = b(0x48AB);
+                parts[0].y = parts[4].y;
+                parts[4].x = (parts[4].x + if left { -4 } else { 4 }) & 0xff;
+            }
+            if n == 182 {
+                parts[0].y = 0;
+            }
+        }
+        // $48D1: the hops' pictures ($50EF, or $51A9's, from 192);
+        // tapper_bars puts his head 16 above him as he hops.
+        3 => {
+            let h = |at: i64| imm(cx, "end_hops", 0x50EF, at);
+            if n == 192 {
+                let (p, f, hp, hf) = if interlude_b { (0x5201, 0x5205, 0x520D, 0x5211) } else { (0x5147, 0x514B, 0x5153, 0x5157) };
+                me.pic = h(p);
+                me.flags = h(f);
+                parts[0].y = 0;
+                parts[4].pic = h(hp);
+                parts[4].flags = h(hf);
+                parts[4].x = (me.x + 1) & 0xff;
+            }
+        }
+        // $48F5: $594D lifts the object above him, then his pictures
+        // ($598D, his head 3 toward the far end; $59CB 60 on), and $4546's
+        // drop: its start ($455B) and its landing ($45B7).
+        4 => {
+            let l = |at: i64| imm(cx, "end_lift", 0x594D, at);
+            let d = |at: i64| imm(cx, "end_drop", 0x4546, at);
+            if n == drop - 100 {
+                me.pic = l(0x5990);
+                parts[4].pic = l(0x5994);
+                parts[4].x = (parts[4].x + if left { -3 } else { 3 }) & 0xff;
+            }
+            if n == drop - 40 {
+                me.pic = l(0x59CE);
+                parts[4].pic = l(0x59D2);
+            }
+            if n == drop {
+                me.pic = d(0x455E);
+                parts[4].pic = d(0x4562);
+            }
+            if n == land {
+                me.pic = d(0x45BA);
+                parts[4].pic = d(0x45BE);
+            }
+        }
+        _ => {}
+    }
 }
 
 /// The bartender's six objects after the play routine's branch `ev` ran:
@@ -203,26 +444,7 @@ fn draw_pose(cx: &mut ExtCx<'_>, ev: Pose, x_before: i64, spawned: usize) {
             Pose::Pour => {
                 // $1206: $1BD4 hides the tap, $1351 the pose at it.
                 tap_y = Some(0);
-                const P: i64 = 0x1351;
-                let f = if tap_left { imm(cx, "bartender_pour", P, 0x1383) } else { imm(cx, "bartender_pour", P, 0x1371) };
-                me.flags = f;
-                me.pic = imm(cx, "bartender_pour", P, 0x136B);
-                for k in [0, 1, 4] {
-                    parts[k].flags = f;
-                }
-                parts[4].x = me.x;
-                let mut x1 = me.x + imm(cx, "bartender_pour", P, 0x1394);
-                if tap_left {
-                    x1 -= imm(cx, "bartender_pour", P, 0x139A);
-                }
-                parts[0].x = x1 & 0xff;
-                parts[1].x = x1 & 0xff;
-                parts[0].pic = imm(cx, "bartender_pour", P, 0x13A4);
-                parts[0].y = me.y;
-                parts[4].y = (me.y - imm(cx, "bartender_pour", P, 0x13BA)) & 0xff;
-                parts[1].y = (parts[4].y + imm(cx, "bartender_pour", P, 0x13BF)) & 0xff;
-                parts[1].pic = imm(cx, "bartender_pour", P, 0x13C6);
-                parts[4].pic = imm(cx, "bartender_pour", P, 0x13CA);
+                at_tap_pose(cx, &mut me, &mut parts, tap_left);
                 const T: i64 = 0x1206;
                 let at_tap = |cx: &ExtCx<'_>, plus: i64| (tap_x + if tap_left { imm(cx, "bartender_tap", T, plus) } else { 0 }) & 0xff;
                 if e715 != 0 {
@@ -283,17 +505,13 @@ fn draw_pose(cx: &mut ExtCx<'_>, ev: Pose, x_before: i64, spawned: usize) {
             }
             Pose::Sent | Pose::Rest if e718 == 0 && e715 != 0 => {
                 // $2085: let go before the mug is full.
-                const S: i64 = 0x2085;
-                me.pic = imm(cx, "bartender_wait", S, 0x2088);
-                parts[0].pic = imm(cx, "bartender_wait", S, 0x208C);
-                parts[1].pic = imm(cx, "bartender_wait", S, 0x2094);
-                let (f1, f2) = if tap_left { (0x20C9, 0x20D0) } else { (0x2090, 0x2098) };
-                parts[0].flags = imm(cx, "bartender_wait", S, f1);
-                parts[1].flags = imm(cx, "bartender_wait", S, f2);
-                parts[0].x = tap_x;
-                parts[1].x = tap_x;
-                parts[1].y = (me.y + imm(cx, "bartender_wait", S, 0x20D5)) & 0xff;
-                parts[3].y = 0;
+                let_go_pose(cx, &mut me, &mut parts, tap_x, tap_left);
+            }
+            Pose::Slide { n, phase } => {
+                slide_pose(cx, &mut me, &mut parts, tap_left, n, phase);
+            }
+            Pose::End { n, script, interlude_b, drop, land } => {
+                end_script_pose(cx, &mut me, &mut parts, &mut tap_y, (tap_x, tap_left), (n, script, interlude_b, drop, land));
             }
             // The setup's frame in the hook is the play routine's first
             // in the original (tapper.poweron.001: E706 6 on 1101, the
@@ -511,6 +729,31 @@ impl Ext for Bartender {
 }
 
 impl Bartender {
+    /// The level's end script at its frame (tapper_bars keeps the count
+    /// and the draws in the flow's word 3): which script, by the list
+    /// $5623 picks with the levels cleared (end_script_lists), and for
+    /// script 4 the frames $4546 starts its drop and the drop lands
+    /// ($4585 to $45AA: a frame, then 4 down, until within 5 of him).
+    fn end_pose(cx: &ExtCx<'_>, w3: i64) -> Pose {
+        let n = ((w3 >> 24) & 0xffff) + 1;
+        let n = if n >= 109 && w3 & END_TWICE != 0 { n - 53 } else { n };
+        let cleared = cx
+            .kind("bars")
+            .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+            .map_or(0, |b| (b.ext[3] >> 16) & 0xff);
+        let words: Vec<i64> = cx.table("end_script_lists").chunks(2).map(|w| w[0] + 256 * w.get(1).copied().unwrap_or(0)).collect();
+        let base = words.iter().copied().min().unwrap_or(0);
+        let list = cx.kind("tap").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).map_or(0, |b| b.ext[1] & 1);
+        let script = words.get(usize::try_from(list * 10 + cleared % 10).unwrap_or(0)).map_or(0, |w| (w - base) / 5);
+        let shown = (w3 >> 8) & 3;
+        let interlude_b = shown != 3 && w3 & END_INTERLUDE_B != 0;
+        let by = cx.me.y.floor();
+        let k = (238 - (by + 6) + 9).max(10) / 10;
+        let drop = 109 + 19 + 2 * k + 100;
+        let land = drop + (250 - by).max(0) / 4 + 1;
+        Pose::End { n, script, interlude_b, drop, land }
+    }
+
     /// The play routine's bartender ($06A4): his move, and in `ev` which
     /// of its branches ran, for his pictures.
     fn act(cx: &mut ExtCx<'_>, ev: &mut Pose, spawned: &mut usize) {
@@ -530,6 +773,18 @@ impl Bartender {
         // customer is served), whose next frame doesn't run $0660
         // (tapper.l13.001: tap held on 20481, he stays at 187).
         if [9, 11, 12, 13, 15, 16].contains(&state) {
+            if let Some(fb) = flow
+                && (state == 15 || state == 16)
+                && (fb.ext[3] >> 16) & 0xff == 8
+            {
+                *ev = Self::end_pose(cx, fb.ext[3]);
+            }
+            if let Some(fb) = flow
+                && (state == 15 || state == 16)
+                && (fb.ext[3] >> 16) & 0xff == 10
+            {
+                *ev = Pose::Slide { n: ((fb.ext[3] >> 24) & 0xff) + 1, phase: (fb.ext[2] >> 26) & 0x3f };
+            }
             return;
         }
         // On the setup's own frame (the flow's word 2 at 4, set by
@@ -1493,6 +1748,30 @@ fn bp(cx: &ExtCx<'_>, name: &str) -> i64 {
     cx.spec.kinds[k].ext_params.get(name).map_or(0, |v| v.floor())
 }
 
+/// tapper_bars moves the bartender in the end scripts and the slide after
+/// his own hook has drawn him; his parts (kind bartender_part, by place
+/// `k` from E2EA) go with him here: `f` gets each part's x and y.
+fn place_parts(cx: &mut ExtCx<'_>, ks: &[i64], hidden_too: bool, f: impl Fn(i64, i64, i64) -> (i64, i64)) {
+    let Some(pk) = cx.kind("bartender_part") else { return };
+    let found: Vec<(usize, gp_sim::world::Body)> = cx
+        .world
+        .bodies
+        .iter()
+        .enumerate()
+        .filter(|(_, b)| b.alive && b.kind == pk && ks.contains(&(b.ext[1] - 1)))
+        .map(|(i, b)| (i, *b))
+        .collect();
+    for (id, mut b) in found {
+        if b.y.floor() == 0 && !hidden_too {
+            continue;
+        }
+        let (x, y) = f(b.ext[1] - 1, b.x.floor(), b.y.floor());
+        b.x = Fx::from_int(x & 0xff);
+        b.y = Fx::from_int(y & 0xff);
+        cx.set_body(id, b);
+    }
+}
+
 impl Bars {
     /// The bar a body on line y is at: 0 the bottom.
     fn bar_of(cx: &ExtCx<'_>, y: i64) -> i64 {
@@ -2199,6 +2478,7 @@ impl Ext for Bars {
             let ry = (fb.ext[2] >> 16) & 0xff;
             let rbar = (fb.ext[2] >> 24) & 3;
             let mut phase = (fb.ext[2] >> 26) & 0x3f;
+            let phase_before = phase;
             let rslot = (fb.ext[2] >> 32) & 0xf;
             let mut lives_word = fb.ext[1];
             if let Some(pk) = player_k
@@ -2297,6 +2577,21 @@ impl Ext for Bars {
                         }
                     }
                     cx.set_body(pid, pb);
+                    // His arm and head ($1D8A to $1DD8 as he is taken, 16
+                    // up; from $1E02 his head 16 along at his height,
+                    // sliding with him), and past the bar's end ($1FB9 to
+                    // $1FDD) his head 3 a frame on for 4 frames, then gone.
+                    let along = if left { -0x10 } else { 0x10 };
+                    let (mx, my) = (pb.x.floor(), pb.y.floor());
+                    if (36..51).contains(&n) {
+                        place_parts(cx, &[0, 4], true, |k, _, _| (if k == 4 { mx + along } else { mx }, my - 0x10));
+                    } else if n >= 51 && phase_before < 4 && my != 0 {
+                        place_parts(cx, &[4], true, |_, _, _| (mx + along, my));
+                    } else if (4..8).contains(&phase_before) {
+                        place_parts(cx, &[4], false, |_, px, py| (px + step, py));
+                    } else if phase_before == 8 {
+                        place_parts(cx, &[4], false, |_, px, _| (px, 0));
+                    }
                 }
             }
             if n <= 255 {
@@ -2466,6 +2761,9 @@ impl Ext for Bars {
                     pb.x = Fx::from_int((pb.x.floor() + dx) & 0xff);
                     pb.y = Fx::from_int(pb.y.floor() + dy);
                     cx.set_body(pid, pb);
+                    // $5228, $5255, $5279: his head 16 above him.
+                    let (hx, hy) = (pb.x.floor(), pb.y.floor() - 0x10);
+                    place_parts(cx, &[4], false, |_, _, _| (hx, hy));
                 }
             }
             if script == 3
@@ -2484,6 +2782,9 @@ impl Ext for Bars {
                 pb.x = Fx::from_int((pb.x.floor() + dx) & 0xff);
                 pb.y = Fx::from_int(pb.y.floor() + dy);
                 cx.set_body(pid, pb);
+                // $5176, $5191: his head 16 above him.
+                let (hx, hy) = (pb.x.floor(), pb.y.floor() - 0x10);
+                place_parts(cx, &[4], false, |_, _, _| (hx, hy));
             }
             // The script's step returns to $5656 (the game back in state
             // 11, $231A): script 1 ($489A) after $5904's 21 waits of 2 and
@@ -2570,8 +2871,14 @@ impl Ext for Bars {
                     } else {
                         pb.x.floor() + if left { -1 } else { 1 }
                     };
+                    let dx = x - pb.x.floor();
                     pb.x = Fx::from_int(x);
                     cx.set_body(pid, pb);
+                    // $1351 put his arms and head on him where he stands
+                    // at the tap.
+                    if n == 56 {
+                        place_parts(cx, &[0, 1, 4], false, |_, px, py| (px + dx, py));
+                    }
                 }
             }
             cx.set_body(fid, fb);
