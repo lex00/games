@@ -1,4 +1,12 @@
 # Hashes and facts only: never the game itself.
+#
+# Each arcade source lists its set's chips as [[source.chip]] rows: the
+# file name, the MAME region it loads into, the offset there, the size and
+# the SHA-1. The tools read these to know a romset zip by its chips
+# (gp_arcade::romset; docs/sources.md, "Arcade chips"). The lists come from
+# MAME 0.276's src/mame/midway/mcr.cpp, ROM_START( tapper ), rbtapper,
+# tapperg, sutapper and tappera: license:BSD-3-Clause,
+# copyright-holders:Aaron Giles.
 [[source]]
 id = "tapper"
 title = "Tapper"
@@ -8,8 +16,135 @@ revision = "Tapper (Budweiser, 1/27/84)"
 system = "tapper"
 sha256 = "1da6316bba4785d780b3df3dc2a46753c09215cfa009f6f69dfd58cf753f4da9"
 status = "unverified"
+sound_driver = "midway-ssio"
 evidence = "Measured 2026-11-12 by gp game new on the owner's romset: every chip of MAME 0.276's tapper list matched by SHA-1. The sha256 is the set's identity, the SHA-256 of its chips' SHA-1s sorted (gp_arcade::romset)."
 notes = "MAME's tapper (Tapper (Budweiser, 1/27/84), 1983), Midway MCR boards 91490 and 90913: a 512x480 screen at 30 frames a second. The region is a guess."
+
+[[source.chip]]
+name = "tapper_c.p.u._pg_0_1c_1-27-84.1c"
+region = "maincpu"
+offset = 0x00000
+size = 0x4000
+sha1 = "ff5a729e36faea3758c8c7b345a42dd8bb465f44"
+
+[[source.chip]]
+name = "tapper_c.p.u._pg_1_2c_1-27-84.2c"
+region = "maincpu"
+offset = 0x04000
+size = 0x4000
+sha1 = "b9f0396e2eba5772deec4725c41fa9de49658e72"
+
+[[source.chip]]
+name = "tapper_c.p.u._pg_2_3c_1-27-84.3c"
+region = "maincpu"
+offset = 0x08000
+size = 0x4000
+sha1 = "434d3c27b9f1e43def081d79b9f56dbce93a9207"
+
+[[source.chip]]
+name = "tapper_c.p.u._pg_3_4c_1-27-84.4c"
+region = "maincpu"
+offset = 0x0c000
+size = 0x2000
+sha1 = "5e4e2dc1703b39f588ba374f6a610f273d710532"
+
+[[source.chip]]
+name = "tapper_sound_snd_0_a7_12-7-83.a7"
+region = "ssio:cpu"
+offset = 0x00000
+size = 0x1000
+sha1 = "9e281c340b7702523c86d56317efad9e3688e585"
+
+[[source.chip]]
+name = "tapper_sound_snd_1_a8_12-7-83.a8"
+region = "ssio:cpu"
+offset = 0x01000
+size = 0x1000
+sha1 = "14334b9d2bfece3fe5bda0cbd53158ead8d27e53"
+
+[[source.chip]]
+name = "tapper_sound_snd_2_a9_12-7-83.a9"
+region = "ssio:cpu"
+offset = 0x02000
+size = 0x1000
+sha1 = "b38bba5f12516d899e023f99147868e3402fbd7b"
+
+[[source.chip]]
+name = "tapper_sound_snd_3_a10_12-7-83.a10"
+region = "ssio:cpu"
+offset = 0x03000
+size = 0x1000
+sha1 = "0011407c1e886071282808c0a561789b1245a789"
+
+[[source.chip]]
+name = "tapper_c.p.u._bg_1_6f_12-7-83.6f"
+region = "gfx1"
+offset = 0x00000
+size = 0x4000
+sha1 = "eb30b9bb654324340f0fc5b44776ac2440c1e869"
+
+[[source.chip]]
+name = "tapper_c.p.u._bg_0_5f_12-7-83.5f"
+region = "gfx1"
+offset = 0x04000
+size = 0x4000
+sha1 = "23e29ec942e1e7516ae8068837af2d1c79592378"
+
+[[source.chip]]
+name = "tapper_video_fg_1_a7_12-7-83.a7"
+region = "gfx2"
+offset = 0x00000
+size = 0x4000
+sha1 = "a38667573d235efe2dc515e52af05825fe4e0f30"
+
+[[source.chip]]
+name = "tapper_video_fg_0_a8_12-7-83.a8"
+region = "gfx2"
+offset = 0x04000
+size = 0x4000
+sha1 = "2077f79177fda26f9c674b2ab525ec3833802059"
+
+[[source.chip]]
+name = "tapper_video_fg_3_a5_12-7-83.a5"
+region = "gfx2"
+offset = 0x08000
+size = 0x4000
+sha1 = "930142dd73fb30c4d3ec09a1e37517c6c6774024"
+
+[[source.chip]]
+name = "tapper_video_fg_2_a6_12-7-83.a6"
+region = "gfx2"
+offset = 0x0c000
+size = 0x4000
+sha1 = "d553b8517c1d03a2be0b065f4da2fa99d9e6fb30"
+
+[[source.chip]]
+name = "tapper_video_fg_5_a3_12-7-83.a3"
+region = "gfx2"
+offset = 0x10000
+size = 0x4000
+sha1 = "8aead89e1adaee5f0b679661c4bfba36e0d639e8"
+
+[[source.chip]]
+name = "tapper_video_fg_4_a4_12-7-83.a4"
+region = "gfx2"
+offset = 0x14000
+size = 0x4000
+sha1 = "402c166d50b4a693959b3f0706a7931a5daef6ce"
+
+[[source.chip]]
+name = "tapper_video_fg_7_a1_12-7-83.a1"
+region = "gfx2"
+offset = 0x18000
+size = 0x4000
+sha1 = "95879a455ecfe2e3de7fe2a75078f9e6934960f5"
+
+[[source.chip]]
+name = "tapper_video_fg_6_a2_12-7-83.a2"
+region = "gfx2"
+offset = 0x1c000
+size = 0x4000
+sha1 = "a24696f16d467d9eea4f25aef5f4c5ff55bf51ff"
 
 [[source]]
 id = "rbtapper"
@@ -20,8 +155,135 @@ revision = "Tapper (Root Beer)"
 system = "rbtapper"
 sha256 = "05c721e1f53c60355abc0f38c4db05040b305118630b86e67721ced1bda22657"
 status = "unverified"
+sound_driver = "midway-ssio"
 evidence = "Measured 2026-11-12 by gp game new on the owner's romset: every chip of MAME 0.276's rbtapper list matched by SHA-1. The sha256 is the set's identity, the SHA-256 of its chips' SHA-1s sorted (gp_arcade::romset)."
 notes = "MAME's rbtapper (Tapper (Root Beer), 1984), Midway MCR boards 91490 and 90913. The Root Beer set: the same RAM layout and the same score timeline as tapper in a scripted game, with its own art. Plays this model with its own pictures. The region is a guess."
+
+[[source.chip]]
+name = "rbtpg0.bin"
+region = "maincpu"
+offset = 0x00000
+size = 0x4000
+sha1 = "31b583c98e7c2cecab42223df8b5400004c9f3d3"
+
+[[source.chip]]
+name = "rbtpg1.bin"
+region = "maincpu"
+offset = 0x04000
+size = 0x4000
+sha1 = "7de10632b2538524fee418175e2cc41be9c8c0e8"
+
+[[source.chip]]
+name = "rbtpg2.bin"
+region = "maincpu"
+offset = 0x08000
+size = 0x4000
+sha1 = "b9878c8a61a98e787e547bb6ab81c809875891f3"
+
+[[source.chip]]
+name = "rbtpg3.bin"
+region = "maincpu"
+offset = 0x0c000
+size = 0x2000
+sha1 = "ddb21e39ede2222cb2286ec9dba06341fe1c9db7"
+
+[[source.chip]]
+name = "5788"
+region = "ssio:cpu"
+offset = 0x00000
+size = 0x1000
+sha1 = "c2c94ab26ebce30ce4efc239e555c6368794d265"
+
+[[source.chip]]
+name = "5787"
+region = "ssio:cpu"
+offset = 0x01000
+size = 0x1000
+sha1 = "f5c8585d443bca67d4065314a06431d1f104c553"
+
+[[source.chip]]
+name = "5786"
+region = "ssio:cpu"
+offset = 0x02000
+size = 0x1000
+sha1 = "2a4dc0deca48f4d2ac9fe673ecb9548415c996a9"
+
+[[source.chip]]
+name = "5785"
+region = "ssio:cpu"
+offset = 0x03000
+size = 0x1000
+sha1 = "a41323149c50adcae7675efcef69fd7d8365e527"
+
+[[source.chip]]
+name = "rbtbg1.bin"
+region = "gfx1"
+offset = 0x00000
+size = 0x4000
+sha1 = "9e96a3ff0b66a4b1d07fe86059f7dfab0d53231c"
+
+[[source.chip]]
+name = "rbtbg0.bin"
+region = "gfx1"
+offset = 0x04000
+size = 0x4000
+sha1 = "a4b24fffbbe299e0c2058abe372f00954e5edf98"
+
+[[source.chip]]
+name = "rbtfg1.bin"
+region = "gfx2"
+offset = 0x00000
+size = 0x4000
+sha1 = "532239605b74b137cd0f6035a6bc7ac43f559d82"
+
+[[source.chip]]
+name = "rbtfg0.bin"
+region = "gfx2"
+offset = 0x04000
+size = 0x4000
+sha1 = "3a8e3e927b0fd2d49222e417e4c1f28b5a45c6ca"
+
+[[source.chip]]
+name = "rbtfg3.bin"
+region = "gfx2"
+offset = 0x08000
+size = 0x4000
+sha1 = "3811f499aa076fb81af42f7cb522879b0af50e37"
+
+[[source.chip]]
+name = "rbtfg2.bin"
+region = "gfx2"
+offset = 0x0c000
+size = 0x4000
+sha1 = "d02a306f8b32b3a097fc51e75e106a40fe942d35"
+
+[[source.chip]]
+name = "rbtfg5.bin"
+region = "gfx2"
+offset = 0x10000
+size = 0x4000
+sha1 = "523efaba9a3cbe871868ee09caea062382f31fad"
+
+[[source.chip]]
+name = "rbtfg4.bin"
+region = "gfx2"
+offset = 0x14000
+size = 0x4000
+sha1 = "e2a427324fc1d4422e50a1ab79822aff0290e109"
+
+[[source.chip]]
+name = "rbtfg7.bin"
+region = "gfx2"
+offset = 0x18000
+size = 0x4000
+sha1 = "dab52db0bca13b9f3470060bc3babe4a6c2cdcc8"
+
+[[source.chip]]
+name = "rbtfg6.bin"
+region = "gfx2"
+offset = 0x1c000
+size = 0x4000
+sha1 = "400d390729601610b152e21da55399399830221f"
 
 [[source]]
 id = "tapperg"
@@ -32,8 +294,135 @@ revision = "Tapper (Budweiser, 1/27/84 - Alternate graphics)"
 system = "tapperg"
 sha256 = "2f3673b7bc328ee950309e70bba40d435d44395ab943172d3122c0fc845b2b04"
 status = "unverified"
+sound_driver = "midway-ssio"
 evidence = "Measured 2026-11-12 by gp game new on the owner's romset: every chip of MAME 0.276's tapperg list matched by SHA-1. The sha256 is the set's identity, the SHA-256 of its chips' SHA-1s sorted (gp_arcade::romset)."
 notes = "MAME's tapperg (Tapper (Budweiser, 1/27/84 - Alternate graphics), 1984), Midway MCR boards 91490 and 90913. tapper's program with other sprites (155 of 256 differ). Plays this model with its own pictures. The region is a guess."
+
+[[source.chip]]
+name = "tapper_c.p.u._pg_0_1c_1-27-84.1c"
+region = "maincpu"
+offset = 0x00000
+size = 0x4000
+sha1 = "ff5a729e36faea3758c8c7b345a42dd8bb465f44"
+
+[[source.chip]]
+name = "tapper_c.p.u._pg_1_2c_1-27-84.2c"
+region = "maincpu"
+offset = 0x04000
+size = 0x4000
+sha1 = "b9f0396e2eba5772deec4725c41fa9de49658e72"
+
+[[source.chip]]
+name = "tapper_c.p.u._pg_2_3c_1-27-84.3c"
+region = "maincpu"
+offset = 0x08000
+size = 0x4000
+sha1 = "434d3c27b9f1e43def081d79b9f56dbce93a9207"
+
+[[source.chip]]
+name = "tapper_c.p.u._pg_3_4c_1-27-84.4c"
+region = "maincpu"
+offset = 0x0c000
+size = 0x2000
+sha1 = "5e4e2dc1703b39f588ba374f6a610f273d710532"
+
+[[source.chip]]
+name = "tapper_sound_snd_0_a7_12-7-83.a7"
+region = "ssio:cpu"
+offset = 0x00000
+size = 0x1000
+sha1 = "9e281c340b7702523c86d56317efad9e3688e585"
+
+[[source.chip]]
+name = "tapper_sound_snd_1_a8_12-7-83.a8"
+region = "ssio:cpu"
+offset = 0x01000
+size = 0x1000
+sha1 = "14334b9d2bfece3fe5bda0cbd53158ead8d27e53"
+
+[[source.chip]]
+name = "tapper_sound_snd_2_a9_12-7-83.a9"
+region = "ssio:cpu"
+offset = 0x02000
+size = 0x1000
+sha1 = "b38bba5f12516d899e023f99147868e3402fbd7b"
+
+[[source.chip]]
+name = "tapper_sound_snd_3_a10_12-7-83.a10"
+region = "ssio:cpu"
+offset = 0x03000
+size = 0x1000
+sha1 = "0011407c1e886071282808c0a561789b1245a789"
+
+[[source.chip]]
+name = "tapper_c.p.u._bg_1_6f_12-7-83.6f"
+region = "gfx1"
+offset = 0x00000
+size = 0x4000
+sha1 = "eb30b9bb654324340f0fc5b44776ac2440c1e869"
+
+[[source.chip]]
+name = "tapper_c.p.u._bg_0_5f_12-7-83.5f"
+region = "gfx1"
+offset = 0x04000
+size = 0x4000
+sha1 = "23e29ec942e1e7516ae8068837af2d1c79592378"
+
+[[source.chip]]
+name = "fg1_a7.128"
+region = "gfx2"
+offset = 0x00000
+size = 0x4000
+sha1 = "7fd26cc8ff2faab86d04fcee2b5ec49ecf6b8143"
+
+[[source.chip]]
+name = "fg0_a8.128"
+region = "gfx2"
+offset = 0x04000
+size = 0x4000
+sha1 = "45df1ac033512be942460d678a7c1ba9dcef1937"
+
+[[source.chip]]
+name = "fg3_a5.128"
+region = "gfx2"
+offset = 0x08000
+size = 0x4000
+sha1 = "0b28e7e59eba983bc1929758f8dcaf315b7134a1"
+
+[[source.chip]]
+name = "fg2_a6.128"
+region = "gfx2"
+offset = 0x0c000
+size = 0x4000
+sha1 = "faf631d4ee96edf6b2c4349780e2d89eaedf70ab"
+
+[[source.chip]]
+name = "fg5_a3.128"
+region = "gfx2"
+offset = 0x10000
+size = 0x4000
+sha1 = "9829c9574fff0803973246f9d22311ca76be4e58"
+
+[[source.chip]]
+name = "fg4_a4.128"
+region = "gfx2"
+offset = 0x14000
+size = 0x4000
+sha1 = "52672b853d67432fd80e4612fa54208c225d2444"
+
+[[source.chip]]
+name = "fg7_a1.128"
+region = "gfx2"
+offset = 0x18000
+size = 0x4000
+sha1 = "6fe170695386fc77310384a5590a7cc3671ae853"
+
+[[source.chip]]
+name = "fg6_a2.128"
+region = "gfx2"
+offset = 0x1c000
+size = 0x4000
+sha1 = "5a6d30974e73f952694b8c09fb3a5393a76db4f2"
 
 [[source]]
 id = "sutapper"
@@ -44,8 +433,135 @@ revision = "Tapper (Suntory)"
 system = "sutapper"
 sha256 = "a2155f0c657d23c0fabb0322ee7610a6dbf923a26f8517645886887b4fb1033c"
 status = "unverified"
+sound_driver = "midway-ssio"
 evidence = "Measured 2026-11-12 by gp game new on the owner's romset: every chip of MAME 0.276's sutapper list matched by SHA-1. The sha256 is the set's identity, the SHA-256 of its chips' SHA-1s sorted (gp_arcade::romset)."
 notes = "MAME's sutapper (Tapper (Suntory), 1984), Midway MCR boards 91490 and 90913. The Suntory set: the same RAM layout and score timeline as rbtapper in a scripted game, not proven the same game. Plays this model with its own pictures. The region is a guess."
+
+[[source.chip]]
+name = "epr-5791"
+region = "maincpu"
+offset = 0x00000
+size = 0x4000
+sha1 = "155dc1df977a474f3f1bd238d851c2ff8fe1faba"
+
+[[source.chip]]
+name = "epr-5792"
+region = "maincpu"
+offset = 0x04000
+size = 0x4000
+sha1 = "0eebe98be6c21d701c7b7fc6547b5c94f934f5ab"
+
+[[source.chip]]
+name = "epr-5793"
+region = "maincpu"
+offset = 0x08000
+size = 0x4000
+sha1 = "de365f4e567d93a9ed9672fabbc739a3a0d47d59"
+
+[[source.chip]]
+name = "epr-5794"
+region = "maincpu"
+offset = 0x0c000
+size = 0x2000
+sha1 = "ee038443ae55598568bd1a53c0a671a2828d3949"
+
+[[source.chip]]
+name = "epr-5788.h11.ic8"
+region = "ssio:cpu"
+offset = 0x00000
+size = 0x1000
+sha1 = "c2c94ab26ebce30ce4efc239e555c6368794d265"
+
+[[source.chip]]
+name = "epr-5787.h10.ic6"
+region = "ssio:cpu"
+offset = 0x01000
+size = 0x1000
+sha1 = "f5c8585d443bca67d4065314a06431d1f104c553"
+
+[[source.chip]]
+name = "epr-5786.h9.ic5"
+region = "ssio:cpu"
+offset = 0x02000
+size = 0x1000
+sha1 = "2a4dc0deca48f4d2ac9fe673ecb9548415c996a9"
+
+[[source.chip]]
+name = "epr-5785.h7.ic4"
+region = "ssio:cpu"
+offset = 0x03000
+size = 0x1000
+sha1 = "a41323149c50adcae7675efcef69fd7d8365e527"
+
+[[source.chip]]
+name = "epr-5790"
+region = "gfx1"
+offset = 0x00000
+size = 0x4000
+sha1 = "f976889b529937948043460679f84b962b4c12bc"
+
+[[source.chip]]
+name = "epr-5789"
+region = "gfx1"
+offset = 0x04000
+size = 0x4000
+sha1 = "96b89dc08f2feeb9950fbbba43d0ee57a9e31804"
+
+[[source.chip]]
+name = "epr-5795"
+region = "gfx2"
+offset = 0x00000
+size = 0x4000
+sha1 = "3c26b0b0d903fb6782c6a1d72e32cd8c57ecad1f"
+
+[[source.chip]]
+name = "epr-5796"
+region = "gfx2"
+offset = 0x04000
+size = 0x4000
+sha1 = "c613c2225eeff5cc65dc6ec301e616e54755b1c2"
+
+[[source.chip]]
+name = "epr-5797"
+region = "gfx2"
+offset = 0x08000
+size = 0x4000
+sha1 = "ca54d1fa6704d38e65a4d2a94449ed8dd56cc94b"
+
+[[source.chip]]
+name = "epr-5798"
+region = "gfx2"
+offset = 0x0c000
+size = 0x4000
+sha1 = "1a6eac2a8fa99d86889d5042c6b64f828b3c5d65"
+
+[[source.chip]]
+name = "epr-5799"
+region = "gfx2"
+offset = 0x10000
+size = 0x4000
+sha1 = "7f4260f4a4e8b33842355e9d8e859ffb9278c3c2"
+
+[[source.chip]]
+name = "epr-5800"
+region = "gfx2"
+offset = 0x14000
+size = 0x4000
+sha1 = "251cf018da8db11c3844123255082146b22507e5"
+
+[[source.chip]]
+name = "epr-5801"
+region = "gfx2"
+offset = 0x18000
+size = 0x4000
+sha1 = "e8ceabe94080eb28aa393b97ec54729cf8aba001"
+
+[[source.chip]]
+name = "epr-5802"
+region = "gfx2"
+offset = 0x1c000
+size = 0x4000
+sha1 = "58ae647b4fd0f48af4158b85e29c813605d930d3"
 
 [[source]]
 id = "tappera"
@@ -56,5 +572,132 @@ revision = "Tapper (Budweiser, 1/12/84)"
 system = "tappera"
 sha256 = "479e70a7adcb16f4be27124580bd1acc6381843a1d5f1782869bfdce10098297"
 status = "unverified"
+sound_driver = "midway-ssio"
 evidence = "Measured 2026-11-12 by gp game new on the owner's romset: every chip of MAME 0.276's tappera list matched by SHA-1. The sha256 is the set's identity, the SHA-256 of its chips' SHA-1s sorted (gp_arcade::romset)."
 notes = "MAME's tappera (Tapper (Budweiser, 1/12/84), 1983), Midway MCR boards 91490 and 90913. An older revision of tapper's program that plays differently; with it a player gets this model's game, which is tapper's, in tappera's pictures. The region is a guess."
+
+[[source.chip]]
+name = "tapper_c.p.u._pg_0_1c_1-12-84.1c"
+region = "maincpu"
+offset = 0x00000
+size = 0x4000
+sha1 = "373e9a9d73b71e100c02862662d025f5ead2f94d"
+
+[[source.chip]]
+name = "tapper_c.p.u._pg_1_2c_1-12-84.1c"
+region = "maincpu"
+offset = 0x04000
+size = 0x4000
+sha1 = "e493e46fc70a765e54bfdd7ba7ca570e6a5c79d6"
+
+[[source.chip]]
+name = "tapper_c.p.u._pg_2_3c_1-12-84.3c"
+region = "maincpu"
+offset = 0x08000
+size = 0x4000
+sha1 = "cb46a2248289ced7282b1463f433dcb970c42c1a"
+
+[[source.chip]]
+name = "tapper_c.p.u._pg_3_4c_1-12-84.4c"
+region = "maincpu"
+offset = 0x0c000
+size = 0x2000
+sha1 = "45bf1571a2418c7dc00ccc7061a3e04e65cb6bff"
+
+[[source.chip]]
+name = "tapper_sound_snd_0_a7_12-7-83.a7"
+region = "ssio:cpu"
+offset = 0x00000
+size = 0x1000
+sha1 = "9e281c340b7702523c86d56317efad9e3688e585"
+
+[[source.chip]]
+name = "tapper_sound_snd_1_a8_12-7-83.a8"
+region = "ssio:cpu"
+offset = 0x01000
+size = 0x1000
+sha1 = "14334b9d2bfece3fe5bda0cbd53158ead8d27e53"
+
+[[source.chip]]
+name = "tapper_sound_snd_2_a9_12-7-83.a9"
+region = "ssio:cpu"
+offset = 0x02000
+size = 0x1000
+sha1 = "b38bba5f12516d899e023f99147868e3402fbd7b"
+
+[[source.chip]]
+name = "tapper_sound_snd_3_a10_12-7-83.a10"
+region = "ssio:cpu"
+offset = 0x03000
+size = 0x1000
+sha1 = "0011407c1e886071282808c0a561789b1245a789"
+
+[[source.chip]]
+name = "tapper_c.p.u._bg_1_6f_12-7-83.6f"
+region = "gfx1"
+offset = 0x00000
+size = 0x4000
+sha1 = "eb30b9bb654324340f0fc5b44776ac2440c1e869"
+
+[[source.chip]]
+name = "tapper_c.p.u._bg_0_5f_12-7-83.5f"
+region = "gfx1"
+offset = 0x04000
+size = 0x4000
+sha1 = "23e29ec942e1e7516ae8068837af2d1c79592378"
+
+[[source.chip]]
+name = "tapper_video_fg_1_a7_12-7-83.a7"
+region = "gfx2"
+offset = 0x00000
+size = 0x4000
+sha1 = "a38667573d235efe2dc515e52af05825fe4e0f30"
+
+[[source.chip]]
+name = "tapper_video_fg_0_a8_12-7-83.a8"
+region = "gfx2"
+offset = 0x04000
+size = 0x4000
+sha1 = "2077f79177fda26f9c674b2ab525ec3833802059"
+
+[[source.chip]]
+name = "tapper_video_fg_3_a5_12-7-83.a5"
+region = "gfx2"
+offset = 0x08000
+size = 0x4000
+sha1 = "930142dd73fb30c4d3ec09a1e37517c6c6774024"
+
+[[source.chip]]
+name = "tapper_video_fg_2_a6_12-7-83.a6"
+region = "gfx2"
+offset = 0x0c000
+size = 0x4000
+sha1 = "d553b8517c1d03a2be0b065f4da2fa99d9e6fb30"
+
+[[source.chip]]
+name = "tapper_video_fg_5_a3_12-7-83.a3"
+region = "gfx2"
+offset = 0x10000
+size = 0x4000
+sha1 = "8aead89e1adaee5f0b679661c4bfba36e0d639e8"
+
+[[source.chip]]
+name = "tapper_video_fg_4_a4_12-7-83.a4"
+region = "gfx2"
+offset = 0x14000
+size = 0x4000
+sha1 = "402c166d50b4a693959b3f0706a7931a5daef6ce"
+
+[[source.chip]]
+name = "tapper_video_fg_7_a1_12-7-83.a1"
+region = "gfx2"
+offset = 0x18000
+size = 0x4000
+sha1 = "95879a455ecfe2e3de7fe2a75078f9e6934960f5"
+
+[[source.chip]]
+name = "tapper_video_fg_6_a2_12-7-83.a2"
+region = "gfx2"
+offset = 0x1c000
+size = 0x4000
+sha1 = "a24696f16d467d9eea4f25aef5f4c5ff55bf51ff"
