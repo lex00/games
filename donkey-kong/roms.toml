@@ -11,6 +11,7 @@ sha1 = "d222dbba5bd3716bbf62ca91167c6a9d15c60065"
 ines_sha1 = "d8dfacbfec34cdc871d73c901811551fe1706923"
 mapper = 0
 status = "unverified"
+sound_driver = "nes-apu-music"
 evidence = "Measured 2026-11-02 by gp movie hashes on the user's dump. Not yet checked against a published checksum or a cartridge database."
 notes = "Its header says mapper 0 (NROM), 16K PRG and 8K CHR. No board facts until a cartridge database confirms them. A platformer: it uses the platformer extension (docs/research/genres.md lists what it adds)."
 
@@ -26,5 +27,6 @@ sha1 = "fb50e8c5e655ddcc207a96d083cfcb472df0def4"
 ines_sha1 = "bc1760e25492a0f2129eef04a7420608288f61aa"
 mapper = 3
 status = "unverified"
+sound_driver = "nes-apu-music"
 evidence = "Measured 2026-11-03 by gp movie hashes and shasum on the user's file. Not yet checked against a published checksum or a cartridge database."
 notes = "Same game as donkey-kong-ju (game id donkey-kong), a second source on the NES with the added 50m stage and the intro. Its NES 2.0 header says mapper 3 (CNROM), submapper 2, 32K PRG in two banks and 32K CHR. gp roms diff against donkey-kong-ju: the upper PRG bank ($C000) starts with the bytes of donkey-kong-ju's whole 16K program, and the lower bank ($8000) is new. No board facts until a cartridge database confirms them."
