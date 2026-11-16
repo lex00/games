@@ -36,3 +36,35 @@ input = "inputs/oracle/cycle.input"
 input_sha256 = "65449785db8bb38c23f200606b673f1a74b1021b3099f5f81e66ad42284bdd33"
 frames = 27819
 sha256 = "f0356501de772f9563cbb951e826045fb645fdd4803c211774b7294878c5453f"
+
+# The captures gameprinter's arcade tests replay against the board
+# (crates/gp-arcade/tests/oracle_mcr.rs and ssio_alone.rs, with
+# $GP_GAME_DIR naming this folder): made once by hand and kept on each
+# machine at $GP_HOME/work/oracle/NAME, with no hash; a test skips each
+# one that isn't there. Every frame must match MAME's; with ay.tsv the AY
+# writes too, with sound.wav the speakers, and a log whose watchdog runs
+# out must reset the board and come back. input is from this folder.
+
+[[replay]]
+name = "tapper-first-a"
+input = "inputs/oracle/first.input"
+
+[[replay]]
+name = "tapper-deaths-a"
+input = "inputs/oracle/deaths.input"
+
+[[replay]]
+name = "tapper-first-sound"
+input = "inputs/oracle/first.input"
+
+[[replay]]
+name = "tapper-watchdog-b"
+input = "inputs/oracle/watchdog.input"
+
+[[replay]]
+name = "tapper-diagonal-a"
+input = "inputs/oracle/diagonal.input"
+
+[[replay]]
+name = "tapper-diagonal-4way-a"
+input = "inputs/oracle/diagonal-4way.input"

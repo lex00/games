@@ -1,0 +1,104 @@
+# What the static harvest (gameprinter's gp_arcade::harvest, `gp harvest`)
+# must find on this game's main CPU, as found by hand (labels.toml): the
+# interrupt handlers, the frame counter and its wait, the random routine
+# and its wrapper, the record tables, the main loop's jump table and the
+# per-customer state machine. The tools' test
+# crates/gp-arcade/tests/harvest_on_a_set.rs reads it, with
+# $GP_GAME_DIR naming this folder, on the set named here.
+
+set = "tapper"
+
+# Facts the harvest must state, by path: with `value`, one of that path
+# must have it; without, the path must be there.
+[[fact]]
+path = "hardware.interrupt_mode"
+value = 2
+
+[[fact]]
+path = "hardware.vector_table"
+value = "00D0"
+
+[[fact]]
+path = "hardware.interrupts.ctc0"
+value = "irq_0144"
+
+[[fact]]
+path = "hardware.interrupts.ctc1"
+value = "irq_0158"
+
+[[fact]]
+path = "hardware.interrupts.ctc2"
+value = "irq_0584"
+
+[[fact]]
+path = "hardware.interrupts.ctc3"
+value = "irq_00D8"
+
+[[fact]]
+path = "hardware.frame_counter"
+value = "E16C"
+
+[[fact]]
+path = "hardware.frame_wait"
+value = "sub_60F6"
+
+[[fact]]
+path = "random.byte"
+value = "E390"
+
+[[fact]]
+path = "random.routine"
+value = "sub_5FBD"
+
+[[fact]]
+path = "random.wrappers.sub_5FAC"
+
+[[fact]]
+path = "entities.slots_E262.stride"
+value = 8
+
+[[fact]]
+path = "entities.slots_E262.count"
+value = 17
+
+[[fact]]
+path = "entities.slots_E2FE.stride"
+value = 8
+
+[[fact]]
+path = "entities.slots_E2FE.count"
+value = 9
+
+[[fact]]
+path = "entities.slots_E4B2.stride"
+value = 32
+
+[[fact]]
+path = "entities.slots_E4B2.count"
+value = 17
+
+# The taps: four of 4 bytes (the walk's count isn't always read).
+[[fact]]
+path = "entities.slots_E346.stride"
+value = 4
+
+[[fact]]
+path = "input.bytes.E38E"
+
+# A list fact, each of `starts_with` the start of one of its items.
+[[list]]
+path = "random.callers"
+starts_with = ["sub_09C7 at 09DE", "sub_1048 at 106D", "sub_10A7 at 10C6"]
+
+# The main loop's jump table: where it jumps, the start of what it reads,
+# and how many cases.
+[[dispatch]]
+at = "60C0"
+subject = "E397"
+cases = 16
+
+# The customer's state machine: its byte and transitions it must have,
+# each [from, to, routine].
+[[machine]]
+byte = "E4B2+20k"
+transitions = [["s0", "s5", "sub_1016"], ["s1", "s2", "sub_1048"], ["s4", "s0", "sub_1148"], ["s5", "s0", "sub_1167"]]
