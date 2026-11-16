@@ -4513,7 +4513,7 @@ slot = "intro_colors"
 
 [[levels.main.present.board.repeats]]
 at = [8, 2]
-counter = "lives"
+counter = "lives_shown"
 most = 8
 plus = -1
 step = [-1, 0]
@@ -4947,6 +4947,10 @@ description = "Credits, E011: one more at each coin with the defaults' coinage (
 
 [counters.lives]
 description = "Lives, E4A7: 3 at a game's start ($4B22), one less when a life is lost ($23AF), one more at each extra-life score ($615D)"
+
+[counters.lives_shown]
+description = "The lives the HUD shows: E4A7 as the copy of a screen ($5CED) last drew them ($5D21, one fewer mug for player 1), at a level's setup ($4B6E's $5DF6) and the tip show's end ($0C95), so a life lost shows only from the next setup; -1 until the hooks first set it"
+start = -1
 
 [counters.mode]
 description = "E3BD: 0 in a game, 1 in attract mode ($4AB8, $4E3D), 2 at game over"
@@ -5800,6 +5804,14 @@ note = "gp code listing --writes F6C4 and F6DE over tapper.attract.001: $0350 ca
 
 [[evidence."assets.text_one_credit".refs]]
 at = "clip:tapper.attract.001"
+
+[evidence."counters.lives_shown.start"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.die.001's log: E4A7 goes from 3 to 2 on the clip's first frame ($1D71), but the lives' cells (F08E to F091) are written only by $5D4F and $5D52 after a screen's copy ($5CED), last at the game's setup (frame 1100), so the HUD keeps showing two mugs; -1 marks it unset until the hooks give it the lives"
+
+[[evidence."counters.lives_shown.start".refs]]
+at = "clip:tapper.die.001"
 
 [evidence."entities.bar_end"]
 source = "observed"

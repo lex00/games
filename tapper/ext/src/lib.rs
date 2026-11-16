@@ -1575,6 +1575,9 @@ impl Ext for Bars {
         let (timer_k, rec_k) = (cx.kind("timer"), cx.kind("record"));
         // The points this frame adds to the score ($5EE7).
         let mut points = 0;
+        // The lives as this frame leaves them, when it takes one: the flow
+        // the HUD counters read at the end is the last frame's.
+        let mut lives_now: Option<i64> = None;
         let player_k = cx.kind("player");
         let line = bp(cx, "line");
         let step = bp(cx, "line_step");
@@ -2150,6 +2153,9 @@ impl Ext for Bars {
                 let stage = if cleared < 26 { cleared } else { cleared.rem_euclid(26) % 13 + 13 };
                 cx.set_counter("stage", stage);
                 cx.set_counter("bonus", 0);
+                // The screen's copy ($5CED) draws the lives after it
+                // ($5D21): the HUD shows them as of this load.
+                cx.set_counter("lives_shown", (fb.ext[1] >> 40) & 0xff);
             }
             if left <= 0 && (fb.ext[3] >> 8) & 3 == 3 {
                 // The setup clears the level's RAM on this frame ($4B65) and
@@ -2220,9 +2226,11 @@ impl Ext for Bars {
                     if n == 36 {
                         pb.y = Fx::from_int(ry);
                         pb.x = Fx::from_int(if left { tx + 12 } else { tx - 8 });
-                        // $1D71: a life less (E4A7).
+                        // $1D71: a life less (E4A7), counted on this frame
+                        // (the HUD counters below read the flow as it was).
                         let l = ((lives_word >> 40) - 1).max(0) & 0xff;
                         lives_word = (lives_word & !(0xff << 40)) | (l << 40);
+                        lives_now = Some(l);
                     } else if n == 51 {
                         pb.y = Fx::from_int(pb.y.floor() - 5);
                         let nx = x + if left { 16 } else { -16 };
@@ -3144,6 +3152,11 @@ impl Ext for Bars {
                 // tip's with them.
                 show.on = false;
                 dancers = [None; 9];
+                // $0C95: the show's end loads the stage's screen again, and
+                // its copy draws the lives ($5D21).
+                if let Some((_, fb)) = flow {
+                    cx.set_counter("lives_shown", (fb.ext[1] >> 40) & 0xff);
+                }
                 if let Some((Some(id), _)) = tip.take() {
                     tips_gone.push(id);
                 }
@@ -3288,9 +3301,14 @@ impl Ext for Bars {
         if cx.counter("mode") == Some(0) {
             cx.set_counter("cleared", cleared);
             if let Some(fb) = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)) {
-                let (lives, shown) = ((fb.ext[1] >> 40) & 0xff, (fb.ext[3] >> 8) & 3);
+                let (lives, shown) = (lives_now.unwrap_or((fb.ext[1] >> 40) & 0xff), (fb.ext[3] >> 8) & 3);
                 cx.set_counter("lives", lives);
                 cx.set_counter("shown", shown);
+                // A clip that starts in play has the lives its screen
+                // shows: those it has.
+                if cx.counter("lives_shown").is_none_or(|v| v < 0) {
+                    cx.set_counter("lives_shown", lives);
+                }
             }
         }
         cx.me.ext[0] = walk | (tip_count << 8) | (tips_left << 16) | (tip_setting << 24);
