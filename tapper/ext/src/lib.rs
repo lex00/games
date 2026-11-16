@@ -945,6 +945,10 @@ fn set_attract_screen(cx: &mut ExtCx<'_>) {
     if cx.counter("attract_screen") != Some(s) {
         cx.set_counter("attract_screen", s);
     }
+    let f = if s == 0 { 0 } else { t };
+    if cx.counter("attract_frames") != Some(f) {
+        cx.set_counter("attract_frames", f);
+    }
 }
 
 impl Ext for Flow {

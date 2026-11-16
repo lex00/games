@@ -440,6 +440,179 @@ width = 2
 rbtapper = 0x636D
 tappera = 0x61DD
 
+# The attract mode's lines of text, each a string the program queues for
+# its text routine ($5F44, drawn by $0350 in the frame's interrupt: a byte
+# a cell up to a zero, a space as tile 0): the logo's three ($3C7C) and the
+# demo's instructions ($2EE0), each read up to its zero; and the colour
+# bytes the routine writes beside them (E38F), from the code that sets it.
+# rbtapper's from its own places.
+[[asset]]
+name = "text_logo_1"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3C9D
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x3CB4
+
+[[asset]]
+name = "text_logo_2"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3CB3
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x3CC9
+
+[[asset]]
+name = "text_logo_3"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3CC4
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x3CDA
+
+[[asset]]
+name = "text_demo_1"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x33AB
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x33C2
+
+[[asset]]
+name = "text_demo_2"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x33BA
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x33D1
+
+[[asset]]
+name = "text_demo_3"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x33C9
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x33E0
+
+[[asset]]
+name = "text_demo_4"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x33D9
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x33F0
+
+[[asset]]
+name = "text_demo_5"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x346F
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x3486
+
+[[asset]]
+name = "text_demo_6"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3419
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x3430
+
+[[asset]]
+name = "text_demo_7"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3409
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x3420
+
+[[asset]]
+name = "text_demo_8"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3429
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x3440
+
+[[asset]]
+name = "text_demo_9"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x33E9
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x3400
+
+[[asset]]
+name = "text_demo_10"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x33F9
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x3410
+
+# $3C7C's ld a,$20, the colour the logo's lines are written in.
+[[asset]]
+name = "text_color_logo"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3C7D
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x3C94
+
+# $2EEB's ld (hl),$10, the colour $2EE0 writes the demo's lines in.
+[[asset]]
+name = "text_color_demo"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2EEC
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x2F00
+
 # The attract mode's two screens, each the address $5CED copies $780 bytes
 # from once E395 holds it: the logo's, which $3D76 sets ($3D8A), and the
 # demo's, which $4AAA sets ($4AE7). rbtapper's program sets them from its

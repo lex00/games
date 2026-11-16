@@ -617,6 +617,141 @@ description = "The slot lists a level's start brings, each ended by $FF (the pro
 source = "tapper"
 asset = "start_lists"
 
+[assets.text_color_demo]
+kind = "rows"
+role = "graphics"
+description = "The colour byte of the attract's lines: $2EEB's ld (hl),$10, the colour $2EE0 writes the demo's lines in"
+
+[assets.text_color_demo.from]
+source = "tapper"
+asset = "text_color_demo"
+
+[assets.text_color_logo]
+kind = "rows"
+role = "graphics"
+description = "The colour byte of the attract's lines: $3C7C's ld a,$20, the colour the logo's lines are written in"
+
+[assets.text_color_logo.from]
+source = "tapper"
+asset = "text_color_logo"
+
+[assets.text_demo_1]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's demo, the string at $33AB its text routine draws"
+
+[assets.text_demo_1.from]
+source = "tapper"
+asset = "text_demo_1"
+
+[assets.text_demo_10]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's demo, the string at $33F9 its text routine draws"
+
+[assets.text_demo_10.from]
+source = "tapper"
+asset = "text_demo_10"
+
+[assets.text_demo_2]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's demo, the string at $33BA its text routine draws"
+
+[assets.text_demo_2.from]
+source = "tapper"
+asset = "text_demo_2"
+
+[assets.text_demo_3]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's demo, the string at $33C9 its text routine draws"
+
+[assets.text_demo_3.from]
+source = "tapper"
+asset = "text_demo_3"
+
+[assets.text_demo_4]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's demo, the string at $33D9 its text routine draws"
+
+[assets.text_demo_4.from]
+source = "tapper"
+asset = "text_demo_4"
+
+[assets.text_demo_5]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's demo, the string at $346F its text routine draws"
+
+[assets.text_demo_5.from]
+source = "tapper"
+asset = "text_demo_5"
+
+[assets.text_demo_6]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's demo, the string at $3419 its text routine draws"
+
+[assets.text_demo_6.from]
+source = "tapper"
+asset = "text_demo_6"
+
+[assets.text_demo_7]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's demo, the string at $3409 its text routine draws"
+
+[assets.text_demo_7.from]
+source = "tapper"
+asset = "text_demo_7"
+
+[assets.text_demo_8]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's demo, the string at $3429 its text routine draws"
+
+[assets.text_demo_8.from]
+source = "tapper"
+asset = "text_demo_8"
+
+[assets.text_demo_9]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's demo, the string at $33E9 its text routine draws"
+
+[assets.text_demo_9.from]
+source = "tapper"
+asset = "text_demo_9"
+
+[assets.text_logo_1]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's logo, the string at $3C9D its text routine draws"
+
+[assets.text_logo_1.from]
+source = "tapper"
+asset = "text_logo_1"
+
+[assets.text_logo_2]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's logo, the string at $3CB3 its text routine draws"
+
+[assets.text_logo_2.from]
+source = "tapper"
+asset = "text_logo_2"
+
+[assets.text_logo_3]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's logo, the string at $3CC4 its text routine draws"
+
+[assets.text_logo_3.from]
+source = "tapper"
+asset = "text_logo_3"
+
 [entities.bar_end]
 description = "The bars' end pieces and far ends, the objects from E356 (y, flags, picture, x), 4 bytes each, a bar's at 4 times its number and its far end 16 on: put in by the setup's $4D13 from the bar_objects rows (tapper_flow), gone at a level's end ($5615) and at the next setup ($5F31). Word 0 is the flags and 256 times the picture. Drawn, never compared"
 ext = "tapper_bar_end"
@@ -2229,6 +2364,253 @@ cmp = "=="
 counter = "mode"
 value = 0
 
+[[levels.main.present.board.texts]]
+at = [5, 23]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_logo"
+
+[levels.main.present.board.texts.text]
+slot = "text_logo_1"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [8, 24]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_logo"
+
+[levels.main.present.board.texts.text]
+slot = "text_logo_2"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [6, 25]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_logo"
+
+[levels.main.present.board.texts.text]
+slot = "text_logo_3"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [9, 4]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_demo"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_1"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 217
+
+[[levels.main.present.board.texts]]
+at = [9, 6]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_demo"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_2"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 217
+
+[[levels.main.present.board.texts]]
+at = [8, 4]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_demo"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_3"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 352
+
+[[levels.main.present.board.texts]]
+at = [8, 6]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_demo"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_4"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 352
+
+[[levels.main.present.board.texts]]
+at = [8, 4]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_demo"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_5"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 490
+
+[[levels.main.present.board.texts]]
+at = [8, 6]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_demo"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_6"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 490
+
+[[levels.main.present.board.texts]]
+at = [8, 4]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_demo"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_7"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 551
+
+[[levels.main.present.board.texts]]
+at = [8, 6]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_demo"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_8"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 551
+
+[[levels.main.present.board.texts]]
+at = [8, 4]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_demo"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_9"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 624
+
+[[levels.main.present.board.texts]]
+at = [8, 6]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_demo"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_10"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 624
+
 [levels.main.present.sprite_order.bar_end]
 at = 115
 step = 1
@@ -2304,6 +2686,9 @@ y = 192
 entity = "bars"
 x = 0
 y = 0
+
+[counters.attract_frames]
+description = "The frames since the attract mode began (its logo, $3D76), 0 out of it; tapper_flow sets it each frame, and the attract's lines of text are drawn by it"
 
 [counters.attract_screen]
 description = "The attract mode's screen: 1 the logo's ($3D76), 2 the demo's ($4AAA) from attract_demo frames in, 0 out of the attract mode (E3BD not 1); tapper_flow sets it each frame from the attract's frames, and the looks pick the screen by it"
@@ -2874,6 +3259,126 @@ note = "Found with gp code listing and gp code tables on tapper.l8.001; the asse
 
 [[evidence."assets.start_lists".refs]]
 at = "clip:tapper.l8.001"
+
+[evidence."assets.text_color_demo"]
+source = "observed"
+confidence = 70
+note = "gp code listing: $2EEB's ld (hl),$10, the colour $2EE0 writes the demo's lines in; rbtapper's at $2F00"
+
+[[evidence."assets.text_color_demo".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_color_logo"]
+source = "observed"
+confidence = 70
+note = "gp code listing: $3C7C's ld a,$20, the colour the logo's lines are written in; rbtapper's at $3C94"
+
+[[evidence."assets.text_color_logo".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_demo_1"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text queue at E0A9 takes $33AB for row 4, column 9, 217 frames into the attract mode; rbtapper's $33C2 from its own listing, its calls lined up with tapper's"
+
+[[evidence."assets.text_demo_1".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_demo_10"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text queue at E0A9 takes $33F9 for row 6, column 8, 624 frames into the attract mode; rbtapper's $3410 from its own listing, its calls lined up with tapper's"
+
+[[evidence."assets.text_demo_10".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_demo_2"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text queue at E0A9 takes $33BA for row 6, column 9, 217 frames into the attract mode; rbtapper's $33D1 from its own listing, its calls lined up with tapper's"
+
+[[evidence."assets.text_demo_2".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_demo_3"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text queue at E0A9 takes $33C9 for row 4, column 8, 352 frames into the attract mode; rbtapper's $33E0 from its own listing, its calls lined up with tapper's"
+
+[[evidence."assets.text_demo_3".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_demo_4"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text queue at E0A9 takes $33D9 for row 6, column 8, 352 frames into the attract mode; rbtapper's $33F0 from its own listing, its calls lined up with tapper's"
+
+[[evidence."assets.text_demo_4".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_demo_5"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text queue at E0A9 takes $346F for row 4, column 8, 490 frames into the attract mode; rbtapper's $3486 from its own listing, its calls lined up with tapper's"
+
+[[evidence."assets.text_demo_5".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_demo_6"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text queue at E0A9 takes $3419 for row 6, column 8, 490 frames into the attract mode; rbtapper's $3430 from its own listing, its calls lined up with tapper's"
+
+[[evidence."assets.text_demo_6".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_demo_7"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text queue at E0A9 takes $3409 for row 4, column 8, 551 frames into the attract mode; rbtapper's $3420 from its own listing, its calls lined up with tapper's"
+
+[[evidence."assets.text_demo_7".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_demo_8"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text queue at E0A9 takes $3429 for row 6, column 8, 551 frames into the attract mode; rbtapper's $3440 from its own listing, its calls lined up with tapper's"
+
+[[evidence."assets.text_demo_8".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_demo_9"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text queue at E0A9 takes $33E9 for row 4, column 8, 624 frames into the attract mode; rbtapper's $3400 from its own listing, its calls lined up with tapper's"
+
+[[evidence."assets.text_demo_9".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_logo_1"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text queue at E0A9 takes $3C9D for row 23, column 5, 2 frames into the attract mode; rbtapper's $3CB4 from its own listing, its calls lined up with tapper's"
+
+[[evidence."assets.text_logo_1".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_logo_2"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text queue at E0A9 takes $3CB3 for row 24, column 8, 2 frames into the attract mode; rbtapper's $3CC9 from its own listing, its calls lined up with tapper's"
+
+[[evidence."assets.text_logo_2".refs]]
+at = "clip:tapper.attract.001"
+
+[evidence."assets.text_logo_3"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text queue at E0A9 takes $3CC4 for row 25, column 6, 2 frames into the attract mode; rbtapper's $3CDA from its own listing, its calls lined up with tapper's"
+
+[[evidence."assets.text_logo_3".refs]]
+at = "clip:tapper.attract.001"
 
 [evidence."entities.bar_end"]
 source = "observed"
