@@ -2782,6 +2782,8 @@ impl Ext for Bars {
                 _ => 3,
             };
             fb.ext[3] = (fb.ext[3] & !0xffff_ffff) | 15 | (shown << 8) | (5 << 16) | (wait << 24);
+            // The setup's frame: the intro's first ($5404 runs on the next).
+            cx.set_counter("intro", 1);
             let at = if cleared < 26 { cleared } else { in13 + 13 };
             let layouts = flow_table(cx, "layouts");
             if let Some(&l) = layouts.get(usize::try_from(at).unwrap_or(0)) {
@@ -2796,6 +2798,15 @@ impl Ext for Bars {
             life_lost = true;
         } else if (state == 15 || state == 16) && sub == 5 && let Some((fid, mut fb)) = flow {
             let left = ((fb.ext[3] >> 24) & 0xff) - 1;
+            // The level's intro ($5404, from the setup's next frame): the
+            // screen cleared ($5FFD) and its lines written ($5F44), until
+            // the stage is drawn; the counter intro is the frames since the
+            // setup, plus 1, and 0 once the stage is up.
+            let total = 2 + 30 + 5 + if cleared == 0 { 100 } else { 0 };
+            let intro = if left > 0 { total - left + 1 } else { 0 };
+            if cx.counter("intro") != Some(intro) {
+                cx.set_counter("intro", intro);
+            }
             if left <= 0 {
                 // $4B6E's $5DF6 draws the level's stage, its screen's
                 // place among the words at $61ED by the levels cleared.
@@ -3531,6 +3542,16 @@ impl Ext for Bars {
                 {
                     c.ext[0] = (c.ext[0] & !(0xff << 24)) | (p << 24);
                 }
+                // $09ED to $0A1F: the mug it caught, its second sprite:
+                // the record's +19 picture, 4 above it ($DE's level with
+                // it, its picture set +10), 16 toward the tap.
+                if let Some(base) = usize::try_from(slot).ok().map(|k| (shown * 16 + k) * 32) {
+                    let rows = cx.table("record_blocks");
+                    let pic2 = rows.get(base + 0x19).copied().unwrap_or(0);
+                    let tall = rows.get(base + 0x10).copied() == Some(0xDE);
+                    let y2 = (c.y.floor() - if tall { 0 } else { 4 }) & 0xff;
+                    c.ext[2] = (c.ext[2] & 0xffff) | (pic2 << 16) | (y2 << 24);
+                }
                 bodies[j].1 = c;
                 removed.push(id);
                 break;
@@ -3757,7 +3778,34 @@ impl Ext for Bars {
                 if let Some(n) = n {
                     recs[n].1.ext[1] = (recs[n].1.ext[1] & !(0xff << 16)) | (ctr << 16);
                 }
+                // Its second sprite, the mug it holds (+4 to +7): $106B
+                // shows it as it starts drinking, the record's +1A at its
+                // y (+4) and 16 toward the tap (+7); $10C0 changes it to
+                // +18 as it throws; $1130 hides it (+4 to 0). Word 2 keeps
+                // its picture (byte 2) and y (byte 3, 0 hidden).
+                let (mut pic2, mut y2) = ((c.ext[2] >> 16) & 0xff, (c.ext[2] >> 24) & 0xff);
+                match (state, ns) {
+                    (1, 2) => {
+                        pic2 = b[0x1A];
+                        y2 = c.y.floor() & 0xff;
+                    }
+                    (2, 3) => pic2 = b[0x18],
+                    (3, 4) => y2 = 0,
+                    _ => {}
+                }
+                c.ext[2] = (c.ext[2] & 0xffff) | (pic2 << 16) | (y2 << 24);
             }
+            // The held mug as drawn: its picture in byte 4 facing right
+            // (16 right of the customer, $1098) or byte 5 facing left (16
+            // left, $109C), 0 while it is hidden.
+            // Bytes 4 and 5 level with it, 6 and 7 4 above (as it is
+            // pushed back), so each draws at its own offset.
+            let y2 = (c.ext[2] >> 24) & 0xff;
+            let held = if y2 != 0 { (c.ext[2] >> 16) & 0xff } else { 0 };
+            let left = (c.ext[0] >> 8) & 1 == 1;
+            let above = y2 != 0 && (c.y.floor() - y2) & 0xff == 4;
+            let at = 32 + 8 * (i64::from(left) + 2 * i64::from(above));
+            c.ext[2] = (c.ext[2] & 0xffff_ffff) | (held << at);
             bodies[k].1 = c;
         }
 
@@ -3955,6 +4003,9 @@ impl Ext for Bars {
                 let pic = cx.table("record_blocks").get((shown * 16 + k) * 32 + 0x10).copied().unwrap_or(row[2]);
                 c.ext[0] = (i64::from(left) << 8) | (flags << 16) | (pic << 24);
                 c.ext[1] = r + 16;
+                // The start row's second sprite (+4 to +7), copied in with
+                // the first ($160D): its picture and y, the held mug.
+                c.ext[2] = (row[6] << 16) | (row[4] << 24);
                 c.ext[3] = (k as i64) << 16;
                 bodies.push((next_id, c));
                 added.push(next_id);

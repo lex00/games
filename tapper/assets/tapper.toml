@@ -1103,6 +1103,65 @@ width = 3
 [asset.at]
 rbtapper = 0x2531
 
+# The level's intro ($5404): $540A's ld a,$11 into palette RAM F800 and F840
+# (the cleared screen's colour), $5412's ld a,$87 into F84D (its lines'),
+# the two lines it queues ($5425 at row 11, $542E at row 9, column 2) and
+# the colour byte the setup gives its lines ($4B53's ld a,$20).
+[[asset]]
+name = "intro_back_color"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x540B
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x559B
+
+[[asset]]
+name = "intro_line_color"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x5413
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x55A3
+
+[[asset]]
+name = "intro_text_high"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4B54
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x4CE4
+
+[[asset]]
+name = "intro_text_1"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x54FA
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x568A
+
+[[asset]]
+name = "intro_text_2"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x54DF
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x566F
+
 # The logo's colours ($3D76): palette RAM's F840 and F84C set ($3D79, $3D7E),
 # F822 to F83D zeroed, then from 16 frames on each of the twelve odd bytes
 # from F823 lit ($FF, $3DA4) and, six frames later, dimmed ($C4, $3DA2), the

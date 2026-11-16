@@ -208,11 +208,11 @@ ram = [0xE4B6]
 stride = 32
 
 [[slots.group.field]]
-note = "Not compared: its wait (+2) and drink (+9)"
+note = "Not compared: its wait (+2) and drink (+9), and the mug it holds, its object's second sprite: picture (+6) and y (+4, 0 hidden)"
 path = "ext[2]"
 presentation = true
-ram = [0xE4B4, 0xE4BB]
-stride = 32
+ram = [0xE4B4, 0xE4BB, 0xE268, 0xE266]
+strides = [32, 32, 8, 8]
 
 [[slots.group.field]]
 note = "Not compared: its drink's turn (+3), the turns left (+5) and its slot (+0C)"

@@ -779,6 +779,15 @@ description = "Where a clip resumes: the interlude's start, the operand of the c
 source = "tapper"
 asset = "interlude_start"
 
+[assets.intro_back_color]
+kind = "rows"
+role = "graphics"
+description = "the level's intro: the cleared screen's colour, $540A's ld a,$11 into palette RAM F800 and F840"
+
+[assets.intro_back_color.from]
+source = "tapper"
+asset = "intro_back_color"
+
 [assets.intro_colors]
 kind = "rows"
 role = "palettes"
@@ -787,6 +796,42 @@ description = "The colours the level's intro pokes over the palette ($540A to $5
 [assets.intro_colors.from]
 source = "tapper"
 asset = "intro_colors"
+
+[assets.intro_line_color]
+kind = "rows"
+role = "graphics"
+description = "the level's intro: its lines' colour, $5412's ld a,$87 into palette RAM F84D"
+
+[assets.intro_line_color.from]
+source = "tapper"
+asset = "intro_line_color"
+
+[assets.intro_text_1]
+kind = "rows"
+role = "graphics"
+description = "the level's intro: the line $542E queues at row 9, column 2"
+
+[assets.intro_text_1.from]
+source = "tapper"
+asset = "intro_text_1"
+
+[assets.intro_text_2]
+kind = "rows"
+role = "graphics"
+description = "the level's intro: the line $5425 queues at row 11, column 2"
+
+[assets.intro_text_2.from]
+source = "tapper"
+asset = "intro_text_2"
+
+[assets.intro_text_high]
+kind = "rows"
+role = "graphics"
+description = "the level's intro: the high byte its lines are written with, $4B53's ld a,$20 into E38F"
+
+[assets.intro_text_high.from]
+source = "tapper"
+asset = "intro_text_high"
 
 [assets.layouts]
 kind = "rows"
@@ -1618,6 +1663,50 @@ size = [16, 16]
 [entities.customer.board_sprite]
 slot = "board_sprites"
 
+[[entities.customer.board_sprite.extra]]
+offset = [16, 0]
+
+[entities.customer.board_sprite.extra.flags]
+byte = 2
+word = 0
+
+[entities.customer.board_sprite.extra.picture]
+byte = 4
+word = 2
+
+[[entities.customer.board_sprite.extra]]
+offset = [-16, 0]
+
+[entities.customer.board_sprite.extra.flags]
+byte = 2
+word = 0
+
+[entities.customer.board_sprite.extra.picture]
+byte = 5
+word = 2
+
+[[entities.customer.board_sprite.extra]]
+offset = [16, -4]
+
+[entities.customer.board_sprite.extra.flags]
+byte = 2
+word = 0
+
+[entities.customer.board_sprite.extra.picture]
+byte = 6
+word = 2
+
+[[entities.customer.board_sprite.extra]]
+offset = [-16, -4]
+
+[entities.customer.board_sprite.extra.flags]
+byte = 2
+word = 0
+
+[entities.customer.board_sprite.extra.picture]
+byte = 7
+word = 2
+
 [entities.customer.board_sprite.flags]
 byte = 2
 word = 0
@@ -1905,6 +1994,11 @@ cmp = "=="
 counter = "mode"
 value = 0
 
+[[levels.main.present.board.counters.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.counters]]
 at = [23, 1]
 counter = "score_2"
@@ -1921,6 +2015,11 @@ slot = "score_codes"
 cmp = "=="
 counter = "mode"
 value = 0
+
+[[levels.main.present.board.counters.when]]
+cmp = "<"
+counter = "intro"
+value = 2
 
 [[levels.main.present.board.counters]]
 at = [28, 27]
@@ -1945,6 +2044,11 @@ cmp = "=="
 counter = "bonus"
 value = 0
 
+[[levels.main.present.board.counters.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.counters]]
 at = [9, 27]
 counter = "credits"
@@ -1960,6 +2064,31 @@ slot = "credit_digit"
 cmp = "=="
 counter = "mode"
 value = 1
+
+[[levels.main.present.board.counters.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.looks]]
+clear = true
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 0
+slot = "intro_back_color"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "intro_back_color"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 77
+slot = "intro_line_color"
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "intro"
+value = 2
 
 [[levels.main.present.board.looks]]
 screen = "screen_attract_logo"
@@ -8424,6 +8553,77 @@ cmp = "=="
 counter = "mode"
 value = 0
 
+[[levels.main.present.board.repeats.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [2, 9]
+
+[levels.main.present.board.texts.high]
+slot = "intro_text_high"
+
+[levels.main.present.board.texts.text]
+slot = "intro_text_1"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "intro"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "cleared"
+value = 1
+
+[[levels.main.present.board.texts]]
+at = [2, 9]
+
+[levels.main.present.board.texts.high]
+slot = "intro_text_high"
+
+[levels.main.present.board.texts.text]
+slot = "intro_text_1"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "intro"
+value = 103
+
+[[levels.main.present.board.texts]]
+at = [2, 11]
+
+[levels.main.present.board.texts.high]
+slot = "intro_text_high"
+
+[levels.main.present.board.texts.text]
+slot = "intro_text_2"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "intro"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "cleared"
+value = 1
+
+[[levels.main.present.board.texts]]
+at = [2, 11]
+
+[levels.main.present.board.texts.high]
+slot = "intro_text_high"
+
+[levels.main.present.board.texts.text]
+slot = "intro_text_2"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "intro"
+value = 103
+
 [[levels.main.present.board.texts]]
 at = [8, 25]
 
@@ -8443,6 +8643,11 @@ cmp = "<="
 counter = "bonus_text"
 value = 1
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.texts]]
 at = [10, 24]
 
@@ -8460,6 +8665,11 @@ value = 2
 [[levels.main.present.board.texts.when]]
 cmp = "<="
 counter = "bonus_text"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
 value = 2
 
 [[levels.main.present.board.texts]]
@@ -8481,6 +8691,11 @@ cmp = "<="
 counter = "bonus_text"
 value = 2
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.texts]]
 at = [10, 27]
 
@@ -8498,6 +8713,11 @@ value = 2
 [[levels.main.present.board.texts.when]]
 cmp = "<="
 counter = "bonus_text"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
 value = 2
 
 [[levels.main.present.board.texts]]
@@ -8519,6 +8739,11 @@ cmp = "<="
 counter = "bonus_text"
 value = 2
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.texts]]
 at = [8, 24]
 
@@ -8537,6 +8762,11 @@ value = 3
 cmp = "<="
 counter = "bonus_text"
 value = 4
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
 
 [[levels.main.present.board.texts]]
 at = [8, 26]
@@ -8557,6 +8787,11 @@ cmp = "<="
 counter = "bonus_text"
 value = 3
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.texts]]
 at = [8, 24]
 
@@ -8576,6 +8811,11 @@ cmp = "<="
 counter = "bonus_text"
 value = 5
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.texts]]
 at = [2, 27]
 
@@ -8589,6 +8829,11 @@ slot = "text_credit"
 cmp = "=="
 counter = "mode"
 value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
 
 [[levels.main.present.board.texts]]
 at = [15, 27]
@@ -8609,6 +8854,11 @@ cmp = "=="
 counter = "credits"
 value = 0
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.texts]]
 at = [13, 27]
 
@@ -8628,6 +8878,11 @@ cmp = "=="
 counter = "credits"
 value = 1
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.texts]]
 at = [11, 27]
 
@@ -8645,6 +8900,11 @@ value = 1
 [[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "credits"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
 value = 2
 
 [[levels.main.present.board.texts]]
@@ -8666,6 +8926,11 @@ cmp = ">="
 counter = "attract_frames"
 value = 2
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.texts]]
 at = [8, 24]
 
@@ -8683,6 +8948,11 @@ value = 1
 [[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "attract_frames"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
 value = 2
 
 [[levels.main.present.board.texts]]
@@ -8704,6 +8974,11 @@ cmp = ">="
 counter = "attract_frames"
 value = 2
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.texts]]
 at = [9, 4]
 
@@ -8722,6 +8997,11 @@ value = 2
 cmp = ">="
 counter = "attract_frames"
 value = 217
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
 
 [[levels.main.present.board.texts]]
 at = [9, 6]
@@ -8742,6 +9022,11 @@ cmp = ">="
 counter = "attract_frames"
 value = 217
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.texts]]
 at = [8, 4]
 
@@ -8760,6 +9045,11 @@ value = 2
 cmp = ">="
 counter = "attract_frames"
 value = 352
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
 
 [[levels.main.present.board.texts]]
 at = [8, 6]
@@ -8780,6 +9070,11 @@ cmp = ">="
 counter = "attract_frames"
 value = 352
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.texts]]
 at = [8, 4]
 
@@ -8798,6 +9093,11 @@ value = 2
 cmp = ">="
 counter = "attract_frames"
 value = 490
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
 
 [[levels.main.present.board.texts]]
 at = [8, 6]
@@ -8818,6 +9118,11 @@ cmp = ">="
 counter = "attract_frames"
 value = 490
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.texts]]
 at = [8, 4]
 
@@ -8836,6 +9141,11 @@ value = 2
 cmp = ">="
 counter = "attract_frames"
 value = 551
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
 
 [[levels.main.present.board.texts]]
 at = [8, 6]
@@ -8856,6 +9166,11 @@ cmp = ">="
 counter = "attract_frames"
 value = 551
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.texts]]
 at = [8, 4]
 
@@ -8875,6 +9190,11 @@ cmp = ">="
 counter = "attract_frames"
 value = 624
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
 [[levels.main.present.board.texts]]
 at = [8, 6]
 
@@ -8893,6 +9213,11 @@ value = 2
 cmp = ">="
 counter = "attract_frames"
 value = 624
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
 
 [levels.main.present.sprite_order.bar_end]
 at = 115
@@ -9016,6 +9341,9 @@ description = "The step of the cycles last written, plus 1 (the looks write its 
 
 [counters.cycle_wait]
 description = "The frames to the cycles' next step, E121 ($01E1 counts it down; at below 0 the step's colour is written and the step's frames begin)"
+
+[counters.intro]
+description = "The level's intro ($5404), counted by tapper_bars from the setup: 1 on the setup's frame, then the frames since plus 1 while the screen is cleared and its lines are up, 0 once the stage is drawn ($5DF6)"
 
 [counters.lives]
 description = "Lives, E4A7: 3 at a game's start ($4B22), one less when a life is lost ($23AF), one more at each extra-life score ($615D)"
@@ -9720,6 +10048,14 @@ note = "gp code listing of tapper and rbtapper: the bonus round starts at $2500 
 [[evidence."assets.interlude_start".refs]]
 at = "clip:tapper.bonus.001"
 
+[evidence."assets.intro_back_color"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.clear.015's log: the setup's palette on 15925, then $5404's writes of F800, F840 and F84D and the cleared screen ($5FFD) on 15926, its two lines (rows 9 and 11 from column 2, high byte E38F $20) on 15927, the stage on 15964; gp code listing shows the same code at rbtapper's offsets"
+
+[[evidence."assets.intro_back_color".refs]]
+at = "clip:tapper.clear.015"
+
 [evidence."assets.intro_colors"]
 source = "observed"
 confidence = 80
@@ -9727,6 +10063,38 @@ note = "The level's intro writes one byte to palette RAM $00 and $40 and another
 
 [[evidence."assets.intro_colors".refs]]
 at = "clip:tapper.l1.001"
+
+[evidence."assets.intro_line_color"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.clear.015's log: the setup's palette on 15925, then $5404's writes of F800, F840 and F84D and the cleared screen ($5FFD) on 15926, its two lines (rows 9 and 11 from column 2, high byte E38F $20) on 15927, the stage on 15964; gp code listing shows the same code at rbtapper's offsets"
+
+[[evidence."assets.intro_line_color".refs]]
+at = "clip:tapper.clear.015"
+
+[evidence."assets.intro_text_1"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.clear.015's log: the setup's palette on 15925, then $5404's writes of F800, F840 and F84D and the cleared screen ($5FFD) on 15926, its two lines (rows 9 and 11 from column 2, high byte E38F $20) on 15927, the stage on 15964; gp code listing shows the same code at rbtapper's offsets"
+
+[[evidence."assets.intro_text_1".refs]]
+at = "clip:tapper.clear.015"
+
+[evidence."assets.intro_text_2"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.clear.015's log: the setup's palette on 15925, then $5404's writes of F800, F840 and F84D and the cleared screen ($5FFD) on 15926, its two lines (rows 9 and 11 from column 2, high byte E38F $20) on 15927, the stage on 15964; gp code listing shows the same code at rbtapper's offsets"
+
+[[evidence."assets.intro_text_2".refs]]
+at = "clip:tapper.clear.015"
+
+[evidence."assets.intro_text_high"]
+source = "observed"
+confidence = 70
+note = "gp-arcade's writes example on tapper.clear.015's log: the setup's palette on 15925, then $5404's writes of F800, F840 and F84D and the cleared screen ($5FFD) on 15926, its two lines (rows 9 and 11 from column 2, high byte E38F $20) on 15927, the stage on 15964; gp code listing shows the same code at rbtapper's offsets"
+
+[[evidence."assets.intro_text_high".refs]]
+at = "clip:tapper.clear.015"
 
 [evidence."assets.layouts"]
 source = "observed"
