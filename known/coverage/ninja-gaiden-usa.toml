@@ -1,0 +1,29 @@
+# Coverage definition for Ninja Gaiden, USA (docs/coverage.md,
+# docs/corpus.md). Addresses are from Data Crystal's RAM map
+# (datacrystal.tcrf.net/wiki/Ninja_Gaiden_(NES)/RAM_map): $6D "The current
+# stage", $6E "The current room", $65 Ryu's health. No disassembly of the
+# game was found.
+schema = 1
+source = "ninja-gaiden-usa"
+title = "Ninja Gaiden"
+notes = "Draft, 2026-10-28: the stage numbering (one $6D value per stage of the 6 acts, 20 in all with the last act's four) is to be checked on a run that plays the whole game."
+
+# Read while Ryu is alive: his health ($65, 16 full) is 0 on the title screen and
+# in cut-scenes.
+[screens]
+when = "ram[0x65] != 0 && ram[0x65] <= 16"
+parts = [
+  { name = "stage", read = "ram[0x6d]" },   # current stage
+  { name = "room", read = "ram[0x6e]" },    # current room
+]
+screen = "stage {stage} room {room}"
+level = "stage {stage}"
+
+# Ninja Gaiden is an extra game since 2026-10-28, not a Milestone 1 target, so it has no thresholds: `gp coverage check --store` checks the targets only. Its 20 stages, for when a run reaches them:
+# [thresholds]
+# levels = [
+#   "stage 0", "stage 1", "stage 2", "stage 3", "stage 4", "stage 5", "stage 6",
+#   "stage 7", "stage 8", "stage 9", "stage 10", "stage 11", "stage 12",
+#   "stage 13", "stage 14", "stage 15", "stage 16", "stage 17", "stage 18",
+#   "stage 19",
+# ]

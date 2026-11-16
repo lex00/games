@@ -1,0 +1,130 @@
+# NES ROM entries brought from game-printer's sources/nes.toml for games
+# that have no folder in this checkout yet: hashes and facts only, never
+# the games themselves. The six are the ROMs the owner had that
+# game-printer registered and gameprinter has no package for (Kirby's
+# Adventure, Ninja Gaiden, Gauntlet, Gauntlet II, Q*bert, Track & Field).
+#
+# Nothing names a ROM by these entries: `gp roms scan` and `gp game new`
+# read each game's roms.toml, and this file is named sources.toml so it
+# isn't one, so these ROMs still show as unknown, and a game can be
+# started from one. `gp game new` copies the matching entry here (its
+# board facts, hashes, evidence and notes) into the new game's roms.toml,
+# with the new game's source id, instead of drafting one from the header,
+# and the entry's coverage definition from known/coverage/ when there is
+# one. The ROM-blocking hook guards the same hashes
+# (.githooks/guarded-roms.toml).
+#
+# `sha256` is the SHA-256 of PRG and CHR data with the iNES header (and any
+# trainer) removed, as `gp roms scan` prints it. `status` is `unverified`
+# until the hash is checked against an independent reference
+# (docs/sources.md). The board facts (`board` to `board_evidence`) are what
+# the header would otherwise say. `md5`, `sha1` and `ines_sha1` are what
+# FCEUX and BizHawk movies name a ROM by (docs/movies.md).
+
+[[source]]
+id = "kirby-usa-prg0"
+title = "Kirby's Adventure"
+platform = "nes"
+board = "NES-TKROM"
+submapper = 0
+mirroring = "mapper"
+battery = true
+prg_rom_bytes = 524288
+chr_rom_bytes = 262144
+prg_ram_bytes = 8192
+chr_ram_bytes = 0
+board_evidence = "NesCartDB (BizHawk Assets/gamedb/NesCarts.xml at commit 2601ad636afa) lists bootgod's NES-KR-USA dump on an NES-TKROM board (PCB NES-TKROM-10), mapper 4, MMC3C, 512KB PRG, 256KB CHR ROM, 8KB battery-backed PRG RAM (wram battery=1). The MMC3 sets the mirroring. Checked 2026-10-28."
+region = "ntsc"
+revision = "PRG0"
+sha256 = "a6b81fec11c24a33fd763db5c28005e760a1614e70c1bb5ccde0bd4242431000"
+md5 = "36ffa102acba11b5c57427d8ac5ad98e"
+sha1 = "32473799f96406d73aa37d5cf66e0e27f1f339da"
+ines_sha1 = "e099d688760ff0ce114ca8a9fd083e31e41cfade"
+mapper = 4
+status = "verified"
+evidence = "Published checksums only, weaker than a disassembly rebuild (none rebuilds this revision: Nathan-R-Og/kirbyadventure is a work in progress on Rev A that splits binaries from the user's ROM). Checked 2026-10-27: NesCartDB (BizHawk Assets/gamedb/NesCarts.xml at commit 2601ad636afa) lists NES-KR-USA without a revision, PRG chip NES-KR-0, dumped by bootgod (2005-12-14) and TheRedEye (a prototype board, 2012-04-23), PRG and CHR SHA-1 32473799f96406d73aa37d5cf66e0e27f1f339da (CRC32 D7794AFC); GoodNES 3.23's 'Kirby's Adventure (U) (PRG0) [!]', as TASVideos lists it for game version 559 (tasvideos.org/api/v1/games/41) and BizHawk's gamedb_goodnes.txt (commit 7c1b40df1f48), has whole-file SHA-1 e099d688760ff0ce114ca8a9fd083e31e41cfade, our ines_sha1. Both cover CHR."
+notes = "The Milestone 1 Kirby's Adventure target, from the user's file 'Kirby's Adventure (U) (PRG 0).nes', added 2026-10-27. The later USA revision (NesCartDB revision A, PRG chip NES-KR-1, CRC32 5ED6F221, SHA-1 118307da6c77a592f0884baad14120301d8d3a1b; GoodNES '(U) (PRG1) [!]') has the same CHR and a different PRG, and is a separate source. Board TKROM, MMC3C, 8KB battery-backed PRG RAM. The file's header bytes 10 to 15 hold dumper text ('Ni0330'), so its file SHA-1 (6bb9ac9f3a25bc4f) differs from ines_sha1; the headerless hashes are unaffected. TASVideos 3226M was made on this revision."
+
+[[source]]
+id = "ninja-gaiden-usa"
+title = "Ninja Gaiden"
+platform = "nes"
+board = "NES-SLROM"
+submapper = 0
+mirroring = "mapper"
+battery = false
+prg_rom_bytes = 131072
+chr_rom_bytes = 131072
+prg_ram_bytes = 0
+chr_ram_bytes = 0
+board_evidence = "NesCartDB (BizHawk Assets/gamedb/NesCarts.xml at commit 2601ad636afa) lists three NES-NG-USA dumps by bootgod on NES-SLROM boards (PCBs NES-SLROM-03 and -04), mapper 1, MMC1A, MMC1B1-H or MMC1B2, 128KB PRG, 128KB CHR ROM, no PRG RAM or battery. The MMC1 sets the mirroring. Checked 2026-10-28."
+region = "ntsc"
+revision = "USA"
+sha256 = "6799437d4122b81c86ae35cefe5b6ae6e10e6f9a9c7b3140dd569f717ba32b3d"
+md5 = "07c1b92ae9b78f209075a8cc6d3eebf0"
+sha1 = "15f245161179ab1959b7dc20e82add024d23aa3d"
+ines_sha1 = "ca513f841d75efeb33bb8099fb02beeb39f6bb9c"
+mapper = 1
+status = "verified"
+evidence = "Published checksums only, weaker than a disassembly rebuild (no disassembly of this game was found, 2026-10-28). NesCartDB (BizHawk Assets/gamedb/NesCarts.xml at commit 2601ad636afa) lists three NES-NG-USA cartridges dumped by bootgod (PRG chip NES-NG-0, CHR NES-NG-0) with PRG and CHR SHA-1 15f245161179ab1959b7dc20e82add024d23aa3d (CRC32 7C4A72D8); GoodNES 3.23's 'Ninja Gaiden (U) [!]' (BizHawk gamedb_goodnes.txt, commit 7c1b40df1f48; TASVideos lists the same for the game) has whole-file SHA-1 ca513f841d75efeb33bb8099fb02beeb39f6bb9c, our ines_sha1, which TASVideos 4751M names too. Both cover CHR."
+notes = "An extra game, registered 2026-10-28, from the user's file 'Ninja Gaiden (U).nes': briefly a Milestone 1 target that day, set aside when its NesHawk run desynced at the act 1 boss (game-printer's docs/corpus.md). Board SLROM, 128KB PRG, 128KB CHR, no PRG RAM. NesCartDB's three boards carry an MMC1A, an MMC1B1-H and an MMC1B2; they differ only in the PRG RAM disable bit, which a board without PRG RAM doesn't use."
+
+[[source]]
+id = "gauntlet-usa"
+title = "Gauntlet"
+platform = "nes"
+region = "ntsc"
+revision = "USA"
+sha256 = "fd2a8520314fb183e15fd62f48df97f92eb9c81140da4e6ab9ff0386e4797071"
+md5 = "fd7321183afd8a0de24cb65b1d6263aa"
+sha1 = "3bd76af54a9a2760e5af975beea877057f08e871"
+ines_sha1 = "a3daf32268297fc0132127fb143119500bd465ec"
+mapper = 4
+status = "unverified"
+evidence = "Measured 2026-11-01 by gp roms add and gp movie hashes on the user's dump. Not yet checked against a published checksum or a cartridge database."
+notes = "The Tengen release (licensed). Its header says mapper 4 with four-screen nametables, 128K PRG and 64K CHR. No board facts are given here until a cartridge database confirms them, so the file's header is used. Plays from power-on on gp-nes to the hero select (900 frames, checked 2026-11-01). The top-down genre target (game-printer's docs/research/topdown-extension.md)."
+
+[[source]]
+id = "gauntlet2-usa"
+title = "Gauntlet II"
+platform = "nes"
+region = "ntsc"
+revision = "USA"
+sha256 = "ffa61d9f7bfb1d60662ddf246b21a8756d518292e8fdc0f58ac1c9b3fbad672d"
+md5 = "48790eae07087e165ca057a01705a205"
+sha1 = "d4bb5ee1cbd7e5e9f55ca8544174589f697d6b6f"
+ines_sha1 = "d21a27ba7f0ad9dbf8b410e349b28945cb513697"
+mapper = 4
+status = "unverified"
+evidence = "Measured 2026-11-01 by gp roms add and gp movie hashes on the user's dump. Not yet checked against a published checksum or a cartridge database."
+notes = "Mindscape's release. Its header says mapper 4 with four-screen nametables, 128K PRG and 128K CHR; gp roms add notes the sizes match smb2-usa-prg0's, which is only a size coincidence. No board facts until a cartridge database confirms them. Plays from power-on on gp-nes to its title screen (900 frames, checked 2026-11-01). Plays like gauntlet-usa: the second game of the top-down pair."
+
+[[source]]
+id = "qbert-usa"
+title = "Q*bert"
+platform = "nes"
+region = "ntsc"
+revision = "USA"
+sha256 = "5fa346174b6b5a9dc2b5fe113ef8d8ac013a32b26dde6d5dfc9ed631d5e9af25"
+md5 = "a6e95134bd85284b40ccef28ce038cb6"
+sha1 = "38444a3b1291b805e1b6d7798687a020a2989d61"
+ines_sha1 = "6aca50d8c260daa05360870d092b97835818f4eb"
+mapper = 3
+status = "unverified"
+evidence = "Measured 2026-11-02 by gp movie hashes on the user's dump. Not yet checked against a published checksum or a cartridge database."
+notes = "Its header says mapper 3 (CNROM), 32K PRG and 32K CHR. No board facts until a cartridge database confirms them. The isometric grid-hop genre target (game-printer's docs/research/gridhop-extension.md)."
+
+[[source]]
+id = "track-and-field-usa"
+title = "Track & Field"
+platform = "nes"
+region = "ntsc"
+revision = "USA"
+sha256 = "a2812d80b3057aac9753f48247a7a46b29bea0b9aec04ca4c327180085c25b58"
+md5 = "7def939a80cb14d296da855eb40eb722"
+sha1 = "c76212e682c0fb725b542ab11effb3a48137b0c8"
+ines_sha1 = "df8425d96b3ac613eec604d66b32e91b001488d0"
+mapper = 3
+status = "unverified"
+evidence = "Measured 2026-11-02 by gp movie hashes on the user's dump. Not yet checked against a published checksum or a cartridge database."
+notes = "Its header says mapper 3 (CNROM), 32K PRG and 32K CHR, vertical mirroring. No board facts until a cartridge database confirms them. The sports events genre target (game-printer's docs/research/events-extension.md)."
