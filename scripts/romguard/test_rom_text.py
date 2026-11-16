@@ -11,6 +11,9 @@ import random
 import subprocess
 import tempfile
 import unittest
+
+# A games checkout in the environment would add to every fixture's list.
+os.environ.pop("GP_GAMES_DIR", None)
 import zipfile
 from pathlib import Path
 
@@ -291,13 +294,24 @@ def romset_zip(compress=zipfile.ZIP_DEFLATED):
     return buf.getvalue()
 
 
+def source_rows(set_name="madeup"):
+    """The made-up set as a game's roms.toml lists it: a [[source]] with
+    [[source.chip]] rows."""
+    return f'[[source]]\nid = "{set_name}-a"\nplatform = "arcade"\nsystem = "{set_name}"\nsha256 = "{"1" * 64}"\n\n' + "".join(
+        f'[[source.chip]]\nname = "{n}"\nregion = "{r}"\noffset = {o}\n'
+        f'size = {len(d)}\nsha1 = "{hashlib.sha1(d).hexdigest()}"\n\n'
+        for n, r, o, d in CHIPS
+    )
+
+
 class ArcadeFixture(Fixture):
-    """A Fixture whose repo guards the made-up set, and whose ROM folder
-    holds its romset (unless `romset` is False)."""
+    """A Fixture whose repo guards the made-up set (by a game's roms.toml),
+    and whose ROM folder holds its romset (unless `romset` is False)."""
 
     def __init__(self, romset=True):
         super().__init__(register=False)
-        (self.root / ".githooks" / "guarded-roms.toml").write_text(chip_rows())
+        (self.root / "madeup-game").mkdir()
+        (self.root / "madeup-game" / "roms.toml").write_text(source_rows())
         if romset:
             (self.dir / "roms" / "arcade").mkdir()
             (self.dir / "roms" / "arcade" / "madeup.zip").write_bytes(romset_zip())
@@ -371,6 +385,29 @@ class Arcade(unittest.TestCase):
 
 
 class Registries(unittest.TestCase):
+    def test_chips_are_read_from_hook_rows_and_from_a_games_checkout_beside(self):
+        # A board's own chip in the hook's [[chip]] rows.
+        f = Fixture(register=False)
+        try:
+            (f.root / ".githooks" / "guarded-roms.toml").write_text(chip_rows())
+            (f.root / "art.png").write_bytes(CHIPS[0][3])
+            code, err = f.run("files", str(f.root / "art.png"))
+            self.assertEqual(code, 1)
+            self.assertIn("arcade chip made.1a (madeup)", err)
+        finally:
+            f.close()
+        # A game's chips in a games checkout beside the repo, which isn't one.
+        f = Fixture(register=False)
+        try:
+            (f.dir / "games" / "g").mkdir(parents=True)
+            (f.dir / "games" / "g" / "roms.toml").write_text(source_rows("other"))
+            (f.root / "art.png").write_bytes(CHIPS[1][3])
+            code, err = f.run("files", str(f.root / "art.png"))
+            self.assertEqual(code, 1)
+            self.assertIn("arcade chip made.2a (other)", err)
+        finally:
+            f.close()
+
     def test_package_entries_and_game_roms_lists_are_guarded(self):
         f = Fixture(register=False)
         try:
@@ -409,7 +446,7 @@ class Registries(unittest.TestCase):
             )
             code, err = f.run("staged")
             self.assertEqual(code, 0)
-            self.assertIn("'nosuchset', whose chips .githooks/guarded-roms.toml doesn't list", err)
+            self.assertIn("'nosuchset', whose chips no roms.toml lists", err)
         finally:
             f.close()
 

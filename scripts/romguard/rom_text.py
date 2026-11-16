@@ -43,12 +43,18 @@ plenty of our own code.
 
 What is guarded is read from the repo, hashes only:
   .githooks/guarded-roms.toml   [[source]] NES images by headerless SHA-256,
-                                [[chip]] arcade chips by SHA-1, with their set,
-                                region and offset (gp-arcade's set table)
-  roms/*.toml, */roms.toml      [[source]] NES images
+                                under ids that are their hashes' first
+                                digits, so no game is named; [[chip]] a
+                                board's own chips by SHA-1 (the SSIO PROM)
+  roms/*.toml, */roms.toml      [[source]] NES images, and each arcade
+                                source's [[source.chip]] rows: its set's
+                                chips by SHA-1, with their region and offset
+  the games checkout            its */roms.toml too, read the same way, when
+                                the repo isn't one: $GP_GAMES_DIR, else a
+                                `games` folder beside the repo
   package.toml, */package.toml  [[rom.entry]]: a NES entry's sha256; an arcade
                                 entry's `system` names a set whose chips are
-                                guarded (they must be in guarded-roms.toml)
+                                guarded (a roms.toml must list them)
 
 The ROMs are found by hash, as `gp` finds them: every file in $GP_ROM_DIR
 with an iNES header whose headerless SHA-256 is guarded, and every guarded
@@ -168,13 +174,22 @@ def load_registry(root):
 
     lists = [root / ".githooks" / "guarded-roms.toml", *sorted((root / "roms").glob("*.toml")),
              *sorted(root.glob("*/roms.toml"))]
+    games = games_checkout(root)
+    if games is not None:
+        lists += sorted(games.glob("*/roms.toml"))
+    seen = set()
     for path in lists:
-        if not path.is_file():
+        if not path.is_file() or path.resolve() in seen:
             continue
+        seen.add(path.resolve())
         data = read(path)
         for entry in data.get("source", []):
             if "sha256" in entry and "id" in entry:
                 reg.nes[entry["sha256"].lower()] = entry["id"]
+            # An arcade source's chips ([[source.chip]]), by its set's name.
+            for chip in entry.get("chip", []):
+                if {"name", "sha1"} <= chip.keys():
+                    all_chips.append({"set": entry.get("system") or entry.get("id", "?"), **chip})
         for chip in data.get("chip", []):
             if {"set", "name", "sha1"} <= chip.keys():
                 all_chips.append(chip)
@@ -193,9 +208,20 @@ def load_registry(root):
                 rel = path.relative_to(root)
                 reg.notes.append(
                     f"{rel} names the arcade set {entry.get('system')!r}, whose chips "
-                    ".githooks/guarded-roms.toml doesn't list, so they aren't guarded"
+                    "no roms.toml lists ([[source.chip]]), so they aren't guarded"
                 )
     return reg
+
+
+def games_checkout(root):
+    """The games checkout whose roms.toml files list more to guard, when
+    `root` isn't one itself: $GP_GAMES_DIR, else a `games` folder beside
+    `root`. None without one."""
+    given = os.environ.get("GP_GAMES_DIR")
+    for d in [Path(given)] if given else [root.parent / "games"]:
+        if d.is_dir() and d.resolve() != Path(root).resolve():
+            return d
+    return None
 
 
 def gp_home():
