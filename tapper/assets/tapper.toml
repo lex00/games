@@ -1042,6 +1042,66 @@ width = 3
 
 [asset.at]
 rbtapper = 0x4B29
+# Where a clip resumes inside a wait ($232B keeps the place it goes on at
+# E3A9): the return from the Nth call to $232B in the bonus round ($2500)
+# and in end script 3's interlude ($51A9 here, $5339 in rbtapper, the same
+# routine shifted). The routines' code, their starts from the calls that
+# reach them ($569D, $48F1), and the call's own bytes ($252C) are lifted from
+# each set, so a set whose code sits elsewhere resumes at its own places.
+[[asset]]
+name = "bonus_code"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2500
+count = 1
+width = 64
+
+[asset.at]
+rbtapper = 0x2500
+
+[[asset]]
+name = "bonus_start"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x569E
+count = 1
+width = 2
+
+[asset.at]
+rbtapper = 0x582E
+
+[[asset]]
+name = "interlude_code"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x51A9
+count = 1
+width = 256
+
+[asset.at]
+rbtapper = 0x5339
+
+[[asset]]
+name = "interlude_start"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x48F2
+count = 1
+width = 2
+
+[asset.at]
+rbtapper = 0x4A74
+
+[[asset]]
+name = "wait_call"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x252C
+count = 1
+width = 3
+
+[asset.at]
+rbtapper = 0x2531
 
 # The logo's colours ($3D76): palette RAM's F840 and F84C set ($3D79, $3D7E),
 # F822 to F83D zeroed, then from 16 frames on each of the twelve odd bytes

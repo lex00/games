@@ -401,6 +401,15 @@ description = "The bonus round: each can's place for the bandit and the bartende
 source = "tapper"
 asset = "bonus_bandit_places"
 
+[assets.bonus_code]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: the bonus round's code from $2500, searched for its waits"
+
+[assets.bonus_code.from]
+source = "tapper"
+asset = "bonus_code"
+
 [assets.bonus_colors]
 kind = "rows"
 role = "palettes"
@@ -427,6 +436,15 @@ description = "The bonus round's cans to swap, a word a row naming a can's objec
 [assets.bonus_pairs.from]
 source = "tapper"
 asset = "bonus_pairs"
+
+[assets.bonus_start]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: the bonus round's start, the operand of the call that reaches it ($569D)"
+
+[assets.bonus_start.from]
+source = "tapper"
+asset = "bonus_start"
 
 [assets.bonus_text_color]
 kind = "rows"
@@ -742,6 +760,24 @@ description = "The bartender's steps along in the space bar's level end hops, a 
 [assets.hop_steps.from]
 source = "tapper"
 asset = "hop_steps"
+
+[assets.interlude_code]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: end script 3's interlude's code ($51A9), searched for its waits"
+
+[assets.interlude_code.from]
+source = "tapper"
+asset = "interlude_code"
+
+[assets.interlude_start]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: the interlude's start, the operand of the call that reaches it ($48F1)"
+
+[assets.interlude_start.from]
+source = "tapper"
+asset = "interlude_start"
 
 [assets.intro_colors]
 kind = "rows"
@@ -1400,6 +1436,15 @@ description = "The credit line's string at $046F: with one credit ($0437)"
 source = "tapper"
 asset = "text_one_credit"
 
+[assets.wait_call]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: a call to the wait routine $232B, as its bytes ($252C)"
+
+[assets.wait_call.from]
+source = "tapper"
+asset = "wait_call"
+
 [entities.bar_end]
 description = "The bars' end pieces and far ends, the objects from E356 (y, flags, picture, x), 4 bytes each, a bar's at 4 times its number and its far end 16 on: put in by the setup's $4D13 from the bar_objects rows (tapper_flow), gone at a level's end ($5615) and at the next setup ($5F31). Word 0 is the flags and 256 times the picture. Drawn, never compared"
 ext = "tapper_bar_end"
@@ -1472,7 +1517,9 @@ beer_flags = "beer_flags"
 beer_pic = "beer_pic"
 beer_pic_spray = "beer_pic_spray"
 bonus_bandit_places = "bonus_bandit_places"
+bonus_code = "bonus_code"
 bonus_objects = "bonus_objects"
+bonus_start = "bonus_start"
 customer_starts = "customer_starts"
 cycle_lamps = "cycle_lamps"
 cycle_space_1 = "cycle_space_1"
@@ -1486,6 +1533,8 @@ hand_flags = "hand_flags"
 hand_pic = "hand_pic"
 hand_pic_shake = "hand_pic_shake"
 hop_steps = "hop_steps"
+interlude_code = "interlude_code"
+interlude_start = "interlude_start"
 level_times = "level_times"
 mug_flags = "mug_flags"
 mug_flags_left = "mug_flags_left"
@@ -1507,6 +1556,7 @@ slide_objects = "slide_objects"
 stage_screens = "stage_screens"
 start_list_ptrs = "start_list_ptrs"
 start_lists = "start_lists"
+wait_call = "wait_call"
 
 [entities.bars.hitbox]
 h = 1
@@ -9334,6 +9384,14 @@ note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tap
 [[evidence."assets.bonus_bandit_places".refs]]
 at = "clip:tapper.bonus.001"
 
+[evidence."assets.bonus_code"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: the bonus round starts at $2500 in both but rbtapper's first wait returns to $2534, not $252F (a call more before it); the interlude is $51A9 in tapper and $5339 in rbtapper, its five waits at the same offsets; tappera, sutapper and tapperg match tapper. tapper.rb.bonus.001 (rbtapper) resumes in the bonus wait"
+
+[[evidence."assets.bonus_code".refs]]
+at = "clip:tapper.bonus.001"
+
 [evidence."assets.bonus_colors"]
 source = "observed"
 confidence = 70
@@ -9357,6 +9415,14 @@ note = "gp code listing on tapper.bonus.001 and the later rounds: $4F17 reads tw
 
 [[evidence."assets.bonus_pairs".refs]]
 at = "clip:tapper.poweron.001"
+
+[evidence."assets.bonus_start"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: the bonus round starts at $2500 in both but rbtapper's first wait returns to $2534, not $252F (a call more before it); the interlude is $51A9 in tapper and $5339 in rbtapper, its five waits at the same offsets; tappera, sutapper and tapperg match tapper. tapper.rb.bonus.001 (rbtapper) resumes in the bonus wait"
+
+[[evidence."assets.bonus_start".refs]]
+at = "clip:tapper.bonus.001"
 
 [evidence."assets.bonus_text_color"]
 source = "observed"
@@ -9637,6 +9703,22 @@ note = "gp code listing on tapper.l10.001's end (frames 15680 to 15926): the end
 
 [[evidence."assets.hop_steps".refs]]
 at = "clip:tapper.l10.001"
+
+[evidence."assets.interlude_code"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: the bonus round starts at $2500 in both but rbtapper's first wait returns to $2534, not $252F (a call more before it); the interlude is $51A9 in tapper and $5339 in rbtapper, its five waits at the same offsets; tappera, sutapper and tapperg match tapper. tapper.rb.bonus.001 (rbtapper) resumes in the bonus wait"
+
+[[evidence."assets.interlude_code".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.interlude_start"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: the bonus round starts at $2500 in both but rbtapper's first wait returns to $2534, not $252F (a call more before it); the interlude is $51A9 in tapper and $5339 in rbtapper, its five waits at the same offsets; tappera, sutapper and tapperg match tapper. tapper.rb.bonus.001 (rbtapper) resumes in the bonus wait"
+
+[[evidence."assets.interlude_start".refs]]
+at = "clip:tapper.bonus.001"
 
 [evidence."assets.intro_colors"]
 source = "observed"
@@ -10221,6 +10303,14 @@ note = "gp code listing --writes F6C4 and F6DE over tapper.attract.001: $0350 ca
 
 [[evidence."assets.text_one_credit".refs]]
 at = "clip:tapper.attract.001"
+
+[evidence."assets.wait_call"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: the bonus round starts at $2500 in both but rbtapper's first wait returns to $2534, not $252F (a call more before it); the interlude is $51A9 in tapper and $5339 in rbtapper, its five waits at the same offsets; tappera, sutapper and tapperg match tapper. tapper.rb.bonus.001 (rbtapper) resumes in the bonus wait"
+
+[[evidence."assets.wait_call".refs]]
+at = "clip:tapper.bonus.001"
 
 [evidence."counters.lives_shown.start"]
 source = "observed"

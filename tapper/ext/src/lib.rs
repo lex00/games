@@ -2027,6 +2027,31 @@ fn set_screen(cx: &mut ExtCx<'_>) {
     }
 }
 
+/// Where a wait in a routine goes on (E3A9, as $232B keeps it): the return
+/// from the `n`-th (from 1) call to $232B in the routine's lifted code,
+/// counted from its start, the operand of the call that reaches it. Each
+/// set's code and start are its own, so a set whose code sits elsewhere
+/// resumes at its own places.
+fn wait_return(cx: &ExtCx<'_>, code: &str, start: &str, n: usize) -> Option<i64> {
+    let call = cx.table("wait_call");
+    let window = cx.table(code);
+    let s = cx.table(start);
+    if call.len() != 3 || s.len() < 2 || n == 0 {
+        return None;
+    }
+    let base = s[0] | (s[1] << 8);
+    let mut seen = 0;
+    for i in 0..window.len().saturating_sub(2) {
+        if window[i..i + 3] == call[..] {
+            seen += 1;
+            if seen == n {
+                return Some(base + i as i64 + 3);
+            }
+        }
+    }
+    None
+}
+
 /// An entry of a points table as a number: six digits a byte, the most
 /// significant first.
 fn points_of(row: &[i64]) -> i64 {
@@ -2432,7 +2457,7 @@ impl Ext for Bars {
         // starts there.
         if let Some((fid, mut fb)) = flow
             && (fb.ext[3] >> 16) & 0xff != 12
-            && (fb.ext[1] >> 16) & 0xffff == 0x252F
+            && Some((fb.ext[1] >> 16) & 0xffff) == wait_return(cx, "bonus_code", "bonus_start", 1)
         {
             fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (12 << 16) | (22 << 24);
             fb.ext[2] &= !BONUS_MASK;
@@ -2493,16 +2518,18 @@ impl Ext for Bars {
         if (state == 15 || state == 16)
             && let Some((fid, mut fb)) = flow
             && (fb.ext[3] >> 16) & 0xff != 8
-            && let ret @ 0x51A9..=0x52A5 = (fb.ext[1] >> 16) & 0xffff
+            && let ret = (fb.ext[1] >> 16) & 0xffff
+            && let Some(k) = (1..=5).find(|&k| wait_return(cx, "interlude_code", "interlude_start", k) == Some(ret))
         {
             let b = (fb.ext[1] >> 32) & 0xff;
-            let resume = match ret {
-                0x51EB => Some(2 * (10 - b + 1)),
-                0x5220 => Some(22),
-                0x5246 => Some(24),
-                0x5260 => Some(28),
-                0x52A3 => Some(28 + 5 * (10 - b + 1)),
-                _ => None,
+            // The interlude's five waits, in order: a loop of 2 a step,
+            // then 22, 24, 28, and a loop of 5 a step.
+            let resume = match k {
+                1 => Some(2 * (10 - b + 1)),
+                2 => Some(22),
+                3 => Some(24),
+                4 => Some(28),
+                _ => Some(28 + 5 * (10 - b + 1)),
             };
             if let Some(m) = resume {
                 let left = timers.iter().find(|(_, t)| t.ext[1] == 0x2346).map_or(0, |(_, t)| t.ext[0]);

@@ -9,7 +9,7 @@ format = "1.0.0"
 name = "tapper"
 version = "0.2.0"
 title = "Tapper"
-recipes = "b3:a00c26a892512cb77ae0dfd8a2ba245f6155d8a46efd3ff1f9d367ad1b9beae2"
+recipes = "b3:8c94bcdd7d2a0d9dc5ab05d7c0e248737ef3445e0f5159e7f1d4e480c9fa2e4c"
 
 [target]
 game = "tapper"
@@ -569,4 +569,44 @@ start = "inputs/tapper.poweron.001.start.presses"
 presses = "inputs/tapper.poweron.001.presses"
 frames = 10000
 why = "the model's own start: the boot, the attract mode, a coin and the start, levels 1 to 3 and the bonus round played, three lives lost in level 4, the game over's wait and the attract mode twice more"
+level = "saloon"
+
+[[clip]]
+id = "tapper.rb.attract.001"
+name = "Root Beer: the same presses as tapper.attract.001"
+source = "played"
+start = "inputs/tapper.rb.attract.001.start.presses"
+presses = "inputs/tapper.rb.attract.001.presses"
+frames = 815
+why = "the rbtapper set on tapper.attract.001's presses, so the gate holds the model on Root Beer too"
+level = "saloon"
+
+[[clip]]
+id = "tapper.rb.l1.001"
+name = "Root Beer: the same presses as tapper.l1.001"
+source = "played"
+start = "inputs/tapper.rb.l1.001.start.presses"
+presses = "inputs/tapper.rb.l1.001.presses"
+frames = 335
+why = "the rbtapper set on tapper.l1.001's presses, so the gate holds the model on Root Beer too"
+level = "saloon"
+
+[[clip]]
+id = "tapper.rb.die.001"
+name = "Root Beer: the same presses as tapper.die.001"
+source = "played"
+start = "inputs/tapper.rb.die.001.start.presses"
+presses = "inputs/tapper.rb.die.001.presses"
+frames = 269
+why = "the rbtapper set on tapper.die.001's presses, so the gate holds the model on Root Beer too"
+level = "saloon"
+
+[[clip]]
+id = "tapper.rb.l8.001"
+name = "Root Beer: the same presses as tapper.l8.001"
+source = "played"
+start = "inputs/tapper.rb.l8.001.start.presses"
+presses = "inputs/tapper.rb.l8.001.presses"
+frames = 3942
+why = "the rbtapper set on tapper.l8.001's presses, so the gate holds the model on Root Beer too"
 level = "saloon"
