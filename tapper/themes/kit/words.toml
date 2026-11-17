@@ -1,89 +1,193 @@
 # Prompt words for tapper's theme kit (docs/theme-kit.md, "Prompt words"),
-# written by hand from watching the game's clips. A theme for this arcade
-# game names its pictures by the board's names (sprite-ENTITY-CODE, a
-# screen's slot, counter-NAME-D: site docs, themes.md, "An arcade game"), so
-# these words describe the entities and their poses for prompts. `deny` lists
-# the words no prompt-facing text may hold; `note` keeps the game's own term
-# and never reaches the kit.
+# written by hand from the game's screens and the contact sheets of
+# `gp theme look sheet` (each code looked at on the sheet). A board sprite's
+# poses go by its picture code in [art.frames]. `deny` lists the words no
+# prompt-facing text may hold; `note` keeps the game's own term for people and
+# never reaches the kit. Scenery and objects are written first; the
+# characters' poses by code come last, as the theme draws them.
 format = "0.1.0"
 deny = ["tapper", "bally", "midway", "budweiser", "bud", "root beer", "rootbeer", "beer", "anheuser", "busch", "saloon", "cowboy", "punk", "bandit", "sports bar", "space bar", "keg", "bartender", "barman", "mustache", "moustache", "bow tie", "suspenders", "stetson", "cowboy hat"]
 
-[[art]]
-id = "entity.player"
-label = "server"
-description = "the hero who works behind the counters: fills a glass at the dispenser at a counter's end and slides it along the counter to a waiting guest, catches empty glasses sliding back and picks up coins left on the counter; drawn from the waist up, 32 by 32 pixels"
-poses = [
-    "standing at the dispenser, filling a glass",
-    "walking along the counter",
-    "reaching to catch a glass",
-    "sliding a full glass down the counter",
-    "a streak of motion as the glass leaves the hand",
-    "slumped over the counter, the shift lost",
-    "waving to the crowd as the shift ends",
-    "turning to face the room",
-]
-note = "the game's bartender, top half"
+# The rooms. Each holds four long serving counters, one above another, seen
+# from a raised three-quarter view: each runs from a door at the far side
+# toward the server's end, where a drink dispenser stands. Guests come in at
+# the doors and walk along the counters. The counters stay where the game has
+# them; a theme builds each room from its own pieces on them.
 
 [[art]]
-id = "entity.bartender_part"
-label = "server's lower half and dispenser parts"
-description = "the hero's lower half while walking and standing, the dispenser at each counter's end and its handle, and the foam of a glass being filled; 32 by 32 pixels each"
-poses = [
-    "lower half standing",
-    "lower half stepping",
-    "lower half lying flat",
-    "the dispenser at a counter's end",
-    "the dispenser's handle pulled",
-    "foam over a filling glass",
-]
-note = "the bartender's legs, the taps and kegs"
+id = "screen.screen_saloon"
+label = "first room, frontier tavern"
+description = "the first room: a frontier tavern with plank walls in deep blue, four long wooden serving counters with dark wood fronts, swinging doors at each counter's far end, a framed picture on the left wall, a sign over the back wall, and round wooden barrel ends set into the right wall where the drinks are drawn; 512 by 480 pixels"
+note = "the saloon (levels 1 to 3)"
 
 [[art]]
-id = "entity.customer"
-label = "guest"
-description = "a guest who comes in at a counter's far end and walks toward the server, wanting a drink; four kinds of guest on each of the four rooms; 32 by 32 pixels, head and shoulders over the counter"
-poses = [
-    "walking toward the server, step one",
-    "walking toward the server, step two",
-    "waiting, impatient, frame one",
-    "waiting, impatient, frame two",
-    "pushed back by a glass caught in hand, surprised",
-    "drinking from the glass",
-    "done drinking, pleased, about to toss the empty glass back",
-]
-note = "the game's customers"
+id = "screen.screen_9e21"
+label = "first room, frontier tavern, second look"
+description = "the frontier tavern again, as it returns after the fourth room: plank walls in deep blue, four wooden serving counters, swinging doors, a framed picture and a sign, and a small figure hanging on the right wall; 512 by 480 pixels"
+note = "the saloon as it comes back (level 14)"
+
+[[art]]
+id = "screen.screen_a5a1"
+label = "first room, frontier tavern, third look"
+description = "the frontier tavern again, as it returns a second time: plank walls in deep blue, four wooden serving counters, swinging doors, a framed picture and a sign; 512 by 480 pixels"
+note = "the saloon as it comes back (level 15)"
+
+[[art]]
+id = "screen.screen_69a1"
+label = "second room, open-air stadium"
+description = "the second room: open air at a ball field, green grass and blue sky with small clouds and an airship drifting over, four long red serving counters on the grass, tall stands of grey seats rising on the right with orange gates where guests come in, and striped umbrellas over drink stands down the left side; 512 by 480 pixels"
+note = "the sports bar (levels 4 and 5)"
+
+[[art]]
+id = "screen.screen_7121"
+label = "third room, loud club"
+description = "the third room: a loud club with grey walls, four long red serving counters with dark fronts, slanted posters and signs on the walls, small amplifiers and blue speaker boxes on the right, a framed mirror on the left wall, and tall stools at the counters' ends; 512 by 480 pixels"
+note = "the punk bar (levels 6 to 8)"
+
+[[art]]
+id = "screen.screen_78a1"
+label = "third room, loud club, second look"
+description = "the loud club again with its walls in a second arrangement: grey walls, four red serving counters, slanted posters, speaker boxes and stools; 512 by 480 pixels"
+note = "the punk bar (level 9)"
+
+[[art]]
+id = "screen.screen_8021"
+label = "fourth room, orbital lounge"
+description = "the fourth room: a lounge on a station in space, a black starfield, four floating serving counters with glowing blue tops on thin metal stands, round grey dishes at their ends, striped metal walls slanting at both sides, small round lamps along the walls, and a small spacecraft drifting at the top; 512 by 480 pixels"
+note = "the space bar (level 10)"
+
+[[art]]
+id = "screen.screen_87a1"
+label = "fourth room, orbital lounge, second look"
+description = "the orbital lounge again: a black starfield, four floating counters with glowing blue tops on thin stands, slanting striped metal walls and round lamps; 512 by 480 pixels"
+note = "the space bar (level 11)"
+
+[[art]]
+id = "screen.screen_8f21"
+label = "fourth room, orbital lounge, third look"
+description = "the orbital lounge again: a black starfield, four floating counters with glowing blue tops on thin stands, slanting striped metal walls and round lamps; 512 by 480 pixels"
+note = "the space bar (level 12)"
+
+[[art]]
+id = "screen.screen_96a1"
+label = "fourth room, orbital lounge, fourth look"
+description = "the orbital lounge again: a black starfield, four floating counters with glowing blue tops on thin stands, slanting striped metal walls and round lamps; 512 by 480 pixels"
+note = "the space bar (level 13)"
+
+[[art]]
+id = "screen.screen_bonus"
+label = "between-rounds counter"
+description = "the game between rounds: one long counter seen from the front, close up, with a large sign over it on a deep blue wall and dark wood framing the scene at the sides; 512 by 480 pixels"
+note = "the bonus round"
+
+[[art]]
+id = "screen.screen_attract_logo"
+label = "title card"
+description = "the title card: the theme's own name in large outlined letters on a dark red panel, over black; 512 by 480 pixels"
+note = "the title logo screen"
+
+[[art]]
+id = "screen.screen_attract_demo"
+label = "how-to-play screen"
+description = "the how-to-play screen: the frontier tavern's two lower counters with an empty dark frame above them where the instructions appear; 512 by 480 pixels"
+note = "the attract demo"
+
+# Objects.
+
+[[art]]
+id = "entity.tap"
+label = "drink dispenser handle"
+description = "the handle of the drink dispenser at each counter's server end, which the server pulls to fill a glass; 32 by 32 pixels"
+note = "the beer tap"
+
+[art.frames]
+"00" = "nothing shown: the handle at rest, drawn with the room"
+"09" = "the handle pulled down, a short lever over a spout"
+
+[[art]]
+id = "entity.bar_end"
+label = "counter end"
+description = "the end of a serving counter on the server's side; the original draws nothing here; 32 by 32 pixels"
+note = "the bar ends"
+
+[art.frames]
+"74" = "nothing shown, left as the room draws it"
+"7b" = "nothing shown, left as the room draws it"
 
 [[art]]
 id = "entity.mug"
 label = "glass"
-description = "a drink in a tall glass: full while it slides to a guest, sloshing as it goes, empty as it slides back, and breaking when it falls off a counter's end; 32 by 32 pixels"
-poses = [
-    "full glass, upright",
-    "full glass, drink sloshing",
-    "empty glass sliding back",
-    "falling glass, full",
-    "falling glass, empty",
-    "glass breaking on the floor, frames of shards",
-]
+description = "a drink in a tall glass with a handle: full while it slides to a guest, sloshing as it goes, empty as it slides back, and breaking when it falls off a counter's end; 32 by 32 pixels"
 note = "the mugs of beer"
+
+[art.frames]
+"00" = "nothing shown"
+"0e" = "a full glass, upright, foam over the rim"
+"16" = "a full glass, upright, the foam sloshing to one side"
+"14" = "a full glass tipping over as it falls off the counter's end"
+"17" = "an empty glass, upright"
+"10" = "an empty glass tipping over as it falls"
+"11" = "a glass breaking on the floor: a small burst of shards"
+"12" = "a glass breaking on the floor: the burst of shards at its widest"
+"13" = "a glass breaking on the floor: the shards spread and fading"
 
 [[art]]
 id = "entity.tip"
 label = "coin"
 description = "a coin a guest leaves on the counter for the server to pick up; 32 by 32 pixels"
-poses = ["a coin lying on the counter"]
 note = "the tip"
+
+[art.frames]
+"4d" = "a small stack of coins on a folded note, lying on the counter"
 
 [[art]]
 id = "entity.bonus_object"
 label = "between-rounds game pieces"
-description = "the pieces of the game between rounds: six sealed drink cans on a counter, a trickster's hand that shakes one of them, and the cans lifting and crossing as they are shuffled; 32 by 32 pixels"
-poses = ["a sealed can", "a can lifted", "a hand shaking a can", "a can opened, spraying", "the trickster's head peeking over the counter"]
-note = "the bonus round's cans and bandit"
+description = "the game between rounds: six sealed drink cans on the counter, a trickster who shakes one and shuffles them, the can that sprays when opened, and the server seen close up, larger than in play; 32 by 32 pixels each, the close-up server made of several pieces"
+note = "the bonus round's cans, bandit and the bartender close up"
+
+[art.frames]
+"4e" = "nothing shown"
+"57" = "a sealed drink can standing upright"
+"58" = "a sealed drink can standing upright, shaken"
+"59" = "a sealed drink can lying on its side"
+"69" = "a burst of spray from an opened can"
+"6a" = "the trickster's head over the counter: a masked face grinning"
+"6c" = "the trickster's head over the counter: a masked face, eyes narrowed"
 
 [[art]]
-id = "screen"
-label = "rooms"
-description = "the four rooms the counters stand in, the title screen and the interludes; 512 by 480 pixels, with four counters running from the room's back toward the front"
-poses = ["the first room", "the second room", "the third room", "the fourth room", "the title", "the between-rounds counter"]
-note = "the saloon, sports bar, punk bar and space bar screens"
+id = "entity.legend"
+label = "how-to-play pictures"
+description = "the pictures of the how-to-play screen, each beside a line of its text: a glass, a coin and one guest of each of four kinds; 32 by 32 pixels"
+note = "the instruction screen's legend"
+
+[art.frames]
+"17" = "an empty glass, upright"
+"4d" = "a small stack of coins on a folded note"
+
+# Characters: drawn last, fitted to the finished rooms. Their poses by code
+# are written from the contact sheets when the characters are drawn.
+
+[[art]]
+id = "entity.player"
+label = "server"
+description = "the hero who works behind the counters: fills a glass at the dispenser at a counter's end, slides it along the counter to a waiting guest, catches empty glasses sliding back and picks up coins; drawn from the waist up, 32 by 32 pixels, the legs a separate picture below"
+note = "the game's bartender, top half"
+
+[[art]]
+id = "entity.npc_299"
+label = "server's lower half and dispenser parts"
+description = "the hero's lower half while walking, standing and running, the drink dispenser at each counter's end, and the foam of a glass being filled; 32 by 32 pixels each"
+note = "bartender_part: the bartender's legs and the taps"
+
+[[art]]
+id = "entity.customer"
+label = "guest"
+description = "a guest who comes in at a counter's far end and walks toward the server, wanting a drink; four kinds of guest in each room, a set for each room; 32 by 32 pixels, head and shoulders over the counter"
+note = "the game's customers"
+
+[[art]]
+id = "entity.npc_031"
+label = "dancer"
+description = "a dancer who appears on the wall between the counters to distract the guests, drawn in two halves, upper and lower; 32 by 32 pixels each"
+note = "dancer"

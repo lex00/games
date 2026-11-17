@@ -7,9 +7,378 @@ game = "tapper"
 model = "tapper"
 screen = [512, 480]
 pixel_aspect = "1"
-slots = "0e8f614b69d94b5aea9644d90974a4c1339c3c895c60f3edd183cdb8579c6834"
-art = []
+slots = "06c824d5b99c8498e44a5e9b91e4ba88d8cf8019a927f8ba2305a2f92f496b50"
 sound = []
+
+[[art]]
+id = "entity.bar_end"
+kind = "board-sprite"
+role = "npc"
+size = [32, 32]
+frames = 0
+frame_names = []
+timing = "a picture for each code its sprite entry draws, the code in hex: the codes the model fixes are listed here, and `gp theme kit GAME --rom ROM` adds the codes your romset's recorded plays show (from `gp theme look sheet`) in the local part"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the top left of the 32 by 32 picture the board draws for its entry, flipped as the board flips it"
+description = "the end of a serving counter on the server's side; the original draws nothing here; 32 by 32 pixels"
+label = "counter end"
+
+[[art]]
+id = "entity.npc_299"
+kind = "board-sprite"
+role = "npc"
+size = [32, 32]
+frames = 0
+frame_names = []
+timing = "a picture for each code its sprite entry draws, the code in hex: the codes the model fixes are listed here, and `gp theme kit GAME --rom ROM` adds the codes your romset's recorded plays show (from `gp theme look sheet`) in the local part"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the top left of the 32 by 32 picture the board draws for its entry, flipped as the board flips it"
+description = "the hero's lower half while walking, standing and running, the drink dispenser at each counter's end, and the foam of a glass being filled; 32 by 32 pixels each"
+label = "server's lower half and dispenser parts"
+
+[[art]]
+id = "entity.bonus_object"
+kind = "board-sprite"
+role = "npc"
+size = [32, 32]
+frames = 0
+frame_names = []
+timing = "a picture for each code its sprite entry draws, the code in hex: the codes the model fixes are listed here, and `gp theme kit GAME --rom ROM` adds the codes your romset's recorded plays show (from `gp theme look sheet`) in the local part"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the top left of the 32 by 32 picture the board draws for its entry, flipped as the board flips it"
+description = "the game between rounds: six sealed drink cans on the counter, a trickster who shakes one and shuffles them, the can that sprays when opened, and the server seen close up, larger than in play; 32 by 32 pixels each, the close-up server made of several pieces"
+label = "between-rounds game pieces"
+
+[[art]]
+id = "entity.customer"
+kind = "board-sprite"
+role = "npc"
+size = [32, 32]
+frames = 0
+frame_names = []
+timing = "a picture for each code its sprite entry draws, the code in hex: the codes the model fixes are listed here, and `gp theme kit GAME --rom ROM` adds the codes your romset's recorded plays show (from `gp theme look sheet`) in the local part"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the top left of the 32 by 32 picture the board draws for its entry, flipped as the board flips it"
+description = "a guest who comes in at a counter's far end and walks toward the server, wanting a drink; four kinds of guest in each room, a set for each room; 32 by 32 pixels, head and shoulders over the counter"
+label = "guest"
+
+[[art]]
+id = "entity.npc_031"
+kind = "board-sprite"
+role = "npc"
+size = [32, 32]
+frames = 0
+frame_names = []
+timing = "a picture for each code its sprite entry draws, the code in hex: the codes the model fixes are listed here, and `gp theme kit GAME --rom ROM` adds the codes your romset's recorded plays show (from `gp theme look sheet`) in the local part"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the top left of the 32 by 32 picture the board draws for its entry, flipped as the board flips it"
+description = "a dancer who appears on the wall between the counters to distract the guests, drawn in two halves, upper and lower; 32 by 32 pixels each"
+label = "dancer"
+
+[[art]]
+id = "entity.legend"
+kind = "board-sprite"
+role = "npc"
+size = [32, 32]
+frames = 0
+frame_names = []
+timing = "a picture for each code its sprite entry draws, the code in hex: the codes the model fixes are listed here, and `gp theme kit GAME --rom ROM` adds the codes your romset's recorded plays show (from `gp theme look sheet`) in the local part"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the top left of the 32 by 32 picture the board draws for its entry, flipped as the board flips it"
+description = "the pictures of the how-to-play screen, each beside a line of its text: a glass, a coin and one guest of each of four kinds; 32 by 32 pixels"
+label = "how-to-play pictures"
+
+[[art]]
+id = "entity.mug"
+kind = "board-sprite"
+role = "npc"
+size = [32, 32]
+frames = 0
+frame_names = []
+timing = "a picture for each code its sprite entry draws, the code in hex: the codes the model fixes are listed here, and `gp theme kit GAME --rom ROM` adds the codes your romset's recorded plays show (from `gp theme look sheet`) in the local part"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the top left of the 32 by 32 picture the board draws for its entry, flipped as the board flips it"
+description = "a drink in a tall glass with a handle: full while it slides to a guest, sloshing as it goes, empty as it slides back, and breaking when it falls off a counter's end; 32 by 32 pixels"
+label = "glass"
+
+[[art]]
+id = "entity.player"
+kind = "board-sprite"
+role = "player"
+size = [32, 32]
+frames = 0
+frame_names = []
+timing = "a picture for each code its sprite entry draws, the code in hex: the codes the model fixes are listed here, and `gp theme kit GAME --rom ROM` adds the codes your romset's recorded plays show (from `gp theme look sheet`) in the local part"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the top left of the 32 by 32 picture the board draws for its entry, flipped as the board flips it"
+description = "the hero who works behind the counters: fills a glass at the dispenser at a counter's end, slides it along the counter to a waiting guest, catches empty glasses sliding back and picks up coins; drawn from the waist up, 32 by 32 pixels, the legs a separate picture below"
+label = "server"
+
+[[art]]
+id = "entity.tap"
+kind = "board-sprite"
+role = "npc"
+size = [32, 32]
+frames = 0
+frame_names = []
+timing = "a picture for each code its sprite entry draws, the code in hex: the codes the model fixes are listed here, and `gp theme kit GAME --rom ROM` adds the codes your romset's recorded plays show (from `gp theme look sheet`) in the local part"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the top left of the 32 by 32 picture the board draws for its entry, flipped as the board flips it"
+description = "the handle of the drink dispenser at each counter's server end, which the server pulls to fill a glass; 32 by 32 pixels"
+label = "drink dispenser handle"
+
+[[art]]
+id = "entity.tip"
+kind = "board-sprite"
+role = "npc"
+size = [32, 32]
+frames = 1
+frame_names = ["4d"]
+timing = "a picture for each code its sprite entry draws, the code in hex: the codes the model fixes are listed here, and `gp theme kit GAME --rom ROM` adds the codes your romset's recorded plays show (from `gp theme look sheet`) in the local part"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the top left of the 32 by 32 picture the board draws for its entry, flipped as the board flips it"
+description = "a coin a guest leaves on the counter for the server to pick up; 32 by 32 pixels"
+label = "coin"
+poses = ["a small stack of coins on a folded note, lying on the counter"]
+
+[[art]]
+id = "screen.screen_saloon"
+kind = "board-screen"
+role = "background"
+size = [512, 480]
+frames = 1
+frame_names = ["base"]
+timing = "one picture, while a level's look shows this screen"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the board's picture's top left"
+description = "the first room: a frontier tavern with plank walls in deep blue, four long wooden serving counters with dark wood fronts, swinging doors at each counter's far end, a framed picture on the left wall, a sign over the back wall, and round wooden barrel ends set into the right wall where the drinks are drawn; 512 by 480 pixels"
+label = "first room, frontier tavern"
+
+[[art]]
+id = "screen.screen_attract_logo"
+kind = "board-screen"
+role = "background"
+size = [512, 480]
+frames = 1
+frame_names = ["base"]
+timing = "one picture, while a level's look shows this screen"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the board's picture's top left"
+description = "the title card: the theme's own name in large outlined letters on a dark red panel, over black; 512 by 480 pixels"
+label = "title card"
+
+[[art]]
+id = "screen.screen_attract_demo"
+kind = "board-screen"
+role = "background"
+size = [512, 480]
+frames = 1
+frame_names = ["base"]
+timing = "one picture, while a level's look shows this screen"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the board's picture's top left"
+description = "the how-to-play screen: the frontier tavern's two lower counters with an empty dark frame above them where the instructions appear; 512 by 480 pixels"
+label = "how-to-play screen"
+
+[[art]]
+id = "screen.screen_bonus"
+kind = "board-screen"
+role = "background"
+size = [512, 480]
+frames = 1
+frame_names = ["base"]
+timing = "one picture, while a level's look shows this screen"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the board's picture's top left"
+description = "the game between rounds: one long counter seen from the front, close up, with a large sign over it on a deep blue wall and dark wood framing the scene at the sides; 512 by 480 pixels"
+label = "between-rounds counter"
+
+[[art]]
+id = "screen.screen_69a1"
+kind = "board-screen"
+role = "background"
+size = [512, 480]
+frames = 1
+frame_names = ["base"]
+timing = "one picture, while a level's look shows this screen"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the board's picture's top left"
+description = "the second room: open air at a ball field, green grass and blue sky with small clouds and an airship drifting over, four long red serving counters on the grass, tall stands of grey seats rising on the right with orange gates where guests come in, and striped umbrellas over drink stands down the left side; 512 by 480 pixels"
+label = "second room, open-air stadium"
+
+[[art]]
+id = "screen.screen_7121"
+kind = "board-screen"
+role = "background"
+size = [512, 480]
+frames = 1
+frame_names = ["base"]
+timing = "one picture, while a level's look shows this screen"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the board's picture's top left"
+description = "the third room: a loud club with grey walls, four long red serving counters with dark fronts, slanted posters and signs on the walls, small amplifiers and blue speaker boxes on the right, a framed mirror on the left wall, and tall stools at the counters' ends; 512 by 480 pixels"
+label = "third room, loud club"
+
+[[art]]
+id = "screen.screen_78a1"
+kind = "board-screen"
+role = "background"
+size = [512, 480]
+frames = 1
+frame_names = ["base"]
+timing = "one picture, while a level's look shows this screen"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the board's picture's top left"
+description = "the loud club again with its walls in a second arrangement: grey walls, four red serving counters, slanted posters, speaker boxes and stools; 512 by 480 pixels"
+label = "third room, loud club, second look"
+
+[[art]]
+id = "screen.screen_8021"
+kind = "board-screen"
+role = "background"
+size = [512, 480]
+frames = 1
+frame_names = ["base"]
+timing = "one picture, while a level's look shows this screen"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the board's picture's top left"
+description = "the fourth room: a lounge on a station in space, a black starfield, four floating serving counters with glowing blue tops on thin metal stands, round grey dishes at their ends, striped metal walls slanting at both sides, small round lamps along the walls, and a small spacecraft drifting at the top; 512 by 480 pixels"
+label = "fourth room, orbital lounge"
+
+[[art]]
+id = "screen.screen_87a1"
+kind = "board-screen"
+role = "background"
+size = [512, 480]
+frames = 1
+frame_names = ["base"]
+timing = "one picture, while a level's look shows this screen"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the board's picture's top left"
+description = "the orbital lounge again: a black starfield, four floating counters with glowing blue tops on thin stands, slanting striped metal walls and round lamps; 512 by 480 pixels"
+label = "fourth room, orbital lounge, second look"
+
+[[art]]
+id = "screen.screen_8f21"
+kind = "board-screen"
+role = "background"
+size = [512, 480]
+frames = 1
+frame_names = ["base"]
+timing = "one picture, while a level's look shows this screen"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the board's picture's top left"
+description = "the orbital lounge again: a black starfield, four floating counters with glowing blue tops on thin stands, slanting striped metal walls and round lamps; 512 by 480 pixels"
+label = "fourth room, orbital lounge, third look"
+
+[[art]]
+id = "screen.screen_96a1"
+kind = "board-screen"
+role = "background"
+size = [512, 480]
+frames = 1
+frame_names = ["base"]
+timing = "one picture, while a level's look shows this screen"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the board's picture's top left"
+description = "the orbital lounge again: a black starfield, four floating counters with glowing blue tops on thin stands, slanting striped metal walls and round lamps; 512 by 480 pixels"
+label = "fourth room, orbital lounge, fourth look"
+
+[[art]]
+id = "screen.screen_9e21"
+kind = "board-screen"
+role = "background"
+size = [512, 480]
+frames = 1
+frame_names = ["base"]
+timing = "one picture, while a level's look shows this screen"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the board's picture's top left"
+description = "the frontier tavern again, as it returns after the fourth room: plank walls in deep blue, four wooden serving counters, swinging doors, a framed picture and a sign, and a small figure hanging on the right wall; 512 by 480 pixels"
+label = "first room, frontier tavern, second look"
+
+[[art]]
+id = "screen.screen_a5a1"
+kind = "board-screen"
+role = "background"
+size = [512, 480]
+frames = 1
+frame_names = ["base"]
+timing = "one picture, while a level's look shows this screen"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "the board's picture's top left"
+description = "the frontier tavern again, as it returns a second time: plank walls in deep blue, four wooden serving counters, swinging doors, a framed picture and a sign; 512 by 480 pixels"
+label = "first room, frontier tavern, third look"
+
+[[art]]
+id = "digits.score"
+kind = "board-counter"
+role = "hud"
+size = [16, 16]
+frames = 10
+frame_names = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+timing = "one glyph a digit, in the counter's cells"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "a cell of the board's tile layer"
+description = "the digits 0 to 9 of a number the game shows, 16 by 16 each"
+label = "digits"
+poses = ["the digit 0", "the digit 1", "the digit 2", "the digit 3", "the digit 4", "the digit 5", "the digit 6", "the digit 7", "the digit 8", "the digit 9"]
+
+[[art]]
+id = "digits.score_2"
+kind = "board-counter"
+role = "hud"
+size = [16, 16]
+frames = 10
+frame_names = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+timing = "one glyph a digit, in the counter's cells"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "a cell of the board's tile layer"
+description = "the digits 0 to 9 of a number the game shows, 16 by 16 each"
+label = "digits"
+poses = ["the digit 0", "the digit 1", "the digit 2", "the digit 3", "the digit 4", "the digit 5", "the digit 6", "the digit 7", "the digit 8", "the digit 9"]
+
+[[art]]
+id = "digits.cleared"
+kind = "board-counter"
+role = "hud"
+size = [16, 16]
+frames = 10
+frame_names = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+timing = "one glyph a digit, in the counter's cells"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "a cell of the board's tile layer"
+description = "the digits 0 to 9 of a number the game shows, 16 by 16 each"
+label = "digits"
+poses = ["the digit 0", "the digit 1", "the digit 2", "the digit 3", "the digit 4", "the digit 5", "the digit 6", "the digit 7", "the digit 8", "the digit 9"]
+
+[[art]]
+id = "digits.credits"
+kind = "board-counter"
+role = "hud"
+size = [16, 16]
+frames = 10
+frame_names = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+timing = "one glyph a digit, in the counter's cells"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "a cell of the board's tile layer"
+description = "the digits 0 to 9 of a number the game shows, 16 by 16 each"
+label = "digits"
+poses = ["the digit 0", "the digit 1", "the digit 2", "the digit 3", "the digit 4", "the digit 5", "the digit 6", "the digit 7", "the digit 8", "the digit 9"]
+
+[[art]]
+id = "tile.lives_shown"
+kind = "board-counter"
+role = "hud"
+size = [16, 16]
+frames = 1
+frame_names = ["base"]
+timing = "one picture, repeated once for each the counter holds"
+colors = "any colors: drawn whole over the board's picture"
+anchor = "a cell of the board's tile layer"
+description = "a small mark the game repeats to count something, such as a life, 16 by 16"
+label = "counter mark"
+poses = ["one mark"]
 
 [tolerance]
 edge = 2
