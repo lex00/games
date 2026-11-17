@@ -9,7 +9,6 @@ Each theme is a folder here, published to the registry as its own package. Its p
 | Theme | What it is | Where it lives |
 |---|---|---|
 | Original | The game's own art and sound, lifted from your ROM when you play. Never stored in a repo. | Your ROM |
-| Neon Shift | A smart bar floating in a playful 1990s retro-future city: a chrome robot server, sixteen guests (humans and aliens), neon rooms. New pictures that hold nothing from the ROM. | `neon-shift/` (package `lex00/neon-shift`) |
 
 On the page, pick one under Settings, Theme.
 
