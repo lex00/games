@@ -1,0 +1,120 @@
+gp-made-from 1
+# Where each picture of Turnips came from (`gp theme look check` reads it). The
+# characters, props and pieces were generated on Runway for the cells of the
+# sheets `gp theme sheet` wrote in the clay run (2026-11-09 to 11-11), each cell
+# for the game pictures named here. The lettering, HUD and title screens were
+# composed from our own clay alphabet and placed by script (`placed`).
+sheets $GP_HOME/notes/clay/run/sheets/sheets.json
+cell sheet-01 A01 frame-0-0.png frame-0-1.png frame-0-2.png frame-0-3.png
+cell sheet-01 A02 frame-1-0.png frame-1-1.png frame-1-2.png frame-1-3.png
+cell sheet-01 A03 frame-2-0.png frame-2-1.png frame-2-2.png frame-2-3.png
+cell sheet-01 A04 frame-3-0.png frame-3-1.png frame-3-2.png frame-3-3.png
+cell sheet-01 A05 frame-4-0.png frame-4-1.png frame-4-2.png frame-4-3.png
+cell sheet-01 A06 frame-5-0.png frame-5-1.png frame-5-2.png frame-5-3.png
+cell sheet-01 A07 frame-6-0.png frame-6-1.png frame-6-2.png frame-6-3.png
+cell sheet-01 A08 frame-7-0.png frame-7-1.png frame-7-2.png frame-7-3.png
+cell sheet-01 A09 frame-8-0.png frame-8-1.png frame-8-2.png frame-8-3.png
+cell sheet-01 A10 frame-9-0.png frame-9-1.png frame-9-2.png frame-9-3.png
+cell sheet-02 B01 frame-10-0.png frame-10-1.png frame-10-2.png frame-10-3.png
+cell sheet-02 B02 frame-11-0.png frame-11-1.png frame-11-2.png frame-11-3.png
+cell sheet-02 B03 frame-12-0.png frame-12-1.png frame-12-2.png frame-12-3.png
+cell sheet-02 B04 frame-13-0.png frame-13-1.png frame-13-2.png frame-13-3.png
+cell sheet-02 B05 frame-14-0.png frame-14-1.png frame-14-2.png frame-14-3.png
+cell sheet-02 B06 frame-15-0.png frame-15-1.png frame-15-2.png frame-15-3.png
+cell sheet-02 B07 frame-16-0.png frame-16-1.png frame-16-2.png frame-16-3.png
+cell sheet-02 B08 frame-17-0.png frame-17-1.png frame-17-2.png frame-17-3.png
+cell sheet-02 B09 frame-18-0.png frame-18-1.png frame-18-2.png frame-18-3.png
+cell sheet-03 C01 frame-20-0.png frame-20-1.png frame-20-2.png frame-20-3.png
+cell sheet-05 E01 frame-21-0.png frame-21-1.png frame-21-2.png frame-21-3.png
+cell sheet-06 F01 frame-22-0.png frame-22-1.png frame-22-2.png frame-22-3.png
+cell sheet-06 F02 frame-23-0.png frame-23-1.png frame-23-2.png frame-23-3.png frame-34-0.png frame-34-1.png frame-34-2.png frame-34-3.png
+cell sheet-06 F03 frame-24-0.png frame-24-1.png frame-24-2.png frame-24-3.png frame-35-0.png frame-35-1.png frame-35-2.png frame-35-3.png
+cell sheet-06 F04 frame-25-0.png frame-25-1.png frame-25-2.png frame-25-3.png frame-36-0.png frame-36-1.png frame-36-2.png frame-36-3.png
+cell sheet-06 F05 frame-26-0.png frame-26-1.png frame-26-2.png frame-26-3.png frame-37-0.png frame-37-1.png frame-37-2.png frame-37-3.png
+cell sheet-06 F06 frame-27-0.png frame-27-1.png frame-27-2.png frame-27-3.png
+cell sheet-06 F07 frame-28-0.png frame-28-1.png frame-28-2.png frame-28-3.png frame-31-0.png frame-31-1.png frame-31-2.png frame-31-3.png
+cell sheet-06 F09 frame-29-0.png frame-29-1.png frame-29-2.png frame-29-3.png frame-32-0.png frame-32-1.png frame-32-2.png frame-32-3.png
+cell sheet-06 F11 frame-30-0.png frame-30-1.png frame-30-2.png frame-30-3.png frame-33-0.png frame-33-1.png frame-33-2.png frame-33-3.png
+cell sheet-07 G01 frame-40-0.png frame-40-1.png frame-40-2.png frame-40-3.png
+cell sheet-08 H01 frame-41-0.png frame-41-1.png frame-41-2.png frame-41-3.png
+cell sheet-08 H02 frame-42-0.png frame-42-1.png frame-42-2.png frame-42-3.png
+cell sheet-08 H03 frame-43-0.png frame-43-1.png frame-43-2.png frame-43-3.png
+cell sheet-08 H04 frame-44-0.png frame-44-1.png frame-44-2.png frame-44-3.png
+cell sheet-08 H05 frame-45-0.png frame-45-1.png frame-45-2.png frame-45-3.png
+cell sheet-08 H06 frame-46-0.png frame-46-1.png frame-46-2.png frame-46-3.png
+cell sheet-09 I01 frame-47-0.png frame-47-1.png frame-47-2.png frame-47-3.png
+cell sheet-09 I02 frame-48-0.png frame-48-1.png frame-48-2.png frame-48-3.png
+cell sheet-09 I03 frame-49-0.png frame-49-1.png frame-49-2.png frame-49-3.png
+cell sheet-10 J01 frame-50-0.png frame-50-1.png frame-50-2.png frame-50-3.png
+cell sheet-10 J02 frame-51-0.png frame-51-1.png frame-51-2.png frame-51-3.png
+cell sheet-10 J03 frame-52-0.png frame-52-1.png frame-52-2.png frame-52-3.png
+cell sheet-10 J04 frame-53-0.png frame-53-1.png frame-53-2.png frame-53-3.png
+cell sheet-12 L01 frame-55-0.png frame-55-1.png frame-55-2.png frame-55-3.png
+cell sheet-12 L02 frame-56-0.png frame-56-1.png frame-56-2.png frame-56-3.png
+cell sheet-12 L03 frame-57-0.png frame-57-1.png frame-57-2.png frame-57-3.png
+cell sheet-12 L04 frame-58-0.png frame-58-1.png frame-58-2.png frame-58-3.png
+cell sheet-12 L05 frame-59-0.png frame-59-1.png frame-59-2.png frame-59-3.png
+cell sheet-12 L06 frame-60-0.png frame-60-1.png frame-60-2.png frame-60-3.png
+cell sheet-12 L07 frame-61-0.png frame-61-1.png frame-61-2.png frame-61-3.png
+cell sheet-12 L08 frame-62-0.png frame-62-1.png frame-62-2.png frame-62-3.png
+cell sheet-12 L09 frame-63-0.png frame-63-1.png frame-63-2.png frame-63-3.png
+cell sheet-12 L10 frame-64-0.png frame-64-1.png frame-64-2.png frame-64-3.png
+cell sheet-12 L11 frame-65-0.png frame-65-1.png frame-65-2.png frame-65-3.png
+cell sheet-13 M01 frame-66-0.png frame-66-1.png frame-66-2.png frame-66-3.png
+cell sheet-14 N01 frame-67-0.png frame-67-1.png frame-67-2.png frame-67-3.png
+cell sheet-14 N02 frame-68-0.png frame-68-1.png frame-68-2.png frame-68-3.png
+cell sheet-15 O01 frame-69-0.png frame-69-1.png frame-69-2.png frame-69-3.png
+cell sheet-17 Q01 frame-73-0.png frame-73-1.png frame-73-2.png frame-73-3.png
+cell sheet-17 Q02 frame-74-0.png frame-74-1.png frame-74-2.png frame-74-3.png
+cell sheet-18 R01 frame-75-0.png frame-75-1.png frame-75-2.png frame-75-3.png
+cell sheet-18 R02 frame-76-0.png frame-76-1.png frame-76-2.png frame-76-3.png
+cell sheet-19 S01 frame-82-0.png frame-82-1.png frame-82-2.png frame-82-3.png
+cell sheet-19 S02 frame-83-0.png frame-83-1.png frame-83-2.png frame-83-3.png
+cell sheet-19 S03 frame-84-0.png frame-84-1.png frame-84-2.png frame-84-3.png
+cell sheet-19 S04 frame-85-0.png frame-85-1.png frame-85-2.png frame-85-3.png
+cell sheet-19 S05 frame-86-0.png frame-86-1.png frame-86-2.png frame-86-3.png
+cell sheet-19 S06 frame-87-0.png frame-87-1.png frame-87-2.png frame-87-3.png
+cell sheet-19 S07 frame-88-0.png frame-88-1.png frame-88-2.png frame-88-3.png
+cell sheet-19 S13 frame-89-0.png frame-89-1.png frame-89-2.png frame-89-3.png
+cell sheet-20 T01 frame-90-0.png frame-90-1.png frame-90-2.png frame-90-3.png
+cell sheet-20 T02 frame-91-0.png frame-91-1.png frame-91-2.png frame-91-3.png
+cell sheet-20 T03 frame-92-0.png frame-92-1.png frame-92-2.png frame-92-3.png
+cell sheet-20 T07 frame-93-0.png frame-93-1.png frame-93-2.png frame-93-3.png
+cell sheet-20 T08 frame-94-0.png frame-94-1.png frame-94-2.png frame-94-3.png
+cell sheet-20 T09 frame-95-0.png frame-95-1.png frame-95-2.png frame-95-3.png
+cell sheet-20 T10 frame-96-0.png frame-96-1.png frame-96-2.png frame-96-3.png
+cell sheet-20 T11 frame-97-0.png frame-97-1.png frame-97-2.png frame-97-3.png
+cell sheet-20 T12 frame-98-0.png frame-98-1.png frame-98-2.png frame-98-3.png
+cell sheet-20 T13 frame-99-0.png frame-99-1.png frame-99-2.png frame-99-3.png
+cell sheet-20 T14 frame-100-0.png frame-100-1.png frame-100-2.png frame-100-3.png
+cell sheet-21 U01 frame-101-0.png frame-101-1.png frame-101-2.png frame-101-3.png
+cell sheet-21 U02 frame-102-0.png frame-102-1.png frame-102-2.png frame-102-3.png
+cell sheet-22 V01 frame-38-0.png frame-38-1.png frame-38-2.png frame-38-3.png
+cell sheet-22 V02 frame-39-0.png frame-39-1.png frame-39-2.png frame-39-3.png
+cell sheet-22 V03 frame-70-0.png frame-70-1.png frame-70-2.png frame-70-3.png
+cell sheet-22 V04 frame-71-0.png frame-71-1.png frame-71-2.png frame-71-3.png
+cell sheet-22 V05 frame-72-0.png frame-72-1.png frame-72-2.png frame-72-3.png
+cell sheet-22 V06 frame-77-0.png frame-77-1.png frame-77-2.png frame-77-3.png
+cell sheet-22 V07 frame-78-0.png frame-78-1.png frame-78-2.png frame-78-3.png
+cell sheet-22 V08 frame-79-0.png frame-79-1.png frame-79-2.png frame-79-3.png
+cell sheet-22 V09 frame-80-0.png frame-80-1.png frame-80-2.png frame-80-3.png
+cell sheet-22 V10 frame-81-0.png frame-81-1.png frame-81-2.png frame-81-3.png
+cell sheet-22 V11 frame-104-0.png frame-104-1.png frame-104-2.png frame-104-3.png frame-105-0.png frame-105-1.png frame-105-2.png frame-105-3.png
+placed frame-103-0.png frame-103-1.png frame-103-2.png frame-103-3.png glyph-0-3-20.png glyph-0-3-23.png glyph-0-3-30.png glyph-0-3-31.png
+placed glyph-0-3-32.png glyph-0-3-33.png glyph-0-3-34.png glyph-0-3-35.png glyph-0-3-36.png glyph-0-3-37.png glyph-0-3-38.png glyph-0-3-39.png
+placed glyph-0-3-41.png glyph-0-3-45.png glyph-0-3-47.png glyph-0-3-4c.png glyph-0-3-4d.png glyph-0-3-4f.png glyph-0-3-50.png glyph-0-3-52.png
+placed glyph-0-3-56.png glyph-0-3-59.png glyph-0-3-7c.png glyph-1-3-20.png glyph-1-3-23.png glyph-1-3-30.png glyph-1-3-31.png glyph-1-3-32.png
+placed glyph-1-3-33.png glyph-1-3-34.png glyph-1-3-35.png glyph-1-3-36.png glyph-1-3-37.png glyph-1-3-38.png glyph-1-3-39.png glyph-1-3-41.png
+placed glyph-1-3-45.png glyph-1-3-47.png glyph-1-3-4c.png glyph-1-3-4d.png glyph-1-3-4f.png glyph-1-3-50.png glyph-1-3-52.png glyph-1-3-56.png
+placed glyph-1-3-59.png glyph-1-3-7c.png glyph-2-3-20.png glyph-2-3-23.png glyph-2-3-30.png glyph-2-3-31.png glyph-2-3-32.png glyph-2-3-33.png
+placed glyph-2-3-34.png glyph-2-3-35.png glyph-2-3-36.png glyph-2-3-37.png glyph-2-3-38.png glyph-2-3-39.png glyph-2-3-41.png glyph-2-3-45.png
+placed glyph-2-3-47.png glyph-2-3-4c.png glyph-2-3-4d.png glyph-2-3-4f.png glyph-2-3-50.png glyph-2-3-52.png glyph-2-3-56.png glyph-2-3-59.png
+placed glyph-2-3-7c.png glyph-3-3-20.png glyph-3-3-23.png glyph-3-3-30.png glyph-3-3-31.png glyph-3-3-32.png glyph-3-3-33.png glyph-3-3-34.png
+placed glyph-3-3-35.png glyph-3-3-36.png glyph-3-3-37.png glyph-3-3-38.png glyph-3-3-39.png glyph-3-3-41.png glyph-3-3-45.png glyph-3-3-47.png
+placed glyph-3-3-4c.png glyph-3-3-4d.png glyph-3-3-4f.png glyph-3-3-50.png glyph-3-3-52.png glyph-3-3-56.png glyph-3-3-59.png glyph-3-3-7c.png
+placed level-m100-mt62-sprite-terrain.png level-m100-mt62-terrain.png level-m50-mt62-sprite-terrain.png level-m50-mt62-terrain.png level-m75-mt62-sprite-terrain.png level-m75-mt62-terrain.png level-main-mt62-sprite-terrain.png level-main-mt62-terrain.png
+placed hud-0.png frame-106-0.png frame-107-0.png frame-108-0.png hud-1.png frame-106-1.png frame-107-1.png frame-108-1.png
+placed hud-2.png frame-106-2.png frame-107-2.png frame-108-2.png hud-3.png frame-106-3.png frame-107-3.png frame-108-3.png
+placed screen-0.png screen-1.png screen-2.png screen-3.png screen-4.png screen-5.png screen-6.png screen-7.png
+placed screen-8.png screen-9.png screen-10.png screen-11.png screen-12.png screen-13.png screen-14.png screen-15.png
+placed screen-16.png screen-11-sprite-0.png screen-16-sprite-0.png
