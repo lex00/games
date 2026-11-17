@@ -1,0 +1,7 @@
+# lex00/neon-shift: Neon Shift, a large-art theme for the bar game lex00/tapper.
+[package]
+name = "lex00/neon-shift"
+version = "0.1.0"
+kind = "content"
+title = "Neon Shift"
+license = "CC-BY-4.0"

@@ -1,0 +1,89 @@
+# Prompt words for tapper's theme kit (docs/theme-kit.md, "Prompt words"),
+# written by hand from watching the game's clips. A theme for this arcade
+# game names its pictures by the board's names (sprite-ENTITY-CODE, a
+# screen's slot, counter-NAME-D: site docs, themes.md, "An arcade game"), so
+# these words describe the entities and their poses for prompts. `deny` lists
+# the words no prompt-facing text may hold; `note` keeps the game's own term
+# and never reaches the kit.
+format = "0.1.0"
+deny = ["tapper", "bally", "midway", "budweiser", "bud", "root beer", "rootbeer", "beer", "anheuser", "busch", "saloon", "cowboy", "punk", "bandit", "sports bar", "space bar", "keg", "bartender", "barman", "mustache", "moustache", "bow tie", "suspenders", "stetson", "cowboy hat"]
+
+[[art]]
+id = "entity.player"
+label = "server"
+description = "the hero who works behind the counters: fills a glass at the dispenser at a counter's end and slides it along the counter to a waiting guest, catches empty glasses sliding back and picks up coins left on the counter; drawn from the waist up, 32 by 32 pixels"
+poses = [
+    "standing at the dispenser, filling a glass",
+    "walking along the counter",
+    "reaching to catch a glass",
+    "sliding a full glass down the counter",
+    "a streak of motion as the glass leaves the hand",
+    "slumped over the counter, the shift lost",
+    "waving to the crowd as the shift ends",
+    "turning to face the room",
+]
+note = "the game's bartender, top half"
+
+[[art]]
+id = "entity.bartender_part"
+label = "server's lower half and dispenser parts"
+description = "the hero's lower half while walking and standing, the dispenser at each counter's end and its handle, and the foam of a glass being filled; 32 by 32 pixels each"
+poses = [
+    "lower half standing",
+    "lower half stepping",
+    "lower half lying flat",
+    "the dispenser at a counter's end",
+    "the dispenser's handle pulled",
+    "foam over a filling glass",
+]
+note = "the bartender's legs, the taps and kegs"
+
+[[art]]
+id = "entity.customer"
+label = "guest"
+description = "a guest who comes in at a counter's far end and walks toward the server, wanting a drink; four kinds of guest on each of the four rooms; 32 by 32 pixels, head and shoulders over the counter"
+poses = [
+    "walking toward the server, step one",
+    "walking toward the server, step two",
+    "waiting, impatient, frame one",
+    "waiting, impatient, frame two",
+    "pushed back by a glass caught in hand, surprised",
+    "drinking from the glass",
+    "done drinking, pleased, about to toss the empty glass back",
+]
+note = "the game's customers"
+
+[[art]]
+id = "entity.mug"
+label = "glass"
+description = "a drink in a tall glass: full while it slides to a guest, sloshing as it goes, empty as it slides back, and breaking when it falls off a counter's end; 32 by 32 pixels"
+poses = [
+    "full glass, upright",
+    "full glass, drink sloshing",
+    "empty glass sliding back",
+    "falling glass, full",
+    "falling glass, empty",
+    "glass breaking on the floor, frames of shards",
+]
+note = "the mugs of beer"
+
+[[art]]
+id = "entity.tip"
+label = "coin"
+description = "a coin a guest leaves on the counter for the server to pick up; 32 by 32 pixels"
+poses = ["a coin lying on the counter"]
+note = "the tip"
+
+[[art]]
+id = "entity.bonus_object"
+label = "between-rounds game pieces"
+description = "the pieces of the game between rounds: six sealed drink cans on a counter, a trickster's hand that shakes one of them, and the cans lifting and crossing as they are shuffled; 32 by 32 pixels"
+poses = ["a sealed can", "a can lifted", "a hand shaking a can", "a can opened, spraying", "the trickster's head peeking over the counter"]
+note = "the bonus round's cans and bandit"
+
+[[art]]
+id = "screen"
+label = "rooms"
+description = "the four rooms the counters stand in, the title screen and the interludes; 512 by 480 pixels, with four counters running from the room's back toward the front"
+poses = ["the first room", "the second room", "the third room", "the fourth room", "the title", "the between-rounds counter"]
+note = "the saloon, sports bar, punk bar and space bar screens"

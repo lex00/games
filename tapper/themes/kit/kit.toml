@@ -1,0 +1,19 @@
+# The theme kit for tapper (docs/theme-kit.md), written by `gp theme kit` from
+# the model. It names no character and holds no art: describe and draw
+# each slot from its role and description, and replace each sound role
+# with an original sound. .claude/skills/theme-generation/SKILL.md says how.
+format = "0.1.0"
+game = "tapper"
+model = "tapper"
+screen = [512, 480]
+pixel_aspect = "1"
+slots = "0e8f614b69d94b5aea9644d90974a4c1339c3c895c60f3edd183cdb8579c6834"
+art = []
+sound = []
+
+[tolerance]
+edge = 2
+size = 4
+feet = 1
+floor = 1
+cover = 0.5
