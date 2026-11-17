@@ -1,0 +1,777 @@
+gp-art 1
+scale 6
+limit off
+pic frame-0-0.png art/frame-0-0.png 16 16 0 0
+pic frame-0-1.png art/frame-0-1.png 16 16 0 0
+pic frame-0-2.png art/frame-0-2.png 16 16 0 0
+pic frame-0-3.png art/frame-0-3.png 16 16 0 0
+pic frame-1-0.png art/frame-1-0.png 16 16 0 0
+pic frame-1-1.png art/frame-1-1.png 16 16 0 0
+pic frame-1-2.png art/frame-1-2.png 16 16 0 0
+pic frame-1-3.png art/frame-1-3.png 16 16 0 0
+pic frame-10-0.png art/frame-10-0.png 240 88 0 0
+pic frame-10-1.png art/frame-10-1.png 240 88 0 0
+pic frame-10-2.png art/frame-10-2.png 240 88 0 0
+pic frame-10-3.png art/frame-10-3.png 240 88 0 0
+pic frame-100-0.png art/frame-100-0.png 16 16 0 0
+pic frame-100-1.png art/frame-100-1.png 16 16 0 0
+pic frame-100-2.png art/frame-100-2.png 16 16 0 0
+pic frame-100-3.png art/frame-100-3.png 16 16 0 0
+pic frame-101-0.png art/frame-101-0.png 16 16 0 0
+pic frame-101-1.png art/frame-101-1.png 16 16 0 0
+pic frame-101-2.png art/frame-101-2.png 16 16 0 0
+pic frame-101-3.png art/frame-101-3.png 16 16 0 0
+pic frame-102-0.png art/frame-102-0.png 16 16 0 0
+pic frame-102-1.png art/frame-102-1.png 16 16 0 0
+pic frame-102-2.png art/frame-102-2.png 16 16 0 0
+pic frame-102-3.png art/frame-102-3.png 16 16 0 0
+pic frame-103-0.png art/frame-103-0.png 16 16 0 0
+pic frame-103-1.png art/frame-103-1.png 16 16 0 0
+pic frame-103-2.png art/frame-103-2.png 16 16 0 0
+pic frame-103-3.png art/frame-103-3.png 16 16 0 0
+pic frame-104-0.png art/frame-104-0.png 16 16 0 0
+pic frame-104-1.png art/frame-104-1.png 16 16 0 0
+pic frame-104-2.png art/frame-104-2.png 16 16 0 0
+pic frame-104-3.png art/frame-104-3.png 16 16 0 0
+pic frame-105-0.png art/frame-105-0.png 16 16 0 0
+pic frame-105-1.png art/frame-105-1.png 16 16 0 0
+pic frame-105-2.png art/frame-105-2.png 16 16 0 0
+pic frame-105-3.png art/frame-105-3.png 16 16 0 0
+pic frame-11-0.png art/frame-11-0.png 240 88 0 0
+pic frame-11-1.png art/frame-11-1.png 240 88 0 0
+pic frame-11-2.png art/frame-11-2.png 240 88 0 0
+pic frame-11-3.png art/frame-11-3.png 240 88 0 0
+pic frame-12-0.png art/frame-12-0.png 240 88 0 0
+pic frame-12-1.png art/frame-12-1.png 240 88 0 0
+pic frame-12-2.png art/frame-12-2.png 240 88 0 0
+pic frame-12-3.png art/frame-12-3.png 240 88 0 0
+pic frame-13-0.png art/frame-13-0.png 240 88 0 0
+pic frame-13-1.png art/frame-13-1.png 240 88 0 0
+pic frame-13-2.png art/frame-13-2.png 240 88 0 0
+pic frame-13-3.png art/frame-13-3.png 240 88 0 0
+pic frame-14-0.png art/frame-14-0.png 240 88 0 0
+pic frame-14-1.png art/frame-14-1.png 240 88 0 0
+pic frame-14-2.png art/frame-14-2.png 240 88 0 0
+pic frame-14-3.png art/frame-14-3.png 240 88 0 0
+pic frame-15-0.png art/frame-15-0.png 240 88 0 0
+pic frame-15-1.png art/frame-15-1.png 240 88 0 0
+pic frame-15-2.png art/frame-15-2.png 240 88 0 0
+pic frame-15-3.png art/frame-15-3.png 240 88 0 0
+pic frame-16-0.png art/frame-16-0.png 240 88 0 0
+pic frame-16-1.png art/frame-16-1.png 240 88 0 0
+pic frame-16-2.png art/frame-16-2.png 240 88 0 0
+pic frame-16-3.png art/frame-16-3.png 240 88 0 0
+pic frame-17-0.png art/frame-17-0.png 240 88 0 0
+pic frame-17-1.png art/frame-17-1.png 240 88 0 0
+pic frame-17-2.png art/frame-17-2.png 240 88 0 0
+pic frame-17-3.png art/frame-17-3.png 240 88 0 0
+pic frame-18-0.png art/frame-18-0.png 240 88 0 0
+pic frame-18-1.png art/frame-18-1.png 240 88 0 0
+pic frame-18-2.png art/frame-18-2.png 240 88 0 0
+pic frame-18-3.png art/frame-18-3.png 240 88 0 0
+pic frame-2-0.png art/frame-2-0.png 16 16 0 0
+pic frame-2-1.png art/frame-2-1.png 16 16 0 0
+pic frame-2-2.png art/frame-2-2.png 16 16 0 0
+pic frame-2-3.png art/frame-2-3.png 16 16 0 0
+pic frame-20-0.png art/frame-20-0.png 16 8 0 0
+pic frame-20-1.png art/frame-20-1.png 16 8 0 0
+pic frame-20-2.png art/frame-20-2.png 16 8 0 0
+pic frame-20-3.png art/frame-20-3.png 16 8 0 0
+pic frame-21-0.png art/frame-21-0.png 16 16 0 0
+pic frame-21-1.png art/frame-21-1.png 16 16 0 0
+pic frame-21-2.png art/frame-21-2.png 16 16 0 0
+pic frame-21-3.png art/frame-21-3.png 16 16 0 0
+pic frame-22-0.png art/frame-22-0.png 16 16 0 0
+pic frame-22-1.png art/frame-22-1.png 16 16 0 0
+pic frame-22-2.png art/frame-22-2.png 16 16 0 0
+pic frame-22-3.png art/frame-22-3.png 16 16 0 0
+pic frame-23-0.png art/frame-23-0.png 16 16 0 0
+pic frame-23-1.png art/frame-23-1.png 16 16 0 0
+pic frame-23-2.png art/frame-23-2.png 16 16 0 0
+pic frame-23-3.png art/frame-23-3.png 16 16 0 0
+pic frame-24-0.png art/frame-24-0.png 16 16 0 0
+pic frame-24-1.png art/frame-24-1.png 16 16 0 0
+pic frame-24-2.png art/frame-24-2.png 16 16 0 0
+pic frame-24-3.png art/frame-24-3.png 16 16 0 0
+pic frame-25-0.png art/frame-25-0.png 16 16 0 0
+pic frame-25-1.png art/frame-25-1.png 16 16 0 0
+pic frame-25-2.png art/frame-25-2.png 16 16 0 0
+pic frame-25-3.png art/frame-25-3.png 16 16 0 0
+pic frame-26-0.png art/frame-26-0.png 16 16 0 0
+pic frame-26-1.png art/frame-26-1.png 16 16 0 0
+pic frame-26-2.png art/frame-26-2.png 16 16 0 0
+pic frame-26-3.png art/frame-26-3.png 16 16 0 0
+pic frame-27-0.png art/frame-27-0.png 16 16 0 0
+pic frame-27-1.png art/frame-27-1.png 16 16 0 0
+pic frame-27-2.png art/frame-27-2.png 16 16 0 0
+pic frame-27-3.png art/frame-27-3.png 16 16 0 0
+pic frame-28-0.png art/frame-28-0.png 16 16 0 0
+pic frame-28-1.png art/frame-28-1.png 16 16 0 0
+pic frame-28-2.png art/frame-28-2.png 16 16 0 0
+pic frame-28-3.png art/frame-28-3.png 16 16 0 0
+pic frame-29-0.png art/frame-29-0.png 16 16 0 0
+pic frame-29-1.png art/frame-29-1.png 16 16 0 0
+pic frame-29-2.png art/frame-29-2.png 16 16 0 0
+pic frame-29-3.png art/frame-29-3.png 16 16 0 0
+pic frame-3-0.png art/frame-3-0.png 16 16 0 0
+pic frame-3-1.png art/frame-3-1.png 16 16 0 0
+pic frame-3-2.png art/frame-3-2.png 16 16 0 0
+pic frame-3-3.png art/frame-3-3.png 16 16 0 0
+pic frame-30-0.png art/frame-30-0.png 16 16 0 0
+pic frame-30-1.png art/frame-30-1.png 16 16 0 0
+pic frame-30-2.png art/frame-30-2.png 16 16 0 0
+pic frame-30-3.png art/frame-30-3.png 16 16 0 0
+pic frame-31-0.png art/frame-31-0.png 16 16 0 0
+pic frame-31-1.png art/frame-31-1.png 16 16 0 0
+pic frame-31-2.png art/frame-31-2.png 16 16 0 0
+pic frame-31-3.png art/frame-31-3.png 16 16 0 0
+pic frame-32-0.png art/frame-32-0.png 16 16 0 0
+pic frame-32-1.png art/frame-32-1.png 16 16 0 0
+pic frame-32-2.png art/frame-32-2.png 16 16 0 0
+pic frame-32-3.png art/frame-32-3.png 16 16 0 0
+pic frame-33-0.png art/frame-33-0.png 16 16 0 0
+pic frame-33-1.png art/frame-33-1.png 16 16 0 0
+pic frame-33-2.png art/frame-33-2.png 16 16 0 0
+pic frame-33-3.png art/frame-33-3.png 16 16 0 0
+pic frame-34-0.png art/frame-34-0.png 16 16 0 0
+pic frame-34-1.png art/frame-34-1.png 16 16 0 0
+pic frame-34-2.png art/frame-34-2.png 16 16 0 0
+pic frame-34-3.png art/frame-34-3.png 16 16 0 0
+pic frame-35-0.png art/frame-35-0.png 16 16 0 0
+pic frame-35-1.png art/frame-35-1.png 16 16 0 0
+pic frame-35-2.png art/frame-35-2.png 16 16 0 0
+pic frame-35-3.png art/frame-35-3.png 16 16 0 0
+pic frame-36-0.png art/frame-36-0.png 16 16 0 0
+pic frame-36-1.png art/frame-36-1.png 16 16 0 0
+pic frame-36-2.png art/frame-36-2.png 16 16 0 0
+pic frame-36-3.png art/frame-36-3.png 16 16 0 0
+pic frame-37-0.png art/frame-37-0.png 16 16 0 0
+pic frame-37-1.png art/frame-37-1.png 16 16 0 0
+pic frame-37-2.png art/frame-37-2.png 16 16 0 0
+pic frame-37-3.png art/frame-37-3.png 16 16 0 0
+pic frame-38-0.png art/frame-38-0.png 12 16 -2 0
+pic frame-38-1.png art/frame-38-1.png 12 16 -2 0
+pic frame-38-2.png art/frame-38-2.png 12 16 -2 0
+pic frame-38-3.png art/frame-38-3.png 12 16 -2 0
+pic frame-39-0.png art/frame-39-0.png 16 12 0 -2
+pic frame-39-1.png art/frame-39-1.png 16 12 0 -2
+pic frame-39-2.png art/frame-39-2.png 16 12 0 -2
+pic frame-39-3.png art/frame-39-3.png 16 12 0 -2
+pic frame-4-0.png art/frame-4-0.png 16 16 0 0
+pic frame-4-1.png art/frame-4-1.png 16 16 0 0
+pic frame-4-2.png art/frame-4-2.png 16 16 0 0
+pic frame-4-3.png art/frame-4-3.png 16 16 0 0
+pic frame-40-0.png art/frame-40-0.png 16 16 0 0
+pic frame-40-1.png art/frame-40-1.png 16 16 0 0
+pic frame-40-2.png art/frame-40-2.png 16 16 0 0
+pic frame-40-3.png art/frame-40-3.png 16 16 0 0
+pic frame-41-0.png art/frame-41-0.png 48 38 0 -5
+pic frame-41-1.png art/frame-41-1.png 48 38 0 -5
+pic frame-41-2.png art/frame-41-2.png 48 38 0 -5
+pic frame-41-3.png art/frame-41-3.png 48 38 0 -5
+pic frame-42-0.png art/frame-42-0.png 48 38 0 -5
+pic frame-42-1.png art/frame-42-1.png 48 38 0 -5
+pic frame-42-2.png art/frame-42-2.png 48 38 0 -5
+pic frame-42-3.png art/frame-42-3.png 48 38 0 -5
+pic frame-43-0.png art/frame-43-0.png 48 38 0 -5
+pic frame-43-1.png art/frame-43-1.png 48 38 0 -5
+pic frame-43-2.png art/frame-43-2.png 48 38 0 -5
+pic frame-43-3.png art/frame-43-3.png 48 38 0 -5
+pic frame-44-0.png art/frame-44-0.png 48 38 0 -5
+pic frame-44-1.png art/frame-44-1.png 48 38 0 -5
+pic frame-44-2.png art/frame-44-2.png 48 38 0 -5
+pic frame-44-3.png art/frame-44-3.png 48 38 0 -5
+pic frame-45-0.png art/frame-45-0.png 48 38 0 -5
+pic frame-45-1.png art/frame-45-1.png 48 38 0 -5
+pic frame-45-2.png art/frame-45-2.png 48 38 0 -5
+pic frame-45-3.png art/frame-45-3.png 48 38 0 -5
+pic frame-46-0.png art/frame-46-0.png 48 38 0 -5
+pic frame-46-1.png art/frame-46-1.png 48 38 0 -5
+pic frame-46-2.png art/frame-46-2.png 48 38 0 -5
+pic frame-46-3.png art/frame-46-3.png 48 38 0 -5
+pic frame-47-0.png art/frame-47-0.png 48 38 0 -5
+pic frame-47-1.png art/frame-47-1.png 48 38 0 -5
+pic frame-47-2.png art/frame-47-2.png 48 38 0 -5
+pic frame-47-3.png art/frame-47-3.png 48 38 0 -5
+pic frame-48-0.png art/frame-48-0.png 48 38 0 -5
+pic frame-48-1.png art/frame-48-1.png 48 38 0 -5
+pic frame-48-2.png art/frame-48-2.png 48 38 0 -5
+pic frame-48-3.png art/frame-48-3.png 48 38 0 -5
+pic frame-49-0.png art/frame-49-0.png 48 38 0 -5
+pic frame-49-1.png art/frame-49-1.png 48 38 0 -5
+pic frame-49-2.png art/frame-49-2.png 48 38 0 -5
+pic frame-49-3.png art/frame-49-3.png 48 38 0 -5
+pic frame-5-0.png art/frame-5-0.png 16 16 0 0
+pic frame-5-1.png art/frame-5-1.png 16 16 0 0
+pic frame-5-2.png art/frame-5-2.png 16 16 0 0
+pic frame-5-3.png art/frame-5-3.png 16 16 0 0
+pic frame-50-0.png art/frame-50-0.png 48 38 0 -5
+pic frame-50-1.png art/frame-50-1.png 48 38 0 -5
+pic frame-50-2.png art/frame-50-2.png 48 38 0 -5
+pic frame-50-3.png art/frame-50-3.png 48 38 0 -5
+pic frame-51-0.png art/frame-51-0.png 48 32 0 1
+pic frame-51-1.png art/frame-51-1.png 48 32 0 1
+pic frame-51-2.png art/frame-51-2.png 48 32 0 1
+pic frame-51-3.png art/frame-51-3.png 48 32 0 1
+pic frame-52-0.png art/frame-52-0.png 48 38 0 -5
+pic frame-52-1.png art/frame-52-1.png 48 38 0 -5
+pic frame-52-2.png art/frame-52-2.png 48 38 0 -5
+pic frame-52-3.png art/frame-52-3.png 48 38 0 -5
+pic frame-53-0.png art/frame-53-0.png 48 38 0 -5
+pic frame-53-1.png art/frame-53-1.png 48 38 0 -5
+pic frame-53-2.png art/frame-53-2.png 48 38 0 -5
+pic frame-53-3.png art/frame-53-3.png 48 38 0 -5
+pic frame-55-0.png art/frame-55-0.png 48 8 0 0
+pic frame-55-1.png art/frame-55-1.png 48 8 0 0
+pic frame-55-2.png art/frame-55-2.png 48 8 0 0
+pic frame-55-3.png art/frame-55-3.png 48 8 0 0
+pic frame-56-0.png art/frame-56-0.png 48 8 0 0
+pic frame-56-1.png art/frame-56-1.png 48 8 0 0
+pic frame-56-2.png art/frame-56-2.png 48 8 0 0
+pic frame-56-3.png art/frame-56-3.png 48 8 0 0
+pic frame-57-0.png art/frame-57-0.png 48 8 0 0
+pic frame-57-1.png art/frame-57-1.png 48 8 0 0
+pic frame-57-2.png art/frame-57-2.png 48 8 0 0
+pic frame-57-3.png art/frame-57-3.png 48 8 0 0
+pic frame-58-0.png art/frame-58-0.png 48 8 0 0
+pic frame-58-1.png art/frame-58-1.png 48 8 0 0
+pic frame-58-2.png art/frame-58-2.png 48 8 0 0
+pic frame-58-3.png art/frame-58-3.png 48 8 0 0
+pic frame-59-0.png art/frame-59-0.png 48 8 0 0
+pic frame-59-1.png art/frame-59-1.png 48 8 0 0
+pic frame-59-2.png art/frame-59-2.png 48 8 0 0
+pic frame-59-3.png art/frame-59-3.png 48 8 0 0
+pic frame-6-0.png art/frame-6-0.png 16 16 0 0
+pic frame-6-1.png art/frame-6-1.png 16 16 0 0
+pic frame-6-2.png art/frame-6-2.png 16 16 0 0
+pic frame-6-3.png art/frame-6-3.png 16 16 0 0
+pic frame-60-0.png art/frame-60-0.png 48 8 0 0
+pic frame-60-1.png art/frame-60-1.png 48 8 0 0
+pic frame-60-2.png art/frame-60-2.png 48 8 0 0
+pic frame-60-3.png art/frame-60-3.png 48 8 0 0
+pic frame-61-0.png art/frame-61-0.png 48 8 0 0
+pic frame-61-1.png art/frame-61-1.png 48 8 0 0
+pic frame-61-2.png art/frame-61-2.png 48 8 0 0
+pic frame-61-3.png art/frame-61-3.png 48 8 0 0
+pic frame-62-0.png art/frame-62-0.png 48 8 0 0
+pic frame-62-1.png art/frame-62-1.png 48 8 0 0
+pic frame-62-2.png art/frame-62-2.png 48 8 0 0
+pic frame-62-3.png art/frame-62-3.png 48 8 0 0
+pic frame-63-0.png art/frame-63-0.png 48 8 0 0
+pic frame-63-1.png art/frame-63-1.png 48 8 0 0
+pic frame-63-2.png art/frame-63-2.png 48 8 0 0
+pic frame-63-3.png art/frame-63-3.png 48 8 0 0
+pic frame-64-0.png art/frame-64-0.png 48 8 0 0
+pic frame-64-1.png art/frame-64-1.png 48 8 0 0
+pic frame-64-2.png art/frame-64-2.png 48 8 0 0
+pic frame-64-3.png art/frame-64-3.png 48 8 0 0
+pic frame-65-0.png art/frame-65-0.png 48 8 0 0
+pic frame-65-1.png art/frame-65-1.png 48 8 0 0
+pic frame-65-2.png art/frame-65-2.png 48 8 0 0
+pic frame-65-3.png art/frame-65-3.png 48 8 0 0
+pic frame-66-0.png art/frame-66-0.png 48 42 0 -10
+pic frame-66-1.png art/frame-66-1.png 48 42 0 -10
+pic frame-66-2.png art/frame-66-2.png 48 42 0 -10
+pic frame-66-3.png art/frame-66-3.png 48 42 0 -10
+pic frame-67-0.png art/frame-67-0.png 48 42 0 -10
+pic frame-67-1.png art/frame-67-1.png 48 42 0 -10
+pic frame-67-2.png art/frame-67-2.png 48 42 0 -10
+pic frame-67-3.png art/frame-67-3.png 48 42 0 -10
+pic frame-68-0.png art/frame-68-0.png 48 42 0 -10
+pic frame-68-1.png art/frame-68-1.png 48 42 0 -10
+pic frame-68-2.png art/frame-68-2.png 48 42 0 -10
+pic frame-68-3.png art/frame-68-3.png 48 42 0 -10
+pic frame-69-0.png art/frame-69-0.png 16 16 0 0
+pic frame-69-1.png art/frame-69-1.png 16 16 0 0
+pic frame-69-2.png art/frame-69-2.png 16 16 0 0
+pic frame-69-3.png art/frame-69-3.png 16 16 0 0
+pic frame-7-0.png art/frame-7-0.png 16 16 0 0
+pic frame-7-1.png art/frame-7-1.png 16 16 0 0
+pic frame-7-2.png art/frame-7-2.png 16 16 0 0
+pic frame-7-3.png art/frame-7-3.png 16 16 0 0
+pic frame-70-0.png art/frame-70-0.png 16 8 8 4
+pic frame-70-1.png art/frame-70-1.png 16 8 8 4
+pic frame-70-2.png art/frame-70-2.png 16 8 8 4
+pic frame-70-3.png art/frame-70-3.png 16 8 8 4
+pic frame-71-0.png art/frame-71-0.png 16 16 8 -2
+pic frame-71-1.png art/frame-71-1.png 16 16 8 -2
+pic frame-71-2.png art/frame-71-2.png 16 16 8 -2
+pic frame-71-3.png art/frame-71-3.png 16 16 8 -2
+pic frame-72-0.png art/frame-72-0.png 16 16 8 -2
+pic frame-72-1.png art/frame-72-1.png 16 16 8 -2
+pic frame-72-2.png art/frame-72-2.png 16 16 8 -2
+pic frame-72-3.png art/frame-72-3.png 16 16 8 -2
+pic frame-73-0.png art/frame-73-0.png 16 24 0 0
+pic frame-73-1.png art/frame-73-1.png 16 24 0 0
+pic frame-73-2.png art/frame-73-2.png 16 24 0 0
+pic frame-73-3.png art/frame-73-3.png 16 24 0 0
+pic frame-74-0.png art/frame-74-0.png 16 24 0 0
+pic frame-74-1.png art/frame-74-1.png 16 24 0 0
+pic frame-74-2.png art/frame-74-2.png 16 24 0 0
+pic frame-74-3.png art/frame-74-3.png 16 24 0 0
+pic frame-75-0.png art/frame-75-0.png 16 16 0 0
+pic frame-75-1.png art/frame-75-1.png 16 16 0 0
+pic frame-75-2.png art/frame-75-2.png 16 16 0 0
+pic frame-75-3.png art/frame-75-3.png 16 16 0 0
+pic frame-76-0.png art/frame-76-0.png 16 16 0 0
+pic frame-76-1.png art/frame-76-1.png 16 16 0 0
+pic frame-76-2.png art/frame-76-2.png 16 16 0 0
+pic frame-76-3.png art/frame-76-3.png 16 16 0 0
+pic frame-77-0.png art/frame-77-0.png 16 16 0 0
+pic frame-77-1.png art/frame-77-1.png 16 16 0 0
+pic frame-77-2.png art/frame-77-2.png 16 16 0 0
+pic frame-77-3.png art/frame-77-3.png 16 16 0 0
+pic frame-78-0.png art/frame-78-0.png 16 16 0 0
+pic frame-78-1.png art/frame-78-1.png 16 16 0 0
+pic frame-78-2.png art/frame-78-2.png 16 16 0 0
+pic frame-78-3.png art/frame-78-3.png 16 16 0 0
+pic frame-79-0.png art/frame-79-0.png 16 16 0 0
+pic frame-79-1.png art/frame-79-1.png 16 16 0 0
+pic frame-79-2.png art/frame-79-2.png 16 16 0 0
+pic frame-79-3.png art/frame-79-3.png 16 16 0 0
+pic frame-8-0.png art/frame-8-0.png 16 16 0 0
+pic frame-8-1.png art/frame-8-1.png 16 16 0 0
+pic frame-8-2.png art/frame-8-2.png 16 16 0 0
+pic frame-8-3.png art/frame-8-3.png 16 16 0 0
+pic frame-80-0.png art/frame-80-0.png 16 16 0 0
+pic frame-80-1.png art/frame-80-1.png 16 16 0 0
+pic frame-80-2.png art/frame-80-2.png 16 16 0 0
+pic frame-80-3.png art/frame-80-3.png 16 16 0 0
+pic frame-81-0.png art/frame-81-0.png 16 16 0 0
+pic frame-81-1.png art/frame-81-1.png 16 16 0 0
+pic frame-81-2.png art/frame-81-2.png 16 16 0 0
+pic frame-81-3.png art/frame-81-3.png 16 16 0 0
+pic frame-82-0.png art/frame-82-0.png 16 16 0 0
+pic frame-82-1.png art/frame-82-1.png 16 16 0 0
+pic frame-82-2.png art/frame-82-2.png 16 16 0 0
+pic frame-82-3.png art/frame-82-3.png 16 16 0 0
+pic frame-83-0.png art/frame-83-0.png 16 16 0 0
+pic frame-83-1.png art/frame-83-1.png 16 16 0 0
+pic frame-83-2.png art/frame-83-2.png 16 16 0 0
+pic frame-83-3.png art/frame-83-3.png 16 16 0 0
+pic frame-84-0.png art/frame-84-0.png 16 16 0 0
+pic frame-84-1.png art/frame-84-1.png 16 16 0 0
+pic frame-84-2.png art/frame-84-2.png 16 16 0 0
+pic frame-84-3.png art/frame-84-3.png 16 16 0 0
+pic frame-85-0.png art/frame-85-0.png 16 16 0 0
+pic frame-85-1.png art/frame-85-1.png 16 16 0 0
+pic frame-85-2.png art/frame-85-2.png 16 16 0 0
+pic frame-85-3.png art/frame-85-3.png 16 16 0 0
+pic frame-86-0.png art/frame-86-0.png 16 16 0 0
+pic frame-86-1.png art/frame-86-1.png 16 16 0 0
+pic frame-86-2.png art/frame-86-2.png 16 16 0 0
+pic frame-86-3.png art/frame-86-3.png 16 16 0 0
+pic frame-87-0.png art/frame-87-0.png 16 16 0 0
+pic frame-87-1.png art/frame-87-1.png 16 16 0 0
+pic frame-87-2.png art/frame-87-2.png 16 16 0 0
+pic frame-87-3.png art/frame-87-3.png 16 16 0 0
+pic frame-88-0.png art/frame-88-0.png 16 16 0 0
+pic frame-88-1.png art/frame-88-1.png 16 16 0 0
+pic frame-88-2.png art/frame-88-2.png 16 16 0 0
+pic frame-88-3.png art/frame-88-3.png 16 16 0 0
+pic frame-89-0.png art/frame-89-0.png 16 16 0 0
+pic frame-89-1.png art/frame-89-1.png 16 16 0 0
+pic frame-89-2.png art/frame-89-2.png 16 16 0 0
+pic frame-89-3.png art/frame-89-3.png 16 16 0 0
+pic frame-9-0.png art/frame-9-0.png 16 16 0 0
+pic frame-9-1.png art/frame-9-1.png 16 16 0 0
+pic frame-9-2.png art/frame-9-2.png 16 16 0 0
+pic frame-9-3.png art/frame-9-3.png 16 16 0 0
+pic frame-90-0.png art/frame-90-0.png 16 16 0 0
+pic frame-90-1.png art/frame-90-1.png 16 16 0 0
+pic frame-90-2.png art/frame-90-2.png 16 16 0 0
+pic frame-90-3.png art/frame-90-3.png 16 16 0 0
+pic frame-91-0.png art/frame-91-0.png 16 16 0 0
+pic frame-91-1.png art/frame-91-1.png 16 16 0 0
+pic frame-91-2.png art/frame-91-2.png 16 16 0 0
+pic frame-91-3.png art/frame-91-3.png 16 16 0 0
+pic frame-92-0.png art/frame-92-0.png 16 16 0 0
+pic frame-92-1.png art/frame-92-1.png 16 16 0 0
+pic frame-92-2.png art/frame-92-2.png 16 16 0 0
+pic frame-92-3.png art/frame-92-3.png 16 16 0 0
+pic frame-93-0.png art/frame-93-0.png 16 16 0 0
+pic frame-93-1.png art/frame-93-1.png 16 16 0 0
+pic frame-93-2.png art/frame-93-2.png 16 16 0 0
+pic frame-93-3.png art/frame-93-3.png 16 16 0 0
+pic frame-94-0.png art/frame-94-0.png 16 16 0 0
+pic frame-94-1.png art/frame-94-1.png 16 16 0 0
+pic frame-94-2.png art/frame-94-2.png 16 16 0 0
+pic frame-94-3.png art/frame-94-3.png 16 16 0 0
+pic frame-95-0.png art/frame-95-0.png 16 16 0 0
+pic frame-95-1.png art/frame-95-1.png 16 16 0 0
+pic frame-95-2.png art/frame-95-2.png 16 16 0 0
+pic frame-95-3.png art/frame-95-3.png 16 16 0 0
+pic frame-96-0.png art/frame-96-0.png 16 16 0 0
+pic frame-96-1.png art/frame-96-1.png 16 16 0 0
+pic frame-96-2.png art/frame-96-2.png 16 16 0 0
+pic frame-96-3.png art/frame-96-3.png 16 16 0 0
+pic frame-97-0.png art/frame-97-0.png 16 16 0 0
+pic frame-97-1.png art/frame-97-1.png 16 16 0 0
+pic frame-97-2.png art/frame-97-2.png 16 16 0 0
+pic frame-97-3.png art/frame-97-3.png 16 16 0 0
+pic frame-98-0.png art/frame-98-0.png 16 16 0 0
+pic frame-98-1.png art/frame-98-1.png 16 16 0 0
+pic frame-98-2.png art/frame-98-2.png 16 16 0 0
+pic frame-98-3.png art/frame-98-3.png 16 16 0 0
+pic frame-99-0.png art/frame-99-0.png 16 16 0 0
+pic frame-99-1.png art/frame-99-1.png 16 16 0 0
+pic frame-99-2.png art/frame-99-2.png 16 16 0 0
+pic frame-99-3.png art/frame-99-3.png 16 16 0 0
+pic glyph-0-3-20.png art/glyph-0-3-20.png 8 8 0 0
+pic glyph-0-3-23.png art/glyph-0-3-23.png 8 8 0 0
+pic glyph-0-3-30.png art/glyph-0-3-30.png 8 8 0 0
+pic glyph-0-3-31.png art/glyph-0-3-31.png 8 8 0 0
+pic glyph-0-3-32.png art/glyph-0-3-32.png 8 8 0 0
+pic glyph-0-3-33.png art/glyph-0-3-33.png 8 8 0 0
+pic glyph-0-3-34.png art/glyph-0-3-34.png 8 8 0 0
+pic glyph-0-3-35.png art/glyph-0-3-35.png 8 8 0 0
+pic glyph-0-3-36.png art/glyph-0-3-36.png 8 8 0 0
+pic glyph-0-3-37.png art/glyph-0-3-37.png 8 8 0 0
+pic glyph-0-3-38.png art/glyph-0-3-38.png 8 8 0 0
+pic glyph-0-3-39.png art/glyph-0-3-39.png 8 8 0 0
+pic glyph-0-3-41.png art/glyph-0-3-41.png 8 8 0 0
+pic glyph-0-3-45.png art/glyph-0-3-45.png 8 8 0 0
+pic glyph-0-3-47.png art/glyph-0-3-47.png 8 8 0 0
+pic glyph-0-3-4c.png art/glyph-0-3-4c.png 8 8 0 0
+pic glyph-0-3-4d.png art/glyph-0-3-4d.png 8 8 0 0
+pic glyph-0-3-4f.png art/glyph-0-3-4f.png 8 8 0 0
+pic glyph-0-3-50.png art/glyph-0-3-50.png 8 8 0 0
+pic glyph-0-3-52.png art/glyph-0-3-52.png 8 8 0 0
+pic glyph-0-3-56.png art/glyph-0-3-56.png 8 8 0 0
+pic glyph-0-3-59.png art/glyph-0-3-59.png 8 8 0 0
+pic glyph-0-3-7c.png art/glyph-0-3-7c.png 8 8 0 0
+pic glyph-1-3-20.png art/glyph-1-3-20.png 8 8 0 0
+pic glyph-1-3-23.png art/glyph-1-3-23.png 8 8 0 0
+pic glyph-1-3-30.png art/glyph-1-3-30.png 8 8 0 0
+pic glyph-1-3-31.png art/glyph-1-3-31.png 8 8 0 0
+pic glyph-1-3-32.png art/glyph-1-3-32.png 8 8 0 0
+pic glyph-1-3-33.png art/glyph-1-3-33.png 8 8 0 0
+pic glyph-1-3-34.png art/glyph-1-3-34.png 8 8 0 0
+pic glyph-1-3-35.png art/glyph-1-3-35.png 8 8 0 0
+pic glyph-1-3-36.png art/glyph-1-3-36.png 8 8 0 0
+pic glyph-1-3-37.png art/glyph-1-3-37.png 8 8 0 0
+pic glyph-1-3-38.png art/glyph-1-3-38.png 8 8 0 0
+pic glyph-1-3-39.png art/glyph-1-3-39.png 8 8 0 0
+pic glyph-1-3-41.png art/glyph-1-3-41.png 8 8 0 0
+pic glyph-1-3-45.png art/glyph-1-3-45.png 8 8 0 0
+pic glyph-1-3-47.png art/glyph-1-3-47.png 8 8 0 0
+pic glyph-1-3-4c.png art/glyph-1-3-4c.png 8 8 0 0
+pic glyph-1-3-4d.png art/glyph-1-3-4d.png 8 8 0 0
+pic glyph-1-3-4f.png art/glyph-1-3-4f.png 8 8 0 0
+pic glyph-1-3-50.png art/glyph-1-3-50.png 8 8 0 0
+pic glyph-1-3-52.png art/glyph-1-3-52.png 8 8 0 0
+pic glyph-1-3-56.png art/glyph-1-3-56.png 8 8 0 0
+pic glyph-1-3-59.png art/glyph-1-3-59.png 8 8 0 0
+pic glyph-1-3-7c.png art/glyph-1-3-7c.png 8 8 0 0
+pic glyph-2-3-20.png art/glyph-2-3-20.png 8 8 0 0
+pic glyph-2-3-23.png art/glyph-2-3-23.png 8 8 0 0
+pic glyph-2-3-30.png art/glyph-2-3-30.png 8 8 0 0
+pic glyph-2-3-31.png art/glyph-2-3-31.png 8 8 0 0
+pic glyph-2-3-32.png art/glyph-2-3-32.png 8 8 0 0
+pic glyph-2-3-33.png art/glyph-2-3-33.png 8 8 0 0
+pic glyph-2-3-34.png art/glyph-2-3-34.png 8 8 0 0
+pic glyph-2-3-35.png art/glyph-2-3-35.png 8 8 0 0
+pic glyph-2-3-36.png art/glyph-2-3-36.png 8 8 0 0
+pic glyph-2-3-37.png art/glyph-2-3-37.png 8 8 0 0
+pic glyph-2-3-38.png art/glyph-2-3-38.png 8 8 0 0
+pic glyph-2-3-39.png art/glyph-2-3-39.png 8 8 0 0
+pic glyph-2-3-41.png art/glyph-2-3-41.png 8 8 0 0
+pic glyph-2-3-45.png art/glyph-2-3-45.png 8 8 0 0
+pic glyph-2-3-47.png art/glyph-2-3-47.png 8 8 0 0
+pic glyph-2-3-4c.png art/glyph-2-3-4c.png 8 8 0 0
+pic glyph-2-3-4d.png art/glyph-2-3-4d.png 8 8 0 0
+pic glyph-2-3-4f.png art/glyph-2-3-4f.png 8 8 0 0
+pic glyph-2-3-50.png art/glyph-2-3-50.png 8 8 0 0
+pic glyph-2-3-52.png art/glyph-2-3-52.png 8 8 0 0
+pic glyph-2-3-56.png art/glyph-2-3-56.png 8 8 0 0
+pic glyph-2-3-59.png art/glyph-2-3-59.png 8 8 0 0
+pic glyph-2-3-7c.png art/glyph-2-3-7c.png 8 8 0 0
+pic glyph-3-3-20.png art/glyph-3-3-20.png 8 8 0 0
+pic glyph-3-3-23.png art/glyph-3-3-23.png 8 8 0 0
+pic glyph-3-3-30.png art/glyph-3-3-30.png 8 8 0 0
+pic glyph-3-3-31.png art/glyph-3-3-31.png 8 8 0 0
+pic glyph-3-3-32.png art/glyph-3-3-32.png 8 8 0 0
+pic glyph-3-3-33.png art/glyph-3-3-33.png 8 8 0 0
+pic glyph-3-3-34.png art/glyph-3-3-34.png 8 8 0 0
+pic glyph-3-3-35.png art/glyph-3-3-35.png 8 8 0 0
+pic glyph-3-3-36.png art/glyph-3-3-36.png 8 8 0 0
+pic glyph-3-3-37.png art/glyph-3-3-37.png 8 8 0 0
+pic glyph-3-3-38.png art/glyph-3-3-38.png 8 8 0 0
+pic glyph-3-3-39.png art/glyph-3-3-39.png 8 8 0 0
+pic glyph-3-3-41.png art/glyph-3-3-41.png 8 8 0 0
+pic glyph-3-3-45.png art/glyph-3-3-45.png 8 8 0 0
+pic glyph-3-3-47.png art/glyph-3-3-47.png 8 8 0 0
+pic glyph-3-3-4c.png art/glyph-3-3-4c.png 8 8 0 0
+pic glyph-3-3-4d.png art/glyph-3-3-4d.png 8 8 0 0
+pic glyph-3-3-4f.png art/glyph-3-3-4f.png 8 8 0 0
+pic glyph-3-3-50.png art/glyph-3-3-50.png 8 8 0 0
+pic glyph-3-3-52.png art/glyph-3-3-52.png 8 8 0 0
+pic glyph-3-3-56.png art/glyph-3-3-56.png 8 8 0 0
+pic glyph-3-3-59.png art/glyph-3-3-59.png 8 8 0 0
+pic glyph-3-3-7c.png art/glyph-3-3-7c.png 8 8 0 0
+pic level-m100-mt62-sprite-terrain.png art/level-m100-mt62-sprite-terrain.png 8 8 0 0
+pic level-m100-mt62-terrain.png art/level-m100-mt62-terrain.png 8 8 0 0
+pic level-m50-mt62-sprite-terrain.png art/level-m50-mt62-sprite-terrain.png 8 8 0 0
+pic level-m50-mt62-terrain.png art/level-m50-mt62-terrain.png 8 8 0 0
+pic level-m75-mt62-sprite-terrain.png art/level-m75-mt62-sprite-terrain.png 8 8 0 0
+pic level-m75-mt62-terrain.png art/level-m75-mt62-terrain.png 8 8 0 0
+pic level-main-mt62-sprite-terrain.png art/level-main-mt62-sprite-terrain.png 8 8 0 0
+pic level-main-mt62-terrain.png art/level-main-mt62-terrain.png 8 8 0 0
+timed frame-44-0.png 0 12 art/foe-push.png 48 38 0 -5
+timed frame-44-0.png 12 26 art/foe-stand.png 48 38 0 -5
+timed frame-44-0.png 0 20 art/foe-stand.png 48 38 0 -5 every=60 wait=26
+timed frame-44-0.png 20 40 art/foe-growl.png 48 38 0 -5 every=60 wait=26
+timed frame-44-0.png 40 60 art/foe-shout.png 48 38 0 -5 every=60 wait=26
+timed frame-42-0.png 0 24 art/foe-dig.png 48 38 0 -5
+timed frame-43-0.png 34 66 art/foe-stand.png 48 38 0 -5
+timed frame-43-0.png 18 34 art/foe-hurl.png 48 38 0 -5
+timed frame-43-0.png 6 12 art/foe-windup.png 48 38 0 -5 hide
+timed frame-43-0.png 12 18 art/foe-front.png 48 38 0 -5
+timed frame-41-0.png 20 40 art/foe-growl.png 48 38 0 -5 every=60
+timed frame-41-0.png 40 60 art/foe-shout.png 48 38 0 -5 every=60
+timed frame-41-0.png 0 0 art/foe-yell.png 48 38 0 -5
+timed frame-73-0.png 0 16 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-73-0.png 16 32 art/turnip-sob.png 28 24 -6 0 every=240
+timed frame-73-0.png 32 48 art/turnip-wail.png 28 24 -6 0 every=240
+timed frame-73-0.png 72 88 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-73-0.png 88 100 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-73-0.png 100 116 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-73-0.png 144 168 art/turnip-fist.png 28 24 -6 0 every=240
+timed frame-73-0.png 168 192 art/turnip-peek.png 28 24 -6 0 every=240
+timed frame-73-0.png 192 204 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-73-0.png 204 216 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-74-0.png 0 16 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-74-0.png 16 32 art/turnip-sob.png 28 24 -6 0 every=240
+timed frame-74-0.png 32 48 art/turnip-wail.png 28 24 -6 0 every=240
+timed frame-74-0.png 72 88 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-74-0.png 88 100 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-74-0.png 100 116 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-74-0.png 144 168 art/turnip-fist.png 28 24 -6 0 every=240
+timed frame-74-0.png 168 192 art/turnip-peek.png 28 24 -6 0 every=240
+timed frame-74-0.png 192 204 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-74-0.png 204 216 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-41-1.png 20 40 art/foe-growl.png 48 38 0 -5 every=60
+timed frame-41-1.png 40 60 art/foe-shout.png 48 38 0 -5 every=60
+timed frame-41-1.png 0 0 art/foe-yell.png 48 38 0 -5
+timed frame-41-2.png 20 40 art/foe-growl.png 48 38 0 -5 every=60
+timed frame-41-2.png 40 60 art/foe-shout.png 48 38 0 -5 every=60
+timed frame-41-2.png 0 0 art/foe-yell.png 48 38 0 -5
+timed frame-41-3.png 20 40 art/foe-growl.png 48 38 0 -5 every=60
+timed frame-41-3.png 40 60 art/foe-shout.png 48 38 0 -5 every=60
+timed frame-41-3.png 0 0 art/foe-yell.png 48 38 0 -5
+timed frame-42-1.png 0 24 art/foe-dig.png 48 38 0 -5
+timed frame-42-2.png 0 24 art/foe-dig.png 48 38 0 -5
+timed frame-42-3.png 0 24 art/foe-dig.png 48 38 0 -5
+timed frame-43-1.png 34 66 art/foe-stand.png 48 38 0 -5
+timed frame-43-1.png 18 34 art/foe-hurl.png 48 38 0 -5
+timed frame-43-1.png 6 12 art/foe-windup.png 48 38 0 -5 hide
+timed frame-43-1.png 12 18 art/foe-front.png 48 38 0 -5
+timed frame-43-2.png 34 66 art/foe-stand.png 48 38 0 -5
+timed frame-43-2.png 18 34 art/foe-hurl.png 48 38 0 -5
+timed frame-43-2.png 6 12 art/foe-windup.png 48 38 0 -5 hide
+timed frame-43-2.png 12 18 art/foe-front.png 48 38 0 -5
+timed frame-43-3.png 34 66 art/foe-stand.png 48 38 0 -5
+timed frame-43-3.png 18 34 art/foe-hurl.png 48 38 0 -5
+timed frame-43-3.png 6 12 art/foe-windup.png 48 38 0 -5 hide
+timed frame-43-3.png 12 18 art/foe-front.png 48 38 0 -5
+timed frame-44-1.png 0 12 art/foe-push.png 48 38 0 -5
+timed frame-44-1.png 12 26 art/foe-stand.png 48 38 0 -5
+timed frame-44-1.png 0 20 art/foe-stand.png 48 38 0 -5 every=60 wait=26
+timed frame-44-1.png 20 40 art/foe-growl.png 48 38 0 -5 every=60 wait=26
+timed frame-44-1.png 40 60 art/foe-shout.png 48 38 0 -5 every=60 wait=26
+timed frame-44-2.png 0 12 art/foe-push.png 48 38 0 -5
+timed frame-44-2.png 12 26 art/foe-stand.png 48 38 0 -5
+timed frame-44-2.png 0 20 art/foe-stand.png 48 38 0 -5 every=60 wait=26
+timed frame-44-2.png 20 40 art/foe-growl.png 48 38 0 -5 every=60 wait=26
+timed frame-44-2.png 40 60 art/foe-shout.png 48 38 0 -5 every=60 wait=26
+timed frame-44-3.png 0 12 art/foe-push.png 48 38 0 -5
+timed frame-44-3.png 12 26 art/foe-stand.png 48 38 0 -5
+timed frame-44-3.png 0 20 art/foe-stand.png 48 38 0 -5 every=60 wait=26
+timed frame-44-3.png 20 40 art/foe-growl.png 48 38 0 -5 every=60 wait=26
+timed frame-44-3.png 40 60 art/foe-shout.png 48 38 0 -5 every=60 wait=26
+timed frame-73-1.png 0 16 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-73-1.png 16 32 art/turnip-sob.png 28 24 -6 0 every=240
+timed frame-73-1.png 32 48 art/turnip-wail.png 28 24 -6 0 every=240
+timed frame-73-1.png 72 88 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-73-1.png 88 100 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-73-1.png 100 116 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-73-1.png 144 168 art/turnip-fist.png 28 24 -6 0 every=240
+timed frame-73-1.png 168 192 art/turnip-peek.png 28 24 -6 0 every=240
+timed frame-73-1.png 192 204 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-73-1.png 204 216 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-73-2.png 0 16 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-73-2.png 16 32 art/turnip-sob.png 28 24 -6 0 every=240
+timed frame-73-2.png 32 48 art/turnip-wail.png 28 24 -6 0 every=240
+timed frame-73-2.png 72 88 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-73-2.png 88 100 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-73-2.png 100 116 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-73-2.png 144 168 art/turnip-fist.png 28 24 -6 0 every=240
+timed frame-73-2.png 168 192 art/turnip-peek.png 28 24 -6 0 every=240
+timed frame-73-2.png 192 204 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-73-2.png 204 216 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-73-3.png 0 16 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-73-3.png 16 32 art/turnip-sob.png 28 24 -6 0 every=240
+timed frame-73-3.png 32 48 art/turnip-wail.png 28 24 -6 0 every=240
+timed frame-73-3.png 72 88 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-73-3.png 88 100 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-73-3.png 100 116 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-73-3.png 144 168 art/turnip-fist.png 28 24 -6 0 every=240
+timed frame-73-3.png 168 192 art/turnip-peek.png 28 24 -6 0 every=240
+timed frame-73-3.png 192 204 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-73-3.png 204 216 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-74-1.png 0 16 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-74-1.png 16 32 art/turnip-sob.png 28 24 -6 0 every=240
+timed frame-74-1.png 32 48 art/turnip-wail.png 28 24 -6 0 every=240
+timed frame-74-1.png 72 88 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-74-1.png 88 100 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-74-1.png 100 116 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-74-1.png 144 168 art/turnip-fist.png 28 24 -6 0 every=240
+timed frame-74-1.png 168 192 art/turnip-peek.png 28 24 -6 0 every=240
+timed frame-74-1.png 192 204 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-74-1.png 204 216 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-74-2.png 0 16 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-74-2.png 16 32 art/turnip-sob.png 28 24 -6 0 every=240
+timed frame-74-2.png 32 48 art/turnip-wail.png 28 24 -6 0 every=240
+timed frame-74-2.png 72 88 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-74-2.png 88 100 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-74-2.png 100 116 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-74-2.png 144 168 art/turnip-fist.png 28 24 -6 0 every=240
+timed frame-74-2.png 168 192 art/turnip-peek.png 28 24 -6 0 every=240
+timed frame-74-2.png 192 204 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-74-2.png 204 216 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-74-3.png 0 16 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-74-3.png 16 32 art/turnip-sob.png 28 24 -6 0 every=240
+timed frame-74-3.png 32 48 art/turnip-wail.png 28 24 -6 0 every=240
+timed frame-74-3.png 72 88 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-74-3.png 88 100 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-74-3.png 100 116 art/turnip-wave.png 28 24 -6 0 every=240
+timed frame-74-3.png 144 168 art/turnip-fist.png 28 24 -6 0 every=240
+timed frame-74-3.png 168 192 art/turnip-peek.png 28 24 -6 0 every=240
+timed frame-74-3.png 192 204 art/turnip-hop.png 28 28 -6 -4 every=240
+timed frame-74-3.png 204 216 art/turnip-scream.png 28 24 -6 0 every=240
+timed frame-50-0.png 20 40 art/foe-growl.png 48 38 0 -5 every=60
+timed frame-50-0.png 40 60 art/foe-shout.png 48 38 0 -5 every=60
+timed frame-50-0.png 0 0 art/foe-yell.png 48 38 0 -5
+timed frame-50-1.png 20 40 art/foe-growl.png 48 38 0 -5 every=60
+timed frame-50-1.png 40 60 art/foe-shout.png 48 38 0 -5 every=60
+timed frame-50-1.png 0 0 art/foe-yell.png 48 38 0 -5
+timed frame-50-2.png 20 40 art/foe-growl.png 48 38 0 -5 every=60
+timed frame-50-2.png 40 60 art/foe-shout.png 48 38 0 -5 every=60
+timed frame-50-2.png 0 0 art/foe-yell.png 48 38 0 -5
+timed frame-50-3.png 20 40 art/foe-growl.png 48 38 0 -5 every=60
+timed frame-50-3.png 40 60 art/foe-shout.png 48 38 0 -5 every=60
+timed frame-50-3.png 0 0 art/foe-yell.png 48 38 0 -5
+timed frame-47-0.png 20 40 art/foe-growl.png 48 38 0 -5 every=60
+timed frame-47-0.png 40 60 art/foe-shout.png 48 38 0 -5 every=60
+timed frame-47-0.png 0 0 art/foe-yell.png 48 38 0 -5
+timed frame-47-1.png 20 40 art/foe-growl.png 48 38 0 -5 every=60
+timed frame-47-1.png 40 60 art/foe-shout.png 48 38 0 -5 every=60
+timed frame-47-1.png 0 0 art/foe-yell.png 48 38 0 -5
+timed frame-47-2.png 20 40 art/foe-growl.png 48 38 0 -5 every=60
+timed frame-47-2.png 40 60 art/foe-shout.png 48 38 0 -5 every=60
+timed frame-47-2.png 0 0 art/foe-yell.png 48 38 0 -5
+timed frame-47-3.png 20 40 art/foe-growl.png 48 38 0 -5 every=60
+timed frame-47-3.png 40 60 art/foe-shout.png 48 38 0 -5 every=60
+timed frame-47-3.png 0 0 art/foe-yell.png 48 38 0 -5
+face frame-22-0.png frame-22-1.png frame-22-2.png frame-22-3.png frame-27-0.png frame-27-1.png frame-27-2.png frame-27-3.png frame-28-0.png frame-28-1.png frame-28-2.png frame-28-3.png frame-29-0.png frame-29-1.png frame-29-2.png frame-29-3.png frame-30-0.png frame-30-1.png frame-30-2.png frame-30-3.png frame-31-0.png frame-31-1.png frame-31-2.png frame-31-3.png frame-32-0.png frame-32-1.png frame-32-2.png frame-32-3.png frame-33-0.png frame-33-1.png frame-33-2.png frame-33-3.png
+held frame-0-0.png frame-0-1.png frame-0-2.png frame-0-3.png frame-1-0.png frame-1-1.png frame-1-2.png frame-1-3.png frame-2-0.png frame-2-1.png frame-2-2.png frame-2-3.png frame-3-0.png frame-3-1.png frame-3-2.png frame-3-3.png frame-4-0.png frame-4-1.png frame-4-2.png frame-4-3.png frame-5-0.png frame-5-1.png frame-5-2.png frame-5-3.png frame-6-0.png frame-6-1.png frame-6-2.png frame-6-3.png frame-7-0.png frame-7-1.png frame-7-2.png frame-7-3.png frame-8-0.png frame-8-1.png frame-8-2.png frame-8-3.png frame-9-0.png frame-9-1.png frame-9-2.png frame-9-3.png
+near art/foe-yell.png 48 38 0 -5
+near_when frame-41-0.png frame-41-1.png frame-41-2.png frame-41-3.png frame-45-0.png frame-45-1.png frame-45-2.png frame-45-3.png frame-46-0.png frame-46-1.png frame-46-2.png frame-46-3.png frame-47-0.png frame-47-1.png frame-47-2.png frame-47-3.png frame-48-0.png frame-48-1.png frame-48-2.png frame-48-3.png frame-49-0.png frame-49-1.png frame-49-2.png frame-49-3.png frame-50-0.png frame-50-1.png frame-50-2.png frame-50-3.png frame-52-0.png frame-52-1.png frame-52-2.png frame-52-3.png frame-53-0.png frame-53-1.png frame-53-2.png frame-53-3.png
+near_other frame-100-0.png frame-100-1.png frame-100-2.png frame-100-3.png frame-101-0.png frame-101-1.png frame-101-2.png frame-101-3.png frame-102-0.png frame-102-1.png frame-102-2.png frame-102-3.png frame-82-0.png frame-82-1.png frame-82-2.png frame-82-3.png frame-83-0.png frame-83-1.png frame-83-2.png frame-83-3.png frame-84-0.png frame-84-1.png frame-84-2.png frame-84-3.png frame-85-0.png frame-85-1.png frame-85-2.png frame-85-3.png frame-86-0.png frame-86-1.png frame-86-2.png frame-86-3.png frame-87-0.png frame-87-1.png frame-87-2.png frame-87-3.png frame-88-0.png frame-88-1.png frame-88-2.png frame-88-3.png frame-89-0.png frame-89-1.png frame-89-2.png frame-89-3.png frame-90-0.png frame-90-1.png frame-90-2.png frame-90-3.png frame-91-0.png frame-91-1.png frame-91-2.png frame-91-3.png frame-92-0.png frame-92-1.png frame-92-2.png frame-92-3.png frame-93-0.png frame-93-1.png frame-93-2.png frame-93-3.png frame-94-0.png frame-94-1.png frame-94-2.png frame-94-3.png frame-95-0.png frame-95-1.png frame-95-2.png frame-95-3.png frame-96-0.png frame-96-1.png frame-96-2.png frame-96-3.png frame-97-0.png frame-97-1.png frame-97-2.png frame-97-3.png frame-98-0.png frame-98-1.png frame-98-2.png frame-98-3.png frame-99-0.png frame-99-1.png frame-99-2.png frame-99-3.png
+elsewhere level-main.png 0 -9 frame-70-0.png frame-70-1.png frame-70-2.png frame-70-3.png frame-71-0.png frame-71-1.png frame-71-2.png frame-71-3.png frame-72-0.png frame-72-1.png frame-72-2.png frame-72-3.png
+prop level-main.png art/stump.png 28 200 37 18
+prop_over frame-0-0.png frame-0-1.png frame-0-2.png frame-0-3.png frame-1-0.png frame-1-1.png frame-1-2.png frame-1-3.png frame-2-0.png frame-2-1.png frame-2-2.png frame-2-3.png frame-3-0.png frame-3-1.png frame-3-2.png frame-3-3.png frame-4-0.png frame-4-1.png frame-4-2.png frame-4-3.png frame-5-0.png frame-5-1.png frame-5-2.png frame-5-3.png frame-6-0.png frame-6-1.png frame-6-2.png frame-6-3.png frame-7-0.png frame-7-1.png frame-7-2.png frame-7-3.png frame-8-0.png frame-8-1.png frame-8-2.png frame-8-3.png frame-9-0.png frame-9-1.png frame-9-2.png frame-9-3.png
+prop_burst frame-2-0.png frame-1-0.png frame-4-0.png frame-3-0.png
+drift level-main.png 47 8 72
+drift_art art/stink-0.png 51 208
+drift_art art/stink-1.png 50 208
+drift_art art/stink-2.png 50 208
+drift_at 23 0
+drift_at 32 360
+drift_at 41 700
+pic hud-0.png art/lettering/hud.png 256 48 0 0
+pic frame-106-0.png art/lettering/points-100.png 16 8 0 0
+pic frame-107-0.png art/lettering/points-500.png 16 8 0 0
+pic frame-108-0.png art/lettering/points-800.png 16 8 0 0
+pic hud-1.png art/lettering/hud.png 256 48 0 0
+pic frame-106-1.png art/lettering/points-100.png 16 8 0 0
+pic frame-107-1.png art/lettering/points-500.png 16 8 0 0
+pic frame-108-1.png art/lettering/points-800.png 16 8 0 0
+pic hud-2.png art/lettering/hud.png 256 48 0 0
+pic frame-106-2.png art/lettering/points-100.png 16 8 0 0
+pic frame-107-2.png art/lettering/points-500.png 16 8 0 0
+pic frame-108-2.png art/lettering/points-800.png 16 8 0 0
+pic hud-3.png art/lettering/hud.png 256 48 0 0
+pic frame-106-3.png art/lettering/points-100.png 16 8 0 0
+pic frame-107-3.png art/lettering/points-500.png 16 8 0 0
+pic frame-108-3.png art/lettering/points-800.png 16 8 0 0
+pic screen-0.png art/lettering/screen-player1.png 256 240 0 0
+pic screen-1.png art/lettering/screen-player1.png 256 240 0 0
+pic screen-2.png art/lettering/screen-player2.png 256 240 0 0
+pic screen-3.png art/lettering/screen-player2.png 256 240 0 0
+pic screen-4.png art/lettering/screen-blank.png 256 240 0 0
+pic screen-5.png art/lettering/screen-blank.png 256 240 0 0
+pic screen-6.png art/lettering/screen-blank.png 256 240 0 0
+pic screen-7.png art/lettering/screen-blank.png 256 240 0 0
+pic screen-8.png art/lettering/screen-blank.png 256 240 0 0
+pic screen-9.png art/lettering/screen-blank.png 256 240 0 0
+pic screen-10.png art/lettering/screen-blank.png 256 240 0 0
+pic screen-11.png art/lettering/screen-title.png 256 240 0 0
+pic screen-12.png art/lettering/screen-blank.png 256 240 0 0
+pic screen-13.png art/lettering/screen-blank.png 256 240 0 0
+pic screen-14.png art/lettering/screen-blank.png 256 240 0 0
+pic screen-15.png art/lettering/screen-blank.png 256 240 0 0
+pic screen-16.png art/lettering/screen-title.png 256 240 0 0
+pic screen-11-sprite-0.png art/lettering/cursor.png 8 8 0 0
+pic screen-16-sprite-0.png art/lettering/cursor.png 8 8 0 0
+stage 6 236 220 190 214 190 150
+stage_piece plank art/pieces/plank.png 453 196
+stage_piece rail art/pieces/rail.png 349 86
+stage_piece rope art/pieces/rope.png 125 819
+stage_piece wheel art/pieces/wheel.png 665 685
+stage_piece lump art/pieces/lump.png 48 48
+stage_piece rake art/pieces/rake.png 460 716
+stage_piece shovel art/pieces/shovel.png 325 854
+stage_piece compost art/pieces/compost.png 558 463
+stage_piece pile art/pieces/pile.png 681 595
+stage_piece stump art/pieces/stump.png 732 533
+stage_holes -mt24.png
+level level-main.png
+lit 60
+floor r>g+50 b>g+0
+ladder g>r+40 b>r+40
+snap_drum 32 48 200 226 195
+skip_ladder 28 60 180
+put pile 16 34.5 36 31.5
+put stump 28 200 37 18
+level level-m50.png
+lit 60
+floor r>b+60 g>b+20
+ladder min>0+150
+items
+ladder_clear 2
+snap_walkway
+put plank 120 118 16 8
+put compost 114 96.833 28 23.167
+level level-m75.png
+lit 60
+floor r>g+50 b>g+0
+ladder g>r+40 b>r+40
+items
+heads 237 152 31
+rope 94 9 1
+level level-m100.png
+lit 60
+floor b>r+60
+ladder r>b+60 g>b+15
+items
+runs
+halves off
+lump 64 64
+lump 184 64
+lump 64 104
+lump 184 104
+lump 64 144
+lump 184 144
+lump 64 184
+lump 184 184

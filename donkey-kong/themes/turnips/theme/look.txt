@@ -1,0 +1,4 @@
+gp-look 1
+id turnips
+title Turnips
+art art.txt

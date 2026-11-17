@@ -1,0 +1,4 @@
+# Theme pictures and sound go through Git LFS (themes live with their game
+# here, never in a repo of their own).
+*/themes/**/*.png filter=lfs diff=lfs merge=lfs -text
+*/themes/**/*.wav filter=lfs diff=lfs merge=lfs -text
