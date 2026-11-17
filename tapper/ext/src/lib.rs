@@ -2451,15 +2451,22 @@ impl Ext for Bars {
             .map(|(i, b)| (i, *b));
         let mut state = flow.map_or(10, |(_, b)| b.ext[3] & 0xff);
         // A start inside the bonus round ($2500): $232B's place (E3A9)
-        // gives its frame. At $252F the wait of 20 at $252C has just ended
-        // (E397 back to the state it was called in): the round's frame 22,
-        // the cans' objects coming in on the next ($255F). Every bonus clip
-        // starts there.
+        // gives its frame. The wait of 20 at $252C ends on the round's
+        // frame 22, the cans' objects coming in on the next ($255F); a start
+        // inside it is that less its frames left, the timer for $2346 (0
+        // once E397 is back to the state it was called in, 16). The
+        // Budweiser clips start as it ends; Root Beer's 14 frames before.
         if let Some((fid, mut fb)) = flow
             && (fb.ext[3] >> 16) & 0xff != 12
             && Some((fb.ext[1] >> 16) & 0xffff) == wait_return(cx, "bonus_code", "bonus_start", 1)
         {
-            fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (12 << 16) | (22 << 24);
+            let left = if state == 16 {
+                0
+            } else {
+                timers.iter().find(|(_, t)| t.ext[1] == 0x2346).map_or(0, |(_, t)| t.ext[0])
+            };
+            let n = (22 - left).max(0);
+            fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (12 << 16) | (n << 24);
             fb.ext[2] &= !BONUS_MASK;
             fb.ext[1] &= !(0xffff << 16);
             cx.set_body(fid, fb);
@@ -2564,7 +2571,19 @@ impl Ext for Bars {
         // the bartender placed and the level's timers set: it reaches play
         // ($4C6D) on the next frame.
         let level_timers = timers.iter().any(|(_, t)| t.ext[1] == 0x2023 && t.ext[0] > 0);
-        let ending = state == 11 && !setting_up && bartender_y != 0 && !level_timers;
+        // A start just after end script 3's last hop: its wait ($232B,
+        // the second in $50EF's code) returned to the hop loop with B at
+        // 1, so $50EF returns, the script ends, and the setup runs on this
+        // frame (tapper.clear.015: $570C's colours on its first frame,
+        // $5404 on its second). The place (E3A9) and B (E39F) are read
+        // once, as a clip starts.
+        let hops_done = state == 11
+            && flow.is_some_and(|(_, b)| {
+                (b.ext[1] >> 16) & 0xffff != 0
+                    && wait_return(cx, "hops_code", "hops_start", 2) == Some((b.ext[1] >> 16) & 0xffff)
+                    && (b.ext[1] >> 32) & 0xff == 1
+            });
+        let ending = state == 11 && !setting_up && bartender_y != 0 && !level_timers && !hops_done;
         let finishing = state == 11 && !setting_up && bartender_y != 0 && level_timers;
         if ending {
             // $55FF: the level's points, once: a clip that starts inside
@@ -2743,7 +2762,11 @@ impl Ext for Bars {
             fb.ext[3] = (fb.ext[3] & !0x00ff_0000) | (4 << 16);
             cx.set_body(fid, fb);
             life_lost = true;
-        } else if (state == 9 || (game_start && fb_started(flow) == 0)) && let Some((fid, mut fb)) = flow {
+        } else if (state == 9 || hops_done || (game_start && fb_started(flow) == 0)) && let Some((fid, mut fb)) = flow {
+            if hops_done {
+                // The place is read once.
+                fb.ext[1] &= !(0xffff << 16);
+            }
             // $4B4D: the setup's $5F31 empties the objects, the bartender's
             // among them; its waits ($232B) are states 15 and 16. The
             // level's RAM is cleared ($4B65) after the bartender's walk on

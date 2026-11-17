@@ -761,6 +761,24 @@ description = "The bartender's steps along in the space bar's level end hops, a 
 source = "tapper"
 asset = "hop_steps"
 
+[assets.hops_code]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: end script 3's hops' code ($50EF), searched for its waits"
+
+[assets.hops_code.from]
+source = "tapper"
+asset = "hops_code"
+
+[assets.hops_start]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: the hops' start, the operand of the call that reaches it ($48ED)"
+
+[assets.hops_start.from]
+source = "tapper"
+asset = "hops_start"
+
 [assets.instr_objects]
 kind = "rows"
 role = "graphics"
@@ -1650,6 +1668,8 @@ hand_flags = "hand_flags"
 hand_pic = "hand_pic"
 hand_pic_shake = "hand_pic_shake"
 hop_steps = "hop_steps"
+hops_code = "hops_code"
+hops_start = "hops_start"
 instr_objects = "instr_objects"
 interlude_code = "interlude_code"
 interlude_start = "interlude_start"
@@ -10316,6 +10336,22 @@ note = "gp code listing on tapper.l10.001's end (frames 15680 to 15926): the end
 
 [[evidence."assets.hop_steps".refs]]
 at = "clip:tapper.l10.001"
+
+[evidence."assets.hops_code"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: end script 3 calls $50EF at $48ED ($4A6F in rbtapper), whose hop loop ($5160 to $519E) waits 5 frames a hop at its second $232B call ($5197, $5327 in rbtapper) with B counting 10 hops down; tapper.clear.015 starts on the frame that wait returns to $519A with B at 1, and the setup runs on it ($570C's colours, then $5404 the next frame)"
+
+[[evidence."assets.hops_code".refs]]
+at = "clip:tapper.clear.015"
+
+[evidence."assets.hops_start"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapper and rbtapper: end script 3 calls $50EF at $48ED ($4A6F in rbtapper), whose hop loop ($5160 to $519E) waits 5 frames a hop at its second $232B call ($5197, $5327 in rbtapper) with B counting 10 hops down; tapper.clear.015 starts on the frame that wait returns to $519A with B at 1, and the setup runs on it ($570C's colours, then $5404 the next frame)"
+
+[[evidence."assets.hops_start".refs]]
+at = "clip:tapper.clear.015"
 
 [evidence."assets.instr_objects"]
 source = "observed"

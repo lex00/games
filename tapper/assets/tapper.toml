@@ -45,6 +45,7 @@ width = 8
 [asset.at]
 tappera = 0xC411
 rbtapper = 0xC5A1
+sutapper = 0xC421
 
 # Each bar's ends, 4 bytes a bar from the bottom: the left end at +1, the
 # right at +2 (read by $0742 at $0774 and $0890 at $08AB).
@@ -56,6 +57,11 @@ offset = 0x0977
 count = 4
 width = 4
 
+[asset.at]
+rbtapper = 0x0977
+sutapper = 0x0977
+tappera = 0x0977
+
 # Each customer slot's arrival routine, a word a slot ($0987, read at $093C
 # and $4C34): a timer naming one of them brings that slot's customer.
 [[asset]]
@@ -65,6 +71,11 @@ region = "maincpu"
 offset = 0x0987
 count = 16
 width = 2
+
+[asset.at]
+rbtapper = 0x0987
+sutapper = 0x0987
+tappera = 0x0987
 
 # The customer slots that arrive at a level's start: a word a level
 # (levels cleared, up to 9) pointing into the lists below ($4C19).
@@ -78,6 +89,8 @@ width = 2
 
 [asset.at]
 rbtapper = 0x4E75
+sutapper = 0x4CE5
+tappera = 0x4CE5
 
 # The lists: slot numbers, each list ended by $FF ($4C2D).
 [[asset]]
@@ -90,6 +103,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x4E13
+sutapper = 0x4C83
+tappera = 0x4C83
 
 # A level's times, 12 bytes a level by E4A9 ($4E50): the respawn wait
 # (E3B1), the times to the waits' speed-up ($2023) and two other events
@@ -105,6 +120,8 @@ width = 12
 
 [asset.at]
 rbtapper = 0x503B
+sutapper = 0x4EAB
+tappera = 0x4EAB
 
 # The customer slots' records a level starts with, by the bar shown: four
 # blocks of 16 records of 32 bytes, copied to E4B2 by the setup ($4A65,
@@ -120,6 +137,7 @@ width = 32
 [asset.at]
 tappera = 0xBC11
 rbtapper = 0xBDA1
+sutapper = 0xBC21
 
 # The level's end scripts, two lists (by E3ED, drawn at a game's start)
 # of ten words by the levels cleared ($5623: $56CA points at them), each a
@@ -134,6 +152,8 @@ width = 2
 
 [asset.at]
 rbtapper = 0x5860
+sutapper = 0x56D0
+tappera = 0x56D0
 
 # The four objects the slide copies into the mug slots from E326 when it
 # ends ($1F75: ld hl,$2003; ldir 32 bytes), 8 bytes an object (y, flags,
@@ -146,6 +166,11 @@ region = "maincpu"
 offset = 0x2003
 count = 4
 width = 8
+
+[asset.at]
+rbtapper = 0x2003
+sutapper = 0x2003
+tappera = 0x2003
 
 # The space bar's level end hops ($50EF): the bartender's steps along,
 # one signed byte a hop, 10 hops ($5180: ld hl,$519F, indexed by 10 less
@@ -161,6 +186,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x532F
+sutapper = 0x519F
+tappera = 0x519F
 # The show a tip starts ($14E7): the dancers' first picture by the bar
 # shown, through the words at $15F5 by E3B8 ($1500 to $1515: ld hl,$15F5,
 # then 36 bytes to E23E). The words name four pictures of 36 bytes in a
@@ -173,6 +200,11 @@ region = "maincpu"
 offset = 0x15F5
 count = 4
 width = 2
+
+[asset.at]
+rbtapper = 0x15F5
+sutapper = 0x15F5
+tappera = 0x15F5
 [[asset]]
 name = "show_first"
 format = "byte-rows"
@@ -180,6 +212,11 @@ region = "maincpu"
 offset = 0x155A
 count = 144
 width = 1
+
+[asset.at]
+rbtapper = 0x155A
+sutapper = 0x155A
+tappera = 0x155A
 # The show's next pictures ($0C25, every 6 frames): the words at $0C99 by
 # E3B8 ($0C38 to $0C46) each name a list of eight words, by E710, naming
 # 36 bytes to copy to E23E ($0C5C to $0C68). The lists and the pictures
@@ -194,6 +231,8 @@ count = 4
 width = 2
 [asset.at]
 rbtapper = 0x0C94
+sutapper = 0x0C99
+tappera = 0x0C99
 [[asset]]
 name = "show_pictures"
 format = "byte-rows"
@@ -203,6 +242,8 @@ count = 856
 width = 1
 [asset.at]
 rbtapper = 0x0C9E
+sutapper = 0x0CA3
+tappera = 0x0CA3
 # The code that asks the sound board for sounds (the sound hook, ext/src/
 # sound.rs): each a stretch of the program from an `ld c,N` the code asks
 # with ($606B takes C), so the request bytes are the player's romset's.
@@ -221,6 +262,8 @@ count = 7
 width = 1
 [asset.at]
 sutapper = 0x0393
+rbtapper = 0x0387
+tappera = 0x0387
 # $00B9 to $00C6: the boot's last requests, 2, 2 and 3 (the second 2 is
 # C left from the first).
 [[asset]]
@@ -230,6 +273,11 @@ region = "maincpu"
 offset = 0x00B9
 count = 13
 width = 1
+
+[asset.at]
+rbtapper = 0x00B9
+sutapper = 0x00B9
+tappera = 0x00B9
 # $CFC5 to $D06D: the boot's sound check, 2, then 2 and 1, and the four
 # bytes at $D06A it writes to all four latches.
 [[asset]]
@@ -242,6 +290,7 @@ width = 1
 [asset.at]
 rbtapper = 0xD145
 tappera = 0xCFB5
+sutapper = 0xCFC5
 # $4B34 to $4C74: a game's start (2 and 2A at $4B34 and $4B39) and a
 # level's setup (2 at $4B9A and $4C4E, then the bar shown's byte of the
 # table at $4C71, $4C56).
@@ -254,6 +303,8 @@ count = 321
 width = 1
 [asset.at]
 rbtapper = 0x4CC4
+sutapper = 0x4B34
+tappera = 0x4B34
 # $125E to $14DC: the pour ($30 and $3A when the mug is full, $39 and $38
 # for the stream, $125E to $12E2) and the mug sent ($12 at $14DB).
 [[asset]]
@@ -265,6 +316,8 @@ count = 639
 width = 1
 [asset.at]
 rbtapper = 0x1259
+sutapper = 0x125E
+tappera = 0x125E
 # $090D to $0A9F: a customer served at the bar's far end ($1E at $090D),
 # and the bartender landing at another bar ($0E at $0A97, $0D at $0A9E).
 [[asset]]
@@ -274,6 +327,11 @@ region = "maincpu"
 offset = 0x090D
 count = 403
 width = 1
+
+[asset.at]
+rbtapper = 0x090D
+sutapper = 0x090D
+tappera = 0x090D
 # $23EA to $2442: a life lost's mug falling ($1A), its crash ($1B at
 # $2402) and $2441's 2.
 [[asset]]
@@ -283,6 +341,11 @@ region = "maincpu"
 offset = 0x23EA
 count = 89
 width = 1
+
+[asset.at]
+rbtapper = 0x23EA
+sutapper = 0x23EA
+tappera = 0x23EA
 # $15FF to $18DF: the 16 customer slots' arrival routines (the arrivals
 # table's words), each starting `ld c,N` with N the arrival's request.
 [[asset]]
@@ -292,6 +355,11 @@ region = "maincpu"
 offset = 0x15FF
 count = 737
 width = 1
+
+[asset.at]
+rbtapper = 0x15FF
+sutapper = 0x15FF
+tappera = 0x15FF
 
 
 # The board's 64 colours as the program loads them into palette RAM at a
@@ -306,6 +374,7 @@ offset = 0x616D
 [asset.at]
 rbtapper = 0x62ED
 tappera = 0x615D
+sutapper = 0x616D
 
 # The saloon's screen, the first of the stages the setup's $5DF6 picks by
 # the levels cleared from the pointers at $61ED; the vblank's $5D19 copies
@@ -319,6 +388,7 @@ offset = 0x6221
 
 [asset.at]
 rbtapper = 0x63A1
+sutapper = 0x6221
 tappera = 0x6211
 
 # The colours the level's intro pokes over the loaded palette ($540A to
@@ -335,6 +405,8 @@ width = 9
 
 [asset.at]
 rbtapper = 0x559B
+sutapper = 0x540B
+tappera = 0x540B
 
 # Each bar's two colours, which a level's start ($570C) writes into palette
 # RAM's $60 and $6C by the bar shown (E3B8): a row a bar.
@@ -348,6 +420,8 @@ width = 2
 
 [asset.at]
 rbtapper = 0x58E1
+sutapper = 0x5751
+tappera = 0x5751
 
 # The settings a board starts with when its battery-backed RAM fails the
 # check at boot ($048A to $0504): $0505 copies these 94 bytes to E000
@@ -368,6 +442,8 @@ width = 94
 
 [asset.at]
 sutapper = 0x0532
+rbtapper = 0x0526
+tappera = 0x0526
 
 # Each level's layout, a byte a level by the levels cleared: bit k set
 # puts bar k's tap on its left end. The setup's $2EC3 reads it into E3AF
@@ -384,6 +460,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x4E89
+sutapper = 0x4CF9
+tappera = 0x4CF9
 
 # The bars' objects the setup's $4D13 copies in, by each bar's side
 # (E3AF): a row for taps on the right end ($4DCC) and one for taps on
@@ -402,6 +480,8 @@ width = 48
 
 [asset.at]
 rbtapper = 0x4F5C
+sutapper = 0x4DCC
+tappera = 0x4DCC
 
 # The bonus round's pairs of cans to swap ($4F17 and $5003, both from
 # $2AD1): five entries of two words in $4F17 (ld hl,$2AD1 at $4F3E, 4
@@ -419,6 +499,8 @@ width = 2
 
 [asset.at]
 rbtapper = 0x2AE5
+sutapper = 0x2AD1
+tappera = 0x2AD1
 
 # The other stages: $5DF6 takes a stage's screen from the words at $61ED
 # by the levels cleared (E4A8, from 26 on counted 13 to 25 again, as
@@ -439,6 +521,7 @@ width = 2
 [asset.at]
 rbtapper = 0x636D
 tappera = 0x61DD
+sutapper = 0x61ED
 
 # $4ADB's ld (hl),$92 into palette RAM's F840: a colour the attract demo ($4AAA) pokes after loading the palette.
 [[asset]]
@@ -451,6 +534,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x4C6C
+sutapper = 0x4ADC
+tappera = 0x4ADC
 
 # $4AE0's ld (hl),$C7 into palette RAM's F84D: a colour the attract demo ($4AAA) pokes after loading the palette.
 [[asset]]
@@ -463,6 +548,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x4C71
+sutapper = 0x4AE1
+tappera = 0x4AE1
 
 # A fallen mug's pictures ($236E, the life lost): $10 for an empty one
 # ($23B0), $14 for a full one ($23E6); after its 13-frame rise $11 ($2407),
@@ -475,6 +562,11 @@ offset = 0x23B1
 count = 1
 width = 1
 
+[asset.at]
+rbtapper = 0x23B1
+sutapper = 0x23B1
+tappera = 0x23B1
+
 [[asset]]
 name = "fall_picture_full"
 format = "byte-rows"
@@ -482,6 +574,11 @@ region = "maincpu"
 offset = 0x23E9
 count = 1
 width = 1
+
+[asset.at]
+rbtapper = 0x23E9
+sutapper = 0x23E9
+tappera = 0x23E9
 
 [[asset]]
 name = "fall_picture_crash"
@@ -491,6 +588,11 @@ offset = 0x2408
 count = 1
 width = 1
 
+[asset.at]
+rbtapper = 0x2408
+sutapper = 0x2408
+tappera = 0x2408
+
 [[asset]]
 name = "fall_crash_pictures"
 format = "byte-rows"
@@ -498,6 +600,11 @@ region = "maincpu"
 offset = 0x24F4
 count = 11
 width = 1
+
+[asset.at]
+rbtapper = 0x24F4
+sutapper = 0x24F4
+tappera = 0x24F4
 
 # A mug's sprite: the send ($13CC) gives a full mug flags $03 ($14A1),
 # $13 moving left ($14C8), and picture $0E ($14A5); the move ($07B1)
@@ -514,6 +621,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x149F
+sutapper = 0x14A4
+tappera = 0x14A4
 
 [[asset]]
 name = "mug_flags_left"
@@ -525,6 +634,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x14C6
+sutapper = 0x14CB
+tappera = 0x14CB
 
 [[asset]]
 name = "mug_picture_full"
@@ -536,6 +647,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x14A1
+sutapper = 0x14A6
+tappera = 0x14A6
 
 [[asset]]
 name = "mug_picture_slosh"
@@ -547,6 +660,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x07BF
+sutapper = 0x07BF
+tappera = 0x07BF
 
 [[asset]]
 name = "mug_picture_empty"
@@ -558,6 +673,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x10FE
+sutapper = 0x1103
+tappera = 0x1103
 
 [[asset]]
 name = "mug_flip_frames"
@@ -569,6 +686,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x07C8
+sutapper = 0x07C8
+tappera = 0x07C8
 
 # The extra life's request ($6166, ld c,$0A): $6143 asks the sound board
 # for it as it gives the life.
@@ -583,6 +702,7 @@ width = 1
 [asset.at]
 rbtapper = 0x62E7
 tappera = 0x6157
+sutapper = 0x6167
 
 # The bonus round ($2500 to $296F): its objects, the bandit's places, its
 # lines of text and the bytes its code writes into the sprites. rbtapper's
@@ -597,6 +717,8 @@ width = 4
 
 [asset.at]
 rbtapper = 0x2A29
+sutapper = 0x2A15
+tappera = 0x2A15
 
 [[asset]]
 name = "bonus_bandit_places"
@@ -608,6 +730,8 @@ width = 2
 
 [asset.at]
 rbtapper = 0x2AD9
+sutapper = 0x2AC5
+tappera = 0x2AC5
 
 [[asset]]
 name = "bonus_text_watch"
@@ -619,6 +743,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x29D2
+sutapper = 0x29C4
+tappera = 0x29C4
 
 [[asset]]
 name = "bonus_text_help_1"
@@ -630,6 +756,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x298F
+sutapper = 0x2981
+tappera = 0x2981
 
 [[asset]]
 name = "bonus_text_help_2"
@@ -641,6 +769,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x299C
+sutapper = 0x298E
+tappera = 0x298E
 
 [[asset]]
 name = "bonus_text_help_3"
@@ -652,6 +782,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x29E4
+sutapper = 0x29D6
+tappera = 0x29D6
 
 [[asset]]
 name = "bonus_text_help_4"
@@ -663,6 +795,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x29F1
+sutapper = 0x29E3
+tappera = 0x29E3
 
 [[asset]]
 name = "bonus_text_win_1"
@@ -674,6 +808,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x29AE
+sutapper = 0x29A0
+tappera = 0x29A0
 
 [[asset]]
 name = "bonus_text_win_2"
@@ -685,6 +821,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x2A17
+sutapper = 0x2A03
+tappera = 0x2A03
 
 [[asset]]
 name = "bonus_text_lose"
@@ -696,6 +834,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x29C0
+sutapper = 0x29B2
+tappera = 0x29B2
 
 [[asset]]
 name = "bonus_text_color"
@@ -707,6 +847,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x253E
+sutapper = 0x2539
+tappera = 0x2539
 
 [[asset]]
 name = "bandit_flags"
@@ -718,6 +860,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x25CF
+sutapper = 0x25C5
+tappera = 0x25C5
 
 [[asset]]
 name = "bandit_pic_top"
@@ -729,6 +873,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x25D7
+sutapper = 0x25CD
+tappera = 0x25CD
 
 [[asset]]
 name = "bandit_pic_bottom"
@@ -740,6 +886,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x25DB
+sutapper = 0x25D1
+tappera = 0x25D1
 
 [[asset]]
 name = "bandit_pic_shake"
@@ -751,6 +899,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x261A
+sutapper = 0x2610
+tappera = 0x2610
 
 [[asset]]
 name = "bandit_pic_walk"
@@ -762,6 +912,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x2670
+sutapper = 0x2662
+tappera = 0x2662
 
 [[asset]]
 name = "bandit_stop"
@@ -773,6 +925,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x268D
+sutapper = 0x267F
+tappera = 0x267F
 
 [[asset]]
 name = "hand_flags"
@@ -784,6 +938,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x2606
+sutapper = 0x25FC
+tappera = 0x25FC
 
 [[asset]]
 name = "hand_pic"
@@ -795,6 +951,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x2602
+sutapper = 0x25F8
+tappera = 0x25F8
 
 [[asset]]
 name = "hand_pic_shake"
@@ -806,6 +964,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x262C
+sutapper = 0x2622
+tappera = 0x2622
 
 [[asset]]
 name = "bartender_flags"
@@ -817,6 +977,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x276A
+sutapper = 0x275C
+tappera = 0x275C
 
 [[asset]]
 name = "bartender_flags_right"
@@ -828,6 +990,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x2775
+sutapper = 0x2767
+tappera = 0x2767
 
 [[asset]]
 name = "bartender_pic_wait_1"
@@ -839,6 +1003,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x277C
+sutapper = 0x276E
+tappera = 0x276E
 
 [[asset]]
 name = "bartender_pic_wait_2"
@@ -850,6 +1016,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x2780
+sutapper = 0x2772
+tappera = 0x2772
 
 [[asset]]
 name = "bartender_pic_wait_3"
@@ -861,6 +1029,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x2786
+sutapper = 0x2778
+tappera = 0x2778
 
 [[asset]]
 name = "bartender_pic_open_1"
@@ -872,6 +1042,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x27A2
+sutapper = 0x2794
+tappera = 0x2794
 
 [[asset]]
 name = "bartender_pic_open_2"
@@ -883,6 +1055,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x27A6
+sutapper = 0x2798
+tappera = 0x2798
 
 [[asset]]
 name = "bartender_pic_open_3"
@@ -894,6 +1068,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x27AC
+sutapper = 0x279E
+tappera = 0x279E
 
 [[asset]]
 name = "bartender_pic_win_1"
@@ -905,6 +1081,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x2800
+sutapper = 0x27F2
+tappera = 0x27F2
 
 [[asset]]
 name = "bartender_pic_win_2"
@@ -916,6 +1094,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x2804
+sutapper = 0x27F6
+tappera = 0x27F6
 
 [[asset]]
 name = "bartender_pic_win_3"
@@ -927,6 +1107,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x280A
+sutapper = 0x27FC
+tappera = 0x27FC
 
 [[asset]]
 name = "bartender_pic_lose_1"
@@ -938,6 +1120,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x290C
+sutapper = 0x28FE
+tappera = 0x28FE
 
 [[asset]]
 name = "bartender_pic_lose_2"
@@ -949,6 +1133,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x2910
+sutapper = 0x2902
+tappera = 0x2902
 
 [[asset]]
 name = "bartender_pic_lose_3"
@@ -960,6 +1146,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x2916
+sutapper = 0x2908
+tappera = 0x2908
 
 [[asset]]
 name = "beer_flags"
@@ -971,6 +1159,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x281A
+sutapper = 0x280C
+tappera = 0x280C
 
 [[asset]]
 name = "beer_pic"
@@ -982,6 +1172,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x281E
+sutapper = 0x2810
+tappera = 0x2810
 
 [[asset]]
 name = "beer_pic_spray"
@@ -993,6 +1185,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x289C
+sutapper = 0x288E
+tappera = 0x288E
 
 # The palette cycles a level's setup starts ($4937, by the bar shown; the
 # frame's $01CC steps them): lists of 3-byte steps, frames to wait, the
@@ -1009,6 +1203,8 @@ width = 3
 
 [asset.at]
 rbtapper = 0x4B08
+sutapper = 0x4978
+tappera = 0x4978
 
 [[asset]]
 name = "cycle_space_1"
@@ -1020,6 +1216,8 @@ width = 3
 
 [asset.at]
 rbtapper = 0x4B15
+sutapper = 0x4985
+tappera = 0x4985
 
 [[asset]]
 name = "cycle_space_2"
@@ -1031,6 +1229,8 @@ width = 3
 
 [asset.at]
 rbtapper = 0x4B1F
+sutapper = 0x498F
+tappera = 0x498F
 
 [[asset]]
 name = "cycle_space_3"
@@ -1042,6 +1242,8 @@ width = 3
 
 [asset.at]
 rbtapper = 0x4B29
+sutapper = 0x4999
+tappera = 0x4999
 # Where a clip resumes inside a wait ($232B keeps the place it goes on at
 # E3A9): the return from the Nth call to $232B in the bonus round ($2500)
 # and in end script 3's interlude ($51A9 here, $5339 in rbtapper, the same
@@ -1058,6 +1260,8 @@ width = 64
 
 [asset.at]
 rbtapper = 0x2500
+sutapper = 0x2500
+tappera = 0x2500
 
 [[asset]]
 name = "bonus_start"
@@ -1069,6 +1273,30 @@ width = 2
 
 [asset.at]
 rbtapper = 0x582E
+sutapper = 0x569E
+tappera = 0x569E
+
+[[asset]]
+name = "hops_code"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x50EF
+count = 1
+width = 256
+
+[asset.at]
+rbtapper = 0x527F
+
+[[asset]]
+name = "hops_start"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x48EE
+count = 1
+width = 2
+
+[asset.at]
+rbtapper = 0x4A70
 
 [[asset]]
 name = "interlude_code"
@@ -1080,6 +1308,8 @@ width = 256
 
 [asset.at]
 rbtapper = 0x5339
+sutapper = 0x51A9
+tappera = 0x51A9
 
 [[asset]]
 name = "interlude_start"
@@ -1091,6 +1321,8 @@ width = 2
 
 [asset.at]
 rbtapper = 0x4A74
+sutapper = 0x48F2
+tappera = 0x48F2
 
 [[asset]]
 name = "wait_call"
@@ -1102,6 +1334,8 @@ width = 3
 
 [asset.at]
 rbtapper = 0x2531
+sutapper = 0x252C
+tappera = 0x252C
 
 # The level's intro ($5404): $540A's ld a,$11 into palette RAM F800 and F840
 # (the cleared screen's colour), $5412's ld a,$87 into F84D (its lines'),
@@ -1120,6 +1354,8 @@ width = 24
 
 [asset.at]
 rbtapper = 0x570F
+sutapper = 0x557F
+tappera = 0x557F
 
 [[asset]]
 name = "instr_text_2"
@@ -1131,6 +1367,8 @@ width = 24
 
 [asset.at]
 rbtapper = 0x5727
+sutapper = 0x5597
+tappera = 0x5597
 
 [[asset]]
 name = "instr_text_3"
@@ -1142,6 +1380,8 @@ width = 24
 
 [asset.at]
 rbtapper = 0x5751
+sutapper = 0x55C1
+tappera = 0x55C1
 
 [[asset]]
 name = "instr_text_4"
@@ -1153,6 +1393,8 @@ width = 24
 
 [asset.at]
 rbtapper = 0x573F
+sutapper = 0x55AF
+tappera = 0x55AF
 
 [[asset]]
 name = "instr_text_5"
@@ -1164,6 +1406,8 @@ width = 24
 
 [asset.at]
 rbtapper = 0x5748
+sutapper = 0x55B8
+tappera = 0x55B8
 
 [[asset]]
 name = "instr_text_7"
@@ -1175,6 +1419,8 @@ width = 24
 
 [asset.at]
 rbtapper = 0x575A
+sutapper = 0x55CA
+tappera = 0x55CA
 
 [[asset]]
 name = "instr_text_8"
@@ -1186,6 +1432,8 @@ width = 24
 
 [asset.at]
 rbtapper = 0x5763
+sutapper = 0x55D3
+tappera = 0x55D3
 
 [[asset]]
 name = "instr_objects"
@@ -1197,6 +1445,8 @@ width = 24
 
 [asset.at]
 rbtapper = 0x576C
+sutapper = 0x55DC
+tappera = 0x55DC
 
 [[asset]]
 name = "intro_back_color"
@@ -1208,6 +1458,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x559B
+sutapper = 0x540B
+tappera = 0x540B
 
 [[asset]]
 name = "intro_line_color"
@@ -1219,6 +1471,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x55A3
+sutapper = 0x5413
+tappera = 0x5413
 
 [[asset]]
 name = "intro_text_high"
@@ -1230,6 +1484,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x4CE4
+sutapper = 0x4B54
+tappera = 0x4B54
 
 [[asset]]
 name = "intro_text_1"
@@ -1241,6 +1497,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x568A
+sutapper = 0x54FA
+tappera = 0x54FA
 
 [[asset]]
 name = "intro_text_2"
@@ -1252,6 +1510,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x566F
+sutapper = 0x54DF
+tappera = 0x54DF
 
 # The logo's colours ($3D76): palette RAM's F840 and F84C set ($3D79, $3D7E),
 # F822 to F83D zeroed, then from 16 frames on each of the twelve odd bytes
@@ -1268,6 +1528,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x3D90
+sutapper = 0x3D7A
+tappera = 0x3D7A
 
 [[asset]]
 name = "logo_color_7c"
@@ -1279,6 +1541,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x3D95
+sutapper = 0x3D7F
+tappera = 0x3D7F
 
 [[asset]]
 name = "logo_color_lit"
@@ -1290,6 +1554,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x3DB8
+sutapper = 0x3DA5
+tappera = 0x3DA5
 
 [[asset]]
 name = "logo_color_dim"
@@ -1301,6 +1567,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x3DC3
+sutapper = 0x3DA3
+tappera = 0x3DA3
 
 # The credit line the frame's interrupt writes in attract mode ($03EA, E3BD 1):
 # CREDIT, the credits as a digit, and one of three lines by the credits, each
@@ -1315,6 +1583,8 @@ width = 32
 
 [asset.at]
 sutapper = 0x0460
+rbtapper = 0x0454
+tappera = 0x0454
 
 [[asset]]
 name = "text_insert_coin"
@@ -1326,6 +1596,8 @@ width = 32
 
 [asset.at]
 sutapper = 0x048A
+rbtapper = 0x047E
+tappera = 0x047E
 
 [[asset]]
 name = "text_one_credit"
@@ -1337,6 +1609,8 @@ width = 32
 
 [asset.at]
 sutapper = 0x047B
+rbtapper = 0x046F
+tappera = 0x046F
 
 [[asset]]
 name = "text_credits"
@@ -1348,6 +1622,8 @@ width = 32
 
 [asset.at]
 sutapper = 0x0467
+rbtapper = 0x045B
+tappera = 0x045B
 
 # $03F6's ld (hl),$20: the colour $03EA writes the credit line in.
 [[asset]]
@@ -1360,6 +1636,8 @@ width = 1
 
 [asset.at]
 sutapper = 0x0403
+rbtapper = 0x03F7
+tappera = 0x03F7
 
 # $040B's add a,$30: the tile code the credits' digit is drawn from.
 [[asset]]
@@ -1372,6 +1650,8 @@ width = 1
 
 [asset.at]
 sutapper = 0x0418
+rbtapper = 0x040C
+tappera = 0x040C
 
 # $0415's ld (hl),$20: the high byte beside the credits' digit.
 [[asset]]
@@ -1384,6 +1664,8 @@ width = 1
 
 [asset.at]
 sutapper = 0x0422
+rbtapper = 0x0416
+tappera = 0x0416
 
 # The attract mode's lines of text, each a string the program queues for
 # its text routine ($5F44, drawn by $0350 in the frame's interrupt: a byte
@@ -1401,6 +1683,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x3CB4
+sutapper = 0x3C9D
+tappera = 0x3C9D
 
 [[asset]]
 name = "text_logo_2"
@@ -1412,6 +1696,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x3CC9
+sutapper = 0x3CB3
+tappera = 0x3CB3
 
 [[asset]]
 name = "text_logo_3"
@@ -1423,6 +1709,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x3CDA
+sutapper = 0x3CC4
+tappera = 0x3CC4
 
 [[asset]]
 name = "text_demo_1"
@@ -1434,6 +1722,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x33C2
+sutapper = 0x33AB
+tappera = 0x33AB
 
 [[asset]]
 name = "text_demo_2"
@@ -1445,6 +1735,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x33D1
+sutapper = 0x33BA
+tappera = 0x33BA
 
 [[asset]]
 name = "text_demo_3"
@@ -1456,6 +1748,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x33E0
+sutapper = 0x33C9
+tappera = 0x33C9
 
 [[asset]]
 name = "text_demo_4"
@@ -1467,6 +1761,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x33F0
+sutapper = 0x33D9
+tappera = 0x33D9
 
 [[asset]]
 name = "text_demo_5"
@@ -1478,6 +1774,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x3486
+sutapper = 0x346F
+tappera = 0x346F
 
 [[asset]]
 name = "text_demo_6"
@@ -1489,6 +1787,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x3430
+sutapper = 0x3419
+tappera = 0x3419
 
 [[asset]]
 name = "text_demo_7"
@@ -1500,6 +1800,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x3420
+sutapper = 0x3409
+tappera = 0x3409
 
 [[asset]]
 name = "text_demo_8"
@@ -1511,6 +1813,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x3440
+sutapper = 0x3429
+tappera = 0x3429
 
 [[asset]]
 name = "text_demo_9"
@@ -1522,6 +1826,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x3400
+sutapper = 0x33E9
+tappera = 0x33E9
 
 [[asset]]
 name = "text_demo_10"
@@ -1533,6 +1839,8 @@ width = 32
 
 [asset.at]
 rbtapper = 0x3410
+sutapper = 0x33F9
+tappera = 0x33F9
 
 # $3C7C's ld a,$20, the colour the logo's lines are written in.
 [[asset]]
@@ -1545,6 +1853,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x3C94
+sutapper = 0x3C7D
+tappera = 0x3C7D
 
 # $2EEB's ld (hl),$10, the colour $2EE0 writes the demo's lines in.
 [[asset]]
@@ -1557,6 +1867,8 @@ width = 1
 
 [asset.at]
 rbtapper = 0x2F00
+sutapper = 0x2EEC
+tappera = 0x2EEC
 
 # The attract mode's two screens, each the address $5CED copies $780 bytes
 # from once E395 holds it: the logo's, which $3D76 sets ($3D8A), and the
@@ -1570,6 +1882,8 @@ offset = 0x3DC6
 
 [asset.at]
 rbtapper = 0x3EF5
+sutapper = 0x3DC6
+tappera = 0x3DC6
 
 [[asset]]
 name = "screen_attract_demo"
@@ -1579,6 +1893,8 @@ offset = 0x347F
 
 [asset.at]
 rbtapper = 0x3496
+sutapper = 0x347F
+tappera = 0x347F
 
 [[asset]]
 name = "screen_69a1"
@@ -1588,6 +1904,7 @@ offset = 0x69A1
 
 [asset.at]
 rbtapper = 0x6B21
+sutapper = 0x69A1
 tappera = 0x6991
 
 [[asset]]
@@ -1598,6 +1915,7 @@ offset = 0x7121
 
 [asset.at]
 rbtapper = 0x72A1
+sutapper = 0x7121
 tappera = 0x7111
 
 [[asset]]
@@ -1608,6 +1926,7 @@ offset = 0x78A1
 
 [asset.at]
 rbtapper = 0x7A21
+sutapper = 0x78A1
 tappera = 0x7891
 
 [[asset]]
@@ -1618,6 +1937,7 @@ offset = 0x87A1
 
 [asset.at]
 rbtapper = 0x8921
+sutapper = 0x87A1
 tappera = 0x8791
 
 [[asset]]
@@ -1628,6 +1948,7 @@ offset = 0x8021
 
 [asset.at]
 rbtapper = 0x81A1
+sutapper = 0x8021
 tappera = 0x8011
 
 [[asset]]
@@ -1638,6 +1959,7 @@ offset = 0x8F21
 
 [asset.at]
 rbtapper = 0x90A1
+sutapper = 0x8F21
 tappera = 0x8F11
 
 [[asset]]
@@ -1648,6 +1970,7 @@ offset = 0x96A1
 
 [asset.at]
 rbtapper = 0x9821
+sutapper = 0x96A1
 tappera = 0x9691
 
 [[asset]]
@@ -1658,6 +1981,7 @@ offset = 0x9E21
 
 [asset.at]
 rbtapper = 0x9FA1
+sutapper = 0x9E21
 tappera = 0x9E11
 
 [[asset]]
@@ -1668,6 +1992,7 @@ offset = 0xA5A1
 
 [asset.at]
 rbtapper = 0xA721
+sutapper = 0xA5A1
 tappera = 0xA591
 
 # The bonus round's screen: $2546 puts ld de,$AD21 in E395. rbtapper's at
@@ -1680,6 +2005,7 @@ offset = 0xAD21
 
 [asset.at]
 rbtapper = 0xAEA1
+sutapper = 0xAD21
 tappera = 0xAD11
 
 # The HUD's tile codes as the vblank writes them, the code's own bytes:
@@ -1699,6 +2025,8 @@ width = 5
 
 [asset.at]
 sutapper = 0x0602
+rbtapper = 0x05F6
+tappera = 0x05F6
 
 [[asset]]
 name = "lives_codes"
@@ -1711,6 +2039,7 @@ width = 4
 [asset.at]
 rbtapper = 0x5ED0
 tappera = 0x5D40
+sutapper = 0x5D50
 
 [[asset]]
 name = "level_codes"
@@ -1723,6 +2052,7 @@ width = 5
 [asset.at]
 rbtapper = 0x5F1F
 tappera = 0x5D8F
+sutapper = 0x5D9F
 
 # The space bar's palette pokes ($570C from $573E: the code's own bytes,
 # the first, sixth and eleventh of the row). rbtapper's at $58CF.
@@ -1736,6 +2066,8 @@ width = 11
 
 [asset.at]
 rbtapper = 0x58CF
+sutapper = 0x573F
+tappera = 0x573F
 
 # The bonus round's palette pokes ($250C and $2511: the first and the
 # sixth byte of the row), the same place in every set listed.
@@ -1746,6 +2078,11 @@ region = "maincpu"
 offset = 0x250D
 count = 1
 width = 6
+
+[asset.at]
+rbtapper = 0x250D
+sutapper = 0x250D
+tappera = 0x250D
 
 # The points the routine at $5EE7 adds to the score (E3F5 to E3FA), a
 # digit a byte, six to an entry, from the entry DE names: a customer
@@ -1763,6 +2100,11 @@ offset = 0x09A7
 count = 4
 width = 6
 
+[asset.at]
+rbtapper = 0x09A7
+sutapper = 0x09A7
+tappera = 0x09A7
+
 [[asset]]
 name = "points_catch"
 format = "byte-rows"
@@ -1770,6 +2112,11 @@ region = "maincpu"
 offset = 0x073C
 count = 1
 width = 6
+
+[asset.at]
+rbtapper = 0x073C
+sutapper = 0x073C
+tappera = 0x073C
 
 [[asset]]
 name = "points_tip"
@@ -1781,6 +2128,8 @@ width = 6
 
 [asset.at]
 rbtapper = 0x0C02
+sutapper = 0x0C07
+tappera = 0x0C07
 
 [[asset]]
 name = "points_bonus"
@@ -1792,6 +2141,8 @@ width = 6
 
 [asset.at]
 rbtapper = 0x2989
+sutapper = 0x297B
+tappera = 0x297B
 
 [[asset]]
 name = "points_level"
@@ -1803,6 +2154,8 @@ width = 6
 
 [asset.at]
 rbtapper = 0x5834
+sutapper = 0x56A4
+tappera = 0x56A4
 
 # The bartender's six objects (E2E6 to E2FD): the routines that set their
 # pictures, flags and places, as rows of the code's own bytes, so the hook
@@ -1819,6 +2172,11 @@ offset = 0x0735
 count = 1
 width = 7
 
+[asset.at]
+rbtapper = 0x0735
+sutapper = 0x0735
+tappera = 0x0735
+
 [[asset]]
 name = "bartender_land"
 format = "byte-rows"
@@ -1826,6 +2184,11 @@ region = "maincpu"
 offset = 0x0A8E
 count = 1
 width = 181
+
+[asset.at]
+rbtapper = 0x0A8E
+sutapper = 0x0A8E
+tappera = 0x0A8E
 
 [[asset]]
 name = "bartender_tap"
@@ -1837,6 +2200,8 @@ width = 262
 
 [asset.at]
 rbtapper = 0x1201
+sutapper = 0x1206
+tappera = 0x1206
 
 # A level's end: the scripts' code, their immediates read by their places
 # (the bartender's pictures and flags): $4603 and $4742, the tails' $4708,
@@ -1855,6 +2220,8 @@ width = 244
 
 [asset.at]
 rbtapper = 0x1D72
+sutapper = 0x1D72
+tappera = 0x1D72
 
 [[asset]]
 name = "end_pose_a"
@@ -1866,6 +2233,8 @@ width = 104
 
 [asset.at]
 rbtapper = 0x477F
+sutapper = 0x4603
+tappera = 0x4603
 
 [[asset]]
 name = "end_pose_b"
@@ -1877,6 +2246,8 @@ width = 672
 
 [asset.at]
 rbtapper = 0x47FD
+sutapper = 0x467B
+tappera = 0x467B
 
 [[asset]]
 name = "end_pose_c"
@@ -1888,6 +2259,8 @@ width = 4
 
 [asset.at]
 rbtapper = 0x4AA1
+sutapper = 0x491B
+tappera = 0x491B
 
 [[asset]]
 name = "end_drop"
@@ -1899,6 +2272,8 @@ width = 124
 
 [asset.at]
 rbtapper = 0x46C2
+sutapper = 0x4546
+tappera = 0x4546
 
 [[asset]]
 name = "end_lift"
@@ -1910,6 +2285,8 @@ width = 144
 
 [asset.at]
 rbtapper = 0x5ACD
+sutapper = 0x594D
+tappera = 0x593D
 
 [[asset]]
 name = "end_hops"
@@ -1921,6 +2298,8 @@ width = 304
 
 [asset.at]
 rbtapper = 0x527F
+sutapper = 0x50EF
+tappera = 0x50EF
 
 [[asset]]
 name = "bartender_pour"
@@ -1932,6 +2311,8 @@ width = 123
 
 [asset.at]
 rbtapper = 0x134C
+sutapper = 0x1351
+tappera = 0x1351
 
 [[asset]]
 name = "bartender_send"
@@ -1943,6 +2324,8 @@ width = 283
 
 [asset.at]
 rbtapper = 0x13C7
+sutapper = 0x13CC
+tappera = 0x13CC
 
 [[asset]]
 name = "bartender_walk_left"
@@ -1952,6 +2335,11 @@ offset = 0x19EF
 count = 1
 width = 246
 
+[asset.at]
+rbtapper = 0x19EF
+sutapper = 0x19EF
+tappera = 0x19EF
+
 [[asset]]
 name = "bartender_walk_right"
 format = "byte-rows"
@@ -1959,6 +2347,11 @@ region = "maincpu"
 offset = 0x1C02
 count = 1
 width = 223
+
+[asset.at]
+rbtapper = 0x1C02
+sutapper = 0x1C02
+tappera = 0x1C02
 
 [[asset]]
 name = "bartender_wait"
@@ -1968,6 +2361,11 @@ offset = 0x2085
 count = 1
 width = 89
 
+[asset.at]
+rbtapper = 0x2085
+sutapper = 0x2085
+tappera = 0x2085
+
 [[asset]]
 name = "bartender_switch"
 format = "byte-rows"
@@ -1976,6 +2374,11 @@ offset = 0x214B
 count = 1
 width = 152
 
+[asset.at]
+rbtapper = 0x214B
+sutapper = 0x214B
+tappera = 0x214B
+
 [[asset]]
 name = "bartender_idle"
 format = "byte-rows"
@@ -1983,6 +2386,11 @@ region = "maincpu"
 offset = 0x2231
 count = 1
 width = 109
+
+[asset.at]
+rbtapper = 0x2231
+sutapper = 0x2231
+tappera = 0x2231
 
 [[asset]]
 name = "bartender_setup"
@@ -1994,3 +2402,5 @@ width = 69
 
 [asset.at]
 rbtapper = 0x4D5B
+sutapper = 0x4BCB
+tappera = 0x4BCB
