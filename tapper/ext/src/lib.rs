@@ -4212,6 +4212,13 @@ impl Ext for Bars {
                 // at 0 back to waiting with its slot's wait ($11CA to
                 // $11EA), 255 frames after the pickup.
                 6 => {
+                    // Mirrored while bit 2 of the timer is 0: it turns as
+                    // that bit changes (the timer counting down from 255,
+                    // at 251, 247 and on), and turns back as it ends.
+                    let mirrored = |t: i64| t < 252 && t & 4 == 0;
+                    if mirrored(t) != mirrored(t + 1) || (t == 0 && mirrored(1)) {
+                        c.ext[0] ^= 0x10 << 16;
+                    }
                     if t == 0 {
                         c.ext[0] &= !0xff;
                         c.ext[1] = wait;
@@ -4237,6 +4244,9 @@ impl Ext for Bars {
                         pic = b[0x12];
                         ctr = b[0x0A];
                     }
+                    // Watching the show: its record's +1B ($154F's caller,
+                    // the picture it takes as it turns to watch).
+                    (_, 6) => pic = b[0x1B],
                     (1, 2) => pic = b[0x15],
                     (2, 3) => pic = b[0x14],
                     (3, 4) => pic = b[0x16],
