@@ -722,6 +722,10 @@ path = "entities.sound[0].ext[1]"
 ram = [0xE114, 0xE0E1, 0xE0E2, 0xE0E3, 0xE0E4, 0xE0E5, 0xE0E6]
 queue = true
 
+[[field.case]]
+unmeasured = "The attract mode's demo game (E3BD 1, the main loop's state E397 3, 4 or 12) asks for its own sounds with the default switches on: its arrivals, pours, sends and gulps. The model doesn't play the demo game, so those requests aren't compared"
+when = "ram[0xE3BD] == 1 && (ram[0xE397] == 3 || ram[0xE397] == 4 || ram[0xE397] == 12)"
+
 [[field]]
 note = "Not compared: the sound requests' state as the frame ends, loaded at a clip's start so the next send's turn bit is the game's: E111, the bit the send ($03D9) flips on latch 0; E099, coins counted the send hasn't answered ($0380); E011, the credits; E728, the foot the bartender's walk steps with next, whose bit 0 picks its step's request ($1A08, $1C1B). The queue itself (E114, E0E1) isn't loaded: every request the model sends is one its hooks made"
 path = "entities.sound[0].ext[0]"

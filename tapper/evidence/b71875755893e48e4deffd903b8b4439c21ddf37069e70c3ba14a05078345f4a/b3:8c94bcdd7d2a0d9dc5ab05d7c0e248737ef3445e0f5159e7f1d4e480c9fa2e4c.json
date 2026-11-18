@@ -2401,19 +2401,15 @@
       {
         "bars": {
           "longest_stretch": true,
-          "together": false
+          "together": true
         },
         "curve": "8ebe791a672d812dc10db7eb310bee114435ab809a7d002089afa2e9bbeefa02",
-        "exact": false,
-        "first": {
-          "frame": 5,
-          "original_frame": 100,
-          "path": "entities.sound[0].ext[1]"
-        },
+        "exact": true,
+        "first": null,
         "frames": 9906,
-        "frames_together": 9747,
+        "frames_together": 9906,
         "id": "tapper.poweron.001",
-        "model_curve": "8913724b772bb4c39a332617426862dc63da9ff149b0f87fd13a94ff72cd7c47",
+        "model_curve": "2b84702f882ad7a367cecfdd5ac4db1cc4187400183d66ada383dac5e13f28e1",
         "moved": [
           "tapper.bartender",
           "core.counters",
@@ -2427,9 +2423,9 @@
           "offset": 94,
           "original": 95
         },
-        "permille": 999,
+        "permille": 1000,
         "recipe": "eab2054a6458d83b5365335ad1b4eee5dc7adfcf2d1be6e0204a29c835cb6a26",
-        "score": 159,
+        "score": 0,
         "screen": {
           "background": {
             "same": 5513,
@@ -2442,20 +2438,20 @@
         },
         "start": 95,
         "stretches": {
-          "at_least_10s": 3,
-          "at_least_30s": 2,
-          "at_least_5s": 3,
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
           "frames": 9906,
-          "longest": 6298,
-          "longest_any": 6298,
-          "median": 8,
-          "open_end": 731,
-          "p10": 2,
+          "longest": 0,
+          "longest_any": 9906,
+          "median": 0,
+          "open_end": 9906,
+          "p10": 0,
           "play": 9906,
-          "shortest": 1,
-          "split_events": 92,
-          "together": 9749,
-          "whole": 92
+          "shortest": 0,
+          "split_events": 0,
+          "together": 9906,
+          "whole": 0
         }
       },
       {
@@ -2595,17 +2591,13 @@
       {
         "bars": {
           "longest_stretch": true,
-          "together": false
+          "together": true
         },
         "curve": "252b0354171990a861537760b63e10bc3aa6cb19ac0f3aa4a7025b9e09db7046",
-        "exact": false,
-        "first": {
-          "frame": 722,
-          "original_frame": 12998,
-          "path": "entities.sound[0].ext[1]"
-        },
+        "exact": true,
+        "first": null,
         "frames": 3943,
-        "frames_together": 3758,
+        "frames_together": 3943,
         "id": "tapper.rb.l8.001",
         "model_curve": "fbad3f18167bfe5979eed630bf8e9bd584a2a87e49066085a521299d30ac7cda",
         "moved": [
@@ -2621,9 +2613,9 @@
           "offset": 94,
           "original": 12276
         },
-        "permille": 990,
+        "permille": 1000,
         "recipe": "fbde49a89aee188ef0d15688ad84ca8f2857b379787465580248f31635d34ff4",
-        "score": 185,
+        "score": 0,
         "screen": {
           "background": {
             "same": 374,
@@ -2636,20 +2628,20 @@
         },
         "start": 12276,
         "stretches": {
-          "at_least_10s": 3,
-          "at_least_30s": 2,
-          "at_least_5s": 3,
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
           "frames": 3943,
-          "longest": 1062,
-          "longest_any": 1062,
-          "median": 10,
-          "open_end": 4,
-          "p10": 2,
+          "longest": 0,
+          "longest_any": 3943,
+          "median": 0,
+          "open_end": 3943,
+          "p10": 0,
           "play": 3943,
-          "shortest": 1,
-          "split_events": 97,
-          "together": 3761,
-          "whole": 97
+          "shortest": 0,
+          "split_events": 0,
+          "together": 3943,
+          "whole": 0
         }
       }
     ],
@@ -2664,7 +2656,7 @@
       "version": "0.1.1"
     },
     "mapping": {
-      "hash": "bd906763af95c7d3cf85637336e27c0440795451c44653e5083808706029f17b",
+      "hash": "2f3ba1904cd0b9a19dd085fec48cc082c9e9b1929311442ba5d3d378a2d9461f",
       "schema": "22"
     },
     "model": {
@@ -2673,19 +2665,19 @@
       "short": "f9373b590673"
     },
     "module": {
-      "hash": "671d09d645e69b4b91ac1856f26e27cd5ee2c0fb750c749a4a7177f465cbbbc2"
+      "hash": "fdfdcecbb82b6851317e6094e2f045e33532b17e49e65c3b012e82997fc8f13e"
     },
     "profile": null,
     "record_format": "0.3.0",
     "results": {
       "bars": {
         "held": 59,
-        "met": 57
+        "met": 59
       },
       "clips": 59,
       "errors": 0,
-      "exact": 57,
-      "fidelity_permille": 999,
+      "exact": 59,
+      "fidelity_permille": 1000,
       "picture": {
         "clips_same": 0,
         "frames": 54884,

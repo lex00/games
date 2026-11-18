@@ -1111,6 +1111,10 @@ impl Flow {
             let draw = draw_at_most(cx, "game_start", 2);
             cx.me.ext[3] = 8;
             cx.me.ext[2] = STARTED;
+            // $4AEF's $4B34 and $4B39 ask for 2 and $2A, in state 8, on the
+            // frame the main loop takes the start (not the press's: a frame
+            // of the attract's own waits puts it a frame later).
+            ask(cx, "sound_game", &[1, 6]);
             cx.me.ext[1] = (cx.me.ext[1] & 0xff) | (lives << 40);
             cx.me.ext[0] = 0;
             if let Some(tk) = cx.kind("tap")

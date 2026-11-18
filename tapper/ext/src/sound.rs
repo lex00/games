@@ -104,6 +104,10 @@ fn queue(q: &mut Vec<i64>, byte: i64, state: i64) {
 
 /// The game's state, E397, as the flow's word 3 keeps it.
 fn state(cx: &ExtCx<'_>) -> i64 {
+    // The flow's own hook asks with the state it has just set.
+    if cx.kind("flow") == Some(cx.me.kind) {
+        return cx.me.ext[3] & 0xff;
+    }
     cx.kind("flow")
         .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
         .map_or(10, |b| b.ext[3] & 0xff)
@@ -263,11 +267,12 @@ impl Ext for Sound {
         // the board's answer; $00B9 to $00C6 ask for 2, 2 and 3 once the
         // board is ready.
         let mut boot = (cx.me.ext[2] >> 8) & 0xff;
-        // A run that didn't start at power-on (a clip's start, the world's
-        // frame past the first) has had its boot: tapper.attract.001
-        // starts in state 0 as the boot ends.
+        // A run that didn't start at power-on has had its boot:
+        // tapper.attract.001 starts in state 0 as the boot ends. A run
+        // resumed a few frames after power-on (the publish run starts
+        // tapper.poweron.001 a frame in) is that far into the check.
         if boot == 0 && cx.frame > 1 {
-            boot = DONE;
+            boot = if cx.frame <= 8 { i64::try_from(cx.frame).unwrap_or(1) - 1 } else { DONE };
         }
         if st == 0 && boot != DONE {
             boot += 1;
@@ -330,17 +335,8 @@ impl Ext for Sound {
             let credits = ((w0 >> 16) & 0xff) + 1;
             w0 = (w0 & !0xff_ff00) | ((coins & 0xff) << 8) | ((credits & 0xff) << 16);
         }
-        // A game's start ($4AEF from the start's press with a credit):
-        // $4B34 and $4B39 ask for 2 and 2A.
-        let credits = (w0 >> 16) & 0xff;
-        if cx.pressed("start1") && credits > 0 {
-            w0 = (w0 & !0xff_0000) | ((credits - 1) << 16);
-            for at in [1, 6] {
-                if let Some(b) = code(cx, "sound_game", at) {
-                    queue(&mut q, b, st);
-                }
-            }
-        }
+        // A game's start asks from tapper_flow, where the main loop's
+        // $584F takes it ($4B34, $4B39).
         let mut w3 = 0;
         for (i, w) in writes.iter().take(4).enumerate() {
             w3 |= w << (16 * i);
