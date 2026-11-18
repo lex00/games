@@ -717,10 +717,16 @@ presentation = true
 ram = [0xE3BD]
 
 [[field]]
-note = "Not compared: the sound requests' state as the frame ends, loaded at a clip's start so the next send's turn bit is the game's: E111, the bit the send ($03D9) flips on latch 0; E099, coins counted the send hasn't answered ($0380); E011, the credits. The queue itself (E114, E0E1) isn't loaded: every request the model sends is one its hooks made"
+note = "The sound requests the frame made, as the frame ends: the queue $606B fills, E114 its length and its bytes from E0E1 (6 at most), which the next frame's interrupt sends ($0379). Compared, so a sound the model doesn't ask for, or asks for on another frame, is a difference"
+path = "entities.sound[0].ext[1]"
+ram = [0xE114, 0xE0E1, 0xE0E2, 0xE0E3, 0xE0E4, 0xE0E5, 0xE0E6]
+queue = true
+
+[[field]]
+note = "Not compared: the sound requests' state as the frame ends, loaded at a clip's start so the next send's turn bit is the game's: E111, the bit the send ($03D9) flips on latch 0; E099, coins counted the send hasn't answered ($0380); E011, the credits; E728, the foot the bartender's walk steps with next, whose bit 0 picks its step's request ($1A08, $1C1B). The queue itself (E114, E0E1) isn't loaded: every request the model sends is one its hooks made"
 path = "entities.sound[0].ext[0]"
 presentation = true
-ram = [0xE111, 0xE099, 0xE011]
+ram = [0xE111, 0xE099, 0xE011, 0xE728]
 
 [[field]]
 note = "Not compared: bar 0's tap's flags and picture, its board sprite's word"

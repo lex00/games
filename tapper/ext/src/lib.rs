@@ -21,7 +21,7 @@ use gp_sim::mechanic::{Carrier, Param, Primitive, Record};
 use gp_sim::{Ext, ExtCx, Exts, Fx};
 
 mod sound;
-use sound::ask;
+use sound::{ask, ask_ld, ask_run};
 
 /// Every hook, by the name the model's `ext` gives it.
 pub fn exts() -> Exts {
@@ -859,12 +859,17 @@ impl Bartender {
                     // asks for $38 the first time and $39 after ($12E2,
                     // $12DB), and on the fourth the mug is full: $30 and
                     // $3A ($125E, $1295). The `sound_bar` rows are the
-                    // program from $125E.
-                    match cx.me.ext[3] & 0xff {
-                        2 => ask(cx, "sound_bar", &[0x85]),
-                        3 | 4 => ask(cx, "sound_bar", &[0x7E]),
-                        5 => ask(cx, "sound_bar", &[0x01, 0x38]),
-                        _ => {}
+                    // program from $125E. By E715 as his word 2 keeps it
+                    // (loaded, so a start inside a pour asks on the
+                    // game's frame); the frame after a send runs none.
+                    let (e715, e714) = ((cx.me.ext[2] >> 40) & 0xff, (cx.me.ext[2] >> 48) & 0xff);
+                    if e714 & 2 == 0 {
+                        match e715 {
+                            4 => ask(cx, "sound_bar", &[0x85]),
+                            2 | 3 => ask(cx, "sound_bar", &[0x7E]),
+                            1 => ask(cx, "sound_bar", &[0x01, 0x38]),
+                            _ => {}
+                        }
                     }
                     *ev = Pose::Pour;
                     return;
@@ -968,6 +973,9 @@ impl Bartender {
                 // 601 to 699).
                 let (count, phase) = (cx.me.ext[2] & 0xff, (cx.me.ext[2] >> 8) & 3);
                 *ev = Pose::Walk { left: !right, step: if count == 0 { Some((phase + 1) & 3) } else { None } };
+                if count == 0 && phase == 3 {
+                    sound::footstep(cx, !right);
+                }
                 if count == 0 {
                     let next = (phase + 1) & 3;
                     let dy = if next == 1 || next == 2 { 1 } else { -1 };
@@ -1534,6 +1542,11 @@ const END_TWICE_KNOWN: i64 = 1 << 40;
 const END_TWICE: i64 = 1 << 41;
 const END_INTERLUDE_KNOWN: i64 = 1 << 42;
 const END_INTERLUDE_B: i64 = 1 << 43;
+/// The level's end began in the run (its first frame, or a start inside
+/// $51A9 counted from it): its requests are asked. A clip that starts in
+/// a script's later waits counts a level's end of its own, which asks for
+/// nothing.
+const END_SOUNDS: i64 = 1 << 44;
 
 /// The random routine $5FAC's number for a site: the original's when the
 /// run has its draws, else one from the generator from 0 to `n`, the A
@@ -1675,6 +1688,24 @@ fn bonus_round(cx: &mut ExtCx<'_>, fb: &mut gp_sim::world::Body, cleared: i64, p
     if c == 23 {
         cx.set_counter("bonus", 1);
     }
+    // $2533: $0B after the wait of 20 ($252C).
+    if c == 22 {
+        ask(cx, "sound_bonus_open", &[1]);
+    }
+    // $2603: each shake, after its rise of 16 and wait of 5, asks for $25.
+    if (53..53 + 5 * 29).contains(&c) && (c - 53) % 29 == 21 {
+        ask(cx, "sound_bonus_shake", &[1]);
+    }
+    // $2684: the bandit's blink, $1C each 8 frames, five times.
+    if c >= 198 && c >= start - 40 && c < start && (c - (start - 40)) % 8 == 0 {
+        ask(cx, "sound_bonus", &[1]);
+    }
+    // $26BA: 2 as the shuffle ends; $26EE: $2D 10 frames on.
+    if c == shuffle_end {
+        ask(cx, "sound_bonus", &[0x37]);
+    } else if c == shuffle_end + 10 {
+        ask(cx, "sound_bonus", &[0x6B]);
+    }
     if (53..53 + 5 * 29).contains(&c) && (c - 53) % 29 == 0 {
         loop {
             let k = draw_at_most(cx, "bonus_shake", 5);
@@ -1689,11 +1720,17 @@ fn bonus_round(cx: &mut ExtCx<'_>, fb: &mut gp_sim::world::Body, cleared: i64, p
         }
     } else if c >= start && c < shuffle_end && (c - start) % d == 0 {
         let j = (c - start) / d;
+        // Each swap asks for $26 ($4F1C, $5008), and each draw of a later
+        // pair too, again when it is the last one ($4F29, $5015; the
+        // `sound_shuffle` rows are the program from $4F1C).
+        let (first_ask, draw_ask) = if fast { (0xEC, 0xF9) } else { (0, 0x0D) };
         pick = if j == 0 {
+            ask(cx, "sound_shuffle", &[first_ask + 1]);
             if unshaken == 5 { 4 } else { unshaken }
         } else {
             let site = if fast { "attract_pick_2" } else { "attract_pick" };
             loop {
+                ask(cx, "sound_shuffle", &[draw_ask + 1]);
                 let v = draw_at_most(cx, site, 4);
                 if v != pick {
                     break v;
@@ -1735,6 +1772,10 @@ fn bonus_round(cx: &mut ExtCx<'_>, fb: &mut gp_sim::world::Body, cleared: i64, p
                 (b - 1, c + 2, b - 1 == 0)
             };
             let at = if choose { then } else { 0 };
+            // $2787: the choice asks for 2 and $27.
+            if choose && at == c {
+                ask(cx, "sound_bonus", &[0x104, 0x109]);
+            }
             fb.ext[3] = (fb.ext[3] & !(0xff << 40 | 0xffff << 48))
                 | (if choose { 0 } else { b2 } << 40)
                 | (if choose { at + 0x8000 } else { then } << 48);
@@ -1743,6 +1784,24 @@ fn bonus_round(cx: &mut ExtCx<'_>, fb: &mut gp_sim::world::Body, cleared: i64, p
             // the win's 70 or the loss's 160, and $296F's 15.
             let at = next - 0x8000;
             let length = 20 + if ptr == unshaken { 70 } else { 160 } + 15;
+            if c == at {
+                ask(cx, "sound_bonus", &[0x104, 0x109]);
+            }
+            // 20 frames on, the win asks for $2A ($2823), the loss for $28
+            // ($284D); in the loss, $29 and $2B ($292C, $3BFF) 56 frames
+            // later, $2B again 40 on (the second $3BFF) and $2C 40 after
+            // that ($2950) (measured on tapper.bonus.002's second round).
+            let won = ptr == unshaken;
+            if c == at + 20 {
+                ask(cx, "sound_bonus", &[if won { 0x1A0 } else { 0x1CA }]);
+            } else if !won && c == at + 76 {
+                ask(cx, "sound_bonus", &[0x2A9]);
+                ask(cx, "sound_bonus_2b", &[1]);
+            } else if !won && c == at + 116 {
+                ask(cx, "sound_bonus_2b", &[1]);
+            } else if !won && c == at + 156 {
+                ask(cx, "sound_bonus", &[0x2CD]);
+            }
             // $2820: the win's points, on the frame of the check.
             if c == at + 20 && ptr == unshaken {
                 *points += points_of(cx.table("points_bonus"));
@@ -2255,6 +2314,82 @@ fn place_parts(cx: &mut ExtCx<'_>, ks: &[i64], hidden_too: bool, f: impl Fn(i64,
 }
 
 impl Bars {
+    /// The level's end script $5623 picks: the list by the tap's word 1
+    /// (E3ED), the entry by the levels cleared mod 10 (end_script_lists).
+    fn end_script(cx: &ExtCx<'_>, cleared: i64) -> i64 {
+        let words: Vec<i64> = cx.table("end_script_lists").chunks(2).map(|w| w[0] + 256 * w.get(1).copied().unwrap_or(0)).collect();
+        let base = words.iter().copied().min().unwrap_or(0);
+        let list = cx.kind("tap").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).map_or(0, |b| b.ext[1] & 1);
+        words.get(usize::try_from(list * 10 + cleared % 10).unwrap_or(0)).map_or(0, |w| (w - base) / 5)
+    }
+
+    /// The level's end's requests on its frame `h` (as Bartender::end_pose
+    /// counts it, $4742 once), by its script ($5623) and, in script 3, its
+    /// interlude. $4603: $2A after its wait of 15 ($4609); $4742: $11 as
+    /// the pour starts ($4778), a gulp each 4 frames as he drinks ($4874
+    /// calls $1B83 six times, the `sound_drink` rows) and 2 after the last
+    /// ($4879); back in $4603, $14 as he kicks the glass ($46E2, 128).
+    /// Then each script's own: 0 and 1 $45E3's $1B, 2 $2DF7's $21, 3 the
+    /// interlude's $34 and $33 and its hops' $32 ($50EF) or $21 ($51A9) on
+    /// every other hop, 4 $594D's $36, 2 once the object is up, $1B and $2F
+    /// after its waits of 20 and 40, and $4546's $35 40 later (its 2 and
+    /// $37 as the object lands, with the drop). Frames measured on the
+    /// corpus's level ends (tapper.l1.001, l2, l3, l4, l5, l13 and
+    /// clear.004), each as the code's waits give it.
+    fn end_sounds(cx: &mut ExtCx<'_>, h: i64, script: i64, interlude_b: bool) {
+        match h {
+            16 => ask(cx, "sound_end", &[0xA3]),
+            58 => ask(cx, "sound_end_drink", &[0x97]),
+            89 | 93 | 97 | 101 | 105 => ask(cx, "sound_drink", &[(109 - h) / 4]),
+            109 => {
+                ask(cx, "sound_drink", &[0]);
+                ask(cx, "sound_end_drink", &[0x198]);
+            }
+            128 => ask(cx, "sound_end_drink", &[1]),
+            _ => {}
+        }
+        match script {
+            0 if h == 172 => ask(cx, "sound_end", &[0x7D]),
+            0 if h == 199 => ask(cx, "sound_end_toss", &[1]),
+            1 if h == 170 => ask(cx, "sound_end", &[0x7D]),
+            2 if h == 170 => ask(cx, "sound_end_turn", &[1]),
+            3 => {
+                if h == 172 {
+                    ask(cx, "sound_interlude", &[if interlude_b { 0xBB } else { 1 }]);
+                } else if h == 192 {
+                    ask(cx, "sound_interlude", &[if interlude_b { 0x107 } else { 0x4D }]);
+                }
+                let (first, at) = if interlude_b { (200, 0x17E) } else { (192, 0x7B) };
+                if h >= first && (h - first) % 10 == 0 && (h - first) / 10 < 5 {
+                    ask(cx, "sound_interlude", &[at]);
+                }
+            }
+            4 => {
+                // $594D lifts the object from 6 above him, 10 each 2
+                // frames until at least $EE: k steps (as tapper_bars
+                // places the drop).
+                let by = cx
+                    .kind("player")
+                    .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+                    .map_or(0, |b| b.y.floor());
+                let k = (238 - (by + 6) + 9).max(10) / 10;
+                let up = 128 + 2 * k;
+                if h == 128 {
+                    ask(cx, "sound_lift", &[1]);
+                } else if h == up {
+                    ask(cx, "sound_lift", &[0x38]);
+                } else if h == up + 20 {
+                    ask(cx, "sound_lift", &[0x6F]);
+                } else if h == up + 60 {
+                    ask(cx, "sound_lift", &[0x7A]);
+                } else if h == up + 100 {
+                    ask(cx, "sound_end", &[1]);
+                }
+            }
+            _ => {}
+        }
+    }
+
     /// The bar a body on line y is at: 0 the bottom.
     fn bar_of(cx: &ExtCx<'_>, y: i64) -> i64 {
         let line = bp(cx, "line");
@@ -2486,7 +2621,14 @@ impl Ext for Bars {
             // the table at $4C71 (the `sound_game` rows are the program
             // from $4B34).
             let shown_now = (fb.ext[3] >> 8) & 3;
-            ask(cx, "sound_game", &[0x67, 0x11B, 0x13D + shown_now]);
+            // The punk bar's and the space bar's $4937 ($4C4B) wait for the
+            // next frame first ($5E99), so their last two come then.
+            if shown_now >= 2 {
+                ask(cx, "sound_game", &[0x67]);
+                sound::ask_setup_next(cx);
+            } else {
+                ask(cx, "sound_game", &[0x67, 0x11B, 0x13D + shown_now]);
+            }
             // $4C4B's $4937: the punk bar's and the space bar's setups
             // empty the palette cycles ($5E99) and add their own on the
             // next frame ($5EA9); the others leave them as they are.
@@ -2706,7 +2848,8 @@ impl Ext for Bars {
                     | (n << 24)
                     | END_TWICE_KNOWN
                     | END_INTERLUDE_KNOWN
-                    | END_INTERLUDE_B;
+                    | END_INTERLUDE_B
+                    | END_SOUNDS;
                 // The place is read once, at the start.
                 fb.ext[1] &= !(0xffff << 16);
                 cx.set_body(fid, fb);
@@ -2742,8 +2885,55 @@ impl Ext for Bars {
                     && wait_return(cx, "hops_code", "hops_start", 2) == Some((b.ext[1] >> 16) & 0xffff)
                     && (b.ext[1] >> 32) & 0xff == 1
             });
+        // A start in an end script's last wait when a bonus round comes
+        // next ($5681 with the levels cleared plus one at 2, 5 or 9 mod
+        // 13, or 0): script 1's last of $45E3's waits of 1 (B at 1), script
+        // 2's $2DF7 wait of 15, script 3's last hop ($50EF's or $51A9's,
+        // B at 1). In state 16 the wait has run out: the script returns on
+        // this frame, $5681 counts the level and the bonus round ($2500)
+        // starts, its frames counted from 0 here (tapper.clear.002,
+        // clear.006). Back in state 11 it has returned already, the level
+        // counted, and the round is on its frame 1 here: its first waits
+        // ($5E99, $60F6) keep the state at 11 (tapper.clear.013, clear.018,
+        // clear.021).
+        let count = if state == 16 { cleared + 1 } else { cleared };
+        let bonus_next = matches!(count % 13, 2 | 5 | 9) || count % 13 == 0;
+        let last_wait = bonus_next
+            && (state == 11 || state == 16)
+            && flow.is_some_and(|(_, b)| {
+                let (place, b_reg, sub) = ((b.ext[1] >> 16) & 0xffff, (b.ext[1] >> 32) & 0xff, (b.ext[3] >> 16) & 0xff);
+                // The script by the levels cleared before this one.
+                let script = Self::end_script(cx, count - 1);
+                place != 0
+                    && ![8, 10, 12].contains(&sub)
+                    && (b.ext[1] >> 8) & 0xff == 11
+                    && match script {
+                        1 => b_reg == 1 && wait_return(cx, "end_gulp_code", "end_gulp_start", 1) == Some(place),
+                        2 => wait_return(cx, "end_turn_code", "end_turn_start", 1) == Some(place),
+                        3 => {
+                            b_reg == 1
+                                && (wait_return(cx, "hops_code", "hops_start", 2) == Some(place)
+                                    || wait_return(cx, "interlude_code", "interlude_start", 5) == Some(place))
+                        }
+                        _ => false,
+                    }
+            });
+        let hops_done = hops_done && !last_wait;
+        let bonus_entered = last_wait && state == 16;
+        if last_wait && let Some((fid, mut fb)) = flow {
+            // As the script's return at $5681 below: a level more, and the
+            // bonus round, sub 12, its frames from bit 24.
+            cleared = count & 0xff;
+            fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (12 << 16);
+            fb.ext[2] &= !BONUS_MASK;
+            fb.ext[1] &= !(0xffff << 16);
+            cx.set_body(fid, fb);
+            flow = Some((fid, fb));
+            state = 15;
+        }
         let ending = state == 11 && !setting_up && bartender_y != 0 && !level_timers && !hops_done;
         let finishing = state == 11 && !setting_up && bartender_y != 0 && level_timers;
+        let mut end_heard = false;
         if ending {
             // $55FF: the level's points, once: a clip that starts inside
             // the end's script (its waits put the game back in state 11,
@@ -2758,6 +2948,9 @@ impl Ext for Bars {
             bar_ends_go(cx);
             if ends_up && !resumed {
                 points += points_of(cx.table("points_level"));
+                // $55F4: the level's end script asks for 2 as it starts.
+                ask(cx, "sound_end_start", &[1]);
+                end_heard = true;
             }
         }
         if (ending || finishing) && let Some((fid, mut fb)) = flow {
@@ -2765,8 +2958,12 @@ impl Ext for Bars {
                 // The level's end script ($55F4, then the level's own, as
                 // $4603) starts on this frame: its frames are counted from
                 // 1 in the flow's word 3 (sub 8).
-                (fb.ext[3] & 0xff00) | 15 | (8 << 16) | (1 << 24)
+                (fb.ext[3] & 0xff00) | 15 | (8 << 16) | (1 << 24) | if end_heard { END_SOUNDS } else { 0 }
             } else {
+                // A start in the setup's wait at $4C4B: its last two
+                // requests come now ($4C4E, $4C5C; tapper.l9.001).
+                let shown = (fb.ext[3] >> 8) & 3;
+                ask(cx, "sound_game", &[0x11B, 0x13D + shown]);
                 (fb.ext[3] & !0xff) | 10
             };
             cx.set_body(fid, fb);
@@ -2806,6 +3003,10 @@ impl Ext for Bars {
         } else if (state == 15 || state == 16 || state == 12) && lost_sub == 11 && let Some((fid, mut fb)) = flow {
             let c = ((fb.ext[3] >> 24) & 0xffff) + 1;
             let sports = (fb.ext[3] >> 8) & 3 == 1;
+            // $246A: 2 after the first wait of 60.
+            if c == 61 {
+                ask(cx, "sound_life", &[0x81]);
+            }
             if c == 121 && !sports {
                 // $24E2's $5E99 empties the palette cycles.
                 cx.set_counter("cycle_on", 0);
@@ -3099,6 +3300,13 @@ impl Ext for Bars {
                         .iter()
                         .position(|(_, b)| b.kind == cust_k && (b.ext[3] >> 16) & 0xf == rslot);
                     let mut knock_at: Option<i64> = None;
+                    // $1D4B: $0D after the wait of 30; $1DF1: $18 as he
+                    // is lowered (51).
+                    if n == 30 {
+                        ask(cx, "sound_lost", &[0x68]);
+                    } else if n == 51 {
+                        ask(cx, "sound_lost", &[0x10E]);
+                    }
                     if n == 36 {
                         pb.y = Fx::from_int(ry);
                         pb.x = Fx::from_int(if left { tx + 12 } else { tx - 8 });
@@ -3162,6 +3370,7 @@ impl Ext for Bars {
                     // the mugs of his bar he has reached: 8 short of him
                     // ($1E97), or 16 past him on a left-tap bar ($1EA3);
                     // a knocked mug's picture is $11 and it drops 3.
+                    let mut knocked = 0;
                     if let Some(bx) = knock_at {
                         for (_, m) in bodies.iter_mut().filter(|(_, b)| b.kind == mug_k) {
                             let mx = m.x.floor();
@@ -3169,8 +3378,18 @@ impl Ext for Bars {
                             if m.ext[3] & 0x200 == 0 && (m.ext[3] >> 4) & 0xf == rbar && m.y.floor() != 0 && hit {
                                 m.ext[3] |= 0x200;
                                 m.y = Fx::from_int(m.y.floor() - 3);
+                                // $1EAD: each mug knocked over asks for $1B.
+                                knocked += 1;
                             }
                         }
+                    }
+                    for _ in 0..knocked {
+                        ask(cx, "sound_lost", &[0x1CA]);
+                    }
+                    // $1FE1: $19 after the copy's 4 frames and 4 more
+                    // ($1F80, $1FB7).
+                    if phase == 9 && phase_before == 8 {
+                        ask(cx, "sound_lost", &[0x2FE]);
                     }
                     cx.set_body(pid, pb);
                     // His arm and head ($1D8A to $1DD8 as he is taken, 16
@@ -3232,6 +3451,7 @@ impl Ext for Bars {
             // The script's frame as if $4742 ran once: past the second
             // run's start the frames of the second run come off, so the
             // second run's $1351 (109, as 56) puts him where he stands.
+            let raw = n;
             let n = if n >= 109 && fb.ext[3] & END_TWICE != 0 { n - 53 } else { n };
             // After $4603 some lists go on ($5623: the list by E3ED, the
             // entry by the levels cleared mod 10, each a 5-byte step). The
@@ -3289,6 +3509,10 @@ impl Ext for Bars {
                         b.y = Fx::from_int(ny);
                         if ny - 5 < by {
                             b.ext[3] |= 0x800;
+                            // $45AD: it lands, asking for 2 and $37.
+                            if fb.ext[3] & END_SOUNDS != 0 {
+                                ask(cx, "sound_end", &[0x47, 0x4C]);
+                            }
                             b.ext[1] = n;
                         }
                     } else if n == b.ext[1] + 60 {
@@ -3324,6 +3548,12 @@ impl Ext for Bars {
                 }
             }
             let interlude_b = shown != 3 && fb.ext[3] & END_INTERLUDE_B != 0;
+            // The script's requests by its frame as if $4742 ran once,
+            // where the first run's own last frame (109) is its own.
+            let h = if raw <= 109 { raw } else { n };
+            if fb.ext[3] & END_SOUNDS != 0 {
+                Self::end_sounds(cx, h, script, interlude_b);
+            }
             // $51A9, from 172: 10 waits of 2 for the other object (E356),
             // then the bartender's pictures turn; 2 frames on ($5220) he
             // is 5 higher and 5 along, away from the tap (E3AD); 2 more
@@ -3488,7 +3718,7 @@ impl Ext for Bars {
                 }
             }
             cx.set_body(fid, fb);
-        } else if (state == 15 || state == 16) && sub == 12 && let Some((fid, mut fb)) = flow {
+        } else if (state == 15 || state == 16) && sub == 12 && !bonus_entered && let Some((fid, mut fb)) = flow {
             let next = bonus_round(cx, &mut fb, cleared, &mut points);
             bonus_objs = Some(bonus_scene(cx, &fb, cleared, next));
             if next {
@@ -3518,6 +3748,8 @@ impl Ext for Bars {
         {
             // The count from bit 24 starts again for the game over's wait.
             fb.ext[3] = (fb.ext[3] & !(0x00ff_0000 | (0xffff << 24))) | (2 << 16);
+            // $230F's $49E5 asks for 2 and 3.
+            ask(cx, "sound_over", &[1, 6]);
             cx.set_body(fid, fb);
         } else if state == 13
             && let Some((fid, mut fb)) = flow
@@ -3609,6 +3841,9 @@ impl Ext for Bars {
                     removed.push(*id);
                     caught = true;
                     points += points_of(cx.table("points_catch"));
+                    // $0BED: an empty mug caught asks for $17 (the
+                    // `sound_catch` rows are the program from $0BCF).
+                    ask_ld(cx, "sound_catch", &[0x1F]);
                 }
             }
             // $0B86 to $0BD4, after the mugs: a tip (picture $4D at
@@ -3626,6 +3861,10 @@ impl Ext for Bars {
                 tip = None;
                 tips_left = (tips_left - 1) & 0xff;
                 points += points_of(cx.table("points_tip"));
+                // $0BCF asks for $13, then the show ($14E7) for 2 and $2E;
+                // rbtapper's show asks for all three, its tip for none.
+                ask_ld(cx, "sound_catch", &[0x01]);
+                ask_run(cx, "sound_bar", 0x289);
                 // $0BD8 calls the show, $14E7: the dancers' first picture
                 // ($14F1 to $1515, see show_picture) and eight draws at $1523,
                 // each 0 to 2 ($5FAC returns at most its A), that step
@@ -3834,6 +4073,10 @@ impl Ext for Bars {
                     if t == 0 {
                         let turns = (c.ext[3] >> 8) & 0xff;
                         if turns != 0 {
+                            // $10BA calls $1B83: a gulp, the byte of the
+                            // table at $1BCE by the turns left less one
+                            // ($1B8D to $1B95, the `sound_drink` rows).
+                            ask(cx, "sound_drink", &[turns - 1]);
                             c.ext[1] = c.ext[3] & 0xff;
                             c.ext[3] = (c.ext[3] & !0xffff) | (c.ext[3] & 0xff) | ((turns - 1) << 8);
                         } else {
@@ -3897,6 +4140,10 @@ impl Ext for Bars {
                         // at a draw of 0 to 3 plus 4 ($213B).
                         if tips_left != 0 {
                             tip_count = (tip_count - 1) & 0xff;
+                            // $20EF: a tip left asks for $16.
+                            if tip_count == 0 {
+                                ask(cx, "sound_tip", &[1]);
+                            }
                             if tip_count == 0
                                 && let Some(tk) = tip_k
                             {
@@ -4105,6 +4352,10 @@ impl Ext for Bars {
                 // tip's with them.
                 show.on = false;
                 dancers = [None; 9];
+                // $0C83 asks for 2, then $0C91 for the bar shown's byte of
+                // the table at $4C71, as a level's setup does.
+                ask_ld(cx, "sound_catch", &[0xB5]);
+                ask(cx, "sound_game", &[0x13D + flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 3)]);
                 // $0C95: the show's end loads the stage's screen again, and
                 // its copy draws the lives ($5D21).
                 if let Some((_, fb)) = flow {
@@ -4147,6 +4398,9 @@ impl Ext for Bars {
             }
             tip = None;
             dancers = [None; 9];
+            // $1CE4: it asks for 2 as it starts (the `sound_lost` rows are
+            // the program from $1CE4).
+            ask(cx, "sound_lost", &[1]);
             fb.ext[3] = (fb.ext[3] & !0xffff_00ff) | 15 | (10 << 16);
             fb.ext[2] = (fb.ext[2] & 0xffff) | ((ry & 0xff) << 16) | ((rbar & 3) << 24) | (rslot << 32);
             cx.set_body(fid, fb);

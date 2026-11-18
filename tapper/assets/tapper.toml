@@ -305,14 +305,15 @@ width = 1
 rbtapper = 0x4CC4
 sutapper = 0x4B34
 tappera = 0x4B34
-# $125E to $14DC: the pour ($30 and $3A when the mug is full, $39 and $38
-# for the stream, $125E to $12E2) and the mug sent ($12 at $14DB).
+# $125E to $14FD: the pour ($30 and $3A when the mug is full, $39 and $38
+# for the stream, $125E to $12E2), the mug sent ($12 at $14DB) and the
+# show a tip starts ($14E7: 2 and $2E; rbtapper's 2, $13 and $2E).
 [[asset]]
 name = "sound_bar"
 format = "byte-rows"
 region = "maincpu"
 offset = 0x125E
-count = 639
+count = 672
 width = 1
 [asset.at]
 rbtapper = 0x1259
@@ -332,14 +333,14 @@ width = 1
 rbtapper = 0x090D
 sutapper = 0x090D
 tappera = 0x090D
-# $23EA to $2442: a life lost's mug falling ($1A), its crash ($1B at
-# $2402) and $2441's 2.
+# $23EA to $246B: a life lost's mug falling ($1A), its crash ($1B at
+# $2402), $2441's 2 and, with no lives left, 2 after its wait ($246A).
 [[asset]]
 name = "sound_life"
 format = "byte-rows"
 region = "maincpu"
 offset = 0x23EA
-count = 89
+count = 130
 width = 1
 
 [asset.at]
@@ -360,7 +361,257 @@ width = 1
 rbtapper = 0x15FF
 sutapper = 0x15FF
 tappera = 0x15FF
+# $0BCF to $0C84: a tip picked up ($13 at $0BCF, none in rbtapper), an
+# empty mug caught ($17 at $0BED) and the show's end (2 at $0C83).
+[[asset]]
+name = "sound_catch"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x0BCF
+count = 182
+width = 1
 
+[asset.at]
+rbtapper = 0x0BCA
+sutapper = 0x0BCF
+tappera = 0x0BCF
+# $1BCE: the gulps, one each turn of a drink, by the turns left less one
+# ($1B83, called by a customer's drink at $10BA and the bartender's at a
+# level's end, $4874).
+[[asset]]
+name = "sound_drink"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x1BCE
+count = 6
+width = 1
+
+[asset.at]
+rbtapper = 0x1BCE
+sutapper = 0x1BCE
+tappera = 0x1BCE
+
+
+# $1CE4 to $1FE2: a customer at the bartender's end takes him ($1CE1):
+# 2 at once, $0D after its wait ($1D4B), $18 as he is lowered ($1DF1), $1B
+# for each mug his slide knocks over ($1EAD) and $19 after it ($1FE1).
+[[asset]]
+name = "sound_lost"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x1CE4
+count = 767
+width = 1
+
+[asset.at]
+rbtapper = 0x1CE4
+sutapper = 0x1CE4
+tappera = 0x1CE4
+# $20EF: a tip left on the bar asks for $16 ($20DE).
+[[asset]]
+name = "sound_tip"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x20EF
+count = 2
+width = 1
+
+[asset.at]
+rbtapper = 0x20EF
+sutapper = 0x20EF
+tappera = 0x20EF
+# $49E5 to $49EB: the game over asks for 2 and 3 ($230F).
+[[asset]]
+name = "sound_over"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x49E5
+count = 7
+width = 1
+
+[asset.at]
+rbtapper = 0x4B75
+sutapper = 0x49E5
+tappera = 0x49E5
+# $55F4: a level's end script asks for 2 as it starts.
+[[asset]]
+name = "sound_end_start"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x55F4
+count = 2
+width = 1
+
+[asset.at]
+rbtapper = 0x5784
+sutapper = 0x55F4
+tappera = 0x55F4
+# $4567 to $460A: the level's end: $4546's drop ($35 at $4567, 2 and $37
+# as it lands at $45AD), $45E3's $1B, and $4603's $2A at $4609.
+[[asset]]
+name = "sound_end"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4567
+count = 164
+width = 1
+
+[asset.at]
+rbtapper = 0x46E3
+sutapper = 0x4567
+tappera = 0x4567
+# $46E2 to $487A: the glass kicked ($14 at $46E2), the pour at a level's
+# end ($11 at $4778) and 2 after he drinks ($4879).
+[[asset]]
+name = "sound_end_drink"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x46E2
+count = 409
+width = 1
+
+[asset.at]
+rbtapper = 0x4864
+sutapper = 0x46E2
+tappera = 0x46E2
+# $491F: end script 0's last request, $16 ($48FC).
+[[asset]]
+name = "sound_end_toss"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x491F
+count = 2
+width = 1
+
+[asset.at]
+rbtapper = 0x4AA9
+sutapper = 0x491F
+tappera = 0x491F
+# $2E14: end script 2's $21 ($2DF7).
+[[asset]]
+name = "sound_end_turn"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2E14
+count = 2
+width = 1
+
+[asset.at]
+rbtapper = 0x2E28
+sutapper = 0x2E14
+tappera = 0x2E14
+# $50EF to $526D: end script 3's interludes: $50EF's $34, $33 and the hops'
+# $32 ($5169), $51A9's $34, $33 and the hops' $21 ($526C).
+[[asset]]
+name = "sound_interlude"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x50EF
+count = 383
+width = 1
+
+[asset.at]
+rbtapper = 0x527F
+sutapper = 0x50EF
+tappera = 0x50EF
+# $594D to $59C7: end script 4's lift: $36, 2 once the object is up ($5984),
+# $1B ($59BB) and $2F ($59C6).
+[[asset]]
+name = "sound_lift"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x594D
+count = 123
+width = 1
+
+[asset.at]
+rbtapper = 0x5ACD
+sutapper = 0x594D
+tappera = 0x593D
+# $2533: the bonus round asks for $0B after its first wait.
+[[asset]]
+name = "sound_bonus_open"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2533
+count = 2
+width = 1
+
+[asset.at]
+rbtapper = 0x2538
+sutapper = 0x2533
+tappera = 0x2533
+# $2603: each shake of the bonus round's cans asks for $25.
+[[asset]]
+name = "sound_bonus_shake"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2603
+count = 2
+width = 1
+
+[asset.at]
+rbtapper = 0x260D
+sutapper = 0x2603
+tappera = 0x2603
+# $2684 to $2951: the bonus round from the bandit's blink ($1C at $2684) to
+# its end: 2 and $2D around the choice's start ($26BA, $26EE), 2 and $27 as
+# a can is chosen ($2787), the win's $2A ($2823) and the loss's $28, $29
+# and $2C ($284D, $292C, $2950).
+[[asset]]
+name = "sound_bonus"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2684
+count = 718
+width = 1
+
+[asset.at]
+rbtapper = 0x2692
+sutapper = 0x2684
+tappera = 0x2684
+# $3BFF: the bonus round's loss asks for $2B, twice ($2931, $2934).
+[[asset]]
+name = "sound_bonus_2b"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3BFF
+count = 2
+width = 1
+
+[asset.at]
+rbtapper = 0x3C16
+sutapper = 0x3BFF
+tappera = 0x3BFF
+# $4F1C to $5016: the bonus round's swaps, $26 as each starts and at each
+# draw of a later pair ($4F1C and $4F29; $5008 and $5015 from 6 levels).
+[[asset]]
+name = "sound_shuffle"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4F1C
+count = 251
+width = 1
+
+[asset.at]
+rbtapper = 0x50AC
+sutapper = 0x4F1C
+tappera = 0x4F1C
+
+# $1A0C to $1C2C: the bartender's steps as he walks, $0F and $10 by turns
+# ($1A0C and $1A18 walking left, $1C1F and $1C2B right).
+[[asset]]
+name = "sound_walk"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x1A0C
+count = 545
+width = 1
+
+[asset.at]
+rbtapper = 0x1A0C
+sutapper = 0x1A0C
+tappera = 0x1A0C
 
 # The board's 64 colours as the program loads them into palette RAM at a
 # level's setup ($4B58: hl = $616D, call $600F). rbtapper loads it from
@@ -1288,6 +1539,62 @@ width = 2
 rbtapper = 0x582E
 sutapper = 0x569E
 tappera = 0x569E
+
+# $2DF7: end script 2's routine, searched for its wait (a start in it).
+[[asset]]
+name = "end_turn_code"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2DF7
+count = 1
+width = 41
+
+[asset.at]
+rbtapper = 0x2E0B
+sutapper = 0x2DF7
+tappera = 0x2DF7
+
+# $48CE: the word end script 2 calls $2DF7 with ($48CD), its place.
+[[asset]]
+name = "end_turn_start"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x48CE
+count = 1
+width = 2
+
+[asset.at]
+rbtapper = 0x4A50
+sutapper = 0x48CE
+tappera = 0x48CE
+
+# $45E3: end scripts 0's and 1's routine, searched for its wait.
+[[asset]]
+name = "end_gulp_code"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x45E3
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x475F
+sutapper = 0x45E3
+tappera = 0x45E3
+
+# $48C4: the word end script 1 calls $45E3 with ($48C3), its place.
+[[asset]]
+name = "end_gulp_start"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x48C4
+count = 1
+width = 2
+
+[asset.at]
+rbtapper = 0x4A46
+sutapper = 0x48C4
+tappera = 0x48C4
 
 [[asset]]
 name = "hops_code"

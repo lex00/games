@@ -770,6 +770,42 @@ description = "The bartender's steps along in the space bar's level end hops, a 
 source = "tapper"
 asset = "hop_steps"
 
+[assets.end_gulp_code]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: end script 1's last code ($45E3), searched for its wait"
+
+[assets.end_gulp_code.from]
+source = "tapper"
+asset = "end_gulp_code"
+
+[assets.end_gulp_start]
+kind = "rows"
+role = "behavior"
+description = "Where end script 1's last code is: the word it calls $45E3 with ($48C4)"
+
+[assets.end_gulp_start.from]
+source = "tapper"
+asset = "end_gulp_start"
+
+[assets.end_turn_code]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: end script 2's code ($2DF7), searched for its wait"
+
+[assets.end_turn_code.from]
+source = "tapper"
+asset = "end_turn_code"
+
+[assets.end_turn_start]
+kind = "rows"
+role = "behavior"
+description = "Where end script 2's code is: the word it calls $2DF7 with ($48CE)"
+
+[assets.end_turn_start.from]
+source = "tapper"
+asset = "end_turn_start"
+
 [assets.hops_code]
 kind = "rows"
 role = "behavior"
@@ -1373,6 +1409,168 @@ description = "The program from $23EA to $2442: a life lost's requests (the prog
 source = "tapper"
 asset = "sound_life"
 
+[assets.sound_catch]
+kind = "rows"
+role = "behavior"
+description = "The program from $0BCF to $0C84: a tip picked up, an empty mug caught and the show ending (the program's code, lifted from the player's romset)"
+
+[assets.sound_catch.from]
+source = "tapper"
+asset = "sound_catch"
+
+[assets.sound_drink]
+kind = "rows"
+role = "behavior"
+description = "The table at $1BCE: the gulps of a drink, by the turns left (the program's code, lifted from the player's romset)"
+
+[assets.sound_drink.from]
+source = "tapper"
+asset = "sound_drink"
+
+[assets.sound_lost]
+kind = "rows"
+role = "behavior"
+description = "The program from $1CE4 to $1FE2: a customer taking the bartender off the bar's end, its requests (the program's code, lifted from the player's romset)"
+
+[assets.sound_lost.from]
+source = "tapper"
+asset = "sound_lost"
+
+[assets.sound_tip]
+kind = "rows"
+role = "behavior"
+description = "The program at $20EF: a tip left on the bar, its request (the program's code, lifted from the player's romset)"
+
+[assets.sound_tip.from]
+source = "tapper"
+asset = "sound_tip"
+
+[assets.sound_over]
+kind = "rows"
+role = "behavior"
+description = "The program from $49E5: the game over's requests (the program's code, lifted from the player's romset)"
+
+[assets.sound_over.from]
+source = "tapper"
+asset = "sound_over"
+
+[assets.sound_end_start]
+kind = "rows"
+role = "behavior"
+description = "The program at $55F4: a level's end starting, its request (the program's code, lifted from the player's romset)"
+
+[assets.sound_end_start.from]
+source = "tapper"
+asset = "sound_end_start"
+
+[assets.sound_end]
+kind = "rows"
+role = "behavior"
+description = "The program from $4567 to $460A: a level's end's drop, $45E3's request and $4603's first (the program's code, lifted from the player's romset)"
+
+[assets.sound_end.from]
+source = "tapper"
+asset = "sound_end"
+
+[assets.sound_end_drink]
+kind = "rows"
+role = "behavior"
+description = "The program from $46E2 to $487A: the level's end's pour, drink and kick, their requests (the program's code, lifted from the player's romset)"
+
+[assets.sound_end_drink.from]
+source = "tapper"
+asset = "sound_end_drink"
+
+[assets.sound_end_toss]
+kind = "rows"
+role = "behavior"
+description = "The program at $491F: end script 0's last request (the program's code, lifted from the player's romset)"
+
+[assets.sound_end_toss.from]
+source = "tapper"
+asset = "sound_end_toss"
+
+[assets.sound_end_turn]
+kind = "rows"
+role = "behavior"
+description = "The program at $2E14: end script 2's request (the program's code, lifted from the player's romset)"
+
+[assets.sound_end_turn.from]
+source = "tapper"
+asset = "sound_end_turn"
+
+[assets.sound_interlude]
+kind = "rows"
+role = "behavior"
+description = "The program from $50EF to $526D: end script 3's interludes, their requests (the program's code, lifted from the player's romset)"
+
+[assets.sound_interlude.from]
+source = "tapper"
+asset = "sound_interlude"
+
+[assets.sound_lift]
+kind = "rows"
+role = "behavior"
+description = "The program from $594D to $59C7: end script 4's lift, its requests (the program's code, lifted from the player's romset)"
+
+[assets.sound_lift.from]
+source = "tapper"
+asset = "sound_lift"
+
+[assets.sound_bonus_open]
+kind = "rows"
+role = "behavior"
+description = "The program at $2533: the bonus round's first request (the program's code, lifted from the player's romset)"
+
+[assets.sound_bonus_open.from]
+source = "tapper"
+asset = "sound_bonus_open"
+
+[assets.sound_bonus_shake]
+kind = "rows"
+role = "behavior"
+description = "The program at $2603: a can shaken in the bonus round, its request (the program's code, lifted from the player's romset)"
+
+[assets.sound_bonus_shake.from]
+source = "tapper"
+asset = "sound_bonus_shake"
+
+[assets.sound_bonus]
+kind = "rows"
+role = "behavior"
+description = "The program from $2684 to $2951: the bonus round's blink, choice, win and loss, their requests (the program's code, lifted from the player's romset)"
+
+[assets.sound_bonus.from]
+source = "tapper"
+asset = "sound_bonus"
+
+[assets.sound_bonus_2b]
+kind = "rows"
+role = "behavior"
+description = "The program at $3BFF: the bonus round's loss, its request (the program's code, lifted from the player's romset)"
+
+[assets.sound_bonus_2b.from]
+source = "tapper"
+asset = "sound_bonus_2b"
+
+[assets.sound_shuffle]
+kind = "rows"
+role = "behavior"
+description = "The program from $4F1C to $5016: the bonus round's swaps, their requests (the program's code, lifted from the player's romset)"
+
+[assets.sound_shuffle.from]
+source = "tapper"
+asset = "sound_shuffle"
+
+[assets.sound_walk]
+kind = "rows"
+role = "behavior"
+description = "The program from $1A0C to $1C2C: the bartender's walk, its steps' requests (the program's code, lifted from the player's romset)"
+
+[assets.sound_walk.from]
+source = "tapper"
+asset = "sound_walk"
+
 [assets.space_colors]
 kind = "rows"
 role = "palettes"
@@ -1680,6 +1878,10 @@ hand_flags = "hand_flags"
 hand_pic = "hand_pic"
 hand_pic_shake = "hand_pic_shake"
 hop_steps = "hop_steps"
+end_gulp_code = "end_gulp_code"
+end_gulp_start = "end_gulp_start"
+end_turn_code = "end_turn_code"
+end_turn_start = "end_turn_start"
 hops_code = "hops_code"
 hops_start = "hops_start"
 instr_objects = "instr_objects"
@@ -2030,6 +2232,24 @@ sound_customers = "sound_customers"
 sound_extra_life = "sound_extra_life"
 sound_game = "sound_game"
 sound_life = "sound_life"
+sound_walk = "sound_walk"
+sound_shuffle = "sound_shuffle"
+sound_bonus_2b = "sound_bonus_2b"
+sound_bonus = "sound_bonus"
+sound_bonus_shake = "sound_bonus_shake"
+sound_bonus_open = "sound_bonus_open"
+sound_lift = "sound_lift"
+sound_interlude = "sound_interlude"
+sound_end_turn = "sound_end_turn"
+sound_end_toss = "sound_end_toss"
+sound_end_drink = "sound_end_drink"
+sound_end = "sound_end"
+sound_end_start = "sound_end_start"
+sound_over = "sound_over"
+sound_tip = "sound_tip"
+sound_lost = "sound_lost"
+sound_drink = "sound_drink"
+sound_catch = "sound_catch"
 
 [entities.sound.hitbox]
 h = 1
@@ -10357,6 +10577,38 @@ note = "gp code listing on tapper.l10.001's end (frames 15680 to 15926): the end
 [[evidence."assets.hop_steps".refs]]
 at = "clip:tapper.l10.001"
 
+[evidence."assets.end_gulp_code"]
+source = "observed"
+confidence = 70
+note = "gp code listing of each set: end script 1 ($489A) calls $45E3 at $48C3 ($4A45 in rbtapper), whose loop waits 1 frame twelve times ($45F5) and returns; tapper.clear.006, clear.013 and clear.021 start in its last wait (E3A9 $45F8, B 1)"
+
+[[evidence."assets.end_gulp_code".refs]]
+at = "clip:tapper.clear.013"
+
+[evidence."assets.end_gulp_start"]
+source = "observed"
+confidence = 70
+note = "gp code listing of each set: end script 1 ($489A) calls $45E3 at $48C3 ($4A45 in rbtapper)"
+
+[[evidence."assets.end_gulp_start".refs]]
+at = "clip:tapper.clear.013"
+
+[evidence."assets.end_turn_code"]
+source = "observed"
+confidence = 70
+note = "gp code listing of each set: end script 2 ($48C7) calls $2DF7 at $48CD ($4A4F in rbtapper), which waits 15 frames ($2E1C) and returns; tapper.clear.002 starts in that wait (E3A9 $2E1F), and the bonus round's first request comes 22 frames after the frame the game is back in state 11"
+
+[[evidence."assets.end_turn_code".refs]]
+at = "clip:tapper.clear.002"
+
+[evidence."assets.end_turn_start"]
+source = "observed"
+confidence = 70
+note = "gp code listing of each set: end script 2 ($48C7) calls $2DF7 at $48CD ($4A4F in rbtapper)"
+
+[[evidence."assets.end_turn_start".refs]]
+at = "clip:tapper.clear.002"
+
 [evidence."assets.hops_code"]
 source = "observed"
 confidence = 70
@@ -10892,6 +11144,150 @@ note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-firs
 
 [[evidence."assets.sound_life".refs]]
 at = "clip:tapper.score.001"
+
+[evidence."assets.sound_catch"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of $606B in $0B63 and $0C25; the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_catch".refs]]
+at = "clip:tapper.tip.001"
+
+[evidence."assets.sound_drink"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: $1B83 asks for the byte of the table at $1BCE by the drink's turns left less one ($1B8D to $1B95); the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_drink".refs]]
+at = "clip:tapper.l4.001"
+
+[evidence."assets.sound_lost"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_lost".refs]]
+at = "clip:tapper.l6.001"
+
+[evidence."assets.sound_tip"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_tip".refs]]
+at = "clip:tapper.l4.001"
+
+[evidence."assets.sound_over"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_over".refs]]
+at = "clip:tapper.die.003"
+
+[evidence."assets.sound_end_start"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_end_start".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.sound_end"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_end".refs]]
+at = "clip:tapper.l4.001"
+
+[evidence."assets.sound_end_drink"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_end_drink".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.sound_end_toss"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_end_toss".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.sound_end_turn"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_end_turn".refs]]
+at = "clip:tapper.l2.001"
+
+[evidence."assets.sound_interlude"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_interlude".refs]]
+at = "clip:tapper.l13.001"
+
+[evidence."assets.sound_lift"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_lift".refs]]
+at = "clip:tapper.l4.001"
+
+[evidence."assets.sound_bonus_open"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_bonus_open".refs]]
+at = "clip:tapper.clear.002"
+
+[evidence."assets.sound_bonus_shake"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_bonus_shake".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.sound_bonus"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_bonus".refs]]
+at = "clip:tapper.bonus.002"
+
+[evidence."assets.sound_bonus_2b"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_bonus_2b".refs]]
+at = "clip:tapper.bonus.002"
+
+[evidence."assets.sound_shuffle"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_shuffle".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.sound_walk"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_walk".refs]]
+at = "clip:tapper.tip.001"
 
 [evidence."assets.space_colors"]
 source = "observed"
