@@ -737,7 +737,16 @@ impl Bartender {
     /// ($4585 to $45AA: a frame, then 4 down, until within 5 of him).
     fn end_pose(cx: &ExtCx<'_>, w3: i64) -> Pose {
         let n = ((w3 >> 24) & 0xffff) + 1;
-        let n = if n >= 109 && w3 & END_TWICE != 0 { n - 53 } else { n };
+        // The second run of $4742 starts on the frame 109 draw, which
+        // tapper_bars takes after this hook: on 109 he took the first
+        // run's next step, so on 110 he takes the second run's first
+        // (as 56: at the tap, the glass in his hand), a frame after the
+        // original.
+        let n = match (n, w3 & END_TWICE != 0) {
+            (110, true) => 56,
+            (n, true) if n >= 109 => n - 53,
+            (n, _) => n,
+        };
         let cleared = cx
             .kind("bars")
             .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))

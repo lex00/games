@@ -673,7 +673,7 @@
             "total": 1640
           },
           "sprites": {
-            "same": 112,
+            "same": 263,
             "total": 1640
           }
         },
@@ -767,7 +767,7 @@
             "total": 1182
           },
           "sprites": {
-            "same": 114,
+            "same": 170,
             "total": 1182
           }
         },
@@ -1463,7 +1463,7 @@
             "total": 1735
           },
           "sprites": {
-            "same": 95,
+            "same": 151,
             "total": 1735
           }
         },
@@ -1822,7 +1822,7 @@
             "total": 1784
           },
           "sprites": {
-            "same": 97,
+            "same": 153,
             "total": 1784
           }
         },
@@ -1916,7 +1916,7 @@
             "total": 1464
           },
           "sprites": {
-            "same": 104,
+            "same": 182,
             "total": 1464
           }
         },
@@ -2087,7 +2087,7 @@
             "total": 3375
           },
           "sprites": {
-            "same": 82,
+            "same": 223,
             "total": 3375
           }
         },
@@ -2181,7 +2181,7 @@
             "total": 2541
           },
           "sprites": {
-            "same": 98,
+            "same": 154,
             "total": 2541
           }
         },
@@ -2652,7 +2652,7 @@
       "version": "0.2.0"
     },
     "gp": {
-      "build": "ef5d06f3a4c3832b125aa048a3da01882584a420a319d30e1a0b1f5ac409cfb0",
+      "build": "f0d45ccd56c2a5dfae4bdb48eb6584cd7743886c1a4371b0c0309b064a707762",
       "version": "0.1.1"
     },
     "mapping": {
@@ -2665,7 +2665,7 @@
       "short": "f9373b590673"
     },
     "module": {
-      "hash": "fdfdcecbb82b6851317e6094e2f045e33532b17e49e65c3b012e82997fc8f13e"
+      "hash": "0b4808d535bc76c54e2a7a3a201e10183c2d0bfd694d72d3c2778023595476d8"
     },
     "profile": null,
     "record_format": "0.3.0",
@@ -2681,7 +2681,7 @@
       "picture": {
         "clips_same": 0,
         "frames": 54884,
-        "frames_same": 6723
+        "frames_same": 7127
       }
     },
     "rom": {
