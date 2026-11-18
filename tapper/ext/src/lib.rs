@@ -1799,7 +1799,7 @@ fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
         let n = if n >= 109 && w3 & END_TWICE != 0 { n - 53 } else { n };
         let b = |at: i64| imm(cx, "end_pose_b", 0x467B, at);
         let x = (tap_x + if tap_left { b(0x47D4) } else { 0 }) & 0xff;
-        return (0..6)
+        let mut objs: Vec<BonusObj> = (0..6)
             .filter(|k| n >= 58 + 2 * k && n < 85)
             .map(|k| BonusObj {
                 at: 0xE18E + 4 * k,
@@ -1809,11 +1809,15 @@ fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
                 x,
             })
             .collect();
+        objs.extend(kicked_glass(cx, me, n, tap_left, fb.ext[3]));
+        return objs;
     }
     let w = me.ext[2];
     let (e715, e714) = ((w >> 40) & 0xff, (w >> 48) & 1);
+    // The board shows a frame's objects the frame after the code wrote
+    // them, so a layer written as E715 counts down shows on the next one.
     let n = match e715 {
-        1..=3 => 4 - e715,
+        1..=3 => 3 - e715,
         0 if e714 != 0 => 3,
         _ => 0,
     };
@@ -1827,6 +1831,59 @@ fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
             x,
         })
         .collect()
+}
+
+/// The glass of a level's end, after he drinks it ($4687 to $4707): from
+/// frame 109 the empty glass ($17) in E2E2 beside him, 2 above his y and
+/// 14 out from where he stood (he steps 1 that way, $46BF); from 124, the
+/// kick ($46CC), the glass tipped ($10) 8 lower; from 128 it flies from
+/// E356 in an arc, a step each 2 frames (10 up at first, 1 less each step,
+/// 1 along away from the tap) turning through its four flips, 22 steps;
+/// then, in scripts 0 and 3 ($4708), he catches it by his head, 3 lower,
+/// and it turns there ($13, $12, $11, $11, $12, $13), until frame 184.
+/// The flight's numbers are measured from MAME (tapper-m3-five, the first
+/// level's end, frames 1325 to 1400).
+fn kicked_glass(cx: &ExtCx<'_>, me: &gp_sim::world::Body, n: i64, left: bool, w3: i64) -> Vec<BonusObj> {
+    let b = |at: i64| imm(cx, "end_pose_b", 0x467B, at);
+    let (my, mx) = (me.y.floor(), me.x.floor());
+    // Where he stood before the step: the glass is placed from there.
+    let stood = if left { mx + 1 } else { mx - 1 };
+    let gx = if left { stood + b(0x46A3) - b(0x46AC) } else { stood + b(0x46A3) };
+    let flags = if left { b(0x46B0) } else { b(0x469E) };
+    let gy = my - b(0x4693);
+    let at_side = |y: i64, pic: i64| BonusObj { at: 0xE2E2, y: y & 0xff, flags, pic, x: gx & 0xff };
+    if (109..124).contains(&n) {
+        return vec![at_side(gy, b(0x469A))];
+    }
+    if (124..128).contains(&n) {
+        return vec![at_side(gy + b(0x46D8), b(0x46D3))];
+    }
+    let t = n - 128;
+    let y0 = gy + b(0x46D8);
+    let dir = if left { 1 } else { -1 };
+    let along = |s: i64| (gx + dir * s) & 0xff;
+    let turn = |t: i64| flags ^ ((((t + 2) / 4) % 4) << 4);
+    if (0..44).contains(&t) {
+        let s = t / 2 + 1;
+        let up: i64 = (0..s).map(|j| 10 - j).sum();
+        return vec![BonusObj { at: 0xE356, y: (y0 + up) & 0xff, flags: turn(t), pic: b(0x46FC), x: along(s) }];
+    }
+    let script = match Bartender::end_pose(cx, w3) {
+        Pose::End { script, .. } => script,
+        _ => -1,
+    };
+    if (44..56).contains(&t) && (script == 0 || script == 3) {
+        let pics = [0x13, 0x12, 0x11, 0x11, 0x12, 0x13];
+        let up: i64 = (0..22).map(|j| 10 - j).sum();
+        return vec![BonusObj {
+            at: 0xE356,
+            y: (y0 + up - 3) & 0xff,
+            flags: turn(42),
+            pic: pics[usize::try_from((t - 44) / 2).unwrap_or(0)],
+            x: along(22),
+        }];
+    }
+    Vec::new()
 }
 
 /// A one-byte table's byte (an immediate the round's code writes, lifted

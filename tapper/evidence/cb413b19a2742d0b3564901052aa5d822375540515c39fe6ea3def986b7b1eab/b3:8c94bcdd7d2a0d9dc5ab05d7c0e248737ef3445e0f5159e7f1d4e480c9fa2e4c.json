@@ -35,7 +35,7 @@
             "total": 336
           },
           "sprites": {
-            "same": 5,
+            "same": 28,
             "total": 336
           }
         },
@@ -337,7 +337,7 @@
             "total": 336
           },
           "sprites": {
-            "same": 94,
+            "same": 160,
             "total": 336
           }
         },
@@ -414,7 +414,7 @@
             "total": 328
           },
           "sprites": {
-            "same": 60,
+            "same": 99,
             "total": 328
           }
         },
@@ -490,7 +490,7 @@
             "total": 1042
           },
           "sprites": {
-            "same": 178,
+            "same": 737,
             "total": 1042
           }
         },
@@ -583,7 +583,7 @@
             "total": 407
           },
           "sprites": {
-            "same": 59,
+            "same": 97,
             "total": 407
           }
         },
@@ -621,7 +621,7 @@
             "total": 96
           },
           "sprites": {
-            "same": 4,
+            "same": 7,
             "total": 96
           }
         },
@@ -660,7 +660,7 @@
             "total": 1640
           },
           "sprites": {
-            "same": 70,
+            "same": 94,
             "total": 1640
           }
         },
@@ -753,7 +753,7 @@
             "total": 1182
           },
           "sprites": {
-            "same": 75,
+            "same": 96,
             "total": 1182
           }
         },
@@ -845,7 +845,7 @@
             "total": 1132
           },
           "sprites": {
-            "same": 122,
+            "same": 678,
             "total": 1132
           }
         },
@@ -1047,7 +1047,7 @@
             "total": 3174
           },
           "sprites": {
-            "same": 9,
+            "same": 159,
             "total": 3174
           }
         },
@@ -1140,7 +1140,7 @@
             "total": 1576
           },
           "sprites": {
-            "same": 145,
+            "same": 177,
             "total": 1576
           }
         },
@@ -1233,7 +1233,7 @@
             "total": 3943
           },
           "sprites": {
-            "same": 18,
+            "same": 108,
             "total": 3943
           }
         },
@@ -1325,7 +1325,7 @@
             "total": 550
           },
           "sprites": {
-            "same": 180,
+            "same": 243,
             "total": 550
           }
         },
@@ -1440,7 +1440,7 @@
             "total": 1735
           },
           "sprites": {
-            "same": 57,
+            "same": 77,
             "total": 1735
           }
         },
@@ -1530,7 +1530,7 @@
             "total": 450
           },
           "sprites": {
-            "same": 187,
+            "same": 243,
             "total": 450
           }
         },
@@ -1607,7 +1607,7 @@
             "total": 3043
           },
           "sprites": {
-            "same": 48,
+            "same": 107,
             "total": 3043
           }
         },
@@ -1700,7 +1700,7 @@
             "total": 1400
           },
           "sprites": {
-            "same": 90,
+            "same": 157,
             "total": 1400
           }
         },
@@ -1793,7 +1793,7 @@
             "total": 1784
           },
           "sprites": {
-            "same": 58,
+            "same": 79,
             "total": 1784
           }
         },
@@ -1886,7 +1886,7 @@
             "total": 1464
           },
           "sprites": {
-            "same": 65,
+            "same": 86,
             "total": 1464
           }
         },
@@ -1976,7 +1976,7 @@
             "total": 498
           },
           "sprites": {
-            "same": 180,
+            "same": 245,
             "total": 498
           }
         },
@@ -2053,7 +2053,7 @@
             "total": 3375
           },
           "sprites": {
-            "same": 44,
+            "same": 64,
             "total": 3375
           }
         },
@@ -2146,7 +2146,7 @@
             "total": 2541
           },
           "sprites": {
-            "same": 59,
+            "same": 80,
             "total": 2541
           }
         },
@@ -2236,7 +2236,7 @@
             "total": 442
           },
           "sprites": {
-            "same": 103,
+            "same": 235,
             "total": 442
           }
         },
@@ -2391,7 +2391,7 @@
             "total": 9906
           },
           "sprites": {
-            "same": 818,
+            "same": 1520,
             "total": 9906
           }
         },
@@ -2500,7 +2500,7 @@
             "total": 336
           },
           "sprites": {
-            "same": 59,
+            "same": 125,
             "total": 336
           }
         },
@@ -2608,7 +2608,7 @@
       "version": "0.2.0"
     },
     "gp": {
-      "build": "995860955361be21ae9cc0b2314365cae0bb72ffa63673fce0d5050c68a43507",
+      "build": "18f012dd989be0eafbb987e1741c22ec7f7de975a19d90176565e204f40d36ff",
       "version": "0.1.1"
     },
     "mapping": {
@@ -2621,7 +2621,7 @@
       "short": "57653d1957dc"
     },
     "module": {
-      "hash": "c2a6badc8506412f3b913d104f3a2f223d651a63c5a711edfbd478863109eb04"
+      "hash": "42b664a4b4fcbf367f6073d2f5c8f378103a089cd551779aafc22254a1d22f94"
     },
     "profile": null,
     "record_format": "0.3.0",
@@ -2637,7 +2637,7 @@
       "picture": {
         "clips_same": 0,
         "frames": 54884,
-        "frames_same": 3747
+        "frames_same": 6473
       }
     },
     "rom": {
