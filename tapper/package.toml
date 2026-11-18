@@ -2,7 +2,7 @@
 # no game data, only facts about the romset and the model made from it.
 [package]
 name = "lex00/tapper"
-version = "0.1.1"
+version = "0.1.2"
 kind = "game"
 title = "Tapper"
 tier = "commercial"
@@ -28,7 +28,7 @@ platform = "arcade"
 system = "tapper"
 board_status = "unverified"
 asset_map = "assets/tapper.toml"
-asset_map_sha256 = "919d7406893e284dcc3dad008c8a4e2a871a1d1657273131e1e4bf4542abe5d0"
+asset_map_sha256 = "760175739efa4384c1da426e62b64d4f43a0d67a83205d85c9b9578b149f6a24"
 lifted_sha256 = "6fa26ec0e1d1c6aa72a3c821fb9f16c514c7b07429f8cebee4734e9df1ffa7e5"
 
 
@@ -42,7 +42,7 @@ platform = "arcade"
 system = "rbtapper"
 board_status = "unverified"
 asset_map = "assets/tapper.toml"
-asset_map_sha256 = "919d7406893e284dcc3dad008c8a4e2a871a1d1657273131e1e4bf4542abe5d0"
+asset_map_sha256 = "760175739efa4384c1da426e62b64d4f43a0d67a83205d85c9b9578b149f6a24"
 lifted_sha256 = "03ad878cb5d296376a2d8761b53f3c3b1ed40a3a066e9dfaeda0fc0aa905ed84"
 
 # tapper's program with other sprites (155 of 256 differ). Plays this model with its own pictures.
@@ -55,7 +55,7 @@ platform = "arcade"
 system = "tapperg"
 board_status = "unverified"
 asset_map = "assets/tapper.toml"
-asset_map_sha256 = "919d7406893e284dcc3dad008c8a4e2a871a1d1657273131e1e4bf4542abe5d0"
+asset_map_sha256 = "760175739efa4384c1da426e62b64d4f43a0d67a83205d85c9b9578b149f6a24"
 lifted_sha256 = "f44d22f315c94a8176929e88c6f73e6afee55cb213e092728bfa2a854f62cfd3"
 
 # The Suntory set: the same RAM layout and score timeline as rbtapper in a scripted game, not proven the same game. Plays this model with its own pictures.
@@ -68,7 +68,7 @@ platform = "arcade"
 system = "sutapper"
 board_status = "unverified"
 asset_map = "assets/tapper.toml"
-asset_map_sha256 = "919d7406893e284dcc3dad008c8a4e2a871a1d1657273131e1e4bf4542abe5d0"
+asset_map_sha256 = "760175739efa4384c1da426e62b64d4f43a0d67a83205d85c9b9578b149f6a24"
 lifted_sha256 = "96b3969764c5f2bba95c236b4012fd8928d4479b2abfdad9476579cf44ca82c1"
 
 # An older revision of tapper's program that plays differently; with it a player gets this model's game, which is tapper's, in tappera's pictures.
@@ -81,7 +81,7 @@ platform = "arcade"
 system = "tappera"
 board_status = "unverified"
 asset_map = "assets/tapper.toml"
-asset_map_sha256 = "919d7406893e284dcc3dad008c8a4e2a871a1d1657273131e1e4bf4542abe5d0"
+asset_map_sha256 = "760175739efa4384c1da426e62b64d4f43a0d67a83205d85c9b9578b149f6a24"
 lifted_sha256 = "b4a02e27628db921e7932f69d365e6539c391890accf00f491b1a88014fb3884"
 
 

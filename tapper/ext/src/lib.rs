@@ -1765,6 +1765,68 @@ struct BonusObj {
     x: i64,
 }
 
+/// The beer in the mug at the tap ($129D to $1308): each frame of the
+/// pour after its first ($121D set E715 to 4), while E715 counts down,
+/// the first free object of six from E18E takes a layer: at the
+/// bartender's y plus 4 for each layer before it, flags 3, picture $7F
+/// for the first and $21 above it, at the tap's handle's x. Three layers
+/// fill the mug (E715 at 1, then 0 with E714 1, $125E); a send ($13CC),
+/// a move ($214B) or a walk empties both counts, and the layers with them.
+/// The level's end pours its own mug the same way.
+fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
+    const T: i64 = 0x1206;
+    let Some(pk) = cx.kind("player") else { return Vec::new() };
+    let Some(me) = cx.world.bodies.iter().find(|b| b.alive && b.kind == pk) else { return Vec::new() };
+    if me.y.floor() == 0 || cx.counter("mode").is_some_and(|m| m != 0) {
+        return Vec::new();
+    }
+    let Some((tap_x, tap_left)) = Bartender::tap(cx, me.ext[0] & 3) else { return Vec::new() };
+    let y = me.y.floor();
+    // A level's end ($4742, from the end script's frame 56 as
+    // Bartender::end_pose counts it): the handle down, then each 2 frames
+    // ($477F, six times) a layer 2 above the last in the first free
+    // object, picture $0B then $0C, until $4852 empties eight objects 15
+    // frames after the full mug ($4815, frame 85).
+    let flow = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k));
+    if let Some(fb) = flow
+        && [15, 16].contains(&(fb.ext[3] & 0xff))
+        && (fb.ext[3] >> 16) & 0xff == 8
+    {
+        let w3 = fb.ext[3];
+        let n = ((w3 >> 24) & 0xffff) + 1;
+        let n = if n >= 109 && w3 & END_TWICE != 0 { n - 53 } else { n };
+        let b = |at: i64| imm(cx, "end_pose_b", 0x467B, at);
+        let x = (tap_x + if tap_left { b(0x47D4) } else { 0 }) & 0xff;
+        return (0..6)
+            .filter(|k| n >= 58 + 2 * k && n < 85)
+            .map(|k| BonusObj {
+                at: 0xE18E + 4 * k,
+                y: (y + 2 * k) & 0xff,
+                flags: b(0x47AB),
+                pic: if k == 0 { b(0x47B8) } else { b(0x47B3) },
+                x,
+            })
+            .collect();
+    }
+    let w = me.ext[2];
+    let (e715, e714) = ((w >> 40) & 0xff, (w >> 48) & 1);
+    let n = match e715 {
+        1..=3 => 4 - e715,
+        0 if e714 != 0 => 3,
+        _ => 0,
+    };
+    let x = (tap_x + if tap_left { imm(cx, "bartender_tap", T, 0x1304) } else { 0 }) & 0xff;
+    (0..n)
+        .map(|i| BonusObj {
+            at: 0xE18E + 4 * i,
+            y: (y + 4 * i) & 0xff,
+            flags: imm(cx, "bartender_tap", T, 0x12D1),
+            pic: if i == 0 { imm(cx, "bartender_tap", T, 0x12E8) } else { imm(cx, "bartender_tap", T, 0x12D9) },
+            x,
+        })
+        .collect()
+}
+
 /// A one-byte table's byte (an immediate the round's code writes, lifted
 /// from the player's romset).
 fn byte_of(cx: &ExtCx<'_>, name: &str) -> i64 {
@@ -1929,7 +1991,21 @@ fn bonus_scene(cx: &ExtCx<'_>, fb: &gp_sim::world::Body, cleared: i64, done: boo
                 text = 0;
                 if c < at + 22 {
                     objs.push(beer(2, "beer_pic_spray", -2));
-                } else if c >= at + 76 {
+                } else if c < at + 76 {
+                    // $28AD: the burst, its 27 objects (bonus_burst) put in
+                    // from E2B2 one a frame, x by the can's, then from
+                    // $28D9 taken away one a frame from the last; the
+                    // first stays until the can is opened.
+                    let t = c - (at + 22);
+                    let rows = cx.table("bonus_burst");
+                    for m in 0..27i64 {
+                        let shown = t > m && (m == 0 || t < 55 - m);
+                        let r = rows.get(usize::try_from(4 * m).unwrap_or(0)..usize::try_from(4 * m + 4).unwrap_or(0));
+                        if let (true, Some(r)) = (shown, r) {
+                            objs.push(BonusObj { at: 0xE2B2 + 4 * m, y: r[0], flags: r[1], pic: r[2], x: (r[3] + cxp) & 0xff });
+                        }
+                    }
+                } else {
                     objs.push(beer(16, "beer_pic", -11));
                     objs[k].y = 0;
                     text = 5;
@@ -4229,7 +4305,11 @@ impl Ext for Bars {
         // The bonus round's objects, by address: one kept is the same
         // body, one gone (y 0, or out of the round) is removed.
         if let Some(ok) = cx.kind("bonus_object") {
-            let (want, text) = bonus_objs.unwrap_or_default();
+            let in_round = bonus_objs.is_some();
+            let (mut want, text) = bonus_objs.unwrap_or_default();
+            if !in_round {
+                want.extend(pour_layers(cx));
+            }
             if cx.counter("bonus_text") != Some(text) {
                 cx.set_counter("bonus_text", text);
             }
@@ -4254,9 +4334,12 @@ impl Ext for Bars {
                 let mut b = gp_sim::systems::new_body(cx.spec, cx.world, ok, Fx::from_int(o.x), Fx::from_int(o.y), false);
                 b.ext[0] = o.flags | (o.pic << 8);
                 b.ext[1] = key(o.at);
+                // Its id: the world's end plus every spawn asked for this
+                // step, mugs and customers included.
+                let id = cx.world.bodies.len()
+                    + cx.requests().iter().filter(|r| matches!(r, gp_sim::ext::Request::Spawn { .. })).count();
                 cx.spawn(ok, b.x, b.y, false);
-                cx.set_body(n, b);
-                n += 1;
+                cx.set_body(id, b);
             }
         }
     }

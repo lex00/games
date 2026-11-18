@@ -721,6 +721,19 @@ sutapper = 0x2A15
 tappera = 0x2A15
 
 [[asset]]
+name = "bonus_burst"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2A55
+count = 27
+width = 4
+
+[asset.at]
+rbtapper = 0x2A69
+sutapper = 0x2A55
+tappera = 0x2A55
+
+[[asset]]
 name = "bonus_bandit_places"
 format = "byte-rows"
 region = "maincpu"

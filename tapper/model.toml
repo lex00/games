@@ -419,6 +419,15 @@ description = "The bonus round pokes ($250C, $2511)"
 source = "tapper"
 asset = "bonus_colors"
 
+[assets.bonus_burst]
+kind = "rows"
+role = "graphics"
+description = "The bonus round's loss: the 27 objects of the burst $284D copies to E2B2 one a frame from $28AD, after the spray (y, flags, picture, and x less the can's), and takes away again from $28D9"
+
+[assets.bonus_burst.from]
+source = "tapper"
+asset = "bonus_burst"
+
 [assets.bonus_objects]
 kind = "rows"
 role = "graphics"
@@ -1635,6 +1644,7 @@ bandit_pic_walk = "bandit_pic_walk"
 bandit_stop = "bandit_stop"
 bar_ends = "bar_ends"
 bartender_flags = "bartender_flags"
+bartender_tap = "bartender_tap"
 bartender_flags_right = "bartender_flags_right"
 bartender_pic_lose_1 = "bartender_pic_lose_1"
 bartender_pic_lose_2 = "bartender_pic_lose_2"
@@ -1652,6 +1662,7 @@ beer_flags = "beer_flags"
 beer_pic = "beer_pic"
 beer_pic_spray = "beer_pic_spray"
 bonus_bandit_places = "bonus_bandit_places"
+bonus_burst = "bonus_burst"
 bonus_code = "bonus_code"
 bonus_objects = "bonus_objects"
 bonus_start = "bonus_start"
@@ -1659,6 +1670,7 @@ customer_starts = "customer_starts"
 cycle_lamps = "cycle_lamps"
 cycle_space_1 = "cycle_space_1"
 defaults = "defaults"
+end_pose_b = "end_pose_b"
 end_script_lists = "end_script_lists"
 fall_crash_pictures = "fall_crash_pictures"
 fall_picture_crash = "fall_picture_crash"
@@ -10039,6 +10051,14 @@ confidence = 70
 note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
 
 [[evidence."assets.bonus_objects".refs]]
+at = "clip:tapper.bonus.001"
+
+[evidence."assets.bonus_burst"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $284D (the loss): $28AD copies 27 rows of 4 bytes from $2A55 to E2B2, one a frame, adding the can's x to the fourth; $28D9 clears them from E31E one a frame. rbtapper's table at $2A69 ($28BE), sutapper's and tappera's at $2A55 ($28B0), each from its own listing. Drawn, never compared"
+
+[[evidence."assets.bonus_burst".refs]]
 at = "clip:tapper.bonus.001"
 
 [evidence."assets.bonus_pairs"]
