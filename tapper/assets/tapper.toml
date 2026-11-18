@@ -2209,7 +2209,7 @@ format = "byte-rows"
 region = "maincpu"
 offset = 0x1206
 count = 1
-width = 262
+width = 331
 
 [asset.at]
 rbtapper = 0x1201

@@ -1810,6 +1810,7 @@ fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
             })
             .collect();
         objs.extend(kicked_glass(cx, me, n, tap_left, fb.ext[3]));
+        objs.extend(drink_bubbles(cx, me, n, tap_left));
         return objs;
     }
     let w = me.ext[2];
@@ -1829,6 +1830,29 @@ fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
             flags: imm(cx, "bartender_tap", T, 0x12D1),
             pic: if i == 0 { imm(cx, "bartender_tap", T, 0x12E8) } else { imm(cx, "bartender_tap", T, 0x12D9) },
             x,
+        })
+        .collect()
+}
+
+/// The bubbles as he drinks at a level's end ($130C, called from $4869
+/// at frame 85): six objects from E1AE, each one line below the last from
+/// his y plus 1 ($1338 to $1343: state 11), 6 along from his x (11 back on
+/// a bar whose tap is on the left), picture $15; they go from the top, one
+/// each 4 frames, the last at frame 109 (tapper-m3-five's first level's
+/// end, frames 1301 to 1325).
+fn drink_bubbles(cx: &ExtCx<'_>, me: &gp_sim::world::Body, n: i64, left: bool) -> Vec<BonusObj> {
+    const T: i64 = 0x1206;
+    let b = |at: i64| imm(cx, "bartender_tap", T, at);
+    let count = b(0x1324);
+    let x = if left { me.x.floor() - b(0x1336) } else { me.x.floor() + b(0x1332) };
+    (0..count)
+        .filter(|i| n >= 85 && n < 109 - 4 * i)
+        .map(|i| BonusObj {
+            at: 0xE1AE + 4 * i,
+            y: (me.y.floor() + 1 + i) & 0xff,
+            flags: b(0x1346),
+            pic: b(0x1349),
+            x: x & 0xff,
         })
         .collect()
 }
