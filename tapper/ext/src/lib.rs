@@ -1011,11 +1011,13 @@ const FLOW_PARAMS: &[Param] = &[
 ];
 
 /// The flow's word 2 from bit 40: the frames since the attract mode's
-/// logo began (sub 0 of the attract, 16 bits), and a flag for the frame a
-/// game started on, which tapper_bars reads.
+/// logo began (sub 0 of the attract, 16 bits), and at bit 60 a flag for
+/// the frame a game started on, which tapper_bars reads. The flag is
+/// cleared every frame, so it keeps clear of the bonus round's fields
+/// (BONUS_MASK, bits 40 to 57), which share the word in a game.
 const ATTRACT_SHIFT: u32 = 40;
 const ATTRACT_MASK: i64 = 0xffff << ATTRACT_SHIFT;
-const STARTED: i64 = 1 << 56;
+const STARTED: i64 = 1 << 60;
 
 impl Flow {
     /// The coin routine ($0213, four times a frame from the CTC's
@@ -4361,6 +4363,17 @@ impl Ext for Bars {
             built_from: &[Primitive::Timer, Primitive::Condition, Primitive::Quantity],
             ..Record::EMPTY
         }]
+    }
+}
+
+#[cfg(test)]
+mod bits {
+    /// The game-start flag, cleared every frame, never touches a field of
+    /// the bonus round in the same word (the can being shaken lost its
+    /// middle bit, so the bandit shook cans 0 and 1 again for 2 and 3).
+    #[test]
+    fn the_start_flag_is_apart_from_the_bonus_fields() {
+        assert_eq!(super::STARTED & super::BONUS_MASK, 0);
     }
 }
 

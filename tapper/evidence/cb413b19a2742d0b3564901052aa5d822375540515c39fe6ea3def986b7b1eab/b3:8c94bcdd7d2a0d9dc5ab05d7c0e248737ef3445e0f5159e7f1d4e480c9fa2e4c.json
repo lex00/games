@@ -490,7 +490,7 @@
             "total": 1042
           },
           "sprites": {
-            "same": 168,
+            "same": 178,
             "total": 1042
           }
         },
@@ -845,7 +845,7 @@
             "total": 1132
           },
           "sprites": {
-            "same": 110,
+            "same": 122,
             "total": 1132
           }
         },
@@ -1325,7 +1325,7 @@
             "total": 550
           },
           "sprites": {
-            "same": 194,
+            "same": 180,
             "total": 550
           }
         },
@@ -1530,7 +1530,7 @@
             "total": 450
           },
           "sprites": {
-            "same": 177,
+            "same": 187,
             "total": 450
           }
         },
@@ -1976,7 +1976,7 @@
             "total": 498
           },
           "sprites": {
-            "same": 168,
+            "same": 180,
             "total": 498
           }
         },
@@ -2236,7 +2236,7 @@
             "total": 442
           },
           "sprites": {
-            "same": 93,
+            "same": 103,
             "total": 442
           }
         },
@@ -2391,7 +2391,7 @@
             "total": 9906
           },
           "sprites": {
-            "same": 808,
+            "same": 818,
             "total": 9906
           }
         },
@@ -2621,7 +2621,7 @@
       "short": "57653d1957dc"
     },
     "module": {
-      "hash": "2fd9d4a59be4b523b1e49d263b29007c4ae46d8859c3a909222222cbb0071e9d"
+      "hash": "c2a6badc8506412f3b913d104f3a2f223d651a63c5a711edfbd478863109eb04"
     },
     "profile": null,
     "record_format": "0.3.0",
@@ -2637,7 +2637,7 @@
       "picture": {
         "clips_same": 0,
         "frames": 54884,
-        "frames_same": 3697
+        "frames_same": 3747
       }
     },
     "rom": {
