@@ -1319,6 +1319,69 @@ description = "The four objects a customer's slide leaves in the mug slots from 
 source = "tapper"
 asset = "slide_objects"
 
+[assets.glass_arcs]
+kind = "rows"
+role = "graphics"
+description = "A level's end: the kicked glass's arcs, $58C5 (scripts 0 and 3, 22 steps) and $5904 (scripts 1 and 2, 21 steps, along every other step), the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.glass_arcs.from]
+source = "tapper"
+asset = "glass_arcs"
+
+[assets.glass_turns]
+kind = "rows"
+role = "graphics"
+description = "A level's end: the kicked glass's flags by its step count mod 8 (E706), the table at $56C2 (lifted from the player's romset)"
+
+[assets.glass_turns.from]
+source = "tapper"
+asset = "glass_turns"
+
+[assets.glass_down]
+kind = "rows"
+role = "graphics"
+description = "A level's end, script 2: $2DF7 stands the glass at his feet, the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.glass_down.from]
+source = "tapper"
+asset = "glass_down"
+
+[assets.glass_crash]
+kind = "rows"
+role = "graphics"
+description = "A level's end: the glass's break, $45E3's pictures a frame from the table at $24F4, 12 (lifted from the player's romset)"
+
+[assets.glass_crash.from]
+source = "tapper"
+asset = "glass_crash"
+
+[assets.intro_pose]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: the level's intro, $5404 from $543D: his four objects at the tap above GET READY TO SERVE and the pour's last pose 30 frames on ($5489), the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.intro_pose.from]
+source = "tapper"
+asset = "intro_pose"
+
+[assets.lost_pose_fall]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: a life lost to a fallen mug, $2389 from $23B5: his picture, his head's and its place 16 above him, the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.lost_pose_fall.from]
+source = "tapper"
+asset = "lost_pose_fall"
+
+[assets.lost_pose_slide]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: a customer's slide, $1CE1 from $1D15: his hands to his head as it starts and his turn after its wait of 30 ($1D50), the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.lost_pose_slide.from]
+source = "tapper"
+asset = "lost_pose_slide"
+
 [assets.slide_pose]
 kind = "rows"
 role = "graphics"
@@ -1834,6 +1897,17 @@ walk_frames = 12
 
 [entities.bars.ext_rows]
 arrivals = "arrivals"
+bar_objects = "bar_objects"
+end_hops = "end_hops"
+end_lift = "end_lift"
+glass_arcs = "glass_arcs"
+glass_crash = "glass_crash"
+glass_down = "glass_down"
+glass_turns = "glass_turns"
+bartender_pour = "bartender_pour"
+intro_pose = "intro_pose"
+lost_pose_fall = "lost_pose_fall"
+lost_pose_slide = "lost_pose_slide"
 bandit_flags = "bandit_flags"
 bandit_pic_bottom = "bandit_pic_bottom"
 bandit_pic_shake = "bandit_pic_shake"
@@ -2144,15 +2218,12 @@ word = 2
 
 [entities.player.ext_params]
 bob_frames = 3
-far_left = 32
-far_right = 232
 four_way = 1
 mug_above = 4
 mug_out = 24
 mug_out_left = 27
 mug_speed = 5
 pour_frames = 5
-reach = 6
 row_bottom = 48
 row_height = 48
 send_step = 6
@@ -2163,6 +2234,7 @@ switch_frames = 6
 walk_step = 2
 
 [entities.player.ext_rows]
+bar_ends = "bar_ends"
 bar_objects = "bar_objects"
 bartender_idle = "bartender_idle"
 bartender_land = "bartender_land"
@@ -11065,6 +11137,62 @@ note = "gp code listing on tapper.l6.001's end: where the slide ends ($1F66 fall
 [[evidence."assets.slide_objects".refs]]
 at = "clip:tapper.l6.001"
 
+[evidence."assets.glass_arcs"]
+source = "observed"
+confidence = 80
+note = "gp code listing of $58C5 and $5904; the glass's object E356 on tapper.l1.001 frames 244 to 286 and tapper.l5.001 frames 1128 to 1168 (gp clip score --values on the bar_end slot 0): up 10, 9, 8 and on each 2 frames, 1 along a step, or every other step in $5904"
+
+[[evidence."assets.glass_arcs".refs]]
+at = "clip:tapper.l5.001"
+
+[evidence."assets.glass_turns"]
+source = "observed"
+confidence = 80
+note = "gp code listing of $58C5, $5904, $594D and $50EF, each reading $56C2 by E706; E357 on tapper.l3.001 frames 341 to 403: 03, 13, 13, 23 as the table gives, on a left-tap bar too"
+
+[[evidence."assets.glass_turns".refs]]
+at = "clip:tapper.l3.001"
+
+[evidence."assets.glass_down"]
+source = "observed"
+confidence = 80
+note = "gp code listing of $48C7 and $2DF7; no corpus clip ends a level with script 2"
+
+[[evidence."assets.glass_down".refs]]
+at = "clip:tapper.l5.001"
+
+[evidence."assets.glass_crash"]
+source = "observed"
+confidence = 80
+note = "gp code listing of $45E3; E358 on tapper.l1.001 frames 288 to 299 and tapper.l5.001 frames 1170 to 1181: 13, 13, 12, 12, 11, 11, 11, 11, 12, 12, 13, 13"
+
+[[evidence."assets.glass_crash".refs]]
+at = "clip:tapper.l5.001"
+
+[evidence."assets.intro_pose"]
+source = "observed"
+confidence = 80
+note = "gp element inputs on tapper.l5.001 frames 563 and 593: $5404 writes E2E8 $04 at $5441 and $01 at $5492, its objects E2E6 to E2FD from $543D to $54CE; $54DB's $5F31 clears them on 598; gp code listing; the same bytes in every set, rbtapper's 0x190 on"
+
+[[evidence."assets.intro_pose".refs]]
+at = "clip:tapper.l5.001"
+
+[evidence."assets.lost_pose_fall"]
+source = "observed"
+confidence = 80
+note = "gp element inputs on tapper.l5.001 frame 533 (the original's 5612): $236E's $2389 writes E2E8 $18 at $23B9, and E2FA to E2FD (his head, $19, 16 above him at his x) from $23BD to $23CC, hiding E2EA to E2F6; gp code listing; the same bytes at $23B5 in every set (gp code listing's bytes, compared)"
+
+[[evidence."assets.lost_pose_fall".refs]]
+at = "clip:tapper.l5.001"
+
+[evidence."assets.lost_pose_slide"]
+source = "observed"
+confidence = 80
+note = "gp element inputs on tapper.l6.001 frames 1394, 1424, 1426 and 1428: $1CE1 writes E2E8 $18 at $1D19 with his head $19 16 above him ($1D1D to $1D2C), then after the wait of 30 hides his head ($1D53) and turns him through $28, $29 and $2A ($1D58), 2 frames each; the same bytes at $1D15 in every set"
+
+[[evidence."assets.lost_pose_slide".refs]]
+at = "clip:tapper.l6.001"
+
 [evidence."assets.slide_pose"]
 source = "observed"
 confidence = 70
@@ -11602,16 +11730,6 @@ note = "His walk's bob moves him a pixel every 3 frames a direction is held: E72
 [[evidence."entities.player.ext_params.bob_frames".refs]]
 at = "clip:tapper.l1.001"
 
-[evidence."entities.player.ext_params.far_left"]
-source = "inferred"
-confidence = 10
-note = "The bars' left end: a guess, not measured"
-
-[evidence."entities.player.ext_params.far_right"]
-source = "inferred"
-confidence = 10
-note = "The bars' right end: a guess, not measured"
-
 [evidence."entities.player.ext_params.four_way"]
 source = "observed"
 confidence = 90
@@ -11659,14 +11777,6 @@ note = "5 frames held fill a mug: gp model static reads E715 set to 4 at $121F, 
 
 [[evidence."entities.player.ext_params.pour_frames".refs]]
 at = "rom:1da6316bba47 frames 321-645: gp model blind, the frames the held button counts before it acts"
-
-[evidence."entities.player.ext_params.reach"]
-source = "observed"
-confidence = 70
-note = "He can walk 6 past where he stands toward a tap on the bar's right end (183 on bar 2, tapper-diagonal-4way-a, frames 601 to 620)"
-
-[[evidence."entities.player.ext_params.reach".refs]]
-at = "clip:tapper.l1.001"
 
 [evidence."entities.player.ext_params.row_bottom"]
 source = "observed"

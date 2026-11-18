@@ -617,7 +617,9 @@ fn draw_pose(cx: &mut ExtCx<'_>, ev: Pose, x_before: i64, spawned: usize) {
                     cx.set_body(id, b);
                 }
             }
-            None if o.y != 0 => {
+            // A hidden one with a picture too, so a start that found it
+            // hidden (tapper.die.001) has it to place.
+            None if o.y != 0 || o.pic != 0 => {
                 let mut b = gp_sim::systems::new_body(cx.spec, cx.world, pk, Fx::from_int(o.x), Fx::from_int(o.y), false);
                 b.ext[0] = word;
                 b.ext[1] = k as i64 + 1;
@@ -664,9 +666,6 @@ const PARAMS: &[Param] = &[
     Param::new("row_bottom", "fixed", "px"),
     Param::new("stand_right", "fixed", "px"),
     Param::new("stand_left", "fixed", "px"),
-    Param::new("reach", "fixed", "px"),
-    Param::new("far_left", "fixed", "px"),
-    Param::new("far_right", "fixed", "px"),
     Param::new("send_step", "fixed", "px"),
     Param::new("pour_frames", "frames", "frames"),
     Param::new("bob_frames", "frames", "frames"),
@@ -970,11 +969,21 @@ impl Bartender {
             }
             Some(d) => {
                 let right = d == 0;
-                let (lo, hi) = match tap {
-                    Some((x, true)) => (x + p(cx, "stand_left") - p(cx, "reach"), p(cx, "far_right")),
-                    Some((x, false)) => (p(cx, "far_left"), x - p(cx, "stand_right") + p(cx, "reach")),
-                    None => (p(cx, "far_left"), p(cx, "far_right")),
-                };
+                // The walk's ends ($1A9D, $1CA8): the bar's row of the
+                // table at $0977, its left end (+13 on a bar whose tap is
+                // on the left, $1AB4) and its right end +16 (+10 more on
+                // such a bar, $1CBC, $1CC2); a step that would reach past
+                // one (the left: below it; the right: at it or past) isn't
+                // taken.
+                let tap_left = tap.is_some_and(|(_, l)| l);
+                let row = usize::try_from(bar & 3).unwrap_or(0) * 4;
+                let ends = cx.table("bar_ends");
+                let (l_end, r_end) = (ends.get(row + 1).copied().unwrap_or(0), ends.get(row + 2).copied().unwrap_or(0));
+                let lo = (l_end + if tap_left { imm(cx, "bartender_walk_left", 0x19EF, 0x1AB5) } else { 0 }) & 0xff;
+                let hi = (r_end
+                    + imm(cx, "bartender_walk_right", 0x1C02, 0x1CBD)
+                    + if tap_left { imm(cx, "bartender_walk_right", 0x1C02, 0x1CC3) } else { 0 })
+                    & 0xff;
                 // His walk's bob: E727 counts 2, 1, 0 over the frames a
                 // direction is held and E729 steps 0 to 3 when it runs out,
                 // moving him 1 down, 1 down, 1 up, 1 up; both are kept when
@@ -994,10 +1003,10 @@ impl Bartender {
                     cx.me.ext[2] = (cx.me.ext[2] & !0xffff) | (count - 1 + (phase << 8));
                 }
                 let step = p(cx, "walk_step");
-                let x = cx.me.x.floor() + if right { step } else { -step };
-                // max then min, not clamp: a bar with no tap in reach (the
-                // bonus round's) may give lo over hi.
-                cx.me.x = Fx::from_int(x.max(lo).min(hi));
+                let x = (cx.me.x.floor() + if right { step } else { -step }) & 0xff;
+                if (right && x < hi) || (!right && x >= lo) {
+                    cx.me.x = Fx::from_int(x);
+                }
                 cx.me.facing_left = !right;
             }
         }
@@ -1932,16 +1941,61 @@ fn drink_bubbles(cx: &ExtCx<'_>, me: &gp_sim::world::Body, n: i64, left: bool) -
 /// The glass of a level's end, after he drinks it ($4687 to $4707): from
 /// frame 109 the empty glass ($17) in E2E2 beside him, 2 above his y and
 /// 14 out from where he stood (he steps 1 that way, $46BF); from 124, the
-/// kick ($46CC), the glass tipped ($10) 8 lower; from 128 it flies from
-/// E356 in an arc, a step each 2 frames (10 up at first, 1 less each step,
-/// 1 along away from the tap) turning through its four flips, 22 steps;
-/// then, in scripts 0 and 3 ($4708), he catches it by his head, 3 lower,
-/// and it turns there ($13, $12, $11, $11, $12, $13), until frame 184.
-/// The flight's numbers are measured from MAME (tapper-m3-five, the first
-/// level's end, frames 1325 to 1400).
+/// kick ($46CC), the glass tipped ($10) 8 lower; from 128 it is in E356
+/// and the script moves it, a step each 2 frames, its flags from the
+/// table at $56C2 by a count of the steps mod 8 (E706, from 0 at $46C8):
+/// - scripts 0 and 3 ($58C5): 22 steps, up 10 at first and 1 less each
+///   step, 1 along away from the tap each step. Script 0 ($4881): 3
+///   lower, then $45E3 breaks it, a picture a frame from the table at
+///   $24F4 (12), and empties it. Script 3 ($48D1): $50EF or $51A9 bounce
+///   it 10 steps (up 3 at first, 1 less each, 1 along, the flags' count
+///   mod 4), then stand it ($17); $51A9 puts him under it 4 frames on
+///   and it rides on his head as he hops (5 frames a hop, 5 up and down
+///   by turns, along by the table at $519F).
+/// - scripts 1 and 2 ($5904): the same arc for 21 steps, 1 along every
+///   other step. Script 1 ($489A): $45E3 breaks it where it came down
+///   (on his head). Script 2 ($2DF7): it stands ($17) at his feet, 2 out
+///   on a left-tap bar.
+/// - script 4 ($594D): straight up 10 a step until at $EE or higher, then
+///   gone.
 fn kicked_glass(cx: &ExtCx<'_>, me: &gp_sim::world::Body, n: i64, left: bool, w3: i64) -> Vec<BonusObj> {
     let b = |at: i64| imm(cx, "end_pose_b", 0x467B, at);
-    let (my, mx) = (me.y.floor(), me.x.floor());
+    let arc = |at: i64| imm(cx, "glass_arcs", 0x58C5, at);
+    let hop = |at: i64| imm(cx, "end_hops", 0x50EF, at);
+    let turns = cx.table("glass_turns");
+    let turn = |k: i64| turns.get(usize::try_from(k.rem_euclid(8)).unwrap_or(0)).copied().unwrap_or(0);
+    let crash = cx.table("glass_crash");
+    let script = match Bartender::end_pose(cx, w3) {
+        Pose::End { script, .. } => script,
+        _ => -1,
+    };
+    let interlude_b = (w3 >> 8) & 3 != 3 && w3 & END_INTERLUDE_B != 0;
+    // Where he stood at the kick: script 3's interludes move him after it
+    // (tapper_bars, on frames before this one's), so those moves come off.
+    let (mut my, mut mx) = (me.y.floor(), me.x.floor());
+    if script == 3 {
+        let away = if left { 1 } else { -1 };
+        let hops = cx.table("hop_steps");
+        let step = |k: i64| hops.get(usize::try_from(k).unwrap_or(0)).map_or(0, |&v| if v >= 0x80 { v - 0x100 } else { v });
+        let first = if interlude_b {
+            if n > 194 {
+                mx -= 5 * away;
+                my -= 5;
+            }
+            if n > 196 {
+                mx -= 14 * away;
+                my += 9;
+            }
+            200
+        } else {
+            192
+        };
+        for k in (0..10).filter(|k| first + 5 * k < n) {
+            mx -= step(k);
+            my -= if k % 2 == 0 { 5 } else { -5 };
+        }
+        mx &= 0xff;
+    }
     // Where he stood before the step: the glass is placed from there.
     let stood = if left { mx + 1 } else { mx - 1 };
     let gx = if left { stood + b(0x46A3) - b(0x46AC) } else { stood + b(0x46A3) };
@@ -1955,31 +2009,81 @@ fn kicked_glass(cx: &ExtCx<'_>, me: &gp_sim::world::Body, n: i64, left: bool, w3
         return vec![at_side(gy + b(0x46D8), b(0x46D3))];
     }
     let t = n - 128;
+    if t < 0 {
+        return Vec::new();
+    }
     let y0 = gy + b(0x46D8);
+    let pic = b(0x46FC);
     let dir = if left { 1 } else { -1 };
-    let along = |s: i64| (gx + dir * s) & 0xff;
-    let turn = |t: i64| flags ^ ((((t + 2) / 4) % 4) << 4);
-    if (0..44).contains(&t) {
-        let s = t / 2 + 1;
-        let up: i64 = (0..s).map(|j| 10 - j).sum();
-        return vec![BonusObj { at: 0xE356, y: (y0 + up) & 0xff, flags: turn(t), pic: b(0x46FC), x: along(s) }];
+    let glass = |y: i64, flags: i64, pic: i64, x: i64| vec![BonusObj { at: 0xE356, y: y & 0xff, flags, pic, x: x & 0xff }];
+    if script == 4 {
+        // $594D: up c a step; after each step's wait, gone at $EE.
+        let (c, top) = (imm(cx, "end_lift", 0x594D, 0x5953), imm(cx, "end_lift", 0x594D, 0x5980));
+        let last = (1..64).find(|&j| y0 + c * j >= top).unwrap_or(64);
+        if t >= 2 * last {
+            return Vec::new();
+        }
+        let k = t / 2 + 1;
+        return glass(y0 + c * k, turn(k), pic, gx);
     }
-    let script = match Bartender::end_pose(cx, w3) {
-        Pose::End { script, .. } => script,
-        _ => -1,
-    };
-    if (44..56).contains(&t) && (script == 0 || script == 3) {
-        let pics = [0x13, 0x12, 0x11, 0x11, 0x12, 0x13];
-        let up: i64 = (0..22).map(|j| 10 - j).sum();
-        return vec![BonusObj {
-            at: 0xE356,
-            y: (y0 + up - 3) & 0xff,
-            flags: turn(42),
-            pic: pics[usize::try_from((t - 44) / 2).unwrap_or(0)],
-            x: along(22),
-        }];
+    // The arc: $58C5 (scripts 0, 3) or $5904 (1, 2).
+    let wide = script == 0 || script == 3;
+    let (c0, steps) = if wide { (arc(0x58C6), arc(0x58CB)) } else { (arc(0x5905), arc(0x590A)) };
+    let along = |k: i64| if wide { k } else { (k + 1) / 2 };
+    let at_step = |k: i64| -> (i64, i64) { (y0 + (0..k).map(|j| c0 - j).sum::<i64>(), gx + dir * along(k)) };
+    if t < 2 * steps {
+        let k = t / 2 + 1;
+        let (y, x) = at_step(k);
+        return glass(y, turn(k), pic, x);
     }
-    Vec::new()
+    let (ye, xe) = at_step(steps);
+    let fe = turn(steps);
+    let u = t - 2 * steps;
+    match script {
+        0 if u < 12 => {
+            // $4887: 3 lower; $45E3: a picture a frame.
+            let p = crash.get(usize::try_from(u).unwrap_or(0)).copied().unwrap_or(pic);
+            glass(ye - 3, fe, p, xe)
+        }
+        1 if u < 12 => {
+            let p = crash.get(usize::try_from(u).unwrap_or(0)).copied().unwrap_or(pic);
+            glass(ye, fe, p, xe)
+        }
+        2 => {
+            // $2DF7: at his feet.
+            let d = imm(cx, "glass_down", 0x2DF7, 0x2E08);
+            let x = mx + if left { d } else { 0 };
+            glass(my, imm(cx, "glass_down", 0x2DF7, 0x2E0F), imm(cx, "glass_down", 0x2DF7, 0x2E13), x)
+        }
+        3 => {
+            // $50EF/$51A9's bounce: the same code from either start.
+            let (c, nb, m4) = (hop(0x50F9), hop(0x50FB), hop(0x5116));
+            let bounce = |m: i64| (ye + (0..m).map(|j| c - j).sum::<i64>(), xe + dir * m);
+            if u < 2 * nb {
+                let m = u / 2 + 1;
+                let (y, x) = bounce(m);
+                return glass(y, turn(m % m4), pic, x);
+            }
+            let (yb, xb) = bounce(nb);
+            let (f, p) = if interlude_b { (hop(0x51F0), hop(0x51F4)) } else { (hop(0x5136), hop(0x513A)) };
+            let w = u - 2 * nb;
+            if !interlude_b || w < 8 {
+                return glass(yb, f, p, xb);
+            }
+            // $5263: 10 hops of 5 frames from 8 on, the glass on his head.
+            let (hc, hw) = (hop(0x5266), hop(0x529E));
+            let k = ((w - 8) / hw + 1).min(10);
+            let dy = if k % 2 == 1 { hc } else { 0 };
+            let dx: i64 = (0..k)
+                .map(|i| {
+                    let v = hop(0x519F + i);
+                    if v >= 0x80 { v - 0x100 } else { v }
+                })
+                .sum();
+            glass(yb + dy, f, p, xb + dx)
+        }
+        _ => Vec::new(),
+    }
 }
 
 /// A one-byte table's byte (an immediate the round's code writes, lifted
@@ -2323,6 +2427,184 @@ fn place_parts(cx: &mut ExtCx<'_>, ks: &[i64], hidden_too: bool, f: impl Fn(i64,
         b.x = Fx::from_int(x & 0xff);
         b.y = Fx::from_int(y & 0xff);
         cx.set_body(id, b);
+    }
+}
+
+/// The bartender's six objects as a hook other than his own sets them
+/// (tapper_bars, which runs after his): `f` gets his object and his five
+/// parts by place, and what it leaves is written back to the bodies (a
+/// part with no body is left out). The tap of his bar goes to `tap_y`'s
+/// y when `f` gives one: 0 hides it, 1 puts it back ($0679).
+fn bartender_objects(cx: &mut ExtCx<'_>, f: impl FnOnce(&ExtCx<'_>, &mut Obj, &mut [Obj; 5], &mut Option<i64>, (i64, bool))) {
+    let Some(pk) = cx.kind("player") else { return };
+    let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.alive && b.kind == pk).map(|(i, b)| (i, *b)) else {
+        return;
+    };
+    let w = pb.ext[2];
+    let mut me = Obj { y: pb.y.floor(), flags: (w >> 16) & 0xff, pic: (w >> 24) & 0xff, x: pb.x.floor() };
+    let mut ids: [Option<usize>; 5] = [None; 5];
+    let mut parts = [Obj::default(); 5];
+    if let Some(qk) = cx.kind("bartender_part") {
+        for (id, b) in cx.world.bodies.iter().enumerate() {
+            if b.alive && b.kind == qk && (1..=5).contains(&b.ext[1]) {
+                let k = usize::try_from(b.ext[1] - 1).unwrap_or(0);
+                ids[k] = Some(id);
+                parts[k] = Obj { y: b.y.floor(), flags: b.ext[0] & 0xff, pic: (b.ext[0] >> 8) & 0xff, x: b.x.floor() };
+            }
+        }
+    }
+    let bar = pb.ext[0] & 3;
+    let tk = cx.kind("tap");
+    let tap = tk.and_then(|tk| cx.world.bodies.iter().enumerate().filter(|(_, b)| b.kind == tk).nth(usize::try_from(bar).unwrap_or(0)).map(|(i, b)| (i, *b)));
+    let tap_at = tap.map_or((0, false), |(_, t)| (t.x.floor(), t.facing_left));
+    let mut tap_y = None;
+    f(cx, &mut me, &mut parts, &mut tap_y, tap_at);
+    let mut b = pb;
+    b.y = Fx::from_int(me.y);
+    b.x = Fx::from_int(me.x);
+    b.ext[2] = (w & !(0xffff << 16)) | ((me.flags & 0xff) << 16) | ((me.pic & 0xff) << 24);
+    cx.set_body(pid, b);
+    for (k, o) in parts.iter().enumerate() {
+        if let Some(id) = ids[k] {
+            let mut q = cx.world.bodies[id];
+            q.y = Fx::from_int(o.y);
+            q.x = Fx::from_int(o.x);
+            q.ext[0] = (o.flags & 0xff) | ((o.pic & 0xff) << 8);
+            cx.set_body(id, q);
+        }
+    }
+    if let (Some(v), Some((id, mut t))) = (tap_y, tap) {
+        let y = if v == 0 { 0 } else { cx.table("bar_objects").get(usize::try_from(bar * 4).unwrap_or(0)).copied().unwrap_or(t.y.floor()) };
+        t.y = Fx::from_int(y);
+        cx.set_body(id, t);
+    }
+}
+
+/// A life lost, as $1CE1 ($1D15 to $1D39) and $2389 ($23B5 to $23D9) both
+/// start it: his picture `pic`, his head's `head`, 16 above him (`up`, the
+/// `add a,$F0`'s byte) at his x, his other four objects hidden, and the
+/// tap of his bar put back ($0679). The pictures are the code's own
+/// immediates, read from `table` (lifted from `start`) at their places.
+/// His own object is `pb`, which the caller sets.
+fn lost_pose(cx: &mut ExtCx<'_>, pb: &mut gp_sim::world::Body, table: &str, start: i64, (pic, head, up): (i64, i64, i64)) {
+    let (pic, head, up) = (imm(cx, table, start, pic), imm(cx, table, start, head), imm(cx, table, start, up));
+    pb.ext[2] = (pb.ext[2] & !(0xff << 24)) | (pic << 24);
+    let (mx, my) = (pb.x.floor(), pb.y.floor());
+    if let Some(qk) = cx.kind("bartender_part") {
+        let found: Vec<(usize, gp_sim::world::Body)> =
+            cx.world.bodies.iter().enumerate().filter(|(_, b)| b.alive && b.kind == qk).map(|(i, b)| (i, *b)).collect();
+        for (id, mut q) in found {
+            if q.ext[1] == 5 {
+                q.y = Fx::from_int((my + up) & 0xff);
+                q.x = Fx::from_int(mx);
+                q.ext[0] = (q.ext[0] & 0xff) | (head << 8);
+            } else {
+                q.y = Fx::ZERO;
+            }
+            cx.set_body(id, q);
+        }
+    }
+    // $0679: the tap's y from its bar's row of $4DCC.
+    let bar = pb.ext[0] & 3;
+    if let Some(tk) = cx.kind("tap")
+        && let Some((id, t)) = cx.world.bodies.iter().enumerate().filter(|(_, b)| b.kind == tk).nth(usize::try_from(bar).unwrap_or(0))
+        && let Some(&y) = cx.table("bar_objects").get(usize::try_from(bar * 4).unwrap_or(0))
+        && t.y.floor() != y
+    {
+        let mut t = *t;
+        t.y = Fx::from_int(y);
+        cx.set_body(id, t);
+    }
+}
+
+/// The bartender above GET READY TO SERVE ($5404): `Some(false)` his
+/// pose at the tap as $543D sets it, `Some(true)` the one $5489 sets 30
+/// frames on, `None` all six objects emptied ($54DB's $5F31). The
+/// pictures, flags and places are the code's own immediates, read from
+/// the intro_pose rows (lifted from $543D) at their places. A part his
+/// hook hasn't made yet (a start inside the intro) is made here.
+fn intro_pose(cx: &mut ExtCx<'_>, pose: Option<bool>, spawn: &mut Vec<gp_sim::world::Body>) {
+    let c = |cx: &ExtCx<'_>, at: i64| imm(cx, "intro_pose", 0x543D, at);
+    // (y, x, flags, picture) of his own object and of parts 0, 1 and 4.
+    let objs: [(i64, i64, i64, i64); 4] = match pose {
+        Some(false) => {
+            let x = c(cx, 0x545A);
+            let x2 = x + c(cx, 0x546A);
+            let hy = c(cx, 0x5472);
+            let y = hy + c(cx, 0x5477);
+            let y1 = y + c(cx, 0x547F);
+            [
+                (y, x, c(cx, 0x5448), c(cx, 0x5444)),
+                (y, x2, c(cx, 0x5450), c(cx, 0x544C)),
+                (y1, x2, c(cx, 0x5458), c(cx, 0x5454)),
+                (hy, x, c(cx, 0x5468), c(cx, 0x5464)),
+            ]
+        }
+        Some(true) => {
+            let x = c(cx, 0x548E);
+            let x2 = x + c(cx, 0x54AA);
+            let y = c(cx, 0x54B6);
+            let hy = y - c(cx, 0x54BE);
+            let y1 = hy + c(cx, 0x54C3);
+            [
+                (y, x, c(cx, 0x5499), c(cx, 0x5495)),
+                (y, x2, c(cx, 0x549D), c(cx, 0x54B4)),
+                (y1, x2, c(cx, 0x54A1), c(cx, 0x54CA)),
+                (hy, x, c(cx, 0x54A5), c(cx, 0x54CE)),
+            ]
+        }
+        None => [(0, 0, 0, 0); 4],
+    };
+    if let Some(pk) = cx.kind("player")
+        && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.alive && b.kind == pk)
+    {
+        let mut pb = *pb;
+        if pose.is_some() {
+            let (y, x, f, p) = objs[0];
+            pb.y = Fx::from_int(y & 0xff);
+            pb.x = Fx::from_int(x & 0xff);
+            pb.ext[2] = (pb.ext[2] & !(0xffff << 16)) | ((f & 0xff) << 16) | ((p & 0xff) << 24);
+        } else {
+            pb.y = Fx::ZERO;
+        }
+        cx.set_body(pid, pb);
+    }
+    let Some(qk) = cx.kind("bartender_part") else { return };
+    let mut have = [false; 5];
+    let found: Vec<(usize, gp_sim::world::Body)> =
+        cx.world.bodies.iter().enumerate().filter(|(_, b)| b.alive && b.kind == qk).map(|(i, b)| (i, *b)).collect();
+    let of = |k: i64| match k {
+        0 => Some(objs[1]),
+        1 => Some(objs[2]),
+        4 => Some(objs[3]),
+        _ => None,
+    };
+    for (id, mut q) in found {
+        let k = q.ext[1] - 1;
+        if let Some(n) = usize::try_from(k).ok().filter(|&n| n < 5) {
+            have[n] = true;
+        }
+        match of(k).filter(|_| pose.is_some()) {
+            Some((y, x, f, p)) => {
+                q.y = Fx::from_int(y & 0xff);
+                q.x = Fx::from_int(x & 0xff);
+                q.ext[0] = (f & 0xff) | ((p & 0xff) << 8);
+            }
+            None => q.y = Fx::ZERO,
+        }
+        cx.set_body(id, q);
+    }
+    if pose.is_some() {
+        for k in [0i64, 1, 4] {
+            if have[k as usize] {
+                continue;
+            }
+            let Some((y, x, f, p)) = of(k) else { continue };
+            let mut b = gp_sim::systems::new_body(cx.spec, cx.world, qk, Fx::from_int(x & 0xff), Fx::from_int(y & 0xff), false);
+            b.ext[0] = (f & 0xff) | ((p & 0xff) << 8);
+            b.ext[1] = k + 1;
+            spawn.push(b);
+        }
     }
 }
 
@@ -3056,6 +3338,14 @@ impl Ext for Bars {
                     dancers = [None; 9];
                     e706 = 13;
                     next_sub = 1;
+                    // $23B5 to $23DC: his hands to his head.
+                    if let Some(pk) = player_k
+                        && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.alive && b.kind == pk)
+                    {
+                        let mut pb = *pb;
+                        lost_pose(cx, &mut pb, "lost_pose_fall", 0x23B5, (0x23BC, 0x23C0, 0x23C5));
+                        cx.set_body(pid, pb);
+                    }
                     // $23B0 to $23E6: the fallen mug's picture, $10
                     // empty, $14 full (bit 0 of its +4).
                     let one = |n: &str| cx.table(n).first().copied().unwrap_or(0);
@@ -3173,6 +3463,8 @@ impl Ext for Bars {
                 pb.x = Fx::ZERO;
                 cx.set_body(pid, pb);
             }
+            // His other objects with him.
+            place_parts(cx, &[0, 1, 2, 3, 4], false, |_, px, _| (px, 0));
             let wait = 2 + 30 + 5 + if cleared == 0 { 100 } else { 0 };
             // $4B44's $3C48: the bar shown by the levels cleared, counted
             // in 13s ($3C55 to $3C76: 0 and 1 the saloon, 2 to 4 the sports
@@ -3235,6 +3527,19 @@ impl Ext for Bars {
                         cx.remove(id);
                     }
                 }
+            }
+            // $5404's bartender at the tap above GET READY TO SERVE: 35
+            // frames before the stage ($543D, after its wait of 2), the
+            // pour's last picture 30 frames on ($5489), and $54DB's $5F31
+            // empties him as the stage comes (tapper.l5.001: 5642, 5672
+            // and 5677).
+            if left == 35 || left == 5 || left <= 0 {
+                let pose = match left {
+                    35 => Some(false),
+                    5 => Some(true),
+                    _ => None,
+                };
+                intro_pose(cx, pose, &mut end_spawn);
             }
             if left <= 0 {
                 // $4B6E's $5DF6 draws the level's stage, its screen's
@@ -3313,6 +3618,15 @@ impl Ext for Bars {
                         .iter()
                         .position(|(_, b)| b.kind == cust_k && (b.ext[3] >> 16) & 0xf == rslot);
                     let mut knock_at: Option<i64> = None;
+                    // $1D50: after the wait of 30 his head goes and he
+                    // turns, a picture each 2 frames from $28 (inc h).
+                    if [30, 32, 34].contains(&n) {
+                        let pic = imm(cx, "lost_pose_slide", 0x1D15, 0x1D51) + (n - 30) / 2;
+                        pb.ext[2] = (pb.ext[2] & !(0xff << 24)) | ((pic & 0xff) << 24);
+                        if n == 30 {
+                            place_parts(cx, &[4], false, |_, px, _| (px, 0));
+                        }
+                    }
                     // $1D4B: $0D after the wait of 30; $1DF1: $18 as he
                     // is lowered (51).
                     if n == 30 {
@@ -3729,6 +4043,20 @@ impl Ext for Bars {
                         place_parts(cx, &[0, 1, 4], false, |_, px, py| (px + dx, py));
                     }
                 }
+            }
+            if raw == 109 && fb.ext[3] & END_TWICE != 0 {
+                // $4684 runs $4742 again on this frame, after his hook took
+                // the first run's next step ($4603's at 109): its first
+                // frame is drawn here, as end_script_pose's 56 (at the tap,
+                // the tap hidden, its handle down beside him), so the glass
+                // he drank is in his hand on the original's frame.
+                let stand = |cx: &ExtCx<'_>, name: &str| {
+                    cx.kind("player").and_then(|pk| cx.spec.kinds[pk].ext_params.get(name)).map_or(16, |v| v.floor())
+                };
+                bartender_objects(cx, |cx, me, parts, tap_y, (tap_x, left)| {
+                    me.x = if left { tap_x + stand(cx, "stand_left") } else { tap_x - stand(cx, "stand_right") };
+                    end_script_pose(cx, me, parts, tap_y, (tap_x, left), (56, 0, false, 0, 0));
+                });
             }
             cx.set_body(fid, fb);
         } else if (state == 15 || state == 16) && sub == 12 && !bonus_entered && let Some((fid, mut fb)) = flow {
@@ -4432,6 +4760,8 @@ impl Ext for Bars {
             {
                 let mut pb = *pb;
                 pb.ext[0] = rbar;
+                // $1D15 to $1D3C: his hands to his head.
+                lost_pose(cx, &mut pb, "lost_pose_slide", 0x1D15, (0x1D1C, 0x1D20, 0x1D25));
                 cx.set_body(pid, pb);
             }
         }

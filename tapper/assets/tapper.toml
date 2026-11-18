@@ -2527,6 +2527,108 @@ tappera = 0x1206
 # (the bartender's pictures and flags): $4603 and $4742, the tails' $4708,
 # $489A and $48FC ($467B on), $491B, $4546's drop, $594D's lift and the
 # hops of $50EF and $51A9. rbtapper's copies sit at their own shifts.
+# A life lost: the bartender's hands to his head as $1CE1 starts (from
+# $1D15) and its turn after the wait of 30 ($1D50), and as $2389 starts
+# (from $23B5), the code's own bytes, their immediates read by their
+# places. Every set has them at the same place.
+[[asset]]
+name = "lost_pose_slide"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x1D15
+count = 1
+width = 70
+
+[asset.at]
+rbtapper = 0x1D15
+sutapper = 0x1D15
+tappera = 0x1D15
+
+[[asset]]
+name = "lost_pose_fall"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x23B5
+count = 1
+width = 26
+
+[asset.at]
+rbtapper = 0x23B5
+sutapper = 0x23B5
+tappera = 0x23B5
+
+# The level's intro ($5404): the bartender at the tap above GET READY TO
+# SERVE, his objects as $543D and $5489 set them, the code's own bytes,
+# their immediates read by their places. rbtapper's copy sits 0x190 on.
+[[asset]]
+name = "intro_pose"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x543D
+count = 1
+width = 146
+
+[asset.at]
+rbtapper = 0x55CD
+sutapper = 0x543D
+tappera = 0x543D
+
+# A level's end: the kicked glass's flight and what each script does with
+# it: the arcs of $58C5 and $5904, the flags by step from the table at
+# $56C2, $2DF7 standing it at his feet and the break's pictures at $24F4,
+# the code's own bytes, their immediates read by their places.
+[[asset]]
+name = "glass_arcs"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x58C5
+count = 1
+width = 136
+
+[asset.at]
+rbtapper = 0x5A45
+sutapper = 0x58C5
+tappera = 0x58B5
+
+[[asset]]
+name = "glass_turns"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x56C2
+count = 1
+width = 8
+
+[asset.at]
+rbtapper = 0x5852
+sutapper = 0x56C2
+tappera = 0x56C2
+
+[[asset]]
+name = "glass_down"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2DF7
+count = 1
+width = 29
+
+[asset.at]
+rbtapper = 0x2E0B
+sutapper = 0x2DF7
+tappera = 0x2DF7
+
+[[asset]]
+name = "glass_crash"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x24F4
+count = 1
+width = 12
+
+[asset.at]
+rbtapper = 0x24F4
+sutapper = 0x24F4
+tappera = 0x24F4
+
 # A customer's slide ($1CE1): his pictures and flags as he is taken and
 # 15 frames on, the code's own bytes from $1D72, its immediates read by
 # their places. rbtapper's copy is at the same place.
@@ -2614,7 +2716,7 @@ format = "byte-rows"
 region = "maincpu"
 offset = 0x50EF
 count = 1
-width = 304
+width = 439
 
 [asset.at]
 rbtapper = 0x527F
