@@ -273,3 +273,19 @@ name = "wait_frames"
 addr = 0x606B
 prg = 0x606B
 description = "Waits C frames"
+
+[[routine]]
+bank = 0
+size = 1
+name = "demo_screen"
+addr = 0x2EE0
+prg = 0x2EE0
+description = "The attract mode's instruction scene, called by $3CD8 in state 6: lines of text from $33AB on, and the bartender (E2E6), a customer (E1BE), the glass and beer (E18E on), a mug (E2FE) and a tip (E25E) acted out between waits ($232B), then the high scores line and state 2"
+
+[[routine]]
+bank = 0
+size = 1
+name = "pour_pose"
+addr = 0x1351
+prg = 0x1351
+description = "The bartender at his bar's tap: his parts from E2E6 placed by the tables at $C4A1 (x, by bar E6F9) and $0977 (y)"

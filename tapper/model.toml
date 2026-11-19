@@ -401,6 +401,15 @@ description = "The bonus round: each can's place for the bandit and the bartende
 source = "tapper"
 asset = "bonus_bandit_places"
 
+[assets.bonus_burst]
+kind = "rows"
+role = "graphics"
+description = "The bonus round's loss: the 27 objects of the burst $284D copies to E2B2 one a frame from $28AD, after the spray (y, flags, picture, and x less the can's), and takes away again from $28D9"
+
+[assets.bonus_burst.from]
+source = "tapper"
+asset = "bonus_burst"
+
 [assets.bonus_code]
 kind = "rows"
 role = "behavior"
@@ -418,15 +427,6 @@ description = "The bonus round pokes ($250C, $2511)"
 [assets.bonus_colors.from]
 source = "tapper"
 asset = "bonus_colors"
-
-[assets.bonus_burst]
-kind = "rows"
-role = "graphics"
-description = "The bonus round's loss: the 27 objects of the burst $284D copies to E2B2 one a frame from $28AD, after the spray (y, flags, picture, and x less the can's), and takes away again from $28D9"
-
-[assets.bonus_burst.from]
-source = "tapper"
-asset = "bonus_burst"
 
 [assets.bonus_objects]
 kind = "rows"
@@ -635,6 +635,69 @@ description = "$4AAA's byte into palette RAM's F84D"
 source = "tapper"
 asset = "demo_color_2"
 
+[assets.demo_input]
+kind = "rows"
+role = "behavior"
+description = "The program from $59DD to $5A1B: the attract demo's presses, which state 3 runs before the play routine in place of the stick's read ($2B3A): E3B0 and E3B1 every frame, and each 16 frames of E3C4 a draw of 0 to 3 that picks a list and the list's next byte (E3C3) as the frame's presses, E38E (the program's code, lifted from the player's romset)"
+
+[assets.demo_input.from]
+source = "tapper"
+asset = "demo_input"
+
+[assets.demo_press_ptrs]
+kind = "rows"
+role = "behavior"
+description = "The words at $5A5C that point at the demo's lists, one a draw ($59F5; the program's table, lifted from the player's romset)"
+
+[assets.demo_press_ptrs.from]
+source = "tapper"
+asset = "demo_press_ptrs"
+
+[assets.demo_presses]
+kind = "rows"
+role = "behavior"
+description = "The attract demo's four lists of presses, 16 bytes each, a byte a pick: $F0 the tap, 0 nothing held, 4 down and 8 up (the program's table, lifted from the player's romset)"
+
+[assets.demo_presses.from]
+source = "tapper"
+asset = "demo_presses"
+
+[assets.demo_records]
+kind = "rows"
+role = "behavior"
+description = "The demo's customer records, 16 of 32 bytes: out of a game the bar shown is 4 ($3C48) and the setup's $4A65 copies the block the fifth word at $4AA0 names, the program's bytes from $5A81 (lifted from the player's romset)"
+
+[assets.demo_records.from]
+source = "tapper"
+asset = "demo_records"
+
+[assets.demo_screen]
+kind = "rows"
+role = "behavior"
+description = "The program from $2F37 to $33AA: the attract mode's instruction scene after its first lines ($2EE0, state 6), its immediates read by their places, and the customer's two objects at $33A3 (the program's code, lifted from the player's romset)"
+
+[assets.demo_screen.from]
+source = "tapper"
+asset = "demo_screen"
+
+[assets.demo_screen_a]
+kind = "rows"
+role = "behavior"
+description = "The program from $2EE0 to $2F36: the instruction scene's start, the bartender's first objects (the program's code, lifted from the player's romset)"
+
+[assets.demo_screen_a.from]
+source = "tapper"
+asset = "demo_screen_a"
+
+[assets.demo_setup]
+kind = "rows"
+role = "behavior"
+description = "The program from $5A64 to $5A80, state 2: the demo's start, its request ($5A67), the levels cleared, E3C4 and the level row it plays with (the program's code, lifted from the player's romset)"
+
+[assets.demo_setup.from]
+source = "tapper"
+asset = "demo_setup"
+
 [assets.end_drop]
 kind = "rows"
 role = "graphics"
@@ -643,6 +706,24 @@ description = "The bartender's pictures: a level's end, $4546: his pictures as t
 [assets.end_drop.from]
 source = "tapper"
 asset = "end_drop"
+
+[assets.end_gulp_code]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: end script 1's last code ($45E3), searched for its wait"
+
+[assets.end_gulp_code.from]
+source = "tapper"
+asset = "end_gulp_code"
+
+[assets.end_gulp_start]
+kind = "rows"
+role = "behavior"
+description = "Where end script 1's last code is: the word it calls $45E3 with ($48C4)"
+
+[assets.end_gulp_start.from]
+source = "tapper"
+asset = "end_gulp_start"
 
 [assets.end_hops]
 kind = "rows"
@@ -698,6 +779,24 @@ description = "The level's end scripts by the game's draw E3ED and the levels cl
 source = "tapper"
 asset = "end_script_lists"
 
+[assets.end_turn_code]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: end script 2's code ($2DF7), searched for its wait"
+
+[assets.end_turn_code.from]
+source = "tapper"
+asset = "end_turn_code"
+
+[assets.end_turn_start]
+kind = "rows"
+role = "behavior"
+description = "Where end script 2's code is: the word it calls $2DF7 with ($48CE)"
+
+[assets.end_turn_start.from]
+source = "tapper"
+asset = "end_turn_start"
+
 [assets.fall_crash_pictures]
 kind = "rows"
 role = "graphics"
@@ -734,6 +833,51 @@ description = "The life lost: a full mug's picture as it falls ($23E6)"
 source = "tapper"
 asset = "fall_picture_full"
 
+[assets.frame_wait_call]
+kind = "rows"
+role = "behavior"
+description = "The setup's call of the frame wait $60F6 at $4B71, whose bytes name the set's frame wait: the logo's call of it is a frame of the logo's time (the program's code, lifted from the player's romset)"
+
+[assets.frame_wait_call.from]
+source = "tapper"
+asset = "frame_wait_call"
+
+[assets.glass_arcs]
+kind = "rows"
+role = "graphics"
+description = "A level's end: the kicked glass's arcs, $58C5 (scripts 0 and 3, 22 steps) and $5904 (scripts 1 and 2, 21 steps, along every other step), the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.glass_arcs.from]
+source = "tapper"
+asset = "glass_arcs"
+
+[assets.glass_crash]
+kind = "rows"
+role = "graphics"
+description = "A level's end: the glass's break, $45E3's pictures a frame from the table at $24F4, 12 (lifted from the player's romset)"
+
+[assets.glass_crash.from]
+source = "tapper"
+asset = "glass_crash"
+
+[assets.glass_down]
+kind = "rows"
+role = "graphics"
+description = "A level's end, script 2: $2DF7 stands the glass at his feet, the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.glass_down.from]
+source = "tapper"
+asset = "glass_down"
+
+[assets.glass_turns]
+kind = "rows"
+role = "graphics"
+description = "A level's end: the kicked glass's flags by its step count mod 8 (E706), the table at $56C2 (lifted from the player's romset)"
+
+[assets.glass_turns.from]
+source = "tapper"
+asset = "glass_turns"
+
 [assets.hand_flags]
 kind = "rows"
 role = "graphics"
@@ -761,6 +905,33 @@ description = "The bonus round: the hand's picture as it shakes the can ($261F)"
 source = "tapper"
 asset = "hand_pic_shake"
 
+[assets.high_scores]
+kind = "rows"
+role = "behavior"
+description = "The program from $4A37 to $4A58, state 4 after the demo: the objects emptied ($3CE1), HIGH SCORES drawn, a wait of $96 frames ($4A4D) and state 0 (the program's code, lifted from the player's romset)"
+
+[assets.high_scores.from]
+source = "tapper"
+asset = "high_scores"
+
+[assets.high_scores_clear]
+kind = "rows"
+role = "graphics"
+description = "The program from $3CE1 to $3CF0, the high scores' screen emptied: 0 into palette RAM's F800 and F840 ($3CE5), $7C into F80C ($3CF0) (the program's code, lifted from the player's romset)"
+
+[assets.high_scores_clear.from]
+source = "tapper"
+asset = "high_scores_clear"
+
+[assets.high_scores_start]
+kind = "rows"
+role = "behavior"
+description = "Where the high scores' routine starts, the operand of state 4's call at $22E2 (the program's code, lifted from the player's romset)"
+
+[assets.high_scores_start.from]
+source = "tapper"
+asset = "high_scores_start"
+
 [assets.hop_steps]
 kind = "rows"
 role = "behavior"
@@ -769,42 +940,6 @@ description = "The bartender's steps along in the space bar's level end hops, a 
 [assets.hop_steps.from]
 source = "tapper"
 asset = "hop_steps"
-
-[assets.end_gulp_code]
-kind = "rows"
-role = "behavior"
-description = "Where a clip resumes: end script 1's last code ($45E3), searched for its wait"
-
-[assets.end_gulp_code.from]
-source = "tapper"
-asset = "end_gulp_code"
-
-[assets.end_gulp_start]
-kind = "rows"
-role = "behavior"
-description = "Where end script 1's last code is: the word it calls $45E3 with ($48C4)"
-
-[assets.end_gulp_start.from]
-source = "tapper"
-asset = "end_gulp_start"
-
-[assets.end_turn_code]
-kind = "rows"
-role = "behavior"
-description = "Where a clip resumes: end script 2's code ($2DF7), searched for its wait"
-
-[assets.end_turn_code.from]
-source = "tapper"
-asset = "end_turn_code"
-
-[assets.end_turn_start]
-kind = "rows"
-role = "behavior"
-description = "Where end script 2's code is: the word it calls $2DF7 with ($48CE)"
-
-[assets.end_turn_start.from]
-source = "tapper"
-asset = "end_turn_start"
 
 [assets.hops_code]
 kind = "rows"
@@ -941,6 +1076,15 @@ description = "the level's intro: its lines' colour, $5412's ld a,$87 into palet
 source = "tapper"
 asset = "intro_line_color"
 
+[assets.intro_pose]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: the level's intro, $5404 from $543D: his four objects at the tap above GET READY TO SERVE and the pour's last pose 30 frames on ($5489), the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.intro_pose.from]
+source = "tapper"
+asset = "intro_pose"
+
 [assets.intro_text_1]
 kind = "rows"
 role = "graphics"
@@ -1004,6 +1148,15 @@ description = "The lives: the cells high byte ($5D4F) and the tile ($5D52)"
 source = "tapper"
 asset = "lives_codes"
 
+[assets.logo_code]
+kind = "rows"
+role = "behavior"
+description = "The program from $3D76, the attract mode's logo (state 1): its waits ($232B, $60F6, in its loop of B) give the logo's time, 215 frames to state 5 in tapper and 192 in rbtapper, and its last wait ($3DC0, before state 5) is where a start in it goes on (the program's code, lifted from the player's romset)"
+
+[assets.logo_code.from]
+source = "tapper"
+asset = "logo_code"
+
 [assets.logo_color_7c]
 kind = "rows"
 role = "graphics"
@@ -1039,6 +1192,33 @@ description = "The logo's colours: the zero $3D76 writes into palette RAM's F840
 [assets.logo_color_zero.from]
 source = "tapper"
 asset = "logo_color_zero"
+
+[assets.logo_start]
+kind = "rows"
+role = "behavior"
+description = "Where the logo's routine starts, the operand of the dispatch's call at $22CA (the program's code, lifted from the player's romset)"
+
+[assets.logo_start.from]
+source = "tapper"
+asset = "logo_start"
+
+[assets.lost_pose_fall]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: a life lost to a fallen mug, $2389 from $23B5: his picture, his head's and its place 16 above him, the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.lost_pose_fall.from]
+source = "tapper"
+asset = "lost_pose_fall"
+
+[assets.lost_pose_slide]
+kind = "rows"
+role = "graphics"
+description = "The bartender's pictures: a customer's slide, $1CE1 from $1D15: his hands to his head as it starts and his turn after its wait of 30 ($1D50), the code's own bytes, its immediates read by their places (lifted from the player's romset)"
+
+[assets.lost_pose_slide.from]
+source = "tapper"
+asset = "lost_pose_slide"
 
 [assets.mug_flags]
 kind = "rows"
@@ -1138,96 +1318,6 @@ description = "The points for a tip picked up ($0BCC), a digit a byte, six to an
 [assets.points_tip.from]
 source = "tapper"
 asset = "points_tip"
-
-[assets.demo_input]
-kind = "rows"
-role = "behavior"
-description = "The program from $59DD to $5A1B: the attract demo's presses, which state 3 runs before the play routine in place of the stick's read ($2B3A): E3B0 and E3B1 every frame, and each 16 frames of E3C4 a draw of 0 to 3 that picks a list and the list's next byte (E3C3) as the frame's presses, E38E (the program's code, lifted from the player's romset)"
-
-[assets.demo_input.from]
-source = "tapper"
-asset = "demo_input"
-
-[assets.demo_presses]
-kind = "rows"
-role = "behavior"
-description = "The attract demo's four lists of presses, 16 bytes each, a byte a pick: $F0 the tap, 0 nothing held, 4 down and 8 up (the program's table, lifted from the player's romset)"
-
-[assets.demo_presses.from]
-source = "tapper"
-asset = "demo_presses"
-
-[assets.demo_press_ptrs]
-kind = "rows"
-role = "behavior"
-description = "The words at $5A5C that point at the demo's lists, one a draw ($59F5; the program's table, lifted from the player's romset)"
-
-[assets.demo_press_ptrs.from]
-source = "tapper"
-asset = "demo_press_ptrs"
-
-[assets.demo_setup]
-kind = "rows"
-role = "behavior"
-description = "The program from $5A64 to $5A80, state 2: the demo's start, its request ($5A67), the levels cleared, E3C4 and the level row it plays with (the program's code, lifted from the player's romset)"
-
-[assets.demo_setup.from]
-source = "tapper"
-asset = "demo_setup"
-
-[assets.demo_records]
-kind = "rows"
-role = "behavior"
-description = "The demo's customer records, 16 of 32 bytes: out of a game the bar shown is 4 ($3C48) and the setup's $4A65 copies the block the fifth word at $4AA0 names, the program's bytes from $5A81 (lifted from the player's romset)"
-
-[assets.demo_records.from]
-source = "tapper"
-asset = "demo_records"
-
-[assets.high_scores]
-kind = "rows"
-role = "behavior"
-description = "The program from $4A37 to $4A58, state 4 after the demo: the objects emptied ($3CE1), HIGH SCORES drawn, a wait of $96 frames ($4A4D) and state 0 (the program's code, lifted from the player's romset)"
-
-[assets.high_scores.from]
-source = "tapper"
-asset = "high_scores"
-
-[assets.frame_wait_call]
-kind = "rows"
-role = "behavior"
-description = "The setup's call of the frame wait $60F6 at $4B71, whose bytes name the set's frame wait: the logo's call of it is a frame of the logo's time (the program's code, lifted from the player's romset)"
-
-[assets.frame_wait_call.from]
-source = "tapper"
-asset = "frame_wait_call"
-
-[assets.high_scores_start]
-kind = "rows"
-role = "behavior"
-description = "Where the high scores' routine starts, the operand of state 4's call at $22E2 (the program's code, lifted from the player's romset)"
-
-[assets.high_scores_start.from]
-source = "tapper"
-asset = "high_scores_start"
-
-[assets.logo_code]
-kind = "rows"
-role = "behavior"
-description = "The program from $3D76, the attract mode's logo (state 1): its waits ($232B, $60F6, in its loop of B) give the logo's time, 215 frames to state 5 in tapper and 192 in rbtapper, and its last wait ($3DC0, before state 5) is where a start in it goes on (the program's code, lifted from the player's romset)"
-
-[assets.logo_code.from]
-source = "tapper"
-asset = "logo_code"
-
-[assets.logo_start]
-kind = "rows"
-role = "behavior"
-description = "Where the logo's routine starts, the operand of the dispatch's call at $22CA (the program's code, lifted from the player's romset)"
-
-[assets.logo_start.from]
-source = "tapper"
-asset = "logo_start"
 
 [assets.record_blocks]
 kind = "rows"
@@ -1409,69 +1499,6 @@ description = "The four objects a customer's slide leaves in the mug slots from 
 source = "tapper"
 asset = "slide_objects"
 
-[assets.glass_arcs]
-kind = "rows"
-role = "graphics"
-description = "A level's end: the kicked glass's arcs, $58C5 (scripts 0 and 3, 22 steps) and $5904 (scripts 1 and 2, 21 steps, along every other step), the code's own bytes, its immediates read by their places (lifted from the player's romset)"
-
-[assets.glass_arcs.from]
-source = "tapper"
-asset = "glass_arcs"
-
-[assets.glass_turns]
-kind = "rows"
-role = "graphics"
-description = "A level's end: the kicked glass's flags by its step count mod 8 (E706), the table at $56C2 (lifted from the player's romset)"
-
-[assets.glass_turns.from]
-source = "tapper"
-asset = "glass_turns"
-
-[assets.glass_down]
-kind = "rows"
-role = "graphics"
-description = "A level's end, script 2: $2DF7 stands the glass at his feet, the code's own bytes, its immediates read by their places (lifted from the player's romset)"
-
-[assets.glass_down.from]
-source = "tapper"
-asset = "glass_down"
-
-[assets.glass_crash]
-kind = "rows"
-role = "graphics"
-description = "A level's end: the glass's break, $45E3's pictures a frame from the table at $24F4, 12 (lifted from the player's romset)"
-
-[assets.glass_crash.from]
-source = "tapper"
-asset = "glass_crash"
-
-[assets.intro_pose]
-kind = "rows"
-role = "graphics"
-description = "The bartender's pictures: the level's intro, $5404 from $543D: his four objects at the tap above GET READY TO SERVE and the pour's last pose 30 frames on ($5489), the code's own bytes, its immediates read by their places (lifted from the player's romset)"
-
-[assets.intro_pose.from]
-source = "tapper"
-asset = "intro_pose"
-
-[assets.lost_pose_fall]
-kind = "rows"
-role = "graphics"
-description = "The bartender's pictures: a life lost to a fallen mug, $2389 from $23B5: his picture, his head's and its place 16 above him, the code's own bytes, its immediates read by their places (lifted from the player's romset)"
-
-[assets.lost_pose_fall.from]
-source = "tapper"
-asset = "lost_pose_fall"
-
-[assets.lost_pose_slide]
-kind = "rows"
-role = "graphics"
-description = "The bartender's pictures: a customer's slide, $1CE1 from $1D15: his hands to his head as it starts and his turn after its wait of 30 ($1D50), the code's own bytes, its immediates read by their places (lifted from the player's romset)"
-
-[assets.lost_pose_slide.from]
-source = "tapper"
-asset = "lost_pose_slide"
-
 [assets.slide_pose]
 kind = "rows"
 role = "graphics"
@@ -1499,6 +1526,42 @@ description = "The program from $125E to $14DC: the pour's requests and the mug 
 source = "tapper"
 asset = "sound_bar"
 
+[assets.sound_bonus]
+kind = "rows"
+role = "behavior"
+description = "The program from $2684 to $2951: the bonus round's blink, choice, win and loss, their requests (the program's code, lifted from the player's romset)"
+
+[assets.sound_bonus.from]
+source = "tapper"
+asset = "sound_bonus"
+
+[assets.sound_bonus_2b]
+kind = "rows"
+role = "behavior"
+description = "The program at $3BFF: the bonus round's loss, its request (the program's code, lifted from the player's romset)"
+
+[assets.sound_bonus_2b.from]
+source = "tapper"
+asset = "sound_bonus_2b"
+
+[assets.sound_bonus_open]
+kind = "rows"
+role = "behavior"
+description = "The program at $2533: the bonus round's first request (the program's code, lifted from the player's romset)"
+
+[assets.sound_bonus_open.from]
+source = "tapper"
+asset = "sound_bonus_open"
+
+[assets.sound_bonus_shake]
+kind = "rows"
+role = "behavior"
+description = "The program at $2603: a can shaken in the bonus round, its request (the program's code, lifted from the player's romset)"
+
+[assets.sound_bonus_shake.from]
+source = "tapper"
+asset = "sound_bonus_shake"
+
 [assets.sound_boot]
 kind = "rows"
 role = "behavior"
@@ -1507,6 +1570,15 @@ description = "The program from $00B9: the boot's last requests (the program's c
 [assets.sound_boot.from]
 source = "tapper"
 asset = "sound_boot"
+
+[assets.sound_catch]
+kind = "rows"
+role = "behavior"
+description = "The program from $0BCF to $0C84: a tip picked up, an empty mug caught and the show ending (the program's code, lifted from the player's romset)"
+
+[assets.sound_catch.from]
+source = "tapper"
+asset = "sound_catch"
 
 [assets.sound_check]
 kind = "rows"
@@ -1535,42 +1607,6 @@ description = "The program from $090D to $0A9F: a customer served's request and 
 source = "tapper"
 asset = "sound_customers"
 
-[assets.sound_extra_life]
-kind = "rows"
-role = "behavior"
-description = "The extra life's request to the sound board, the byte $6166 loads for $606B (the program's code, lifted from the player's romset)"
-
-[assets.sound_extra_life.from]
-source = "tapper"
-asset = "sound_extra_life"
-
-[assets.sound_game]
-kind = "rows"
-role = "behavior"
-description = "The program from $4B34 to $4C75: a game's start's requests and a level's setup's, with the table of the bar shown's at $4C71, five bytes, the fifth for the demo's bar shown 4 (the program's code, lifted from the player's romset)"
-
-[assets.sound_game.from]
-source = "tapper"
-asset = "sound_game"
-
-[assets.sound_life]
-kind = "rows"
-role = "behavior"
-description = "The program from $23EA to $24AF: a life lost's requests, and out of a game the demo's end ($24AE) (the program's code, lifted from the player's romset)"
-
-[assets.sound_life.from]
-source = "tapper"
-asset = "sound_life"
-
-[assets.sound_catch]
-kind = "rows"
-role = "behavior"
-description = "The program from $0BCF to $0C84: a tip picked up, an empty mug caught and the show ending (the program's code, lifted from the player's romset)"
-
-[assets.sound_catch.from]
-source = "tapper"
-asset = "sound_catch"
-
 [assets.sound_drink]
 kind = "rows"
 role = "behavior"
@@ -1579,42 +1615,6 @@ description = "The table at $1BCE: the gulps of a drink, by the turns left (the 
 [assets.sound_drink.from]
 source = "tapper"
 asset = "sound_drink"
-
-[assets.sound_lost]
-kind = "rows"
-role = "behavior"
-description = "The program from $1CE4 to $1FE2: a customer taking the bartender off the bar's end, its requests (the program's code, lifted from the player's romset)"
-
-[assets.sound_lost.from]
-source = "tapper"
-asset = "sound_lost"
-
-[assets.sound_tip]
-kind = "rows"
-role = "behavior"
-description = "The program at $20EF: a tip left on the bar, its request (the program's code, lifted from the player's romset)"
-
-[assets.sound_tip.from]
-source = "tapper"
-asset = "sound_tip"
-
-[assets.sound_over]
-kind = "rows"
-role = "behavior"
-description = "The program from $49E5: the game over's requests (the program's code, lifted from the player's romset)"
-
-[assets.sound_over.from]
-source = "tapper"
-asset = "sound_over"
-
-[assets.sound_end_start]
-kind = "rows"
-role = "behavior"
-description = "The program at $55F4: a level's end starting, its request (the program's code, lifted from the player's romset)"
-
-[assets.sound_end_start.from]
-source = "tapper"
-asset = "sound_end_start"
 
 [assets.sound_end]
 kind = "rows"
@@ -1634,6 +1634,15 @@ description = "The program from $46E2 to $487A: the level's end's pour, drink an
 source = "tapper"
 asset = "sound_end_drink"
 
+[assets.sound_end_start]
+kind = "rows"
+role = "behavior"
+description = "The program at $55F4: a level's end starting, its request (the program's code, lifted from the player's romset)"
+
+[assets.sound_end_start.from]
+source = "tapper"
+asset = "sound_end_start"
+
 [assets.sound_end_toss]
 kind = "rows"
 role = "behavior"
@@ -1652,6 +1661,24 @@ description = "The program at $2E14: end script 2's request (the program's code,
 source = "tapper"
 asset = "sound_end_turn"
 
+[assets.sound_extra_life]
+kind = "rows"
+role = "behavior"
+description = "The extra life's request to the sound board, the byte $6166 loads for $606B (the program's code, lifted from the player's romset)"
+
+[assets.sound_extra_life.from]
+source = "tapper"
+asset = "sound_extra_life"
+
+[assets.sound_game]
+kind = "rows"
+role = "behavior"
+description = "The program from $4B34 to $4C75: a game's start's requests and a level's setup's, with the table of the bar shown's at $4C71, five bytes, the fifth for the demo's bar shown 4 (the program's code, lifted from the player's romset)"
+
+[assets.sound_game.from]
+source = "tapper"
+asset = "sound_game"
+
 [assets.sound_interlude]
 kind = "rows"
 role = "behavior"
@@ -1660,6 +1687,15 @@ description = "The program from $50EF to $526D: end script 3's interludes, their
 [assets.sound_interlude.from]
 source = "tapper"
 asset = "sound_interlude"
+
+[assets.sound_life]
+kind = "rows"
+role = "behavior"
+description = "The program from $23EA to $24AF: a life lost's requests, and out of a game the demo's end ($24AE) (the program's code, lifted from the player's romset)"
+
+[assets.sound_life.from]
+source = "tapper"
+asset = "sound_life"
 
 [assets.sound_lift]
 kind = "rows"
@@ -1670,41 +1706,23 @@ description = "The program from $594D to $59C7: end script 4's lift, its request
 source = "tapper"
 asset = "sound_lift"
 
-[assets.sound_bonus_open]
+[assets.sound_lost]
 kind = "rows"
 role = "behavior"
-description = "The program at $2533: the bonus round's first request (the program's code, lifted from the player's romset)"
+description = "The program from $1CE4 to $1FE2: a customer taking the bartender off the bar's end, its requests (the program's code, lifted from the player's romset)"
 
-[assets.sound_bonus_open.from]
+[assets.sound_lost.from]
 source = "tapper"
-asset = "sound_bonus_open"
+asset = "sound_lost"
 
-[assets.sound_bonus_shake]
+[assets.sound_over]
 kind = "rows"
 role = "behavior"
-description = "The program at $2603: a can shaken in the bonus round, its request (the program's code, lifted from the player's romset)"
+description = "The program from $49E5: the game over's requests (the program's code, lifted from the player's romset)"
 
-[assets.sound_bonus_shake.from]
+[assets.sound_over.from]
 source = "tapper"
-asset = "sound_bonus_shake"
-
-[assets.sound_bonus]
-kind = "rows"
-role = "behavior"
-description = "The program from $2684 to $2951: the bonus round's blink, choice, win and loss, their requests (the program's code, lifted from the player's romset)"
-
-[assets.sound_bonus.from]
-source = "tapper"
-asset = "sound_bonus"
-
-[assets.sound_bonus_2b]
-kind = "rows"
-role = "behavior"
-description = "The program at $3BFF: the bonus round's loss, its request (the program's code, lifted from the player's romset)"
-
-[assets.sound_bonus_2b.from]
-source = "tapper"
-asset = "sound_bonus_2b"
+asset = "sound_over"
 
 [assets.sound_shuffle]
 kind = "rows"
@@ -1714,6 +1732,15 @@ description = "The program from $4F1C to $5016: the bonus round's swaps, their r
 [assets.sound_shuffle.from]
 source = "tapper"
 asset = "sound_shuffle"
+
+[assets.sound_tip]
+kind = "rows"
+role = "behavior"
+description = "The program at $20EF: a tip left on the bar, its request (the program's code, lifted from the player's romset)"
+
+[assets.sound_tip.from]
+source = "tapper"
+asset = "sound_tip"
 
 [assets.sound_walk]
 kind = "rows"
@@ -1741,6 +1768,15 @@ description = "The words $5DF6 picks a stage's screen from by the stage (E395), 
 [assets.stage_screens.from]
 source = "tapper"
 asset = "stage_screens"
+
+[assets.stand_x]
+kind = "rows"
+role = "behavior"
+description = "Where the bartender stands at each bar's tap: $1351's table at $C4A1, by bar (lifted from the player's romset)"
+
+[assets.stand_x.from]
+source = "tapper"
+asset = "stand_x"
 
 [assets.start_list_ptrs]
 kind = "rows"
@@ -1814,6 +1850,42 @@ description = "A line of the attract mode's demo, the string at $33F9 its text r
 source = "tapper"
 asset = "text_demo_10"
 
+[assets.text_demo_11]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's instruction scene's close, the string at $3439 its text routine draws"
+
+[assets.text_demo_11.from]
+source = "tapper"
+asset = "text_demo_11"
+
+[assets.text_demo_12]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's instruction scene's close, the string at $3451 its text routine draws"
+
+[assets.text_demo_12.from]
+source = "tapper"
+asset = "text_demo_12"
+
+[assets.text_demo_14]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's instruction scene's close, the string at $344C its text routine draws"
+
+[assets.text_demo_14.from]
+source = "tapper"
+asset = "text_demo_14"
+
+[assets.text_demo_16]
+kind = "rows"
+role = "graphics"
+description = "A line of the attract mode's instruction scene's close, the string at $3447 its text routine draws"
+
+[assets.text_demo_16.from]
+source = "tapper"
+asset = "text_demo_16"
+
 [assets.text_demo_2]
 kind = "rows"
 role = "graphics"
@@ -1885,6 +1957,15 @@ description = "A line of the attract mode's demo, the string at $33E9 its text r
 [assets.text_demo_9.from]
 source = "tapper"
 asset = "text_demo_9"
+
+[assets.text_high_scores]
+kind = "rows"
+role = "graphics"
+description = "The high scores' heading after the attract mode's demo game: the string at $4A59 that $4A37 queues at row 2, column 9"
+
+[assets.text_high_scores.from]
+source = "tapper"
+asset = "text_high_scores"
 
 [assets.text_insert_coin]
 kind = "rows"
@@ -1980,28 +2061,14 @@ line = 57
 line_step = 48
 pushed_base = 14
 pushed_spread = 20
+scene_a = 1
 setup_late_bars = 12
 throw_base = 5
 throw_spread = 15
 walk_frames = 12
 
 [entities.bars.ext_rows]
-demo_input = "demo_input"
-demo_records = "demo_records"
-demo_setup = "demo_setup"
-high_scores = "high_scores"
 arrivals = "arrivals"
-bar_objects = "bar_objects"
-end_hops = "end_hops"
-end_lift = "end_lift"
-glass_arcs = "glass_arcs"
-glass_crash = "glass_crash"
-glass_down = "glass_down"
-glass_turns = "glass_turns"
-bartender_pour = "bartender_pour"
-intro_pose = "intro_pose"
-lost_pose_fall = "lost_pose_fall"
-lost_pose_slide = "lost_pose_slide"
 bandit_flags = "bandit_flags"
 bandit_pic_bottom = "bandit_pic_bottom"
 bandit_pic_shake = "bandit_pic_shake"
@@ -2009,8 +2076,8 @@ bandit_pic_top = "bandit_pic_top"
 bandit_pic_walk = "bandit_pic_walk"
 bandit_stop = "bandit_stop"
 bar_ends = "bar_ends"
+bar_objects = "bar_objects"
 bartender_flags = "bartender_flags"
-bartender_tap = "bartender_tap"
 bartender_flags_right = "bartender_flags_right"
 bartender_pic_lose_1 = "bartender_pic_lose_1"
 bartender_pic_lose_2 = "bartender_pic_lose_2"
@@ -2024,6 +2091,10 @@ bartender_pic_wait_3 = "bartender_pic_wait_3"
 bartender_pic_win_1 = "bartender_pic_win_1"
 bartender_pic_win_2 = "bartender_pic_win_2"
 bartender_pic_win_3 = "bartender_pic_win_3"
+bartender_pour = "bartender_pour"
+bartender_tap = "bartender_tap"
+bartender_wait = "bartender_wait"
+bartender_walk_left = "bartender_walk_left"
 beer_flags = "beer_flags"
 beer_pic = "beer_pic"
 beer_pic_spray = "beer_pic_spray"
@@ -2036,26 +2107,41 @@ customer_starts = "customer_starts"
 cycle_lamps = "cycle_lamps"
 cycle_space_1 = "cycle_space_1"
 defaults = "defaults"
+demo_input = "demo_input"
+demo_records = "demo_records"
+demo_screen = "demo_screen"
+demo_screen_a = "demo_screen_a"
+demo_setup = "demo_setup"
+end_gulp_code = "end_gulp_code"
+end_gulp_start = "end_gulp_start"
+end_hops = "end_hops"
+end_lift = "end_lift"
 end_pose_b = "end_pose_b"
 end_script_lists = "end_script_lists"
+end_turn_code = "end_turn_code"
+end_turn_start = "end_turn_start"
 fall_crash_pictures = "fall_crash_pictures"
 fall_picture_crash = "fall_picture_crash"
 fall_picture_empty = "fall_picture_empty"
 fall_picture_full = "fall_picture_full"
+glass_arcs = "glass_arcs"
+glass_crash = "glass_crash"
+glass_down = "glass_down"
+glass_turns = "glass_turns"
 hand_flags = "hand_flags"
 hand_pic = "hand_pic"
 hand_pic_shake = "hand_pic_shake"
+high_scores = "high_scores"
 hop_steps = "hop_steps"
-end_gulp_code = "end_gulp_code"
-end_gulp_start = "end_gulp_start"
-end_turn_code = "end_turn_code"
-end_turn_start = "end_turn_start"
 hops_code = "hops_code"
 hops_start = "hops_start"
 instr_objects = "instr_objects"
 interlude_code = "interlude_code"
 interlude_start = "interlude_start"
+intro_pose = "intro_pose"
 level_times = "level_times"
+lost_pose_fall = "lost_pose_fall"
+lost_pose_slide = "lost_pose_slide"
 mug_flags = "mug_flags"
 mug_flags_left = "mug_flags_left"
 mug_flip_frames = "mug_flip_frames"
@@ -2074,6 +2160,7 @@ show_lists = "show_lists"
 show_pictures = "show_pictures"
 slide_objects = "slide_objects"
 stage_screens = "stage_screens"
+stand_x = "stand_x"
 start_list_ptrs = "start_list_ptrs"
 start_lists = "start_lists"
 wait_call = "wait_call"
@@ -2334,9 +2421,6 @@ switch_frames = 6
 walk_step = 2
 
 [entities.player.ext_rows]
-demo_input = "demo_input"
-demo_press_ptrs = "demo_press_ptrs"
-demo_presses = "demo_presses"
 bar_ends = "bar_ends"
 bar_objects = "bar_objects"
 bartender_idle = "bartender_idle"
@@ -2349,6 +2433,9 @@ bartender_tap = "bartender_tap"
 bartender_wait = "bartender_wait"
 bartender_walk_left = "bartender_walk_left"
 bartender_walk_right = "bartender_walk_right"
+demo_input = "demo_input"
+demo_press_ptrs = "demo_press_ptrs"
+demo_presses = "demo_presses"
 end_drop = "end_drop"
 end_hops = "end_hops"
 end_lift = "end_lift"
@@ -2401,31 +2488,31 @@ check_step = 6
 demo_setup = "demo_setup"
 sound_arrivals = "sound_arrivals"
 sound_bar = "sound_bar"
+sound_bonus = "sound_bonus"
+sound_bonus_2b = "sound_bonus_2b"
+sound_bonus_open = "sound_bonus_open"
+sound_bonus_shake = "sound_bonus_shake"
 sound_boot = "sound_boot"
+sound_catch = "sound_catch"
 sound_check = "sound_check"
 sound_coin = "sound_coin"
 sound_customers = "sound_customers"
+sound_drink = "sound_drink"
+sound_end = "sound_end"
+sound_end_drink = "sound_end_drink"
+sound_end_start = "sound_end_start"
+sound_end_toss = "sound_end_toss"
+sound_end_turn = "sound_end_turn"
 sound_extra_life = "sound_extra_life"
 sound_game = "sound_game"
-sound_life = "sound_life"
-sound_walk = "sound_walk"
-sound_shuffle = "sound_shuffle"
-sound_bonus_2b = "sound_bonus_2b"
-sound_bonus = "sound_bonus"
-sound_bonus_shake = "sound_bonus_shake"
-sound_bonus_open = "sound_bonus_open"
-sound_lift = "sound_lift"
 sound_interlude = "sound_interlude"
-sound_end_turn = "sound_end_turn"
-sound_end_toss = "sound_end_toss"
-sound_end_drink = "sound_end_drink"
-sound_end = "sound_end"
-sound_end_start = "sound_end_start"
-sound_over = "sound_over"
-sound_tip = "sound_tip"
+sound_life = "sound_life"
+sound_lift = "sound_lift"
 sound_lost = "sound_lost"
-sound_drink = "sound_drink"
-sound_catch = "sound_catch"
+sound_over = "sound_over"
+sound_shuffle = "sound_shuffle"
+sound_tip = "sound_tip"
+sound_walk = "sound_walk"
 
 [entities.sound.hitbox]
 h = 1
@@ -2497,6 +2584,118 @@ tile_size = 16
 palette = "board_palette"
 screen = "screen_saloon"
 tiles = "board_tiles"
+
+[[levels.main.present.board.counters]]
+at = [3, 1]
+counter = "score"
+digits = 6
+
+[levels.main.present.board.counters.high]
+column = 4
+slot = "score_codes"
+
+[levels.main.present.board.counters.tile]
+slot = "score_codes"
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "mode"
+value = 1
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 0
+
+[[levels.main.present.board.counters.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.counters]]
+at = [23, 1]
+counter = "score_2"
+digits = 6
+
+[levels.main.present.board.counters.high]
+column = 4
+slot = "score_codes"
+
+[levels.main.present.board.counters.tile]
+slot = "score_codes"
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "mode"
+value = 1
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 0
+
+[[levels.main.present.board.counters.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.counters]]
+at = [11, 4]
+counter = "extra_first"
+digits = 2
+zeros = true
+
+[levels.main.present.board.counters.high]
+column = 1076
+slot = "demo_screen"
+
+[levels.main.present.board.counters.tile]
+column = 1069
+slot = "demo_screen"
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 813
+
+[[levels.main.present.board.counters.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.counters]]
+at = [11, 7]
+counter = "extra_every"
+digits = 2
+zeros = true
+
+[levels.main.present.board.counters.high]
+column = 1076
+slot = "demo_screen"
+
+[levels.main.present.board.counters.tile]
+column = 1069
+slot = "demo_screen"
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 813
+
+[[levels.main.present.board.counters.when]]
+cmp = "<"
+counter = "intro"
+value = 2
 
 [[levels.main.present.board.counters]]
 at = [3, 1]
@@ -2590,6 +2789,34 @@ value = 1
 cmp = "<"
 counter = "intro"
 value = 2
+
+[[levels.main.present.board.looks]]
+clear = true
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 0
+column = 4
+slot = "high_scores_clear"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+column = 4
+slot = "high_scores_clear"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 12
+column = 15
+slot = "high_scores_clear"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 77
+column = 9
+slot = "high_scores"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 3
 
 [[levels.main.present.board.looks]]
 clear = true
@@ -4537,6 +4764,31 @@ value = 1
 cmp = ">="
 counter = "attract_frames"
 value = 89
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_demo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "demo_color_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 77
+slot = "demo_color_2"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 813
 
 [[levels.main.present.board.looks]]
 screen = "screen_attract_demo"
@@ -9713,6 +9965,11 @@ value = 217
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
+counter = "attract_frames"
+value = 813
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
 counter = "intro"
 value = 2
 
@@ -9758,6 +10015,11 @@ value = 2
 cmp = ">="
 counter = "attract_frames"
 value = 352
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 813
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
@@ -9809,6 +10071,11 @@ value = 490
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
+counter = "attract_frames"
+value = 813
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
 counter = "intro"
 value = 2
 
@@ -9854,6 +10121,11 @@ value = 2
 cmp = ">="
 counter = "attract_frames"
 value = 551
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 813
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
@@ -9905,6 +10177,11 @@ value = 624
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
+counter = "attract_frames"
+value = 813
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
 counter = "intro"
 value = 2
 
@@ -9931,6 +10208,167 @@ value = 624
 cmp = "<"
 counter = "intro"
 value = 2
+
+[[levels.main.present.board.texts]]
+at = [9, 3]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_demo"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_11"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 812
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [9, 6]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_demo"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_12"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 812
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [17, 4]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_demo"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_14"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 813
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [17, 7]
+
+[levels.main.present.board.texts.high]
+slot = "text_color_demo"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_14"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 813
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [13, 4]
+
+[levels.main.present.board.texts.high]
+column = 1042
+slot = "demo_screen"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_16"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 814
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [13, 7]
+
+[levels.main.present.board.texts.high]
+column = 1042
+slot = "demo_screen"
+
+[levels.main.present.board.texts.text]
+slot = "text_demo_16"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 814
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [9, 2]
+
+[levels.main.present.board.texts.high]
+column = 7
+slot = "high_scores"
+
+[levels.main.present.board.texts.text]
+slot = "text_high_scores"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 3
 
 [levels.main.present.sprite_order.bar_end]
 at = 115
@@ -10017,7 +10455,7 @@ y = 0
 description = "The frames since the attract mode began (its logo, $3D76), 0 out of it; tapper_flow sets it each frame, and the attract's lines of text are drawn by it"
 
 [counters.attract_screen]
-description = "The attract mode's screen: 1 the logo's ($3D76), 2 the demo's ($4AAA) from attract_demo frames in, 0 out of the attract mode (E3BD not 1); tapper_flow sets it each frame from the attract's frames, and the looks pick the screen by it"
+description = "The attract mode's screen: 1 the logo's ($3D76), 2 the demo's ($4AAA) from attract_demo frames in, 3 the high scores after its demo game ($4A37), 0 out of the attract mode (E3BD not 1); tapper_flow sets it each frame from the attract's frames, and the looks pick the screen by it"
 
 [counters.bonus]
 description = "1 from the bonus round's start ($2500, called at $569D) to its end, which the hooks keep: no RAM byte marks the bonus round by itself"
@@ -10066,6 +10504,12 @@ description = "E3C3: the place of the demo's next press in the list it picks ($5
 
 [counters.demo_press]
 description = "E38E: the presses the play routine reads, bit 0 right, 1 left, 2 down, 3 up and 4 the tap ($06FE): in a game the stick and the tap as $2B3A reads them, in the demo the byte $59DD picks"
+
+[counters.extra_every]
+description = "The extra life's every, as the instruction scene's close draws it ($3378 to $338E): E00F and E010, the defaults' 16th and 17th bytes that the boot copies ($0517), as two digits; tapper_bars sets it in the attract mode"
+
+[counters.extra_first]
+description = "The first extra life's score, as the instruction scene's close draws it ($3360 to $3376): E00D and E00E, the defaults' 14th and 15th bytes that the boot copies ($0517), as two digits; tapper_bars sets it in the attract mode"
 
 [counters.intro]
 description = "The level's intro ($5404), counted by tapper_bars from the setup: 1 on the setup's frame, then the frames since plus 1 while the screen is cleared and its lines are up, 0 once the stage is drawn ($5DF6)"
@@ -10437,6 +10881,14 @@ note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tap
 [[evidence."assets.bonus_bandit_places".refs]]
 at = "clip:tapper.bonus.001"
 
+[evidence."assets.bonus_burst"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $284D (the loss): $28AD copies 27 rows of 4 bytes from $2A55 to E2B2, one a frame, adding the can's x to the fourth; $28D9 clears them from E31E one a frame. rbtapper's table at $2A69 ($28BE), sutapper's and tappera's at $2A55 ($28B0), each from its own listing. Drawn, never compared"
+
+[[evidence."assets.bonus_burst".refs]]
+at = "clip:tapper.bonus.001"
+
 [evidence."assets.bonus_code"]
 source = "observed"
 confidence = 70
@@ -10459,14 +10911,6 @@ confidence = 70
 note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tapper.bonus.001's log: the round's objects from E226 to E35A; rbtapper's offsets by aligning its listing with tapper's"
 
 [[evidence."assets.bonus_objects".refs]]
-at = "clip:tapper.bonus.001"
-
-[evidence."assets.bonus_burst"]
-source = "observed"
-confidence = 70
-note = "gp code listing of $284D (the loss): $28AD copies 27 rows of 4 bytes from $2A55 to E2B2, one a frame, adding the can's x to the fourth; $28D9 clears them from E31E one a frame. rbtapper's table at $2A69 ($28BE), sutapper's and tappera's at $2A55 ($28B0), each from its own listing. Drawn, never compared"
-
-[[evidence."assets.bonus_burst".refs]]
 at = "clip:tapper.bonus.001"
 
 [evidence."assets.bonus_pairs"]
@@ -10645,6 +11089,65 @@ note = "gp code listing: $4AAA loads the palette from $616D ($600F) and pokes F8
 [[evidence."assets.demo_color_2".refs]]
 at = "clip:tapper.attract.001"
 
+[evidence."assets.demo_input"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.poweron.001: state 3 ($22D4) runs $59DD and then $0660, where state 10 runs $2B3A's read of port 1; $59DD sets E3B0 1 and E3B1 $012C every frame and counts E3C4 down, and at 0 sets it to 16 and draws 0 to 3 ($59F2), whose list's byte at E3C3 goes to E38E (51 times) unless E3C3 is 15 (3 times, E3C3 back to 0). The model's E3C4, E3C3 and E38E follow the original's on every frame of both demos (7259 to 7627, 8712 to 9269); each set's place by its code's bytes"
+
+[[evidence."assets.demo_input".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.demo_press_ptrs"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.poweron.001: $59F5 to $5A00 take the word at $5A5C plus twice the draw"
+
+[[evidence."assets.demo_press_ptrs".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.demo_presses"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.poweron.001: the words at $5A5C point at four 16-byte lists from $5A1C, read by $5A0D to $5A10 at E3C3; their bytes are $F0, 0, 4 and 8, the tap, nothing held, down and up by $06FE's bits. The same lists in every set (rbtapper's from $5B9C)"
+
+[[evidence."assets.demo_presses".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.demo_records"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.poweron.001: out of a game $3C48 sets E3B8 to 4 ($3C4C, E3BD not 0), and $4A65 copies the 0x200 bytes the fifth word at $4AA0 names, $5A81 (tappera's $5A71, rbtapper's $5C01); the demo's customers come and walk as those records say (both demos of tapper.poweron.001, three of tapper.rb.l8.001)"
+
+[[evidence."assets.demo_records".refs]]
+at = "clip:tapper.poweron.001"
+
+[[evidence."assets.demo_records".refs]]
+at = "clip:tapper.rb.l8.001"
+
+[evidence."assets.demo_screen"]
+source = "observed"
+confidence = 80
+note = "gp element explain and gp element inputs on tapper.demo.001 frames 300, 414, 522, 560, 572 and 656: the scene's objects from E18E (the beer), E1BE (the customer, from $33A3), E25E (the tip), E2E6 (the bartender, $1351 by the tables at $C4A1 and $0977) and E2FE (the mug) are written by $2EE0 between waits of $232B, from the scene's first frame (the texts, clip frame 218) to its state 2, 716 frames on; each set's place from its own code, found by its bytes"
+
+[[evidence."assets.demo_screen".refs]]
+at = "clip:tapper.demo.001"
+
+[evidence."assets.demo_screen_a"]
+source = "observed"
+confidence = 80
+note = "As assets.demo_screen: the scene's start, its first objects and the copy of the taps' objects from $4DD0"
+
+[[evidence."assets.demo_screen_a".refs]]
+at = "clip:tapper.demo.001"
+
+[evidence."assets.demo_setup"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.poweron.001: state 2 ($22CF) calls $5A64 and then the setup $4B3F; $5A64 empties the objects ($5F31), asks for 3 ($5A67, in the queue on 7260 and 8713) and sets E4A8 1, E3C4 6, E4A9 3 and state 3"
+
+[[evidence."assets.demo_setup".refs]]
+at = "clip:tapper.poweron.001"
+
 [evidence."assets.end_drop"]
 source = "observed"
 confidence = 70
@@ -10652,6 +11155,22 @@ note = "gp-arcade's writes example on the level clips' logs (tapper.l1.001, l3, 
 
 [[evidence."assets.end_drop".refs]]
 at = "clip:tapper.l1.001"
+
+[evidence."assets.end_gulp_code"]
+source = "observed"
+confidence = 70
+note = "gp code listing of each set: end script 1 ($489A) calls $45E3 at $48C3 ($4A45 in rbtapper), whose loop waits 1 frame twelve times ($45F5) and returns; tapper.clear.006, clear.013 and clear.021 start in its last wait (E3A9 $45F8, B 1)"
+
+[[evidence."assets.end_gulp_code".refs]]
+at = "clip:tapper.clear.013"
+
+[evidence."assets.end_gulp_start"]
+source = "observed"
+confidence = 70
+note = "gp code listing of each set: end script 1 ($489A) calls $45E3 at $48C3 ($4A45 in rbtapper)"
+
+[[evidence."assets.end_gulp_start".refs]]
+at = "clip:tapper.clear.013"
 
 [evidence."assets.end_hops"]
 source = "observed"
@@ -10701,6 +11220,22 @@ note = "gp code listing on tapper.l1.001 and tapper.l7.001: a level's end ($55F4
 [[evidence."assets.end_script_lists".refs]]
 at = "clip:tapper.l7.001"
 
+[evidence."assets.end_turn_code"]
+source = "observed"
+confidence = 70
+note = "gp code listing of each set: end script 2 ($48C7) calls $2DF7 at $48CD ($4A4F in rbtapper), which waits 15 frames ($2E1C) and returns; tapper.clear.002 starts in that wait (E3A9 $2E1F), and the bonus round's first request comes 22 frames after the frame the game is back in state 11"
+
+[[evidence."assets.end_turn_code".refs]]
+at = "clip:tapper.clear.002"
+
+[evidence."assets.end_turn_start"]
+source = "observed"
+confidence = 70
+note = "gp code listing of each set: end script 2 ($48C7) calls $2DF7 at $48CD ($4A4F in rbtapper)"
+
+[[evidence."assets.end_turn_start".refs]]
+at = "clip:tapper.clear.002"
+
 [evidence."assets.fall_crash_pictures"]
 source = "observed"
 confidence = 70
@@ -10733,6 +11268,46 @@ note = "gp code listing of $236E to $243A, the life lost: the fallen mug (E71B) 
 [[evidence."assets.fall_picture_full".refs]]
 at = "clip:tapper.die.001"
 
+[evidence."assets.frame_wait_call"]
+source = "observed"
+confidence = 70
+note = "gp code listing: the setup's $4B71 calls the frame wait ($60F6; tappera's $60E6, rbtapper's $6276 at $4D01), and the logo calls the same routine at $3D91"
+
+[[evidence."assets.frame_wait_call".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.glass_arcs"]
+source = "observed"
+confidence = 80
+note = "gp code listing of $58C5 and $5904; the glass's object E356 on tapper.l1.001 frames 244 to 286 and tapper.l5.001 frames 1128 to 1168 (gp clip score --values on the bar_end slot 0): up 10, 9, 8 and on each 2 frames, 1 along a step, or every other step in $5904"
+
+[[evidence."assets.glass_arcs".refs]]
+at = "clip:tapper.l5.001"
+
+[evidence."assets.glass_crash"]
+source = "observed"
+confidence = 80
+note = "gp code listing of $45E3; E358 on tapper.l1.001 frames 288 to 299 and tapper.l5.001 frames 1170 to 1181: 13, 13, 12, 12, 11, 11, 11, 11, 12, 12, 13, 13"
+
+[[evidence."assets.glass_crash".refs]]
+at = "clip:tapper.l5.001"
+
+[evidence."assets.glass_down"]
+source = "observed"
+confidence = 80
+note = "gp code listing of $48C7 and $2DF7; no corpus clip ends a level with script 2"
+
+[[evidence."assets.glass_down".refs]]
+at = "clip:tapper.l5.001"
+
+[evidence."assets.glass_turns"]
+source = "observed"
+confidence = 80
+note = "gp code listing of $58C5, $5904, $594D and $50EF, each reading $56C2 by E706; E357 on tapper.l3.001 frames 341 to 403: 03, 13, 13, 23 as the table gives, on a left-tap bar too"
+
+[[evidence."assets.glass_turns".refs]]
+at = "clip:tapper.l3.001"
+
 [evidence."assets.hand_flags"]
 source = "observed"
 confidence = 70
@@ -10757,6 +11332,30 @@ note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tap
 [[evidence."assets.hand_pic_shake".refs]]
 at = "clip:tapper.bonus.001"
 
+[evidence."assets.high_scores"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.poweron.001: after the demo's life lost $24A8 asks for 4 and sets state 4 (7627); $22DC calls $4A37 with no credits: $3CE1 empties the objects, HIGH SCORES is drawn and $232B waits $96 frames (states 15 and 16, 7628 to 7777); state 0 on 7778 and $22B8's logo on 7779"
+
+[[evidence."assets.high_scores".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.high_scores_clear"]
+source = "observed"
+confidence = 70
+note = "As assets.text_high_scores: $4A37 calls $3CE1 first, which empties the objects ($5F31) and writes palette RAM's F800 and F840 (0) and F80C ($7C), then lists the high scores from E014 (none at the boot); rbtapper's copy $16 further on"
+
+[[evidence."assets.high_scores_clear".refs]]
+at = "clip:tapper.demo.001"
+
+[evidence."assets.high_scores_start"]
+source = "observed"
+confidence = 70
+note = "gp code listing: state 4's $22E2 calls $4A37 (rbtapper's $4BC7); tapper.demo.002 starts in its wait, E3A8 4 and E3A9 $4A53 with 4 frames left on the timer for $2346, and state 0 comes 5 frames on"
+
+[[evidence."assets.high_scores_start".refs]]
+at = "clip:tapper.demo.002"
+
 [evidence."assets.hop_steps"]
 source = "observed"
 confidence = 85
@@ -10764,38 +11363,6 @@ note = "gp code listing on tapper.l10.001's end (frames 15680 to 15926): the end
 
 [[evidence."assets.hop_steps".refs]]
 at = "clip:tapper.l10.001"
-
-[evidence."assets.end_gulp_code"]
-source = "observed"
-confidence = 70
-note = "gp code listing of each set: end script 1 ($489A) calls $45E3 at $48C3 ($4A45 in rbtapper), whose loop waits 1 frame twelve times ($45F5) and returns; tapper.clear.006, clear.013 and clear.021 start in its last wait (E3A9 $45F8, B 1)"
-
-[[evidence."assets.end_gulp_code".refs]]
-at = "clip:tapper.clear.013"
-
-[evidence."assets.end_gulp_start"]
-source = "observed"
-confidence = 70
-note = "gp code listing of each set: end script 1 ($489A) calls $45E3 at $48C3 ($4A45 in rbtapper)"
-
-[[evidence."assets.end_gulp_start".refs]]
-at = "clip:tapper.clear.013"
-
-[evidence."assets.end_turn_code"]
-source = "observed"
-confidence = 70
-note = "gp code listing of each set: end script 2 ($48C7) calls $2DF7 at $48CD ($4A4F in rbtapper), which waits 15 frames ($2E1C) and returns; tapper.clear.002 starts in that wait (E3A9 $2E1F), and the bonus round's first request comes 22 frames after the frame the game is back in state 11"
-
-[[evidence."assets.end_turn_code".refs]]
-at = "clip:tapper.clear.002"
-
-[evidence."assets.end_turn_start"]
-source = "observed"
-confidence = 70
-note = "gp code listing of each set: end script 2 ($48C7) calls $2DF7 at $48CD ($4A4F in rbtapper)"
-
-[[evidence."assets.end_turn_start".refs]]
-at = "clip:tapper.clear.002"
 
 [evidence."assets.hops_code"]
 source = "observed"
@@ -10917,6 +11484,14 @@ note = "gp-arcade's writes example on tapper.clear.015's log: the setup's palett
 [[evidence."assets.intro_line_color".refs]]
 at = "clip:tapper.clear.015"
 
+[evidence."assets.intro_pose"]
+source = "observed"
+confidence = 80
+note = "gp element inputs on tapper.l5.001 frames 563 and 593: $5404 writes E2E8 $04 at $5441 and $01 at $5492, its objects E2E6 to E2FD from $543D to $54CE; $54DB's $5F31 clears them on 598; gp code listing; the same bytes in every set, rbtapper's 0x190 on"
+
+[[evidence."assets.intro_pose".refs]]
+at = "clip:tapper.l5.001"
+
 [evidence."assets.intro_text_1"]
 source = "observed"
 confidence = 70
@@ -10973,6 +11548,17 @@ note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stage
 [[evidence."assets.lives_codes".refs]]
 at = "clip:tapper.l1.001"
 
+[evidence."assets.logo_code"]
+source = "observed"
+confidence = 70
+note = "gp code listing on tapper.poweron.001 and tapper.rb.l8.001: $3D76 (rbtapper's $3D8C) waits with $232B and the frame wait, in a loop of B, then sets state 5: tapper's logo starts on 6326 and sets state 5 on 6541 (215 frames on), rbtapper's on 13652 and 13844 (192); tapper.rb.l8.001 starts in the last wait, E3A9 $3E55, with 2 frames left on the timer for $2346 and state 5 three frames on"
+
+[[evidence."assets.logo_code".refs]]
+at = "clip:tapper.poweron.001"
+
+[[evidence."assets.logo_code".refs]]
+at = "clip:tapper.rb.l8.001"
+
 [evidence."assets.logo_color_7c"]
 source = "observed"
 confidence = 70
@@ -11004,6 +11590,30 @@ note = "gp-arcade's writes example on tapper/inputs/oracle/first.input, palette 
 
 [[evidence."assets.logo_color_zero".refs]]
 at = "clip:tapper.attract.001"
+
+[evidence."assets.logo_start"]
+source = "observed"
+confidence = 70
+note = "gp code listing: the dispatch's state 1 at $22CA calls the logo routine; its operand is the routine's address in each set"
+
+[[evidence."assets.logo_start".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.lost_pose_fall"]
+source = "observed"
+confidence = 80
+note = "gp element inputs on tapper.l5.001 frame 533 (the original's 5612): $236E's $2389 writes E2E8 $18 at $23B9, and E2FA to E2FD (his head, $19, 16 above him at his x) from $23BD to $23CC, hiding E2EA to E2F6; gp code listing; the same bytes at $23B5 in every set (gp code listing's bytes, compared)"
+
+[[evidence."assets.lost_pose_fall".refs]]
+at = "clip:tapper.l5.001"
+
+[evidence."assets.lost_pose_slide"]
+source = "observed"
+confidence = 80
+note = "gp element inputs on tapper.l6.001 frames 1394, 1424, 1426 and 1428: $1CE1 writes E2E8 $18 at $1D19 with his head $19 16 above him ($1D1D to $1D2C), then after the wait of 30 hides his head ($1D53) and turns him through $28, $29 and $2A ($1D58), 2 frames each; the same bytes at $1D15 in every set"
+
+[[evidence."assets.lost_pose_slide".refs]]
+at = "clip:tapper.l6.001"
 
 [evidence."assets.mug_flags"]
 source = "observed"
@@ -11091,92 +11701,6 @@ confidence = 80
 note = "gp code listing --writes E3FA on tapper.poweron.001: $5EE7 adds six digit bytes from DE to E3F5..E3FA, called from $095C, $0BF5, $2820 and $55FF (and $0BCC for a tip); each set's place from its own code, found by its bytes in a recording of each"
 
 [[evidence."assets.points_tip".refs]]
-at = "clip:tapper.poweron.001"
-
-[evidence."assets.demo_input"]
-source = "observed"
-confidence = 80
-note = "gp code listing on tapper.poweron.001: state 3 ($22D4) runs $59DD and then $0660, where state 10 runs $2B3A's read of port 1; $59DD sets E3B0 1 and E3B1 $012C every frame and counts E3C4 down, and at 0 sets it to 16 and draws 0 to 3 ($59F2), whose list's byte at E3C3 goes to E38E (51 times) unless E3C3 is 15 (3 times, E3C3 back to 0). The model's E3C4, E3C3 and E38E follow the original's on every frame of both demos (7259 to 7627, 8712 to 9269); each set's place by its code's bytes"
-
-[[evidence."assets.demo_input".refs]]
-at = "clip:tapper.poweron.001"
-
-[evidence."assets.demo_presses"]
-source = "observed"
-confidence = 80
-note = "gp code listing on tapper.poweron.001: the words at $5A5C point at four 16-byte lists from $5A1C, read by $5A0D to $5A10 at E3C3; their bytes are $F0, 0, 4 and 8, the tap, nothing held, down and up by $06FE's bits. The same lists in every set (rbtapper's from $5B9C)"
-
-[[evidence."assets.demo_presses".refs]]
-at = "clip:tapper.poweron.001"
-
-[evidence."assets.demo_press_ptrs"]
-source = "observed"
-confidence = 80
-note = "gp code listing on tapper.poweron.001: $59F5 to $5A00 take the word at $5A5C plus twice the draw"
-
-[[evidence."assets.demo_press_ptrs".refs]]
-at = "clip:tapper.poweron.001"
-
-[evidence."assets.demo_setup"]
-source = "observed"
-confidence = 80
-note = "gp code listing on tapper.poweron.001: state 2 ($22CF) calls $5A64 and then the setup $4B3F; $5A64 empties the objects ($5F31), asks for 3 ($5A67, in the queue on 7260 and 8713) and sets E4A8 1, E3C4 6, E4A9 3 and state 3"
-
-[[evidence."assets.demo_setup".refs]]
-at = "clip:tapper.poweron.001"
-
-[evidence."assets.demo_records"]
-source = "observed"
-confidence = 80
-note = "gp code listing on tapper.poweron.001: out of a game $3C48 sets E3B8 to 4 ($3C4C, E3BD not 0), and $4A65 copies the 0x200 bytes the fifth word at $4AA0 names, $5A81 (tappera's $5A71, rbtapper's $5C01); the demo's customers come and walk as those records say (both demos of tapper.poweron.001, three of tapper.rb.l8.001)"
-
-[[evidence."assets.demo_records".refs]]
-at = "clip:tapper.poweron.001"
-
-[[evidence."assets.demo_records".refs]]
-at = "clip:tapper.rb.l8.001"
-
-[evidence."assets.high_scores"]
-source = "observed"
-confidence = 80
-note = "gp code listing on tapper.poweron.001: after the demo's life lost $24A8 asks for 4 and sets state 4 (7627); $22DC calls $4A37 with no credits: $3CE1 empties the objects, HIGH SCORES is drawn and $232B waits $96 frames (states 15 and 16, 7628 to 7777); state 0 on 7778 and $22B8's logo on 7779"
-
-[[evidence."assets.high_scores".refs]]
-at = "clip:tapper.poweron.001"
-
-[evidence."assets.logo_code"]
-source = "observed"
-confidence = 70
-note = "gp code listing on tapper.poweron.001 and tapper.rb.l8.001: $3D76 (rbtapper's $3D8C) waits with $232B and the frame wait, in a loop of B, then sets state 5: tapper's logo starts on 6326 and sets state 5 on 6541 (215 frames on), rbtapper's on 13652 and 13844 (192); tapper.rb.l8.001 starts in the last wait, E3A9 $3E55, with 2 frames left on the timer for $2346 and state 5 three frames on"
-
-[[evidence."assets.logo_code".refs]]
-at = "clip:tapper.poweron.001"
-
-[[evidence."assets.logo_code".refs]]
-at = "clip:tapper.rb.l8.001"
-
-[evidence."assets.high_scores_start"]
-source = "observed"
-confidence = 70
-note = "gp code listing: state 4's $22E2 calls $4A37 (rbtapper's $4BC7); tapper.demo.002 starts in its wait, E3A8 4 and E3A9 $4A53 with 4 frames left on the timer for $2346, and state 0 comes 5 frames on"
-
-[[evidence."assets.high_scores_start".refs]]
-at = "clip:tapper.demo.002"
-
-[evidence."assets.logo_start"]
-source = "observed"
-confidence = 70
-note = "gp code listing: the dispatch's state 1 at $22CA calls the logo routine; its operand is the routine's address in each set"
-
-[[evidence."assets.logo_start".refs]]
-at = "clip:tapper.poweron.001"
-
-[evidence."assets.frame_wait_call"]
-source = "observed"
-confidence = 70
-note = "gp code listing: the setup's $4B71 calls the frame wait ($60F6; tappera's $60E6, rbtapper's $6276 at $4D01), and the logo calls the same routine at $3D91"
-
-[[evidence."assets.frame_wait_call".refs]]
 at = "clip:tapper.poweron.001"
 
 [evidence."assets.record_blocks"]
@@ -11339,62 +11863,6 @@ note = "gp code listing on tapper.l6.001's end: where the slide ends ($1F66 fall
 [[evidence."assets.slide_objects".refs]]
 at = "clip:tapper.l6.001"
 
-[evidence."assets.glass_arcs"]
-source = "observed"
-confidence = 80
-note = "gp code listing of $58C5 and $5904; the glass's object E356 on tapper.l1.001 frames 244 to 286 and tapper.l5.001 frames 1128 to 1168 (gp clip score --values on the bar_end slot 0): up 10, 9, 8 and on each 2 frames, 1 along a step, or every other step in $5904"
-
-[[evidence."assets.glass_arcs".refs]]
-at = "clip:tapper.l5.001"
-
-[evidence."assets.glass_turns"]
-source = "observed"
-confidence = 80
-note = "gp code listing of $58C5, $5904, $594D and $50EF, each reading $56C2 by E706; E357 on tapper.l3.001 frames 341 to 403: 03, 13, 13, 23 as the table gives, on a left-tap bar too"
-
-[[evidence."assets.glass_turns".refs]]
-at = "clip:tapper.l3.001"
-
-[evidence."assets.glass_down"]
-source = "observed"
-confidence = 80
-note = "gp code listing of $48C7 and $2DF7; no corpus clip ends a level with script 2"
-
-[[evidence."assets.glass_down".refs]]
-at = "clip:tapper.l5.001"
-
-[evidence."assets.glass_crash"]
-source = "observed"
-confidence = 80
-note = "gp code listing of $45E3; E358 on tapper.l1.001 frames 288 to 299 and tapper.l5.001 frames 1170 to 1181: 13, 13, 12, 12, 11, 11, 11, 11, 12, 12, 13, 13"
-
-[[evidence."assets.glass_crash".refs]]
-at = "clip:tapper.l5.001"
-
-[evidence."assets.intro_pose"]
-source = "observed"
-confidence = 80
-note = "gp element inputs on tapper.l5.001 frames 563 and 593: $5404 writes E2E8 $04 at $5441 and $01 at $5492, its objects E2E6 to E2FD from $543D to $54CE; $54DB's $5F31 clears them on 598; gp code listing; the same bytes in every set, rbtapper's 0x190 on"
-
-[[evidence."assets.intro_pose".refs]]
-at = "clip:tapper.l5.001"
-
-[evidence."assets.lost_pose_fall"]
-source = "observed"
-confidence = 80
-note = "gp element inputs on tapper.l5.001 frame 533 (the original's 5612): $236E's $2389 writes E2E8 $18 at $23B9, and E2FA to E2FD (his head, $19, 16 above him at his x) from $23BD to $23CC, hiding E2EA to E2F6; gp code listing; the same bytes at $23B5 in every set (gp code listing's bytes, compared)"
-
-[[evidence."assets.lost_pose_fall".refs]]
-at = "clip:tapper.l5.001"
-
-[evidence."assets.lost_pose_slide"]
-source = "observed"
-confidence = 80
-note = "gp element inputs on tapper.l6.001 frames 1394, 1424, 1426 and 1428: $1CE1 writes E2E8 $18 at $1D19 with his head $19 16 above him ($1D1D to $1D2C), then after the wait of 30 hides his head ($1D53) and turns him through $28, $29 and $2A ($1D58), 2 frames each; the same bytes at $1D15 in every set"
-
-[[evidence."assets.lost_pose_slide".refs]]
-at = "clip:tapper.l6.001"
-
 [evidence."assets.slide_pose"]
 source = "observed"
 confidence = 70
@@ -11419,6 +11887,38 @@ note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-firs
 [[evidence."assets.sound_bar".refs]]
 at = "clip:tapper.score.001"
 
+[evidence."assets.sound_bonus"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_bonus".refs]]
+at = "clip:tapper.bonus.002"
+
+[evidence."assets.sound_bonus_2b"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_bonus_2b".refs]]
+at = "clip:tapper.bonus.002"
+
+[evidence."assets.sound_bonus_open"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_bonus_open".refs]]
+at = "clip:tapper.clear.002"
+
+[evidence."assets.sound_bonus_shake"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_bonus_shake".refs]]
+at = "clip:tapper.bonus.001"
+
 [evidence."assets.sound_boot"]
 source = "observed"
 confidence = 80
@@ -11426,6 +11926,14 @@ note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-firs
 
 [[evidence."assets.sound_boot".refs]]
 at = "clip:tapper.score.001"
+
+[evidence."assets.sound_catch"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of $606B in $0B63 and $0C25; the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_catch".refs]]
+at = "clip:tapper.tip.001"
 
 [evidence."assets.sound_check"]
 source = "observed"
@@ -11451,6 +11959,54 @@ note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-firs
 [[evidence."assets.sound_customers".refs]]
 at = "clip:tapper.score.001"
 
+[evidence."assets.sound_drink"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: $1B83 asks for the byte of the table at $1BCE by the drink's turns left less one ($1B8D to $1B95); the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_drink".refs]]
+at = "clip:tapper.l4.001"
+
+[evidence."assets.sound_end"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_end".refs]]
+at = "clip:tapper.l4.001"
+
+[evidence."assets.sound_end_drink"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_end_drink".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.sound_end_start"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_end_start".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.sound_end_toss"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_end_toss".refs]]
+at = "clip:tapper.l1.001"
+
+[evidence."assets.sound_end_turn"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_end_turn".refs]]
+at = "clip:tapper.l2.001"
+
 [evidence."assets.sound_extra_life"]
 source = "observed"
 confidence = 70
@@ -11470,6 +12026,14 @@ at = "clip:tapper.score.001"
 [[evidence."assets.sound_game".refs]]
 at = "clip:tapper.poweron.001"
 
+[evidence."assets.sound_interlude"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_interlude".refs]]
+at = "clip:tapper.l13.001"
+
 [evidence."assets.sound_life"]
 source = "observed"
 confidence = 80
@@ -11481,20 +12045,12 @@ at = "clip:tapper.score.001"
 [[evidence."assets.sound_life".refs]]
 at = "clip:tapper.poweron.001"
 
-[evidence."assets.sound_catch"]
+[evidence."assets.sound_lift"]
 source = "observed"
 confidence = 80
-note = "gp code listing on each set: the ld c,N before each call of $606B in $0B63 and $0C25; the sound request queue (E114, E0E1) compared each frame over the corpus"
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
 
-[[evidence."assets.sound_catch".refs]]
-at = "clip:tapper.tip.001"
-
-[evidence."assets.sound_drink"]
-source = "observed"
-confidence = 80
-note = "gp code listing on each set: $1B83 asks for the byte of the table at $1BCE by the drink's turns left less one ($1B8D to $1B95); the sound request queue (E114, E0E1) compared each frame over the corpus"
-
-[[evidence."assets.sound_drink".refs]]
+[[evidence."assets.sound_lift".refs]]
 at = "clip:tapper.l4.001"
 
 [evidence."assets.sound_lost"]
@@ -11505,14 +12061,6 @@ note = "gp code listing on each set: the ld c,N before each call of the sound re
 [[evidence."assets.sound_lost".refs]]
 at = "clip:tapper.l6.001"
 
-[evidence."assets.sound_tip"]
-source = "observed"
-confidence = 80
-note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
-
-[[evidence."assets.sound_tip".refs]]
-at = "clip:tapper.l4.001"
-
 [evidence."assets.sound_over"]
 source = "observed"
 confidence = 80
@@ -11521,94 +12069,6 @@ note = "gp code listing on each set: the ld c,N before each call of the sound re
 [[evidence."assets.sound_over".refs]]
 at = "clip:tapper.die.003"
 
-[evidence."assets.sound_end_start"]
-source = "observed"
-confidence = 80
-note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
-
-[[evidence."assets.sound_end_start".refs]]
-at = "clip:tapper.l1.001"
-
-[evidence."assets.sound_end"]
-source = "observed"
-confidence = 80
-note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
-
-[[evidence."assets.sound_end".refs]]
-at = "clip:tapper.l4.001"
-
-[evidence."assets.sound_end_drink"]
-source = "observed"
-confidence = 80
-note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
-
-[[evidence."assets.sound_end_drink".refs]]
-at = "clip:tapper.l1.001"
-
-[evidence."assets.sound_end_toss"]
-source = "observed"
-confidence = 80
-note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
-
-[[evidence."assets.sound_end_toss".refs]]
-at = "clip:tapper.l1.001"
-
-[evidence."assets.sound_end_turn"]
-source = "observed"
-confidence = 80
-note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
-
-[[evidence."assets.sound_end_turn".refs]]
-at = "clip:tapper.l2.001"
-
-[evidence."assets.sound_interlude"]
-source = "observed"
-confidence = 80
-note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
-
-[[evidence."assets.sound_interlude".refs]]
-at = "clip:tapper.l13.001"
-
-[evidence."assets.sound_lift"]
-source = "observed"
-confidence = 80
-note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
-
-[[evidence."assets.sound_lift".refs]]
-at = "clip:tapper.l4.001"
-
-[evidence."assets.sound_bonus_open"]
-source = "observed"
-confidence = 80
-note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
-
-[[evidence."assets.sound_bonus_open".refs]]
-at = "clip:tapper.clear.002"
-
-[evidence."assets.sound_bonus_shake"]
-source = "observed"
-confidence = 80
-note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
-
-[[evidence."assets.sound_bonus_shake".refs]]
-at = "clip:tapper.bonus.001"
-
-[evidence."assets.sound_bonus"]
-source = "observed"
-confidence = 80
-note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
-
-[[evidence."assets.sound_bonus".refs]]
-at = "clip:tapper.bonus.002"
-
-[evidence."assets.sound_bonus_2b"]
-source = "observed"
-confidence = 80
-note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
-
-[[evidence."assets.sound_bonus_2b".refs]]
-at = "clip:tapper.bonus.002"
-
 [evidence."assets.sound_shuffle"]
 source = "observed"
 confidence = 80
@@ -11616,6 +12076,14 @@ note = "gp code listing on each set: the ld c,N before each call of the sound re
 
 [[evidence."assets.sound_shuffle".refs]]
 at = "clip:tapper.bonus.001"
+
+[evidence."assets.sound_tip"]
+source = "observed"
+confidence = 80
+note = "gp code listing on each set: the ld c,N before each call of the sound request routine ($606B) and the same instruction found by its bytes in each set's program; the frames from the sound request queue (E114, E0E1) compared each frame over the corpus"
+
+[[evidence."assets.sound_tip".refs]]
+at = "clip:tapper.l4.001"
 
 [evidence."assets.sound_walk"]
 source = "observed"
@@ -11640,6 +12108,14 @@ note = "gp code listing over the corpus: $5DF6 reads a word at $61ED by the stag
 
 [[evidence."assets.stage_screens".refs]]
 at = "clip:tapper.l1.001"
+
+[evidence."assets.stand_x"]
+source = "observed"
+confidence = 80
+note = "gp element inputs on tapper.demo.001 frame 300: $2EE0 read $C4A2 (bar 1) for the bartender's x; $1351 reads the same table by E6F9"
+
+[[evidence."assets.stand_x".refs]]
+at = "clip:tapper.demo.001"
 
 [evidence."assets.start_list_ptrs"]
 source = "observed"
@@ -11705,6 +12181,38 @@ note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text
 [[evidence."assets.text_demo_10".refs]]
 at = "clip:tapper.attract.001"
 
+[evidence."assets.text_demo_11"]
+source = "observed"
+confidence = 70
+note = "The scene's close ($3312 to $335D, read with gp element inputs on tapper.demo.001): $3439 queued for its text routine ($5F44) 594 frames into the scene, as the scene's lines before it are; rbtapper's $3450, the scene's second part's shift"
+
+[[evidence."assets.text_demo_11".refs]]
+at = "clip:tapper.demo.001"
+
+[evidence."assets.text_demo_12"]
+source = "observed"
+confidence = 70
+note = "The scene's close ($3312 to $335D, read with gp element inputs on tapper.demo.001): $3451 queued for its text routine ($5F44) 594 frames into the scene, as the scene's lines before it are; rbtapper's $3468, the scene's second part's shift"
+
+[[evidence."assets.text_demo_12".refs]]
+at = "clip:tapper.demo.001"
+
+[evidence."assets.text_demo_14"]
+source = "observed"
+confidence = 70
+note = "The scene's close ($3312 to $335D, read with gp element inputs on tapper.demo.001): $344C queued for its text routine ($5F44) 595 frames into the scene, as the scene's lines before it are; rbtapper's $3463, the scene's second part's shift"
+
+[[evidence."assets.text_demo_14".refs]]
+at = "clip:tapper.demo.001"
+
+[evidence."assets.text_demo_16"]
+source = "observed"
+confidence = 70
+note = "The scene's close ($3312 to $335D, read with gp element inputs on tapper.demo.001): $3447 queued for its text routine ($5F44) 596 frames into the scene, as the scene's lines before it are; rbtapper's $345E, the scene's second part's shift"
+
+[[evidence."assets.text_demo_16".refs]]
+at = "clip:tapper.demo.001"
+
 [evidence."assets.text_demo_2"]
 source = "observed"
 confidence = 70
@@ -11768,6 +12276,14 @@ note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text
 
 [[evidence."assets.text_demo_9".refs]]
 at = "clip:tapper.attract.001"
+
+[evidence."assets.text_high_scores"]
+source = "observed"
+confidence = 70
+note = "gp code listing on tapper.demo.001: state 4 after the demo game runs $4A37, which empties the objects and the screen ($3CE1), sets the lines' colour E38F to $20, writes $C3 into palette RAM's F84D and queues $4A59 for row 2, column 9, then waits $96 frames ($4A4D) before state 0; rbtapper's copy at $4BC7, its string 0x190 further on as the routine is"
+
+[[evidence."assets.text_high_scores".refs]]
+at = "clip:tapper.demo.001"
 
 [evidence."assets.text_insert_coin"]
 source = "observed"

@@ -2163,6 +2163,89 @@ rbtapper = 0x3410
 sutapper = 0x33F9
 tappera = 0x33F9
 
+# The instruction scene's closing lines ($3312 to $335D): the extra
+# life's headings, PTS and the zeros after its scores.
+[[asset]]
+name = "text_demo_11"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3439
+count = 1
+width = 14
+
+[asset.at]
+rbtapper = 0x3450
+sutapper = 0x3439
+tappera = 0x3439
+
+[[asset]]
+name = "text_demo_12"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3451
+count = 1
+width = 14
+
+[asset.at]
+rbtapper = 0x3468
+sutapper = 0x3451
+tappera = 0x3451
+
+[[asset]]
+name = "text_demo_14"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x344C
+count = 1
+width = 5
+
+[asset.at]
+rbtapper = 0x3463
+sutapper = 0x344C
+tappera = 0x344C
+
+[[asset]]
+name = "text_demo_16"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3447
+count = 1
+width = 5
+
+[asset.at]
+rbtapper = 0x345E
+sutapper = 0x3447
+tappera = 0x3447
+
+# $3CE1, the high scores' screen emptied: its palette writes' bytes.
+[[asset]]
+name = "high_scores_clear"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3CE1
+count = 1
+width = 16
+
+[asset.at]
+rbtapper = 0x3CF7
+sutapper = 0x3CE1
+tappera = 0x3CE1
+
+# The high scores' heading after the demo ($4A44 queues it at row 2,
+# column 9).
+[[asset]]
+name = "text_high_scores"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4A59
+count = 1
+width = 12
+
+[asset.at]
+rbtapper = 0x4BE9
+sutapper = 0x4A59
+tappera = 0x4A59
+
 # $3C7C's ld a,$20, the colour the logo's lines are written in.
 [[asset]]
 name = "text_color_logo"
@@ -2873,6 +2956,51 @@ width = 2
 rbtapper = 0x5BDC
 sutapper = 0x5A5C
 tappera = 0x5A4C
+
+# $2EE0, the attract mode's instruction scene (state 6, from $3CD8): the
+# code's own bytes, its immediates read by their places, and the
+# customer's two objects it copies from $33A3. rbtapper's copy has a call
+# more at its $2F4B, so its second part sits 3 further on.
+[[asset]]
+name = "demo_screen_a"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2EE0
+count = 1
+width = 87
+
+[asset.at]
+rbtapper = 0x2EF4
+sutapper = 0x2EE0
+tappera = 0x2EE0
+
+[[asset]]
+name = "demo_screen"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2F37
+count = 1
+width = 1140
+
+[asset.at]
+rbtapper = 0x2F4E
+sutapper = 0x2F37
+tappera = 0x2F37
+
+# Where the bartender stands at each bar's tap, $1351's table at $C4A1 (by
+# bar, then by bar plus 4 when $0FFB's bit is set), 8 bytes.
+[[asset]]
+name = "stand_x"
+format = "byte-rows"
+region = "maincpu"
+offset = 0xC4A1
+count = 1
+width = 8
+
+[asset.at]
+rbtapper = 0xC621
+sutapper = 0xC4A1
+tappera = 0xC491
 
 # $5A64, state 2: the demo's start, its request and the levels cleared,
 # E3C4 and the level row it plays with.

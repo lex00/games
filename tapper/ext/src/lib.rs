@@ -1422,6 +1422,9 @@ fn set_attract_screen(cx: &mut ExtCx<'_>) {
         // The demo's game: the demo screen until its setup draws the
         // stage ($5DF6), on the frame after $5A64.
         Some(1) if state == 2 => 2,
+        // The high scores after the demo game ($4A37, the flow's sub
+        // DEMO_SCORES): the screen emptied, its heading.
+        Some(1) if in_demo(cx) && state == 15 && (cx.me.ext[3] >> 16) & 0xff == DEMO_SCORES => 3,
         Some(1) if in_demo(cx) => 0,
         Some(1) if t >= attract_at(cx, "attract_demo") => 2,
         Some(1) => 1,
@@ -2105,6 +2108,377 @@ struct BonusObj {
     flags: i64,
     pic: i64,
     x: i64,
+}
+
+/// The board's sprite objects from E18E that hooks place by address (the
+/// bonus round's, the pour's, the instruction scene's) as bodies of kind
+/// `ok`: one kept is the same body, one gone is removed, a new one spawned.
+fn place_objects(cx: &mut ExtCx<'_>, ok: usize, want: &[BonusObj]) {
+    use gp_sim::world::Body;
+    let have: Vec<(usize, Body)> =
+        cx.world.bodies.iter().enumerate().filter(|(_, b)| b.alive && b.kind == ok).map(|(i, b)| (i, *b)).collect();
+    // Word 1 is the object's place from E18E, plus 1: its sprite RAM
+    // entry (present.sprite_order).
+    let key = |at: i64| (at - 0xE18E) / 4 + 1;
+    for (id, b) in &have {
+        match want.iter().find(|o| key(o.at) == b.ext[1]) {
+            Some(o) => {
+                let mut b = *b;
+                b.x = Fx::from_int(o.x);
+                b.y = Fx::from_int(o.y);
+                b.ext[0] = o.flags | (o.pic << 8);
+                cx.set_body(*id, b);
+            }
+            None => cx.remove(*id),
+        }
+    }
+    for o in want.iter().filter(|o| !have.iter().any(|(_, b)| b.ext[1] == key(o.at))) {
+        let mut b = gp_sim::systems::new_body(cx.spec, cx.world, ok, Fx::from_int(o.x), Fx::from_int(o.y), false);
+        b.ext[0] = o.flags | (o.pic << 8);
+        b.ext[1] = key(o.at);
+        // Its id: the world's end plus every spawn asked for this step,
+        // mugs and customers included.
+        let id = cx.world.bodies.len()
+            + cx.requests().iter().filter(|r| matches!(r, gp_sim::ext::Request::Spawn { .. })).count();
+        cx.spawn(ok, b.x, b.y, false);
+        cx.set_body(id, b);
+    }
+}
+
+/// The instruction scene's frame (demo_scene), 0 on its first, while the
+/// attract mode is in state 6 ($3CD8): from the flow's count of the
+/// attract mode, from the frame attract_demo names.
+fn scene_frame(cx: &ExtCx<'_>) -> Option<i64> {
+    if cx.counter("mode") != Some(1) {
+        return None;
+    }
+    let k = cx.kind("flow")?;
+    let fb = cx.world.bodies.iter().find(|b| b.alive && b.kind == k)?;
+    // State 2's frame ($3CD8 set it as the scene ended): the board shows
+    // the scene's last objects, which $5A64 empties on the next.
+    if fb.ext[3] & 0xff == 2 {
+        return Some(i64::MAX / 2);
+    }
+    if fb.ext[3] & 0xff != 6 || in_demo(cx) {
+        return None;
+    }
+    let t = (fb.ext[2] & ATTRACT_MASK) >> ATTRACT_SHIFT;
+    // The board shows a frame's objects the frame after the code wrote
+    // them: the scene's frame before this one.
+    Some(t - attract_at(cx, "attract_demo") - 2).filter(|n| *n >= 0)
+}
+
+/// The attract mode's instruction scene ($2EE0, called by $3CD8 in state 6)
+/// on its frame `n` (0 the frame it starts, the texts' first): the objects
+/// it shows, from E18E on. The scene plays the game's own objects with no
+/// input and no draw: the bartender (E2E6, six parts) pours a mug at bar 1
+/// and slides it to a customer (E1BE, from $33A3), walks to bar 2 for a tip
+/// (E25E) and back, and the customer sends the empty mug (E2FE) back,
+/// between waits of $232B. Each number is read from the scene's code by its
+/// place (demo_screen_a, demo_screen), from the tables its calls read
+/// ($C4A1 stand_x, $0977 bar_ends, $1AD5 in bartender_walk_left, $4DCC
+/// bar_objects) and from the routines it calls ($1351 bartender_pour,
+/// $2085 bartender_wait). After a wait A is what the text routine left
+/// (scene_a, E39D: gp element inputs on tapper.demo.001 frames 414, 522
+/// and 656).
+fn demo_scene(cx: &ExtCx<'_>, n: i64) -> Vec<BonusObj> {
+    const BASE: i64 = 0xE18E;
+    let d = |at: i64| {
+        if at < 0x2F37 { imm(cx, "demo_screen_a", 0x2EE0, at) } else { imm(cx, "demo_screen", 0x2F37, at) }
+    };
+    // A ld de,NN before a call of the wait: its frames.
+    let w = |at: i64| d(at) | (d(at + 1) << 8);
+    let stand = |bar: i64| imm(cx, "stand_x", 0xC4A1, 0xC4A1 + bar);
+    let end = |bar: i64, k: i64| imm(cx, "bar_ends", 0x0977, 0x0977 + 4 * bar + k);
+    let pour = |at: i64| imm(cx, "bartender_pour", 0x1351, at);
+    let wait_pose = |at: i64| imm(cx, "bartender_wait", 0x2085, at);
+    let step = |k: i64| imm(cx, "bartender_walk_left", 0x19EF, 0x1AD5 + k);
+    let taps = |k: i64| imm(cx, "bar_objects", 0x4DCC, 0x4DCC + k);
+    let after_wait = p(cx, "scene_a");
+    let mut m = [0i64; 0x200];
+    let (mut e727, mut e729) = (0i64, 0i64);
+    let mut f = 0i64;
+    // The objects as they stand after the writes of frame n.
+    let shown = |m: &[i64; 0x200]| -> Vec<BonusObj> {
+        (0..0x80)
+            .filter(|k| m[4 * k] & 0xff != 0)
+            .map(|k| BonusObj { at: BASE + 4 * k as i64, y: m[4 * k] & 0xff, flags: m[4 * k + 1] & 0xff, pic: m[4 * k + 2] & 0xff, x: m[4 * k + 3] & 0xff })
+            .collect()
+    };
+    macro_rules! wait {
+        ($k:expr) => {
+            f += $k;
+            if f > n {
+                return shown(&m);
+            }
+        };
+    }
+    let at = |a: i64| (a - BASE) as usize;
+    const IX: i64 = 0xE2E6;
+    // The bartender at bar `bar`'s tap ($1351 with E3AF 0, so $0FFB's bit
+    // is clear): his parts by the tables at $C4A1 and $0977.
+    let pour_pose = |m: &mut [i64; 0x200], bar: i64| {
+        let o = at(IX);
+        let x = stand(bar);
+        m[o + 3] = x;
+        m[o + 2] = pour(0x136B);
+        for k in [1, 5, 9, 0x15] {
+            m[o + k] = pour(0x1371);
+        }
+        m[o + 0x17] = x;
+        m[o + 7] = (x + pour(0x1394)) & 0xff;
+        m[o + 0xB] = m[o + 7];
+        m[o + 6] = pour(0x13A4);
+        let y = end(bar, 0);
+        m[o] = y;
+        m[o + 4] = y;
+        m[o + 0x14] = (y - pour(0x13BA)) & 0xff;
+        m[o + 8] = (m[o + 0x14] + pour(0x13BF)) & 0xff;
+        m[o + 0xA] = pour(0x13C6);
+        m[o + 0x16] = pour(0x13CA);
+    };
+    // $0679: the tap's handle back, from $4DCC by bar.
+    let handle_back = |m: &mut [i64; 0x200], bar: i64| m[at(0xE346) + 4 * bar as usize] = taps(4 * bar);
+    // The scene's first frame: its colour and lines (the board's texts),
+    // bar 1, the taps' objects from $4DD0, the bartender's first parts and
+    // the customer's two objects from $33A3.
+    let bar = d(0x2F00);
+    for k in 0..d(0x2F13) {
+        m[at(d(0x2F0D) | (d(0x2F0E) << 8)) + k as usize] = taps(4 + k);
+    }
+    let o = at(IX);
+    m[o] = d(0x2F1A);
+    m[o + 1] = d(0x2F1E);
+    m[o + 3] = d(0x2F22);
+    m[o + 0x17] = d(0x2F26);
+    m[o + 0x14] = d(0x2F2A);
+    m[o + 0x15] = d(0x2F2E);
+    m[o + 0x16] = d(0x2F32);
+    m[o + 2] = d(0x2F36);
+    let cust = at(d(0x2F38) | (d(0x2F39) << 8));
+    for k in 0..d(0x2F3E) {
+        m[cust + k as usize] = d(0x33A3 + k);
+    }
+    // $60F6's wait of a frame, then $232B's.
+    wait!(1);
+    wait!(w(0x2F49));
+    // The handle down ($1BD4) and the pour: he stands at the tap ($1351),
+    // his arm on the handle (+$10 to +$13), and every other frame of six
+    // the arm turns and the first free object of six from E18E takes a
+    // layer of beer, 2 above the last.
+    m[at(0xE346) + 4 * bar as usize] = 0;
+    pour_pose(&mut m, bar);
+    let hx = (stand(bar) + d(0x2F5F)) & 0xff;
+    m[o + 0x13] = hx;
+    m[o + 0x12] = d(0x2F66);
+    m[o + 0x11] = d(0x2F6A);
+    m[o + 0x10] = m[o + 4];
+    wait!(w(0x2F72));
+    for _ in 0..d(0x2F78) {
+        m[o + 0x11] ^= d(0x2F7E);
+        m[o + 0x10] = m[o + 4];
+        let free = (0..d(0x2F8E)).find(|k| m[at(d(0x2F89) | (d(0x2F8A) << 8)) + 4 * *k as usize] == 0);
+        let Some(k) = free else { continue };
+        let b = at(BASE) + 4 * k as usize;
+        m[b] = (m[o + 4] + 2 * k) & 0xff;
+        m[b + 1] = d(0x2FA5);
+        m[b + 2] = if k == 0 { d(0x2FB2) } else { d(0x2FAD) };
+        m[b + 3] = (stand(bar) + d(0x2FC2)) & 0xff;
+        wait!(w(0x2FC5));
+    }
+    // The full mug in his hand ($2085's pose at the tap) and the handle up.
+    m[o + 0xF] = (stand(bar) + d(0x2FD8)) & 0xff;
+    m[o + 0xC] = m[o + 4];
+    m[o + 0xE] = d(0x2FE3);
+    m[o + 0xD] = d(0x2FEA);
+    m[o + 2] = wait_pose(0x2088);
+    m[o + 6] = wait_pose(0x208C);
+    m[o + 5] = wait_pose(0x2090);
+    m[o + 0xA] = wait_pose(0x2094);
+    m[o + 9] = wait_pose(0x2098);
+    let tx = m[at(0xE349) + 4 * bar as usize];
+    if m[at(0xE347) + 4 * bar as usize] & 0x10 == 0 {
+        m[o + 3] = (tx - wait_pose(0x20AE)) & 0xff;
+        m[o + 7] = (m[o + 3] + wait_pose(0x20B3)) & 0xff;
+        m[o + 0xB] = m[o + 7];
+    } else {
+        m[o + 3] = (tx + wait_pose(0x20BD)) & 0xff;
+        m[o + 7] = (m[o + 3] - wait_pose(0x20C2)) & 0xff;
+        m[o + 5] = wait_pose(0x20C9);
+        m[o + 0xB] = m[o + 7];
+        m[o + 9] = wait_pose(0x20D0);
+    }
+    m[o + 8] = (m[o] + wait_pose(0x20D5)) & 0xff;
+    m[o + 0x10] = 0;
+    handle_back(&mut m, bar);
+    wait!(w(0x2FF2));
+    wait!(w(0x300A));
+    // The send: his parts as A left them, the throw's pose, the beer gone
+    // and the mug from his hand to the left, 3 a frame.
+    m[o + 8] = after_wait;
+    m[o + 0xC] = after_wait;
+    m[o + 0x10] = after_wait;
+    handle_back(&mut m, bar);
+    m[o + 3] = (stand(bar) + d(0x3026)) & 0xff;
+    m[o + 0x17] = (m[o + 3] + d(0x302B)) & 0xff;
+    m[o + 7] = (m[o + 0x17] + d(0x3030)) & 0xff;
+    m[o + 0x16] = d(0x3037);
+    m[o + 2] = d(0x3039);
+    m[o + 6] = d(0x303E);
+    for k in 0..d(0x3047) {
+        m[at(BASE) + 4 * k as usize] = 0;
+    }
+    let mug = at(0xE2FE);
+    m[mug] = (m[o] + d(0x3059)) & 0xff;
+    m[mug + 1] = d(0x3060);
+    m[mug + 2] = d(0x3062);
+    m[mug + 3] = (stand(bar) + d(0x3071)) & 0xff;
+    for _ in 0..d(0x3076) {
+        // Three dec (ix+$03) a frame ($3077).
+        m[mug + 3] = (m[mug + 3] - 3) & 0xff;
+        wait!(w(0x3081));
+    }
+    // The catch: the customer's arm and the mug gone, and both slide back
+    // 2 a frame.
+    m[cust + 6] = d(0x308F);
+    m[cust + 4] = d(0x3093);
+    m[mug] = d(0x3097);
+    for _ in 0..d(0x3099) {
+        // Two dec a frame each ($309A, $30A0).
+        m[cust + 7] = (m[cust + 7] - 2) & 0xff;
+        m[cust + 3] = (m[cust + 3] - 2) & 0xff;
+        wait!(w(0x30A7));
+    }
+    wait!(w(0x30AF));
+    wait!(w(0x30C9));
+    // To bar 2 for the tip: his switch's pictures, then he stands at its
+    // far end ($0977's +2).
+    let switch = |m: &mut [i64; 0x200], a: i64, p2: i64, p16: i64| {
+        for k in [4, 8, 0xC, 0x10] {
+            m[o + k] = a;
+        }
+        m[o + 2] = p2;
+        m[o + 3] = (m[o + 3] + d(0x30E3)) & 0xff;
+        m[o + 0x16] = p16;
+    };
+    switch(&mut m, after_wait, d(0x30E1), d(0x30ED));
+    wait!(w(0x30EF));
+    let bar2 = d(0x30F5);
+    let mut h = d(0x30FF);
+    m[o + 0x14] = 0;
+    for _ in 0..d(0x3105) {
+        m[o + 2] = h;
+        h += 1;
+        wait!(w(0x310B));
+    }
+    let stand_far = |m: &mut [i64; 0x200], bar: i64, p2: i64, p16: i64, f1: i64, f15: i64, below: i64, add: i64| {
+        m[o + 2] = p2;
+        m[o + 0x16] = p16;
+        m[o + 1] = f1;
+        m[o + 0x15] = f15;
+        let y = end(bar, 0);
+        m[o] = y;
+        m[o + 0x14] = (y - below) & 0xff;
+        m[o + 3] = (end(bar, 2) + add) & 0xff;
+        m[o + 0x17] = m[o + 3];
+    };
+    stand_far(&mut m, bar2, d(0x3115), d(0x3119), d(0x311D), d(0x3121), d(0x3134), d(0x313C));
+    wait!(w(0x3144));
+    // The tip on bar 2.
+    let tip = at(d(0x315C) | (d(0x315D) << 8));
+    m[tip] = d(0x315F);
+    m[tip + 1] = 0;
+    m[tip + 2] = d(0x3165);
+    m[tip + 3] = d(0x3169);
+    wait!(w(0x316B));
+    // He walks left to it, 2 a frame, his step's pictures from $1AD5
+    // every third frame (E727, E729).
+    for _ in 0..d(0x3171) {
+        wait!(w(0x3173));
+        if e727 != 0 {
+            e727 -= 1;
+        } else {
+            e729 = if e729 == 3 { 0 } else { e729 + 1 };
+            let k = 4 * e729;
+            m[o + 2] = step(k);
+            m[o + 1] |= d(0x31A2);
+            m[o + 6] = step(k + 1);
+            m[o + 5] = d(0x31AE);
+            m[o + 0x16] = step(k + 2);
+            m[o + 0x15] |= d(0x31B8);
+            let c = step(k + 3);
+            m[o] = (m[o] + c) & 0xff;
+            m[o + 4] = (m[o + 4] + c) & 0xff;
+            m[o + 0x14] = (m[o + 0x14] + c) & 0xff;
+            m[o + 4] = (m[o] + d(0x31D7)) & 0xff;
+            m[o + 7] = (m[o + 3] + d(0x31DF)) & 0xff;
+            e727 = d(0x31E4);
+        }
+        for k in [3, 7, 0x17] {
+            m[o + k] = (m[o + k] + d(0x31E9)) & 0xff;
+        }
+    }
+    m[tip] = d(0x3208);
+    wait!(w(0x320A));
+    wait!(w(0x3222));
+    // Back to bar 1.
+    for k in [4, 8, 0xC, 0x10] {
+        m[o + k] = after_wait;
+    }
+    m[o + 2] = d(0x3236);
+    m[o + 1] = d(0x323A);
+    m[o + 0x16] = d(0x323E);
+    m[o + 0x15] = d(0x3242);
+    wait!(w(0x3244));
+    let bar1 = d(0x324A);
+    let mut h = d(0x3254);
+    m[o + 0x14] = 0;
+    for _ in 0..d(0x325A) {
+        m[o + 2] = h;
+        h += 1;
+        wait!(w(0x3260));
+    }
+    stand_far(&mut m, bar1, d(0x326A), d(0x326E), d(0x3272), d(0x3276), d(0x3289), d(0x3291));
+    // The customer drinks: his pictures, and six bubbles from E18E above
+    // him, which go from the top every 4 frames.
+    m[cust + 2] = d(0x329D);
+    m[cust + 4] = m[cust];
+    m[cust + 6] = d(0x32A7);
+    let bub = at(d(0x32A9) | (d(0x32AA) << 8));
+    let mut y = m[cust];
+    for k in 0..d(0x32AC) as usize {
+        m[bub + 4 * k] = y & 0xff;
+        m[bub + 4 * k + 1] = d(0x32B9);
+        m[bub + 4 * k + 2] = d(0x32BC);
+        m[bub + 4 * k + 3] = (m[cust + 3] + d(0x32B1)) & 0xff;
+        y += 1;
+    }
+    let mut hl = bub + 4 * d(0x32AC) as usize;
+    for _ in 0..d(0x32C4) {
+        wait!(w(0x32C6));
+        if hl < 0x200 {
+            m[hl] = 0;
+        }
+        hl = hl.saturating_sub(4);
+    }
+    // The empty mug back to the right, 1 a frame.
+    m[cust + 2] = d(0x32D8);
+    m[cust + 6] = d(0x32DC);
+    m[mug] = (m[cust + 4] - 3) & 0xff;
+    m[mug + 3] = m[cust + 7];
+    m[mug + 2] = d(0x32F6);
+    m[mug + 1] = d(0x32FA);
+    for _ in 0..d(0x32FC) {
+        m[mug + 3] = (m[mug + 3] + 1) & 0xff;
+        wait!(w(0x3301));
+    }
+    m[mug] = d(0x330B);
+    wait!(w(0x330D));
+    // The last lines, the high scores' line and its wait, then state 2.
+    wait!(1);
+    wait!(1);
+    wait!(w(0x3391));
+    shown(&m)
 }
 
 /// The beer in the mug at the tap ($129D to $1308): each frame of the
@@ -3022,6 +3396,22 @@ impl Ext for Bars {
         // (tapper_flow keeps the logo's time).
         let demo = in_demo(cx);
         if cx.counter("mode") == Some(1) && !demo {
+            // The extra life's scores the scene's close draws (E00D to
+            // E010, the defaults the boot copies to E000 on).
+            let defaults = cx.table("defaults").to_vec();
+            let digit = |k: usize| defaults.get(k).copied().unwrap_or(0);
+            for (name, k) in [("extra_first", 0xD), ("extra_every", 0xF)] {
+                let v = 10 * digit(k) + digit(k + 1);
+                if cx.counter(name) != Some(v) {
+                    cx.set_counter(name, v);
+                }
+            }
+            // The instruction scene's objects ($2EE0, state 6); none
+            // elsewhere in the attract mode.
+            if let Some(ok) = cx.kind("bonus_object") {
+                let want = scene_frame(cx).map(|n| demo_scene(cx, n)).unwrap_or_default();
+                place_objects(cx, ok, &want);
+            }
             return;
         }
         let (timer_k, rec_k) = (cx.kind("timer"), cx.kind("record"));
@@ -5383,38 +5773,14 @@ impl Ext for Bars {
             let (mut want, text) = bonus_objs.unwrap_or_default();
             if !in_round {
                 want.extend(pour_layers(cx));
+                if let Some(n) = scene_frame(cx) {
+                    want.extend(demo_scene(cx, n));
+                }
             }
             if cx.counter("bonus_text") != Some(text) {
                 cx.set_counter("bonus_text", text);
             }
-            let have: Vec<(usize, Body)> =
-                cx.world.bodies.iter().enumerate().filter(|(_, b)| b.alive && b.kind == ok).map(|(i, b)| (i, *b)).collect();
-            // Word 1 is the object's place from E18E, plus 1: its sprite
-            // RAM entry (present.sprite_order).
-            let key = |at: i64| (at - 0xE18E) / 4 + 1;
-            for (id, b) in &have {
-                match want.iter().find(|o| key(o.at) == b.ext[1]) {
-                    Some(o) => {
-                        let mut b = *b;
-                        b.x = Fx::from_int(o.x);
-                        b.y = Fx::from_int(o.y);
-                        b.ext[0] = o.flags | (o.pic << 8);
-                        cx.set_body(*id, b);
-                    }
-                    None => cx.remove(*id),
-                }
-            }
-            for o in want.iter().filter(|o| !have.iter().any(|(_, b)| b.ext[1] == key(o.at))) {
-                let mut b = gp_sim::systems::new_body(cx.spec, cx.world, ok, Fx::from_int(o.x), Fx::from_int(o.y), false);
-                b.ext[0] = o.flags | (o.pic << 8);
-                b.ext[1] = key(o.at);
-                // Its id: the world's end plus every spawn asked for this
-                // step, mugs and customers included.
-                let id = cx.world.bodies.len()
-                    + cx.requests().iter().filter(|r| matches!(r, gp_sim::ext::Request::Spawn { .. })).count();
-                cx.spawn(ok, b.x, b.y, false);
-                cx.set_body(id, b);
-            }
+            place_objects(cx, ok, &want);
         }
     }
 
