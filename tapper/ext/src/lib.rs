@@ -2548,6 +2548,96 @@ fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
         .collect()
 }
 
+/// A drinking customer's bubbles ($130C, called from $10A1 as he starts
+/// to drink): six blocks of six objects from E1AE, the first block whose
+/// first object is empty his; its objects at his y plus 0 to 5 (1 more in
+/// a level's end, E397 $0B), flags 3, picture $15, 6 along from his x (11
+/// back when he faces the tap's way, his record's +0D bit 0). Each gulp
+/// ($1B83, from $10BA) empties the highest of his block, so he shows as
+/// many as the gulps he has left (word 3 from bit 8). A drinker keeps the
+/// block his bubbles are in: they are read back from the objects placed
+/// on the frame before.
+fn customer_bubbles(
+    cx: &ExtCx<'_>,
+    bodies: &[(usize, gp_sim::world::Body)],
+    cust_k: usize,
+    ok: usize,
+    state: i64,
+) -> Vec<BonusObj> {
+    const T: i64 = 0x1206;
+    let b = |at: i64| imm(cx, "bartender_tap", T, at);
+    let base = b(0x130D) | (b(0x130E) << 8);
+    let count = b(0x1324);
+    let len = b(0x1319);
+    let blocks = b(0x1312);
+    if count <= 0 || len <= 0 || blocks <= 0 {
+        return Vec::new();
+    }
+    let up = i64::from(state == b(0x133C));
+    // The objects placed before, by their address.
+    let placed: Vec<(i64, i64, i64)> = cx
+        .world
+        .bodies
+        .iter()
+        .filter(|o| o.alive && o.kind == ok)
+        .map(|o| (0xE18E + 4 * (o.ext[1] - 1), o.x.floor(), o.y.floor()))
+        .collect();
+    let mut drinkers: Vec<&gp_sim::world::Body> = bodies
+        .iter()
+        .map(|(_, c)| c)
+        .filter(|c| c.alive && c.kind == cust_k && c.ext[0] & 0xff == 2 && (c.ext[3] >> 8) & 0xff > 0)
+        .collect();
+    drinkers.sort_by_key(|c| (c.ext[3] >> 16) & 0xff);
+    let place = |c: &gp_sim::world::Body| {
+        let x = if (c.ext[0] >> 8) & 1 == 0 { c.x.floor() + b(0x1332) } else { c.x.floor() - b(0x1336) };
+        (x & 0xff, (c.y.floor() + up) & 0xff)
+    };
+    let mut owner: Vec<Option<usize>> = vec![None; usize::try_from(blocks).unwrap_or(0)];
+    let mut block_of: Vec<Option<usize>> = vec![None; drinkers.len()];
+    // Those whose bubbles are up keep their block.
+    for (n, c) in drinkers.iter().enumerate() {
+        let (x, y) = place(c);
+        for (k, o) in owner.iter_mut().enumerate() {
+            let at = base + len * k as i64;
+            if o.is_none() && placed.iter().any(|&(a, px, py)| a == at && px == x && py == y) {
+                *o = Some(n);
+                block_of[n] = Some(k);
+                break;
+            }
+        }
+    }
+    // A new drinker takes the first block with nothing in it.
+    for n in 0..drinkers.len() {
+        if block_of[n].is_some() {
+            continue;
+        }
+        let free = (0..owner.len()).find(|&k| {
+            let at = base + len * k as i64;
+            owner[k].is_none() && !placed.iter().any(|&(a, _, _)| a == at)
+        });
+        if let Some(k) = free {
+            owner[k] = Some(n);
+            block_of[n] = Some(k);
+        }
+    }
+    let mut out = Vec::new();
+    for (n, c) in drinkers.iter().enumerate() {
+        let Some(k) = block_of[n] else { continue };
+        let (x, y) = place(c);
+        let left = ((c.ext[3] >> 8) & 0xff).min(count);
+        for i in 0..left {
+            out.push(BonusObj {
+                at: base + len * k as i64 + 4 * i,
+                y: (y + i) & 0xff,
+                flags: b(0x1346),
+                pic: b(0x1349),
+                x,
+            });
+        }
+    }
+    out
+}
+
 /// The bubbles as he drinks at a level's end ($130C, called from $4869
 /// at frame 85): six objects from E1AE, each one line below the last from
 /// his y plus 1 ($1338 to $1343: state 11), 6 along from his x (11 back on
@@ -5798,6 +5888,8 @@ impl Ext for Bars {
                 if let Some(n) = scene_frame(cx) {
                     want.extend(demo_scene(cx, n));
                 }
+                let taken: Vec<i64> = want.iter().map(|o| o.at).collect();
+                want.extend(customer_bubbles(cx, &bodies, cust_k, ok, state).into_iter().filter(|o| !taken.contains(&o.at)));
             }
             if cx.counter("bonus_text") != Some(text) {
                 cx.set_counter("bonus_text", text);
