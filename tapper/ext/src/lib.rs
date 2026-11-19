@@ -2549,8 +2549,8 @@ fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
 }
 
 /// A drinking customer's bubbles ($130C, called from $10A1 as he starts
-/// to drink): six blocks of six objects from E1AE, the first block whose
-/// first object is empty his; its objects at his y plus 0 to 5 (1 more in
+/// to drink): six blocks of six objects from E1AE (more in the model, which
+/// has no limit), the first block whose first object is empty his; its objects at his y plus 0 to 5 (1 more in
 /// a level's end, E397 $0B), flags 3, picture $15, 6 along from his x (11
 /// back when he faces the tap's way, his record's +0D bit 0). Each gulp
 /// ($1B83, from $10BA) empties the highest of his block, so he shows as
@@ -2592,7 +2592,12 @@ fn customer_bubbles(
         let x = if (c.ext[0] >> 8) & 1 == 0 { c.x.floor() + b(0x1332) } else { c.x.floor() - b(0x1336) };
         (x & 0xff, (c.y.floor() + up) & 0xff)
     };
-    let mut owner: Vec<Option<usize>> = vec![None; usize::try_from(blocks).unwrap_or(0)];
+    // The original keeps six blocks (`blocks`), so a seventh drinker at
+    // once shows none; the model has no such limit (its owner's choice,
+    // 2026-11-19): a drinker past the six takes a block after them, every
+    // other rule as the original's.
+    let room = usize::try_from(blocks).unwrap_or(0).max(drinkers.len());
+    let mut owner: Vec<Option<usize>> = vec![None; room];
     let mut block_of: Vec<Option<usize>> = vec![None; drinkers.len()];
     // Those whose bubbles are up keep their block.
     for (n, c) in drinkers.iter().enumerate() {
