@@ -1139,6 +1139,96 @@ description = "The points for a tip picked up ($0BCC), a digit a byte, six to an
 source = "tapper"
 asset = "points_tip"
 
+[assets.demo_input]
+kind = "rows"
+role = "behavior"
+description = "The program from $59DD to $5A1B: the attract demo's presses, which state 3 runs before the play routine in place of the stick's read ($2B3A): E3B0 and E3B1 every frame, and each 16 frames of E3C4 a draw of 0 to 3 that picks a list and the list's next byte (E3C3) as the frame's presses, E38E (the program's code, lifted from the player's romset)"
+
+[assets.demo_input.from]
+source = "tapper"
+asset = "demo_input"
+
+[assets.demo_presses]
+kind = "rows"
+role = "behavior"
+description = "The attract demo's four lists of presses, 16 bytes each, a byte a pick: $F0 the tap, 0 nothing held, 4 down and 8 up (the program's table, lifted from the player's romset)"
+
+[assets.demo_presses.from]
+source = "tapper"
+asset = "demo_presses"
+
+[assets.demo_press_ptrs]
+kind = "rows"
+role = "behavior"
+description = "The words at $5A5C that point at the demo's lists, one a draw ($59F5; the program's table, lifted from the player's romset)"
+
+[assets.demo_press_ptrs.from]
+source = "tapper"
+asset = "demo_press_ptrs"
+
+[assets.demo_setup]
+kind = "rows"
+role = "behavior"
+description = "The program from $5A64 to $5A80, state 2: the demo's start, its request ($5A67), the levels cleared, E3C4 and the level row it plays with (the program's code, lifted from the player's romset)"
+
+[assets.demo_setup.from]
+source = "tapper"
+asset = "demo_setup"
+
+[assets.demo_records]
+kind = "rows"
+role = "behavior"
+description = "The demo's customer records, 16 of 32 bytes: out of a game the bar shown is 4 ($3C48) and the setup's $4A65 copies the block the fifth word at $4AA0 names, the program's bytes from $5A81 (lifted from the player's romset)"
+
+[assets.demo_records.from]
+source = "tapper"
+asset = "demo_records"
+
+[assets.high_scores]
+kind = "rows"
+role = "behavior"
+description = "The program from $4A37 to $4A58, state 4 after the demo: the objects emptied ($3CE1), HIGH SCORES drawn, a wait of $96 frames ($4A4D) and state 0 (the program's code, lifted from the player's romset)"
+
+[assets.high_scores.from]
+source = "tapper"
+asset = "high_scores"
+
+[assets.frame_wait_call]
+kind = "rows"
+role = "behavior"
+description = "The setup's call of the frame wait $60F6 at $4B71, whose bytes name the set's frame wait: the logo's call of it is a frame of the logo's time (the program's code, lifted from the player's romset)"
+
+[assets.frame_wait_call.from]
+source = "tapper"
+asset = "frame_wait_call"
+
+[assets.high_scores_start]
+kind = "rows"
+role = "behavior"
+description = "Where the high scores' routine starts, the operand of state 4's call at $22E2 (the program's code, lifted from the player's romset)"
+
+[assets.high_scores_start.from]
+source = "tapper"
+asset = "high_scores_start"
+
+[assets.logo_code]
+kind = "rows"
+role = "behavior"
+description = "The program from $3D76, the attract mode's logo (state 1): its waits ($232B, $60F6, in its loop of B) give the logo's time, 215 frames to state 5 in tapper and 192 in rbtapper, and its last wait ($3DC0, before state 5) is where a start in it goes on (the program's code, lifted from the player's romset)"
+
+[assets.logo_code.from]
+source = "tapper"
+asset = "logo_code"
+
+[assets.logo_start]
+kind = "rows"
+role = "behavior"
+description = "Where the logo's routine starts, the operand of the dispatch's call at $22CA (the program's code, lifted from the player's romset)"
+
+[assets.logo_start.from]
+source = "tapper"
+asset = "logo_start"
+
 [assets.record_blocks]
 kind = "rows"
 role = "behavior"
@@ -1457,7 +1547,7 @@ asset = "sound_extra_life"
 [assets.sound_game]
 kind = "rows"
 role = "behavior"
-description = "The program from $4B34 to $4C74: a game's start's requests and a level's setup's, with the table of the bar shown's at $4C71 (the program's code, lifted from the player's romset)"
+description = "The program from $4B34 to $4C75: a game's start's requests and a level's setup's, with the table of the bar shown's at $4C71, five bytes, the fifth for the demo's bar shown 4 (the program's code, lifted from the player's romset)"
 
 [assets.sound_game.from]
 source = "tapper"
@@ -1466,7 +1556,7 @@ asset = "sound_game"
 [assets.sound_life]
 kind = "rows"
 role = "behavior"
-description = "The program from $23EA to $2442: a life lost's requests (the program's code, lifted from the player's romset)"
+description = "The program from $23EA to $24AF: a life lost's requests, and out of a game the demo's end ($24AE) (the program's code, lifted from the player's romset)"
 
 [assets.sound_life.from]
 source = "tapper"
@@ -1874,7 +1964,7 @@ x = 0
 y = 0
 
 [entities.bars]
-description = "The bars' play each frame after the bartender's (tapper_bars): empty mugs caught by him ($0B63), mugs moved and caught by customers ($0742), the customers' states ($0B43) and their ends of the bar ($0890). A body with no box"
+description = "The bars' play each frame after the bartender's (tapper_bars): empty mugs caught by him ($0B63), mugs moved and caught by customers ($0742), the customers' states ($0B43) and their ends of the bar ($0890); in the attract mode its demo game, from $5A64 to the high scores' wait after its life lost ($4A37). A body with no box"
 ext = "tapper_bars"
 no_slot = true
 role = "npc"
@@ -1896,6 +1986,10 @@ throw_spread = 15
 walk_frames = 12
 
 [entities.bars.ext_rows]
+demo_input = "demo_input"
+demo_records = "demo_records"
+demo_setup = "demo_setup"
+high_scores = "high_scores"
 arrivals = "arrivals"
 bar_objects = "bar_objects"
 end_hops = "end_hops"
@@ -2123,7 +2217,7 @@ x = 0
 y = 0
 
 [entities.flow]
-description = "The game's flow between plays, a body with no box (tapper_flow): from power-on the boot's wait, the attract mode, the coins and the start ($584F) that begins a game ($4AEF); a level's start ($4B3F), which puts the taps by the level's layout and the bartender at bar 2 on the frame after the setup clears the level's RAM; and the game over's wait back to the attract mode ($2B82)"
+description = "The game's flow between plays, a body with no box (tapper_flow): from power-on the boot's wait, the attract mode (its logo for as long as the set's logo routine waits, the demo screen, and the demo game that tapper_bars plays), the coins and the start ($584F) that begins a game ($4AEF); a level's start ($4B3F), which puts the taps by the level's layout and the bartender at bar 2 on the frame after the setup clears the level's RAM; and the game over's wait back to the attract mode ($2B82)"
 ext = "tapper_flow"
 no_slot = true
 role = "npc"
@@ -2150,7 +2244,13 @@ bar_objects = "bar_objects"
 bartender_setup = "bartender_setup"
 bonus_pairs = "bonus_pairs"
 defaults = "defaults"
+frame_wait_call = "frame_wait_call"
+high_scores = "high_scores"
+high_scores_start = "high_scores_start"
 layouts = "layouts"
+logo_code = "logo_code"
+logo_start = "logo_start"
+wait_call = "wait_call"
 
 [entities.flow.hitbox]
 h = 1
@@ -2200,7 +2300,7 @@ x = 0
 y = 0
 
 [entities.player]
-description = "The bartender, the game's object at E2E6 (y, flags, picture, x): walks along his bar, moves to the next bar's tap on up or down, pours at the tap and steps back when a mug is sent (tapper_bartender)"
+description = "The bartender, the game's object at E2E6 (y, flags, picture, x): walks along his bar, moves to the next bar's tap on up or down, pours at the tap and steps back when a mug is sent (tapper_bartender); in the attract mode's demo game he plays the presses $59DD picks from the program's lists"
 ext = "tapper_bartender"
 role = "player"
 size = [16, 16]
@@ -2234,6 +2334,9 @@ switch_frames = 6
 walk_step = 2
 
 [entities.player.ext_rows]
+demo_input = "demo_input"
+demo_press_ptrs = "demo_press_ptrs"
+demo_presses = "demo_presses"
 bar_ends = "bar_ends"
 bar_objects = "bar_objects"
 bartender_idle = "bartender_idle"
@@ -2295,6 +2398,7 @@ check_second = 6
 check_step = 6
 
 [entities.sound.ext_rows]
+demo_setup = "demo_setup"
 sound_arrivals = "sound_arrivals"
 sound_bar = "sound_bar"
 sound_boot = "sound_boot"
@@ -9951,6 +10055,18 @@ description = "The step of the cycles last written, plus 1 (the looks write its 
 [counters.cycle_wait]
 description = "The frames to the cycles' next step, E121 ($01E1 counts it down; at below 0 the step's colour is written and the step's frames begin)"
 
+[counters.demo]
+description = "1 while the attract mode plays its demo game (E3BD 1): from $5A64, state 2, through its play (state 3), its life lost (12) and the high scores after it ($4A37, state 4) to state 0, whose $22B8 starts the logo again"
+
+[counters.demo_count]
+description = "E3C4: the frames to the demo's next pick, 6 from $5A64 and 16 from each pick ($59EE)"
+
+[counters.demo_place]
+description = "E3C3: the place of the demo's next press in the list it picks ($5A01 to $5A1A); at 15 the pick sets it to 0 and leaves the presses as they were. Kept from one demo to the next"
+
+[counters.demo_press]
+description = "E38E: the presses the play routine reads, bit 0 right, 1 left, 2 down, 3 up and 4 the tap ($06FE): in a game the stick and the tap as $2B3A reads them, in the demo the byte $59DD picks"
+
 [counters.intro]
 description = "The level's intro ($5404), counted by tapper_bars from the setup: 1 on the setup's frame, then the frames since plus 1 while the screen is cleared and its lines are up, 0 once the stage is drawn ($5DF6)"
 
@@ -10977,6 +11093,92 @@ note = "gp code listing --writes E3FA on tapper.poweron.001: $5EE7 adds six digi
 [[evidence."assets.points_tip".refs]]
 at = "clip:tapper.poweron.001"
 
+[evidence."assets.demo_input"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.poweron.001: state 3 ($22D4) runs $59DD and then $0660, where state 10 runs $2B3A's read of port 1; $59DD sets E3B0 1 and E3B1 $012C every frame and counts E3C4 down, and at 0 sets it to 16 and draws 0 to 3 ($59F2), whose list's byte at E3C3 goes to E38E (51 times) unless E3C3 is 15 (3 times, E3C3 back to 0). The model's E3C4, E3C3 and E38E follow the original's on every frame of both demos (7259 to 7627, 8712 to 9269); each set's place by its code's bytes"
+
+[[evidence."assets.demo_input".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.demo_presses"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.poweron.001: the words at $5A5C point at four 16-byte lists from $5A1C, read by $5A0D to $5A10 at E3C3; their bytes are $F0, 0, 4 and 8, the tap, nothing held, down and up by $06FE's bits. The same lists in every set (rbtapper's from $5B9C)"
+
+[[evidence."assets.demo_presses".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.demo_press_ptrs"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.poweron.001: $59F5 to $5A00 take the word at $5A5C plus twice the draw"
+
+[[evidence."assets.demo_press_ptrs".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.demo_setup"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.poweron.001: state 2 ($22CF) calls $5A64 and then the setup $4B3F; $5A64 empties the objects ($5F31), asks for 3 ($5A67, in the queue on 7260 and 8713) and sets E4A8 1, E3C4 6, E4A9 3 and state 3"
+
+[[evidence."assets.demo_setup".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.demo_records"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.poweron.001: out of a game $3C48 sets E3B8 to 4 ($3C4C, E3BD not 0), and $4A65 copies the 0x200 bytes the fifth word at $4AA0 names, $5A81 (tappera's $5A71, rbtapper's $5C01); the demo's customers come and walk as those records say (both demos of tapper.poweron.001, three of tapper.rb.l8.001)"
+
+[[evidence."assets.demo_records".refs]]
+at = "clip:tapper.poweron.001"
+
+[[evidence."assets.demo_records".refs]]
+at = "clip:tapper.rb.l8.001"
+
+[evidence."assets.high_scores"]
+source = "observed"
+confidence = 80
+note = "gp code listing on tapper.poweron.001: after the demo's life lost $24A8 asks for 4 and sets state 4 (7627); $22DC calls $4A37 with no credits: $3CE1 empties the objects, HIGH SCORES is drawn and $232B waits $96 frames (states 15 and 16, 7628 to 7777); state 0 on 7778 and $22B8's logo on 7779"
+
+[[evidence."assets.high_scores".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.logo_code"]
+source = "observed"
+confidence = 70
+note = "gp code listing on tapper.poweron.001 and tapper.rb.l8.001: $3D76 (rbtapper's $3D8C) waits with $232B and the frame wait, in a loop of B, then sets state 5: tapper's logo starts on 6326 and sets state 5 on 6541 (215 frames on), rbtapper's on 13652 and 13844 (192); tapper.rb.l8.001 starts in the last wait, E3A9 $3E55, with 2 frames left on the timer for $2346 and state 5 three frames on"
+
+[[evidence."assets.logo_code".refs]]
+at = "clip:tapper.poweron.001"
+
+[[evidence."assets.logo_code".refs]]
+at = "clip:tapper.rb.l8.001"
+
+[evidence."assets.high_scores_start"]
+source = "observed"
+confidence = 70
+note = "gp code listing: state 4's $22E2 calls $4A37 (rbtapper's $4BC7); tapper.demo.002 starts in its wait, E3A8 4 and E3A9 $4A53 with 4 frames left on the timer for $2346, and state 0 comes 5 frames on"
+
+[[evidence."assets.high_scores_start".refs]]
+at = "clip:tapper.demo.002"
+
+[evidence."assets.logo_start"]
+source = "observed"
+confidence = 70
+note = "gp code listing: the dispatch's state 1 at $22CA calls the logo routine; its operand is the routine's address in each set"
+
+[[evidence."assets.logo_start".refs]]
+at = "clip:tapper.poweron.001"
+
+[evidence."assets.frame_wait_call"]
+source = "observed"
+confidence = 70
+note = "gp code listing: the setup's $4B71 calls the frame wait ($60F6; tappera's $60E6, rbtapper's $6276 at $4D01), and the logo calls the same routine at $3D91"
+
+[[evidence."assets.frame_wait_call".refs]]
+at = "clip:tapper.poweron.001"
+
 [evidence."assets.record_blocks"]
 source = "observed"
 confidence = 80
@@ -11265,6 +11467,9 @@ note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-firs
 [[evidence."assets.sound_game".refs]]
 at = "clip:tapper.score.001"
 
+[[evidence."assets.sound_game".refs]]
+at = "clip:tapper.poweron.001"
+
 [evidence."assets.sound_life"]
 source = "observed"
 confidence = 80
@@ -11272,6 +11477,9 @@ note = "gp-arcade's write log on tapper-first (scripts/oracle/inputs/tapper-firs
 
 [[evidence."assets.sound_life".refs]]
 at = "clip:tapper.score.001"
+
+[[evidence."assets.sound_life".refs]]
+at = "clip:tapper.poweron.001"
 
 [evidence."assets.sound_catch"]
 source = "observed"

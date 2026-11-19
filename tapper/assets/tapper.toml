@@ -291,7 +291,7 @@ width = 1
 rbtapper = 0xD145
 tappera = 0xCFB5
 sutapper = 0xCFC5
-# $4B34 to $4C74: a game's start (2 and 2A at $4B34 and $4B39) and a
+# $4B34 to $4C75: a game's start (2 and 2A at $4B34 and $4B39) and a
 # level's setup (2 at $4B9A and $4C4E, then the bar shown's byte of the
 # table at $4C71, $4C56).
 [[asset]]
@@ -299,7 +299,7 @@ name = "sound_game"
 format = "byte-rows"
 region = "maincpu"
 offset = 0x4B34
-count = 321
+count = 322
 width = 1
 [asset.at]
 rbtapper = 0x4CC4
@@ -333,14 +333,15 @@ width = 1
 rbtapper = 0x090D
 sutapper = 0x090D
 tappera = 0x090D
-# $23EA to $246B: a life lost's mug falling ($1A), its crash ($1B at
-# $2402), $2441's 2 and, with no lives left, 2 after its wait ($246A).
+# $23EA to $24AF: a life lost's mug falling ($1A), its crash ($1B at
+# $2402), $2441's 2 and, with no lives left, 2 after its wait ($246A);
+# out of a game, the demo's end ($24AE asks for 4).
 [[asset]]
 name = "sound_life"
 format = "byte-rows"
 region = "maincpu"
 offset = 0x23EA
-count = 130
+count = 198
 width = 1
 
 [asset.at]
@@ -2826,3 +2827,154 @@ width = 69
 rbtapper = 0x4D5B
 sutapper = 0x4BCB
 tappera = 0x4BCB
+
+# The attract mode's demo game (gp code listing on tapper.poweron.001).
+# $59DD, which state 3 ($22D4) runs before the play routine $0660 in
+# place of $2B3A's read of port 1: E3B0 and E3B1 set every frame, and
+# each 16 frames of E3C4 a draw of 0 to 3 picks a list, whose next byte
+# (E3C3) becomes the frame's presses, E38E.
+[[asset]]
+name = "demo_input"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x59DD
+count = 1
+width = 63
+
+[asset.at]
+rbtapper = 0x5B5D
+sutapper = 0x59DD
+tappera = 0x59CD
+
+# The four lists of the demo's presses, 16 bytes each, which the words at
+# $5A5C point at ($59F5).
+[[asset]]
+name = "demo_presses"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x5A1C
+count = 4
+width = 16
+
+[asset.at]
+rbtapper = 0x5B9C
+sutapper = 0x5A1C
+tappera = 0x5A0C
+
+[[asset]]
+name = "demo_press_ptrs"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x5A5C
+count = 4
+width = 2
+
+[asset.at]
+rbtapper = 0x5BDC
+sutapper = 0x5A5C
+tappera = 0x5A4C
+
+# $5A64, state 2: the demo's start, its request and the levels cleared,
+# E3C4 and the level row it plays with.
+[[asset]]
+name = "demo_setup"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x5A64
+count = 1
+width = 29
+
+[asset.at]
+rbtapper = 0x5BE4
+sutapper = 0x5A64
+tappera = 0x5A54
+
+# The demo's customer records: out of a game $3C48 sets the bar shown
+# E3B8 to 4, and the setup's $4A65 copies the 0x200 bytes the fifth word
+# at $4AA0 points at, which start here.
+[[asset]]
+name = "demo_records"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x5A81
+count = 16
+width = 32
+
+[asset.at]
+rbtapper = 0x5C01
+sutapper = 0x5A81
+tappera = 0x5A71
+
+# $4A37, state 4 after the demo's life lost: the objects emptied ($3CE1),
+# HIGH SCORES drawn, a wait ($232B) and state 0.
+[[asset]]
+name = "high_scores"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4A37
+count = 1
+width = 34
+
+[asset.at]
+rbtapper = 0x4BC7
+sutapper = 0x4A37
+tappera = 0x4A37
+
+# $3D76, the attract mode's logo (state 1), searched for its last wait
+# ($3DC0, before $3DC2 sets state 5): a start in it. Its start from the
+# dispatch's call ($22CA); rbtapper's logo is longer, so the window is.
+[[asset]]
+name = "logo_code"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3D76
+count = 1
+width = 207
+
+[asset.at]
+rbtapper = 0x3D8C
+sutapper = 0x3D76
+tappera = 0x3D76
+
+[[asset]]
+name = "logo_start"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x22CB
+count = 1
+width = 2
+
+[asset.at]
+rbtapper = 0x22CB
+sutapper = 0x22CB
+tappera = 0x22CB
+
+# The setup's call of the frame wait $60F6 ($4B71): the logo's own call
+# of it is a frame of its time.
+[[asset]]
+name = "frame_wait_call"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4B71
+count = 1
+width = 3
+
+[asset.at]
+rbtapper = 0x4D01
+sutapper = 0x4B71
+tappera = 0x4B71
+
+# Where $4A37 starts, the operand of state 4's call at $22E2: a start in
+# the high scores' wait goes on at its place.
+[[asset]]
+name = "high_scores_start"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x22E3
+count = 1
+width = 2
+
+[asset.at]
+rbtapper = 0x22E3
+sutapper = 0x22E3
+tappera = 0x22E3

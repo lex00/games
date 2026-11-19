@@ -109,10 +109,10 @@ note = "Attract mode, the second list: 0 to 4, not the last one (E719). --find p
 rbtapper = 0x51B1
 
 [[draws]]
-site = "tip_kind"
+site = "demo_pick"
 pc = 0x59F2
 ram = 0xE390
-note = "Every 16 frames of E3C4: 0 to 3, picks from the table at $5A5C. gp model static lists this call; --find counts its reads under $5FAE, the call inside $5FAC"
+note = "The attract demo's presses ($59DD, state 3): every 16 frames of E3C4, 0 to 3, which of the lists the words at $5A5C point at gives the next press (E38E). gp model static lists this call; --find counts its reads under $5FAE, the call inside $5FAC. Named tip_kind before, which it isn't"
 
 [draws.at]
 rbtapper = 0x5B72
@@ -149,11 +149,11 @@ active = 0xE2FE
 active_stride = 8
 count = 9
 note = "The mugs from E2FE, 8 bytes a slot (gp track, gp labels propose, gp element inputs). A slot holds an object while its y isn't 0. The slots hold the play's objects while the bars are set up: the setup's $4D13 writes the bars' far ends from E366 (bar 0's x at E369) with the taps, and $5F31 empties them with every object from E18E (the next setup at $4B4D, the bonus round's and the game over's), after which the slots hold the scripts' pictures (the setup's intro at $5404, the bonus round). So the play's objects stay through a customer's slide ($1CE1, the bartender off his bar), a life lost ($236E) and a level's end until the clear, as the program leaves them (tapper.l6.001, tapper.die.001). The rule before this one read them empty whenever the bartender was off a bar's line"
-vacant = "ram[0xE3BD] != 0 || ram[0xE369] == 0"
+vacant = "ram[0xE3BD] == 2 || ram[0xE369] == 0"
 
 [[slots.level]]
 level = "main"
-when = "ram[0xE3BD] == 0"
+when = "ram[0xE3BD] != 2"
 
 [[slots.field]]
 note = "The mug's x"
@@ -206,7 +206,7 @@ active_stride = 8
 count = 16
 name = "customers"
 note = "The customers: 8-byte objects from E262 (the customer's y, flags, picture, x, then its mug's), 4 a bar from the bottom, each with a 0x20-byte record from E4B2 ($0B43 walks both). A slot holds a customer while its y isn't 0"
-vacant = "ram[0xE3BD] != 0 || ram[0xE369] == 0"
+vacant = "ram[0xE3BD] == 2 || ram[0xE369] == 0"
 
 [[slots.group.field]]
 note = "The customer's x"
@@ -258,7 +258,7 @@ active_stride = 8
 count = 1
 name = "tips"
 note = "The tip: the object at E25E (y, flags, picture, x), a tip while its picture E260 is $4D ($0B8C)"
-vacant = "ram[0xE260] != 0x4D || ram[0xE3BD] != 0 || ram[0xE369] == 0"
+vacant = "ram[0xE260] != 0x4D || ram[0xE3BD] == 2 || ram[0xE369] == 0"
 
 [[slots.group.field]]
 note = "The tip's x"
@@ -516,12 +516,12 @@ ram = [0xE2E9]
 whole = true
 
 [[field.case]]
-unmeasured = "A game's first frame (E397 8, set by the start at $5876): the setup ($4B3F) waits a frame in $5E99 before $5F31 empties the objects, so the slot still holds the attract demo's bartender, which the model doesn't run"
+unmeasured = "A game's first frame (E397 8, set by the start at $5876): the setup ($4B3F) waits a frame in $5E99 before $5F31 empties the objects, so the slot still holds the attract mode's: the demo screen's bartender ($3CD8, state 6), which the model doesn't run"
 when = "ram[0xE397] == 8"
 
 [[field.case]]
-unmeasured = "Out of a game (E3BD 1 in attract mode, 2 at game over) the slot holds the attract mode's objects"
-when = "ram[0xE3BD] != 0"
+unmeasured = "Out of a game the slot holds the attract mode's objects (the demo screen's bartender, $3CD8, state 6, until its game's $5A64 empties them) and the game over's (E3BD 2); the demo's game (E3BD 1, E397 3, its play; 12, its life lost; 4, its end) is compared"
+when = "ram[0xE3BD] == 2 || (ram[0xE3BD] == 1 && ram[0xE397] != 3 && ram[0xE397] != 4 && ram[0xE397] != 12)"
 
 [[field.case]]
 unmeasured = "Between levels, at a level's start and in a life lost, the slot holds no bartender at a bar: his y is no bar's row (48, 96, 144 or 192, give or take the 2 his walk bobs)"
@@ -534,12 +534,12 @@ ram = [0xE2E6]
 whole = true
 
 [[field.case]]
-unmeasured = "A game's first frame (E397 8, set by the start at $5876): the setup ($4B3F) waits a frame in $5E99 before $5F31 empties the objects, so the slot still holds the attract demo's bartender, which the model doesn't run"
+unmeasured = "A game's first frame (E397 8, set by the start at $5876): the setup ($4B3F) waits a frame in $5E99 before $5F31 empties the objects, so the slot still holds the attract mode's: the demo screen's bartender ($3CD8, state 6), which the model doesn't run"
 when = "ram[0xE397] == 8"
 
 [[field.case]]
-unmeasured = "Out of a game (E3BD 1 in attract mode, 2 at game over) the slot holds the attract mode's objects"
-when = "ram[0xE3BD] != 0"
+unmeasured = "Out of a game the slot holds the attract mode's objects (the demo screen's bartender, $3CD8, state 6, until its game's $5A64 empties them) and the game over's (E3BD 2); the demo's game (E3BD 1, E397 3, its play; 12, its life lost; 4, its end) is compared"
+when = "ram[0xE3BD] == 2 || (ram[0xE3BD] == 1 && ram[0xE397] != 3 && ram[0xE397] != 4 && ram[0xE397] != 12)"
 
 [[field.case]]
 unmeasured = "Between levels, at a level's start and in a life lost, the slot holds no bartender at a bar"
@@ -688,10 +688,6 @@ note = "Lives, E4A7: 3 at the start ($4B22), 1 less at a life lost ($23AF), 1 mo
 path = "counters.lives"
 ram = [0xE4A7]
 
-[[field.case]]
-unmeasured = "Outside a game (E3BD not 0) the attract mode's demo game plays with the lives as the last game left them and takes one at its own mug's fall ($23AF, 0 to 255); the model doesn't play the demo game"
-when = "ram[0xE3BD] != 0"
-
 [[field]]
 note = "Not compared: the extra lives given, E3F3 ($6158), loaded so a clip's start knows which extra-life scores it has passed"
 path = "counters.lives_given"
@@ -721,10 +717,6 @@ note = "The sound requests the frame made, as the frame ends: the queue $606B fi
 path = "entities.sound[0].ext[1]"
 ram = [0xE114, 0xE0E1, 0xE0E2, 0xE0E3, 0xE0E4, 0xE0E5, 0xE0E6]
 queue = true
-
-[[field.case]]
-unmeasured = "The attract mode's demo game (E3BD 1, the main loop's state E397 3, 4 or 12) asks for its own sounds with the default switches on: its arrivals, pours, sends and gulps. The model doesn't play the demo game, so those requests aren't compared"
-when = "ram[0xE3BD] == 1 && (ram[0xE397] == 3 || ram[0xE397] == 4 || ram[0xE397] == 12)"
 
 [[field]]
 note = "Not compared: the sound requests' state as the frame ends, loaded at a clip's start so the next send's turn bit is the game's: E111, the bit the send ($03D9) flips on latch 0; E099, coins counted the send hasn't answered ($0380); E011, the credits; E728, the foot the bartender's walk steps with next, whose bit 0 picks its step's request ($1A08, $1C1B). The queue itself (E114, E0E1) isn't loaded: every request the model sends is one its hooks made"
@@ -785,6 +777,24 @@ note = "Not compared: credits, E011 (the coin routine $0213 adds them, $5860 tak
 path = "counters.credits"
 presentation = true
 ram = [0xE011]
+
+[[field]]
+note = "Not compared: the presses the play routine reads, E38E: in a game $2B3A's read of the stick and the tap, in the attract demo the byte $59DD picks (bit 0 right, 1 left, 2 down, 3 up, 4 the tap). Loaded so a demo's first frames, before its first pick, press what the original's do"
+path = "counters.demo_press"
+presentation = true
+ram = [0xE38E]
+
+[[field]]
+note = "Not compared: the place of the demo's next press in its list, E3C3 ($5A01 to $5A1A), which no setup clears: each demo goes on where the last left it"
+path = "counters.demo_place"
+presentation = true
+ram = [0xE3C3]
+
+[[field]]
+note = "Not compared: the frames to the demo's next pick, E3C4 (6 from $5A64, 16 from each pick, $59EE)"
+path = "counters.demo_count"
+presentation = true
+ram = [0xE3C4]
 
 [[field]]
 note = "Not compared: coins toward the next credit, E012 ($0242 to $0255)"

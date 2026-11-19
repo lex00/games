@@ -402,7 +402,7 @@ fn draw_pose(cx: &mut ExtCx<'_>, ev: Pose, x_before: i64, spawned: usize) {
     // $0679 puts the bar's tap back (its y from $4DCC), $1BD4 hides it
     // while he pours: his objects draw it then.
     let mut tap_y: Option<i64> = None;
-    let hide = cx.counter("mode").is_some_and(|m| m != 0) || me.y == 0;
+    let hide = out_of_play(cx) || me.y == 0;
     let hold = e714 & 2 != 0;
     e714 &= 1;
     if hide {
@@ -717,7 +717,7 @@ impl Ext for Bartender {
             class: "mover",
             implementation: "gp-ext-tapper::Bartender",
             like: "player-physics",
-            about: "Walks along his bar, moves to the next bar's tap on up or down, and steps back from the tap when a mug is sent; his six objects' pictures as the play routine sets them",
+            about: "Walks along his bar, moves to the next bar's tap on up or down, and steps back from the tap when a mug is sent, by the stick or, in the attract demo, by the presses $59DD picks; his six objects' pictures as the play routine sets them",
             params: PARAMS,
             state: &["ext[0] bar", "ext[1] move frames left x8 plus the bar moving to x2 plus the stick latch", "ext[2] bob count plus 256 x bob phase; byte 2 his flags and byte 3 his picture (E2E7, E2E8), the board sprite's; bytes 4 to 7 E706, E715, E714 (bit 1: the frame after a send, E72C) and E718", "ext[3] tap held (low byte), the 4-way filter's state above"],
             reads: &["action", "tap.x", "tap.facing"],
@@ -774,14 +774,16 @@ impl Bartender {
             .copied();
         let state = flow.map_or(10, |b| b.ext[3] & 0xff);
         // Out of a game (the attract mode, a game over) and on a game's
-        // start (state 8) the play routine doesn't run.
-        if cx.counter("mode").is_some_and(|m| m != 0) || state == 8 {
+        // start (state 8) the play routine doesn't run; the attract
+        // mode's demo game runs it in state 3 ($22D4).
+        if out_of_play(cx) || state == 8 {
             return;
         }
+        let demo = in_demo(cx);
         // State 11 too: a level's end ($0963 sets it the frame the last
         // customer is served), whose next frame doesn't run $0660
         // (tapper.l13.001: tap held on 20481, he stays at 187).
-        if [9, 11, 12, 13, 15, 16].contains(&state) {
+        if [9, 11, 12, 13, 15, 16].contains(&state) || (demo && state != 3) {
             if let Some(fb) = flow
                 && (state == 15 || state == 16)
                 && (fb.ext[3] >> 16) & 0xff == 8
@@ -811,6 +813,9 @@ impl Bartender {
             return;
         }
         *ev = Pose::Play;
+        // The demo's presses: $59DD runs first on every frame of state 3,
+        // whatever the play routine then does.
+        let presses = if demo { Some(demo_presses(cx)) } else { None };
         let bar = cx.me.ext[0];
         // ext[1]: frames left of a bar move times 8, plus the bar it goes
         // to times 2, plus the stick's latch (E730): set when a move
@@ -844,12 +849,19 @@ impl Bartender {
         }
         // The stick's directions in the order $06FE tries them: right,
         // left, down, up; the first held wins.
-        let held: [bool; 4] = ["right", "left", "down", "up"].map(|a| cx.held(a));
-        let held = if p(cx, "four_way") != 0 {
+        // In the demo E38E's bits 0 to 3 ($06FE), which MAME's 4-way
+        // filter doesn't see: it filters the stick, not the program's byte.
+        let held: [bool; 4] = match presses {
+            Some(b) => [0, 1, 2, 3].map(|k| b & (1 << k) != 0),
+            None => ["right", "left", "down", "up"].map(|a| cx.held(a)),
+        };
+        let held = if presses.is_none() && p(cx, "four_way") != 0 {
             four_way(&mut cx.me.ext[3], held)
         } else {
             held
         };
+        // The tap: E38E's bit 4 in the demo.
+        let tap_held = presses.map_or_else(|| cx.held("button1"), |b| b & 0x10 != 0);
         let dir = held.iter().position(|&h| h);
         let tap = Self::tap(cx, bar);
         match dir {
@@ -857,7 +869,7 @@ impl Bartender {
                 cx.me.ext[1] &= !1;
                 // The tap ($1206) puts him at the tap and pours; let go
                 // with a full mug (E718), he sends it ($13CC) and steps back.
-                if cx.held("button1") {
+                if tap_held {
                     if let Some(x) = Self::stand(cx, bar) {
                         cx.me.x = Fx::from_int(x);
                     }
@@ -1059,7 +1071,12 @@ impl Flow {
         let held = cx.held("coin");
         let was = cx.counter("coin_held").unwrap_or(0) != 0;
         let on_press = p(cx, "coin_on_press") != 0;
-        let counts = if on_press { held && !was } else { !held && was };
+        // A start on the boot's first frame loads E097 from RAM the boot
+        // hasn't set yet (0, as if held); the boot then sets it let go,
+        // which no coin made ($022C runs only for a coin): no credit
+        // (tapper.poweron.001: E097 0 on 94, set on 95, E011 0).
+        let boot = cx.frame <= 1 && cx.counter("mode") == Some(0) && cx.me.ext[3] & 0xff == 0;
+        let counts = !boot && if on_press { held && !was } else { !held && was };
         if counts {
             let defaults = cx.table("defaults");
             let (per_credit, per_coin) = (
@@ -1096,18 +1113,26 @@ impl Flow {
         // $3D91, its demo after $2F45 and after $3324 and $3342, and the
         // game over's after $2B82's $5E99 and $2C76's and $2CA2's waits.
         let t = (cx.me.ext[2] & ATTRACT_MASK) >> ATTRACT_SHIFT;
+        let demo = in_demo(cx);
         let main_loop = match mode {
+            // The demo's setup goes on after waits of its own ($5E99 and
+            // $60F6 in $4B3F); the rest of the demo runs from the main
+            // loop, its high scores' wait too ($232B).
+            1 if demo => !(state == 15 && (cx.me.ext[3] >> 16) & 0xff == DEMO_SETUP),
             1 => {
                 // This frame's place in the attract mode.
                 let t = t + 1;
-                let demo_waits = p(cx, "demo_waits_at");
-                !(t == p(cx, "logo_wait_at") || t == p(cx, "demo_wait_at") || t == demo_waits || t == demo_waits + 1)
+                let demo_waits = attract_at(cx, "demo_waits_at");
+                !(t == p(cx, "logo_wait_at") || t == attract_at(cx, "demo_wait_at") || t == demo_waits || t == demo_waits + 1)
             }
             // The game over: its count is word 3 from bit 24 (sub 2).
             2 => state != 13 || (cx.me.ext[3] >> 24) & 0xffff >= 3,
             _ => false,
         };
         let credits = cx.counter("credits").unwrap_or(0);
+        if mode == 1 && !demo && Self::scores_resumed(cx) {
+            return false;
+        }
         if main_loop && credits > 0 && cx.held("start1") {
             // $5860: a credit for a one-player game, state 8 ($5874);
             // the dispatch then runs $4AEF, the game's start: E3ED from
@@ -1120,6 +1145,9 @@ impl Flow {
             // wait in $5E99 ($4B47); tapper_bars goes on from the next.
             cx.set_counter("credits", now - 1);
             cx.set_counter("mode", 0);
+            if demo {
+                cx.set_counter("demo", 0);
+            }
             cx.set_counter("cleared", 0);
             cx.set_counter("score", 0);
             let defaults = cx.table("defaults").to_vec();
@@ -1191,18 +1219,30 @@ impl Flow {
                 Self::attract(cx, credits);
                 true
             }
+            // The demo game: tapper_bars plays it, and this hook puts the
+            // taps and the bartender in at its setup as at a level's.
+            (1, _) if demo => false,
+            // State 0 after the demo's high scores ($4A53): $22B8 again.
+            (1, 0) => {
+                Self::attract(cx, credits);
+                true
+            }
+            // $22CF, state 2: the demo's game starts ($5A64, tapper_bars).
+            (1, 2) => {
+                cx.set_counter("demo", 1);
+                false
+            }
             (1, _) => {
                 // The attract mode: the logo ($3D76, state 1) for
-                // attract_demo frames, then $4AAA and the demo ($3CD8,
-                // state 6) to attract_play, then the demo's game (states
-                // 2, 3 and 4), which isn't modelled: the model stays in
-                // state 3 until a start.
-                let t = t + 1;
-                let st = if t >= p(cx, "attract_play") {
-                    3
-                } else if t >= p(cx, "attract_demo") {
+                // attract_demo frames, then $4AAA and the demo screen
+                // ($3CD8, state 6) to attract_play, when $3CD8 sets state
+                // 2 and the demo's game starts.
+                let t = Self::logo_resumed(cx).unwrap_or(t) + 1;
+                let st = if t >= attract_at(cx, "attract_play") {
+                    2
+                } else if t >= attract_at(cx, "attract_demo") {
                     6
-                } else if t == p(cx, "attract_demo") - 1 {
+                } else if t == attract_at(cx, "attract_demo") - 1 {
                     5
                 } else {
                     1
@@ -1215,16 +1255,161 @@ impl Flow {
         }
     }
 
+    /// A start in the logo's last wait ($232B at $3DBD, called in state 1,
+    /// E3A8; it goes on at $3DC0, E3A9, and sets state 5): the attract
+    /// mode's frame, from the frames left of the timer for $2346, the last
+    /// frame before state 5 being attract_demo less 2 (tapper.rb.l8.001
+    /// starts there, 2 frames left). The place is read once.
+    fn logo_resumed(cx: &mut ExtCx<'_>) -> Option<i64> {
+        let place = (cx.me.ext[1] >> 16) & 0xffff;
+        if place == 0 || (cx.me.ext[1] >> 8) & 0xff != 1 {
+            return None;
+        }
+        cx.me.ext[1] &= !(0xffff << 16);
+        let code = cx.table("logo_code");
+        let start = cx.table("logo_start");
+        let base = start.first().copied()? | (start.get(1).copied()? << 8);
+        // The last wait: the one $3DC2's ld a,5 (state 5) follows.
+        let last = (1..)
+            .map_while(|n| wait_return(cx, "logo_code", "logo_start", n))
+            .find(|&r| {
+                let at = usize::try_from(r - base).unwrap_or(usize::MAX);
+                code.get(at).copied() == Some(0x3E) && code.get(at + 1).copied() == Some(5)
+            })?;
+        if place != last {
+            return None;
+        }
+        let left = cx
+            .kind("timer")
+            .and_then(|k| cx.world.bodies.iter().find(|b| b.alive && b.kind == k && b.ext[1] == 0x2346))
+            .map_or(0, |b| b.ext[0]);
+        Some(attract_at(cx, "attract_demo") - 2 - left)
+    }
+
+    /// A start in the high scores' wait after a demo ($232B at $4A50,
+    /// called in state 4, E3A8; it goes on at $4A53, E3A9): the demo's
+    /// end goes on, its count (tapper_bars, sub DEMO_SCORES) from the
+    /// frames left of the timer for $2346 (tapper.demo.002: 4 left on
+    /// 1630, state 0 on 1635). The place is read once.
+    fn scores_resumed(cx: &mut ExtCx<'_>) -> bool {
+        let place = (cx.me.ext[1] >> 16) & 0xffff;
+        if place == 0 || (cx.me.ext[1] >> 8) & 0xff != 4 || wait_return(cx, "high_scores", "high_scores_start", 1) != Some(place) {
+            return false;
+        }
+        cx.me.ext[1] &= !(0xffff << 16);
+        const H: i64 = 0x4A37;
+        let wait = imm(cx, "high_scores", H, 0x4A4E) | (imm(cx, "high_scores", H, 0x4A4F) << 8);
+        let left = cx
+            .kind("timer")
+            .and_then(|k| cx.world.bodies.iter().find(|b| b.alive && b.kind == k && b.ext[1] == 0x2346))
+            .map_or(0, |b| b.ext[0]);
+        cx.me.ext[3] = (cx.me.ext[3] & 0xff00) | 15 | (DEMO_SCORES << 16) | (((wait - left).max(0) & 0xffff) << 24);
+        cx.me.ext[2] = 0;
+        cx.set_counter("demo", 1);
+        true
+    }
+
     /// $22B8 in state 0: with no credits $4E2C, the attract mode's logo
     /// (E3BD 1, state 1); with credits $4AAA, straight to the demo (state
     /// 6). Every object goes ($5F31).
     fn attract(cx: &mut ExtCx<'_>, credits: i64) {
         cx.set_counter("mode", 1);
-        let t = if credits > 0 { p(cx, "attract_demo") } else { 0 };
+        let t = if credits > 0 { attract_at(cx, "attract_demo") } else { 0 };
         cx.me.ext[3] = (cx.me.ext[3] & !0xff) | if credits > 0 { 6 } else { 1 };
         cx.me.ext[2] = (t << ATTRACT_SHIFT) & ATTRACT_MASK;
         cx.me.ext[0] = 0;
     }
+}
+
+/// The frame of the attract mode (from the logo's first, 0) that its part
+/// `name` starts on: the flow's param, counted for a logo ($3D76) that
+/// takes attract_demo frames, and shifted by as much as the set's own
+/// logo takes more or fewer (logo_frames).
+fn attract_at(cx: &ExtCx<'_>, name: &str) -> i64 {
+    let param = |n: &str| {
+        cx.kind("flow")
+            .and_then(|k| cx.spec.kinds[k].ext_params.get(n))
+            .map_or(0, |v| v.floor())
+    };
+    let base = param("attract_demo");
+    let demo = logo_frames(cx).map_or(base, |n| n + 1);
+    param(name) - base + demo
+}
+
+/// The logo's time ($3D76, state 1): the frame from the logo's first on
+/// which it sets state 5, from its lifted code: one frame to its start,
+/// one for its call of the frame wait ($60F6, the setup's call at $4B71
+/// names it), DE frames for each call of $232B, and its loop of B
+/// ($3DB7's djnz; rbtapper's also tests B with cp and jr nz). 215 frames
+/// in tapper, 192 in rbtapper (tapper.rb.l8.001: state 1 on 13652, 5 on
+/// 13844). None for code it can't follow.
+fn logo_frames(cx: &ExtCx<'_>) -> Option<i64> {
+    let code = flow_table(cx, "logo_code");
+    let wait = flow_table(cx, "wait_call");
+    let frame_wait = flow_table(cx, "frame_wait_call");
+    let at = |k: usize| code.get(k).copied();
+    let rel = |k: usize| at(k).map(|e| if e > 127 { e - 256 } else { e });
+    let (mut pc, mut a, mut b, mut z, mut de, mut t) = (0usize, 0i64, 0i64, false, 0i64, 1i64);
+    for _ in 0..10_000 {
+        let op = at(pc)?;
+        match op {
+            0x01 | 0x21 | 0x32 => pc += 3,
+            0x11 => {
+                de = at(pc + 1)? | (at(pc + 2)? << 8);
+                pc += 3;
+            }
+            0x06 => {
+                b = at(pc + 1)?;
+                pc += 2;
+            }
+            0x0E | 0x36 => pc += 2,
+            0x3E => {
+                a = at(pc + 1)?;
+                pc += 2;
+            }
+            0xED => pc += if at(pc + 1)? == 0x53 { 4 } else { 2 },
+            0x23 | 0x2B | 0x71 | 0x77 => pc += 1,
+            0xAF => {
+                a = 0;
+                pc += 1;
+            }
+            0x78 => {
+                a = b;
+                pc += 1;
+            }
+            0xFE => {
+                z = a == at(pc + 1)?;
+                pc += 2;
+            }
+            0x20 => {
+                let e = rel(pc + 1)?;
+                pc += 2;
+                if !z {
+                    pc = usize::try_from(i64::try_from(pc).ok()? + e).ok()?;
+                }
+            }
+            0x10 => {
+                let e = rel(pc + 1)?;
+                pc += 2;
+                b = (b - 1) & 0xff;
+                if b != 0 {
+                    pc = usize::try_from(i64::try_from(pc).ok()? + e).ok()?;
+                }
+            }
+            0xCD => {
+                let call = code.get(pc..pc + 3)?;
+                if call == wait.as_slice() {
+                    t += de;
+                } else if call == frame_wait.as_slice() {
+                    t += 1;
+                }
+                pc += 3;
+            }
+            0xC9 => return Some(t),
+            _ => return None,
+        }
+    }
+    None
 }
 
 /// The counter attract_screen, which picks the attract mode's screen: the
@@ -1232,8 +1417,13 @@ impl Flow {
 /// of the attract mode.
 fn set_attract_screen(cx: &mut ExtCx<'_>) {
     let t = (cx.me.ext[2] & ATTRACT_MASK) >> ATTRACT_SHIFT;
+    let state = cx.me.ext[3] & 0xff;
     let s = match cx.counter("mode") {
-        Some(1) if t >= p(cx, "attract_demo") => 2,
+        // The demo's game: the demo screen until its setup draws the
+        // stage ($5DF6), on the frame after $5A64.
+        Some(1) if state == 2 => 2,
+        Some(1) if in_demo(cx) => 0,
+        Some(1) if t >= attract_at(cx, "attract_demo") => 2,
         Some(1) => 1,
         _ => 0,
     };
@@ -1453,7 +1643,7 @@ impl Ext for Flow {
             class: "flow",
             implementation: "gp-ext-tapper::Flow",
             like: "",
-            about: "A level's start: the taps by the level's layout and the bartender at his starting bar",
+            about: "The boot's wait, the attract mode's logo and demo screen and the start of its demo game, the coins and a game's start; a level's start: the taps by the level's layout and the bartender at his starting bar",
             params: FLOW_PARAMS,
             state: &["ext[0] the level was set up this frame", "ext[1] the layout (low byte), the wait's state E3A8, place E3A9 and B E39F, and the lives E4A7 above it"],
             writes: &["tap.x", "tap.facing", "player.x", "player.y", "player.ext"],
@@ -1636,6 +1826,75 @@ fn show_picture(cx: &ExtCx<'_>, bar: i64, n: Option<i64>) -> Option<Vec<i64>> {
 
 /// The flow's flag for the frame a game started on (tapper_flow's
 /// STARTED), 0 without a flow.
+/// The attract mode's demo game (E3BD 1, the counter demo): from $5A64
+/// (state 2) through its play (state 3), its life lost (12) and the high
+/// scores after it ($4A37, state 4), to the state 0 that starts the logo
+/// again.
+fn in_demo(cx: &ExtCx<'_>) -> bool {
+    cx.counter("mode") == Some(1) && cx.counter("demo") == Some(1)
+}
+
+/// Out of play: the attract mode but its demo game, and the game over.
+fn out_of_play(cx: &ExtCx<'_>) -> bool {
+    cx.counter("mode").is_some_and(|m| m != 0) && !in_demo(cx)
+}
+
+/// The flow's sub (word 3 from bit 16) through the demo's setup: $5A64 on
+/// its first frame, $4B3F's clear of the level on its second.
+const DEMO_SETUP: i64 = 13;
+/// The flow's sub through the high scores' wait after the demo ($4A50).
+const DEMO_SCORES: i64 = 14;
+
+/// $59DD, the demo's presses, run by state 3 before the play routine
+/// ($22D4): E3C4 counts down, and at 0 it is 16 again and a draw of 0 to
+/// 3 picks one of the lists the words at $5A5C point at; the list's byte
+/// at E3C3 becomes the presses (E38E) and E3C3 one more, but at 15 E3C3
+/// goes back to 0 and the presses stay as they were ($5A04). E3C3 is kept
+/// from one demo to the next.
+fn demo_presses(cx: &mut ExtCx<'_>) -> i64 {
+    const D: i64 = 0x59DD;
+    let mut press = cx.counter("demo_press").unwrap_or(0);
+    let count = (cx.counter("demo_count").unwrap_or(0) - 1) & 0xff;
+    if count != 0 {
+        cx.set_counter("demo_count", count);
+        return press;
+    }
+    cx.set_counter("demo_count", imm(cx, "demo_input", D, 0x59EF));
+    let pick = draw_at_most(cx, "demo_pick", imm(cx, "demo_input", D, 0x59F1));
+    let ptrs: Vec<i64> = cx
+        .table("demo_press_ptrs")
+        .chunks(2)
+        .map(|w| w[0] + 256 * w.get(1).copied().unwrap_or(0))
+        .collect();
+    let first = ptrs.iter().copied().min().unwrap_or(0);
+    let mut place = cx.counter("demo_place").unwrap_or(0);
+    if place == imm(cx, "demo_input", D, 0x5A05) {
+        place = 0;
+    } else {
+        let list = ptrs.get(usize::try_from(pick).unwrap_or(0)).map_or(0, |w| w - first);
+        press = usize::try_from(list + place)
+            .ok()
+            .and_then(|k| cx.table("demo_presses").get(k).copied())
+            .unwrap_or(0);
+        place = (place + 1) & 0xff;
+        cx.set_counter("demo_press", press);
+    }
+    cx.set_counter("demo_place", place);
+    press
+}
+
+/// The 16 records of 32 bytes the setup's $4A65 copies to E4B2 for the
+/// bar shown (E3B8, the flow's word 3 from bit 8): the block of the words
+/// at $4AA0, record_blocks for the four bars and, for the 4 $3C48 sets
+/// out of a game, demo_records.
+fn record_block(cx: &ExtCx<'_>, shown: i64) -> Vec<i64> {
+    if shown >= 4 {
+        return cx.table("demo_records").to_vec();
+    }
+    let at = usize::try_from(shown).unwrap_or(0) * 512;
+    cx.table("record_blocks").get(at..at + 512).map(<[i64]>::to_vec).unwrap_or_default()
+}
+
 fn fb_started(flow: Option<(usize, gp_sim::world::Body)>) -> i64 {
     flow.map_or(0, |(_, b)| b.ext[2] & STARTED)
 }
@@ -1860,7 +2119,7 @@ fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
     const T: i64 = 0x1206;
     let Some(pk) = cx.kind("player") else { return Vec::new() };
     let Some(me) = cx.world.bodies.iter().find(|b| b.alive && b.kind == pk) else { return Vec::new() };
-    if me.y.floor() == 0 || cx.counter("mode").is_some_and(|m| m != 0) {
+    if me.y.floor() == 0 || out_of_play(cx) {
         return Vec::new();
     }
     let Some((tap_x, tap_left)) = Bartender::tap(cx, me.ext[0] & 3) else { return Vec::new() };
@@ -2759,9 +3018,10 @@ impl Ext for Bars {
         };
         set_screen(cx);
         palette_cycles(cx);
-        // The attract mode (E3BD 1) plays the demo's game, which isn't
-        // modelled (tapper_flow keeps its time).
-        if cx.counter("mode") == Some(1) {
+        // The attract mode (E3BD 1): nothing moves but in its demo game
+        // (tapper_flow keeps the logo's time).
+        let demo = in_demo(cx);
+        if cx.counter("mode") == Some(1) && !demo {
             return;
         }
         let (timer_k, rec_k) = (cx.kind("timer"), cx.kind("record"));
@@ -2916,13 +3176,16 @@ impl Ext for Bars {
             // the table at $4C71 (the `sound_game` rows are the program
             // from $4B34).
             let shown_now = (fb.ext[3] >> 8) & 3;
+            // E3B8 as it is: 4 in the demo ($3C48), which picks the fifth
+            // byte of $4C71's table and the fifth block of records.
+            let shown_byte = (fb.ext[3] >> 8) & 0xff;
             // The punk bar's and the space bar's $4937 ($4C4B) wait for the
             // next frame first ($5E99), so their last two come then.
             if shown_now >= 2 {
                 ask(cx, "sound_game", &[0x67]);
                 sound::ask_setup_next(cx);
             } else {
-                ask(cx, "sound_game", &[0x67, 0x11B, 0x13D + shown_now]);
+                ask(cx, "sound_game", &[0x67, 0x11B, 0x13D + shown_byte]);
             }
             // $4C4B's $4937: the punk bar's and the space bar's setups
             // empty the palette cycles ($5E99) and add their own on the
@@ -2952,12 +3215,14 @@ impl Ext for Bars {
             let shown_bit = 1 << ((fb.ext[3] >> 8) & 3);
             let late = i64::from(!whole || bp(cx, "setup_late_bars") & shown_bit != 0);
             // Play from here (the game reaches state 10 a few frames on,
-            // playing all the while).
-            fb.ext[3] = (fb.ext[3] & !0xff) | 10;
+            // playing all the while). Out of a game $4C63 sets state 3, the
+            // demo's play ($22D4), with the level's RAM cleared (E6FF and
+            // E706 0, $4B65).
+            fb.ext[3] = if demo { (fb.ext[3] & 0xff00) | 3 } else { (fb.ext[3] & !0xff) | 10 };
+            let shown = usize::try_from(shown_now).unwrap_or(0);
             // $4A65: the records of the bar shown, each slot's wait, drink,
             // bar and number, and its facing from the layout.
-            let shown = usize::try_from((fb.ext[3] >> 8) & 3).unwrap_or(0);
-            let blocks = cx.table("record_blocks").to_vec();
+            let blocks = record_block(cx, (fb.ext[3] >> 8) & 0xff);
             // The records are carried in slot order; before a game's first
             // setup their bytes are blank, so the n-th is slot n.
             // A run from power-on has no records yet (a clip's start
@@ -2970,7 +3235,7 @@ impl Ext for Bars {
                 }
             }
             for (k, (_, r)) in recs.iter_mut().enumerate() {
-                let Some(rec) = blocks.get((shown * 16 + k) * 32..(shown * 16 + k + 1) * 32) else {
+                let Some(rec) = blocks.get(k * 32..(k + 1) * 32) else {
                     continue;
                 };
                 let bar = rec[8];
@@ -3286,7 +3551,14 @@ impl Ext for Bars {
         if state == 12 && lost_sub == 3 {
             ask(cx, "sound_life", &[0x58]);
         }
-        if state == 12 && lost_sub == 3 && lives == 0 && let Some((fid, mut fb)) = flow {
+        if demo && state == 12 && lost_sub == 3 && lives != 0 && let Some((fid, mut fb)) = flow {
+            // $24A8: out of a game $24AE asks for 4 and the game goes to
+            // state 4 ($22DC), the demo's end (tapper.poweron.001: E6FF 3
+            // on 7626, state 4 on 7627).
+            ask_ld(cx, "sound_life", &[0x24AF - 0x23EA]);
+            fb.ext[3] = (fb.ext[3] & !0xff) | 4;
+            cx.set_body(fid, fb);
+        } else if state == 12 && lost_sub == 3 && lives == 0 && let Some((fid, mut fb)) = flow {
             // $2441 with no lives left ($244B): GAME OVER is drawn and
             // the game waits 60 frames ($2467) and 60 more ($24D8); unless
             // the bar shown is the sports bar, $24E2 calls $5E99, which
@@ -4082,7 +4354,123 @@ impl Ext for Bars {
             }
             cx.set_body(fid, fb);
         }
-        let playing = !ending && !life_lost && ![13, 15, 16].contains(&state);
+        // The attract mode's demo game (tapper.poweron.001, from 7259).
+        // $3CD8 sets state 2 (tapper_flow); on the next frame $5A64 empties
+        // the objects ($5F31), asks for 3 and sets the levels cleared, E3C4
+        // and the level row as its code has them, then state 3; the setup
+        // ($4B3F) sets the bar shown, 4 out of a game ($3C48), and waits for
+        // the next frame ($5E99). There, with no intro out of a game ($4B62),
+        // it empties the timers ($5DEC), takes the level's layout ($2EC3),
+        // clears the level's RAM ($4B65) and draws the stage ($5DF6), and
+        // tapper_flow puts the taps and the bartender in on the next frame
+        // as at a level's start; the play ($59DD, $0660) runs from the frame
+        // after that. The model keeps the setup's two frames in state 15
+        // (sub DEMO_SETUP), the original's E397 being 3 already.
+        let mut demo_still = false;
+        if demo && let Some((fid, mut fb)) = flow {
+            let sub = (fb.ext[3] >> 16) & 0xff;
+            let count = (fb.ext[3] >> 24) & 0xffff;
+            let empties = state == 2 || (state == 4 && sub != DEMO_SCORES);
+            if empties {
+                // $5F31 (from $5A64, and from $4A37's $3CE1): every object.
+                for (id, _) in &bodies {
+                    removed.push(*id);
+                }
+                if let Some((Some(id), _)) = tip.take() {
+                    tips_gone.push(id);
+                }
+                tip = None;
+                dancers = [None; 9];
+                bar_ends_go(cx);
+                if let Some(tk) = cx.kind("tap") {
+                    let taps: Vec<(usize, Body)> =
+                        cx.world.bodies.iter().enumerate().filter(|(_, b)| b.kind == tk).map(|(i, b)| (i, *b)).collect();
+                    for (id, mut t) in taps {
+                        t.y = Fx::ZERO;
+                        cx.set_body(id, t);
+                    }
+                }
+                if let Some(pk) = player_k
+                    && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == pk)
+                {
+                    let mut pb = *pb;
+                    pb.y = Fx::ZERO;
+                    pb.x = Fx::ZERO;
+                    cx.set_body(pid, pb);
+                }
+                place_parts(cx, &[0, 1, 2, 3, 4], false, |_, px, _| (px, 0));
+            }
+            if state == 2 {
+                const S: i64 = 0x5A64;
+                ask_ld(cx, "demo_setup", &[0x5A68 - S]);
+                cleared = imm(cx, "demo_setup", S, 0x5A6D);
+                cx.set_counter("demo_count", imm(cx, "demo_setup", S, 0x5A72));
+                level = imm(cx, "demo_setup", S, 0x5A77);
+                fb.ext[3] = 15 | (4 << 8) | (DEMO_SETUP << 16) | (1 << 24);
+                // The logo's time and the wait's registers go; the lives
+                // stay as the last game left them.
+                fb.ext[2] = 0;
+                fb.ext[1] &= !0xff_ffff_ffff;
+                fb.ext[0] = 0;
+                cx.set_body(fid, fb);
+                demo_still = true;
+            } else if state == 15 && sub == DEMO_SETUP && count == 1 {
+                for (n, (_, t)) in timers.iter_mut().enumerate() {
+                    t.ext[0] = 0;
+                    t.ext[1] = 0;
+                    timers_changed.push(n);
+                }
+                let layouts = flow_table(cx, "layouts");
+                if let Some(&l) = layouts.get(usize::try_from(cleared).unwrap_or(0)) {
+                    fb.ext[1] = (fb.ext[1] & !0xff) | l;
+                }
+                cx.set_counter("stage", cleared);
+                cx.set_counter("bonus", 0);
+                cx.set_counter("lives_shown", (fb.ext[1] >> 40) & 0xff);
+                // The clear: tapper_flow places the taps and him next.
+                fb.ext[0] = 1;
+                fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (DEMO_SETUP << 16) | (2 << 24);
+                cx.set_body(fid, fb);
+                demo_still = true;
+            } else if state == 4 && sub != DEMO_SCORES {
+                // $22DC: with credits $4AAA, the demo screen again (as
+                // $22B8 with credits); else $4A37, the high scores (not
+                // drawn by the model) for a wait of $96 frames ($232B).
+                let credits = cx.counter("credits").unwrap_or(0);
+                if credits > 0 {
+                    let at = attract_at(cx, "attract_demo");
+                    fb.ext[3] = (fb.ext[3] & !0xff) | 6;
+                    fb.ext[2] = (at << ATTRACT_SHIFT) & ATTRACT_MASK;
+                    fb.ext[0] = 0;
+                    cx.set_counter("demo", 0);
+                } else {
+                    fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (DEMO_SCORES << 16) | (1 << 24);
+                }
+                cx.set_body(fid, fb);
+                demo_still = true;
+            } else if (state == 15 || state == 16) && sub == DEMO_SCORES {
+                const H: i64 = 0x4A37;
+                let wait = imm(cx, "high_scores", H, 0x4A4E) | (imm(cx, "high_scores", H, 0x4A4F) << 8);
+                let c = count + 1;
+                if c > wait {
+                    // $4A53: state 0, whose $22B8 starts the logo again.
+                    fb.ext[3] &= 0xff00;
+                    cx.set_counter("demo", 0);
+                } else {
+                    fb.ext[3] = (fb.ext[3] & !(0xffff << 24)) | (c << 24);
+                }
+                cx.set_body(fid, fb);
+                demo_still = true;
+            } else if state == 3 {
+                // $59DD, before $0660 on every frame of the demo's play:
+                // the empty mug's speed E3B0 and the respawn wait E3B1.
+                const D: i64 = 0x59DD;
+                empty_speed = imm(cx, "demo_input", D, 0x59DE);
+                w_word = imm(cx, "demo_input", D, 0x59E3) | (imm(cx, "demo_input", D, 0x59E4) << 8);
+            }
+        }
+        let life_lost = life_lost || demo_still;
+        let playing = !ending && !life_lost && ![13, 15, 16].contains(&state) && !(demo && state != 3);
         if state == 13
             && let Some((fid, mut fb)) = flow
             && (fb.ext[3] >> 16) & 0xff == 1
@@ -4330,18 +4718,15 @@ impl Ext for Bars {
                 c.ext[1] = bp(cx, "pushed_base") + r;
                 // $09E5: pushed back, the record's +14 picture.
                 let slot = (c.ext[3] >> 16) & 0xff;
-                let shown = usize::try_from(flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 3)).unwrap_or(0);
-                if let Some(p) = usize::try_from(slot)
-                    .ok()
-                    .and_then(|k| cx.table("record_blocks").get((shown * 16 + k) * 32 + 0x14).copied())
-                {
+                let block = record_block(cx, flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 0xff));
+                if let Some(p) = usize::try_from(slot).ok().and_then(|k| block.get(k * 32 + 0x14).copied()) {
                     c.ext[0] = (c.ext[0] & !(0xff << 24)) | (p << 24);
                 }
                 // $09ED to $0A1F: the mug it caught, its second sprite:
                 // the record's +19 picture, 4 above it ($DE's level with
                 // it, its picture set +10), 16 toward the tap.
-                if let Some(base) = usize::try_from(slot).ok().map(|k| (shown * 16 + k) * 32) {
-                    let rows = cx.table("record_blocks");
+                if let Some(base) = usize::try_from(slot).ok().map(|k| k * 32) {
+                    let rows = &block;
                     let pic2 = rows.get(base + 0x19).copied().unwrap_or(0);
                     let tall = rows.get(base + 0x10).copied() == Some(0xDE);
                     let y2 = (c.y.floor() - if tall { 0 } else { 4 }) & 0xff;
@@ -4360,11 +4745,10 @@ impl Ext for Bars {
         cust_order.sort_by_key(|&k| (bodies[k].1.ext[3] >> 16) & 0xff);
         // The bar shown's records (record_blocks), whose bytes give a
         // customer's pictures as its state changes ($1016 to $11EA).
-        let shown_now = usize::try_from(flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 3)).unwrap_or(0);
-        let blocks = cx.table("record_blocks").to_vec();
+        let blocks = record_block(cx, flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 0xff));
         let block_of = |slot: i64| -> Option<&[i64]> {
             let k = usize::try_from(slot).ok()?;
-            blocks.get((shown_now * 16 + k) * 32..(shown_now * 16 + k + 1) * 32)
+            blocks.get(k * 32..(k + 1) * 32)
         };
         for k in cust_order {
             let (id, mut c) = bodies[k];
@@ -4807,7 +5191,6 @@ impl Ext for Bars {
                 let bar = Self::bar_of(cx, y);
                 let left = layout & (1 << bar) != 0;
                 let x = if left { 0xEE - x0 } else { x0 };
-                let shown = usize::try_from(flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 3)).unwrap_or(0);
                 let mut c = gp_sim::systems::new_body(cx.spec, cx.world, cust_k, Fx::from_int(x), Fx::from_int(y), left);
                 // $1B58: waiting, for 16 frames and a draw of 0 to 16.
                 let r = draw_at_most(cx, "arrival_wait", 16);
@@ -4818,11 +5201,12 @@ impl Ext for Bars {
                 // walks and drinks isn't modelled.
                 // $1B58: its flags' low nibble is its record's +07 (its
                 // colours), over the start row's, mirrored ($190F).
-                let rec7 = cx.table("record_blocks").get((shown * 16 + k) * 32 + 7).copied().unwrap_or(row[1] & 0xf);
+                let block = record_block(cx, flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 0xff));
+                let rec7 = block.get(k * 32 + 7).copied().unwrap_or(row[1] & 0xf);
                 let flags = ((row[1] | if left { 0x10 } else { 0 }) & 0xf0) | rec7;
                 // $161B: its picture is its record's +10, not the start
                 // row's.
-                let pic = cx.table("record_blocks").get((shown * 16 + k) * 32 + 0x10).copied().unwrap_or(row[2]);
+                let pic = block.get(k * 32 + 0x10).copied().unwrap_or(row[2]);
                 c.ext[0] = (i64::from(left) << 8) | (flags << 16) | (pic << 24);
                 c.ext[1] = r + 16;
                 // The start row's second sprite (+4 to +7), copied in with
@@ -4906,7 +5290,7 @@ impl Ext for Bars {
         }
         // The counters the board's HUD and its looks read: the levels
         // cleared, the lives and the bar shown as the hooks keep them.
-        if cx.counter("mode") == Some(0) {
+        if cx.counter("mode") == Some(0) || demo {
             cx.set_counter("cleared", cleared);
             if let Some(fb) = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)) {
                 let (lives, shown) = (lives_now.unwrap_or((fb.ext[1] >> 40) & 0xff), (fb.ext[3] >> 8) & 3);
@@ -5043,7 +5427,7 @@ impl Ext for Bars {
             class: "flow",
             implementation: "gp-ext-tapper::Bars",
             like: "",
-            about: "Each frame after the bartender: empty mugs caught, a tip picked up and the show it starts, mugs moved and caught by customers, the customers' waits, walks, drinks, throws and watching, and customers served off the bar's end",
+            about: "Each frame after the bartender: empty mugs caught, a tip picked up and the show it starts, mugs moved and caught by customers, the customers' waits, walks, drinks, throws and watching, and customers served off the bar's end; the attract mode's demo game, its start ($5A64), its life lost's end and the high scores' wait after it",
             params: BARS_PARAMS,
             state: &["ext[0] walk, plus E72E, E72F and E006 a byte each above it", "ext[1] empty mug speed, then the show's E70F, E712, E70E and E710 a byte each above it", "ext[2] full mug speed, 8.8"],
             reads: &["mug", "customer", "player", "tap.facing", "tip", "dancer"],

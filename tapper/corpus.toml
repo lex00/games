@@ -9,7 +9,7 @@ format = "1.0.0"
 name = "tapper"
 version = "0.2.0"
 title = "Tapper"
-recipes = "b3:8c94bcdd7d2a0d9dc5ab05d7c0e248737ef3445e0f5159e7f1d4e480c9fa2e4c"
+recipes = "b3:74c711e6801c74db72ddb2ea76aa6a28052b182c3f7bc7e4bb6452491099cf47"
 
 [target]
 game = "tapper"
@@ -610,3 +610,33 @@ presses = "inputs/tapper.rb.l8.001.presses"
 frames = 3942
 why = "the rbtapper set on tapper.l8.001's presses, so the gate holds the model on Root Beer too"
 level = "saloon"
+
+[[clip]]
+id = "tapper.demo.001"
+name = "The attract demo after the boot, no presses"
+source = "generated"
+start = "inputs/tapper.demo.001.start.presses"
+presses = "inputs/tapper.demo.001.presses"
+frames = 1800
+why = "the attract mode's first demo game from the boot with nothing pressed: the logo, the demo screen, the demo's play, its life lost and the high scores"
+level = "attract"
+
+[[clip]]
+id = "tapper.demo.002"
+name = "The attract mode's second demo, no presses"
+source = "generated"
+start = "inputs/tapper.demo.002.start.presses"
+presses = "inputs/tapper.demo.002.presses"
+frames = 1700
+why = "the second demo game of the attract loop, which goes on in the press lists where the first left them (E3C3), with the lives the first left"
+level = "attract"
+
+[[clip]]
+id = "tapper.rb.demo.001"
+name = "Root Beer: the attract demo after the boot, no presses"
+source = "generated"
+start = "inputs/tapper.rb.demo.001.start.presses"
+presses = "inputs/tapper.rb.demo.001.presses"
+frames = 1800
+why = "the rbtapper set's attract mode, whose logo is shorter, and its first demo game"
+level = "attract"
