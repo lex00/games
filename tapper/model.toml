@@ -4697,7 +4697,141 @@ at = 58
 slot = "logo_color_zero"
 
 [[levels.main.present.board.looks.palette_writes]]
+at = 60
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 61
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 35
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 37
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 39
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 41
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 43
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 45
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 47
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 49
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 51
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 53
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 55
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 57
+slot = "logo_color_dim"
+
+[[levels.main.present.board.looks.palette_writes]]
 at = 59
+slot = "logo_color_lit"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 89
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 95
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 34
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 36
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 38
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 40
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 42
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 44
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 46
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 48
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 50
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 52
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 54
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 56
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 58
 slot = "logo_color_zero"
 
 [[levels.main.present.board.looks.palette_writes]]
@@ -4756,6 +4890,10 @@ slot = "logo_color_dim"
 at = 57
 slot = "logo_color_dim"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 59
+slot = "logo_color_dim"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "attract_screen"
@@ -4764,7 +4902,7 @@ value = 1
 [[levels.main.present.board.looks.when]]
 cmp = ">="
 counter = "attract_frames"
-value = 89
+value = 95
 
 [[levels.main.present.board.looks]]
 screen = "screen_attract_demo"
