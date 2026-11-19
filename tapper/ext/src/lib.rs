@@ -4475,16 +4475,29 @@ impl Ext for Bars {
                 let k = (238 - y0 + 9).max(10) / 10;
                 let t = 109 + 19 + 2 * k + 100;
                 let slot5 = bodies.iter().position(|(id, b)| b.kind == mug_k && b.ext[2] == 6 && !removed.contains(id));
+                // Its picture and flags (word 0: flags, then the picture):
+                // $4578's $73, then every 2 frames it turns between $73
+                // and $75 (E706 from $4583, $458E to $4599) as it falls;
+                // where it lands it turns at once and every 4 frames after
+                // ($45BF to $45CF), 15 times, and is emptied.
+                let d = |at: i64| imm(cx, "end_drop", 0x4546, at);
+                let (p73, p75, was, every, flags, landed_every) =
+                    (d(0x457B), d(0x4598), d(0x4592), d(0x4584).max(1), d(0x4571), d(0x45D0).max(1));
+                let turn = move |p: i64| if p == was { p75 } else { p73 };
+                let falling = move |k: i64| if (k / every) % 2 == 0 { p73 } else { p75 };
+                let word0 = move |p: i64| flags | (p << 8);
                 if n == t {
                     if let Some(j) = slot5 {
                         let b = &mut bodies[j].1;
                         b.x = Fx::from_int(bx);
                         b.y = Fx::from_int(255);
                         b.ext[3] = 0x400;
+                        b.ext[0] = word0(p73);
                     } else {
                         let mut b = gp_sim::systems::new_body(cx.spec, cx.world, mug_k, Fx::from_int(bx), Fx::from_int(255), false);
                         b.ext[2] = 6;
                         b.ext[3] = 0x400;
+                        b.ext[0] = word0(p73);
                         end_spawn.push(b);
                     }
                 } else if n > t
@@ -4496,6 +4509,7 @@ impl Ext for Bars {
                     if b.ext[3] & 0x800 == 0 {
                         let ny = y - 4;
                         b.y = Fx::from_int(ny);
+                        b.ext[0] = word0(falling(n - t));
                         if ny - 5 < by {
                             b.ext[3] |= 0x800;
                             // $45AD: it lands, asking for 2 and $37.
@@ -4503,9 +4517,17 @@ impl Ext for Bars {
                                 ask(cx, "sound_end", &[0x47, 0x4C]);
                             }
                             b.ext[1] = n;
+                            b.ext[0] = word0(turn(falling(n - t)));
                         }
                     } else if n == b.ext[1] + 60 {
                         removed.push(bodies[j].0);
+                    } else {
+                        // Turned every 4 frames from its landing ($45CF).
+                        let landed = b.ext[1];
+                        let at_landing = turn(falling(landed - t));
+                        let turns = (n - landed) / landed_every;
+                        let p = if turns % 2 == 0 { at_landing } else { turn(at_landing) };
+                        b.ext[0] = word0(p);
                     }
                 }
             }
