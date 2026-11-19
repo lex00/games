@@ -1,0 +1,491 @@
+gp-art 1
+# Last Call: the rules for a large-art theme of Tapper (site docs, themes.md, lists every rule).
+# Each picture the game's theme kit lists is below, marked TO DRAW. Draw it into art/,
+# then write its `pic` lines (`gp theme look check` names the game's pictures for each pose).
+scale 2
+# --- title (runway/title.py) ---
+pic screen_attract_logo art/title/title-14.png 512 480 0 0
+pic screen_attract_logo-1 art/title/title-01.png 512 480 0 0
+pic screen_attract_logo-2 art/title/title-02.png 512 480 0 0
+pic screen_attract_logo-3 art/title/title-03.png 512 480 0 0
+pic screen_attract_logo-4 art/title/title-04.png 512 480 0 0
+pic screen_attract_logo-5 art/title/title-05.png 512 480 0 0
+pic screen_attract_logo-6 art/title/title-06.png 512 480 0 0
+pic screen_attract_logo-7 art/title/title-07.png 512 480 0 0
+pic screen_attract_logo-8 art/title/title-08.png 512 480 0 0
+pic screen_attract_logo-9 art/title/title-09.png 512 480 0 0
+pic screen_attract_logo-10 art/title/title-10.png 512 480 0 0
+pic screen_attract_logo-11 art/title/title-11.png 512 480 0 0
+pic screen_attract_logo-12 art/title/title-12.png 512 480 0 0
+pic screen_attract_logo-13 art/title/title-13.png 512 480 0 0
+pic screen_attract_logo-14 art/title/title-14.png 512 480 0 0
+# --- end title ---
+# The idle panel's lines, centred in its frame; the bonus round's win
+# line in the theme's own words.
+#+ text_center 8 22 3 8
+#+ text_say bonus_text_win_1 ONE FOR THE ROAD
+# --- objects (runway/objects.py) ---
+pic sprite-tap-09 art/obj/tap-09.png 32 32 0 0
+pic sprite-mug-0e art/obj/mug-0e.png 32 32 0 0
+pic sprite-mug-16 art/obj/mug-16.png 32 32 0 0
+pic sprite-mug-14 art/obj/mug-14.png 32 32 0 0
+pic sprite-mug-17 art/obj/mug-17.png 32 32 0 0
+pic sprite-mug-10 art/obj/mug-10.png 32 32 0 0
+pic sprite-mug-11 art/obj/mug-11.png 32 32 0 0
+pic sprite-mug-12 art/obj/mug-12.png 32 32 0 0
+pic sprite-mug-13 art/obj/mug-13.png 32 32 0 0
+pic sprite-tip-4d art/obj/tip-4d.png 32 32 0 0
+pic letter-A art/font/letter-A.png 16 16 0 0
+pic letter-B art/font/letter-B.png 16 16 0 0
+pic letter-C art/font/letter-C.png 16 16 0 0
+pic letter-D art/font/letter-D.png 16 16 0 0
+pic letter-E art/font/letter-E.png 16 16 0 0
+pic letter-F art/font/letter-F.png 16 16 0 0
+pic letter-G art/font/letter-G.png 16 16 0 0
+pic letter-H art/font/letter-H.png 16 16 0 0
+pic letter-I art/font/letter-I.png 16 16 0 0
+pic letter-J art/font/letter-J.png 16 16 0 0
+pic letter-K art/font/letter-K.png 16 16 0 0
+pic letter-L art/font/letter-L.png 16 16 0 0
+pic letter-M art/font/letter-M.png 16 16 0 0
+pic letter-N art/font/letter-N.png 16 16 0 0
+pic letter-O art/font/letter-O.png 16 16 0 0
+pic letter-P art/font/letter-P.png 16 16 0 0
+pic letter-R art/font/letter-R.png 16 16 0 0
+pic letter-S art/font/letter-S.png 16 16 0 0
+pic letter-T art/font/letter-T.png 16 16 0 0
+pic letter-U art/font/letter-U.png 16 16 0 0
+pic letter-V art/font/letter-V.png 16 16 0 0
+pic letter-W art/font/letter-W.png 16 16 0 0
+pic letter-X art/font/letter-X.png 16 16 0 0
+pic letter-Y art/font/letter-Y.png 16 16 0 0
+pic letter-0 art/font/letter-0.png 16 16 0 0
+pic letter-1 art/font/letter-1.png 16 16 0 0
+pic letter-2 art/font/letter-2.png 16 16 0 0
+pic letter-3 art/font/letter-3.png 16 16 0 0
+pic letter-5 art/font/letter-5.png 16 16 0 0
+pic letter-7 art/font/letter-7.png 16 16 0 0
+pic letter-x03a art/font/letter-x03a.png 16 16 0 0
+pic counter-score-0 art/font/letter-0.png 16 16 0 0
+pic counter-score-1 art/font/letter-1.png 16 16 0 0
+pic counter-score-2 art/font/letter-2.png 16 16 0 0
+pic counter-score-3 art/font/letter-3.png 16 16 0 0
+pic counter-score-4 art/font/letter-4.png 16 16 0 0
+pic counter-score-5 art/font/letter-5.png 16 16 0 0
+pic counter-score-6 art/font/letter-6.png 16 16 0 0
+pic counter-score-7 art/font/letter-7.png 16 16 0 0
+pic counter-score-8 art/font/letter-8.png 16 16 0 0
+pic counter-score-9 art/font/letter-9.png 16 16 0 0
+pic counter-score_2-0 art/font/letter-0.png 16 16 0 0
+pic counter-score_2-1 art/font/letter-1.png 16 16 0 0
+pic counter-score_2-2 art/font/letter-2.png 16 16 0 0
+pic counter-score_2-3 art/font/letter-3.png 16 16 0 0
+pic counter-score_2-4 art/font/letter-4.png 16 16 0 0
+pic counter-score_2-5 art/font/letter-5.png 16 16 0 0
+pic counter-score_2-6 art/font/letter-6.png 16 16 0 0
+pic counter-score_2-7 art/font/letter-7.png 16 16 0 0
+pic counter-score_2-8 art/font/letter-8.png 16 16 0 0
+pic counter-score_2-9 art/font/letter-9.png 16 16 0 0
+pic counter-cleared-0 art/font/letter-0.png 16 16 0 0
+pic counter-cleared-1 art/font/letter-1.png 16 16 0 0
+pic counter-cleared-2 art/font/letter-2.png 16 16 0 0
+pic counter-cleared-3 art/font/letter-3.png 16 16 0 0
+pic counter-cleared-4 art/font/letter-4.png 16 16 0 0
+pic counter-cleared-5 art/font/letter-5.png 16 16 0 0
+pic counter-cleared-6 art/font/letter-6.png 16 16 0 0
+pic counter-cleared-7 art/font/letter-7.png 16 16 0 0
+pic counter-cleared-8 art/font/letter-8.png 16 16 0 0
+pic counter-cleared-9 art/font/letter-9.png 16 16 0 0
+pic counter-credits-0 art/font/letter-0.png 16 16 0 0
+pic counter-credits-1 art/font/letter-1.png 16 16 0 0
+pic counter-credits-2 art/font/letter-2.png 16 16 0 0
+pic counter-credits-3 art/font/letter-3.png 16 16 0 0
+pic counter-credits-4 art/font/letter-4.png 16 16 0 0
+pic counter-credits-5 art/font/letter-5.png 16 16 0 0
+pic counter-credits-6 art/font/letter-6.png 16 16 0 0
+pic counter-credits-7 art/font/letter-7.png 16 16 0 0
+pic counter-credits-8 art/font/letter-8.png 16 16 0 0
+pic counter-credits-9 art/font/letter-9.png 16 16 0 0
+pic counter-lives_shown art/font/glass.png 16 16 0 0
+#+ recolor sprite-bartender_part-03 13=c1821c 10=eab647 14=7b4506
+#+ recolor sprite-bartender_part-06 13=c1821c 10=eab647 14=7b4506
+#+ recolor sprite-bartender_part-02 box=7,6,22,31 9=- 4=- 2=- 10=-
+#+ recolor sprite-bartender_part-02 box=9,0,31,5 13=c1821c 10=eab647
+also sprite-bartender_part-02 art/obj/glass-pour-body.png 32 32 0 0
+#+ recolor sprite-bartender_part-05 box=7,6,22,31 9=- 4=- 2=- 10=-
+#+ recolor sprite-bartender_part-05 box=9,0,31,5 13=c1821c 10=eab647
+also sprite-bartender_part-05 art/obj/glass-pour-body.png 32 32 0 0
+pic sprite-legend-17 art/obj/mug-17.png 32 32 0 0
+pic sprite-bonus_object-7f art/obj/beer-7f.png 32 32 0 0
+pic sprite-bonus_object-21 art/obj/beer-21.png 32 32 0 0
+pic sprite-bonus_object-0b art/obj/beer-0b.png 32 32 0 0
+pic sprite-bonus_object-0c art/obj/beer-0c.png 32 32 0 0
+pic sprite-bartender_part-0d art/obj/foam-0d.png 32 32 0 0
+pic sprite-customer-23 art/obj/mug-23.png 32 32 0 0
+pic sprite-bonus_object-59 art/obj/mug-59.png 32 32 0 0
+pic sprite-bartender_part-0a art/obj/stream-0a.png 32 32 0 0
+#+ recolor sprite-player-41 box=22,0,31,8 2=- 3=- 4=- 7=- 9=- 10=- 12=- 14=- 15=-
+#+ recolor sprite-player-41 box=22,9,31,14 4=- 10=- 14=-
+#+ recolor sprite-player-41 box=22,9,23,13 9=-
+#+ recolor sprite-bartender_part-24 9=- 4=- 10=-
+also sprite-player-41 art/obj/mug-drink.png 32 32 14 -4
+pic sprite-bonus_object-15 art/obj/beer-15.png 32 32 0 0
+pic sprite-bonus_object-17 art/obj/mug-17.png 32 32 0 0
+pic sprite-bonus_object-10 art/obj/mug-10.png 32 32 0 0
+pic sprite-bonus_object-11 art/obj/mug-11.png 32 32 0 0
+pic sprite-bonus_object-12 art/obj/mug-12.png 32 32 0 0
+pic sprite-bonus_object-13 art/obj/mug-13.png 32 32 0 0
+# --- end objects ---
+limit off
+
+# Tapper is drawn by its board: sizes and places are in the board's picture's pixels
+# (512 by 480). `gp theme look sheet --game GAME` lists the sprite codes each entity
+# shows, from your own romset, with a contact sheet of them (never commit it).
+
+# TO DRAW the screen screen_saloon: 512 by 480 (`pic screen_saloon art/screen_saloon.png 512 480 0 0`)
+
+# TO DRAW the screen screen_attract_logo: 512 by 480 (`pic screen_attract_logo art/screen_attract_logo.png 512 480 0 0`)
+
+# TO DRAW the screen screen_attract_demo: 512 by 480 (`pic screen_attract_demo art/screen_attract_demo.png 512 480 0 0`)
+
+# TO DRAW the screen screen_bonus: 512 by 480 (`pic screen_bonus art/screen_bonus.png 512 480 0 0`)
+
+# TO DRAW the screen screen_69a1: 512 by 480 (`pic screen_69a1 art/screen_69a1.png 512 480 0 0`)
+
+# TO DRAW the screen screen_7121: 512 by 480 (`pic screen_7121 art/screen_7121.png 512 480 0 0`)
+
+# TO DRAW the screen screen_78a1: 512 by 480 (`pic screen_78a1 art/screen_78a1.png 512 480 0 0`)
+
+# TO DRAW the screen screen_8021: 512 by 480 (`pic screen_8021 art/screen_8021.png 512 480 0 0`)
+
+# TO DRAW the screen screen_87a1: 512 by 480 (`pic screen_87a1 art/screen_87a1.png 512 480 0 0`)
+
+# TO DRAW the screen screen_8f21: 512 by 480 (`pic screen_8f21 art/screen_8f21.png 512 480 0 0`)
+
+# TO DRAW the screen screen_96a1: 512 by 480 (`pic screen_96a1 art/screen_96a1.png 512 480 0 0`)
+
+# TO DRAW the screen screen_9e21: 512 by 480 (`pic screen_9e21 art/screen_9e21.png 512 480 0 0`)
+
+# TO DRAW the screen screen_a5a1: 512 by 480 (`pic screen_a5a1 art/screen_a5a1.png 512 480 0 0`)
+
+# TO DRAW bar_end: 32 by 32 a picture, one line per code, sprite-bar_end-CODE; the codes your sheet saw it show: 74, 7b
+
+# TO DRAW bartender_part: 32 by 32 a picture, one line per code, sprite-bartender_part-CODE; the codes your sheet saw it show: 00, 02, 03, 05, 06, 08, 0a, 0d, 0f, 19, 24, 25, 27, 36, 37, 3f, 45, 46, 47, 48, 49, 4a, 4b, 4c, 72, a2, a4
+
+# TO DRAW bonus_object: 32 by 32 a picture, one line per code, sprite-bonus_object-CODE; the codes your sheet saw it show: 22, 4e, 57, 58, 59, 5a, 5b, 5c, 5d, 5e, 5f, 60, 61, 62, 63, 64, 65, 66, 67, 69, 6a, 6c
+
+# TO DRAW customer: 32 by 32 a picture, one line per code, sprite-customer-CODE; the codes your sheet saw it show: 1a, 1b, 1c, 1d, 1e, 1f, 20, 22, 23, 24, 2c, 2d, 2e, 2f, 30, 31, 32, 38, 39, 3a, 3b, 3c, 3d, 3e, 76, 77, 78, 79, 7a, 7c, 7e, 80, 81, 82, 83, 84, 85, 86, 88, 89, 8a, 8b, 8c, 8d, 8e, 90, 91, 92, 93, 94, 95, 96, 98, 99, 9a, 9b, 9c, 9d, 9e, ac, ad, ae, af, b0, b1, b2, b4, b5, b6, b7, b8, b9, ba, bc, bd, be, bf, c0, c1, c2, c4, c5, c6, c7, c8, c9, ca, d4, d5, d6, d7, d8, d9, da, dc, dd, de, df, e0, e1, e2, e3, e4, e6, e7, e8, e9, ea, eb, ec, ed, ee, f0, f1, f2, f3, f4, f5, f6, f7, f8, fa, fb
+
+# TO DRAW dancer: 32 by 32 a picture, one line per code, sprite-dancer-CODE; the codes your sheet saw it show: 00, fc, fd, fe, ff
+
+# TO DRAW legend: 32 by 32 a picture, one line per code, sprite-legend-CODE; the codes your sheet saw it show: 17, 4d, 78, 89, be, f5
+
+# TO DRAW mug: 32 by 32 a picture, one line per code, sprite-mug-CODE; the codes your sheet saw it show: 00, 0e, 10, 11, 12, 13, 14, 16, 17
+
+# TO DRAW player: 32 by 32 a picture, one line per code, sprite-player-CODE; the codes your sheet saw it show: 00, 01, 04, 07, 18, 26, 28, 29, 2a, 2b, 33, 34, 35, 40, 41, 42, 43, 44, 71, a1, a3
+
+# TO DRAW tap: 32 by 32 a picture, one line per code, sprite-tap-CODE; the codes your sheet saw it show: 00, 09
+
+# TO DRAW tip: 32 by 32 a picture, one line per code, sprite-tip-CODE; the codes your sheet saw it show: 4d
+
+# TO DRAW the digits of score: 16 by 16 each, counter-score-0 to counter-score-9
+
+# TO DRAW the digits of score_2: 16 by 16 each, counter-score_2-0 to counter-score_2-9
+
+# TO DRAW the digits of cleared: 16 by 16 each, counter-cleared-0 to counter-cleared-9
+
+# TO DRAW the digits of credits: 16 by 16 each, counter-credits-0 to counter-credits-9
+
+# TO DRAW the tile lives_shown repeats: 16 by 16, counter-lives_shown
+
+# TO DRAW counter end (entity.bar_end): 32 by 32 game pixels, draw at 64 by 64. 0 poses: 
+
+# TO DRAW server's lower half and dispenser parts (entity.npc_299): 32 by 32 game pixels, draw at 64 by 64. 0 poses: 
+
+# TO DRAW between-rounds game pieces (entity.bonus_object): 32 by 32 game pixels, draw at 64 by 64. 0 poses: 
+
+# TO DRAW guest (entity.customer): 32 by 32 game pixels, draw at 64 by 64. 0 poses: 
+
+# TO DRAW dancer (entity.npc_031): 32 by 32 game pixels, draw at 64 by 64. 0 poses: 
+
+# TO DRAW how-to-play pictures (entity.legend): 32 by 32 game pixels, draw at 64 by 64. 0 poses: 
+
+# TO DRAW glass (entity.mug): 32 by 32 game pixels, draw at 64 by 64. 0 poses: 
+
+# TO DRAW server (entity.player): 32 by 32 game pixels, draw at 64 by 64. 0 poses: 
+
+# TO DRAW drink dispenser handle (entity.tap): 32 by 32 game pixels, draw at 64 by 64. 0 poses: 
+
+# TO DRAW coin (entity.tip): 32 by 32 game pixels, draw at 64 by 64. 1 pose: a small stack of coins on a folded note, lying on the counter
+
+# TO DRAW first room, frontier tavern (screen.screen_saloon): 512 by 480 game pixels, draw at 1024 by 960. 1 pose: base
+
+# TO DRAW title card (screen.screen_attract_logo): 512 by 480 game pixels, draw at 1024 by 960. 1 pose: base
+
+# TO DRAW how-to-play screen (screen.screen_attract_demo): 512 by 480 game pixels, draw at 1024 by 960. 1 pose: base
+
+# TO DRAW between-rounds counter (screen.screen_bonus): 512 by 480 game pixels, draw at 1024 by 960. 1 pose: base
+
+# TO DRAW second room, open-air stadium (screen.screen_69a1): 512 by 480 game pixels, draw at 1024 by 960. 1 pose: base
+
+# TO DRAW third room, loud club (screen.screen_7121): 512 by 480 game pixels, draw at 1024 by 960. 1 pose: base
+
+# TO DRAW third room, loud club, second look (screen.screen_78a1): 512 by 480 game pixels, draw at 1024 by 960. 1 pose: base
+
+# TO DRAW fourth room, orbital lounge (screen.screen_8021): 512 by 480 game pixels, draw at 1024 by 960. 1 pose: base
+
+# TO DRAW fourth room, orbital lounge, second look (screen.screen_87a1): 512 by 480 game pixels, draw at 1024 by 960. 1 pose: base
+
+# TO DRAW fourth room, orbital lounge, third look (screen.screen_8f21): 512 by 480 game pixels, draw at 1024 by 960. 1 pose: base
+
+# TO DRAW fourth room, orbital lounge, fourth look (screen.screen_96a1): 512 by 480 game pixels, draw at 1024 by 960. 1 pose: base
+
+# TO DRAW first room, frontier tavern, second look (screen.screen_9e21): 512 by 480 game pixels, draw at 1024 by 960. 1 pose: base
+
+# TO DRAW first room, frontier tavern, third look (screen.screen_a5a1): 512 by 480 game pixels, draw at 1024 by 960. 1 pose: base
+
+# TO DRAW digits (digits.score): 16 by 16 game pixels, draw at 32 by 32. 10 poses: the digit 0; the digit 1; the digit 2; the digit 3; the digit 4; the digit 5; the digit 6; the digit 7; the digit 8; the digit 9
+
+# TO DRAW digits (digits.score_2): 16 by 16 game pixels, draw at 32 by 32. 10 poses: the digit 0; the digit 1; the digit 2; the digit 3; the digit 4; the digit 5; the digit 6; the digit 7; the digit 8; the digit 9
+
+# TO DRAW digits (digits.cleared): 16 by 16 game pixels, draw at 32 by 32. 10 poses: the digit 0; the digit 1; the digit 2; the digit 3; the digit 4; the digit 5; the digit 6; the digit 7; the digit 8; the digit 9
+
+# TO DRAW digits (digits.credits): 16 by 16 game pixels, draw at 32 by 32. 10 poses: the digit 0; the digit 1; the digit 2; the digit 3; the digit 4; the digit 5; the digit 6; the digit 7; the digit 8; the digit 9
+
+# TO DRAW counter mark (tile.lives_shown): 16 by 16 game pixels, draw at 32 by 32. 1 pose: one mark
+
+# The first room, built from pieces on the screen's own cells (placeholders while
+# the classes are tested; flat colours, no art yet).
+stage 2 40 30 60 20 16 30
+stage_piece t007 pieces/saloon/t007.png 32 32
+stage_piece t008 pieces/saloon/t008.png 32 32
+stage_piece t015 pieces/saloon/t015.png 32 32
+stage_piece t004 pieces/saloon/t004.png 32 32
+stage_piece t001 pieces/saloon/t001.png 32 32
+stage_piece t01b pieces/saloon/t01b.png 32 32
+stage_piece t01a pieces/saloon/t01a.png 32 32
+stage_piece t017 pieces/saloon/t017.png 32 32
+stage_piece t018 pieces/saloon/t018.png 32 32
+stage_piece t019 pieces/saloon/t019.png 32 32
+stage_piece t011 pieces/saloon/t011.png 32 32
+stage_piece t012 pieces/saloon/t012.png 32 32
+stage_piece t013 pieces/saloon/t013.png 32 32
+stage_piece t014 pieces/saloon/t014.png 32 32
+stage_piece door pieces/saloon/door.png 96 288
+stage_piece hole pieces/saloon/hole.png 96 288
+stage_piece cask pieces/saloon/cask.png 96 128
+stage_piece sign pieces/saloon/sign.png 288 224
+stage_piece picture pieces/saloon/picture.png 128 563
+stage_piece painting01 pieces/saloon/painting01.png 128 563
+stage_piece painting02 pieces/saloon/painting02.png 128 563
+stage_piece painting03 pieces/saloon/painting03.png 128 563
+stage_piece painting04 pieces/saloon/painting04.png 128 563
+stage_piece painting05 pieces/saloon/painting05.png 128 563
+stage_piece painting06 pieces/saloon/painting06.png 128 563
+stage_piece painting07 pieces/saloon/painting07.png 128 563
+stage_piece painting08 pieces/saloon/painting08.png 128 563
+stage_piece painting09 pieces/saloon/painting09.png 128 563
+stage_piece painting10 pieces/saloon/painting10.png 128 563
+stage_piece painting11 pieces/saloon/painting11.png 128 563
+stage_piece painting12 pieces/saloon/painting12.png 128 563
+stage_piece figure pieces/saloon/figure.png 128 160
+stage_piece panel pieces/saloon/panel.png 32 32
+stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
+# The saloon, as all three of its screens draw it (the second mirrored):
+# a tile for each of its tile codes, and each door, cask, the sign, the
+# picture and the hanging figure placed whole where the original draws it.
+#+ room screen_saloon screen_a5a1
+#+ room_cells t007 tile=0x007
+#+ room_cells t008 tile=0x008 tile=0x016 tile=0x01c tile=0x090
+#+ room_cells t015 tile=0x015
+#+ room_cells t004 tile=0x004
+#+ room_cells t001 tile=0x001
+#+ room_cells t01b tile=0x01b
+#+ room_cells t01a tile=0x01a
+#+ room_cells t017 tile=0x017
+#+ room_cells t018 tile=0x018
+#+ room_cells t019 tile=0x019
+#+ room_cells t011 tile=0x011
+#+ room_cells t012 tile=0x012
+#+ room_cells t013 tile=0x013
+#+ room_cells t014 tile=0x014
+#+ room_cells door tile=0x025-0x02e tile=0x05c-0x063
+#+ room_cells door_floor tile=0x025-0x02e tile=0x05c-0x063 min>0+50 r>b-20 b>r-20 r>g-20 share=25
+#+ room_cells door_ctop tile=0x02b tile=0x05e
+#+ room_cells door_cfront tile=0x02c tile=0x05f
+#+ room_cells door_cfoot tile=0x02d tile=0x060
+#+ room_cells door_top tile=0x028
+#+ room_cells cask tile=0x01d-0x01f tile=0x021-0x024
+#+ room_cells cask_top tile=0x01d
+#+ room_cells sign tile=0x064-0x08f tile=0x00e
+#+ room_cells picture tile=0x094-0x0b6
+#+ room_cells picture_top tile=0x09b
+#+ room_fill t007 t007
+#+ room_fill t008 t008
+#+ room_fill t015 t015
+#+ room_fill t004 t004
+#+ room_fill t001 t001
+#+ room_fill t01b t01b
+#+ room_fill t01a t01a
+#+ room_fill t017 t017
+#+ room_fill t018 t018
+#+ room_fill t019 t019
+#+ room_fill t011 t011
+#+ room_fill t012 t012
+#+ room_fill t013 t013
+#+ room_fill t014 t014
+#+ room_fill door t007
+#+ room_at door_top hole -16 0
+#+ room_fill door_ctop t001
+#+ room_fill door_cfront t01b
+#+ room_fill door_cfoot t01a
+#+ room_fill cask t007
+# The floor's edge through the door and cask cells, on the original's own
+# floor pixels (grey), over the wall laid there.
+#+ room_mask door t004 min>0+50 r>b-20 b>r-20 r>g-20
+#+ room_mask cask t004 min>0+50 r>b-20 b>r-20 r>g-20
+#+ room_fill sign t008
+#+ room_fill picture t007
+#+ room_at door_top door -16 0
+#+ room_at cask_top cask 0 0
+#+ room_box sign sign
+#+ room_at picture_top picture|painting01|painting02|painting03|painting04|painting05|painting06|painting07|painting08|painting09|painting10|painting11|painting12 -48 -58
+# The wall left of each bar's doorway drawn over the bodies: the bartender
+# walking or thrown past a bar's end goes into the wall, where the
+# original's own colours showed through.
+#+ room_front 0 4 5 9
+#+ room_front 0 10 3 15
+#+ room_front 4 10 4 11
+#+ room_front 0 16 1 21
+#+ room_front 2 16 2 17
+#+ room_front 0 22 0 23
+# The second look (mirrored, with a figure hanging on the wall): the same
+# rules, and the figure.
+#+ room screen_9e21
+#+ room_cells t007 tile=0x007
+#+ room_cells t008 tile=0x008 tile=0x016 tile=0x01c tile=0x090
+#+ room_cells t015 tile=0x015
+#+ room_cells t004 tile=0x004
+#+ room_cells t001 tile=0x001
+#+ room_cells t01b tile=0x01b
+#+ room_cells t01a tile=0x01a
+#+ room_cells t017 tile=0x017
+#+ room_cells t018 tile=0x018
+#+ room_cells t019 tile=0x019
+#+ room_cells t011 tile=0x011
+#+ room_cells t012 tile=0x012
+#+ room_cells t013 tile=0x013
+#+ room_cells t014 tile=0x014
+#+ room_cells door tile=0x025-0x02e tile=0x05c-0x063
+#+ room_cells door_floor tile=0x025-0x02e tile=0x05c-0x063 min>0+50 r>b-20 b>r-20 r>g-20 share=25
+#+ room_cells door_ctop tile=0x02b tile=0x05e
+#+ room_cells door_cfront tile=0x02c tile=0x05f
+#+ room_cells door_cfoot tile=0x02d tile=0x060
+#+ room_cells door_top tile=0x028
+#+ room_cells cask tile=0x01d-0x01f tile=0x021-0x024
+#+ room_cells cask_top tile=0x01d
+#+ room_cells sign tile=0x064-0x08f tile=0x00e
+#+ room_cells picture tile=0x094-0x0b6
+#+ room_cells picture_top tile=0x09b
+#+ room_cells figure tile=0x251-0x260
+#+ room_fill t007 t007
+#+ room_fill t008 t008
+#+ room_fill t015 t015
+#+ room_fill t004 t004
+#+ room_fill t001 t001
+#+ room_fill t01b t01b
+#+ room_fill t01a t01a
+#+ room_fill t017 t017
+#+ room_fill t018 t018
+#+ room_fill t019 t019
+#+ room_fill t011 t011
+#+ room_fill t012 t012
+#+ room_fill t013 t013
+#+ room_fill t014 t014
+#+ room_fill door t007
+#+ room_at door_top hole -16 0
+#+ room_fill door_ctop t001
+#+ room_fill door_cfront t01b
+#+ room_fill door_cfoot t01a
+#+ room_fill cask t007
+# The floor's edge through the door and cask cells, on the original's own
+# floor pixels (grey), over the wall laid there.
+#+ room_mask door t004 min>0+50 r>b-20 b>r-20 r>g-20
+#+ room_mask cask t004 min>0+50 r>b-20 b>r-20 r>g-20
+#+ room_fill sign t008
+#+ room_fill picture t007
+#+ room_fill figure t007
+#+ room_at door_top door -16 0
+#+ room_at cask_top cask 0 0
+#+ room_box sign sign
+#+ room_at picture_top picture|painting01|painting02|painting03|painting04|painting05|painting06|painting07|painting08|painting09|painting10|painting11|painting12 -48 -58
+# The walls beside its doorways over the bodies (its doors alternate
+# sides: right, left, right, left).
+#+ room_front 25 4 31 9
+#+ room_front 24 4 24 5
+#+ room_front 0 10 4 11
+#+ room_front 0 12 3 15
+#+ room_front 28 16 31 17
+#+ room_front 29 18 31 21
+#+ room_box figure figure
+# The how-to-play screen: the saloon's two lower counters, and a wooden
+# frame round the dark panel the instructions are written on.
+#+ room screen_attract_demo
+#+ room_cells t007 tile=0x007
+#+ room_cells t008 tile=0x008 tile=0x016 tile=0x01c tile=0x090
+#+ room_cells t015 tile=0x015
+#+ room_cells t004 tile=0x004
+#+ room_cells t001 tile=0x001
+#+ room_cells t01b tile=0x01b
+#+ room_cells t01a tile=0x01a
+#+ room_cells t017 tile=0x017
+#+ room_cells t018 tile=0x018
+#+ room_cells t019 tile=0x019
+#+ room_cells t011 tile=0x011
+#+ room_cells t012 tile=0x012
+#+ room_cells t013 tile=0x013
+#+ room_cells t014 tile=0x014
+#+ room_cells door tile=0x025-0x02e tile=0x05c-0x063
+#+ room_cells door_floor tile=0x025-0x02e tile=0x05c-0x063 min>0+50 r>b-20 b>r-20 r>g-20 share=25
+#+ room_cells door_ctop tile=0x02b tile=0x05e
+#+ room_cells door_cfront tile=0x02c tile=0x05f
+#+ room_cells door_cfoot tile=0x02d tile=0x060
+#+ room_cells door_top tile=0x028
+#+ room_cells cask tile=0x01d-0x01f tile=0x021-0x024
+#+ room_cells cask_top tile=0x01d
+#+ room_cells picture tile=0x094-0x0b6
+#+ room_cells picture_top tile=0x09b
+#+ room_cells frame tile=0x091-0x093
+#+ room_cells panel tile=0x000
+#+ room_fill t007 t007
+#+ room_fill t008 t008
+#+ room_fill t015 t015
+#+ room_fill t004 t004
+#+ room_fill t001 t001
+#+ room_fill t01b t01b
+#+ room_fill t01a t01a
+#+ room_fill t017 t017
+#+ room_fill t018 t018
+#+ room_fill t019 t019
+#+ room_fill t011 t011
+#+ room_fill t012 t012
+#+ room_fill t013 t013
+#+ room_fill t014 t014
+#+ room_fill door t007
+#+ room_at door_top hole -16 0
+#+ room_fill door_ctop t001
+#+ room_fill door_cfront t01b
+#+ room_fill door_cfoot t01a
+#+ room_fill cask t007
+# The floor's edge through the door and cask cells, on the original's own
+# floor pixels (grey), over the wall laid there.
+#+ room_mask door t004 min>0+50 r>b-20 b>r-20 r>g-20
+#+ room_mask cask t004 min>0+50 r>b-20 b>r-20 r>g-20
+#+ room_fill picture t007
+#+ room_fill frame t015
+#+ room_fill panel panel
+#+ room_at door_top door -16 0
+#+ room_at cask_top cask 0 0
+# The idle screen draws no tap sprites: its barrels get the brass tap where play draws it.
+#+ room_at cask_top idle_tap -19 8
+#+ room_at picture_top picture|painting01|painting02|painting03|painting04|painting05|painting06|painting07|painting08|painting09|painting10|painting11|painting12 -48 -58
