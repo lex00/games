@@ -4,3 +4,52 @@
 
 # RAM addresses by name, each from the model's evidence or the mapping.
 [watch]
+lives = 0xE4A7    # spare lives
+pbar = 0xE6F9     # the bartender's bar: 0 the bottom to 3 the top; a move past either wraps
+b0x = 0xE265      # customer slot 0's x (the bottom bar's first, objects from E262, 8 bytes each)
+s0 = 0xE4B2       # customer slot 0's state, its record's +0 (records from E4B2, 0x20 each): 0 waiting, 5 walking, 1 pushed back, 2 drinking, 3 and 4 after the throw
+c0x = 0xE2C5      # customer slot 12's x (the top bar's first)
+s12 = 0xE632      # customer slot 12's state
+
+# ---- A customer drinking at the far end ---------------------------------
+#
+# A customer who catches a full mug is pushed back toward the far end for
+# 14 frames plus a draw of 0 to 20 ($09C7), 3 px a frame on the saloon, and
+# is served and goes the frame his x is past the bar's far end ($0890);
+# where the push stops short of it he drinks there ($106B). In the sweeps
+# a customer pushed to x 7 or below on the bottom bar was served and one
+# stopped at 8 drank; on the top bar, served at 55 and below. The base is
+# move/1's path at 411, the saloon's first play, three spare lives, the
+# bartender on bar 2 (worker loop-s698258c1fd8f's sweeps, 2026-11-19).
+
+# The top bar: one tap up, W frames, a mug sent. W = 330: caught at x 109
+# and pushed to x 61, a few short of the far end, where he drinks. It stops
+# 100 frames into the drink: a bottom-bar customer reaches the taps at
+# frame 887 and a life goes.
+[[probe]]
+id = "drink-far-end-top"
+session = "drink-far-end"
+clips = [1]
+note = "The top bar: a mug sent W frames after the bartender moves up; the customer catches it near x 109, is pushed back ($09C7) and drinks at x 61, a few short of the bar's far end (served at 55 and below) ($106B)"
+base = { path = "cd15c596319afca47c779ae5cee1a7b1df921c9212d28d92893ab0e38e22d5b8", at = 411 }
+steps = [". 1", "U 2", ". {W}", "T 10", "until s12 == 2 . max 400", ". 100"]
+sweep = { W = [330] }
+check = [
+  { measure = "min c0x while s12 == 2", expect = 61 },
+  { measure = "count lives == 2", expect = 0 },
+]
+
+# The bottom bar: two taps down, W frames, a mug sent. W = 20: pushed back
+# from x 71 to x 8, the last x short of the far end, where he drinks.
+[[probe]]
+id = "drink-far-end-bottom"
+session = "drink-far-end"
+clips = [2]
+note = "The bottom bar: a mug sent W frames after the bartender moves down two bars; the customer catches it near x 71, is pushed back ($09C7) and drinks at x 8, by the door ($106B)"
+base = { path = "cd15c596319afca47c779ae5cee1a7b1df921c9212d28d92893ab0e38e22d5b8", at = 411 }
+steps = [". 1", "D 2", ". 16", "D 2", ". 16", ". {W}", "T 10", "until s0 == 2 . max 400", ". 120"]
+sweep = { W = [20] }
+check = [
+  { measure = "min b0x while s0 == 2", expect = 8 },
+  { measure = "count lives == 2", expect = 0 },
+]

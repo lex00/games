@@ -9,7 +9,7 @@ format = "1.0.0"
 name = "tapper"
 version = "0.3.0"
 title = "Tapper"
-recipes = "b3:fa429f30c8bcf434767ec71509a7f8740ddf5e6bac09cf98618245b9577290a6"
+recipes = "b3:53bc4ec55d995a31b2d495273b813b5e79b2460bdd73582ecf7347e8cee8cf80"
 
 [target]
 game = "tapper"
@@ -664,4 +664,14 @@ start = "inputs/tapper.move.002.start.presses"
 presses = "inputs/tapper.move.002.presses"
 frames = 553
 why = "the bartender walks left and right along his bar from rest and stops: long holds, taps of 1 to 3 frames, quick turns left and right, a walk after a bar switch down and up, and a walk back after a pour"
+level = "saloon"
+
+[[clip]]
+id = "tapper.drink.001"
+name = "The saloon, a customer drinking by the door on the bottom bar"
+source = "generated"
+start = "inputs/tapper.drink.001.start.presses"
+presses = "inputs/tapper.drink.001.presses"
+frames = 233
+why = "a mug sent while a bottom-bar customer is near x 71: he is pushed back 3 px a frame for 14 plus a draw of 0 to 20 frames ($09C7), stops at x 8, short of the far end ($0890), and drinks there ($106B), then throws the empty back; made from the code by the probe drink-far-end-bottom (W = 20)"
 level = "saloon"

@@ -71,13 +71,18 @@ stop = "When the title comes back"
 [[item]]
 row = "drink-far-end"
 note = "A customer who catches a mug at the far end of bar 4 and drinks there, before being pushed back"
-# The top bar (bar 3; y counts up the screen): its objects are slots
-# E2C2-E2E1, a customer drinking is at y 0xC9 - 4, and the far end is the left, away from the taps.
-goal = "mode == 0 and @0 == 0xC5 and @3 < 0x30"
-slots = { at = 0xE2C2, stride = 4, count = 8 }
+# Bar 4 is the bottom one (y 0x39), its customers the 8-byte objects from
+# E262 (y, flags, picture, x, then the held mug's y, ...), 4 of them. The
+# held mug's y is 0x35 while he is pushed back and 0x39 while he drinks
+# and throws ($106B, $10C0); the far end is the left, a customer pushed
+# below x 8 is served (the top bar's below 56, so x < 0x30 can't hold
+# there). The probe
+# drink-far-end-bottom reaches it (probes.toml).
+goal = "mode == 0 and @0 == 0x39 and @4 == 0x39 and @3 < 0x30"
+slots = { at = 0xE262, stride = 8, count = 4 }
 hold = 4
 near = "mode == 0 and lives == 3 and cleared == 0 and barshown == 0 and px > 0"
 where = "The saloon, the first stage, a second after play starts, three spare lives"
-do = "On the top bar, let a customer walk all the way to the far left end, then send him a mug there so he catches it and drinks at the end"
+do = "On the bottom bar, send a mug while a customer is a third of the way along, so the push back stops just short of the door and he drinks there"
 stop = "Once he's drinking at the far end (the mug tilted up), then R"
 
