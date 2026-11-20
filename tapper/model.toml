@@ -1058,6 +1058,15 @@ description = "the level's intro: the cleared screen's colour, $540A's ld a,$11 
 source = "tapper"
 asset = "intro_back_color"
 
+[assets.intro_code]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: the level's intro's code ($5404, and $5512 after it to $557E), searched for its four waits"
+
+[assets.intro_code.from]
+source = "tapper"
+asset = "intro_code"
+
 [assets.intro_colors]
 kind = "rows"
 role = "palettes"
@@ -1084,6 +1093,15 @@ description = "The bartender's pictures: the level's intro, $5404 from $543D: hi
 [assets.intro_pose.from]
 source = "tapper"
 asset = "intro_pose"
+
+[assets.intro_start]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: the level's intro's start, the operand of the setup's call z,$5404 ($4B62)"
+
+[assets.intro_start.from]
+source = "tapper"
+asset = "intro_start"
 
 [assets.intro_text_1]
 kind = "rows"
@@ -2139,7 +2157,9 @@ hops_start = "hops_start"
 instr_objects = "instr_objects"
 interlude_code = "interlude_code"
 interlude_start = "interlude_start"
+intro_code = "intro_code"
 intro_pose = "intro_pose"
+intro_start = "intro_start"
 level_times = "level_times"
 lost_pose_fall = "lost_pose_fall"
 lost_pose_slide = "lost_pose_slide"
@@ -11607,6 +11627,14 @@ note = "gp-arcade's writes example on tapper.clear.015's log: the setup's palett
 [[evidence."assets.intro_back_color".refs]]
 at = "clip:tapper.clear.015"
 
+[evidence."assets.intro_code"]
+source = "observed"
+confidence = 70
+note = "gp code listing of tapperg, tapper's other sets and rbtapper: $5404's waits ($232B) at $543A, $5486 and $54D2 and $5512's of 100 at $5575, the same in tapper, tappera, tapperg and sutapper and 0x190 on in rbtapper ($55CA, $5616, $5662, $5705). The get-ready-screen session's clip 1 (tapperg, from power-on frame 201) starts in $5512's wait, E3A9 $5578"
+
+[[evidence."assets.intro_code".refs]]
+at = "clip:tapper.start.001"
+
 [evidence."assets.intro_colors"]
 source = "observed"
 confidence = 80
@@ -11630,6 +11658,14 @@ note = "gp element inputs on tapper.l5.001 frames 563 and 593: $5404 writes E2E8
 
 [[evidence."assets.intro_pose".refs]]
 at = "clip:tapper.l5.001"
+
+[evidence."assets.intro_start"]
+source = "observed"
+confidence = 70
+note = "gp code listing: the setup's call z,$5404 at $4B62 in tapper, tappera, tapperg and sutapper, at $4CF2 (call z,$5594) in rbtapper"
+
+[[evidence."assets.intro_start".refs]]
+at = "clip:tapper.start.001"
 
 [evidence."assets.intro_text_1"]
 source = "observed"

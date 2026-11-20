@@ -2657,6 +2657,36 @@ rbtapper = 0x55CD
 sutapper = 0x543D
 tappera = 0x543D
 
+# Where a clip inside the level's intro resumes: $5404's code and $5512's
+# after it (to $557E), searched for their four waits ($543A, $5486, $54D2,
+# $5575), and the intro's start, the operand of the setup's call z,$5404
+# ($4B62). rbtapper's copy sits 0x190 on, its call at $4CF2.
+[[asset]]
+name = "intro_code"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x5404
+count = 1
+width = 379
+
+[asset.at]
+rbtapper = 0x5594
+sutapper = 0x5404
+tappera = 0x5404
+
+[[asset]]
+name = "intro_start"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4B63
+count = 1
+width = 2
+
+[asset.at]
+rbtapper = 0x4CF3
+sutapper = 0x4B63
+tappera = 0x4B63
+
 # A level's end: the kicked glass's flight and what each script does with
 # it: the arcs of $58C5 and $5904, the flags by step from the table at
 # $56C2, $2DF7 standing it at his feet and the break's pictures at $24F4,

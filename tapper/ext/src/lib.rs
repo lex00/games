@@ -3901,6 +3901,36 @@ impl Ext for Bars {
                 flow = Some((fid, fb));
             }
         }
+        // A start inside the level's intro ($5404): $232B's place (E3A9)
+        // is one of its four waits, $5404's of 2, 30 and 5 (returning to
+        // $543D, $5489 and $54D5) or, before a game's first level, $5512's
+        // of 100 (to $5578). The intro's count (the flow's word 3 from bit
+        // 24, sub 5) is the frames to the stage: on each wait's return 35,
+        // 5, 0 and 37, plus the frames the wait has left, the timer for
+        // $2346 (0 in state 16). The place is read once, at the start.
+        if (state == 15 || state == 16)
+            && let Some((fid, mut fb)) = flow
+            && (fb.ext[3] >> 16) & 0xff != 5
+            && let ret = (fb.ext[1] >> 16) & 0xffff
+            && let Some(k) = (1..=4).find(|&k| wait_return(cx, "intro_code", "intro_start", k) == Some(ret))
+        {
+            let left = if state == 16 {
+                0
+            } else {
+                timers.iter().find(|(_, t)| t.ext[1] == 0x2346).map_or(0, |(_, t)| t.ext[0])
+            };
+            let at_return = match k {
+                1 => 35,
+                2 => 5,
+                3 => 0,
+                _ => 37,
+            };
+            fb.ext[3] = (fb.ext[3] & !(0xffff_00ff | (0xffff << 24))) | 15 | (5 << 16) | ((at_return + 1 + left) << 24);
+            fb.ext[1] &= !(0xffff << 16);
+            cx.set_body(fid, fb);
+            flow = Some((fid, fb));
+            state = 15;
+        }
         // State 11 outside a level's setup is a level's end ($2304): its
         // script ($55F4) waits through states 15 and 16 ($232B, $2346,
         // $231A), and the game's clear ($5DB8) has emptied the bars by the
