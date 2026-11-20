@@ -122,6 +122,7 @@ pic sprite-bonus_object-0b art/obj/beer-0b.png 32 32 0 0
 pic sprite-bonus_object-0c art/obj/beer-0c.png 32 32 0 0
 pic sprite-bartender_part-0d art/obj/foam-0d.png 32 32 0 0
 pic sprite-customer-23 art/obj/mug-23.png 32 32 0 0
+pic sprite-scene_customer-23 art/obj/mug-23.png 32 32 0 0
 pic sprite-bonus_object-59 art/obj/mug-59.png 32 32 0 0
 pic sprite-bartender_part-0a art/obj/stream-0a.png 32 32 0 0
 #+ recolor sprite-player-41 box=22,0,31,8 2=- 3=- 4=- 7=- 9=- 10=- 12=- 14=- 15=-

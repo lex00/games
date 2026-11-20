@@ -2309,6 +2309,32 @@ fn scene_ram_frame(cx: &ExtCx<'_>) -> Option<i64> {
     scene_frame_at(cx, 1)
 }
 
+/// The instruction scene's objects left for the board (place_cast's rest)
+/// split by kind: the customer's two (the $33A3 copy's place, $2F38, and
+/// its length, $2F3E; E1BE is no customer slot, so place_cast leaves him)
+/// for scene_customer, so a theme dresses him as a customer, and the rest
+/// for bonus_object. Out of the scene (the bonus round, the pour's layers,
+/// the customers' bubbles) every object is a bonus_object; a game with no
+/// scene_customer kind keeps them all as bonus_object.
+fn place_scene(cx: &mut ExtCx<'_>, ok: usize, mut want: Vec<BonusObj>) {
+    let Some(sk) = cx.kind("scene_customer") else {
+        place_objects(cx, ok, &want);
+        return;
+    };
+    if scene_frame(cx).is_none() {
+        place_objects(cx, ok, &want);
+        place_objects(cx, sk, &[]);
+        return;
+    }
+    let d = |at: i64| imm(cx, "demo_screen", 0x2F37, at);
+    let from = d(0x2F38) | (d(0x2F39) << 8);
+    let to = from + d(0x2F3E);
+    let cust: Vec<BonusObj> = want.iter().copied().filter(|o| (from..to).contains(&o.at)).collect();
+    want.retain(|o| !(from..to).contains(&o.at));
+    place_objects(cx, ok, &want);
+    place_objects(cx, sk, &cust);
+}
+
 /// scene_frame, `back` frames from the flow's count.
 fn scene_frame_at(cx: &ExtCx<'_>, back: i64) -> Option<i64> {
     if cx.counter("mode") != Some(1) {
@@ -3668,7 +3694,7 @@ impl Ext for Bars {
                 let scene = scene_ram_frame(cx).map(|n| demo_scene(cx, n));
                 let drawn = scene_ram_frame(cx).map(|n| demo_scene(cx, n)).unwrap_or_default();
                 let want = place_cast(cx, scene, drawn);
-                place_objects(cx, ok, &want);
+                place_scene(cx, ok, want);
             }
             return;
         }
@@ -6092,7 +6118,7 @@ impl Ext for Bars {
             if cx.counter("bonus_text") != Some(text) {
                 cx.set_counter("bonus_text", text);
             }
-            place_objects(cx, ok, &want);
+            place_scene(cx, ok, want);
         }
     }
 

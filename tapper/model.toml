@@ -2490,6 +2490,28 @@ w = 1
 x = 0
 y = 0
 
+[entities.scene_customer]
+description = "The customer of the attract mode's instruction scene ($2EE0, state 6): his two objects at E1BE and E1C2 (y, flags, picture, x), the second the mug he holds, copied from $33A3 and moved as the scene's code writes them. A kind of its own so a theme dresses him as it dresses a customer; tapper_bars places them by place. Word 0 is the flags and 256 times the picture, word 1 the object's place from E18E plus 1. Drawn, never compared"
+no_slot = true
+role = "npc"
+size = [16, 16]
+
+[entities.scene_customer.board_sprite]
+slot = "board_sprites"
+
+[entities.scene_customer.board_sprite.flags]
+word = 0
+
+[entities.scene_customer.board_sprite.picture]
+byte = 1
+word = 0
+
+[entities.scene_customer.hitbox]
+h = 1
+w = 1
+x = 0
+y = 0
+
 [entities.sound]
 description = "The main CPU's requests to the sound board, a body with no box: the hooks queue each byte as the game's code asks ($606B, the queue at E0E1), and the frame's interrupt sends up to three to latches 1 to 3 at the next frame's start with E111's turn bit to latch 0 ($0379); the boot's sound check, a coin and a game's start ask from here (tapper_sound). Every byte is read from the program's code (the sound_* rows)"
 ext = "tapper_sound"
@@ -10562,6 +10584,11 @@ word = 2
 at = 87
 step = 1
 
+[levels.main.present.sprite_order.scene_customer]
+at = 1
+step = 1
+word = 1
+
 [levels.main.present.sprite_order.tap]
 at = 111
 step = 1
@@ -12748,6 +12775,14 @@ note = "gp code listing on tapper.l8.001: each customer slot's 0x20-byte record 
 
 [[evidence."entities.record".refs]]
 at = "clip:tapper.l8.001"
+
+[evidence."entities.scene_customer"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2EE0 (the instruction scene): $2F37 to $2F3E copy the customer's two objects from $33A3 to E1BE, $308F and $3093 his arm and the mug he catches (E1C4, E1C2), $309A and $30A0 slide both back 2 a frame; the same objects the bonus_object kind drew before, now their own kind"
+
+[[evidence."entities.scene_customer".refs]]
+at = "clip:tapper.demo.001"
 
 [evidence."entities.sound"]
 source = "observed"
