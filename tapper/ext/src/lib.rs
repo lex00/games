@@ -2156,8 +2156,10 @@ const SCENE_CAST: i64 = 1 << 48;
 /// from E2EA as bartender_part, each in the words play keeps them in, so
 /// what draws them in play (a theme too) draws them here. They are at the
 /// scene's frame in RAM (`scene`, scene_ram_frame's), being compared;
-/// what is left of `drawn` (scene_frame's: the beer's layers, the taps,
-/// the tip) is returned, for bonus_object.
+/// what is left of `drawn` (the beer's layers, the taps, the tip, at the
+/// same frame: the original changes them on the frame the bartender's pose
+/// changes, tapper.attract.001 frames 280 to 294) is returned, for
+/// bonus_object.
 fn place_cast(cx: &mut ExtCx<'_>, scene: Option<Vec<BonusObj>>, drawn: Vec<BonusObj>) -> Vec<BonusObj> {
     use gp_sim::world::Body;
     const MUGS: i64 = 0xE2FE;
@@ -3663,7 +3665,7 @@ impl Ext for Bars {
             // elsewhere in the attract mode.
             if let Some(ok) = cx.kind("bonus_object") {
                 let scene = scene_ram_frame(cx).map(|n| demo_scene(cx, n));
-                let drawn = scene_frame(cx).map(|n| demo_scene(cx, n)).unwrap_or_default();
+                let drawn = scene_ram_frame(cx).map(|n| demo_scene(cx, n)).unwrap_or_default();
                 let want = place_cast(cx, scene, drawn);
                 place_objects(cx, ok, &want);
             }
