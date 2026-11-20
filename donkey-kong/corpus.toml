@@ -7,9 +7,9 @@
 [corpus]
 format = "1.0.0"
 name = "donkey-kong-oe-25m"
-version = "7.0.0"
+version = "7.1.0"
 title = "Donkey Kong: Original Edition, 25m"
-recipes = "b3:398917c60adc61e56813f24a30c80221d9268bf6dba77d6da80b51bb5aaa6fd3"
+recipes = "b3:066dc51f22a993059fa691051e56d5b30c4d2449537321a910d809c3ff75ac3a"
 
 [target]
 game = "donkey-kong-oe"
@@ -1105,6 +1105,15 @@ presses = "inputs/donkey-kong-oe.m50-ladder-fire.003.presses"
 frames = 1746
 why = "a clip of the m50-ladder-fire mechanic session"
 
+[[clip]]
+id = "donkey-kong-oe.two-p-over.001"
+name = "two-p-over 001: probe two-p-over: two players, game A: each loses two lives standing on 25m; player 1's last life clears 25m (ladders 201, 113, 201, 89, 201, 14"
+source = "played"
+start = "inputs/donkey-kong-oe.two-p-over.001.start.presses"
+presses = "inputs/donkey-kong-oe.two-p-over.001.presses"
+frames = 8033
+why = "a clip of the two-p-over mechanic session"
+
 [[changelog]]
 version = "1.0.0"
 date = "2026-11-04"
@@ -1290,3 +1299,9 @@ changed = ["dk.top-hammer.001", "donkey-kong-oe.over75-start.001", "donkey-kong-
 version = "7.0.0"
 date = "2026-11-08"
 says = "The corpus plan: curves leave the package and are derived (format 1.0.0); no clip or press changed"
+
+[[changelog]]
+version = "7.1.0"
+date = "2026-11-20"
+says = "gp corpus import from the mechanic sessions: added donkey-kong-oe.two-p-over.001."
+added = ["donkey-kong-oe.two-p-over.001"]
