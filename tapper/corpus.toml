@@ -7,9 +7,9 @@
 [corpus]
 format = "1.0.0"
 name = "tapper"
-version = "0.4.0"
+version = "1.0.0"
 title = "Tapper"
-recipes = "b3:97dd4a6335717b8fed65e230a265ad21a372a9ec205742ffb777e4a30640c2dd"
+recipes = "b3:ac5d97e388ea2375f97095687384fe18a11679e28fc82fe698107cf69a6facaf"
 
 [target]
 game = "tapper"
@@ -694,8 +694,94 @@ presses = "inputs/tapper.enemies.003.presses"
 frames = 322
 why = "the enemies row's clip, played by the owner from frame 1587: customers come in and walk down the bars on their own; the model matched the original state on every frame"
 
+[[clip]]
+id = "tapper.attract-demo.001"
+name = "attract-demo 001: The attract demo from the boot with nothing pressed, on tapperg: the logo, the demo screen, the demo's play, its life lost and the high scores"
+source = "played"
+start = "inputs/tapper.attract-demo.001.start.presses"
+presses = "inputs/tapper.attract-demo.001.presses"
+frames = 1800
+why = "a clip of the attract-demo mechanic session"
+
+[[clip]]
+id = "tapper.clear-stage.001"
+name = "clear-stage 001: made by the tools (corpus): tapper.l1.001, the test `cleared >= 1` holds 90 frames in"
+source = "played"
+start = "inputs/tapper.clear-stage.001.start.presses"
+presses = "inputs/tapper.clear-stage.001.presses"
+frames = 90
+why = "a clip of the clear-stage mechanic session"
+
+[[clip]]
+id = "tapper.double-drink-end.001"
+name = "double-drink-end 001: Level 4's end (tapper.l4.001 frames 1379 to 1639): the double drink and the mug that falls on his head, for judging Last Call's falling gl"
+source = "played"
+start = "inputs/tapper.double-drink-end.001.start.presses"
+presses = "inputs/tapper.double-drink-end.001.presses"
+frames = 260
+why = "a clip of the double-drink-end mechanic session"
+
+[[clip]]
+id = "tapper.drink-far-end.001"
+name = "drink-far-end 001: The top bar: a mug sent W frames after the bartender moves up; the customer catches it near x 109, is pushed back ($09C7) and drinks at x 61,"
+source = "played"
+start = "inputs/tapper.drink-far-end.001.start.presses"
+presses = "inputs/tapper.drink-far-end.001.presses"
+frames = 467
+why = "a clip of the drink-far-end mechanic session"
+
+[[clip]]
+id = "tapper.drink-far-end.002"
+name = "drink-far-end 002: The bottom bar: a mug sent W frames after the bartender moves down two bars; the customer catches it near x 71, is pushed back ($09C7) and dr"
+source = "played"
+start = "inputs/tapper.drink-far-end.002.start.presses"
+presses = "inputs/tapper.drink-far-end.002.presses"
+frames = 233
+why = "a clip of the drink-far-end mechanic session"
+
+[[clip]]
+id = "tapper.enemies.001"
+name = "enemies 001: made by the tools (corpus): tapper.bonus.001, the test `mode == 0 and @0 == 0x39 and @3 >= 0x70` holds 90 frames in"
+source = "played"
+start = "inputs/tapper.enemies.001.start.presses"
+presses = "inputs/tapper.enemies.001.presses"
+frames = 211
+why = "a clip of the enemies mechanic session"
+
+[[clip]]
+id = "tapper.game-over.001"
+name = "game-over 001: made by the tools (corpus): tapper.l3.001, the test `mode == 2` holds 90 frames in"
+source = "played"
+start = "inputs/tapper.game-over.001.start.presses"
+presses = "inputs/tapper.game-over.001.presses"
+frames = 201
+why = "a clip of the game-over mechanic session"
+
+[[clip]]
+id = "tapper.get-ready-screen.001"
+name = "get-ready-screen 001: From just after START to the first pour: the GET READY TO SERVE screen on the tapperg set (inputs from corpus clip tapper.drink.001, power"
+source = "played"
+start = "inputs/tapper.get-ready-screen.001.start.presses"
+presses = "inputs/tapper.get-ready-screen.001.presses"
+frames = 220
+why = "a clip of the get-ready-screen mechanic session"
+
+[[clip]]
+id = "tapper.title.001"
+name = "title 001: made by the tools (corpus): tapper.attract.001, the test `mode == 1` holds 1 frames in"
+source = "played"
+start = "inputs/tapper.title.001.start.presses"
+presses = "inputs/tapper.title.001.presses"
+frames = 151
+why = "a clip of the title mechanic session"
+
 [[changelog]]
 version = "0.4.0"
 date = "2026-11-20"
 says = "tapper.enemies.002 and tapper.enemies.003: the owner's two enemies clips (customers walking down the bars), state exact on every frame"
 added = ["tapper.enemies.002", "tapper.enemies.003"]
+
+[[changelog]]
+version = "1.0.0"
+date = "2026-11-20"
+says = "gp corpus import from the mechanic sessions: added tapper.attract-demo.001, tapper.clear-stage.001, tapper.double-drink-end.001, tapper.drink-far-end.001, tapper.drink-far-end.002, tapper.enemies.001, tapper.game-over.001, tapper.get-ready-screen.001, tapper.title.001."
