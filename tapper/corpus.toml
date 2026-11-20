@@ -7,9 +7,9 @@
 [corpus]
 format = "1.0.0"
 name = "tapper"
-version = "0.2.0"
+version = "0.3.0"
 title = "Tapper"
-recipes = "b3:74c711e6801c74db72ddb2ea76aa6a28052b182c3f7bc7e4bb6452491099cf47"
+recipes = "b3:fa429f30c8bcf434767ec71509a7f8740ddf5e6bac09cf98618245b9577290a6"
 
 [target]
 game = "tapper"
@@ -640,3 +640,28 @@ presses = "inputs/tapper.rb.demo.001.presses"
 frames = 1800
 why = "the rbtapper set's attract mode, whose logo is shorter, and its first demo game"
 level = "attract"
+
+[[clip]]
+id = "tapper.move.001"
+name = "move 001: made by the tools (corpus): tapper.score.001, the test `mode == 0 and pbar == 0` holds 90 frames in"
+source = "played"
+start = "inputs/tapper.move.001.start.presses"
+presses = "inputs/tapper.move.001.presses"
+frames = 211
+why = "a clip of the move mechanic session"
+
+[[changelog]]
+version = "0.3.0"
+date = "2026-11-19"
+says = "tapper.move.001: the move row's clip (tapper.score.001 from frame 411, 211 frames: bar switches up and down, pours and sends)"
+added = ["tapper.move.001"]
+
+[[clip]]
+id = "tapper.move.002"
+name = "Walking each way, starting and stopping"
+source = "generated"
+start = "inputs/tapper.move.002.start.presses"
+presses = "inputs/tapper.move.002.presses"
+frames = 553
+why = "the bartender walks left and right along his bar from rest and stops: long holds, taps of 1 to 3 frames, quick turns left and right, a walk after a bar switch down and up, and a walk back after a pour"
+level = "saloon"
