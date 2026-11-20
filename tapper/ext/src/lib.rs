@@ -2145,10 +2145,170 @@ fn place_objects(cx: &mut ExtCx<'_>, ok: usize, want: &[BonusObj]) {
     }
 }
 
+/// A scene's mug or customer (place_cast): word 3's bit, which nothing in
+/// play reads, so the attract mode takes away only its own.
+const SCENE_CAST: i64 = 1 << 48;
+
+/// The instruction scene's objects (demo_scene's, None out of the scene)
+/// that are play's: the mugs from E2FE (8 bytes a slot) as bodies of kind
+/// mug, the customers from E262 (8 bytes a slot, its held mug the second
+/// four) as customer, the bartender E2E6 as the player and his five parts
+/// from E2EA as bartender_part, each in the words play keeps them in, so
+/// what draws them in play (a theme too) draws them here. They are at the
+/// scene's frame in RAM (`scene`, scene_ram_frame's), being compared;
+/// what is left of `drawn` (scene_frame's: the beer's layers, the taps,
+/// the tip) is returned, for bonus_object.
+fn place_cast(cx: &mut ExtCx<'_>, scene: Option<Vec<BonusObj>>, drawn: Vec<BonusObj>) -> Vec<BonusObj> {
+    use gp_sim::world::Body;
+    const MUGS: i64 = 0xE2FE;
+    const CUSTS: i64 = 0xE262;
+    const IX: i64 = 0xE2E6;
+    let (Some(mk), Some(ck)) = (cx.kind("mug"), cx.kind("customer")) else { return drawn };
+    let on = scene.is_some();
+    let want = scene.unwrap_or_default();
+    let find = |at: i64| want.iter().find(|o| o.at == at).copied();
+    // The held mug's byte of word 2 by where it is from the customer, as
+    // play draws it (16 right, 16 left, and each 4 above): drawn with the
+    // customer's flags, so only one with the same flags is folded in.
+    let held_at = |c: &BonusObj, h: &BonusObj| -> Option<i64> {
+        if h.flags != c.flags {
+            return None;
+        }
+        let s = |v: i64| if v & 0x80 != 0 { v - 0x100 } else { v };
+        match (s((h.x - c.x) & 0xff), s((h.y - c.y) & 0xff)) {
+            (16, 0) => Some(32),
+            (-16, 0) => Some(40),
+            (16, -4) => Some(48),
+            (-16, -4) => Some(56),
+            _ => None,
+        }
+    };
+    let (pk, qk) = (cx.kind("player"), cx.kind("bartender_part"));
+    let player = pk.and_then(|pk| cx.world.bodies.iter().enumerate().find(|(_, b)| b.alive && b.kind == pk).map(|(i, b)| (i, *b)));
+    let in_custs = |at: i64| (CUSTS..CUSTS + 16 * 8).contains(&at);
+    let is_mug = |at: i64| (MUGS..MUGS + 9 * 8).contains(&at) && (at - MUGS) % 8 == 0;
+    let is_cust = |at: i64| in_custs(at) && (at - CUSTS) % 8 == 0;
+    let is_his = |at: i64| player.is_some() && qk.is_some() && (IX..IX + 6 * 4).contains(&at);
+    // What of `drawn` the bodies draw: a held mug only if folded in.
+    let rest: Vec<BonusObj> = drawn
+        .iter()
+        .filter(|o| {
+            let o: &BonusObj = o;
+            let held = in_custs(o.at) && drawn.iter().find(|c| c.at == o.at - 4).is_some_and(|c| held_at(c, o).is_some());
+            !(is_mug(o.at) || is_cust(o.at) || is_his(o.at) || held)
+        })
+        .copied()
+        .collect();
+    // (kind, key, body) of the mugs and customers wanted.
+    let mut cast: Vec<(usize, i64, Body)> = Vec::new();
+    for o in &want {
+        if is_mug(o.at) {
+            let n = (o.at - MUGS) / 8 + 1;
+            let mut b = gp_sim::systems::new_body(cx.spec, cx.world, mk, Fx::from_int(o.x), Fx::from_int(o.y), false);
+            b.ext[0] = o.flags | (o.pic << 8);
+            b.ext[2] = n;
+            b.ext[3] = SCENE_CAST;
+            cast.push((mk, n, b));
+        } else if is_cust(o.at) {
+            let slot = (o.at - CUSTS) / 8;
+            let left = o.flags & 0x10 != 0;
+            let mut b = gp_sim::systems::new_body(cx.spec, cx.world, ck, Fx::from_int(o.x), Fx::from_int(o.y), left);
+            b.ext[0] = (i64::from(left) << 8) | (o.flags << 16) | (o.pic << 24);
+            if let Some(h) = find(o.at + 4)
+                && let Some(at) = held_at(o, &h)
+            {
+                b.ext[2] = (h.pic << 16) | (h.y << 24) | (h.pic << at);
+            }
+            b.ext[3] = (slot << 16) | SCENE_CAST;
+            cast.push((ck, slot, b));
+        }
+    }
+    let key = |b: &Body| if b.kind == mk { b.ext[2] } else { (b.ext[3] >> 16) & 0xf };
+    let have: Vec<(usize, Body)> = cx
+        .world
+        .bodies
+        .iter()
+        .enumerate()
+        .filter(|(_, b)| b.alive && (b.kind == mk || b.kind == ck) && b.ext[3] & SCENE_CAST != 0)
+        .map(|(i, b)| (i, *b))
+        .collect();
+    for (id, b) in &have {
+        match cast.iter().find(|(k, n, _)| *k == b.kind && *n == key(b)) {
+            Some((_, _, w)) => {
+                let mut b = *b;
+                b.x = w.x;
+                b.y = w.y;
+                b.facing_left = w.facing_left;
+                b.ext = w.ext;
+                cx.set_body(*id, b);
+            }
+            None => cx.remove(*id),
+        }
+    }
+    let spawned = |cx: &ExtCx<'_>| cx.requests().iter().filter(|r| matches!(r, gp_sim::ext::Request::Spawn { .. })).count();
+    for (k, n, b) in &cast {
+        if have.iter().any(|(_, h)| h.kind == *k && key(h) == *n) {
+            continue;
+        }
+        let id = cx.world.bodies.len() + spawned(cx);
+        cx.spawn(*k, b.x, b.y, b.facing_left);
+        cx.set_body(id, *b);
+    }
+    // The bartender and his parts, in the scene only: out of it they stay
+    // as they are, as in play out of a game (his hook hides the parts).
+    if let (true, Some((pid, mut pb)), Some(qk)) = (on, player, qk) {
+        let me = find(IX).unwrap_or(BonusObj { at: IX, y: 0, flags: 0, pic: 0, x: 0 });
+        pb.x = Fx::from_int(me.x);
+        pb.y = Fx::from_int(me.y);
+        pb.ext[2] = (pb.ext[2] & !(0xffff << 16)) | ((me.flags & 0xff) << 16) | ((me.pic & 0xff) << 24);
+        cx.set_body(pid, pb);
+        let parts: Vec<(usize, Body)> =
+            cx.world.bodies.iter().enumerate().filter(|(_, b)| b.alive && b.kind == qk && (1..=5).contains(&b.ext[1])).map(|(i, b)| (i, *b)).collect();
+        for k in 0..5i64 {
+            let o = find(IX + 4 + 4 * k);
+            let (y, x, word) = o.map_or((0, 0, 0), |o| (o.y, o.x, o.flags | (o.pic << 8)));
+            match parts.iter().find(|(_, b)| b.ext[1] == k + 1) {
+                Some((id, b)) => {
+                    let mut b = *b;
+                    b.y = Fx::from_int(y);
+                    if o.is_some() {
+                        b.x = Fx::from_int(x);
+                        b.ext[0] = word;
+                    }
+                    cx.set_body(*id, b);
+                }
+                None if o.is_some() => {
+                    let mut b = gp_sim::systems::new_body(cx.spec, cx.world, qk, Fx::from_int(x), Fx::from_int(y), false);
+                    b.ext[0] = word;
+                    b.ext[1] = k + 1;
+                    let id = cx.world.bodies.len() + spawned(cx);
+                    cx.spawn(qk, b.x, b.y, false);
+                    cx.set_body(id, b);
+                }
+                None => {}
+            }
+        }
+    }
+    rest
+}
+
 /// The instruction scene's frame (demo_scene), 0 on its first, while the
 /// attract mode is in state 6 ($3CD8): from the flow's count of the
-/// attract mode, from the frame attract_demo names.
+/// attract mode, from the frame attract_demo names. The board shows a
+/// frame's objects the frame after the code wrote them, so this is the
+/// scene's frame before the one in RAM.
 fn scene_frame(cx: &ExtCx<'_>) -> Option<i64> {
+    scene_frame_at(cx, 2)
+}
+
+/// The instruction scene's frame in RAM (scene_frame's next): the one the
+/// compared bodies place_cast makes are at.
+fn scene_ram_frame(cx: &ExtCx<'_>) -> Option<i64> {
+    scene_frame_at(cx, 1)
+}
+
+/// scene_frame, `back` frames from the flow's count.
+fn scene_frame_at(cx: &ExtCx<'_>, back: i64) -> Option<i64> {
     if cx.counter("mode") != Some(1) {
         return None;
     }
@@ -2163,9 +2323,7 @@ fn scene_frame(cx: &ExtCx<'_>) -> Option<i64> {
         return None;
     }
     let t = (fb.ext[2] & ATTRACT_MASK) >> ATTRACT_SHIFT;
-    // The board shows a frame's objects the frame after the code wrote
-    // them: the scene's frame before this one.
-    Some(t - attract_at(cx, "attract_demo") - 2).filter(|n| *n >= 0)
+    Some(t - attract_at(cx, "attract_demo") - back).filter(|n| *n >= 0)
 }
 
 /// The attract mode's instruction scene ($2EE0, called by $3CD8 in state 6)
@@ -3504,7 +3662,9 @@ impl Ext for Bars {
             // The instruction scene's objects ($2EE0, state 6); none
             // elsewhere in the attract mode.
             if let Some(ok) = cx.kind("bonus_object") {
-                let want = scene_frame(cx).map(|n| demo_scene(cx, n)).unwrap_or_default();
+                let scene = scene_ram_frame(cx).map(|n| demo_scene(cx, n));
+                let drawn = scene_frame(cx).map(|n| demo_scene(cx, n)).unwrap_or_default();
+                let want = place_cast(cx, scene, drawn);
                 place_objects(cx, ok, &want);
             }
             return;

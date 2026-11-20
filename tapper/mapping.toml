@@ -148,8 +148,8 @@ rbtapper = 0x4A69
 active = 0xE2FE
 active_stride = 8
 count = 9
-note = "The mugs from E2FE, 8 bytes a slot (gp track, gp labels propose, gp element inputs). A slot holds an object while its y isn't 0. The slots hold the play's objects while the bars are set up: the setup's $4D13 writes the bars' far ends from E366 (bar 0's x at E369) with the taps, and $5F31 empties them with every object from E18E (the next setup at $4B4D, the bonus round's and the game over's), after which the slots hold the scripts' pictures (the setup's intro at $5404, the bonus round). So the play's objects stay through a customer's slide ($1CE1, the bartender off his bar), a life lost ($236E) and a level's end until the clear, as the program leaves them (tapper.l6.001, tapper.die.001). The rule before this one read them empty whenever the bartender was off a bar's line"
-vacant = "ram[0xE3BD] == 2 || ram[0xE369] == 0"
+note = "The mugs from E2FE, 8 bytes a slot (gp track, gp labels propose, gp element inputs). A slot holds an object while its y isn't 0. The slots hold the play's objects while the bars are set up: the setup's $4D13 writes the bars' far ends from E366 (bar 0's x at E369) with the taps, and $5F31 empties them with every object from E18E (the next setup at $4B4D, the bonus round's and the game over's), after which the slots hold the scripts' pictures (the setup's intro at $5404, the bonus round). So the play's objects stay through a customer's slide ($1CE1, the bartender off his bar), a life lost ($236E) and a level's end until the clear, as the program leaves them (tapper.l6.001, tapper.die.001). The rule before this one read them empty whenever the bartender was off a bar's line. The attract mode's instruction scene ($2EE0, called in the attract mode's state 6, E3BD 1, between its waits with E397 15 and 16) slides its mug in E2FE with no bars set up (E369 0), so in the attract mode the slots are compared whatever E369 holds: the model's mug there is a mug body (place_cast)"
+vacant = "ram[0xE3BD] == 2 || (ram[0xE369] == 0 && ram[0xE3BD] != 1)"
 
 [[slots.level]]
 level = "main"
