@@ -1,0 +1,6160 @@
+{
+  "_type": "https://in-toto.io/Statement/v1",
+  "predicate": {
+    "clips": [
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "7c5a0dad0866ccc72b4b58dd59baa356c2411d5571b97b4e2c3565d0e92aec1e",
+        "exact": true,
+        "first": null,
+        "frames": 353,
+        "frames_together": 353,
+        "id": "dk.walk.001",
+        "model_curve": "2530f60ec3737d4c49ad59ba835d0342555b481e8d0e2ce1bdd92812c07918b4",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4578,
+          "offset": 3,
+          "original": 4581
+        },
+        "permille": 1000,
+        "recipe": "9c95efb93c49a30ed3b2f226adeee73670f06d1199f758c3be2f746595fdcb13",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 352,
+            "total": 352
+          },
+          "sprites": {
+            "same": 352,
+            "total": 352
+          }
+        },
+        "start": 4581
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "f574a63a7d545ee7e02258d44835602b5e619f978cf3ef3c513135842aaa08d8",
+        "exact": true,
+        "first": null,
+        "frames": 277,
+        "frames_together": 277,
+        "id": "dk.climb-ladder.001",
+        "model_curve": "534f1b71819971037b438c54c22e026ba8af3e45e6f2457a43bbfc68a4192c85",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1422,
+          "offset": 3,
+          "original": 1425
+        },
+        "permille": 1000,
+        "recipe": "31779492922f03104ae259aab7e2ddfbb2c2c8fbb79a3501e5fb058ab45eceb9",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 276,
+            "total": 276
+          },
+          "sprites": {
+            "same": 276,
+            "total": 276
+          }
+        },
+        "start": 1425
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "9a748f8ef967d245abc0316a19ee2a8c5aa3f5a7d6133df8ab73aaa8f0f6c2b3",
+        "exact": true,
+        "first": null,
+        "frames": 161,
+        "frames_together": 161,
+        "id": "dk.climb-ladder.006",
+        "model_curve": "7dbac2e89ce2a4831615e807ab02dff9422de034055b3c95c2e515dc0dcbf131",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1377,
+          "offset": 3,
+          "original": 1380
+        },
+        "permille": 1000,
+        "recipe": "df21727c77691f7a19dd4f53ff9c6bad564060d72e95c5f936bf16931e00da76",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 160,
+            "total": 160
+          },
+          "sprites": {
+            "same": 152,
+            "total": 160
+          }
+        },
+        "start": 1380
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "368cc7a19cea881af398f0eada8f47c24f3f963d1f728b3cc17ea8df05a56266",
+        "exact": true,
+        "first": null,
+        "frames": 920,
+        "frames_together": 920,
+        "id": "dk.climb-ladder.008",
+        "model_curve": "318f935a1664eced612ee0161da10a6a721e9db631893cb9a17cc4776691ebc5",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1168,
+          "offset": 3,
+          "original": 1171
+        },
+        "permille": 1000,
+        "recipe": "5cc04c448f85bae0d8819a9a8cc3df59f16c2588241f1e0ba19fb455f2aec081",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 919,
+            "total": 919
+          },
+          "sprites": {
+            "same": 919,
+            "total": 919
+          }
+        },
+        "start": 1171,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 920,
+          "longest": 0,
+          "longest_any": 920,
+          "median": 0,
+          "open_end": 920,
+          "p10": 0,
+          "play": 920,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 920,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "a583c8fda602d70926b13756db2064ffaccec4b4fdee913c450a13aa5a3e5980",
+        "exact": true,
+        "first": null,
+        "frames": 59,
+        "frames_together": 59,
+        "id": "dk.double-barrel-jump.001",
+        "model_curve": "47f9cc457440c0912f7cd4c3dc00b037d0b6415d2ff6c751cae3f75cec0c8c83",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 4,
+          "model": 33895,
+          "offset": 4,
+          "original": 33899
+        },
+        "permille": 1000,
+        "recipe": "5e9bb4ed5253d2795cf691bd2b6b80366b5722137a3fc602f97db57c4ebfc8e0",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 58,
+            "total": 58
+          },
+          "sprites": {
+            "same": 58,
+            "total": 58
+          }
+        },
+        "start": 33899
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "6b1e417198c9617b2162ecb9cf402c13cd2150c28445f8f027ae2fe9e79ebaf7",
+        "exact": true,
+        "first": null,
+        "frames": 134,
+        "frames_together": 134,
+        "id": "dk.double-barrel-jump.002",
+        "model_curve": "009a1faebf4fa2ec006034379c339a664e54b87c7c8560b7929ba11860fd7677",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 4,
+          "model": 35725,
+          "offset": 4,
+          "original": 35729
+        },
+        "permille": 1000,
+        "recipe": "5b9ae1b662e5eff5f136a54e4ab374ae805429e2663def1b1072b352ebff2307",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 133,
+            "total": 133
+          },
+          "sprites": {
+            "same": 133,
+            "total": 133
+          }
+        },
+        "start": 35729
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "128dd3d2f75d512e25db437dbb1439c7d79582da988f4c60aa65e0c8bdd11c44",
+        "exact": true,
+        "first": null,
+        "frames": 466,
+        "frames_together": 466,
+        "id": "dk.double-barrel-jump.003",
+        "model_curve": "e36b42c0611ad143b227ea25ff659441202157032706fc00b3464d6f4988bd42",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 4,
+          "model": 36836,
+          "offset": 4,
+          "original": 36840
+        },
+        "permille": 1000,
+        "recipe": "d76656bba78fe20eb065c0ec1784d3c74169d0f9fd0bcf6c43321fdd3a98b286",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 465,
+            "total": 465
+          },
+          "sprites": {
+            "same": 465,
+            "total": 465
+          }
+        },
+        "start": 36840
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "f3450cd7bc37b7c7e458311e4edd36e10386536dac1bf731df86085610d65b94",
+        "exact": true,
+        "first": null,
+        "frames": 216,
+        "frames_together": 216,
+        "id": "dk.fall-too-far.001",
+        "model_curve": "fdfa243be047db0b1f1922941f4ca083022ace560914082e24ae415329bc9140",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1529,
+          "offset": 3,
+          "original": 1532
+        },
+        "permille": 1000,
+        "recipe": "2a37b13db108dc6ed08eb1437cb4551c4791797190ace44aff3a09a528934b2e",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 215,
+            "total": 215
+          },
+          "sprites": {
+            "same": 215,
+            "total": 215
+          }
+        },
+        "start": 1532
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "2f16a969e6132f9d9ba01636d5eadb4660c1823dbe210559ffd94ae1232db510",
+        "exact": true,
+        "first": null,
+        "frames": 601,
+        "frames_together": 601,
+        "id": "dk.hammer.005",
+        "model_curve": "ee715785f3afc1391e3913843a8f3039c2ccf284706061f1d9e4376b6a9028a9",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 9057,
+          "offset": 3,
+          "original": 9060
+        },
+        "permille": 1000,
+        "recipe": "58405e0955b519cb3dda4e0abbb8c3b424a9a83d431ad713831270ed7f86c353",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 600,
+            "total": 600
+          },
+          "sprites": {
+            "same": 600,
+            "total": 600
+          }
+        },
+        "start": 9060
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "1772c355802aba9209caec565abe53ae11f4dc85053a45eb66377798d3ad4a90",
+        "exact": true,
+        "first": null,
+        "frames": 836,
+        "frames_together": 836,
+        "id": "dk.hammer.007",
+        "model_curve": "067e7823840cbcb443dd59f7df2d1930689fb4395710ea67aa318dec561e12b1",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1168,
+          "offset": 3,
+          "original": 1171
+        },
+        "permille": 1000,
+        "recipe": "708a720fb0d4108e13ad6ff6b9f1e6d590da23f7da1cf658e3bf000641ad6b95",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 835,
+            "total": 835
+          },
+          "sprites": {
+            "same": 835,
+            "total": 835
+          }
+        },
+        "start": 1171,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 836,
+          "longest": 0,
+          "longest_any": 836,
+          "median": 0,
+          "open_end": 836,
+          "p10": 0,
+          "play": 836,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 836,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "7e0c7f8f8f485274431ff688ba2ff53996b9b7d331653dcdc8ab913bd56db366",
+        "exact": true,
+        "first": null,
+        "frames": 823,
+        "frames_together": 823,
+        "id": "dk.hammer.013",
+        "model_curve": "d5d69431510f3c161071f72fb386601eae0c0d06b7f629d08b267ff75c76ae5b",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1168,
+          "offset": 3,
+          "original": 1171
+        },
+        "permille": 1000,
+        "recipe": "4fa4bf662c06818eb520725b900b79576dbb0323f1e9d61a5bc12cb92b439ac7",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 822,
+            "total": 822
+          },
+          "sprites": {
+            "same": 822,
+            "total": 822
+          }
+        },
+        "start": 1171,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 823,
+          "longest": 0,
+          "longest_any": 759,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 759,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 823,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "cf9e8c8f15458f6d38131492547a4fc11ef53f5db808d95379dcb6a98abaed4c",
+        "exact": true,
+        "first": null,
+        "frames": 962,
+        "frames_together": 962,
+        "id": "dk.hammer.016",
+        "model_curve": "b3ce68dc513d961692651daecb62df46d450035b569a28e206a528bba73b5a59",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1168,
+          "offset": 3,
+          "original": 1171
+        },
+        "permille": 1000,
+        "recipe": "ee23ffb7cdd806f5284cef0d9ff4dc1a88f43924af510797324b67c1de4ebd76",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 961,
+            "total": 961
+          },
+          "sprites": {
+            "same": 960,
+            "total": 961
+          }
+        },
+        "start": 1171,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 962,
+          "longest": 0,
+          "longest_any": 736,
+          "median": 0,
+          "open_end": 143,
+          "p10": 0,
+          "play": 879,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 962,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "de273b5b4323212b3fb55f4f4568e9b5be5429b42ea8accc80efcd389d7a4d90",
+        "exact": true,
+        "first": null,
+        "frames": 1563,
+        "frames_together": 1563,
+        "id": "dk.hammer.023",
+        "model_curve": "ff5c47242b80e9dca84ba3abe32cfc8a49a365c8e2203ca5cf8f0e0bd5df3e6e",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1168,
+          "offset": 3,
+          "original": 1171
+        },
+        "permille": 1000,
+        "recipe": "1e20750141af98af8036fe18378a420a37ede7b9e6828598629bbc02dd00c2dd",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1562,
+            "total": 1562
+          },
+          "sprites": {
+            "same": 1562,
+            "total": 1562
+          }
+        },
+        "start": 1171,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1563,
+          "longest": 0,
+          "longest_any": 1563,
+          "median": 0,
+          "open_end": 1563,
+          "p10": 0,
+          "play": 1563,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1563,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "03b2aeea66613acc92803adc8501d99603f1a9d4f7acf51ecb24ebc20047039b",
+        "exact": true,
+        "first": null,
+        "frames": 181,
+        "frames_together": 181,
+        "id": "dk.hammer.028",
+        "model_curve": "63932a86260da52db0f343c95f247d889c817cb94fa969f7d80ea266708ebfbf",
+        "moved": [
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.run"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3132,
+          "offset": 3,
+          "original": 3135
+        },
+        "permille": 1000,
+        "recipe": "1d1faa81db11dd75725b129d3946c87e54b4dcdeef29ef56dd5b722212a9204a",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 180,
+            "total": 180
+          },
+          "sprites": {
+            "same": 180,
+            "total": 180
+          }
+        },
+        "start": 3135
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "bceb0b2795b4d7ad14f0b0a38d59f598fa59ba11fedd1bf767de83ab2c2db318",
+        "exact": true,
+        "first": null,
+        "frames": 894,
+        "frames_together": 894,
+        "id": "dk.top-hammer.001",
+        "model_curve": "344bdb73c86970df180902217be46ff6065c54278ea9b4230dd9406a849e31a8",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 13560,
+          "offset": 3,
+          "original": 13563
+        },
+        "permille": 1000,
+        "recipe": "3415729f1386ba461047c5c836cf3529910d7de3a2b215522f9c473b9479c561",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 893,
+            "total": 893
+          },
+          "sprites": {
+            "same": 893,
+            "total": 893
+          }
+        },
+        "start": 13563,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 894,
+          "longest": 0,
+          "longest_any": 442,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 442,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 894,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "909a49c4fe8b99e89fd63183c7f153e742a77d9fa452f84ddc848e87d36591fd",
+        "exact": true,
+        "first": null,
+        "frames": 619,
+        "frames_together": 619,
+        "id": "dk.game-over.001",
+        "model_curve": "3e9cd205c17aeeedec95a7dadb948b66efe0b6dd98c593f29db1e3c2daecd44b",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 29424,
+          "offset": 3,
+          "original": 29427
+        },
+        "permille": 1000,
+        "recipe": "b39fd429f05c4a9020d36e6c626fd730fa014f71914d23a0c361fcfad841da6c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 618,
+            "total": 618
+          },
+          "sprites": {
+            "same": 618,
+            "total": 618
+          }
+        },
+        "start": 29427,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 619,
+          "longest": 0,
+          "longest_any": 54,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 54,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 619,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "fdf559c6db27f6ec825fb7793a6d11c13ddcabc88b71e44e02aa4b79d2223c44",
+        "exact": true,
+        "first": null,
+        "frames": 2143,
+        "frames_together": 2143,
+        "id": "dk.clear-25m.001",
+        "model_curve": "1f5c83912c3724c66cce656b9309196211326fa4f2f92b920a053671080ab236",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1529,
+          "offset": 3,
+          "original": 1532
+        },
+        "permille": 1000,
+        "recipe": "e78b9f46a50b731f4550df6e99aba9bcc99a49955327456191f13cc10d9ab4b9",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 2142,
+            "total": 2142
+          },
+          "sprites": {
+            "same": 2142,
+            "total": 2142
+          }
+        },
+        "start": 1532,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 2143,
+          "longest": 0,
+          "longest_any": 624,
+          "median": 0,
+          "open_end": 195,
+          "p10": 0,
+          "play": 1207,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 2143,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "b412eb4e9a2d32ac2f94219f7ac99bb329f3be964e567dabbe8902a38c570f70",
+        "exact": true,
+        "first": null,
+        "frames": 1397,
+        "frames_together": 1397,
+        "id": "dk.title.001",
+        "model_curve": "545aa81fb019ecf879a3287468846cefad25ac0f16873ae150061d5cba6cb191",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1,
+          "offset": 3,
+          "original": 4
+        },
+        "permille": 1000,
+        "recipe": "4e384a0dc9bb245a5ff4b3bf93d75147770ee590612ceeaa00bfaaf07a2f59e4",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1396,
+            "total": 1396
+          },
+          "sprites": {
+            "same": 1396,
+            "total": 1396
+          }
+        },
+        "start": 4,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1397,
+          "longest": 0,
+          "longest_any": 891,
+          "median": 0,
+          "open_end": 891,
+          "p10": 0,
+          "play": 891,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1397,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "1055472875df8258ff77ce8a6a890b80d06aad8e92d0130d8e42a0e40ac0b1bc",
+        "exact": true,
+        "first": null,
+        "frames": 802,
+        "frames_together": 802,
+        "id": "dk.title.006",
+        "model_curve": "12ac5de2962440bc6c76d44583d85c4fb788f7be53c26930ddb617191e935e48",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1,
+          "offset": 3,
+          "original": 4
+        },
+        "permille": 1000,
+        "recipe": "2a5e34af737e55ed4e2d96b871119ac27dcde0671b1ca75d98db080b281d3977",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 801,
+            "total": 801
+          },
+          "sprites": {
+            "same": 801,
+            "total": 801
+          }
+        },
+        "start": 4,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 802,
+          "longest": 0,
+          "longest_any": 175,
+          "median": 0,
+          "open_end": 175,
+          "p10": 0,
+          "play": 175,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 802,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "b6db8fb839efaf06268f71a0080a5c9c46b8513b6c41aa31745cb9885e38f765",
+        "exact": true,
+        "first": null,
+        "frames": 1157,
+        "frames_together": 1157,
+        "id": "dk.title.007",
+        "model_curve": "ac46c19756048017a4d5c210e38e77928481d6222526318e0347a9c729263f6a",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1,
+          "offset": 3,
+          "original": 4
+        },
+        "permille": 1000,
+        "recipe": "d95bc3b71d198051079105bd2a78ecfafde9f9c9259dad83238416f8b9648e71",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1156,
+            "total": 1156
+          },
+          "sprites": {
+            "same": 1156,
+            "total": 1156
+          }
+        },
+        "start": 4,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1157,
+          "longest": 0,
+          "longest_any": 35,
+          "median": 0,
+          "open_end": 35,
+          "p10": 0,
+          "play": 35,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1157,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "30c4f8e139a32592945496df50cef13f288ffc82c182db1489ad66d498690bdb",
+        "exact": true,
+        "first": null,
+        "frames": 818,
+        "frames_together": 818,
+        "id": "dk.title.008",
+        "model_curve": "b83bba8b8ce1221f77814e636100046c2b496ddfdc062994b4d762f6cdf8433c",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1,
+          "offset": 3,
+          "original": 4
+        },
+        "permille": 1000,
+        "recipe": "dbd723c362f5773f26d76603403b4813d3cfb65314de47183930cc4e1cbf97bd",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 815,
+            "total": 817
+          },
+          "sprites": {
+            "same": 815,
+            "total": 817
+          }
+        },
+        "start": 4,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 818,
+          "longest": 0,
+          "longest_any": 312,
+          "median": 0,
+          "open_end": 312,
+          "p10": 0,
+          "play": 312,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 818,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "ca02810a1f79b200875b684069c370492828afd0b6d2066dd620e146d7843973",
+        "exact": true,
+        "first": null,
+        "frames": 1398,
+        "frames_together": 1398,
+        "id": "dk.title.009",
+        "model_curve": "5bedf9d51597a1a5eea0d0ad5844511b58f4cd88541083e752641c26e1c786fd",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1,
+          "offset": 3,
+          "original": 4
+        },
+        "permille": 1000,
+        "recipe": "ec1069e767b461cc8d692abee8f721898e18e4c16342f4f995aebb37fe771a9c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1397,
+            "total": 1397
+          },
+          "sprites": {
+            "same": 1397,
+            "total": 1397
+          }
+        },
+        "start": 4,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1398,
+          "longest": 0,
+          "longest_any": 191,
+          "median": 0,
+          "open_end": 177,
+          "p10": 0,
+          "play": 368,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1398,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": false,
+          "together": true
+        },
+        "curve": "dca589749fe8d4ff006137c77c31e0c1465500e7dff28b6e11f0c72d5f8f37fc",
+        "exact": true,
+        "first": null,
+        "frames": 6080,
+        "frames_together": 6080,
+        "id": "dk.two-players.001",
+        "model_curve": "7b5333850b505690dc8da0145adeb76a1f47a853eda9b3b372869208a25f5e6d",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1,
+          "offset": 3,
+          "original": 4
+        },
+        "permille": 1000,
+        "recipe": "d01da0865abdfc9f9b2a2f8759304f83fe2cde9ad85040fc537a587f8400ec99",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 6079,
+            "total": 6079
+          },
+          "sprites": {
+            "same": 6079,
+            "total": 6079
+          }
+        },
+        "start": 4,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 6080,
+          "longest": 0,
+          "longest_any": 360,
+          "median": 0,
+          "open_end": 360,
+          "p10": 0,
+          "play": 1674,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 6080,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "4953b046e5b85c3839597f162e8340752977d7a3bfc4669bf8c2613367e98702",
+        "exact": true,
+        "first": null,
+        "frames": 1356,
+        "frames_together": 1356,
+        "id": "dk.clear-25m-scene.001",
+        "model_curve": "ad86894c59e7b04a255a18828f06c56998a7e7dcb218c2abb808cab0b7a383f2",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": {
+          "frame": 1356,
+          "frames": 164,
+          "original_frame": 2888
+        },
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1529,
+          "offset": 3,
+          "original": 1532
+        },
+        "permille": 1000,
+        "recipe": "705dad65a5765472b77486a66d10f7bd3c68fd55d24ea0513823e9e3d0b5f39e",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1355,
+            "total": 1355
+          },
+          "sprites": {
+            "same": 1355,
+            "total": 1355
+          }
+        },
+        "start": 1532,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1356,
+          "longest": 0,
+          "longest_any": 1114,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 1114,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1356,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "e6d127a132e11babad02cfb8edcf5d9ab7a54833e80b103eb7b3652d079a7531",
+        "exact": true,
+        "first": null,
+        "frames": 401,
+        "frames_together": 401,
+        "id": "dk.m50-start.001",
+        "model_curve": "37a3276c12435f67531ce205a2249c51650756e2252337fa97c6fc5a38bb9259",
+        "moved": [
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "9f364447f6c4fa52dcd3e3f619d761b2e135a6caf7d3b14cc9a388782a116052",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 400,
+            "total": 400
+          },
+          "sprites": {
+            "same": 400,
+            "total": 400
+          }
+        },
+        "start": 3052
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "f0783032dceda3b0e0ab9bd32b9cf04862ee6fb0bf59286c19d00009619ae109",
+        "exact": true,
+        "first": null,
+        "frames": 782,
+        "frames_together": 782,
+        "id": "dk.m50-walk.001",
+        "model_curve": "636148238f6f66c9fb6f7657919b6bef4cf1ad6c6b3a25b48bcd25f21d178245",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "4a6140bab1176ce999ef5c91332801359c602e8d295a18691639a6bed525e771",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 781,
+            "total": 781
+          },
+          "sprites": {
+            "same": 781,
+            "total": 781
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 782,
+          "longest": 0,
+          "longest_any": 782,
+          "median": 0,
+          "open_end": 782,
+          "p10": 0,
+          "play": 782,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 782,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "e6bc17b83d06f1ae818fbbda57c1556e9ce9b83a232c6d380a5a4f84c2e3735f",
+        "exact": true,
+        "first": null,
+        "frames": 2385,
+        "frames_together": 2385,
+        "id": "dk.walk-sweep.001",
+        "model_curve": "e8b5bdf77360d252dd524012b01350eb303e78b14c477a48ea99831f177f16db",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 951,
+          "offset": 3,
+          "original": 954
+        },
+        "permille": 1000,
+        "recipe": "3c8f4b2c9c2053f9e3aea528cf41734d8e248c3ac01dbbeeedf20cd9f917a887",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 2384,
+            "total": 2384
+          },
+          "sprites": {
+            "same": 2384,
+            "total": 2384
+          }
+        },
+        "start": 954,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 2385,
+          "longest": 0,
+          "longest_any": 1135,
+          "median": 0,
+          "open_end": 1135,
+          "p10": 0,
+          "play": 1915,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 2385,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "b305c184cfac2ba99e6912b03c7d6855b3b3733ee12e6bbc6d794b740d26ac0c",
+        "exact": true,
+        "first": null,
+        "frames": 1363,
+        "frames_together": 1363,
+        "id": "dk.walk-sweep.004",
+        "model_curve": "36301bd468e7ed8bee282081bd6fc395e465c3987df2ce49fac28c92ed828bce",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1635,
+          "offset": 3,
+          "original": 1638
+        },
+        "permille": 1000,
+        "recipe": "2863e6ada77c49ff1cda24f351c8215b4ef9055646198b52d15fed3c28c76cc7",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1362,
+            "total": 1362
+          },
+          "sprites": {
+            "same": 1362,
+            "total": 1362
+          }
+        },
+        "start": 1638,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1363,
+          "longest": 0,
+          "longest_any": 1030,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 1030,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1363,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "ea102313ee3b3c60ebbbf0d0d7493562092f5dadd2338b28674cd989b7fec455",
+        "exact": true,
+        "first": null,
+        "frames": 330,
+        "frames_together": 330,
+        "id": "dk.wall-jump.002",
+        "model_curve": "8107c1dbee281ff11e83f577923bb6a2396712082061ad7d8f0d053bf380edaf",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 596,
+          "offset": 3,
+          "original": 599
+        },
+        "permille": 1000,
+        "recipe": "0c55ff80012c050ba828b095cdebdc88e6122d6ef9542fbf4d9bff742ed8452c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 329,
+            "total": 329
+          },
+          "sprites": {
+            "same": 329,
+            "total": 329
+          }
+        },
+        "start": 599
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "a7b1396aa406454dd33a4d070ba231ec25473be23b031aa8f3294c2e02844efa",
+        "exact": true,
+        "first": null,
+        "frames": 328,
+        "frames_together": 328,
+        "id": "dk.wall-jump.003",
+        "model_curve": "78a367a719036fe34ae205a986698f627045ea872f760253470fcc1b9135f136",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 596,
+          "offset": 3,
+          "original": 599
+        },
+        "permille": 1000,
+        "recipe": "b1d64f703f302dc163bcec940574653adc96aa9bf35fc19a53b49091fdc6e87f",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 327,
+            "total": 327
+          },
+          "sprites": {
+            "same": 327,
+            "total": 327
+          }
+        },
+        "start": 599
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "0964ee6f7e74043d4f2a49ad972213789b9a74dcd653479fcabb15bae6e1ca37",
+        "exact": true,
+        "first": null,
+        "frames": 333,
+        "frames_together": 333,
+        "id": "dk.wall-jump.006",
+        "model_curve": "54d15e6ac411fe2a6a8d3342649f83e2624e43d4438f2c19a09ffbf49d3c8309",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 891,
+          "offset": 3,
+          "original": 894
+        },
+        "permille": 1000,
+        "recipe": "762b16c2d474bb78176a042d28d94083915c700e23a72550ebf5c75095eda65a",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 332,
+            "total": 332
+          },
+          "sprites": {
+            "same": 332,
+            "total": 332
+          }
+        },
+        "start": 894
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "dc41f6e8d2b72728afc840f4843b2b897b071422c699b94677d8dff92cb2ed8c",
+        "exact": true,
+        "first": null,
+        "frames": 239,
+        "frames_together": 239,
+        "id": "dk.wall-jump.007",
+        "model_curve": "f0c5e5e723e00ff237983835f8652a9addfa535714c63a9a25dbb47d25e8b090",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1109,
+          "offset": 3,
+          "original": 1112
+        },
+        "permille": 1000,
+        "recipe": "2b81922bac29c0c94cc711fc8cabafab9d7e7690a6533845a4c3e7b6a6393aec",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 238,
+            "total": 238
+          },
+          "sprites": {
+            "same": 238,
+            "total": 238
+          }
+        },
+        "start": 1112
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "d7710d95ec4568afc44909a7d8951dd5370ac3c2550560c41d15a8f0173ebd17",
+        "exact": true,
+        "first": null,
+        "frames": 138,
+        "frames_together": 138,
+        "id": "dk.points.004",
+        "model_curve": "d1c8ce41f8289ad91566bd9bce1280006273abbe16ec46bc1a84de20a235d702",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 4,
+          "model": 35725,
+          "offset": 4,
+          "original": 35729
+        },
+        "permille": 1000,
+        "recipe": "894450efa546b03bc68bab3d0a92a3f6bb89319953d75cbb079c53e51f816415",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 137,
+            "total": 137
+          },
+          "sprites": {
+            "same": 137,
+            "total": 137
+          }
+        },
+        "start": 35729
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "2b186ac7aa4f7eb193696ccc000523ef9addabaab1a0b7f8f6e889b61b169a0e",
+        "exact": true,
+        "first": null,
+        "frames": 138,
+        "frames_together": 138,
+        "id": "dk.points.005",
+        "model_curve": "84109134f2b3db8d245b4ba3805f5b94a6893bb16faaf3528fe5685a66025064",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 4,
+          "model": 35725,
+          "offset": 4,
+          "original": 35729
+        },
+        "permille": 1000,
+        "recipe": "9b1619d4d82bb4b3236862608a4460421427b173f10c6572b337520a56e90a1b",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 137,
+            "total": 137
+          },
+          "sprites": {
+            "same": 137,
+            "total": 137
+          }
+        },
+        "start": 35729
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "761266c504846567d065f4317a4846c37d58f2334a91483494eaa14b1712eb3c",
+        "exact": true,
+        "first": null,
+        "frames": 1283,
+        "frames_together": 1283,
+        "id": "dk.m50-hammer-smash.003",
+        "model_curve": "1f29b3a48bffe6b709ca7d97e3699506bc19b7e6265da632b7b10b7db6970f14",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "8f43b46b153c1928bc61221772ee4c95f03e290527e574ea57a0bbe0fe82f463",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1282,
+            "total": 1282
+          },
+          "sprites": {
+            "same": 1282,
+            "total": 1282
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1283,
+          "longest": 0,
+          "longest_any": 1283,
+          "median": 0,
+          "open_end": 1283,
+          "p10": 0,
+          "play": 1283,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1283,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "1e9f58d2e30571c50f037deac9e723301cc3f73e7f04df565aac0f30de0e3a7d",
+        "exact": true,
+        "first": null,
+        "frames": 1163,
+        "frames_together": 1163,
+        "id": "dk.m50-hammer-smash.004",
+        "model_curve": "9c562a4d5457da7d014f6a4298039d61c07516f6d3b75f412228a8c055ad2e63",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "6ed4d8a1f6e7aa28dca397743b1f1bf83ba8f106fc649691b94ef919121bfd80",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1162,
+            "total": 1162
+          },
+          "sprites": {
+            "same": 1162,
+            "total": 1162
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1163,
+          "longest": 0,
+          "longest_any": 1163,
+          "median": 0,
+          "open_end": 1163,
+          "p10": 0,
+          "play": 1163,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1163,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "55ba39febe7b98abb370e7c96138e62f2c52ed152ae3f74339596aca80963f98",
+        "exact": true,
+        "first": null,
+        "frames": 1727,
+        "frames_together": 1727,
+        "id": "dk.m50-pie-points.001",
+        "model_curve": "47d0dde420f79388765a35d5a83e3b5428ef4a4589c2932e8c3057fb9fb5e503",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "34e61c0e2b0083e23beb4c54654a402f0067078628aec919f136a45b1b5ae26f",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1726,
+            "total": 1726
+          },
+          "sprites": {
+            "same": 1726,
+            "total": 1726
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1727,
+          "longest": 0,
+          "longest_any": 1026,
+          "median": 0,
+          "open_end": 243,
+          "p10": 0,
+          "play": 1269,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1727,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "e72a072c8913e55f1a9e733350d6d151457468fc3c0ff68756f969917dc1def1",
+        "exact": true,
+        "first": null,
+        "frames": 544,
+        "frames_together": 544,
+        "id": "dk.m50-girder3.003",
+        "model_curve": "7491cb545268e609cf02c7be46822ebf87c72bb51b2e81b8a17914c130d14b5b",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "a408e75907ffc5052364e6b0fd3f3814b2f4ca21034a8a2063d83d716a40224d",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 543,
+            "total": 543
+          },
+          "sprites": {
+            "same": 543,
+            "total": 543
+          }
+        },
+        "start": 3052
+      },
+      {
+        "bars": {
+          "longest_stretch": false,
+          "together": true
+        },
+        "curve": "7ca7d89af91902fe196998904a36ddcf7a517f246a9e3c69def4ab5f9346225a",
+        "exact": true,
+        "first": null,
+        "frames": 1104,
+        "frames_together": 1104,
+        "id": "dk.m50-middle.001",
+        "model_curve": "6a4ecb0ef6f6e6bb4155e92271d1b84c5cc3eb56a4f7ef3ed010358af91367c1",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "3bf78cd46ef2b91458efb02c8db0238e835dee9f4ce20efe2132c2244da40854",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1103,
+            "total": 1103
+          },
+          "sprites": {
+            "same": 1103,
+            "total": 1103
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1104,
+          "longest": 0,
+          "longest_any": 503,
+          "median": 0,
+          "open_end": 148,
+          "p10": 0,
+          "play": 651,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1104,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "3fc0d7a13540d04c0faf11a27efe938252b9224bceb006cdf5d79b813fc72e36",
+        "exact": true,
+        "first": null,
+        "frames": 688,
+        "frames_together": 688,
+        "id": "dk.m50-girder3.001",
+        "model_curve": "bf97182496ff93994bf06f3fae38727f0ec0d798866d299c246b1d63741239e5",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "979518c6360a2d750eaf76321e89dbbea208359e21c10bb02290f50a78dee5ba",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 687,
+            "total": 687
+          },
+          "sprites": {
+            "same": 687,
+            "total": 687
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 688,
+          "longest": 0,
+          "longest_any": 331,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 331,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 688,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "e3f05c68d12f3445ae801aa8558f73e071a7f52661f65f0df414524b01fc4be0",
+        "exact": true,
+        "first": null,
+        "frames": 688,
+        "frames_together": 688,
+        "id": "dk.m50-girder3.004",
+        "model_curve": "d4c04b31fd1f2fc46f99e3a84e15e2024e30c90be00d13729ab4a9c3aca8625a",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "5176be2d9142d187f68958cf4077486ae754c6f973cdbc4e122a789abd96490c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 687,
+            "total": 687
+          },
+          "sprites": {
+            "same": 687,
+            "total": 687
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 688,
+          "longest": 0,
+          "longest_any": 449,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 449,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 688,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "f0480723ba66ea0a4f7fc53978267a2d1f5e603980b8f080d54312e3b303cfc2",
+        "exact": true,
+        "first": null,
+        "frames": 1247,
+        "frames_together": 1247,
+        "id": "dk.m50-hammer2.011",
+        "model_curve": "4a1ad4a16d11bad8ce4c69d9228468768ce0e66a48910e9bb04da6d0f57641c0",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "2c8108a2dde47242629b31b29e6dea2a5fe38f1d818058ffe4e62e5b42b81403",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1246,
+            "total": 1246
+          },
+          "sprites": {
+            "same": 1246,
+            "total": 1246
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1247,
+          "longest": 0,
+          "longest_any": 1247,
+          "median": 0,
+          "open_end": 1247,
+          "p10": 0,
+          "play": 1247,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1247,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "5204b524280dad6bf28f631191007eb12674048c1f5c8c929cc15761ed651c4b",
+        "exact": true,
+        "first": null,
+        "frames": 1330,
+        "frames_together": 1330,
+        "id": "dk.m50-mladder.001",
+        "model_curve": "c76f1e8953bade91613349d75dd899ad494626f1d44cd2698b7fe2f1e440a3b7",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "38a331f7f60f8ecde3d2d5a705ae3e71a972e358df7ec00b24c207c6b9d044c5",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1329,
+            "total": 1329
+          },
+          "sprites": {
+            "same": 1329,
+            "total": 1329
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1330,
+          "longest": 0,
+          "longest_any": 1146,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 1146,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1330,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "ccef6945e5892bb087d94f6752da096ca9d37754e46680538c37a22ad44e7d26",
+        "exact": true,
+        "first": null,
+        "frames": 1390,
+        "frames_together": 1390,
+        "id": "dk.m50-mladder.007",
+        "model_curve": "0e6ecac14eb8b8c06148dea1b97e2c7f1688aa2d87668525c8f94e6bb2517771",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "b61bb851f33f8067259ff597d59ff84ac33ce64845ff6c82ed4f04e5600fd17f",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1389,
+            "total": 1389
+          },
+          "sprites": {
+            "same": 1389,
+            "total": 1389
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1390,
+          "longest": 0,
+          "longest_any": 1128,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 1128,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1390,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "9a9b42d150245de4c0829aa3bb27bbf569231bba8acc49105220a07d444bb9c9",
+        "exact": true,
+        "first": null,
+        "frames": 237,
+        "frames_together": 237,
+        "id": "dk.m50-ladders.001",
+        "model_curve": "4c89700789c475480433b42d98b29a3b956b5cfa8d3bca16f6e1eb9c9e4314a3",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "be0eb661b4d8bf815180c0bf5c08e23059367e793275b9c6ab99fb8910554afa",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 236,
+            "total": 236
+          },
+          "sprites": {
+            "same": 236,
+            "total": 236
+          }
+        },
+        "start": 3052
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "1b8cda39043486afcf2b1de5393b4d1309986b1f5ffddcafb91d3549c4614cef",
+        "exact": true,
+        "first": null,
+        "frames": 459,
+        "frames_together": 459,
+        "id": "dk.m50-ladders.005",
+        "model_curve": "33b70fd2b22149bb4fa05adac47f4ddb43a384032c02e2de2db5367cc4f7f24d",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "63574b0cd861f26060b8a7d2c85236394a9fb558e3842c1573ae55dd03382360",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 458,
+            "total": 458
+          },
+          "sprites": {
+            "same": 458,
+            "total": 458
+          }
+        },
+        "start": 3052
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "a9f755d94466e0494611b5dfe6465e534e13c79dd9ea1588a19f13583407b907",
+        "exact": true,
+        "first": null,
+        "frames": 181,
+        "frames_together": 181,
+        "id": "dk.m75-harvest.002",
+        "model_curve": "6dc469eaa46e8795e1004e05447dce958060fb0feef80c31d2e64d59d19c1792",
+        "moved": [
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4460,
+          "offset": 3,
+          "original": 4463
+        },
+        "permille": 1000,
+        "recipe": "6774470f2230ba7cf5fb98a00823d5d70fdae17a9fe81d4785ec5a6e167fecc0",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 180,
+            "total": 180
+          },
+          "sprites": {
+            "same": 180,
+            "total": 180
+          }
+        },
+        "start": 4463
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "9adf8196a8f31eac466cf0a2c453a63421d69cd8809172819709fc2c536f6956",
+        "exact": true,
+        "first": null,
+        "frames": 181,
+        "frames_together": 181,
+        "id": "dk.m75-harvest.003",
+        "model_curve": "65238f56d2b3b789d74a5528904e06047432389dce92ea202343d015370d95e9",
+        "moved": [
+          "core.counters",
+          "platformer.run"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4340,
+          "offset": 3,
+          "original": 4343
+        },
+        "permille": 1000,
+        "recipe": "42082054470a1510817821d1cb4de437904c27e05f78134ec3b4d83260da04f6",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 180,
+            "total": 180
+          },
+          "sprites": {
+            "same": 180,
+            "total": 180
+          }
+        },
+        "start": 4343
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "4843a8fb64df77c88856bbb1e0b492cf055a87be7dd5abc0036f4346a389830a",
+        "exact": true,
+        "first": null,
+        "frames": 231,
+        "frames_together": 231,
+        "id": "dk.m75.002",
+        "model_curve": "97d3caaa2921ab7b00dbdd04306a3f3d8d6d698c8ebe847349d01f2c77173049",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4267,
+          "offset": 3,
+          "original": 4270
+        },
+        "permille": 1000,
+        "recipe": "ae87265359df4870d824837a96ee939a8d7e13a9181e6045830acffff4f3d426",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 230,
+            "total": 230
+          },
+          "sprites": {
+            "same": 230,
+            "total": 230
+          }
+        },
+        "start": 4270
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "a4a5e8d4721511dd42083413594e238f9cf504083db195705ceba2e76f839a28",
+        "exact": true,
+        "first": null,
+        "frames": 181,
+        "frames_together": 181,
+        "id": "dk.m75.016",
+        "model_curve": "15dd14e688ed3d7c0d8dfebc7c47d8fc714bcba82df56af3511f00537c150ac2",
+        "moved": [
+          "platformer.run",
+          "core.counters",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4148,
+          "offset": 3,
+          "original": 4151
+        },
+        "permille": 1000,
+        "recipe": "075aa721aa0345adc6e63d0eacdc22e904df5a04832d4b9d6330198bffcbba4a",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 180,
+            "total": 180
+          },
+          "sprites": {
+            "same": 180,
+            "total": 180
+          }
+        },
+        "start": 4151
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "d03f6caded04b158974f202c5dbe965f13c5203fe89300965b83e2a26689e0e0",
+        "exact": true,
+        "first": null,
+        "frames": 763,
+        "frames_together": 763,
+        "id": "dk.m75.023",
+        "model_curve": "4cb280d012e5acef3dcab0fcd2329f201dae6fe54874302239f6ac590412d7f5",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4148,
+          "offset": 3,
+          "original": 4151
+        },
+        "permille": 1000,
+        "recipe": "79904dab1b16cb1e7599eb4ecca245e8b0455c5d3953798b2db78caf694badc6",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 762,
+            "total": 762
+          },
+          "sprites": {
+            "same": 762,
+            "total": 762
+          }
+        },
+        "start": 4151,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 763,
+          "longest": 0,
+          "longest_any": 483,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 483,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 763,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "73858073bbc9b31a58882c76ff430e7dd823e194f6c3f08601bfd9f95da97213",
+        "exact": true,
+        "first": null,
+        "frames": 521,
+        "frames_together": 521,
+        "id": "dk.m75.036",
+        "model_curve": "fba1b6fc5d0fa1e26b357ea8a47c5f10332a88fb358be8524b4091bc1c198c6d",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4148,
+          "offset": 3,
+          "original": 4151
+        },
+        "permille": 1000,
+        "recipe": "7f29180c6e4eecf5e88b6e52142a4a0fe3325be6bc2f0e49222eba3011110154",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 520,
+            "total": 520
+          },
+          "sprites": {
+            "same": 520,
+            "total": 520
+          }
+        },
+        "start": 4151
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "0a9d0b49b774f2198a40db4c968081915f78f733f0a7fe86ac19b9243274ce1a",
+        "exact": true,
+        "first": null,
+        "frames": 260,
+        "frames_together": 260,
+        "id": "dk.m75.037",
+        "model_curve": "624f4579b5c365b48fb97774300054192b8cfa1f8024a3ad29aaa6a94c9d7fbf",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4267,
+          "offset": 3,
+          "original": 4270
+        },
+        "permille": 1000,
+        "recipe": "166d6b086f09779d46299a78638c1ab03801ba378c995df511c8b46b343b2df4",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 259,
+            "total": 259
+          },
+          "sprites": {
+            "same": 258,
+            "total": 259
+          }
+        },
+        "start": 4270
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "c6629418d625dc76defb06b981fb1bae27d3cdb52168aaea85ba3a907f4e28c3",
+        "exact": true,
+        "first": null,
+        "frames": 267,
+        "frames_together": 267,
+        "id": "dk.m75.046",
+        "model_curve": "19fbdb1bf12418f7dee5101c1dd8c6b37ea7ab764c83480aeaf19e7967a76781",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4727,
+          "offset": 3,
+          "original": 4730
+        },
+        "permille": 1000,
+        "recipe": "a05dd9fd53edbf806e6d3980f9e494ad57ca5650520c0ddfb11471ed1f8d1a3d",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 266,
+            "total": 266
+          },
+          "sprites": {
+            "same": 266,
+            "total": 266
+          }
+        },
+        "start": 4730
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "38c75355fe8796c8a6399f4eaf71bef60b03adda53e41ce326aff6699d3b2a29",
+        "exact": true,
+        "first": null,
+        "frames": 213,
+        "frames_together": 213,
+        "id": "dk.m75.047",
+        "model_curve": "a1122226675d2d668000a9e475e748ba9934ff541b5f9cb975e23d76badabfd8",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4148,
+          "offset": 3,
+          "original": 4151
+        },
+        "permille": 1000,
+        "recipe": "b0336bc6314ca0a2c5e5d51f899c85296bf97ac57c91fba63a5b701b04991722",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 212,
+            "total": 212
+          },
+          "sprites": {
+            "same": 212,
+            "total": 212
+          }
+        },
+        "start": 4151
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "611abda97821ebd3a08a9dd55dfc69297ae4c0adb7e4d797f1318d23e93e596e",
+        "exact": true,
+        "first": null,
+        "frames": 182,
+        "frames_together": 182,
+        "id": "dk.m75.053",
+        "model_curve": "02e3ec5d8b20ba52ad69cc4cf89f557609768ecee258d6080c595389b710c55b",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4148,
+          "offset": 3,
+          "original": 4151
+        },
+        "permille": 1000,
+        "recipe": "0d6b2c5eee2c3a8fd9b8866d548c999adf021ac6b5c2044b2202646a9b824888",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 181,
+            "total": 181
+          },
+          "sprites": {
+            "same": 181,
+            "total": 181
+          }
+        },
+        "start": 4151
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "8aa640a32bab02506f6b40b0d57e70043b3e8ac18d07a8b2bae367dc41e2fbfa",
+        "exact": true,
+        "first": null,
+        "frames": 208,
+        "frames_together": 208,
+        "id": "dk.m75.060",
+        "model_curve": "8f424d16b9475c287e145185d2ccfe7e9b238fe5fd9ce93f50ecb0710a1b7f6a",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4267,
+          "offset": 3,
+          "original": 4270
+        },
+        "permille": 1000,
+        "recipe": "294ff57c0ba022afb007131a76d6c70fad95a7379de96642c623b6c4b3261dc6",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 207,
+            "total": 207
+          },
+          "sprites": {
+            "same": 207,
+            "total": 207
+          }
+        },
+        "start": 4270
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "2e021c4822f6a7893549e2c8c0435e7f97b757c99496f4ebd2d2252972730c02",
+        "exact": true,
+        "first": null,
+        "frames": 1601,
+        "frames_together": 1601,
+        "id": "dk.m75-clear.001",
+        "model_curve": "a71a44116594baeb2f487ffa475384254a4151c16bc52e0e510aa88905535272",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4148,
+          "offset": 3,
+          "original": 4151
+        },
+        "permille": 1000,
+        "recipe": "d7a6fdffd26fbbfee3bd1799c6e2d5c39718d10a9f9c869a17d88b4c7d4c8a00",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1600,
+            "total": 1600
+          },
+          "sprites": {
+            "same": 1600,
+            "total": 1600
+          }
+        },
+        "start": 4151,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1601,
+          "longest": 0,
+          "longest_any": 1144,
+          "median": 0,
+          "open_end": 61,
+          "p10": 0,
+          "play": 1205,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1601,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "aaa7f998788c4bcf06139568126f24ab84b41c032649844559812e1278e8aa15",
+        "exact": true,
+        "first": null,
+        "frames": 1251,
+        "frames_together": 1251,
+        "id": "dk.m75-prize.002",
+        "model_curve": "b69b252645c000afd99c43107f935021a378db37dd75f770cf12699698fb1bb2",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4148,
+          "offset": 3,
+          "original": 4151
+        },
+        "permille": 1000,
+        "recipe": "51c9ef9963f023b7d33491f1b904cf040b82b058856eb7f34b1afa486454fe40",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1250,
+            "total": 1250
+          },
+          "sprites": {
+            "same": 1250,
+            "total": 1250
+          }
+        },
+        "start": 4151,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1251,
+          "longest": 0,
+          "longest_any": 1251,
+          "median": 0,
+          "open_end": 1251,
+          "p10": 0,
+          "play": 1251,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1251,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "ea48bccf6673cf06c1a4c672c0234bd1c5d868204a09a1e3d3c39fe9124fedc5",
+        "exact": true,
+        "first": null,
+        "frames": 1021,
+        "frames_together": 1021,
+        "id": "dk.m75-fire.001",
+        "model_curve": "81c83d0abebc5e0ed8735084848ac88c9c324159c21d0fa54f57f11c01546177",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4148,
+          "offset": 3,
+          "original": 4151
+        },
+        "permille": 1000,
+        "recipe": "191fb4ed9d5d14f14700909e619c78fc569cd88ed37d1305e32fbc1d66d5a9ef",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1020,
+            "total": 1020
+          },
+          "sprites": {
+            "same": 1020,
+            "total": 1020
+          }
+        },
+        "start": 4151,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1021,
+          "longest": 0,
+          "longest_any": 531,
+          "median": 0,
+          "open_end": 31,
+          "p10": 0,
+          "play": 562,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1021,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "653e18625826f069209565baaafcae88a84354b755af0865fca06dc6232041fa",
+        "exact": true,
+        "first": null,
+        "frames": 1301,
+        "frames_together": 1301,
+        "id": "dk.m75-fall.002",
+        "model_curve": "e7e14f737f28a13c85e6a781e2e55f8d1da4c3eb3ea487680f5f667fbb306359",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4148,
+          "offset": 3,
+          "original": 4151
+        },
+        "permille": 1000,
+        "recipe": "f92863d2c4dbd636d324805a20fcfa41302538fd4e6086d7586b3aa291f3cf63",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1300,
+            "total": 1300
+          },
+          "sprites": {
+            "same": 1300,
+            "total": 1300
+          }
+        },
+        "start": 4151,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1301,
+          "longest": 0,
+          "longest_any": 824,
+          "median": 0,
+          "open_end": 25,
+          "p10": 0,
+          "play": 849,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1301,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "5b1cbb3cd8b20224303395103959a456bf1997a0134bfd09de466537d6b55c2e",
+        "exact": true,
+        "first": null,
+        "frames": 1461,
+        "frames_together": 1461,
+        "id": "dk.m75-spring.001",
+        "model_curve": "49af6ab65c6ade06ead7e63030cb6d5cf7ac182598dd1bae8c40e0a8c29ba356",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4148,
+          "offset": 3,
+          "original": 4151
+        },
+        "permille": 1000,
+        "recipe": "0fa86211c085a88fb68806d3472b351f73e59c54f4133ec8ef7be85fc8a5e5a1",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1460,
+            "total": 1460
+          },
+          "sprites": {
+            "same": 1460,
+            "total": 1460
+          }
+        },
+        "start": 4151,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1461,
+          "longest": 0,
+          "longest_any": 1047,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 1047,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1461,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": false,
+          "together": true
+        },
+        "curve": "ce18115525d3c7b3a7349ead236540411fd8e6abc90f107142f213b4763047b4",
+        "exact": true,
+        "first": null,
+        "frames": 3001,
+        "frames_together": 3001,
+        "id": "dk.m75-game-over.001",
+        "model_curve": "39117d31d3402eecbce96c2f6c89460fb4285e8b6398e88e1d875056c658c5ff",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4148,
+          "offset": 3,
+          "original": 4151
+        },
+        "permille": 1000,
+        "recipe": "3046dc3a6ffe7aac5536d6b6fcc53be410aa8d62cd61e9b3c74b6bd5a5e0bcc6",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 3000,
+            "total": 3000
+          },
+          "sprites": {
+            "same": 3000,
+            "total": 3000
+          }
+        },
+        "start": 4151,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 3001,
+          "longest": 0,
+          "longest_any": 385,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 1144,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 3001,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "042966441805aed99fa921049dee04958c4323fc094c686ccbb1baea12a44158",
+        "exact": true,
+        "first": null,
+        "frames": 6701,
+        "frames_together": 6701,
+        "id": "dk.m75-bonus-out.001",
+        "model_curve": "855b4a1f8d0e41d05e0c55e1b8f5b12a706ee1b2843208dd32dc4ebfa313da98",
+        "moved": [
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.run",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 4148,
+          "offset": 3,
+          "original": 4151
+        },
+        "permille": 1000,
+        "recipe": "4932ffb61afe17850f39d5760ab08c2fbab3369ecf693aa4c37cdd236db9779c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 6700,
+            "total": 6700
+          },
+          "sprites": {
+            "same": 6700,
+            "total": 6700
+          }
+        },
+        "start": 4151,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 6701,
+          "longest": 0,
+          "longest_any": 6051,
+          "median": 0,
+          "open_end": 189,
+          "p10": 0,
+          "play": 6240,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 6701,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "5f36710cb321992a8064e3e517d72f8c6765582f4f7cb834640fcf98a24b087f",
+        "exact": true,
+        "first": null,
+        "frames": 1856,
+        "frames_together": 1856,
+        "id": "dk.m100.001",
+        "model_curve": "ec8d25eccb51ef37493c8bb49158f9c58a977dda05ecf3711b21f6b3cd5c6833",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 5612,
+          "offset": 3,
+          "original": 5615
+        },
+        "permille": 1000,
+        "recipe": "94f4379bca6be5ab79d6ca6de64b731f75af9cd6470a8507f9ff5dd6d8772e0c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1855,
+            "total": 1855
+          },
+          "sprites": {
+            "same": 1855,
+            "total": 1855
+          }
+        },
+        "start": 5615,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1856,
+          "longest": 0,
+          "longest_any": 1825,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 1825,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1856,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "ba15ffdd8e6532157ff65663b23e76c76ba94903b6d4aba2ad820c61d3a75d3e",
+        "exact": true,
+        "first": null,
+        "frames": 1051,
+        "frames_together": 1051,
+        "id": "dk.m100-clear.001",
+        "model_curve": "37b00b92b2e88a78dcc611809b61f3a38da3e8d04af4ddb9327a12c29e041ee0",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 7377,
+          "offset": 3,
+          "original": 7380
+        },
+        "permille": 1000,
+        "recipe": "baceb22de999150ac6e44fc3d9a8b2f66d691835fa893ec3e489a1433e51d954",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1050,
+            "total": 1050
+          },
+          "sprites": {
+            "same": 1050,
+            "total": 1050
+          }
+        },
+        "start": 7380,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1051,
+          "longest": 0,
+          "longest_any": 65,
+          "median": 0,
+          "open_end": 65,
+          "p10": 0,
+          "play": 125,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1051,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "ec6f5ba5593e10a10ae99034333957670e410d22a3e2b0799355e0c60412bdd4",
+        "exact": true,
+        "first": null,
+        "frames": 721,
+        "frames_together": 721,
+        "id": "dk.m100-kong.001",
+        "model_curve": "ad313fe762dc1223909427e68c650d128dc97b0cb6d7a577f05323fbdd3bed76",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 6987,
+          "offset": 3,
+          "original": 6990
+        },
+        "permille": 1000,
+        "recipe": "17bfea657979de13fb720add7a0a53e36446acb15f45e5a6c644a3830213b331",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 720,
+            "total": 720
+          },
+          "sprites": {
+            "same": 720,
+            "total": 720
+          }
+        },
+        "start": 6990,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 721,
+          "longest": 0,
+          "longest_any": 161,
+          "median": 0,
+          "open_end": 161,
+          "p10": 0,
+          "play": 263,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 721,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "6feeb2fe2e6887659d3c66673dfc27f47eecf828e6969fef91adddf115a8a834",
+        "exact": true,
+        "first": null,
+        "frames": 901,
+        "frames_together": 901,
+        "id": "dk.m100-fires.001",
+        "model_curve": "475ff0f40256fb398151eaedc389c7911d6b132be714df9ba2198c1b9caa7271",
+        "moved": [
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 5612,
+          "offset": 3,
+          "original": 5615
+        },
+        "permille": 1000,
+        "recipe": "745c02d0b4e50d0510d24dd6d35f404b21ec0c94382f1c45d9f48991013c93a7",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 900,
+            "total": 900
+          },
+          "sprites": {
+            "same": 900,
+            "total": 900
+          }
+        },
+        "start": 5615,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 901,
+          "longest": 0,
+          "longest_any": 901,
+          "median": 0,
+          "open_end": 901,
+          "p10": 0,
+          "play": 901,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 901,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "814faedd58326d134466dbed6bf94217603ad4f32939502134517f6d02fa4dfe",
+        "exact": true,
+        "first": null,
+        "frames": 521,
+        "frames_together": 521,
+        "id": "dk.m100-hammer.001",
+        "model_curve": "e9abc5f2e7bdafabfbcbbd33c9cc483a8440e4db7659f80f6b4afda796513a8d",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 6202,
+          "offset": 3,
+          "original": 6205
+        },
+        "permille": 1000,
+        "recipe": "489817c3e8e8cf86750f7d8443f5a54c2ac76fdf0453a050612566b3205c59ae",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 520,
+            "total": 520
+          },
+          "sprites": {
+            "same": 520,
+            "total": 520
+          }
+        },
+        "start": 6205
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "1e28b4e351bb6025672000af16a7830282360280abdb12807e572ce2adf2c38b",
+        "exact": true,
+        "first": null,
+        "frames": 421,
+        "frames_together": 421,
+        "id": "dk.m100-hammer.002",
+        "model_curve": "30527f10fa0df4f11efbc2b3c59d371b1371042eda8ad7eaa6c1fb09271891fd",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 6619,
+          "offset": 3,
+          "original": 6622
+        },
+        "permille": 1000,
+        "recipe": "5bb117315a3348dd5826be92be353be3a66ca7b7490b5974d0b691f4a8d407c8",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 420,
+            "total": 420
+          },
+          "sprites": {
+            "same": 420,
+            "total": 420
+          }
+        },
+        "start": 6622
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "509a7b2a3283e4cebf5423b64ffb046121a7238329ae8d17ed69447feaf6ae2f",
+        "exact": true,
+        "first": null,
+        "frames": 421,
+        "frames_together": 421,
+        "id": "dk.m100-gap.001",
+        "model_curve": "0117b9d0e120e73b24d23eb1a3a999a38f0dc2c2c2e4f5fb37a49c8ceb21ab0c",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 5882,
+          "offset": 3,
+          "original": 5885
+        },
+        "permille": 1000,
+        "recipe": "1240656467ede414ac650ab6bd6d58b985a443359b7f9dfb14dd89637ea83e24",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 420,
+            "total": 420
+          },
+          "sprites": {
+            "same": 420,
+            "total": 420
+          }
+        },
+        "start": 5885
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "81aea5e1a6ac78394f777a096517ac398b8ee3c7d26198f3a84a1f2fd9cb78aa",
+        "exact": true,
+        "first": null,
+        "frames": 121,
+        "frames_together": 121,
+        "id": "dk.m100-gap.002",
+        "model_curve": "6da5e8d4c95cbe36c955a622ad1a7d294c2937f11ac75f869f2fc9bd53b2fd60",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 5882,
+          "offset": 3,
+          "original": 5885
+        },
+        "permille": 1000,
+        "recipe": "e1cf7868f945b754e07c90e900d4f2cddfe935890622737b620b7af84e8052ed",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 120,
+            "total": 120
+          },
+          "sprites": {
+            "same": 120,
+            "total": 120
+          }
+        },
+        "start": 5885
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "6a96a8ed25dbf745efbd84a44da6d14b7391a4e69e06aa8a6cd1d3a5263ec166",
+        "exact": true,
+        "first": null,
+        "frames": 701,
+        "frames_together": 701,
+        "id": "dk.m100-game-over.001",
+        "model_curve": "2bacfb79a2b5c08d123f90b32496ff2edd9a188c5ea28f910cb41216f92d6389",
+        "moved": [
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.run",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 11097,
+          "offset": 3,
+          "original": 11100
+        },
+        "permille": 1000,
+        "recipe": "01cb161766236618dfe12653111dfbc9e802d77f31c2b7cce6238a06e1ff3162",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 700,
+            "total": 700
+          },
+          "sprites": {
+            "same": 700,
+            "total": 700
+          }
+        },
+        "start": 11100,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 701,
+          "longest": 0,
+          "longest_any": 87,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 87,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 701,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "94c350b1c961e49955e34ca5092c0132654574a5b228b27efef798a3d7f264df",
+        "exact": true,
+        "first": null,
+        "frames": 1651,
+        "frames_together": 1651,
+        "id": "dk.gameb-d1.001",
+        "model_curve": "5794309f830e633c700d6397034e33fcc8de5c6da0405c7eb057833f77014202",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": {
+          "frame": 1652,
+          "frames": 165,
+          "original_frame": 2262
+        },
+        "pairing": {
+          "lag": [
+            1510
+          ],
+          "last_offset": 4,
+          "model": 607,
+          "offset": 3,
+          "original": 610
+        },
+        "permille": 1000,
+        "recipe": "689d4af35e9e91fcca23387b9267c757b7b2bc7377c27e8766c43a4e0e347876",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1650,
+            "total": 1650
+          },
+          "sprites": {
+            "same": 1650,
+            "total": 1650
+          }
+        },
+        "start": 610,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1651,
+          "longest": 0,
+          "longest_any": 1412,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 1412,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1651,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "ca8aa8a6e153b351ba8d9ee159b4c1bfc9add0afa066d0208fd98a2897d5f3cf",
+        "exact": true,
+        "first": null,
+        "frames": 991,
+        "frames_together": 991,
+        "id": "dk.gameb-d1.002",
+        "model_curve": "7159f683f4750a217fd7e015dd589e26bbe53584e40ba910a54ff09b27508a68",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": {
+          "frame": 991,
+          "frames": 165,
+          "original_frame": 3417
+        },
+        "pairing": {
+          "lag": [],
+          "last_offset": 4,
+          "model": 2422,
+          "offset": 4,
+          "original": 2426
+        },
+        "permille": 1000,
+        "recipe": "3401cb9c141a4acab4a716126caf6b49b6c607ec40a60e2388fde7553f4e5f6a",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 990,
+            "total": 990
+          },
+          "sprites": {
+            "same": 976,
+            "total": 990
+          }
+        },
+        "start": 2426,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 991,
+          "longest": 0,
+          "longest_any": 756,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 756,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 991,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "ba9ebcfb85810974148173b0d97cb83292d2d476a812e21077d8d76be448d06d",
+        "exact": true,
+        "first": null,
+        "frames": 561,
+        "frames_together": 561,
+        "id": "dk.m100-fall.002",
+        "model_curve": "1db4d52f152b6208c158292abbac97970ebcba1ccdac0e8c800ca7465717ffd4",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 6202,
+          "offset": 3,
+          "original": 6205
+        },
+        "permille": 1000,
+        "recipe": "1bf9bd274993dccbc1cb5a29782645302da075e90118f5417cd9039cd8a03a96",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 560,
+            "total": 560
+          },
+          "sprites": {
+            "same": 560,
+            "total": 560
+          }
+        },
+        "start": 6205
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "ff675914273fd749ca8de1bc82f9f0aadad7ab50624bf798e1ab930a63cffbec",
+        "exact": true,
+        "first": null,
+        "frames": 561,
+        "frames_together": 561,
+        "id": "dk.m100-hammer.003",
+        "model_curve": "167b01ecbbfa3dc264de37baa6314287ae5a33baf3a2d30f8fcc7c777adfa94b",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 6202,
+          "offset": 3,
+          "original": 6205
+        },
+        "permille": 1000,
+        "recipe": "786e443e884319bd9e0ea4463644c15ffa765f5f792ec6ee499c884ccdaf7849",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 560,
+            "total": 560
+          },
+          "sprites": {
+            "same": 560,
+            "total": 560
+          }
+        },
+        "start": 6205
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "de8c01bfcef6a66e98f18b8fff6be25c53531062a9db45cc7140a39a9e611b61",
+        "exact": true,
+        "first": null,
+        "frames": 561,
+        "frames_together": 561,
+        "id": "dk.m100-fall.003",
+        "model_curve": "e08532a19b78e3e5d6d248f4da038c97f9a822e2a10569fdead9a6882f33d066",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 6035,
+          "offset": 3,
+          "original": 6038
+        },
+        "permille": 1000,
+        "recipe": "9c28c459f8e4bb88538acdf65aa6f8cbeb2cf9bcf07c68ec13adc64ffac60fab",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 560,
+            "total": 560
+          },
+          "sprites": {
+            "same": 560,
+            "total": 560
+          }
+        },
+        "start": 6038
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "ada48eb33101298e50d90d134c46852a6c094dd3fb4e3e659b303fd629950e2f",
+        "exact": true,
+        "first": null,
+        "frames": 5270,
+        "frames_together": 5270,
+        "id": "dk.m50-clear-late.001",
+        "model_curve": "e8bbe3c848e1dc736e6790c574eae965e2770de8b570fb1a41a10dade35be744",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": {
+          "frame": 5270,
+          "frames": 466,
+          "original_frame": 8322
+        },
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "7c85b879891a9117304c7421271e4ad33ad4932ca0d1b95a781a62a3a79d71ae",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 5269,
+            "total": 5269
+          },
+          "sprites": {
+            "same": 5269,
+            "total": 5269
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 5270,
+          "longest": 0,
+          "longest_any": 5036,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 5036,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 5270,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "c096b5c99fc8970c8e0f06e8618518a0f6783bad324478d6674f4430f2880778",
+        "exact": true,
+        "first": null,
+        "frames": 6551,
+        "frames_together": 6551,
+        "id": "dk.m50-bonus-out.001",
+        "model_curve": "3a2ba99e00f80680656b7624f17e6fb12d58a1e9ef3e710330746f5430e8b4a0",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "23baa926cb571f6b12d53289910d4d812cf4d7045120be5b6d5adf716aa0e3b2",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 6550,
+            "total": 6550
+          },
+          "sprites": {
+            "same": 6550,
+            "total": 6550
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 6551,
+          "longest": 0,
+          "longest_any": 6050,
+          "median": 0,
+          "open_end": 40,
+          "p10": 0,
+          "play": 6090,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 6551,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "e501e18d4bf5b51783829d3b19258e9fd65bc75592db38ba587bc55e39568e34",
+        "exact": true,
+        "first": null,
+        "frames": 8301,
+        "frames_together": 8301,
+        "id": "dk.m100-bonus-out.001",
+        "model_curve": "a587717e6ae5179bf60197723ea017c6b8ffedbc2f620105d4e2941dede9b453",
+        "moved": [
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.run",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 5748,
+          "offset": 3,
+          "original": 5751
+        },
+        "permille": 1000,
+        "recipe": "2ca7cf9a30693e035edb4bccdb6a2391c8d9b270e370b46a17e9a29c982ed0e8",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 8300,
+            "total": 8300
+          },
+          "sprites": {
+            "same": 7551,
+            "total": 8300
+          }
+        },
+        "start": 5751,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 8301,
+          "longest": 0,
+          "longest_any": 6051,
+          "median": 0,
+          "open_end": 199,
+          "p10": 0,
+          "play": 7381,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 8301,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "7a958ef96f4276585cbdb9e1826059b36d3b42098a1da3274d4e8c700cc3883b",
+        "exact": true,
+        "first": null,
+        "frames": 233,
+        "frames_together": 233,
+        "id": "dk.untaken-jump-fall.001",
+        "model_curve": "a7ea4a1cf2e5b113511f00ee6aa5585a5630057cddb26fda7a3d474bf6fcb826",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1529,
+          "offset": 3,
+          "original": 1532
+        },
+        "permille": 1000,
+        "recipe": "e927795ce00e3b031f9b2830ee0967c81182177a90b659cb59c62bdfff23fe43",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 232,
+            "total": 232
+          },
+          "sprites": {
+            "same": 221,
+            "total": 232
+          }
+        },
+        "start": 1532
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "3b7bcc62e6052a63818beed75ec050c05614f3b165c70bac118f6491719f317e",
+        "exact": true,
+        "first": null,
+        "frames": 331,
+        "frames_together": 331,
+        "id": "dk.untaken-jump-x141.001",
+        "model_curve": "2c05b50bc539e0121a3272267d5a863eb5d38a5a421cbef0259ab9b155267f87",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 5773,
+          "offset": 3,
+          "original": 5776
+        },
+        "permille": 1000,
+        "recipe": "5afced2f12b11834ff3b7b25c3eba18e5c09e8765037b0f02ee36e4af25be7a5",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 330,
+            "total": 330
+          },
+          "sprites": {
+            "same": 330,
+            "total": 330
+          }
+        },
+        "start": 5776
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "2d7a695336ef89633acac4999a280bce30b85c90d3e10bfd876114aef71ea6be",
+        "exact": true,
+        "first": null,
+        "frames": 1261,
+        "frames_together": 1261,
+        "id": "dk.untaken-hammer-used.001",
+        "model_curve": "e4ff4eb41fc613b65ee063fa8e30836013453bbf73e0ac8e335109e2129ba642",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 6202,
+          "offset": 3,
+          "original": 6205
+        },
+        "permille": 1000,
+        "recipe": "cd1bde26f273d8709d84f452770f7e2c4cd43d97ac59c5b9f9f57bfa1fb59a20",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1260,
+            "total": 1260
+          },
+          "sprites": {
+            "same": 1260,
+            "total": 1260
+          }
+        },
+        "start": 6205,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1261,
+          "longest": 0,
+          "longest_any": 1261,
+          "median": 0,
+          "open_end": 1261,
+          "p10": 0,
+          "play": 1261,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1261,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "1ac181e97616da13417ecd4cc62d2033288242fd4f7dae68969f2720c78fb7a5",
+        "exact": true,
+        "first": null,
+        "frames": 1151,
+        "frames_together": 1151,
+        "id": "dk.untaken-hammer-used.002",
+        "model_curve": "cc5ccb609ea223d8f1775cbdffaa914f3178bd2074271f133264bcbdfaa97e1c",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 6619,
+          "offset": 3,
+          "original": 6622
+        },
+        "permille": 1000,
+        "recipe": "a1ca30c79b8a5808b93aa6a314f43d00a3170b23f16c9048108c74e4c7fa826c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1150,
+            "total": 1150
+          },
+          "sprites": {
+            "same": 1150,
+            "total": 1150
+          }
+        },
+        "start": 6622,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1151,
+          "longest": 0,
+          "longest_any": 1151,
+          "median": 0,
+          "open_end": 1151,
+          "p10": 0,
+          "play": 1151,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1151,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "e2174c38d1f037639667eea34b7f90a407ed603b2eb0b6f427f1056b3c2f9876",
+        "exact": true,
+        "first": null,
+        "frames": 501,
+        "frames_together": 501,
+        "id": "dk.untaken-hammer-edge.001",
+        "model_curve": "9e7788bfa1eb13d54968bfdc0f8e2a06c9e6d4344aca1d16bcda60210eafe949",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 6202,
+          "offset": 3,
+          "original": 6205
+        },
+        "permille": 1000,
+        "recipe": "b7fa65e7002953307e9afb8d98735b68c2b47d4666e03fa56ea7651a6387578b",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 500,
+            "total": 500
+          },
+          "sprites": {
+            "same": 500,
+            "total": 500
+          }
+        },
+        "start": 6205
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "e687bbe03d687fa4d796741166b54f4c40bd7900513e050dfcf0d1949414abc2",
+        "exact": true,
+        "first": null,
+        "frames": 761,
+        "frames_together": 761,
+        "id": "dk.untaken-crowded.002",
+        "model_curve": "77a2b8a7205826d5b2a3172251848f48354c000ae079064d541356dd975c766b",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1109,
+          "offset": 3,
+          "original": 1112
+        },
+        "permille": 1000,
+        "recipe": "ee493b6117d1aac9ec24d6664a995506a8f7396e11923e51df6cb74e4729a617",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 760,
+            "total": 760
+          },
+          "sprites": {
+            "same": 760,
+            "total": 760
+          }
+        },
+        "start": 1112,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 761,
+          "longest": 0,
+          "longest_any": 761,
+          "median": 0,
+          "open_end": 761,
+          "p10": 0,
+          "play": 761,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 761,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "5be0b4b64c88a4d82058f24b983814eca270728faa3474973bf1d99041086c9b",
+        "exact": true,
+        "first": null,
+        "frames": 2541,
+        "frames_together": 2541,
+        "id": "dk.second-straight.001",
+        "model_curve": "2d02c9a38dd5f42ed387d4477100bac33d5c6d75d24f25ae804eb48fd88f0087",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1529,
+          "offset": 3,
+          "original": 1532
+        },
+        "permille": 1000,
+        "recipe": "9bf20ebf556d3e62f8fc1e15fcd46ad311075a1d9be8ffadc507d216200eadfb",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 2540,
+            "total": 2540
+          },
+          "sprites": {
+            "same": 2540,
+            "total": 2540
+          }
+        },
+        "start": 1532,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 2541,
+          "longest": 0,
+          "longest_any": 2541,
+          "median": 0,
+          "open_end": 2541,
+          "p10": 0,
+          "play": 2541,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 2541,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "c1fb8ba4401745f4de9117d6629001f92181ca32e787f19e69a48e8a00ffb8e8",
+        "exact": true,
+        "first": null,
+        "frames": 1441,
+        "frames_together": 1441,
+        "id": "dk.third-points.001",
+        "model_curve": "2e69a8574eff3567e6df9f29b5d0fefcdd28d5897e5e4700b5af3521fd0fdd3c",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 596,
+          "offset": 3,
+          "original": 599
+        },
+        "permille": 1000,
+        "recipe": "4970c064a3262a795db5d285b519277ae6a06ce8db46f15c4d90ce20d0adb570",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1440,
+            "total": 1440
+          },
+          "sprites": {
+            "same": 1440,
+            "total": 1440
+          }
+        },
+        "start": 599,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1441,
+          "longest": 0,
+          "longest_any": 1422,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 1422,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1441,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "b0bdc1af1a052e6c0fd996b66e65ca60ec80156f7c7ffd72899662e9069a3fd8",
+        "exact": true,
+        "first": null,
+        "frames": 725,
+        "frames_together": 725,
+        "id": "dk.crowded-top.001",
+        "model_curve": "69cf148c135ddba7d7e840a984ba45ff8005c9c8329c95f3f9421538178226f1",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1573,
+          "offset": 3,
+          "original": 1576
+        },
+        "permille": 1000,
+        "recipe": "0870bda3604f0125669c0efd44553687164e33e62495040ea37d444e9fc12558",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 724,
+            "total": 724
+          },
+          "sprites": {
+            "same": 724,
+            "total": 724
+          }
+        },
+        "start": 1576,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 725,
+          "longest": 0,
+          "longest_any": 725,
+          "median": 0,
+          "open_end": 725,
+          "p10": 0,
+          "play": 725,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 725,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "45ddd01718b1fa9a3a8935fc7c52dca3feec153f71f14e27292af0294bb8f845",
+        "exact": true,
+        "first": null,
+        "frames": 725,
+        "frames_together": 725,
+        "id": "dk.crowded-top.002",
+        "model_curve": "9ac73f4e93f97aa52864d1e45f84508a72ed5f45c6302882c949f0fd113f0280",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1573,
+          "offset": 3,
+          "original": 1576
+        },
+        "permille": 1000,
+        "recipe": "e08b3bceeeae98c6a5427c1739716c28f5656b7d246fc80eb35cf6cf6410a61b",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 724,
+            "total": 724
+          },
+          "sprites": {
+            "same": 724,
+            "total": 724
+          }
+        },
+        "start": 1576,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 725,
+          "longest": 0,
+          "longest_any": 725,
+          "median": 0,
+          "open_end": 725,
+          "p10": 0,
+          "play": 725,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 725,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "a45ec51084afe7df0d36b826fa2fecac4fdc19502db566f50c29976f6c816e88",
+        "exact": true,
+        "first": null,
+        "frames": 989,
+        "frames_together": 989,
+        "id": "dk.crowded-top.003",
+        "model_curve": "4c632005b149601b1ede1d5ba54b6e65d81bf780b3f3d1e2444f48dc90acb641",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1109,
+          "offset": 3,
+          "original": 1112
+        },
+        "permille": 1000,
+        "recipe": "d5d7797a6d3aa3b380825ef4ca0035b7d57d4be1b30a59bb6c3cb65b48ac613b",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 988,
+            "total": 988
+          },
+          "sprites": {
+            "same": 988,
+            "total": 988
+          }
+        },
+        "start": 1112,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 989,
+          "longest": 0,
+          "longest_any": 989,
+          "median": 0,
+          "open_end": 989,
+          "p10": 0,
+          "play": 989,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 989,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "c3ec8119270f5969f8980d9cb9eb0b10450ade75460b51e5d0732cea75fff0b7",
+        "exact": true,
+        "first": null,
+        "frames": 1039,
+        "frames_together": 1039,
+        "id": "dk.crowded-top.004",
+        "model_curve": "6570c6618b10dc423a2d9ec390622c15425dc50f72225cb1d61c9e1b541b7908",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1109,
+          "offset": 3,
+          "original": 1112
+        },
+        "permille": 1000,
+        "recipe": "df2a1766a7d3f9611982baf1f71dae9c1816081b247f3a69dd5128bed2f5ea7c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1038,
+            "total": 1038
+          },
+          "sprites": {
+            "same": 1038,
+            "total": 1038
+          }
+        },
+        "start": 1112,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1039,
+          "longest": 0,
+          "longest_any": 1039,
+          "median": 0,
+          "open_end": 1039,
+          "p10": 0,
+          "play": 1039,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1039,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "38cbdf837b9987899c1c5de650b48db21636016d69b18fa0b8698c824b5cf0f3",
+        "exact": true,
+        "first": null,
+        "frames": 1791,
+        "frames_together": 1791,
+        "id": "donkey-kong-oe.death-redraw.001",
+        "model_curve": "d96f7f4000254677c7f388cffe98e46b3783aa684d9ae0dc7bfb358190f8e72e",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 5612,
+          "offset": 3,
+          "original": 5615
+        },
+        "permille": 1000,
+        "recipe": "b2dc4f0006afc95c7b3f08bcee964ecc6b94cf274d109083eb5a53d7f7196239",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1790,
+            "total": 1790
+          },
+          "sprites": {
+            "same": 1790,
+            "total": 1790
+          }
+        },
+        "start": 5615,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1791,
+          "longest": 0,
+          "longest_any": 1033,
+          "median": 0,
+          "open_end": 296,
+          "p10": 0,
+          "play": 1329,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1791,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "0b8c9c34c612656b5f8a7467fc25dbbb66bc85d68e424696e24365dd01a4d61e",
+        "exact": true,
+        "first": null,
+        "frames": 920,
+        "frames_together": 920,
+        "id": "donkey-kong-oe.death-redraw.002",
+        "model_curve": "14245f1412734c864841bee75b75f3d712eb696affd9f490112350aced3f9752",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 1109,
+          "offset": 3,
+          "original": 1112
+        },
+        "permille": 1000,
+        "recipe": "68d03a97ed7d692345ec4279ba3e36ff4f4e3d439a24ca5ccef22f64a3e209aa",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 919,
+            "total": 919
+          },
+          "sprites": {
+            "same": 919,
+            "total": 919
+          }
+        },
+        "start": 1112,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 920,
+          "longest": 0,
+          "longest_any": 219,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 403,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 920,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "b59eb2f8c123473cfd2a90b57009a149b52fb22518cd939ce461505c3681261d",
+        "exact": true,
+        "first": null,
+        "frames": 1674,
+        "frames_together": 1674,
+        "id": "donkey-kong-oe.diff-25m-d2.001",
+        "model_curve": "7b3b1e9e83c6aca4968d5479d9fa8763708cb12cb3dca067569eb33baa2c8201",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": {
+          "frame": 1677,
+          "frames": 165,
+          "original_frame": 9500
+        },
+        "pairing": {
+          "lag": [
+            8761,
+            9010,
+            9191
+          ],
+          "last_offset": 7,
+          "model": 7819,
+          "offset": 4,
+          "original": 7823
+        },
+        "permille": 1000,
+        "recipe": "91cba5aaf2d3d438234724c03e8bf0b42c10c9354e22225fab26186676db5a6c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 46,
+            "total": 1673
+          },
+          "sprites": {
+            "same": 1673,
+            "total": 1673
+          }
+        },
+        "start": 7823,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1674,
+          "longest": 0,
+          "longest_any": 1437,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 1437,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1674,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "8beac835cf573933821c1f7b4939727642f6e8df0c2dd02596aedff1691f3968",
+        "exact": true,
+        "first": null,
+        "frames": 1252,
+        "frames_together": 1252,
+        "id": "donkey-kong-oe.diff-50m-d2.001",
+        "model_curve": "8a3ec4f6c20d71a2a0d40c3e2218ecffa204dcb80b704293a92712ded99e89e9",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 7,
+          "model": 9657,
+          "offset": 7,
+          "original": 9664
+        },
+        "permille": 1000,
+        "recipe": "34616c7ecbe8e96740ad1c94efa888fd90d6f01bfd0aaefb7e0e86de0b9cdb7b",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 10,
+            "total": 1251
+          },
+          "sprites": {
+            "same": 1250,
+            "total": 1251
+          }
+        },
+        "start": 9664,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1252,
+          "longest": 0,
+          "longest_any": 997,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 997,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1252,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "bbf0966bed1a2767a7f6d277ed923d6e2ab98ae8a3047aa421a8f48dd856b51c",
+        "exact": true,
+        "first": null,
+        "frames": 1729,
+        "frames_together": 1729,
+        "id": "donkey-kong-oe.diff-25m-d3.001",
+        "model_curve": "8c25386bf083d9f4746fbb46c43fae4414443989daef30d779738fafef9cca5e",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": {
+          "frame": 1732,
+          "frames": 165,
+          "original_frame": 16779
+        },
+        "pairing": {
+          "lag": [
+            15990,
+            16267,
+            16468
+          ],
+          "last_offset": 10,
+          "model": 15040,
+          "offset": 7,
+          "original": 15047
+        },
+        "permille": 1000,
+        "recipe": "5072ff35e72490bad764ef0eb17149ca02423ab0d5dcf6d4c1ceb887d2022124",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 46,
+            "total": 1728
+          },
+          "sprites": {
+            "same": 1728,
+            "total": 1728
+          }
+        },
+        "start": 15047,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1729,
+          "longest": 0,
+          "longest_any": 1490,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 1490,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1729,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "e36b5e240cef3d28f1c82818f46f598eb06226a69943de696f69e2c73ba8f5c0",
+        "exact": true,
+        "first": null,
+        "frames": 969,
+        "frames_together": 969,
+        "id": "donkey-kong-oe.diff-50m-d3.001",
+        "model_curve": "2b21397153fff727f622cd46135e8036b85862834e0e7d79d5c3b99854f98270",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": {
+          "frame": 969,
+          "frames": 165,
+          "original_frame": 17912
+        },
+        "pairing": {
+          "lag": [],
+          "last_offset": 10,
+          "model": 16933,
+          "offset": 10,
+          "original": 16943
+        },
+        "permille": 1000,
+        "recipe": "014d2cfb063bd3787e584dc2a1406089b5373993b149aedc23197d050bbbf3bf",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 46,
+            "total": 968
+          },
+          "sprites": {
+            "same": 944,
+            "total": 968
+          }
+        },
+        "start": 16943,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 969,
+          "longest": 0,
+          "longest_any": 726,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 726,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 969,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "c5cfe07a0f6fc08ba59626daf6891d37101eb6706b23b6e71b5150bfd45714f6",
+        "exact": true,
+        "first": null,
+        "frames": 1784,
+        "frames_together": 1784,
+        "id": "donkey-kong-oe.diff-25m-d4.001",
+        "model_curve": "26c8178e85d1fa8a13eaacd405cc8b392a668050cd1f4e033201afe69ba2b0a5",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": {
+          "frame": 1787,
+          "frames": 165,
+          "original_frame": 24201
+        },
+        "pairing": {
+          "lag": [
+            23395,
+            23687,
+            23888
+          ],
+          "last_offset": 13,
+          "model": 22404,
+          "offset": 10,
+          "original": 22414
+        },
+        "permille": 1000,
+        "recipe": "af83541bf390915e4f68beb30e1d46e6bc8ceddd9b7cb938549865e8684e797d",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 46,
+            "total": 1783
+          },
+          "sprites": {
+            "same": 1782,
+            "total": 1783
+          }
+        },
+        "start": 22414,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1784,
+          "longest": 0,
+          "longest_any": 1543,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 1543,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1784,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "0eb2fcbb769516adb9c8499ad29b165bb7ed84dad5878d10d0129bf18561c00f",
+        "exact": true,
+        "first": null,
+        "frames": 936,
+        "frames_together": 936,
+        "id": "donkey-kong-oe.diff-50m-d4.001",
+        "model_curve": "8b98d39a3a8c669aebae060ab268f7900c347e61ad26099c1d88e9cb7f3821f0",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": {
+          "frame": 936,
+          "frames": 165,
+          "original_frame": 25301
+        },
+        "pairing": {
+          "lag": [],
+          "last_offset": 13,
+          "model": 24352,
+          "offset": 13,
+          "original": 24365
+        },
+        "permille": 1000,
+        "recipe": "bf593435a76cc256becc01b5c5e88c0b83e006b7e04075c2de44cb2f6bc9a8fa",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 46,
+            "total": 935
+          },
+          "sprites": {
+            "same": 922,
+            "total": 935
+          }
+        },
+        "start": 24365,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 936,
+          "longest": 0,
+          "longest_any": 698,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 698,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 936,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "131738f856772d32f5dfa63b26e05d38774ba458dbe4169deab06a16a62ec163",
+        "exact": true,
+        "first": null,
+        "frames": 2811,
+        "frames_together": 2811,
+        "id": "donkey-kong-oe.diff-100m.001",
+        "model_curve": "d7dfa891e936b3e2db213ea773c9cf42e71ca14ea2ae4525558dd75a752fc6c2",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 4,
+          "model": 5062,
+          "offset": 4,
+          "original": 5066
+        },
+        "permille": 1000,
+        "recipe": "4c5a3f649fb7fee15aad595ca01333f50a38a919bd556fa732b3396ba9305fe6",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 2810,
+            "total": 2810
+          },
+          "sprites": {
+            "same": 2810,
+            "total": 2810
+          }
+        },
+        "start": 5066,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 2811,
+          "longest": 0,
+          "longest_any": 1861,
+          "median": 0,
+          "open_end": 13,
+          "p10": 0,
+          "play": 1874,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 2811,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "4e41eca04bcd96af7920a85f951d3acd657538d97a7ee438785e487948b8bd82",
+        "exact": true,
+        "first": null,
+        "frames": 2884,
+        "frames_together": 2884,
+        "id": "donkey-kong-oe.diff-100m.002",
+        "model_curve": "b17f5ad366686261c4645ea9800e1324a94b45d1aef933c4c7367e5504c0a929",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 7,
+          "model": 12107,
+          "offset": 7,
+          "original": 12114
+        },
+        "permille": 1000,
+        "recipe": "36e53c3a7d2f8aba2dbc44ba62ec12cb397b10b8370131d80d4d11b8e79e3f8f",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 988,
+            "total": 2883
+          },
+          "sprites": {
+            "same": 2563,
+            "total": 2883
+          }
+        },
+        "start": 12114,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 2884,
+          "longest": 0,
+          "longest_any": 1883,
+          "median": 0,
+          "open_end": 64,
+          "p10": 0,
+          "play": 1947,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 2884,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "0aa16f2b572e96d24c751e561f9330c3ef43a02e811810e729e841197e052fbb",
+        "exact": true,
+        "first": null,
+        "frames": 3752,
+        "frames_together": 3752,
+        "id": "donkey-kong-oe.diff-100m.003",
+        "model_curve": "90c4173c8ed2b55640b5fbf936a2a867e706f79da0e0533f6aedd9c90e81c2f1",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 8,
+          "model": 19262,
+          "offset": 8,
+          "original": 19270
+        },
+        "permille": 1000,
+        "recipe": "ca2f7152541455dfe740206bcd651e8d91371399b529c9c9e34af4e775133b2c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 988,
+            "total": 3751
+          },
+          "sprites": {
+            "same": 3133,
+            "total": 3751
+          }
+        },
+        "start": 19270,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 3752,
+          "longest": 0,
+          "longest_any": 2751,
+          "median": 0,
+          "open_end": 64,
+          "p10": 0,
+          "play": 2815,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 3752,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "4cfc7738c40245f1d280b12009ab9433abef03aeebc19041d44d5fb7bc77cc0a",
+        "exact": true,
+        "first": null,
+        "frames": 1486,
+        "frames_together": 1486,
+        "id": "donkey-kong-oe.diff-75m.001",
+        "model_curve": "df37887df381e39fe02ce49a6d446eda9ae7f39cc7e843b371433bdaa73eb76b",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 4,
+          "model": 3577,
+          "offset": 4,
+          "original": 3581
+        },
+        "permille": 1000,
+        "recipe": "9d1bb8047bc51a20306ecd360c34eec254a9bcdeca1b8c5c65581794298483b4",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1485,
+            "total": 1485
+          },
+          "sprites": {
+            "same": 1485,
+            "total": 1485
+          }
+        },
+        "start": 3581,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1486,
+          "longest": 0,
+          "longest_any": 1080,
+          "median": 0,
+          "open_end": 2,
+          "p10": 0,
+          "play": 1082,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1486,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "5004e49558741c51b0295b3d9092045c8511996c81b57e8262c12d74a7eedfe6",
+        "exact": true,
+        "first": null,
+        "frames": 1201,
+        "frames_together": 1201,
+        "id": "donkey-kong-oe.diff-75m.002",
+        "model_curve": "19e3b4bdc7fc09315d3efb949df2514df11f567c90d166fd2f7b05f2eaa15539",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 7,
+          "model": 10907,
+          "offset": 7,
+          "original": 10914
+        },
+        "permille": 1000,
+        "recipe": "85c328d3c8acd2671c0ae2c0533502f1bdeb16b42830cb26daab2fe5c7f81e73",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 211,
+            "total": 1200
+          },
+          "sprites": {
+            "same": 1200,
+            "total": 1200
+          }
+        },
+        "start": 10914,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1201,
+          "longest": 0,
+          "longest_any": 796,
+          "median": 0,
+          "open_end": 2,
+          "p10": 0,
+          "play": 798,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1201,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "e58900131e6b856f30c84887943352d55b4ac78e88540e41eddf01f2839e1d51",
+        "exact": true,
+        "first": null,
+        "frames": 1289,
+        "frames_together": 1289,
+        "id": "donkey-kong-oe.diff-75m.003",
+        "model_curve": "826412821e62ddf5f2cb24ef56c8014a9c1b66922fe1adfe61e769db15457c8d",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 8,
+          "model": 17974,
+          "offset": 8,
+          "original": 17982
+        },
+        "permille": 1000,
+        "recipe": "bd330d2602eac1a5dd3a91cbdea8aa9e39f7f80779f177b2c0b7dd35afed6900",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 211,
+            "total": 1288
+          },
+          "sprites": {
+            "same": 1288,
+            "total": 1288
+          }
+        },
+        "start": 17982,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1289,
+          "longest": 0,
+          "longest_any": 884,
+          "median": 0,
+          "open_end": 2,
+          "p10": 0,
+          "play": 886,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1289,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "b2509abf1f3c962c1b34f0f0a54595d380f975d371208ebc49b15edb678ae504",
+        "exact": true,
+        "first": null,
+        "frames": 3911,
+        "frames_together": 3911,
+        "id": "donkey-kong-oe.diff-100m.004",
+        "model_curve": "82e3a332644fe2c206814f042ea5c7a36ed710844a0d3206d2d15ebfe6a8b744",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 13,
+          "model": 26706,
+          "offset": 13,
+          "original": 26719
+        },
+        "permille": 1000,
+        "recipe": "3fd26546f30f6531282836f896c4162c0dd998e772ed8dd9cc13e5f2afe5a9c6",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 988,
+            "total": 3910
+          },
+          "sprites": {
+            "same": 3771,
+            "total": 3910
+          }
+        },
+        "start": 26719,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 3911,
+          "longest": 0,
+          "longest_any": 2910,
+          "median": 0,
+          "open_end": 64,
+          "p10": 0,
+          "play": 2974,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 3911,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "cd379ee3d67d415b9e1e0b0135e7fa3edcb8ae70d265c4e048db5edc19750acc",
+        "exact": true,
+        "first": null,
+        "frames": 1255,
+        "frames_together": 1255,
+        "id": "donkey-kong-oe.diff-75m.004",
+        "model_curve": "e899d2d32b9ac78eb6039aa90b06918246f4213d24e452ea170dc1f2bb09f9ba",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 13,
+          "model": 25452,
+          "offset": 13,
+          "original": 25465
+        },
+        "permille": 1000,
+        "recipe": "a23cd89b082814abc43ceacd883cca9770e27053fa8ca52c22e45c9b857212cc",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 211,
+            "total": 1254
+          },
+          "sprites": {
+            "same": 1254,
+            "total": 1254
+          }
+        },
+        "start": 25465,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1255,
+          "longest": 0,
+          "longest_any": 851,
+          "median": 0,
+          "open_end": 2,
+          "p10": 0,
+          "play": 853,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1255,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "e0c05ce411203eaab4939cbce1c0749ae126d53469e5b6fcd4958dcf178a89f4",
+        "exact": true,
+        "first": null,
+        "frames": 1448,
+        "frames_together": 1448,
+        "id": "donkey-kong-oe.over75-start.001",
+        "model_curve": "84e139c653f70ba0dd36edfbd6b52d23c1d7e5e732d72eeb586f75f277d2ada4",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact",
+          "core.modes"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 6189,
+          "offset": 3,
+          "original": 6192
+        },
+        "permille": 1000,
+        "recipe": "66d9a8b7f77044d75c951d42d46ab6f73ea644732f654318ce39e4cc51d5712a",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1447,
+            "total": 1447
+          },
+          "sprites": {
+            "same": 1447,
+            "total": 1447
+          }
+        },
+        "start": 6192,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1448,
+          "longest": 0,
+          "longest_any": 219,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 239,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1448,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "9891290d7ac1ed187cef8c9e792daf663d7fd9b2a97d2b3b498a2d2170cdc04c",
+        "exact": true,
+        "first": null,
+        "frames": 1738,
+        "frames_together": 1738,
+        "id": "donkey-kong-oe.two-p-clear.001",
+        "model_curve": "b5ac931ccd441fd51b0403eb9350307849bccc5448f3d052b61ae76d308cd766",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": {
+          "frame": 1739,
+          "frames": 20,
+          "original_frame": 5122
+        },
+        "pairing": {
+          "lag": [
+            4353
+          ],
+          "last_offset": 4,
+          "model": 3380,
+          "offset": 3,
+          "original": 3383
+        },
+        "permille": 1000,
+        "recipe": "a3f8c4270a2f63a8911bb4cce81f377b2c21a312642d83f0c9e0c099cfe16b2f",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1737,
+            "total": 1737
+          },
+          "sprites": {
+            "same": 1737,
+            "total": 1737
+          }
+        },
+        "start": 3383,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1738,
+          "longest": 0,
+          "longest_any": 1497,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 1497,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1738,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "e52f0b3460856570f6ce74e47b0e130a37d80b07136e81700dca0ddf40e11871",
+        "exact": true,
+        "first": null,
+        "frames": 1407,
+        "frames_together": 1407,
+        "id": "donkey-kong-oe.m50-ladder-fire.001",
+        "model_curve": "90b7cf87bf56d6684e9ec133896bc04162f55bb055679435f52c47c3ad103f97",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "45322aeb2a3df5c833fd6d0dbab26500c97016a03d3274178a1deef55dda7485",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1406,
+            "total": 1406
+          },
+          "sprites": {
+            "same": 1406,
+            "total": 1406
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1407,
+          "longest": 0,
+          "longest_any": 706,
+          "median": 0,
+          "open_end": 242,
+          "p10": 0,
+          "play": 948,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1407,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "9e7f37d11e9413fb27ebe810b07c12eab804bd0722689dbe995f4a36f7a70ea3",
+        "exact": true,
+        "first": null,
+        "frames": 2185,
+        "frames_together": 2185,
+        "id": "donkey-kong-oe.m50-ladder-fire.002",
+        "model_curve": "407793cd17be0923ae52eddc76f0244545f39c53c45dc044d4d38e69178ae3ad",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "4701582cd0e93ed64af1a21d6b45b744b29e21c05b0d35177b6acb1ab03f3ec6",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 2184,
+            "total": 2184
+          },
+          "sprites": {
+            "same": 2184,
+            "total": 2184
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 2185,
+          "longest": 0,
+          "longest_any": 1484,
+          "median": 0,
+          "open_end": 239,
+          "p10": 0,
+          "play": 1723,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 2185,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "b87e0ddcf058955a6f30be0acc388df3e8cb555fd73de466c56bb16b4858221d",
+        "exact": true,
+        "first": null,
+        "frames": 1747,
+        "frames_together": 1747,
+        "id": "donkey-kong-oe.m50-ladder-fire.003",
+        "model_curve": "7a7eebc4b38cf2ad0a481b32d770a518299c97b3060f9d8fa8f7b77a99b85282",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 3,
+          "model": 3049,
+          "offset": 3,
+          "original": 3052
+        },
+        "permille": 1000,
+        "recipe": "266b9a5dcd15e6bf3c3fd8cc9c69a9eb38e74b336b6c6d9ce0a0a0951c7f799a",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1746,
+            "total": 1746
+          },
+          "sprites": {
+            "same": 1746,
+            "total": 1746
+          }
+        },
+        "start": 3052,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1747,
+          "longest": 0,
+          "longest_any": 1046,
+          "median": 0,
+          "open_end": 241,
+          "p10": 0,
+          "play": 1287,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1747,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "9891290d7ac1ed187cef8c9e792daf663d7fd9b2a97d2b3b498a2d2170cdc04c",
+        "exact": true,
+        "first": null,
+        "frames": 1738,
+        "frames_together": 1738,
+        "id": "donkey-kong-oe.two-p-over.001",
+        "model_curve": "b5ac931ccd441fd51b0403eb9350307849bccc5448f3d052b61ae76d308cd766",
+        "moved": [
+          "platformer.run",
+          "platformer.jump",
+          "core.counters",
+          "core.flow",
+          "platformer.contact"
+        ],
+        "out_of_scope": {
+          "frame": 1739,
+          "frames": 6295,
+          "original_frame": 5122
+        },
+        "pairing": {
+          "lag": [
+            4353
+          ],
+          "last_offset": 4,
+          "model": 3380,
+          "offset": 3,
+          "original": 3383
+        },
+        "permille": 1000,
+        "recipe": "34e94c0eee6fd87a96e99ae6661abbf64cfcc8d8fba9b92d12c4f7e816213f91",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1737,
+            "total": 1737
+          },
+          "sprites": {
+            "same": 1737,
+            "total": 1737
+          }
+        },
+        "start": 3383,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1738,
+          "longest": 0,
+          "longest_any": 1497,
+          "median": 0,
+          "open_end": 0,
+          "p10": 0,
+          "play": 1497,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1738,
+          "whole": 0
+        }
+      }
+    ],
+    "contract": "0547b4a741d8eb816b3354dd2ebc4b7e7c56fa1daf5e5d55f4326435f61177af",
+    "corpus": {
+      "hash": "b3:066dc51f22a993059fa691051e56d5b30c4d2449537321a910d809c3ff75ac3a",
+      "name": "donkey-kong-oe-25m",
+      "version": "7.1.0"
+    },
+    "gp": {
+      "build": "f3bab1a1e218dfb0a98c2b790e5c1c66d45c133337fa8802d4553e66a71b0613",
+      "version": "0.1.1"
+    },
+    "mapping": {
+      "hash": "5b033b7164da116db8037245d0c964a6ec2e1fa9ffa292d1f3525a4f07aa6e9c",
+      "schema": "22"
+    },
+    "model": {
+      "hash": "bf4f11318747ec959e26dbceb4e2ce421eeb2a9f262a8293ffffbd7b5e371a8e",
+      "name": "donkey_kong_oe",
+      "short": "bbef3443162b"
+    },
+    "module": {
+      "hash": "1e219a211f2d979d6dbaecf6531d9592e84316e3adcd634c793c0e5e12a0832a"
+    },
+    "profile": null,
+    "record_format": "0.3.0",
+    "results": {
+      "bars": {
+        "held": 115,
+        "met": 112
+      },
+      "clips": 115,
+      "errors": 0,
+      "exact": 115,
+      "fidelity_permille": 1000,
+      "picture": {
+        "clips_same": 96,
+        "frames": 144689,
+        "frames_same": 125116
+      }
+    },
+    "rom": {
+      "patch": null,
+      "sha256": "45440d8ef512b4660dce0c753e110004aef96fa30f2967f9260e946d808db07d"
+    },
+    "runtime": {
+      "name": "gp-interp",
+      "scenario": "0.4.0"
+    }
+  },
+  "predicateType": "urn:game-printer:score-record:0",
+  "subject": [
+    {
+      "digest": {
+        "blake3": "b3:066dc51f22a993059fa691051e56d5b30c4d2449537321a910d809c3ff75ac3a"
+      },
+      "name": "corpus donkey-kong-oe-25m 7.1.0"
+    },
+    {
+      "digest": {
+        "blake3": "bf4f11318747ec959e26dbceb4e2ce421eeb2a9f262a8293ffffbd7b5e371a8e"
+      },
+      "name": "model donkey_kong_oe"
+    }
+  ]
+}
