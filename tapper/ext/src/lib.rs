@@ -2689,10 +2689,11 @@ fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
     }
     let w = me.ext[2];
     let (e715, e714) = ((w >> 40) & 0xff, (w >> 48) & 1);
-    // The board shows a frame's objects the frame after the code wrote
-    // them, so a layer written as E715 counts down shows on the next one.
+    // A layer shows on the frame E715 counts down to its number
+    // (tapper.l2.001, frames 21 to 23: $7F with E715 at 3, then a $21
+    // each frame).
     let n = match e715 {
-        1..=3 => 3 - e715,
+        1..=3 => 4 - e715,
         0 if e714 != 0 => 3,
         _ => 0,
     };
