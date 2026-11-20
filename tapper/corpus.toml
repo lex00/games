@@ -567,8 +567,8 @@ name = "From power-on to the attract mode again"
 source = "generated"
 start = "inputs/tapper.poweron.001.start.presses"
 presses = "inputs/tapper.poweron.001.presses"
-frames = 10000
-why = "the model's own start: the boot, the attract mode, a coin and the start, levels 1 to 3 and the bonus round played, three lives lost in level 4, the game over's wait and the attract mode twice more"
+frames = 5619
+why = "the model's own start: the boot, the attract mode, a coin and the start, levels 1 to 3 and the bonus round played, three lives lost in level 4 and the game over's first 3 seconds; it ends where our model leaves the game over after 180 frames (no initials, no scoreboard) while the original waits out its 1203-frame initials timer"
 level = "saloon"
 
 [[clip]]
