@@ -2564,7 +2564,7 @@ x = 0
 y = 0
 
 [entities.tap]
-description = "A bar's tap, the game's objects at E346, E34A, E34E and E352 (one a bar, bottom first): its x and whether it is on the bar's left end (its flags' bit 4, the picture mirrored). Placed from the game's RAM when a clip starts; the bartender reads it. Its word 0 is the x of its bar's far end (the object at E366 plus 4 a bar), which the tip's place reads"
+description = "A bar's tap, the game's objects at E346, E34A, E34E and E352 (one a bar, bottom first): its x and whether it is on the bar's left end (its flags' bit 4, the picture mirrored). Placed from the game's RAM when a clip starts; the bartender reads it. Its word 0 is the x of its bar's far end (the object at E366 plus 4 a bar), which the tip's place reads; word 3 its bar plus 1 (tapper_bars), its sprite RAM entry less 110"
 no_slot = true
 role = "npc"
 size = [16, 16]
@@ -10592,6 +10592,7 @@ word = 1
 [levels.main.present.sprite_order.tap]
 at = 111
 step = 1
+word = 3
 
 [levels.main.present.sprite_order.tip]
 at = 53

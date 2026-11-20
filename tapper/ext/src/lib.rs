@@ -2145,6 +2145,25 @@ fn place_objects(cx: &mut ExtCx<'_>, ok: usize, want: &[BonusObj]) {
     }
 }
 
+/// Each tap's word 3: its bar plus 1, so present.sprite_order gives bar
+/// k's tap the sprite RAM entry of its object E346 + 4k (111 + k) whichever
+/// taps are hidden. Counted among the taps drawn, a hidden tap below moved
+/// the rest down an entry, onto the scene's pulled handle (E34A, 112),
+/// which then went under the mug's froth (tapper.attract.001 frames 294 to
+/// 413).
+fn tap_entries(cx: &mut ExtCx<'_>) {
+    let Some(tk) = cx.kind("tap") else { return };
+    let taps: Vec<(usize, gp_sim::world::Body)> =
+        cx.world.bodies.iter().enumerate().filter(|(_, b)| b.kind == tk).map(|(i, b)| (i, *b)).collect();
+    for (bar, (id, mut b)) in taps.into_iter().enumerate() {
+        let want = bar as i64 + 1;
+        if b.ext[3] != want {
+            b.ext[3] = want;
+            cx.set_body(id, b);
+        }
+    }
+}
+
 /// A scene's mug or customer (place_cast): word 3's bit, which nothing in
 /// play reads, so the attract mode takes away only its own.
 const SCENE_CAST: i64 = 1 << 48;
@@ -2165,6 +2184,7 @@ fn place_cast(cx: &mut ExtCx<'_>, scene: Option<Vec<BonusObj>>, drawn: Vec<Bonus
     const MUGS: i64 = 0xE2FE;
     const CUSTS: i64 = 0xE262;
     const IX: i64 = 0xE2E6;
+    const TAPS: i64 = 0xE346;
     let (Some(mk), Some(ck)) = (cx.kind("mug"), cx.kind("customer")) else { return drawn };
     let on = scene.is_some();
     let want = scene.unwrap_or_default();
@@ -2191,16 +2211,44 @@ fn place_cast(cx: &mut ExtCx<'_>, scene: Option<Vec<BonusObj>>, drawn: Vec<Bonus
     let is_mug = |at: i64| (MUGS..MUGS + 9 * 8).contains(&at) && (at - MUGS) % 8 == 0;
     let is_cust = |at: i64| in_custs(at) && (at - CUSTS) % 8 == 0;
     let is_his = |at: i64| player.is_some() && qk.is_some() && (IX..IX + 6 * 4).contains(&at);
+    let tk = cx.kind("tap");
+    let is_tap = |at: i64| on && tk.is_some() && (TAPS..TAPS + 4 * 4).contains(&at) && (at - TAPS) % 4 == 0;
     // What of `drawn` the bodies draw: a held mug only if folded in.
     let rest: Vec<BonusObj> = drawn
         .iter()
         .filter(|o| {
             let o: &BonusObj = o;
             let held = in_custs(o.at) && drawn.iter().find(|c| c.at == o.at - 4).is_some_and(|c| held_at(c, o).is_some());
-            !(is_mug(o.at) || is_cust(o.at) || is_his(o.at) || held)
+            !(is_mug(o.at) || is_cust(o.at) || is_his(o.at) || is_tap(o.at) || held)
         })
         .copied()
         .collect();
+    // The taps' objects (E346 + 4 a bar) as the tap bodies, in the scene
+    // only: drawn as objects too, a scene's tap and its bar's tap body
+    // (hidden at y 0) wanted the same sprite RAM entry, and the body's
+    // took it, so the handle he pulls (E34A) went under the mug's froth
+    // (tapper.attract.001 frames 294 to 413). The next setup ($4D13) puts
+    // them back.
+    if let Some(tk) = tk.filter(|_| on) {
+        let taps: Vec<(usize, Body)> =
+            cx.world.bodies.iter().enumerate().filter(|(_, b)| b.kind == tk).map(|(i, b)| (i, *b)).collect();
+        for (bar, (id, b)) in taps.into_iter().take(4).enumerate() {
+            let at = TAPS + 4 * bar as i64;
+            let mut t = b;
+            match drawn.iter().find(|o| o.at == at) {
+                Some(o) => {
+                    t.x = Fx::from_int(o.x);
+                    t.y = Fx::from_int(o.y);
+                    t.facing_left = o.flags & 0x10 != 0;
+                    t.ext[2] = (t.ext[2] & !0xffff) | o.flags | (o.pic << 8);
+                }
+                None => t.y = Fx::from_int(0),
+            }
+            if t.x != b.x || t.y != b.y || t.facing_left != b.facing_left || t.ext != b.ext {
+                cx.set_body(id, t);
+            }
+        }
+    }
     // (kind, key, body) of the mugs and customers wanted.
     let mut cast: Vec<(usize, i64, Body)> = Vec::new();
     for o in &want {
@@ -3674,6 +3722,7 @@ impl Ext for Bars {
         };
         set_screen(cx);
         palette_cycles(cx);
+        tap_entries(cx);
         // The attract mode (E3BD 1): nothing moves but in its demo game
         // (tapper_flow keeps the logo's time).
         let demo = in_demo(cx);
