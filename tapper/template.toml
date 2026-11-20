@@ -54,6 +54,6 @@ asset_map_sha256 = "919d7406893e284dcc3dad008c8a4e2a871a1d1657273131e1e4bf4542ab
 # (docs/formats/scoring-corpus.md); the records are in evidence/.
 [scored_against]
 corpus = "tapper"
-version = "0.2.0"
-hash = "b3:74c711e6801c74db72ddb2ea76aa6a28052b182c3f7bc7e4bb6452491099cf47"
+version = "0.3.0"
+hash = "b3:fa429f30c8bcf434767ec71509a7f8740ddf5e6bac09cf98618245b9577290a6"
 path = "."
