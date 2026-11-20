@@ -7,9 +7,9 @@
 [corpus]
 format = "1.0.0"
 name = "tapper"
-version = "0.3.0"
+version = "0.4.0"
 title = "Tapper"
-recipes = "b3:53bc4ec55d995a31b2d495273b813b5e79b2460bdd73582ecf7347e8cee8cf80"
+recipes = "b3:97dd4a6335717b8fed65e230a265ad21a372a9ec205742ffb777e4a30640c2dd"
 
 [target]
 game = "tapper"
@@ -675,3 +675,27 @@ presses = "inputs/tapper.drink.001.presses"
 frames = 233
 why = "a mug sent while a bottom-bar customer is near x 71: he is pushed back 3 px a frame for 14 plus a draw of 0 to 20 frames ($09C7), stops at x 8, short of the far end ($0890), and drinks there ($106B), then throws the empty back; made from the code by the probe drink-far-end-bottom (W = 20)"
 level = "saloon"
+
+[[clip]]
+id = "tapper.enemies.002"
+name = "enemies 002: customers walking down the bars (the owner's clip 2)"
+source = "played"
+start = "inputs/tapper.enemies.002.start.presses"
+presses = "inputs/tapper.enemies.002.presses"
+frames = 102
+why = "the enemies row's clip, played by the owner from frame 910: customers come in and walk down the bars on their own; the model matched the original state on every frame"
+
+[[clip]]
+id = "tapper.enemies.003"
+name = "enemies 003: customers walking down the bars (the owner's clip 3)"
+source = "played"
+start = "inputs/tapper.enemies.003.start.presses"
+presses = "inputs/tapper.enemies.003.presses"
+frames = 322
+why = "the enemies row's clip, played by the owner from frame 1587: customers come in and walk down the bars on their own; the model matched the original state on every frame"
+
+[[changelog]]
+version = "0.4.0"
+date = "2026-11-20"
+says = "tapper.enemies.002 and tapper.enemies.003: the owner's two enemies clips (customers walking down the bars), state exact on every frame"
+added = ["tapper.enemies.002", "tapper.enemies.003"]
