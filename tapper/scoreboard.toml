@@ -1,0 +1,23 @@
+# The scoreboard (gameprinter's docs/loop.md, "The scoreboard"): the parts
+# of Tapper the owner works on now, each measured on one corpus clip. The
+# screen page shows a line for each, and gp loop health prints them.
+
+[[line]]
+name = "attract mode"
+clip = "tapper.attract.001"
+
+[[line]]
+name = "the demo"
+clip = "tapper.demo.001"
+
+[[line]]
+name = "level 1"
+clip = "tapper.l1.001"
+
+[[line]]
+name = "level 2"
+clip = "tapper.l2.001"
+
+[[line]]
+name = "the first bonus round"
+clip = "tapper.bonus.001"
