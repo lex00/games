@@ -1418,22 +1418,43 @@ fn logo_frames(cx: &ExtCx<'_>) -> Option<i64> {
 fn set_attract_screen(cx: &mut ExtCx<'_>) {
     let t = (cx.me.ext[2] & ATTRACT_MASK) >> ATTRACT_SHIFT;
     let state = cx.me.ext[3] & 0xff;
+    // The demo's setup ($5A64's next frame, the flow's sub DEMO_SETUP at
+    // count 1) draws the stage, but the screen keeps the demo's scene on
+    // that frame, its numbers too, and shows the stage from the next.
+    let demo_setup = state == 15 && (cx.me.ext[3] >> 16) & 0xff == DEMO_SETUP && (cx.me.ext[3] >> 24) & 0xff == 1;
+    let held = demo_setup && cx.counter("attract_screen") == Some(2);
     let s = match cx.counter("mode") {
         // The demo's game: the demo screen until its setup draws the
         // stage ($5DF6), on the frame after $5A64.
-        Some(1) if state == 2 => 2,
+        Some(1) if state == 2 || held => 2,
         // The high scores after the demo game ($4A37, the flow's sub
         // DEMO_SCORES): the screen emptied, its heading.
         Some(1) if in_demo(cx) && state == 15 && (cx.me.ext[3] >> 16) & 0xff == DEMO_SCORES => 3,
+        // The demo's end ($22DC, state 4): the screen is blank for that
+        // frame, the heading on the next.
+        Some(1) if in_demo(cx) && state == 4 => 4,
         Some(1) if in_demo(cx) => 0,
         Some(1) if t >= attract_at(cx, "attract_demo") => 2,
+        // The logo after the demo's high scores ($3D76 from $4A53): its
+        // first frame still shows the high scores, its second their tiles
+        // in the logo's colours (kept as the high scores here); the logo's
+        // tiles come on the third.
+        Some(1) if t <= 1 && cx.counter("attract_screen") == Some(3) => 3,
         Some(1) => 1,
         _ => 0,
     };
     if cx.counter("attract_screen") != Some(s) {
         cx.set_counter("attract_screen", s);
     }
-    let f = if s == 0 { 0 } else { t };
+    let f = if s == 0 {
+        0
+    } else if held {
+        // Past the scene's every part, so its lines and numbers stay up;
+        // the board's looks draw it in the stage's colours there.
+        DEMO_HELD
+    } else {
+        t
+    };
     if cx.counter("attract_frames") != Some(f) {
         cx.set_counter("attract_frames", f);
     }
@@ -1845,6 +1866,9 @@ fn out_of_play(cx: &ExtCx<'_>) -> bool {
 /// The flow's sub (word 3 from bit 16) through the demo's setup: $5A64 on
 /// its first frame, $4B3F's clear of the level on its second.
 const DEMO_SETUP: i64 = 13;
+/// The counter attract_frames on the demo setup's frame, which keeps the
+/// demo's scene up in the stage's colours (the board's looks test it).
+const DEMO_HELD: i64 = 30000;
 /// The flow's sub through the high scores' wait after the demo ($4A50).
 const DEMO_SCORES: i64 = 14;
 

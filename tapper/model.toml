@@ -2944,6 +2944,33 @@ clear = true
 
 [[levels.main.present.board.looks.palette_writes]]
 at = 0
+column = 4
+slot = "high_scores_clear"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+column = 4
+slot = "high_scores_clear"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 12
+column = 15
+slot = "high_scores_clear"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 77
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 4
+
+[[levels.main.present.board.looks]]
+clear = true
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 0
 slot = "intro_back_color"
 
 [[levels.main.present.board.looks.palette_writes]]
@@ -5023,6 +5050,41 @@ value = 1
 cmp = ">="
 counter = "attract_frames"
 value = 95
+
+[[levels.main.present.board.looks]]
+screen = "screen_attract_logo"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "demo_color_1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 77
+slot = "demo_color_2"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 217
+
+[[levels.main.present.board.looks]]
+palette = "board_palette"
+screen = "screen_attract_demo"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "attract_screen"
+value = 2
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 30000
 
 [[levels.main.present.board.looks]]
 screen = "screen_attract_demo"
@@ -10141,14 +10203,24 @@ slot = "text_color_logo"
 slot = "text_logo_1"
 
 [[levels.main.present.board.texts.when]]
-cmp = "=="
+cmp = ">="
 counter = "attract_screen"
 value = 1
 
 [[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "attract_screen"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 217
+
+[[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "attract_frames"
-value = 2
+value = 3
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
@@ -10165,14 +10237,24 @@ slot = "text_color_logo"
 slot = "text_logo_2"
 
 [[levels.main.present.board.texts.when]]
-cmp = "=="
+cmp = ">="
 counter = "attract_screen"
 value = 1
 
 [[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "attract_screen"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 217
+
+[[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "attract_frames"
-value = 2
+value = 3
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
@@ -10189,14 +10271,24 @@ slot = "text_color_logo"
 slot = "text_logo_3"
 
 [[levels.main.present.board.texts.when]]
-cmp = "=="
+cmp = ">="
 counter = "attract_screen"
 value = 1
 
 [[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "attract_screen"
+value = 3
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "attract_frames"
+value = 217
+
+[[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "attract_frames"
-value = 2
+value = 3
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
@@ -10220,7 +10312,7 @@ value = 2
 [[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "attract_frames"
-value = 217
+value = 218
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
@@ -10249,7 +10341,7 @@ value = 2
 [[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "attract_frames"
-value = 217
+value = 218
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
