@@ -1516,90 +1516,11 @@ impl Ext for Flow {
         // wait's state and place (E3A8, E3A9, E39F) and the lives (E4A7)
         // for tapper_bars.
         let layout = cx.me.ext[1] & 0xff;
-        let (Some(tap_kind), Some(player)) = (cx.kind("tap"), cx.kind("player")) else {
+        let (Some(_), Some(player)) = (cx.kind("tap"), cx.kind("player")) else {
             return;
         };
-        let step = p(cx, "tap_step");
-        // $4D13 (the setup's $5DF6): each bar's tap (E346 + 4 a bar) and
-        // far end (E366 + 4 a bar) from the bar_objects row of its side,
-        // y, flags, picture and x; in the sports and the space bar (E3B8
-        // 1, 3) the far end 7 further out, and 2 more in the sports bar
-        // ($4D89 to $4DBE). The tap keeps its flags and picture in word
-        // 2 for its board sprite, the far end's x in word 0.
-        let objects = cx.table("bar_objects").to_vec();
         let shown = (cx.me.ext[3] >> 8) & 3;
-        let mut k = 0;
-        for (id, b) in cx.world.bodies.iter().enumerate() {
-            if b.kind == tap_kind && k < 4 {
-                let left = layout & (1 << k) != 0;
-                let mut t = *b;
-                t.x = Fx::from_int(if left {
-                    p(cx, "tap_left") + step * k
-                } else {
-                    p(cx, "tap_right") - step * k
-                });
-                t.facing_left = left;
-                let row = usize::from(left) * 48 + usize::try_from(k).unwrap_or(0) * 4;
-                if let (Some(tap), Some(end)) = (objects.get(row..row + 4), objects.get(row + 32..row + 36)) {
-                    t.y = Fx::from_int(tap[0]);
-                    t.ext[2] = (t.ext[2] & !0xffff) | tap[1] | (tap[2] << 8);
-                    let mut far = end[3];
-                    if shown == 1 || shown == 3 {
-                        if shown == 1 {
-                            far += 2;
-                        }
-                        far = if end[1] & 0x10 != 0 { far + 7 } else { far - 7 };
-                    }
-                    t.ext[0] = far & 0xff;
-                }
-                cx.set_body(id, t);
-                k += 1;
-            }
-        }
-        // The end pieces and far ends ($4D13's second and third groups, to
-        // E356 and E366), as bodies of kind bar_end in that order; the far
-        // ends 7 further out in the sports and the space bar, as the taps'
-        // word 0 has them.
-        let mut spawned = 0;
-        if let Some(ek) = cx.kind("bar_end") {
-            let old: Vec<usize> = cx
-                .world
-                .bodies
-                .iter()
-                .enumerate()
-                .filter(|(_, b)| b.alive && b.kind == ek)
-                .map(|(i, _)| i)
-                .collect();
-            for id in old {
-                cx.remove(id);
-            }
-            let mut ends: Vec<gp_sim::world::Body> = Vec::new();
-            for group in [16usize, 32] {
-                for bar in 0..4usize {
-                    let left = layout & (1 << bar) != 0;
-                    let at = usize::from(left) * 48 + group + bar * 4;
-                    let Some(o) = objects.get(at..at + 4) else { continue };
-                    if o[0] == 0 {
-                        continue;
-                    }
-                    let mut x = o[3] + if group == 32 && shown == 1 { 2 } else { 0 };
-                    if group == 32 && (shown == 1 || shown == 3) {
-                        x = if o[1] & 0x10 != 0 { x + 7 } else { x - 7 };
-                    }
-                    let mut b = gp_sim::systems::new_body(cx.spec, cx.world, ek, Fx::from_int(x & 0xff), Fx::from_int(o[0]), false);
-                    b.ext[0] = o[1] | (o[2] << 8);
-                    b.ext[1] = i64::try_from((group - 16) / 4 + bar + 1).unwrap_or(0);
-                    ends.push(b);
-                }
-            }
-            // Spawned bodies take their ids in order from the world's end.
-            let first = cx.world.bodies.len();
-            for (n, b) in ends.iter().enumerate() {
-                cx.spawn(ek, b.x, b.y, false);
-                cx.set_body(first + n, *b);
-            }
-            spawned = ends.len();
-        }
+        let spawned = place_bar_objects(cx, layout, shown);
         let bar = p(cx, "start_bar");
         let left = layout & (1 << bar) != 0;
         if let Some((id, b)) = cx
@@ -1674,6 +1595,103 @@ impl Ext for Flow {
             built_from: &[Primitive::Condition, Primitive::Quantity],
             ..Record::EMPTY
         }]
+    }
+}
+
+/// $4D13 (the setup's $5DF6): the taps and the bars' end pieces and far
+/// ends by the level's layout (bit per bar, 1 for a tap on the left) and
+/// the bar shown (E3B8). Called by tapper_flow at a level's start, with the
+/// bartender, and by tapper_bars on the demo setup's frame that draws the
+/// stage, a frame before him. The number of bar_end bodies it spawned.
+fn place_bar_objects(cx: &mut ExtCx<'_>, layout: i64, shown: i64) -> usize {
+    let Some(tap_kind) = cx.kind("tap") else { return 0 };
+    let fp = |cx: &ExtCx<'_>, n: &str| {
+        cx.kind("flow")
+            .and_then(|k| cx.spec.kinds[k].ext_params.get(n))
+            .map_or(0, |v| v.floor())
+    };
+    let step = fp(cx, "tap_step");
+    {
+        // $4D13 (the setup's $5DF6): each bar's tap (E346 + 4 a bar) and
+        // far end (E366 + 4 a bar) from the bar_objects row of its side,
+        // y, flags, picture and x; in the sports and the space bar (E3B8
+        // 1, 3) the far end 7 further out, and 2 more in the sports bar
+        // ($4D89 to $4DBE). The tap keeps its flags and picture in word
+        // 2 for its board sprite, the far end's x in word 0.
+        let objects = cx.table("bar_objects").to_vec();
+        let mut k = 0;
+        for (id, b) in cx.world.bodies.iter().enumerate() {
+            if b.kind == tap_kind && k < 4 {
+                let left = layout & (1 << k) != 0;
+                let mut t = *b;
+                t.x = Fx::from_int(if left {
+                    fp(cx, "tap_left") + step * k
+                } else {
+                    fp(cx, "tap_right") - step * k
+                });
+                t.facing_left = left;
+                let row = usize::from(left) * 48 + usize::try_from(k).unwrap_or(0) * 4;
+                if let (Some(tap), Some(end)) = (objects.get(row..row + 4), objects.get(row + 32..row + 36)) {
+                    t.y = Fx::from_int(tap[0]);
+                    t.ext[2] = (t.ext[2] & !0xffff) | tap[1] | (tap[2] << 8);
+                    let mut far = end[3];
+                    if shown == 1 || shown == 3 {
+                        if shown == 1 {
+                            far += 2;
+                        }
+                        far = if end[1] & 0x10 != 0 { far + 7 } else { far - 7 };
+                    }
+                    t.ext[0] = far & 0xff;
+                }
+                cx.set_body(id, t);
+                k += 1;
+            }
+        }
+        // The end pieces and far ends ($4D13's second and third groups, to
+        // E356 and E366), as bodies of kind bar_end in that order; the far
+        // ends 7 further out in the sports and the space bar, as the taps'
+        // word 0 has them.
+        let mut spawned = 0;
+        if let Some(ek) = cx.kind("bar_end") {
+            let old: Vec<usize> = cx
+                .world
+                .bodies
+                .iter()
+                .enumerate()
+                .filter(|(_, b)| b.alive && b.kind == ek)
+                .map(|(i, _)| i)
+                .collect();
+            for id in old {
+                cx.remove(id);
+            }
+            let mut ends: Vec<gp_sim::world::Body> = Vec::new();
+            for group in [16usize, 32] {
+                for bar in 0..4usize {
+                    let left = layout & (1 << bar) != 0;
+                    let at = usize::from(left) * 48 + group + bar * 4;
+                    let Some(o) = objects.get(at..at + 4) else { continue };
+                    if o[0] == 0 {
+                        continue;
+                    }
+                    let mut x = o[3] + if group == 32 && shown == 1 { 2 } else { 0 };
+                    if group == 32 && (shown == 1 || shown == 3) {
+                        x = if o[1] & 0x10 != 0 { x + 7 } else { x - 7 };
+                    }
+                    let mut b = gp_sim::systems::new_body(cx.spec, cx.world, ek, Fx::from_int(x & 0xff), Fx::from_int(o[0]), false);
+                    b.ext[0] = o[1] | (o[2] << 8);
+                    b.ext[1] = i64::try_from((group - 16) / 4 + bar + 1).unwrap_or(0);
+                    ends.push(b);
+                }
+            }
+            // Spawned bodies take their ids in order from the world's end.
+            let first = cx.world.bodies.len();
+            for (n, b) in ends.iter().enumerate() {
+                cx.spawn(ek, b.x, b.y, false);
+                cx.set_body(first + n, *b);
+            }
+            spawned = ends.len();
+        }
+        spawned
     }
 }
 
@@ -5223,9 +5241,10 @@ impl Ext for Bars {
         // ($4B3F) sets the bar shown, 4 out of a game ($3C48), and waits for
         // the next frame ($5E99). There, with no intro out of a game ($4B62),
         // it empties the timers ($5DEC), takes the level's layout ($2EC3),
-        // clears the level's RAM ($4B65) and draws the stage ($5DF6), and
-        // tapper_flow puts the taps and the bartender in on the next frame
-        // as at a level's start; the play ($59DD, $0660) runs from the frame
+        // clears the level's RAM ($4B65) and draws the stage ($5DF6), whose
+        // $4D13 puts the taps and the bars' ends in (place_bar_objects), and
+        // tapper_flow puts the bartender in on the next frame as at a
+        // level's start; the play ($59DD, $0660) runs from the frame
         // after that. The model keeps the setup's two frames in state 15
         // (sub DEMO_SETUP), the original's E397 being 3 already.
         let mut demo_still = false;
@@ -5290,7 +5309,10 @@ impl Ext for Bars {
                 cx.set_counter("bonus", 0);
                 cx.set_counter("lives_shown", (fb.ext[1] >> 40) & 0xff);
                 cx.set_counter("cleared_shown", cleared);
-                // The clear: tapper_flow places the taps and him next.
+                // The stage's $4D13 puts the taps and the bars' ends in now
+                // (tapper.demo.001: E346's y 61 on 936, the bartender on
+                // 937); tapper_flow places him next, and them again.
+                place_bar_objects(cx, fb.ext[1] & 0xff, (fb.ext[3] >> 8) & 3);
                 fb.ext[0] = 1;
                 fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (DEMO_SETUP << 16) | (2 << 24);
                 cx.set_body(fid, fb);
