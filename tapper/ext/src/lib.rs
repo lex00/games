@@ -1782,10 +1782,23 @@ impl Ext for BarEnd {
 ///
 /// A customer's words (its record at E4B2 + 0x20 a customer): `ext[0]` its
 /// state plus 256 times its facing (+0, +0D: 1 on a bar whose tap is on the
-/// left), `ext[1]` its timer (+4), `ext[2]` its wait plus 256 times its
-/// drink (+2, +9), `ext[3]` its drink's turn plus 256 times the turns left
-/// (+3, +5).
+/// left), `ext[1]` its slot plus one (present.sprite_order: slot k's
+/// object E262 + 8k is sprite RAM entry 54 + 2k, so of two customers that
+/// overlap the higher slot is drawn over the lower, tapper.l4.001 frame
+/// 531), `ext[2]` its wait plus 256 times its drink (+2, +9), `ext[3]` its
+/// drink's turn plus 256 times the turns left (+3, +5), its slot (+0C) in
+/// byte 2 and its timer (+4) in byte 3 ([`cust_timer`]).
 pub struct Bars;
+
+/// A customer's timer (its record's +4), byte 3 of its `ext[3]`.
+fn cust_timer(c: &gp_sim::world::Body) -> i64 {
+    (c.ext[3] >> 24) & 0xff
+}
+
+/// Sets a customer's timer, a byte ([`cust_timer`]).
+fn set_cust_timer(c: &mut gp_sim::world::Body, t: i64) {
+    c.ext[3] = (c.ext[3] & !(0xff << 24)) | ((t & 0xff) << 24);
+}
 
 const BARS_PARAMS: &[Param] = &[
     Param::new("line", "fixed", "px"),
@@ -2327,6 +2340,7 @@ fn place_cast(cx: &mut ExtCx<'_>, scene: Option<Vec<BonusObj>>, drawn: Vec<Bonus
             {
                 b.ext[2] = (h.pic << 16) | (h.y << 24) | (h.pic << at);
             }
+            b.ext[1] = slot + 1;
             b.ext[3] = (slot << 16) | SCENE_CAST;
             cast.push((ck, slot, b));
         }
@@ -5585,7 +5599,7 @@ impl Ext for Bars {
                         let c = &mut bodies[j].1;
                         if !matches!(c.ext[0] & 0xff, 1..=3) {
                             c.ext[0] = (c.ext[0] & !0xff) | 6;
-                            c.ext[1] = 0xFF;
+                            set_cust_timer(c, 0xFF);
                         }
                     }
                 }
@@ -5687,7 +5701,7 @@ impl Ext for Bars {
                 // $09C7: pushed back, for 14 frames plus a draw of 0 to 20.
                 let r = draw_at_most(cx, "customer_wait_start", bp(cx, "pushed_spread"));
                 c.ext[0] = (c.ext[0] & !0xff) | 1;
-                c.ext[1] = bp(cx, "pushed_base") + r;
+                set_cust_timer(&mut c, bp(cx, "pushed_base") + r);
                 // $09E5: pushed back, the record's +14 picture.
                 let slot = (c.ext[3] >> 16) & 0xff;
                 let block = record_block(cx, flow.map_or(0, |(_, b)| (b.ext[3] >> 8) & 0xff));
@@ -5735,19 +5749,19 @@ impl Ext for Bars {
             };
             let state = c.ext[0] & 0xff;
             let facing = (c.ext[0] >> 8) & 1;
-            let t = (c.ext[1] - 1) & 0xff;
-            c.ext[1] = t;
+            let t = (cust_timer(&c) - 1) & 0xff;
+            set_cust_timer(&mut c, t);
             match state {
                 0 => {
                     if t == 0 {
                         c.ext[0] = (c.ext[0] & !0xff) | 5;
-                        c.ext[1] = bp(cx, "walk_frames");
+                        set_cust_timer(&mut c, bp(cx, "walk_frames"));
                     }
                 }
                 5 => {
                     if t == 0 {
                         c.ext[0] &= !0xff;
-                        c.ext[1] = wait;
+                        set_cust_timer(&mut c, wait);
                     } else {
                         let dx = if facing == 1 { -walk } else { walk };
                         c.x = Fx::from_int((c.x.floor() + dx) & 0xff);
@@ -5758,7 +5772,7 @@ impl Ext for Bars {
                         // $106B: a draw of 0 to 6, then drinking.
                         let _ = cx.draw("pushed_drink");
                         c.ext[0] = (c.ext[0] & !0xff) | 2;
-                        c.ext[1] = drink;
+                        set_cust_timer(&mut c, drink);
                         c.ext[3] = (c.ext[3] & !0xffff) | drink | (bp(cx, "drink_turns") << 8);
                     } else {
                         let a = ((full_speed >> 8) + 2) & 0xff;
@@ -5774,14 +5788,15 @@ impl Ext for Bars {
                             // table at $1BCE by the turns left less one
                             // ($1B8D to $1B95, the `sound_drink` rows).
                             ask(cx, "sound_drink", &[turns - 1]);
-                            c.ext[1] = c.ext[3] & 0xff;
+                            let turn = c.ext[3] & 0xff;
+                            set_cust_timer(&mut c, turn);
                             c.ext[3] = (c.ext[3] & !0xffff) | (c.ext[3] & 0xff) | ((turns - 1) << 8);
                         } else {
                             // $10C0: the empty mug, 3 above the line where
                             // the customer holds it, 16 toward the tap.
                             let r = draw_at_most(cx, "throw_wait", bp(cx, "throw_spread"));
                             c.ext[0] = (c.ext[0] & !0xff) | 3;
-                            c.ext[1] = r + bp(cx, "throw_base");
+                            set_cust_timer(&mut c, r + bp(cx, "throw_base"));
                             let hx = c.x.floor() + if facing == 1 { -16 } else { 16 };
                             // $10E2: the first of the 9 mug slots from E2FE
                             // whose y is 0, none when all are taken. A slot
@@ -5828,7 +5843,7 @@ impl Ext for Bars {
                 3 => {
                     if t == 0 {
                         c.ext[0] = (c.ext[0] & !0xff) | 4;
-                        c.ext[1] = bp(cx, "after_throw");
+                        set_cust_timer(&mut c, bp(cx, "after_throw"));
                         // $20DE, called at $1142: while the level has tips
                         // left (E72F), each throw counts E72E down; at 0 a
                         // tip is left on the bar ($20F4: 8 above the
@@ -5888,7 +5903,7 @@ impl Ext for Bars {
                 4 => {
                     if t == 0 {
                         c.ext[0] &= !0xff;
-                        c.ext[1] = wait;
+                        set_cust_timer(&mut c, wait);
                     }
                 }
                 // $11AA: watching the show, standing, its picture
@@ -5905,7 +5920,7 @@ impl Ext for Bars {
                     }
                     if t == 0 {
                         c.ext[0] &= !0xff;
-                        c.ext[1] = wait;
+                        set_cust_timer(&mut c, wait);
                     }
                 }
                 _ => {}
@@ -6181,11 +6196,12 @@ impl Ext for Bars {
                 // row's.
                 let pic = block.get(k * 32 + 0x10).copied().unwrap_or(row[2]);
                 c.ext[0] = (i64::from(left) << 8) | (flags << 16) | (pic << 24);
-                c.ext[1] = r + 16;
+                c.ext[1] = k as i64 + 1;
                 // The start row's second sprite (+4 to +7), copied in with
                 // the first ($160D): its picture and y, the held mug.
                 c.ext[2] = (row[6] << 16) | (row[4] << 24);
                 c.ext[3] = (k as i64) << 16;
+                set_cust_timer(&mut c, r + 16);
                 bodies.push((next_id, c));
                 added.push(next_id);
                 next_id += 1;
@@ -6285,6 +6301,13 @@ impl Ext for Bars {
         }
         cx.me.ext[0] = walk | (tip_count << 8) | (tips_left << 16) | (tip_setting << 24);
         cx.me.ext[1] = (cx.me.ext[1] & 0xff) | show.word();
+        // Each customer's word 1 is its slot plus one, its sprite RAM entry
+        // (present.sprite_order); one a clip's start placed comes without.
+        for (_, b) in &mut bodies {
+            if b.kind == cust_k {
+                b.ext[1] = ((b.ext[3] >> 16) & 0xff) + 1;
+            }
+        }
         for (id, b) in &bodies {
             if added.contains(id) {
                 continue;

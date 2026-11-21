@@ -228,13 +228,6 @@ ram = [0xE4B2, 0xE4BF, 0xE263, 0xE264]
 strides = [32, 32, 8, 8]
 
 [[slots.group.field]]
-note = "Not compared: its timer (+4)"
-path = "ext[1]"
-presentation = true
-ram = [0xE4B6]
-stride = 32
-
-[[slots.group.field]]
 note = "Not compared: its wait (+2) and drink (+9), and the mug it holds, its object's second sprite: picture (+6) and y (+4, 0 hidden)"
 path = "ext[2]"
 presentation = true
@@ -242,10 +235,10 @@ ram = [0xE4B4, 0xE4BB, 0xE268, 0xE266]
 strides = [32, 32, 8, 8]
 
 [[slots.group.field]]
-note = "Not compared: its drink's turn (+3), the turns left (+5) and its slot (+0C)"
+note = "Not compared: its drink's turn (+3), the turns left (+5), its slot (+0C) and its timer (+4). Its ext[1], its slot plus one for its sprite RAM entry, the hooks set from the slot"
 path = "ext[3]"
 presentation = true
-ram = [0xE4B5, 0xE4B7, 0xE4BE]
+ram = [0xE4B5, 0xE4B7, 0xE4BE, 0xE4B6]
 stride = 32
 
 [[slots.group.kind]]

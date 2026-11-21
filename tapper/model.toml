@@ -11578,6 +11578,7 @@ word = 1
 [levels.main.present.sprite_order.customer]
 at = 54
 step = 2
+word = 1
 
 [levels.main.present.sprite_order.dancer]
 at = 45
