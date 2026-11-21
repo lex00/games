@@ -350,7 +350,7 @@ apart = [
 [[look]]
 row = "confirm-level-2"
 clip = "tapper.l2.001"
-frames = [0, 326]
+frames = [0, 327]
 look = "game"
 approved = "2026-11-21"
 apart = [
@@ -681,6 +681,7 @@ apart = [
   [324, 0, 0],
   [325, 0, 0],
   [326, 0, 0],
+  [327, 0, 0],
 ]
 
 [[look]]
