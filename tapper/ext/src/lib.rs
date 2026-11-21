@@ -3177,8 +3177,11 @@ fn bonus_scene(cx: &ExtCx<'_>, fb: &gp_sim::world::Body, cleared: i64, done: boo
             let names = match at {
                 Some(at) if c >= at + 20 && ptr == unshaken => ["bartender_pic_win_1", "bartender_pic_win_2", "bartender_pic_win_3"],
                 Some(at) if c >= at + 76 && ptr != unshaken => ["bartender_pic_lose_1", "bartender_pic_lose_2", "bartender_pic_lose_3"],
-                Some(_) => ["bartender_pic_open_1", "bartender_pic_open_2", "bartender_pic_open_3"],
-                None => ["bartender_pic_wait_1", "bartender_pic_wait_2", "bartender_pic_wait_3"],
+                // A choice made by the last read of B or after a move is
+                // set ahead (at the read's frame); his pictures change on
+                // it, not before (tapper.bonus.002 frames 935 and 936).
+                Some(at) if c >= at => ["bartender_pic_open_1", "bartender_pic_open_2", "bartender_pic_open_3"],
+                _ => ["bartender_pic_wait_1", "bartender_pic_wait_2", "bartender_pic_wait_3"],
             };
             let (fl, fr) = (byte_of(cx, "bartender_flags"), byte_of(cx, "bartender_flags_right"));
             let pics = names.map(|n| byte_of(cx, n));
@@ -3214,6 +3217,9 @@ fn bonus_scene(cx: &ExtCx<'_>, fb: &gp_sim::world::Body, cleared: i64, done: boo
                 if c < at + 22 {
                     objs.push(beer(2, "beer_pic_spray", -2));
                 } else if c < at + 76 {
+                    // The can's top stays through the burst, its flags 0
+                    // ($28AC), until the can is opened (tapper.bonus.002).
+                    objs.push(BonusObj { flags: 0, ..beer(2, "beer_pic_spray", -2) });
                     // $28AD: the burst, its 27 objects (bonus_burst) put in
                     // from E2B2 one a frame, x by the can's, then from
                     // $28D9 taken away one a frame from the last; the
@@ -3240,6 +3246,26 @@ fn bonus_scene(cx: &ExtCx<'_>, fb: &gp_sim::world::Body, cleared: i64, done: boo
                     objs.push(beer(16, "beer_pic", -11));
                     objs[k].y = 0;
                     text = 5;
+                    // $2931 and $2934 call $3BFF twice: two drops (E2B2,
+                    // E2B6) from his feet, x 4 and 12 past his first
+                    // sprite, falling 1 each 2 frames for 40 frames, each
+                    // step turning bit $10 of both flags ($3C39, $3C3C);
+                    // a new call sets the first's flags again and leaves
+                    // the second's (the burst's last, $13, on the first
+                    // call); $2937 and $293B take them away
+                    // (tapper.bonus.002 from frame 1013).
+                    let t = c - (at + 76);
+                    if (0..80).contains(&t) {
+                        let (ty, tx) = place(ptr);
+                        let (call, k) = (t / 40, (t % 40) / 2);
+                        let first = byte_of(cx, "bonus_drop_flags");
+                        let turned = if k % 2 == 1 { first ^ 0x10 } else { first };
+                        let second = if k == 0 && call == 0 { first ^ 0x10 } else { turned };
+                        let pic = byte_of(cx, "bonus_drop_pic");
+                        for (m, (flags, dx)) in [(turned, 9), (second, 17)].into_iter().enumerate() {
+                            objs.push(BonusObj { at: 0xE2B2 + 4 * m as i64, y: ty + 32 - k, flags, pic, x: (tx + dx) & 0xff });
+                        }
+                    }
                 }
             }
         }

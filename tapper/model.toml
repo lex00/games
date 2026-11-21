@@ -428,6 +428,24 @@ description = "The bonus round pokes ($250C, $2511)"
 source = "tapper"
 asset = "bonus_colors"
 
+[assets.bonus_drop_flags]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the two drops' first flags after a loss ($3C13)"
+
+[assets.bonus_drop_flags.from]
+source = "tapper"
+asset = "bonus_drop_flags"
+
+[assets.bonus_drop_pic]
+kind = "rows"
+role = "graphics"
+description = "The bonus round: the two drops' picture after a loss ($3C17)"
+
+[assets.bonus_drop_pic.from]
+source = "tapper"
+asset = "bonus_drop_pic"
+
 [assets.bonus_objects]
 kind = "rows"
 role = "graphics"
@@ -2137,6 +2155,8 @@ beer_pic_spray = "beer_pic_spray"
 bonus_bandit_places = "bonus_bandit_places"
 bonus_burst = "bonus_burst"
 bonus_code = "bonus_code"
+bonus_drop_flags = "bonus_drop_flags"
+bonus_drop_pic = "bonus_drop_pic"
 bonus_objects = "bonus_objects"
 bonus_start = "bonus_start"
 customer_starts = "customer_starts"
@@ -11111,6 +11131,22 @@ note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stage
 
 [[evidence."assets.bonus_colors".refs]]
 at = "clip:tapper.l1.001"
+
+[evidence."assets.bonus_drop_flags"]
+source = "observed"
+confidence = 70
+note = "gp code listing --writes E2B2 to E2B9 on tapper.bonus.002 and gp query of its recording: $3BFF, called from $2931 and $2934, writes ld (iy+1),$03 at $3C13 and ld (iy+2),$6D at $3C17; rbtapper's offsets from sound_bonus_2b's ($3BFF to $3C16)"
+
+[[evidence."assets.bonus_drop_flags".refs]]
+at = "clip:tapper.bonus.002"
+
+[evidence."assets.bonus_drop_pic"]
+source = "observed"
+confidence = 70
+note = "gp code listing --writes E2B2 to E2B9 on tapper.bonus.002 and gp query of its recording: $3BFF, called from $2931 and $2934, writes ld (iy+1),$03 at $3C13 and ld (iy+2),$6D at $3C17; rbtapper's offsets from sound_bonus_2b's ($3BFF to $3C16)"
+
+[[evidence."assets.bonus_drop_pic".refs]]
+at = "clip:tapper.bonus.002"
 
 [evidence."assets.bonus_objects"]
 source = "observed"

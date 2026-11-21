@@ -1453,6 +1453,35 @@ rbtapper = 0x289C
 sutapper = 0x288E
 tappera = 0x288E
 
+# $3BFF, called twice after a loss ($2931, $2934): the two drops falling
+# from the bartender (E2B2 and E2B6), their first flags (ld (iy+1),$03)
+# and their picture (ld (iy+2),$6D).
+[[asset]]
+name = "bonus_drop_flags"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3C16
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x3C2D
+sutapper = 0x3C16
+tappera = 0x3C16
+
+[[asset]]
+name = "bonus_drop_pic"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3C1A
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x3C31
+sutapper = 0x3C1A
+tappera = 0x3C1A
+
 # The palette cycles a level's setup starts ($4937, by the bar shown; the
 # frame's $01CC steps them): lists of 3-byte steps, frames to wait, the
 # byte's offset from the cycle's base and the colour byte, to a 0 that
