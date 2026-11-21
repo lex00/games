@@ -3158,9 +3158,14 @@ fn bonus_scene(cx: &ExtCx<'_>, fb: &gp_sim::world::Body, cleared: i64, done: boo
     // The bandit's two sprites and his hand.
     let mut bandit = [BonusObj { at: 0xE226, y: 0, flags: bf, pic: 0, x: 0 }, BonusObj { at: 0xE22A, y: 0, flags: bf, pic: 0, x: 0 }];
     let mut hand = BonusObj { at: 0xE35A, y: 0, flags: hf, pic: 0, x: 0 };
-    if c < 53 {
-        // $253D: the round's first line while the cans wait ($2579).
+    // $253D: the round's first line while the cans wait ($2579), still up
+    // on the first shake's frame, its line going a frame after the bandit
+    // comes (tapper.bonus.001 frame 31).
+    if c <= 53 {
         text = 1;
+    }
+    if c < 53 {
+        // The cans wait: no bandit yet.
     } else if c < 53 + 5 * 29 {
         let f = (c - 53) % 29;
         let (ty, tx) = place(shaking);
@@ -3269,8 +3274,17 @@ fn bonus_scene(cx: &ExtCx<'_>, fb: &gp_sim::world::Body, cleared: i64, done: boo
                 // frames 1022 to 1041).
                 objs.push(beer(16, "beer_pic", -11));
                 objs[k].y = 0;
-                let t = c - at - 20;
-                text = if t < 10 || t >= 60 || ((t - 10) / 10) % 2 == 1 { 3 } else { 4 };
+                // The lines come a frame after the can and the points: the
+                // instructions stay up on the check's frame, and the blink
+                // runs a frame behind it (tapper.bonus.001 frames 956, 966).
+                let t = c - at - 21;
+                text = if t < 0 {
+                    2
+                } else if t < 10 || t >= 60 || ((t - 10) / 10) % 2 == 1 {
+                    3
+                } else {
+                    4
+                };
             } else {
                 // $284D: the can's top for 2 frames, the spray, then the
                 // can opened and the loss's line ($28F2).
