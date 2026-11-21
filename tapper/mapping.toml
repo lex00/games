@@ -666,6 +666,38 @@ number = 0
 when = "ram[0xE2E6] != 0 || (ram[0xE397] != 8 && ram[0xE397] != 9 && ram[0xE397] != 11)"
 
 [[field]]
+lookup = [[0, 138]]
+lookup_else = 0
+note = "Not compared: the level's intro as the hooks keep it, on the frame the setup's second half ($4B65) has drawn the stage ($5DF6) and cleared the level's RAM (E6F2 0, the bartender's object E2E6 empty, E397 a setup's state, as for the flow's word 0): the screen still shows the intro then, so the counter is one past the intro's count (138, at least 103 on any level) and the hooks take it to 0 on the next frame (counter stage_late). Loaded so a clip starting there (tapper.l1.001, tapper.l5.001) draws GET READY on its first frame. A start on a game's first setup frame, before its intro, reads the same and would load it too"
+path = "counters.intro"
+presentation = true
+ram = [0xE6F2]
+
+[[field.case]]
+number = 0
+when = "ram[0xE3BD] != 0"
+
+[[field.case]]
+number = 0
+when = "ram[0xE2E6] != 0 || (ram[0xE397] != 8 && ram[0xE397] != 9 && ram[0xE397] != 11)"
+
+[[field]]
+lookup = [[0, 1]]
+lookup_else = 0
+note = "Not compared: 1 on the same frame as counters.intro's 138, so the hooks take the intro to 0 on the next frame, when the screen shows the stage"
+path = "counters.stage_late"
+presentation = true
+ram = [0xE6F2]
+
+[[field.case]]
+number = 0
+when = "ram[0xE3BD] != 0"
+
+[[field.case]]
+number = 0
+when = "ram[0xE2E6] != 0 || (ram[0xE397] != 8 && ram[0xE397] != 9 && ram[0xE397] != 11)"
+
+[[field]]
 note = "Not compared: the level's layout, E3AF: bit k set puts bar k's tap on its left end. The setup reads it to draw the taps and to place the bartender ($4BF9). Above it the wait a script is in: $232B keeps the state it was called in at E3A8 and where it goes on at E3A9, and $5FE6 its registers from E39D (B at E39F), so a start inside $1CE1 knows its frame; then the lives, E4A7 ($1D71, $23AF)"
 path = "entities.flow[0].ext[1]"
 presentation = true
