@@ -734,6 +734,24 @@ description = "The bartender's pictures: a level's end, $50EF and $51A9: his and
 source = "tapper"
 asset = "end_hops"
 
+[assets.end_last_code]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: end script 0's last code ($48FC), searched for its waits"
+
+[assets.end_last_code.from]
+source = "tapper"
+asset = "end_last_code"
+
+[assets.end_last_start]
+kind = "rows"
+role = "behavior"
+description = "Where end script 0's last code is: the word it calls $48FC with ($4897)"
+
+[assets.end_last_start.from]
+source = "tapper"
+asset = "end_last_start"
+
 [assets.end_lift]
 kind = "rows"
 role = "graphics"
@@ -2134,6 +2152,8 @@ end_drop = "end_drop"
 end_gulp_code = "end_gulp_code"
 end_gulp_start = "end_gulp_start"
 end_hops = "end_hops"
+end_last_code = "end_last_code"
+end_last_start = "end_last_start"
 end_lift = "end_lift"
 end_pose_b = "end_pose_b"
 end_script_lists = "end_script_lists"
@@ -11366,6 +11386,22 @@ note = "gp-arcade's writes example on the level clips' logs (tapper.l1.001, l3, 
 
 [[evidence."assets.end_hops".refs]]
 at = "clip:tapper.l1.001"
+
+[evidence."assets.end_last_code"]
+source = "observed"
+confidence = 70
+note = "gp code listing of each set: end script 0 ($563D, $4881) calls $48FC last, at $4896 ($4A18 in rbtapper, $4A7E there), which waits 15, then 10 twice in a loop from B 2 ($4926) and returns; tapper.clear.001 starts in its last wait (E3A8 11, E3A9 $492C, B 1) and the setup ($4B3F) runs from its next frame"
+
+[[evidence."assets.end_last_code".refs]]
+at = "clip:tapper.clear.001"
+
+[evidence."assets.end_last_start"]
+source = "observed"
+confidence = 70
+note = "gp code listing of each set: end script 0 ($4881) calls $48FC at $4896 ($4A18 in rbtapper)"
+
+[[evidence."assets.end_last_start".refs]]
+at = "clip:tapper.clear.001"
 
 [evidence."assets.end_lift"]
 source = "observed"

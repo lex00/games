@@ -4191,16 +4191,23 @@ impl Ext for Bars {
         // 1, so $50EF returns, the script ends, and the setup runs on this
         // frame (tapper.clear.015: $570C's colours on its first frame,
         // $5404 on its second). The place (E3A9) and B (E39F) are read
-        // once, as a clip starts.
+        // once, as a clip starts. So too end script 0's last wait, the
+        // second of $48FC's waits of 10 (B at 1): $48FC returns, then
+        // $4881 and the script, $5681 has counted the level and the setup
+        // ($4B3F) waits this frame in $5E99 (tapper.clear.001: E3A9 $492C
+        // on its first frame, $5404's first wait on its second).
         let hops_done = state == 11
             && flow.is_some_and(|(_, b)| {
-                (b.ext[1] >> 16) & 0xffff != 0
-                    && wait_return(cx, "hops_code", "hops_start", 2) == Some((b.ext[1] >> 16) & 0xffff)
+                let place = (b.ext[1] >> 16) & 0xffff;
+                place != 0
                     && (b.ext[1] >> 32) & 0xff == 1
+                    && (wait_return(cx, "hops_code", "hops_start", 2) == Some(place)
+                        || wait_return(cx, "end_last_code", "end_last_start", 2) == Some(place))
             });
         // A start in an end script's last wait when a bonus round comes
         // next ($5681 with the levels cleared plus one at 2, 5 or 9 mod
-        // 13, or 0): script 1's last of $45E3's waits of 1 (B at 1), script
+        // 13, or 0): script 0's last of $48FC's waits of 10 (B at 1),
+        // script 1's last of $45E3's waits of 1 (B at 1), script
         // 2's $2DF7 wait of 15, script 3's last hop ($50EF's or $51A9's,
         // B at 1). In state 16 the wait has run out: the script returns on
         // this frame, $5681 counts the level and the bonus round ($2500)
@@ -4221,6 +4228,7 @@ impl Ext for Bars {
                     && ![8, 10, 12].contains(&sub)
                     && (b.ext[1] >> 8) & 0xff == 11
                     && match script {
+                        0 => b_reg == 1 && wait_return(cx, "end_last_code", "end_last_start", 2) == Some(place),
                         1 => b_reg == 1 && wait_return(cx, "end_gulp_code", "end_gulp_start", 1) == Some(place),
                         2 => wait_return(cx, "end_turn_code", "end_turn_start", 1) == Some(place),
                         3 => {

@@ -1597,6 +1597,35 @@ rbtapper = 0x4A46
 sutapper = 0x48C4
 tappera = 0x48C4
 
+# $48FC: end script 0's last code ($4881 calls it at $4896), searched for
+# its waits: one of 15, then two of 10 ($4926, B from 2), and it returns.
+[[asset]]
+name = "end_last_code"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x48FC
+count = 1
+width = 59
+
+[asset.at]
+rbtapper = 0x4A7E
+sutapper = 0x48FC
+tappera = 0x48FC
+
+# $4897: the word end script 0 calls $48FC with ($4896), its place.
+[[asset]]
+name = "end_last_start"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4897
+count = 1
+width = 2
+
+[asset.at]
+rbtapper = 0x4A19
+sutapper = 0x4897
+tappera = 0x4897
+
 [[asset]]
 name = "hops_code"
 format = "byte-rows"
