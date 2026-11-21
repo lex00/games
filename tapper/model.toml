@@ -2826,6 +2826,39 @@ value = 2
 
 [[levels.main.present.board.counters]]
 at = [28, 27]
+counter = "cleared_shown"
+digits = 2
+plus = 1
+
+[levels.main.present.board.counters.high]
+column = 4
+slot = "level_codes"
+
+[levels.main.present.board.counters.tile]
+slot = "level_codes"
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "mode"
+value = 0
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.counters.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "cleared_shown"
+value = 0
+
+[[levels.main.present.board.counters]]
+at = [28, 27]
 counter = "cleared"
 digits = 2
 plus = 1
@@ -2851,6 +2884,11 @@ value = 0
 cmp = "<"
 counter = "intro"
 value = 2
+
+[[levels.main.present.board.counters.when]]
+cmp = "<"
+counter = "cleared_shown"
+value = 0
 
 [[levels.main.present.board.counters]]
 at = [9, 27]
@@ -10693,6 +10731,10 @@ description = "The bonus round's line of text: 1 its first ($253D), 2 the four a
 [counters.cleared]
 description = "Levels cleared, E4A8: 0 at a game's start, one more at each level's end ($5681), bonus rounds included"
 
+[counters.cleared_shown]
+description = "The levels cleared as the HUD's level number shows them: E4A8 as the copy of a stage's screen ($5CED) last drew it, with the lives (counter lives_shown), so a level's clear, which counts E4A8 at once, shows the old number until the next stage (tapper.l1.001's last frame); -1 until the hooks first set it, when the HUD shows E4A8"
+start = -1
+
 [counters.coin_held]
 description = "The coin switch as the coin routine last saw it settled, 1 while a coin is held: E097 0 ($0213 to $0229, read four times a frame by the CTC's interrupt at $0158; 1 from the boot, $0095)"
 
@@ -10739,7 +10781,7 @@ description = "The extra life's every, as the instruction scene's close draws it
 description = "The first extra life's score, as the instruction scene's close draws it ($3360 to $3376): E00D and E00E, the defaults' 14th and 15th bytes that the boot copies ($0517), as two digits; tapper_bars sets it in the attract mode"
 
 [counters.intro]
-description = "The level's intro ($5404), counted by tapper_bars from the setup: 1 on the setup's frame, then the frames since plus 1 while the screen is cleared and its lines are up, 0 once the stage is drawn ($5DF6)"
+description = "The level's intro ($5404), counted by tapper_bars from the setup: 1 on the setup's frame, then the frames since plus 1 while the screen is cleared and its lines are up, one past its count on the frame the screen keeps it after the stage is drawn ($5DF6, counter stage_late), then 0"
 
 [counters.lives]
 description = "Lives, E4A7: 3 at a game's start ($4B22), one less when a life is lost ($23AF), one more at each extra-life score ($615D)"
@@ -10768,6 +10810,9 @@ description = "The bar shown, E3B8: 0 the saloon, 1 the sports bar, 2 the punk b
 
 [counters.stage]
 description = "The stage the setup's $5DF6 shows, the place of its screen among the words at $61ED: the levels cleared, from 26 on 13 to 25 again ($5DFC to $5E0B), which tapper_bars keeps"
+
+[counters.stage_late]
+description = "1 on the frame the level's intro ends and the stage is drawn ($5DF6): the screen still shows the intro then and the stage from the next frame, where tapper_bars sets it and the counter intro back to 0 (tapper.l1.001 and l5.001 start on that frame: GET READY on their first frame, the stage on their second)"
 
 [present.screen]
 size = [512, 480]
@@ -12607,6 +12652,14 @@ note = "gp code listing of tapper and rbtapper: the bonus round starts at $2500 
 
 [[evidence."assets.wait_call".refs]]
 at = "clip:tapper.bonus.001"
+
+[evidence."counters.cleared_shown.start"]
+source = "observed"
+confidence = 70
+note = "gp picture --shots on tapper.l1.001's last frame (the clear) and tapper.clear.001's first: the model counts the level at the clear and its HUD showed 2 where the original still shows 1; the number is drawn with a stage's screen, as the lives are; -1 marks it unset until the hooks give it the count"
+
+[[evidence."counters.cleared_shown.start".refs]]
+at = "clip:tapper.l1.001"
 
 [evidence."counters.lives_shown.start"]
 source = "observed"

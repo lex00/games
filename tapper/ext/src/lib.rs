@@ -4332,6 +4332,15 @@ impl Ext for Bars {
         // 3 ($2441): state 9, the level's setup again ($22F7, $4B3F), whose
         // $5F31 empties the objects on the next frame.
         let mut end_spawn: Vec<Body> = Vec::new();
+        // The intro's screen past the stage's draw (below, at the intro's
+        // end): the screen shows the stage only from the next frame, the
+        // one the setup places the bartender on (tapper.l1.001 and l5.001
+        // start on the stage's draw: GET READY on their first frame, the
+        // stage on their second).
+        if cx.counter("stage_late").is_some_and(|l| l > 0) {
+            cx.set_counter("stage_late", 0);
+            cx.set_counter("intro", 0);
+        }
         // State 8, a game's start ($4AEF, then the setup $4B3F), is a
         // setup as after a life lost.
         // Not on the frame a setup places the bartender (the flow's word
@@ -4570,8 +4579,17 @@ impl Ext for Bars {
             // setup, plus 1, and 0 once the stage is up.
             let total = 2 + 30 + 5 + if cleared == 0 { 100 } else { 0 };
             let intro = if left > 0 { total - left + 1 } else { 0 };
-            if cx.counter("intro") != Some(intro) {
-                cx.set_counter("intro", intro);
+            // The screen keeps the intro on the frame of the stage's draw
+            // and shows the stage from the next (tapper.l1.001 and l5.001
+            // start on the draw's frame: GET READY on it): the counter
+            // intro, which only the board's looks read, stays one past the
+            // intro's count until stage_late takes it to 0.
+            let shown = if left > 0 { intro } else { total + 1 };
+            if left <= 0 {
+                cx.set_counter("stage_late", 1);
+            }
+            if cx.counter("intro") != Some(shown) {
+                cx.set_counter("intro", shown);
             }
             // $5512, a game's first level: on the intro's frame 2 it copies
             // six sprites into the customer slots ($5567, from $55DC: y,
@@ -4616,8 +4634,10 @@ impl Ext for Bars {
                 cx.set_counter("stage", stage);
                 cx.set_counter("bonus", 0);
                 // The screen's copy ($5CED) draws the lives after it
-                // ($5D21): the HUD shows them as of this load.
+                // ($5D21): the HUD shows them as of this load, and the
+                // level's number with them.
                 cx.set_counter("lives_shown", (fb.ext[1] >> 40) & 0xff);
+                cx.set_counter("cleared_shown", cleared);
             }
             if left <= 0 && (fb.ext[3] >> 8) & 3 == 3 {
                 // The setup clears the level's RAM on this frame ($4B65) and
@@ -5245,6 +5265,7 @@ impl Ext for Bars {
                 cx.set_counter("stage", cleared);
                 cx.set_counter("bonus", 0);
                 cx.set_counter("lives_shown", (fb.ext[1] >> 40) & 0xff);
+                cx.set_counter("cleared_shown", cleared);
                 // The clear: tapper_flow places the taps and him next.
                 fb.ext[0] = 1;
                 fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (DEMO_SETUP << 16) | (2 << 24);
@@ -5913,6 +5934,7 @@ impl Ext for Bars {
                 // its copy draws the lives ($5D21).
                 if let Some((_, fb)) = flow {
                     cx.set_counter("lives_shown", (fb.ext[1] >> 40) & 0xff);
+                    cx.set_counter("cleared_shown", cleared);
                 }
                 if let Some((Some(id), _)) = tip.take() {
                     tips_gone.push(id);
@@ -6110,6 +6132,13 @@ impl Ext for Bars {
         // cleared, the lives and the bar shown as the hooks keep them.
         if cx.counter("mode") == Some(0) || demo {
             cx.set_counter("cleared", cleared);
+            // The level's number as the screen last drew it (with the
+            // lives, at a stage's draw): a level's clear counts E4A8 at
+            // once but the HUD keeps the old number until the next stage
+            // (tapper.l1.001's last frame). A clip's start shows the count.
+            if cx.counter("cleared_shown").is_none_or(|v| v < 0) {
+                cx.set_counter("cleared_shown", cleared);
+            }
             if let Some(fb) = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)) {
                 let (lives, shown) = (lives_now.unwrap_or((fb.ext[1] >> 40) & 0xff), (fb.ext[3] >> 8) & 3);
                 cx.set_counter("lives", lives);
