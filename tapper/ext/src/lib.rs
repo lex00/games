@@ -1462,6 +1462,15 @@ fn set_attract_screen(cx: &mut ExtCx<'_>) {
 
 impl Ext for Flow {
     fn step(&self, cx: &mut ExtCx<'_>) {
+        // The credit line as the screen shows it: the coin routine counts
+        // E011 in the CTC's interrupt, and the main loop's pass redraws
+        // the line ($03EA) on the next frame (tapper.attract.001: the coin
+        // counted on 762, CREDIT 1 and PRESS 1 PLAYER on 763). The board
+        // reads credits_shown, the credits as the last frame ended.
+        let before = cx.counter("credits").unwrap_or(0);
+        if cx.counter("credits_shown") != Some(before) {
+            cx.set_counter("credits_shown", before);
+        }
         let credits = Self::coin(cx);
         let done = Self::out_of_game(cx, credits);
         set_attract_screen(cx);

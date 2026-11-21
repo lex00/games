@@ -2892,7 +2892,7 @@ value = 0
 
 [[levels.main.present.board.counters]]
 at = [9, 27]
-counter = "credits"
+counter = "credits_shown"
 digits = 1
 
 [levels.main.present.board.counters.high]
@@ -10472,7 +10472,7 @@ value = 1
 
 [[levels.main.present.board.texts.when]]
 cmp = "=="
-counter = "credits"
+counter = "credits_shown"
 value = 0
 
 [[levels.main.present.board.texts.when]]
@@ -10496,7 +10496,7 @@ value = 1
 
 [[levels.main.present.board.texts.when]]
 cmp = "=="
-counter = "credits"
+counter = "credits_shown"
 value = 1
 
 [[levels.main.present.board.texts.when]]
@@ -10520,7 +10520,7 @@ value = 1
 
 [[levels.main.present.board.texts.when]]
 cmp = ">="
-counter = "credits"
+counter = "credits_shown"
 value = 2
 
 [[levels.main.present.board.texts.when]]
@@ -11170,6 +11170,9 @@ description = "Coins put in toward the next credit, E012 ($0242 to $0255): at th
 
 [counters.credits]
 description = "Credits, E011: one more at each coin with the defaults' coinage ($024C to $0253), at most 9 ($0164), one less at a one-player start ($5860)"
+
+[counters.credits_shown]
+description = "The credits as the credit line shows them: E011 as the last frame ended, set by tapper_flow before the frame's coin, since the coin routine counts in the CTC's interrupt and the main loop redraws the line ($03EA) on the next frame (tapper.attract.001: counted on 762, drawn on 763)"
 
 [counters.cycle_index]
 description = "The next step of the cycles' lists, as their pointer (E11F) stands from their start (E11D), 3 bytes a step"
