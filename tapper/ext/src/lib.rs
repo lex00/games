@@ -3217,14 +3217,23 @@ fn bonus_scene(cx: &ExtCx<'_>, fb: &gp_sim::world::Body, cleared: i64, done: boo
                     // $28AD: the burst, its 27 objects (bonus_burst) put in
                     // from E2B2 one a frame, x by the can's, then from
                     // $28D9 taken away one a frame from the last; the
-                    // first stays until the can is opened.
+                    // first stays until the can is opened. After each odd
+                    // step of either loop $49A3 turns bit $10 of every
+                    // slot's flags, so an object's bit counts the odd
+                    // put-in steps from its own on and the odd take-away
+                    // steps so far.
                     let t = c - (at + 22);
                     let rows = cx.table("bonus_burst");
+                    // The odd numbers from a to b.
+                    let odd = |a: i64, b: i64| if b < a { 0 } else { (b + 1) / 2 - a / 2 };
+                    let (put, taken) = ((t - 1).min(26), t - 28);
                     for m in 0..27i64 {
                         let shown = t > m && (m == 0 || t < 55 - m);
                         let r = rows.get(usize::try_from(4 * m).unwrap_or(0)..usize::try_from(4 * m + 4).unwrap_or(0));
                         if let (true, Some(r)) = (shown, r) {
-                            objs.push(BonusObj { at: 0xE2B2 + 4 * m, y: r[0], flags: r[1], pic: r[2], x: (r[3] + cxp) & 0xff });
+                            let turns = odd(m, put) + odd(0, taken);
+                            let flags = r[1] ^ (0x10 * (turns & 1));
+                            objs.push(BonusObj { at: 0xE2B2 + 4 * m, y: r[0], flags, pic: r[2], x: (r[3] + cxp) & 0xff });
                         }
                     }
                 } else {
