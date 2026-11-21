@@ -10700,7 +10700,7 @@ value = 2
 [[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "attract_frames"
-value = 352
+value = 353
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
@@ -10729,7 +10729,7 @@ value = 2
 [[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "attract_frames"
-value = 352
+value = 353
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
@@ -10753,7 +10753,7 @@ value = 2
 [[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "attract_frames"
-value = 490
+value = 491
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
@@ -10782,7 +10782,7 @@ value = 2
 [[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "attract_frames"
-value = 490
+value = 491
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
@@ -10806,7 +10806,7 @@ value = 2
 [[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "attract_frames"
-value = 551
+value = 552
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
@@ -10835,7 +10835,7 @@ value = 2
 [[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "attract_frames"
-value = 551
+value = 552
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
@@ -10859,7 +10859,7 @@ value = 2
 [[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "attract_frames"
-value = 624
+value = 625
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
@@ -10888,7 +10888,7 @@ value = 2
 [[levels.main.present.board.texts.when]]
 cmp = ">="
 counter = "attract_frames"
-value = 624
+value = 625
 
 [[levels.main.present.board.texts.when]]
 cmp = "<"
