@@ -1416,6 +1416,13 @@ fn logo_frames(cx: &ExtCx<'_>) -> Option<i64> {
 /// logo's until attract_demo frames in, then the demo's ($4AAA), and 0 out
 /// of the attract mode.
 fn set_attract_screen(cx: &mut ExtCx<'_>) {
+    // The self-test's colour bars ($C64A) stay in video RAM through the
+    // boot and the logo's first frame, on which $3D76 asks for its screen
+    // (E395); the vblank's $5CED copies it on the next. So the bars go on
+    // the frame after the one the logo's screen was first chosen on.
+    if cx.counter("boot_bars").is_some_and(|b| b > 0) && cx.counter("attract_screen") == Some(1) {
+        cx.set_counter("boot_bars", 0);
+    }
     let t = (cx.me.ext[2] & ATTRACT_MASK) >> ATTRACT_SHIFT;
     let state = cx.me.ext[3] & 0xff;
     // The demo's setup ($5A64's next frame, the flow's sub DEMO_SETUP at

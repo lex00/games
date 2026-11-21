@@ -2332,6 +2332,24 @@ rbtapper = 0x2F00
 sutapper = 0x2EEC
 tappera = 0x2EEC
 
+# The self-test's colour bars: the 16 words $C64A reads from $C6AA
+# ($C64F, ld ix,$c6aa), each written twice side by side across each of
+# video RAM's 30 rows. rbtapper's routine reads them from $C82A ($C7CF) and
+# tappera's from $C69A ($C63F), each found by gp code listing --writes F802
+# over a clip from power-on; sutapper's at the same place as tapper's.
+[[asset]]
+name = "boot_bars"
+format = "byte-rows"
+region = "maincpu"
+offset = 0xC6AA
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0xC82A
+sutapper = 0xC6AA
+tappera = 0xC69A
+
 # The attract mode's two screens, each the address $5CED copies $780 bytes
 # from once E395 holds it: the logo's, which $3D76 sets ($3D8A), and the
 # demo's, which $4AAA sets ($4AE7). rbtapper's program sets them from its

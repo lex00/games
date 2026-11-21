@@ -554,6 +554,15 @@ description = "The bonus round: the win's second line, which blinks ($27CB, $283
 source = "tapper"
 asset = "bonus_text_win_2"
 
+[assets.boot_bars]
+kind = "rows"
+role = "graphics"
+description = "The self-test's colour bars ($C64A, called at $C779 in the boot): 16 words, each a cell's tile code and high byte, written twice side by side across each of the 30 rows of video RAM; they stay on the screen until the logo's screen is copied in (the program's table at $C6AA, lifted from the player's romset)"
+
+[assets.boot_bars.from]
+source = "tapper"
+asset = "boot_bars"
+
 [assets.credit_color]
 kind = "rows"
 role = "graphics"
@@ -2910,6 +2919,23 @@ value = 1
 cmp = "<"
 counter = "intro"
 value = 2
+
+[[levels.main.present.board.looks]]
+clear = true
+palette = "board_palette"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 76
+slot = "logo_color_7c"
+
+[[levels.main.present.board.looks.when]]
+cmp = ">"
+counter = "boot_bars"
+value = 0
 
 [[levels.main.present.board.looks]]
 clear = true
@@ -9987,6 +10013,484 @@ cmp = "<"
 counter = "intro"
 value = 2
 
+[[levels.main.present.board.repeats]]
+at = [0, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 1
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [1, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 1
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [2, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 3
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 2
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [3, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 3
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 2
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [4, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 5
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 4
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [5, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 5
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 4
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [6, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 7
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 6
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [7, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 7
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 6
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [8, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 9
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 8
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [9, 0]
+counter = "boot_bars"
+most = 27
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 9
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 8
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [9, 28]
+counter = "boot_bars"
+most = 2
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 9
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 8
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [9, 27]
+counter = "boot_bars"
+most = 1
+
+[levels.main.present.board.repeats.high]
+column = 9
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 8
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats.when]]
+cmp = "=="
+counter = "mode"
+value = 0
+
+[[levels.main.present.board.repeats]]
+at = [10, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 11
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 10
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [11, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 11
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 10
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [12, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 13
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 12
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [13, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 13
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 12
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [14, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 15
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 14
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [15, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 15
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 14
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [16, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 17
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 16
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [17, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 17
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 16
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [18, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 19
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 18
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [19, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 19
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 18
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [20, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 21
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 20
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [21, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 21
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 20
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [22, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 23
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 22
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [23, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 23
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 22
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [24, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 25
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 24
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [25, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 25
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 24
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [26, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 27
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 26
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [27, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 27
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 26
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [28, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 29
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 28
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [29, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 29
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 28
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [30, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 31
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 30
+slot = "boot_bars"
+
+[[levels.main.present.board.repeats]]
+at = [31, 0]
+counter = "boot_bars"
+most = 30
+step = [0, 1]
+
+[levels.main.present.board.repeats.high]
+column = 31
+slot = "boot_bars"
+
+[levels.main.present.board.repeats.tile]
+column = 30
+slot = "boot_bars"
+
 [[levels.main.present.board.texts]]
 at = [2, 5]
 
@@ -11155,6 +11659,10 @@ description = "1 from the bonus round's start ($2500, called at $569D) to its en
 [counters.bonus_text]
 description = "The bonus round's line of text: 1 its first ($253D), 2 the four after the shuffle ($26BF), 3 the win's two, 4 the win's first alone as the second blinks ($2830), 5 the loss's ($28F2), 0 none; tapper_bars sets it each frame"
 
+[counters.boot_bars]
+description = "30 while the screen still shows the self-test's colour bars ($C64A in the boot), the rows of them drawn; 0 from the logo's first screen on. tapper_flow clears it on the logo's second frame, when the vblank's $5CED has copied the logo's screen ($3D76 sets E395 on the frame before)"
+start = 30
+
 [counters.cleared]
 description = "Levels cleared, E4A8: 0 at a game's start, one more at each level's end ($5681), bonus rounds included"
 
@@ -11718,6 +12226,14 @@ note = "gp code listing of $2500 to $296F, and gp-arcade's writes example on tap
 
 [[evidence."assets.bonus_text_win_2".refs]]
 at = "clip:tapper.bonus.001"
+
+[evidence."assets.boot_bars"]
+source = "observed"
+confidence = 70
+note = "gp code listing --writes F000, F802 over tapper.poweron.001 (frames 0 to 150): the boot's $C749 calls $C64A ($C779), which writes video RAM from F000 with the 16 words at $C6AA, each twice, 30 rows ($C64F to $C66A), then loads the board's colours ($616D through $600F, $C697) and F800 0 ($C69E); gp picture --shots on tapper.poweron.001 frames 0 to 40 and tapper.attract.001 frames 0 to 2 show the 16 bars until the logo's screen. rbtapper's from $C82A ($C7CA, on tapper.rb.attract.001), tappera's from $C69A ($C63A)"
+
+[[evidence."assets.boot_bars".refs]]
+at = "clip:tapper.poweron.001"
 
 [evidence."assets.credit_color"]
 source = "observed"
@@ -13082,6 +13598,14 @@ note = "gp code listing of tapper and rbtapper: the bonus round starts at $2500 
 
 [[evidence."assets.wait_call".refs]]
 at = "clip:tapper.bonus.001"
+
+[evidence."counters.boot_bars.start"]
+source = "observed"
+confidence = 70
+note = "gp picture --shots on tapper.poweron.001: from power-on the original's screen shows the self-test's colour bars ($C64A) until the logo's screen is copied in; 30, the rows of them, so the model starts showing them"
+
+[[evidence."counters.boot_bars.start".refs]]
+at = "clip:tapper.poweron.001"
 
 [evidence."counters.cleared_shown.start"]
 source = "observed"

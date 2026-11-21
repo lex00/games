@@ -682,6 +682,18 @@ number = 0
 when = "ram[0xE2E6] != 0 || (ram[0xE397] != 8 && ram[0xE397] != 9 && ram[0xE397] != 11)"
 
 [[field]]
+lookup = [[0, 30]]
+lookup_else = 0
+note = "Not compared: the self-test's colour bars still on the screen, 30 (their rows) in the boot: the game's state E397 is 0 and its mode E3BD 0 only from power-on to the logo's start ($22B8 sets E3BD 1 and state 1; tapper.attract.001 and tapper.demo.001 start there, on recording frame 145). Loaded so such a clip draws the bars on its first frames, as the original's screen shows them until the logo's screen is copied in"
+path = "counters.boot_bars"
+presentation = true
+ram = [0xE397]
+
+[[field.case]]
+number = 0
+when = "ram[0xE3BD] != 0"
+
+[[field]]
 lookup = [[0, 1]]
 lookup_else = 0
 note = "Not compared: 1 on the same frame as counters.intro's 138, so the hooks take the intro to 0 on the next frame, when the screen shows the stage"
