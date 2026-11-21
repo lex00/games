@@ -3557,6 +3557,20 @@ fn lost_pose(cx: &mut ExtCx<'_>, pb: &mut gp_sim::world::Body, table: &str, star
     }
 }
 
+/// $5512, a game's first level: the six sprites $5567 copies into the
+/// customer slots from $55DC (y, flags, picture, x each), as bodies of
+/// kind legend. tapper_bars' own table instr_objects holds them.
+fn legend_spawn(cx: &ExtCx<'_>, spawn: &mut Vec<gp_sim::world::Body>) {
+    let Some(lk) = cx.kind("legend") else { return };
+    let objs = cx.table("instr_objects").to_vec();
+    for o in objs.chunks(4).filter(|o| o.len() == 4 && o[0] != 0) {
+        let mut b = gp_sim::systems::new_body(cx.spec, cx.world, lk, Fx::from_int(o[3]), Fx::from_int(o[0]), false);
+        b.ext[1] = o[1];
+        b.ext[2] = o[2];
+        spawn.push(b);
+    }
+}
+
 /// The bartender above GET READY TO SERVE ($5404): `Some(false)` his
 /// pose at the tap as $543D sets it, `Some(true)` the one $5489 sets 30
 /// frames on, `None` all six objects emptied ($54DB's $5F31). The
@@ -4600,7 +4614,19 @@ impl Ext for Bars {
             };
             fb.ext[3] = (fb.ext[3] & !0xffff_ffff) | 15 | (shown << 8) | (5 << 16) | (wait << 24);
             // The setup's frame: the intro's first ($5404 runs on the next).
-            cx.set_counter("intro", 1);
+            // A game's first level's screen is a frame ahead of the count:
+            // the original's is cleared on the setup's frame, its lines up
+            // on the next, cleared again on the intro's frame 101 and GET
+            // READY on 102 (tapper.start.001 frames 1, 2, 101 and 102),
+            // its stage drawn on the same frame as the others' (138).
+            cx.set_counter("intro", if cleared == 0 { 2 } else { 1 });
+            // $5512's six sprites ($5567, on the intro's frame 2): the
+            // screen shows objects a frame on, so they are made here to be
+            // seen on that frame (tapper.start.001 frame 2, tapper.die.001
+            // 133).
+            if cleared == 0 {
+                legend_spawn(cx, &mut end_spawn);
+            }
             let at = if cleared < 26 { cleared } else { in13 + 13 };
             let layouts = flow_table(cx, "layouts");
             if let Some(&l) = layouts.get(usize::try_from(at).unwrap_or(0)) {
@@ -4620,7 +4646,10 @@ impl Ext for Bars {
             // the stage is drawn; the counter intro is the frames since the
             // setup, plus 1, and 0 once the stage is up.
             let total = 2 + 30 + 5 + if cleared == 0 { 100 } else { 0 };
-            let intro = if left > 0 { total - left + 1 } else { 0 };
+            // One more in a game's first level (its screen a frame ahead,
+            // at the setup above).
+            let ahead = i64::from(cleared == 0);
+            let intro = if left > 0 { total - left + 1 + ahead } else { 0 };
             // The screen keeps the intro on the frame of the stage's draw
             // and shows the stage from the next (tapper.l1.001 and l5.001
             // start on the draw's frame: GET READY on it): the counter
@@ -4635,20 +4664,15 @@ impl Ext for Bars {
             }
             // $5512, a game's first level: on the intro's frame 2 it copies
             // six sprites into the customer slots ($5567, from $55DC: y,
-            // flags, picture, x each), and 100 frames on ($5575) $5F31
-            // empties them.
+            // flags, picture, x each; made on the setup's frame, above),
+            // and 100 frames on ($5575) $5F31 empties them. The screen
+            // shows objects a frame on, and the original's is without them
+            // 100 frames after the setup's (tapper.start.001 frame 101), so
+            // they go on the frame before, the count 101 (a frame ahead).
             if cleared == 0
                 && let Some(lk) = cx.kind("legend")
             {
-                if intro == 2 {
-                    let objs = cx.table("instr_objects").to_vec();
-                    for o in objs.chunks(4).filter(|o| o.len() == 4 && o[0] != 0) {
-                        let mut b = gp_sim::systems::new_body(cx.spec, cx.world, lk, Fx::from_int(o[3]), Fx::from_int(o[0]), false);
-                        b.ext[1] = o[1];
-                        b.ext[2] = o[2];
-                        end_spawn.push(b);
-                    }
-                } else if intro == 102 || intro == 0 {
+                if intro == 101 || intro == 0 {
                     let ids: Vec<usize> =
                         cx.world.bodies.iter().enumerate().filter(|(_, b)| b.alive && b.kind == lk).map(|(i, _)| i).collect();
                     for id in ids {
@@ -4661,13 +4685,21 @@ impl Ext for Bars {
             // pour's last picture 30 frames on ($5489), and $54DB's $5F31
             // empties him as the stage comes (tapper.l5.001: 5642, 5672
             // and 5677).
-            if left == 35 || left == 5 || left <= 0 {
+            if left == 35 || left == 5 || left <= 1 {
                 let pose = match left {
                     35 => Some(false),
                     5 => Some(true),
                     _ => None,
                 };
                 intro_pose(cx, pose, &mut end_spawn);
+            }
+            // The screen shows the objects as they stand a frame on: on the
+            // stage's draw the original's shows the taps $4D13 puts up and
+            // not the intro's bartender (tapper.start.001 frame 138,
+            // tapper.die.001 269, tapper.get-ready-screen.001 134), so both
+            // change here, the frame before.
+            if left == 1 {
+                place_bar_objects(cx, fb.ext[1] & 0xff, (fb.ext[3] >> 8) & 3);
             }
             if left <= 0 {
                 // $4B6E's $5DF6 draws the level's stage, its screen's
