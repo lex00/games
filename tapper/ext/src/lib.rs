@@ -2441,6 +2441,15 @@ fn place_scene(cx: &mut ExtCx<'_>, ok: usize, mut want: Vec<BonusObj>) {
     place_objects(cx, sk, &cust);
 }
 
+/// Whether this is state 2's frame of the attract mode, the one after the
+/// instruction scene ($3CD8 set it as the scene ended): the board shows
+/// none of the scene's objects, the bartender and the taps gone too
+/// (tapper.demo.001 frame 935), until the next setup's taps.
+fn scene_closed(cx: &ExtCx<'_>) -> bool {
+    cx.counter("mode") == Some(1)
+        && cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.alive && b.kind == k)).is_some_and(|fb| fb.ext[3] & 0xff == 2)
+}
+
 /// scene_frame, `back` frames from the flow's count.
 fn scene_frame_at(cx: &ExtCx<'_>, back: i64) -> Option<i64> {
     if cx.counter("mode") != Some(1) {
@@ -2449,9 +2458,9 @@ fn scene_frame_at(cx: &ExtCx<'_>, back: i64) -> Option<i64> {
     let k = cx.kind("flow")?;
     let fb = cx.world.bodies.iter().find(|b| b.alive && b.kind == k)?;
     // State 2's frame ($3CD8 set it as the scene ended): the board shows
-    // the scene's last objects, which $5A64 empties on the next.
+    // none of the scene's objects (scene_closed).
     if fb.ext[3] & 0xff == 2 {
-        return Some(i64::MAX / 2);
+        return None;
     }
     if fb.ext[3] & 0xff != 6 || in_demo(cx) {
         return None;
@@ -3864,8 +3873,13 @@ impl Ext for Bars {
             // The instruction scene's objects ($2EE0, state 6); none
             // elsewhere in the attract mode.
             if let Some(ok) = cx.kind("bonus_object") {
-                let scene = scene_ram_frame(cx).map(|n| demo_scene(cx, n));
-                let drawn = scene_ram_frame(cx).map(|n| demo_scene(cx, n)).unwrap_or_default();
+                // From the board's first frame of the scene (scene_frame's
+                // 0), the frame after the code first writes them: on RAM
+                // frame 0 the board still shows none (tapper.demo.001
+                // frames 219 and 1709).
+                let n = scene_ram_frame(cx).filter(|_| scene_frame(cx).is_some());
+                let scene = if scene_closed(cx) { Some(Vec::new()) } else { n.map(|n| demo_scene(cx, n)) };
+                let drawn = scene.clone().unwrap_or_default();
                 let want = place_cast(cx, scene, drawn);
                 place_scene(cx, ok, want);
             }
@@ -5360,6 +5374,14 @@ impl Ext for Bars {
                 fb.ext[0] = 0;
                 cx.set_body(fid, fb);
                 demo_still = true;
+                // The screen shows the objects a frame on: the original's
+                // shows the taps the setup's $4D13 puts up on this frame
+                // (tapper.demo.001 frame 936), so they go up now, after
+                // $5F31 emptied the scene's; the setup's next frame puts
+                // them in again with the stage's layout.
+                if let Some(&l) = flow_table(cx, "layouts").get(usize::try_from(cleared).unwrap_or(0)) {
+                    place_bar_objects(cx, l, (fb.ext[3] >> 8) & 3);
+                }
             } else if state == 15 && sub == DEMO_SETUP && count == 1 {
                 for (n, (_, t)) in timers.iter_mut().enumerate() {
                     t.ext[0] = 0;
