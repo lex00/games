@@ -3256,11 +3256,14 @@ fn bonus_scene(cx: &ExtCx<'_>, fb: &gp_sim::world::Body, cleared: i64, done: boo
             };
             if ptr == unshaken {
                 // $27C2: the can opened, the win's lines, then the second
-                // blinking every 10 frames from 10 on ($282E).
+                // blinking every 10 frames from 10 on ($282E): six turns
+                // of B ($2830, off when B is even), the last on from 60,
+                // then $296F with both lines left up (tapper.bonus.001
+                // frames 1022 to 1041).
                 objs.push(beer(16, "beer_pic", -11));
                 objs[k].y = 0;
                 let t = c - at - 20;
-                text = if t < 10 || ((t - 10) / 10) % 2 == 1 { 3 } else { 4 };
+                text = if t < 10 || t >= 60 || ((t - 10) / 10) % 2 == 1 { 3 } else { 4 };
             } else {
                 // $284D: the can's top for 2 frames, the spray, then the
                 // can opened and the loss's line ($28F2).
@@ -6314,7 +6317,15 @@ impl Ext for Bars {
         // body, one gone (y 0, or out of the round) is removed.
         if let Some(ok) = cx.kind("bonus_object") {
             let in_round = bonus_objs.is_some();
-            let (mut want, text) = bonus_objs.unwrap_or_default();
+            let (mut want, mut text) = bonus_objs.unwrap_or_default();
+            // When the round returns ($296F's 15 frames), its last line stays
+            // on the screen until the next setup draws the stage ($5DF6
+            // clears counter bonus): tapper.bonus.001 frames 1032 to 1041.
+            // Only once the round draws nothing: the loss's spray has no line
+            // while its objects are up.
+            if text == 0 && want.is_empty() && cx.counter("bonus") == Some(1) {
+                text = cx.counter("bonus_text").unwrap_or(0);
+            }
             if !in_round {
                 want.extend(pour_layers(cx));
                 if let Some(n) = scene_frame(cx) {
