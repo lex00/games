@@ -3371,6 +3371,13 @@ fn bonus_scene(cx: &ExtCx<'_>, fb: &gp_sim::world::Body, cleared: i64, done: boo
                             objs.push(BonusObj { at: 0xE2B2 + 4 * m as i64, y: ty + 32 - k, flags, pic, x: (tx + dx) & 0xff });
                         }
                     }
+                    // $293F to $296D: the can that wasn't shaken (the first
+                    // from E262 whose second sprite's flags are 0) blinks,
+                    // its y 0 a frame and back a frame, 12 times, before
+                    // $296F's wait (tapper.bonus.002 frames 1093 to 1115).
+                    if (80..104).contains(&t) && (t - 80) % 2 == 0 {
+                        objs[usize::try_from(2 * unshaken).unwrap_or(0)].y = 0;
+                    }
                 }
             }
         }
