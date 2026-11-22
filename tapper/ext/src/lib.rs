@@ -812,6 +812,13 @@ impl Bartender {
             *ev = Pose::SetupFrame;
             return;
         }
+        // The punk bar's setup (E3B8 2) waits that frame too: its $4937
+        // ($4C4B) waits in $5E99, so E397 is still 11 and $0660 runs
+        // none of him, his standing ($2231) neither (tapper.l6.001: E706
+        // 0 and picture $34 on 7454, 6 and $35 on 7455).
+        if flow.is_some_and(|b| b.ext[2] == 4 && (b.ext[3] >> 8) & 3 == 2) {
+            return;
+        }
         *ev = Pose::Play;
         // The demo's presses: $59DD runs first on every frame of state 3,
         // whatever the play routine then does.
