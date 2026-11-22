@@ -6403,6 +6403,35 @@ impl Ext for Bars {
             if cx.counter("bonus_text") != Some(text) {
                 cx.set_counter("bonus_text", text);
             }
+            // E2E6 is the bartender's own object, sprite RAM entry 87, the
+            // player's (present.sprite_order): in a loss the burst's 14th
+            // row ($28AD) is put there. As a bonus_object it wanted the
+            // entry the player (at y 0 through the round) had, and was
+            // drawn under the row before it, so the player draws it, as
+            // the instruction scene's bartender does (place_cast); the
+            // burst's 14th row went under its 13th (tapper.bonus.002
+            // frames 973 to 1000).
+            if in_round
+                && let Some(pk) = cx.kind("player")
+                && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.alive && b.kind == pk).map(|(i, b)| (i, *b))
+            {
+                let mut b = pb;
+                match want.iter().position(|o| o.at == 0xE2E6) {
+                    Some(k) => {
+                        let o = want.remove(k);
+                        b.x = Fx::from_int(o.x);
+                        b.y = Fx::from_int(o.y);
+                        b.ext[2] = (b.ext[2] & !(0xffff << 16)) | ((o.flags & 0xff) << 16) | ((o.pic & 0xff) << 24);
+                    }
+                    // $28D9 takes it away (its y 0) while the round's
+                    // other objects are still up.
+                    None if !want.is_empty() => b.y = Fx::ZERO,
+                    None => {}
+                }
+                if b.x != pb.x || b.y != pb.y || b.ext != pb.ext {
+                    cx.set_body(pid, b);
+                }
+            }
             place_scene(cx, ok, want);
         }
     }
