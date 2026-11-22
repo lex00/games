@@ -122,6 +122,9 @@ enum Pose {
     Slide { n: i64, phase: i64 },
 }
 
+/// A sprite's mirror bit in its object's flags (+1).
+const MIRROR_FLAG: i64 = 0x10;
+
 /// One of the game's 4-byte objects: y, flags, picture, x.
 #[derive(Clone, Copy, Default, Debug)]
 struct Obj {
@@ -4911,6 +4914,15 @@ impl Ext for Bars {
                         pb.x = Fx::from_int(nx);
                         if let Some(k) = cust {
                             bodies[k].1.x = Fx::from_int(if left { nx - 8 } else { nx + 8 });
+                            // $1E37 to $1E58: he turns to slide with him,
+                            // mirrored (flags bit 4) unless the tap is on
+                            // the left.
+                            let m = MIRROR_FLAG << 16;
+                            if left {
+                                bodies[k].1.ext[0] &= !m;
+                            } else {
+                                bodies[k].1.ext[0] |= m;
+                            }
                         }
                         knock_at = Some(nx);
                     } else if n > 51 && phase == 0 {
@@ -4919,6 +4931,26 @@ impl Ext for Bars {
                         pb.x = Fx::from_int(if on { nx } else { (nx + step) & 0xff });
                         if let Some(k) = cust {
                             bodies[k].1.x = Fx::from_int((bodies[k].1.x.floor() + step) & 0xff);
+                        }
+                        // $1F0D to $1F47: every 4 frames (E706, 4 from
+                        // $1E63) each customer he has slid past (x at or
+                        // beyond his; short of his when the tap is on the
+                        // left) turns: its picture's bit 0 flipped and
+                        // mirrored as the one who took him (tapper.l6.001:
+                        // 1450 on, 188,368's from 1482).
+                        if (n - 51) % 4 == 0 {
+                            let m = MIRROR_FLAG << 16;
+                            for (_, c) in bodies.iter_mut().filter(|(_, b)| b.kind == cust_k) {
+                                let cx0 = c.x.floor();
+                                if if left { cx0 < nx } else { cx0 >= nx } {
+                                    c.ext[0] ^= 1 << 24;
+                                    if left {
+                                        c.ext[0] &= !m;
+                                    } else {
+                                        c.ext[0] |= m;
+                                    }
+                                }
+                            }
                         }
                         if on {
                             knock_at = Some(nx);
@@ -4955,6 +4987,14 @@ impl Ext for Bars {
                         phase = 5;
                     } else if phase >= 5 {
                         phase += 1;
+                    }
+                    // $1FE6 to $2000, after his head goes: the 16
+                    // customers' pictures' bit 0 flipped 10 times, 4
+                    // frames apart (tapper.l6.001: 1518 to 1554).
+                    if (8..=44).contains(&phase_before) && (phase_before - 8) % 4 == 0 {
+                        for (_, c) in bodies.iter_mut().filter(|(_, b)| b.kind == cust_k) {
+                            c.ext[0] ^= 1 << 24;
+                        }
                     }
                     // Each step of the slide ($1E68 to $1EBB) knocks over
                     // the mugs of his bar he has reached: 8 short of him
@@ -5568,6 +5608,8 @@ impl Ext for Bars {
             dancers = [None; 9];
         }
         let mut throws: Vec<Body> = Vec::new();
+        // $1CE1 started this frame: its $1D3C emptied the bubbles.
+        let mut bubbles_gone = false;
         if playing {
         // $0B63: the bartender catches an empty mug within 15 each way.
         if let Some(pk) = player_k
@@ -6176,6 +6218,25 @@ impl Ext for Bars {
                 lost_pose(cx, &mut pb, "lost_pose_slide", 0x1D15, (0x1D1C, 0x1D20, 0x1D25));
                 cx.set_body(pid, pb);
             }
+            // $1CF7 to $1D13: each of the 16 customer slots from E262 takes
+            // its record's +10 picture (from E4C2, its walk's first) and the
+            // mug it holds goes (its second sprite's y, +4, 0); $1D3C
+            // empties the 0x8C bytes from E18E, the drinkers' bubbles with
+            // them (tapper.l6.001 frame 1395: 9B to 98, 8C to 88).
+            for (id, c) in bodies.iter_mut() {
+                if c.kind != cust_k || removed.contains(id) {
+                    continue;
+                }
+                let slot = (c.ext[3] >> 16) & 0xff;
+                let pic = rec_of(&recs, slot)
+                    .map(|n| recs[n].1.ext[3] & 0xff)
+                    .or_else(|| block_of(slot).and_then(|b| b.get(0x10).copied()));
+                if let Some(pic) = pic {
+                    c.ext[0] = (c.ext[0] & !(0xff << 24)) | (pic << 24);
+                }
+                c.ext[2] &= 0x00ff_ffff;
+            }
+            bubbles_gone = true;
         }
         if fell && let Some((fid, mut fb)) = flow {
             fb.ext[3] = (fb.ext[3] & !0xffff_00ff) | 12;
@@ -6439,7 +6500,19 @@ impl Ext for Bars {
                     want.extend(demo_scene(cx, n));
                 }
                 let taken: Vec<i64> = want.iter().map(|o| o.at).collect();
-                want.extend(customer_bubbles(cx, &bodies, cust_k, ok, state).into_iter().filter(|o| !taken.contains(&o.at)));
+                // $1CE1's $1D3C empties the bubbles as the slide starts, and
+                // the play routine, which makes them, doesn't run again
+                // before the setup empties the customers: none in the slide
+                // (sub 10) or after it, while he is off the bar (y 0, $1FB9).
+                // A mug's fall ($2389) empties only the 0x18 bytes before
+                // them, so they stay there.
+                let sliding = flow.is_some_and(|(_, b)| [15, 16].contains(&(b.ext[3] & 0xff)) && (b.ext[3] >> 16) & 0xff == 10);
+                let off_bar = player_k
+                    .and_then(|pk| cx.world.bodies.iter().find(|b| b.alive && b.kind == pk))
+                    .is_some_and(|b| b.y.floor() == 0);
+                if !(bubbles_gone || sliding || off_bar) {
+                    want.extend(customer_bubbles(cx, &bodies, cust_k, ok, state).into_iter().filter(|o| !taken.contains(&o.at)));
+                }
             }
             if cx.counter("bonus_text") != Some(text) {
                 cx.set_counter("bonus_text", text);
