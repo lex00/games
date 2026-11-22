@@ -3428,7 +3428,8 @@ fn bar_ends_go(cx: &mut ExtCx<'_>) {
 /// starts it again ($01ED). The punk bar's lamps (cycle_lamps) and the
 /// space bar's three lights, whose lists step together (cycle_space_1 gives
 /// their frames). A setup's $5EA9 starts them on the frame after it asked
-/// (cycle_on 2); the looks write the colours of the step last written.
+/// (cycle_on 2), their first step on that frame; the looks write the
+/// colours of the step last written.
 fn palette_cycles(cx: &mut ExtCx<'_>) {
     let c = |cx: &ExtCx<'_>, n: &str| cx.counter(n).unwrap_or(0);
     let (mut on, mut list, mut index, mut wait, mut step) =
@@ -3443,6 +3444,20 @@ fn palette_cycles(cx: &mut ExtCx<'_>) {
         list = if on != 0 && shown >= 2 { shown } else { 0 };
         cx.set_counter("cycle_start", 0);
     }
+    if on == 0 {
+        // Emptied by a $5E99 ($24C0, $24E2, $2B82, a setup's $4937): the
+        // lamps and lights in their colours from before the first step, from
+        // the frame after it (tapper.l6.001: the life lost's on 540, the game
+        // over's on 1679).
+        step = 0;
+    } else if on == 2 {
+        // $5EA9, the frame after the setup's $5E99: the lists from their
+        // start, their first step written on this frame (tapper.l6.001:
+        // the setup on frame 1, the lamps' first colour on 2).
+        on = 1;
+        index = 0;
+        wait = 0;
+    }
     if on == 1 && list >= 2 {
         let rows = cx.table(if list == 2 { "cycle_lamps" } else { "cycle_space_1" }).to_vec();
         wait = (wait - 1) & 0xff;
@@ -3456,12 +3471,6 @@ fn palette_cycles(cx: &mut ExtCx<'_>) {
             step = i + 1;
             index = i + 1;
         }
-    } else if on == 2 {
-        // $5EA9, the frame after the setup's $5E99: the lists from their
-        // start, stepped from the next frame.
-        on = 1;
-        index = 0;
-        wait = 0;
     }
     for (n, v) in [("cycle_on", on), ("cycle_list", list), ("cycle_index", index), ("cycle_wait", wait), ("cycle_step", step)] {
         if cx.counter(n) != Some(v) {

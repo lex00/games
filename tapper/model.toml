@@ -11728,7 +11728,7 @@ description = "1 while the frame's palette cycles run ($01CC, E410): set by $5EA
 description = "The low byte of the cycles' list start (E11D) as a clip's start loads it, so the hooks can count the pointer's step from it; 0 once counted"
 
 [counters.cycle_step]
-description = "The step of the cycles last written, plus 1 (the looks write its colours); 0 before the first"
+description = "The step of the cycles last written, plus 1 (the looks write its colours); 0 before the first, and from the frame after a $5E99 empties them"
 
 [counters.cycle_wait]
 description = "The frames to the cycles' next step, E121 ($01E1 counts it down; at below 0 the step's colour is written and the step's frames begin)"
