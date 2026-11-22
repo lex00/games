@@ -2957,6 +2957,7 @@ value = 0
 
 [[levels.main.present.board.looks]]
 clear = true
+sprites_off = true
 
 [[levels.main.present.board.looks.palette_writes]]
 at = 0
