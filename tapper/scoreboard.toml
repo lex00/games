@@ -29,3 +29,15 @@ clip = "tapper.l3.001"
 [[line]]
 name = "level 4"
 clip = "tapper.l4.001"
+
+[[line]]
+name = "level 5"
+clip = "tapper.l5.001"
+
+[[line]]
+name = "the second bonus round"
+clip = "tapper.bonus.002"
+
+[[line]]
+name = "level 6"
+clip = "tapper.l6.001"
