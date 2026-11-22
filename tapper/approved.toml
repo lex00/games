@@ -4523,7 +4523,7 @@ row = "confirm-level-4"
 clip = "tapper.l4.001"
 frames = [0, 1639]
 look = "game"
-approved = "2026-11-21"
+approved = "2026-11-22"
 apart = [
   [0, 0, 0],
   [1, 0, 0],
