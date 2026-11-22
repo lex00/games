@@ -3381,6 +3381,22 @@ fn bonus_scene(cx: &ExtCx<'_>, fb: &gp_sim::world::Body, cleared: i64, done: boo
     (objs, text)
 }
 
+/// GAME OVER on the bottom bar (counter game_over_text): $2441 with no
+/// lives left ($244B) queues the string at $4A2D at row 25, column 12
+/// ($2452 to $2458) and waits 60 frames twice ($2467, $24D8), the flow's
+/// sub 11 in states 12, 15 and 16; it stays through the game over's first
+/// frame (state 13, sub 1), and $2B82 clears the screen after.
+fn game_over_text(cx: &mut ExtCx<'_>) {
+    let on = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).is_some_and(|fb| {
+        let (state, sub) = (fb.ext[3] & 0xff, (fb.ext[3] >> 16) & 0xff);
+        ([12, 15, 16].contains(&state) && sub == 11) || (state == 13 && sub == 1)
+    });
+    let v = i64::from(on);
+    if cx.counter("game_over_text") != Some(v) {
+        cx.set_counter("game_over_text", v);
+    }
+}
+
 /// The bars' end pieces and far ends (kind bar_end) go: a level's end
 /// ($5615) and a setup's $5F31 empty E356 on.
 fn bar_ends_go(cx: &mut ExtCx<'_>) {
@@ -3904,6 +3920,7 @@ impl Ext for Bars {
                 let want = place_cast(cx, scene, drawn);
                 place_scene(cx, ok, want);
             }
+            game_over_text(cx);
             return;
         }
         let (timer_k, rec_k) = (cx.kind("timer"), cx.kind("record"));
@@ -6386,6 +6403,7 @@ impl Ext for Bars {
                 (None, None) => {}
             }
         }
+        game_over_text(cx);
         // The bonus round's objects, by address: one kept is the same
         // body, one gone (y 0, or out of the round) is removed.
         if let Some(ok) = cx.kind("bonus_object") {

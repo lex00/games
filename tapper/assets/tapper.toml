@@ -1102,6 +1102,34 @@ rbtapper = 0x29C0
 sutapper = 0x29B2
 tappera = 0x29B2
 
+# $2441 with no lives left ($244B): $244D's ld a,$10 into E38F, then GAME
+# OVER, the string at $4A2D, queued at row 25, column 12 ($2452 to $2458).
+[[asset]]
+name = "text_game_over"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4A2D
+count = 1
+width = 32
+
+[asset.at]
+rbtapper = 0x4BBD
+sutapper = 0x4A2D
+tappera = 0x4A2D
+
+[[asset]]
+name = "game_over_color"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x244E
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x244E
+sutapper = 0x244E
+tappera = 0x244E
+
 [[asset]]
 name = "bonus_text_color"
 format = "byte-rows"

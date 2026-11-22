@@ -887,6 +887,15 @@ description = "The setup's call of the frame wait $60F6 at $4B71, whose bytes na
 source = "tapper"
 asset = "frame_wait_call"
 
+[assets.game_over_color]
+kind = "rows"
+role = "graphics"
+description = "The colour byte GAME OVER is drawn in: $244D's ld a,$10, put in E38F for the text queue"
+
+[assets.game_over_color.from]
+source = "tapper"
+asset = "game_over_color"
+
 [assets.glass_arcs]
 kind = "rows"
 role = "graphics"
@@ -2020,6 +2029,15 @@ description = "A line of the attract mode's demo, the string at $33E9 its text r
 [assets.text_demo_9.from]
 source = "tapper"
 asset = "text_demo_9"
+
+[assets.text_game_over]
+kind = "rows"
+role = "graphics"
+description = "GAME OVER: the string at $4A2D that $2441 queues at row 25, column 12 when the last life is lost ($244B)"
+
+[assets.text_game_over.from]
+source = "tapper"
+asset = "text_game_over"
 
 [assets.text_high_scores]
 kind = "rows"
@@ -10942,6 +10960,20 @@ counter = "intro"
 value = 2
 
 [[levels.main.present.board.texts]]
+at = [12, 25]
+
+[levels.main.present.board.texts.high]
+slot = "game_over_color"
+
+[levels.main.present.board.texts.text]
+slot = "text_game_over"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "game_over_text"
+value = 1
+
+[[levels.main.present.board.texts]]
 at = [2, 27]
 
 [levels.main.present.board.texts.high]
@@ -11718,6 +11750,9 @@ description = "The extra life's every, as the instruction scene's close draws it
 
 [counters.extra_first]
 description = "The first extra life's score, as the instruction scene's close draws it ($3360 to $3376): E00D and E00E, the defaults' 14th and 15th bytes that the boot copies ($0517), as two digits; tapper_bars sets it in the attract mode"
+
+[counters.game_over_text]
+description = "1 while GAME OVER is on the bottom bar: from the frame $2441 queues it with no lives left ($244B) through its two waits of 60 ($2467, $24D8) to the game over's first frame (state 13), whose $2B82 clears the screen on the next; 0 otherwise. tapper_bars sets it each frame from the flow's state"
 
 [counters.intro]
 description = "The level's intro ($5404), counted by tapper_bars from the setup: 1 on the setup's frame, then the frames since plus 1 while the screen is cleared and its lines are up, one past its count on the frame the screen keeps it after the stage is drawn ($5DF6, counter stage_late), then 0"
@@ -12526,6 +12561,14 @@ note = "gp code listing: the setup's $4B71 calls the frame wait ($60F6; tappera'
 
 [[evidence."assets.frame_wait_call".refs]]
 at = "clip:tapper.poweron.001"
+
+[evidence."assets.game_over_color"]
+source = "observed"
+confidence = 70
+note = "gp code listing --routine 2441: $244D's ld a,$10 and $244F's ld ($E38F),a, the high byte the text queue draws GAME OVER with; the same at $244D in rbtapper, sutapper and tappera"
+
+[[evidence."assets.game_over_color".refs]]
+at = "clip:tapper.l6.001"
 
 [evidence."assets.glass_arcs"]
 source = "observed"
@@ -13543,6 +13586,14 @@ note = "gp-arcade's writes example on tapper/inputs/oracle/first.input: the text
 
 [[evidence."assets.text_demo_9".refs]]
 at = "clip:tapper.attract.001"
+
+[evidence."assets.text_game_over"]
+source = "observed"
+confidence = 70
+note = "gp code listing --routine 2441: with no lives left (E4A7 0, $244B) $2452 loads DE with $4A2D and $2455 BC with $190C, row 25, column 12, for the text queue's $5F44; rbtapper's $4BBD at the same $2452, sutapper's and tappera's $4A2D from their own listings"
+
+[[evidence."assets.text_game_over".refs]]
+at = "clip:tapper.l6.001"
 
 [evidence."assets.text_high_scores"]
 source = "observed"
