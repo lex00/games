@@ -490,7 +490,11 @@ fn draw_pose(cx: &mut ExtCx<'_>, ev: Pose, x_before: i64, spawned: usize) {
         // $06B5: the frame after a send runs none of it.
     } else {
         match ev {
-            Pose::Still | Pose::Play => {}
+            // The space bar's setup frame (E3B8 3) runs none of $0660, its
+            // standing ($2231) neither: E706 counts from the next frame
+            // (tapper.l13.001: picture $34 on 3, $35 on 4; the send's
+            // pose held 5 frames, 219 to 223).
+            Pose::Still | Pose::Play | Pose::SetupFrame => {}
             Pose::SwitchStart => {
                 const S: i64 = 0x214B;
                 let f = if tap_left { imm(cx, "bartender_switch", S, 0x2175) } else { imm(cx, "bartender_switch", S, 0x2171) };
@@ -591,10 +595,7 @@ fn draw_pose(cx: &mut ExtCx<'_>, ev: Pose, x_before: i64, spawned: usize) {
             Pose::End { n, script, interlude_b, drop, land } => {
                 end_script_pose(cx, &mut me, &mut parts, &mut tap_y, (tap_x, tap_left), (n, script, interlude_b, drop, land));
             }
-            // The setup's frame in the hook is the play routine's first
-            // in the original (tapper.poweron.001: E706 6 on 1101, the
-            // frame after $4BCB put him at the tap).
-            Pose::Sent | Pose::Rest | Pose::SetupFrame => {
+            Pose::Sent | Pose::Rest => {
                 // $2231: standing, his picture and his head's changing
                 // every E706 frames.
                 const S: i64 = 0x2231;
@@ -1805,7 +1806,7 @@ fn place_bar_objects(cx: &mut ExtCx<'_>, layout: i64, shown: i64) -> usize {
         // The end pieces and far ends ($4D13's second and third groups, to
         // E356 and E366), as bodies of kind bar_end in that order; the far
         // ends 7 further out in the sports and the space bar, as the taps'
-        // word 0 has them.
+        // word 0 has them, and drawn in that bar's own picture.
         let mut spawned = 0;
         if let Some(ek) = cx.kind("bar_end") {
             let old: Vec<usize> = cx
@@ -1832,8 +1833,16 @@ fn place_bar_objects(cx: &mut ExtCx<'_>, layout: i64, shown: i64) -> usize {
                     if group == 32 && (shown == 1 || shown == 3) {
                         x = if o[1] & 0x10 != 0 { x + 7 } else { x - 7 };
                     }
+                    // $4D9F and $4DA5: in those two bars the far end's
+                    // picture is $74, or $4E in the sports bar, whatever
+                    // the row holds.
+                    let pic = match (group, shown) {
+                        (32, 1) => 0x4E,
+                        (32, 3) => 0x74,
+                        _ => o[2],
+                    };
                     let mut b = gp_sim::systems::new_body(cx.spec, cx.world, ek, Fx::from_int(x & 0xff), Fx::from_int(o[0]), false);
-                    b.ext[0] = o[1] | (o[2] << 8);
+                    b.ext[0] = o[1] | (pic << 8);
                     b.ext[1] = i64::try_from((group - 16) / 4 + bar + 1).unwrap_or(0);
                     ends.push(b);
                 }
@@ -2944,7 +2953,6 @@ fn demo_scene(cx: &ExtCx<'_>, n: i64) -> Vec<BonusObj> {
 /// a move ($214B) or a walk empties both counts, and the layers with them.
 /// The level's end pours its own mug the same way.
 fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
-    const T: i64 = 0x1206;
     let Some(pk) = cx.kind("player") else { return Vec::new() };
     let Some(me) = cx.world.bodies.iter().find(|b| b.alive && b.kind == pk) else { return Vec::new() };
     if me.y.floor() == 0 || out_of_play(cx) {
@@ -2977,10 +2985,25 @@ fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
                 x,
             })
             .collect();
+        // A pour the last serve cut short keeps its layers: the play
+        // routine stops with E715 where it was, and the objects stay until
+        // $4603, 15 frames in, empties them with the rest of his
+        // (tapper.l14.001 frames 2967 to 2982).
+        if n < 16 {
+            objs.extend(play_layers(cx, me, tap_x, tap_left));
+        }
         objs.extend(kicked_glass(cx, me, n, tap_left, fb.ext[3]));
         objs.extend(drink_bubbles(cx, me, n, tap_left));
         return objs;
     }
+    play_layers(cx, me, tap_x, tap_left)
+}
+
+/// The play pour's layers in the mug at the tap, by E715 and E714 (see
+/// pour_layers).
+fn play_layers(cx: &ExtCx<'_>, me: &gp_sim::world::Body, tap_x: i64, tap_left: bool) -> Vec<BonusObj> {
+    const T: i64 = 0x1206;
+    let y = me.y.floor();
     let w = me.ext[2];
     let (e715, e714) = ((w >> 40) & 0xff, (w >> 48) & 1);
     // A layer shows on the frame E715 counts down to its number
