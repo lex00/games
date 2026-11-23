@@ -2398,6 +2398,70 @@ rbtapper = 0x4BE9
 sutapper = 0x4A59
 tappera = 0x4A59
 
+# The initials' strings, each up to its zero: ENTER YOUR INITIALS ($2DAA,
+# queued by $2C87 at row 2, column 5), USE JOYSTICK TO SELECT LETTER
+# ($2DBE, $2C90, row 25, column 2) and USE TAPPER TO ENTER LETTER ($2DDC,
+# $2C99, row 26, column 3).
+[[asset]]
+name = "text_initials"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2DAA
+count = 1
+width = 77
+
+[asset.at]
+rbtapper = 0x2DBE
+sutapper = 0x2DAA
+tappera = 0x2DAA
+
+# The initials' program from $2B0C to $2CDF: the cheerleader's three
+# objects ($2B0C), the new entry's first letter ($2C54), the strings'
+# colour ($2C79), the objects' place ($2CBB to $2CCF) and the letter's
+# colour ($2CDD). Only its immediates are read.
+[[asset]]
+name = "initials"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x2B0C
+count = 1
+width = 468
+
+[asset.at]
+rbtapper = 0x2B20
+sutapper = 0x2B0C
+tappera = 0x2B0C
+
+# $3CE1 to $3D46, the high scores' table drawn from E014: the first
+# place's digit ($3D04, ld c,$31) and the score's digit codes ($3D45,
+# add a,$30).
+[[asset]]
+name = "score_table"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x3CE1
+count = 1
+width = 102
+
+[asset.at]
+rbtapper = 0x3CF7
+sutapper = 0x3CE1
+tappera = 0x3CE1
+
+# $5FFD, video RAM cleared: every cell's two bytes 0 ($6003, $6006).
+[[asset]]
+name = "video_clear"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x5FFD
+count = 1
+width = 18
+
+[asset.at]
+rbtapper = 0x617D
+sutapper = 0x5FFD
+tappera = 0x5FED
+
 # $3C7C's ld a,$20, the colour the logo's lines are written in.
 [[asset]]
 name = "text_color_logo"

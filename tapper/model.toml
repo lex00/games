@@ -1031,6 +1031,15 @@ description = "Where a clip resumes: the hops' start, the operand of the call th
 source = "tapper"
 asset = "hops_start"
 
+[assets.initials]
+kind = "rows"
+role = "graphics"
+description = "The program from $2B0C to $2CDF, the game over's initials: the cheerleader's objects ($2B0C: pictures $CC, $CD and $CE, flags 3), $C0 into palette RAM's F86D ($2B89), the new entry's first letter $41 ($2C54), the strings' colour $30 ($2C79), the objects' place ($2CBB: y $D2 less 16 a place, x $10) and the letter's colour $30 ($2CDD) (the program's code, lifted from the player's romset)"
+
+[assets.initials.from]
+source = "tapper"
+asset = "initials"
+
 [assets.instr_objects]
 kind = "rows"
 role = "graphics"
@@ -1435,6 +1444,15 @@ description = "The score digits: the tile code the score routine adds a digit to
 [assets.score_codes.from]
 source = "tapper"
 asset = "score_codes"
+
+[assets.score_table]
+kind = "rows"
+role = "graphics"
+description = "The program from $3CE1 to $3D46, the high scores' table drawn from E014 two rows apart from row 5: the place's digit from $31 ($3D04) at column 7, the letters at 10, the score's digits $30 on ($3D45) at 16 with its leading zeros blank (the program's code, lifted from the player's romset)"
+
+[assets.score_table.from]
+source = "tapper"
+asset = "score_table"
 
 [assets.screen_69a1]
 kind = "board-screen"
@@ -2102,6 +2120,15 @@ description = "The high scores' heading after the attract mode's demo game: the 
 source = "tapper"
 asset = "text_high_scores"
 
+[assets.text_initials]
+kind = "rows"
+role = "graphics"
+description = "The initials' three strings from $2DAA, each up to its zero: ENTER YOUR INITIALS (column 0, queued at row 2, column 5), USE JOYSTICK TO SELECT LETTER (column 20, row 25, column 2) and USE TAPPER TO ENTER LETTER (column 50, row 26, column 3)"
+
+[assets.text_initials.from]
+source = "tapper"
+asset = "text_initials"
+
 [assets.text_insert_coin]
 kind = "rows"
 role = "graphics"
@@ -2147,6 +2174,15 @@ description = "The credit line's string at $046F: with one credit ($0437)"
 source = "tapper"
 asset = "text_one_credit"
 
+[assets.video_clear]
+kind = "rows"
+role = "graphics"
+description = "The program from $5FFD to $600E, video RAM cleared: each cell's tile and high byte 0 ($6003, $6006) (the program's code, lifted from the player's romset)"
+
+[assets.video_clear.from]
+source = "tapper"
+asset = "video_clear"
+
 [assets.wait_call]
 kind = "rows"
 role = "behavior"
@@ -2169,7 +2205,7 @@ slot = "board_sprites"
 [entities.bar_end.board_sprite.flags]
 word = 0
 
-[entities.bar_end.board_sprite.hidden]
+[entities.bar_end.board_sprite.gone_next]
 bit = 6
 byte = 7
 word = 3
@@ -2284,6 +2320,7 @@ high_scores = "high_scores"
 hop_steps = "hop_steps"
 hops_code = "hops_code"
 hops_start = "hops_start"
+initials = "initials"
 instr_objects = "instr_objects"
 interlude_code = "interlude_code"
 interlude_start = "interlude_start"
@@ -2336,6 +2373,11 @@ slot = "board_sprites"
 [entities.bartender_part.board_sprite.flags]
 word = 0
 
+[entities.bartender_part.board_sprite.gone_next]
+bit = 6
+byte = 7
+word = 3
+
 [entities.bartender_part.board_sprite.hidden]
 bit = 0
 byte = 4
@@ -2364,7 +2406,7 @@ slot = "board_sprites"
 [entities.bonus_object.board_sprite.flags]
 word = 0
 
-[entities.bonus_object.board_sprite.hidden]
+[entities.bonus_object.board_sprite.gone_next]
 bit = 6
 byte = 7
 word = 3
@@ -2435,7 +2477,7 @@ word = 2
 byte = 2
 word = 0
 
-[entities.customer.board_sprite.hidden]
+[entities.customer.board_sprite.gone_next]
 bit = 6
 byte = 7
 word = 3
@@ -2461,7 +2503,7 @@ slot = "board_sprites"
 [entities.dancer.board_sprite.flags]
 word = 1
 
-[entities.dancer.board_sprite.hidden]
+[entities.dancer.board_sprite.gone_next]
 bit = 6
 byte = 7
 word = 3
@@ -2489,7 +2531,7 @@ boot_wait = 52
 coin_on_press = 0
 demo_wait_at = 217
 demo_waits_at = 812
-game_over_wait = 180
+game_over_wait = 1203
 lives_set = 0
 logo_wait_at = 2
 start_bar = 2
@@ -2551,7 +2593,7 @@ slot = "board_sprites"
 [entities.mug.board_sprite.flags]
 word = 0
 
-[entities.mug.board_sprite.hidden]
+[entities.mug.board_sprite.gone_next]
 bit = 6
 byte = 7
 word = 3
@@ -2578,6 +2620,11 @@ slot = "board_sprites"
 [entities.player.board_sprite.flags]
 byte = 2
 word = 2
+
+[entities.player.board_sprite.gone_next]
+bit = 6
+byte = 7
+word = 3
 
 [entities.player.board_sprite.hidden]
 bit = 0
@@ -2738,7 +2785,7 @@ slot = "board_sprites"
 [entities.tap.board_sprite.flags]
 word = 2
 
-[entities.tap.board_sprite.hidden]
+[entities.tap.board_sprite.gone_next]
 bit = 6
 byte = 7
 word = 2
@@ -2776,7 +2823,7 @@ slot = "board_sprites"
 [entities.tip.board_sprite.flags]
 number = 0
 
-[entities.tip.board_sprite.hidden]
+[entities.tip.board_sprite.gone_next]
 bit = 6
 byte = 7
 word = 3
@@ -2800,6 +2847,78 @@ tile_size = 16
 palette = "board_palette"
 screen = "screen_saloon"
 tiles = "board_tiles"
+
+[[levels.main.present.board.counters]]
+at = [7, 5]
+counter = "initials_place"
+digits = 1
+
+[levels.main.present.board.counters.high]
+column = 10
+slot = "video_clear"
+
+[levels.main.present.board.counters.tile]
+column = 36
+slot = "score_table"
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials"
+value = 1
+
+[[levels.main.present.board.counters]]
+at = [10, 5]
+counter = "initials_letter"
+digits = 1
+
+[levels.main.present.board.counters.high]
+column = 10
+slot = "video_clear"
+
+[levels.main.present.board.counters.tile]
+column = 331
+slot = "initials"
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "initials"
+value = 1
+
+[[levels.main.present.board.counters]]
+at = [10, 5]
+counter = "initials_letter"
+digits = 1
+
+[levels.main.present.board.counters.high]
+column = 466
+slot = "initials"
+
+[levels.main.present.board.counters.tile]
+column = 331
+slot = "initials"
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials"
+value = 2
+
+[[levels.main.present.board.counters]]
+at = [16, 5]
+counter = "score"
+digits = 6
+
+[levels.main.present.board.counters.high]
+column = 10
+slot = "video_clear"
+
+[levels.main.present.board.counters.tile]
+column = 101
+slot = "score_table"
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials"
+value = 1
 
 [[levels.main.present.board.counters]]
 at = [3, 1]
@@ -3053,6 +3172,39 @@ value = 1
 cmp = "<"
 counter = "intro"
 value = 2
+
+[[levels.main.present.board.looks]]
+clear = true
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+column = 4
+slot = "high_scores_clear"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 109
+column = 126
+slot = "initials"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 0
+column = 4
+slot = "high_scores_clear"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+column = 4
+slot = "high_scores_clear"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 12
+column = 15
+slot = "high_scores_clear"
+
+[[levels.main.present.board.looks.when]]
+cmp = ">="
+counter = "initials"
+value = 1
 
 [[levels.main.present.board.looks]]
 clear = true
@@ -24693,6 +24845,53 @@ cmp = "=="
 counter = "space_pad"
 value = 8
 
+[[levels.main.present.board.texts]]
+at = [5, 2]
+
+[levels.main.present.board.texts.high]
+column = 366
+slot = "initials"
+
+[levels.main.present.board.texts.text]
+slot = "text_initials"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "initials"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [2, 25]
+
+[levels.main.present.board.texts.high]
+column = 366
+slot = "initials"
+
+[levels.main.present.board.texts.text]
+column = 20
+slot = "text_initials"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "initials"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [3, 26]
+
+[levels.main.present.board.texts.high]
+column = 366
+slot = "initials"
+
+[levels.main.present.board.texts.text]
+column = 50
+slot = "text_initials"
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "initials"
+value = 2
+
 [levels.main.present.sprite_order.bar_end]
 at = 115
 step = 1
@@ -24857,6 +25056,15 @@ description = "The first extra life's score, as the instruction scene's close dr
 
 [counters.game_over_text]
 description = "1 while GAME OVER is on the bottom bar: from the frame $2441 queues it with no lives left ($244B) through its two waits of 60 ($2467, $24D8) to the game over's first frame (state 13), whose $2B82 clears the screen on the next; 0 otherwise. tapper_bars sets it each frame from the flow's state"
+
+[counters.initials]
+description = "The game over's initials ($2B82, state 13 and E3BD 2): 0 out of them; 1 from the frame $3CE1 clears the screen and draws the table's new entry (with $2B82's palette writes to F860 and F86D), 2 once the interrupt has written the three strings $2C87 to $2C99 queue and the letter's colour is set ($2CDD), 3 once the cheerleader's objects ($2CBD, $2B0C) are in sprite RAM; back to 0 as the game over ends (state 0, $4A27, 1203 frames on: the initials' timer of $4B0 at $2CA7). tapper_bars sets it each frame from the flow's count"
+
+[counters.initials_letter]
+description = "The new entry's first letter in the initials, from A ($2C54): 0. The model doesn't read the stick there, so it stays A"
+
+[counters.initials_place]
+description = "The new entry's place in the high scores' table less 1 ($2C34): 0, the first. The model keeps no table, so every game's score is the first"
 
 [counters.intro]
 description = "The level's intro ($5404), counted by tapper_bars from the setup: 1 on the setup's frame (2 in a game's first level and after a life lost, whose screen is cleared on the setup's frame), then the frames since plus 1 while the screen is cleared and its lines are up, one past its count on the frame the screen keeps it after the stage is drawn ($5DF6, counter stage_late), then 0"
@@ -25803,6 +26011,14 @@ note = "gp code listing of tapper and rbtapper: end script 3 calls $50EF at $48E
 [[evidence."assets.hops_start".refs]]
 at = "clip:tapper.clear.015"
 
+[evidence."assets.initials"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2B82 to $2D73 and $2B0C: the game over's $2B82 writes 0 and $C0 into palette RAM's F860 and F86D, puts the score in the table with the letters $41 $20 $20 ($2C54), clears the screen ($3CE1), queues its three strings in E38F $30 ($2C79), sets a timer of $4B0 frames ($2CA7) and places the cheerleader's three objects ($2CBD, $2B0C: $D2 less 16 a place, x $10 and $20, pictures $CC to $CE, flags 3), the letter's cell in $30 ($2CDD); the bytes are at the same places in sutapper, tappera and tapperg, $14 further on in rbtapper. tapper.poweron.001 frames 5028 to 5031 and tapper.gameover.001 show the screen"
+
+[[evidence."assets.initials".refs]]
+at = "clip:tapper.poweron.001"
+
 [evidence."assets.instr_objects"]
 source = "observed"
 confidence = 70
@@ -26165,6 +26381,14 @@ note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stage
 
 [[evidence."assets.score_codes".refs]]
 at = "clip:tapper.l1.001"
+
+[evidence."assets.score_table"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $3CE1: from E014 it writes each entry two rows apart from F14C, its place's digit from $31 at column 7, its three letters at 10 and its score's six digits ($30 plus each, $3D45) at 16 with its leading zeros blank, the tile bytes only; rbtapper's copy $16 further on, the other sets' at $3CE1. tapper.poweron.001 frame 5028 shows the first place's row"
+
+[[evidence."assets.score_table".refs]]
+at = "clip:tapper.poweron.001"
 
 [evidence."assets.screen_69a1"]
 source = "observed"
@@ -26764,6 +26988,14 @@ note = "gp code listing on tapper.demo.001: state 4 after the demo game runs $4A
 [[evidence."assets.text_high_scores".refs]]
 at = "clip:tapper.demo.001"
 
+[evidence."assets.text_initials"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $2C79 to $2C9F: the initials queue $2DAA at row 2, column 5, $2DBE at row 25, column 2 and $2DDC at row 26, column 3 ($5F44), each up to its zero; rbtapper's strings $14 further on, the other sets' at $2DAA. tapper.poweron.001 frame 5030 and tapper.gameover.001 frame 3 show them"
+
+[[evidence."assets.text_initials".refs]]
+at = "clip:tapper.poweron.001"
+
 [evidence."assets.text_insert_coin"]
 source = "observed"
 confidence = 70
@@ -26803,6 +27035,14 @@ note = "gp code listing --writes F6C4 and F6DE over tapper.attract.001: $0350 ca
 
 [[evidence."assets.text_one_credit".refs]]
 at = "clip:tapper.attract.001"
+
+[evidence."assets.video_clear"]
+source = "observed"
+confidence = 70
+note = "gp code listing of $5FFD: $3C0 cells from F000, each one's tile and high byte set to 0 ($6003, $6006); $3CE1 calls it, so the table's cells keep high byte 0. Found by its bytes in each set: $617D in rbtapper, $5FED in tappera, $5FFD in the others. tapper.poweron.001 frame 5028 shows the cleared screen"
+
+[[evidence."assets.video_clear".refs]]
+at = "clip:tapper.poweron.001"
 
 [evidence."assets.wait_call"]
 source = "observed"

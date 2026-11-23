@@ -101,17 +101,16 @@ pub struct Bartender;
 const BOARD_HIDDEN: i64 = 1 << 32;
 
 /// The bit (byte 7, bit 6) of a body's word the board reads for
-/// board_sprite.hidden on the frame before a bonus round ($2500) empties
-/// the objects: ext[3]'s for the kinds below, a tap's ext[2] (its word 3
-/// is its sprite RAM entry). The board draws its sprites a frame late, so
-/// it hides them on this frame for the original's picture of the next,
-/// which shows none (tapper.l9.001 frame 1734, l15.001 frame 2540).
-/// tapper_bars sets it last in its step and clears it first in the next;
-/// on the bartender and his parts it sets BOARD_HIDDEN with it.
+/// board_sprite.gone_next on the frame before a bonus round ($2500) or the
+/// game over's initials ($2B82) empties the objects: ext[3]'s for the kinds
+/// below, a tap's ext[2] (its word 3 is its sprite RAM entry). The board
+/// leaves the body out of the next frame's picture only, which in the
+/// original shows none (tapper.l9.001 frame 1734, l15.001 frame 2540); a
+/// frame drawn from its own bodies (a clip's first) still shows it.
+/// tapper_bars sets it last in its step and clears it first in the next.
 const GONE_NEXT: i64 = 1 << 62;
 
-/// The kinds GONE_NEXT hides by their ext[3] (the tap by its ext[2]), with
-/// the bartender and his parts by BOARD_HIDDEN.
+/// The kinds GONE_NEXT hides by their ext[3] (the tap by its ext[2]).
 const GONE_NEXT_KINDS: [&str; 9] = ["player", "bartender_part", "tap", "customer", "mug", "tip", "dancer", "bar_end", "bonus_object"];
 
 /// The word GONE_NEXT is in for a body of kind `name`.
@@ -119,16 +118,16 @@ fn gone_next_word(name: &str) -> usize {
     if name == "tap" { 2 } else { 3 }
 }
 
-/// Sets (`on`) or clears GONE_NEXT on every body of GONE_NEXT_KINDS, and
-/// BOARD_HIDDEN with it on the bartender and his parts; clearing touches
-/// only the bodies that have it.
+/// Sets (`on`) or clears GONE_NEXT on every body of GONE_NEXT_KINDS;
+/// clearing touches only the bodies that have it. Setting goes over this step's last word on
+/// each body, as hide_play_objects: one removed this step stays removed
+/// (tapper.l4.001's last frame, a level's end whose setup empties a mug).
 fn gone_next(cx: &mut ExtCx<'_>, on: bool) {
     for name in GONE_NEXT_KINDS {
         let Some(k) = cx.kind(name) else {
             continue;
         };
         let w = gone_next_word(name);
-        let also = if name == "player" || name == "bartender_part" { BOARD_HIDDEN } else { 0 };
         let ids: Vec<usize> = cx
             .world
             .bodies
@@ -138,13 +137,21 @@ fn gone_next(cx: &mut ExtCx<'_>, on: bool) {
             .map(|(i, _)| i)
             .collect();
         for id in ids {
-            let mut b = cx.world.bodies[id];
+            let mut latest = Some(cx.world.bodies[id]);
+            if on {
+                for r in cx.requests() {
+                    match r {
+                        gp_sim::ext::Request::Remove(i) if *i == id => latest = None,
+                        gp_sim::ext::Request::SetBody(i, b) if *i == id => latest = Some(*b),
+                        _ => {}
+                    }
+                }
+            }
+            let Some(mut b) = latest.filter(|b| b.alive) else { continue };
             if on {
                 b.ext[w] |= GONE_NEXT;
-                b.ext[3] |= also;
             } else {
                 b.ext[w] &= !GONE_NEXT;
-                b.ext[3] &= !also;
             }
             cx.set_body(id, b);
         }
@@ -3644,6 +3651,84 @@ fn game_over_text(cx: &mut ExtCx<'_>) {
     }
 }
 
+/// The game over's initials ($2B82 on, state 13 sub 2, the flow's count
+/// from bit 24 of word 3): counter initials for the board's look, texts
+/// and table row, and the cheerleader's three objects (E18E, E192, E196)
+/// for the board. The original's screen, against the count (0 on the
+/// frame tapper_bars moves the flow to sub 2, the original's first frame
+/// of state 13): from 0 cleared with the table's new entry ($3CE1), from 2
+/// the three strings ($2C87 to $2C99, queued the frame before and written
+/// by the interrupt) and the letter in its colour ($2CDD), from 3 the
+/// cheerleader (tapper.poweron.001 frames 5028, 5030 and 5031). The model
+/// keeps no table and reads no stick here, so the new entry is the first
+/// place's with the letter A.
+fn initials_screen(cx: &mut ExtCx<'_>) -> Vec<BonusObj> {
+    let (sub, count) = cx
+        .kind("flow")
+        .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+        .filter(|fb| fb.ext[3] & 0xff == 13)
+        .map_or((0, 0), |fb| ((fb.ext[3] >> 16) & 0xff, (fb.ext[3] >> 24) & 0xffff));
+    let phase = match (sub, count) {
+        (2, 0 | 1) => 1,
+        (2, 2) => 2,
+        (2, _) => 3,
+        _ => 0,
+    };
+    for (n, v) in [("initials", phase), ("initials_place", 0), ("initials_letter", 0)] {
+        if cx.counter(n) != Some(v) {
+            cx.set_counter(n, v);
+        }
+    }
+    // $2B82's $5E99 empties the draw list and $3CE1's $5F31 the objects
+    // from E18E, the taps' (E346 on) among them; the model keeps its taps,
+    // the bartender reads them, so the board leaves every play object out
+    // of the next frame's picture (GONE_NEXT, cleared each step) from the
+    // game over's first frame. Not the cheerleader's (bonus_object).
+    if phase >= 1 || sub == 1 {
+        hide_play_objects(cx);
+    }
+    // Placed on the count's third frame ($2CBD), in sprite RAM on the next.
+    if phase < 2 {
+        return Vec::new();
+    }
+    // $2CB1: the place less 1 times 16 off $D2 for y, x $10 ($2CC4), flags
+    // 3 ($2CCC); $2B0C: the second object 16 right, the third 16 up, the
+    // pictures $CC, $CD and $CE, flags 3 for each.
+    const I: i64 = 0x2B0C;
+    let b = |at: i64| imm(cx, "initials", I, at);
+    let place = cx.counter("initials_place").unwrap_or(0);
+    let y = (b(0x2CBC) - ((place * 16) & 0xff)) & 0xff;
+    let x = b(0x2CCB);
+    vec![
+        BonusObj { at: 0xE18E, y, flags: b(0x2B31), pic: b(0x2B1A), x },
+        BonusObj { at: 0xE192, y, flags: b(0x2B31), pic: b(0x2B1E), x: (x + b(0x2B2A)) & 0xff },
+        BonusObj { at: 0xE196, y: (y - b(0x2B13)) & 0xff, flags: b(0x2B31), pic: b(0x2B22), x },
+    ]
+}
+
+/// GONE_NEXT on every play object but the bonus_object kind's, set over
+/// this step's last word on each body: one removed this step stays removed.
+fn hide_play_objects(cx: &mut ExtCx<'_>) {
+    for name in GONE_NEXT_KINDS.into_iter().filter(|n| *n != "bonus_object") {
+        let Some(k) = cx.kind(name) else { continue };
+        let w = gone_next_word(name);
+        let ids: Vec<usize> = cx.world.bodies.iter().enumerate().filter(|(_, b)| b.alive && b.kind == k).map(|(i, _)| i).collect();
+        for id in ids {
+            let mut latest = Some(cx.world.bodies[id]);
+            for r in cx.requests() {
+                match r {
+                    gp_sim::ext::Request::Remove(i) if *i == id => latest = None,
+                    gp_sim::ext::Request::SetBody(i, b) if *i == id => latest = Some(*b),
+                    _ => {}
+                }
+            }
+            let Some(mut b) = latest.filter(|b| b.alive) else { continue };
+            b.ext[w] |= GONE_NEXT;
+            cx.set_body(id, b);
+        }
+    }
+}
+
 /// The bars' end pieces and far ends (kind bar_end) go: a level's end
 /// ($5615) and a setup's $5F31 empty E356 on.
 fn bar_ends_go(cx: &mut ExtCx<'_>) {
@@ -4274,6 +4359,28 @@ impl Ext for Bars {
                 cx.set_body(id, b);
             }
         }
+        // A start on the game over's first frame (state 13 with E3BD still
+        // 0: $230F has asked for its sounds and $2B82's $5E99 waits the
+        // frame, $2B90 sets E3BD 2 on the next): the flow as tapper_bars
+        // leaves it on that frame, sub 2 with its count at 0, whatever E6FF
+        // a life lost left there. The screen is still the level's with GAME
+        // OVER on it and its sprites, the initials' from the next frame with
+        // none ($5E99 emptied the draw list): GONE_NEXT on the play objects
+        // leaves them out of frame 1's picture only (tapper.gameover.001
+        // frame 0, E6FF 3).
+        if cx.counter("mode") == Some(0)
+            && let Some((fid, mut fb)) =
+                cx.kind("flow").and_then(|k| cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == k)).map(|(i, b)| (i, *b))
+            && fb.ext[3] & 0xff == 13
+            && (fb.ext[3] >> 16) & 0xff != 2
+        {
+            fb.ext[3] = (fb.ext[3] & !(0x00ff_0000 | (0xffff << 24))) | (2 << 16);
+            cx.set_body(fid, fb);
+            for (n, v) in [("initials", 0), ("game_over_text", 1)] {
+                cx.set_counter(n, v);
+            }
+            hide_play_objects(cx);
+        }
         let flow = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).map(|fb| fb.ext);
         let level_timers = cx
             .kind("timer")
@@ -4371,6 +4478,7 @@ impl Ext for Bars {
                 place_scene(cx, ok, want);
             }
             game_over_text(cx);
+            initials_screen(cx);
             return;
         }
         let (timer_k, rec_k) = (cx.kind("timer"), cx.kind("record"));
@@ -5847,12 +5955,18 @@ impl Ext for Bars {
             };
             let count = cleared + 1;
             let bonus = matches!(count % 13, 2 | 5 | 9) || count % 13 == 0;
-            let returns = done.is_some_and(|d| n == d + i64::from(shown == 2 || shown == 3));
+            let late = i64::from(shown == 2 || shown == 3);
+            let returns = done.is_some_and(|d| n == d + late);
             // The original's board shows no sprite on the frame $2500's
             // $5F31 empties the objects (tapper.l9.001 frame 1734,
             // l15.001 frame 2540: every compared object at 0 on it); the
-            // model's draws this frame's (GONE_NEXT).
-            sprites_gone_next = bonus && done.is_some_and(|d| n + 1 == d + i64::from(shown == 2 || shown == 3));
+            // model's draws this frame's (GONE_NEXT). Without a bonus round
+            // the setup's $5F31 ($4B4D) empties them a frame after the
+            // return, and the original's screen is empty on that frame
+            // (tapper.poweron.001 frames 1340 and 3270); the model's setup
+            // runs then and its board shows that a frame on, so GONE_NEXT
+            // goes on the return's frame.
+            sprites_gone_next = done.is_some_and(|d| if bonus { n + 1 == d + late } else { n == d + late });
             if (shown == 2 || shown == 3) && done == Some(n) {
                 // $5663's $5E99 empties the palette cycles: the lamps and
                 // lights in their colours from before the first step from
@@ -5902,6 +6016,10 @@ impl Ext for Bars {
                     pb.y = Fx::ZERO;
                     cx.set_body(pid, pb);
                 }
+                // His parts go with him: the original's card shows none of
+                // them on the round's first frame (tapper.poweron.001 frame
+                // 1706, where the model kept his legs).
+                place_parts(cx, &[0, 1, 2, 3, 4], false, |_, px, _| (px, 0));
             }
             if (n == 56 || n == 109)
                 && let Some(pk) = player_k
@@ -7070,11 +7188,13 @@ impl Ext for Bars {
             }
         }
         game_over_text(cx);
+        let cheerleader = initials_screen(cx);
         // The bonus round's objects, by address: one kept is the same
         // body, one gone (y 0, or out of the round) is removed.
         if let Some(ok) = cx.kind("bonus_object") {
             let in_round = bonus_objs.is_some();
             let (mut want, mut text) = bonus_objs.unwrap_or_default();
+            want.extend(cheerleader);
             // When the round returns ($296F's 15 frames), its last line stays
             // on the screen until the next setup draws the stage ($5DF6
             // clears counter bonus): tapper.bonus.001 frames 1032 to 1041.
