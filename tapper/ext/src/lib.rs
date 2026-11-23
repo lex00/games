@@ -95,6 +95,57 @@ pub struct Bartender;
 /// tapper_bartender clears it on his next step.
 const BOARD_HIDDEN: i64 = 1 << 32;
 
+/// The bit (byte 7, bit 6) of a body's word the board reads for
+/// board_sprite.hidden on the frame before a bonus round ($2500) empties
+/// the objects: ext[3]'s for the kinds below, a tap's ext[2] (its word 3
+/// is its sprite RAM entry). The board draws its sprites a frame late, so
+/// it hides them on this frame for the original's picture of the next,
+/// which shows none (tapper.l9.001 frame 1734, l15.001 frame 2540).
+/// tapper_bars sets it last in its step and clears it first in the next;
+/// on the bartender and his parts it sets BOARD_HIDDEN with it.
+const GONE_NEXT: i64 = 1 << 62;
+
+/// The kinds GONE_NEXT hides by their ext[3] (the tap by its ext[2]), with
+/// the bartender and his parts by BOARD_HIDDEN.
+const GONE_NEXT_KINDS: [&str; 9] = ["player", "bartender_part", "tap", "customer", "mug", "tip", "dancer", "bar_end", "bonus_object"];
+
+/// The word GONE_NEXT is in for a body of kind `name`.
+fn gone_next_word(name: &str) -> usize {
+    if name == "tap" { 2 } else { 3 }
+}
+
+/// Sets (`on`) or clears GONE_NEXT on every body of GONE_NEXT_KINDS, and
+/// BOARD_HIDDEN with it on the bartender and his parts; clearing touches
+/// only the bodies that have it.
+fn gone_next(cx: &mut ExtCx<'_>, on: bool) {
+    for name in GONE_NEXT_KINDS {
+        let Some(k) = cx.kind(name) else {
+            continue;
+        };
+        let w = gone_next_word(name);
+        let also = if name == "player" || name == "bartender_part" { BOARD_HIDDEN } else { 0 };
+        let ids: Vec<usize> = cx
+            .world
+            .bodies
+            .iter()
+            .enumerate()
+            .filter(|(_, b)| b.alive && b.kind == k && (on || b.ext[w] & GONE_NEXT != 0))
+            .map(|(i, _)| i)
+            .collect();
+        for id in ids {
+            let mut b = cx.world.bodies[id];
+            if on {
+                b.ext[w] |= GONE_NEXT;
+                b.ext[3] |= also;
+            } else {
+                b.ext[w] &= !GONE_NEXT;
+                b.ext[3] &= !also;
+            }
+            cx.set_body(id, b);
+        }
+    }
+}
+
 /// Which branch of the play routine's $06A4 ran for the bartender this
 /// frame, for his pictures (draw_pose).
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
@@ -4024,6 +4075,9 @@ impl Ext for Bars {
         let (Some(mug_k), Some(cust_k)) = (cx.kind("mug"), cx.kind("customer")) else {
             return;
         };
+        // The frame before's GONE_NEXT is spent: the board drew this
+        // frame's sprites from it.
+        gone_next(cx, false);
         set_screen(cx);
         palette_cycles(cx);
         tap_entries(cx);
@@ -4153,6 +4207,9 @@ impl Ext for Bars {
             .map(|(i, b)| (i, *b))
             .collect();
         let mut removed: Vec<usize> = Vec::new();
+        // The frame before a level's end starts the bonus round, whose
+        // $5F31 empties every object: GONE_NEXT, as the step ends.
+        let mut sprites_gone_next = false;
         // The tip, the object at E25E (one at most): kept apart from the
         // mugs and customers, and written back when the step ends.
         let mut tip: Option<(Option<usize>, Body)> = of_kind(cx, tip_k).into_iter().next().map(|(i, b)| (Some(i), b));
@@ -5450,6 +5507,11 @@ impl Ext for Bars {
             let count = cleared + 1;
             let bonus = matches!(count % 13, 2 | 5 | 9) || count % 13 == 0;
             let returns = done.is_some_and(|d| n == d + i64::from(shown == 2 || shown == 3));
+            // The original's board shows no sprite on the frame $2500's
+            // $5F31 empties the objects (tapper.l9.001 frame 1734,
+            // l15.001 frame 2540: every compared object at 0 on it); the
+            // model's draws this frame's (GONE_NEXT).
+            sprites_gone_next = bonus && done.is_some_and(|d| n + 1 == d + i64::from(shown == 2 || shown == 3));
             if (shown == 2 || shown == 3) && done == Some(n) {
                 // $5663's $5E99 empties the palette cycles: the lamps and
                 // lights in their colours from before the first step from
@@ -6715,6 +6777,9 @@ impl Ext for Bars {
                 }
             }
             place_scene(cx, ok, want);
+        }
+        if sprites_gone_next {
+            gone_next(cx, true);
         }
     }
 

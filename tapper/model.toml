@@ -2124,6 +2124,11 @@ slot = "board_sprites"
 [entities.bar_end.board_sprite.flags]
 word = 0
 
+[entities.bar_end.board_sprite.hidden]
+bit = 6
+byte = 7
+word = 3
+
 [entities.bar_end.board_sprite.picture]
 byte = 1
 word = 0
@@ -2312,6 +2317,11 @@ slot = "board_sprites"
 [entities.bonus_object.board_sprite.flags]
 word = 0
 
+[entities.bonus_object.board_sprite.hidden]
+bit = 6
+byte = 7
+word = 3
+
 [entities.bonus_object.board_sprite.picture]
 byte = 1
 word = 0
@@ -2378,6 +2388,11 @@ word = 2
 byte = 2
 word = 0
 
+[entities.customer.board_sprite.hidden]
+bit = 6
+byte = 7
+word = 3
+
 [entities.customer.board_sprite.picture]
 byte = 3
 word = 0
@@ -2398,6 +2413,11 @@ slot = "board_sprites"
 
 [entities.dancer.board_sprite.flags]
 word = 1
+
+[entities.dancer.board_sprite.hidden]
+bit = 6
+byte = 7
+word = 3
 
 [entities.dancer.board_sprite.picture]
 word = 2
@@ -2483,6 +2503,11 @@ slot = "board_sprites"
 
 [entities.mug.board_sprite.flags]
 word = 0
+
+[entities.mug.board_sprite.hidden]
+bit = 6
+byte = 7
+word = 3
 
 [entities.mug.board_sprite.picture]
 byte = 1
@@ -2666,6 +2691,11 @@ slot = "board_sprites"
 [entities.tap.board_sprite.flags]
 word = 2
 
+[entities.tap.board_sprite.hidden]
+bit = 6
+byte = 7
+word = 2
+
 [entities.tap.board_sprite.picture]
 byte = 1
 word = 2
@@ -2698,6 +2728,11 @@ slot = "board_sprites"
 
 [entities.tip.board_sprite.flags]
 number = 0
+
+[entities.tip.board_sprite.hidden]
+bit = 6
+byte = 7
+word = 3
 
 [entities.tip.board_sprite.picture]
 number = 77
