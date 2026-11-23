@@ -3173,6 +3173,42 @@ cmp = "<"
 counter = "intro"
 value = 2
 
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "boot_bars"
+value = 0
+
+[[levels.main.present.board.counters]]
+at = [9, 27]
+counter = "credits_shown"
+digits = 1
+
+[levels.main.present.board.counters.high]
+slot = "credit_digit_color"
+
+[levels.main.present.board.counters.tile]
+slot = "credit_digit"
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "mode"
+value = 1
+
+[[levels.main.present.board.counters.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "boot_bars"
+value = 1
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 1
+
 [[levels.main.present.board.looks]]
 clear = true
 
@@ -22201,7 +22237,7 @@ slot = "boot_bars"
 
 [[levels.main.present.board.repeats.when]]
 cmp = "=="
-counter = "mode"
+counter = "attract_frames"
 value = 0
 
 [[levels.main.present.board.repeats]]
@@ -22995,6 +23031,40 @@ cmp = "<"
 counter = "intro"
 value = 2
 
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "boot_bars"
+value = 0
+
+[[levels.main.present.board.texts]]
+at = [2, 27]
+
+[levels.main.present.board.texts.high]
+slot = "credit_color"
+
+[levels.main.present.board.texts.text]
+slot = "text_credit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "mode"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "boot_bars"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 1
+
 [[levels.main.present.board.texts]]
 at = [15, 27]
 
@@ -23018,6 +23088,45 @@ value = 0
 cmp = "<"
 counter = "intro"
 value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "boot_bars"
+value = 0
+
+[[levels.main.present.board.texts]]
+at = [15, 27]
+
+[levels.main.present.board.texts.high]
+slot = "credit_color"
+
+[levels.main.present.board.texts.text]
+slot = "text_insert_coin"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "mode"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "credits_shown"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "boot_bars"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 1
 
 [[levels.main.present.board.texts]]
 at = [13, 27]
@@ -23043,6 +23152,45 @@ cmp = "<"
 counter = "intro"
 value = 2
 
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "boot_bars"
+value = 0
+
+[[levels.main.present.board.texts]]
+at = [13, 27]
+
+[levels.main.present.board.texts.high]
+slot = "credit_color"
+
+[levels.main.present.board.texts.text]
+slot = "text_one_credit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "mode"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "credits_shown"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "boot_bars"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 1
+
 [[levels.main.present.board.texts]]
 at = [11, 27]
 
@@ -23066,6 +23214,45 @@ value = 2
 cmp = "<"
 counter = "intro"
 value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "boot_bars"
+value = 0
+
+[[levels.main.present.board.texts]]
+at = [11, 27]
+
+[levels.main.present.board.texts.high]
+slot = "credit_color"
+
+[levels.main.present.board.texts.text]
+slot = "text_credits"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "mode"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "credits_shown"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "boot_bars"
+value = 1
+
+[[levels.main.present.board.texts.when]]
+cmp = ">="
+counter = "attract_frames"
+value = 1
 
 [[levels.main.present.board.texts]]
 at = [5, 23]

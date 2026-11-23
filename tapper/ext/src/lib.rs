@@ -5405,8 +5405,13 @@ impl Ext for Bars {
             // the same on 7990, 7992 and 7994). So too a start in an end
             // script's last wait (hops_done): the original's screen is
             // cleared on the clip's first step, the setup's, and GET READY
-            // is up on its second (tapper.clear.001 frames 1 and 2).
-            cx.set_counter("intro", if cleared == 0 || state == 9 || hops_done { 2 } else { 1 });
+            // is up on its second (tapper.clear.001 frames 1 and 2). So too
+            // the setup after a level's end script returns or a bonus round
+            // ends (state 8 here with levels cleared): the original's screen
+            // is empty on the setup's frame and GET READY up on the next
+            // (tapper.poweron.001 frames 1340 and 1341, 2769 and 2770, 3270
+            // and 3271).
+            cx.set_counter("intro", 2);
             // $5512's six sprites ($5567, on the intro's frame 2): the
             // screen shows objects a frame on, so they are made here to be
             // seen on that frame (tapper.start.001 frame 2, tapper.die.001
