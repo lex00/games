@@ -928,6 +928,21 @@ rbtapper = 0x10FE
 sutapper = 0x1103
 tappera = 0x1103
 
+# $1EB2: ld (ix+$02),$11, the picture of a mug a customer's slide knocks
+# over. Every set has it at the same place.
+[[asset]]
+name = "mug_picture_knocked"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x1EB5
+count = 1
+width = 1
+
+[asset.at]
+rbtapper = 0x1EB5
+sutapper = 0x1EB5
+tappera = 0x1EB5
+
 [[asset]]
 name = "mug_flip_frames"
 format = "byte-rows"

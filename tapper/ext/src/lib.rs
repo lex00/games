@@ -5007,6 +5007,9 @@ impl Ext for Bars {
                             let hit = if left { mx <= bx + 16 } else { bx - 8 < mx };
                             if m.ext[3] & 0x200 == 0 && (m.ext[3] >> 4) & 0xf == rbar && m.y.floor() != 0 && hit {
                                 m.ext[3] |= 0x200;
+                                // $1EB2: its picture is the broken glass.
+                                let pic = cx.table("mug_picture_knocked").first().copied().unwrap_or(0);
+                                m.ext[0] = (m.ext[0] & !(0xff << 8)) | ((pic & 0xff) << 8);
                                 m.y = Fx::from_int(m.y.floor() - 3);
                                 // $1EAD: each mug knocked over asks for $1B.
                                 knocked += 1;

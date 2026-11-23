@@ -1337,6 +1337,15 @@ description = "The mugs: a full mug's picture, as the send sets it ($14A5)"
 source = "tapper"
 asset = "mug_picture_full"
 
+[assets.mug_picture_knocked]
+kind = "rows"
+role = "graphics"
+description = "The mugs: a knocked-over mug's picture, the broken glass, as a customer's slide sets it on each mug of his bar it reaches ($1EB2)"
+
+[assets.mug_picture_knocked.from]
+source = "tapper"
+asset = "mug_picture_knocked"
+
 [assets.mug_picture_slosh]
 kind = "rows"
 role = "graphics"
@@ -2235,6 +2244,7 @@ mug_flags_left = "mug_flags_left"
 mug_flip_frames = "mug_flip_frames"
 mug_picture_empty = "mug_picture_empty"
 mug_picture_full = "mug_picture_full"
+mug_picture_knocked = "mug_picture_knocked"
 mug_picture_slosh = "mug_picture_slosh"
 points_bonus = "points_bonus"
 points_catch = "points_catch"
@@ -12965,6 +12975,14 @@ note = "gp-arcade's writes example on tapper.l8.001's log: the send ($1498 to $1
 
 [[evidence."assets.mug_picture_full".refs]]
 at = "clip:tapper.l8.001"
+
+[evidence."assets.mug_picture_knocked"]
+source = "observed"
+confidence = 70
+note = "gp code listing --routine 1CE1: $1EB2's ld (ix+$02),$11 on each mug the slide reaches, after $1E76's cp $11 skips one already knocked; the same at $1EB2 in rbtapper, sutapper and tappera. tapper.l6.001 frames 1454 to 1680: the original's sprite code $11 at 336,380"
+
+[[evidence."assets.mug_picture_knocked".refs]]
+at = "clip:tapper.l6.001"
 
 [evidence."assets.mug_picture_slosh"]
 source = "observed"
