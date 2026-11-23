@@ -77,3 +77,35 @@ clip = "tapper.l13.001"
 [[line]]
 name = "the fourth bonus round"
 clip = "tapper.bonus.005"
+
+[[line]]
+name = "level 14"
+clip = "tapper.l14.001"
+
+[[line]]
+name = "level 15"
+clip = "tapper.l15.001"
+
+[[line]]
+name = "the fifth bonus round"
+clip = "tapper.bonus.006"
+
+[[line]]
+name = "the second bonus round won"
+clip = "tapper.bonus.003"
+
+[[line]]
+name = "losing a life"
+clip = "tapper.die.003"
+
+[[line]]
+name = "game over"
+clip = "tapper.gameover.001"
+
+[[line]]
+name = "power-on"
+clip = "tapper.poweron.001"
+
+[[line]]
+name = "after level 1"
+clip = "tapper.clear.001"
