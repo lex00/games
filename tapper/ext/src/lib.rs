@@ -897,6 +897,28 @@ impl Bartender {
             {
                 *ev = Pose::Slide { n: ((fb.ext[3] >> 24) & 0xff) + 1, phase: (fb.ext[2] >> 26) & 0x3f };
             }
+            // A start inside the slide's first waits: tapper_bars takes the
+            // flow to the slide (sub 10) after this hook, on this frame, and
+            // on the last wait's return puts him where the customer stands
+            // there (tapper.die.001 to die.003: n 36 on the first step).
+            // His pictures ($1D72) go on with that move, so this hook counts
+            // the slide's frame as tapper_bars will.
+            if let Some(fb) = flow
+                && (state == 15 || state == 16)
+            {
+                let left = if state == 16 {
+                    0
+                } else {
+                    cx.kind("timer").and_then(|k| cx.world.bodies.iter().find(|t| t.alive && t.kind == k && t.ext[1] == 0x2346)).map_or(0, |t| t.ext[0])
+                };
+                let bar = cx.me.ext[0] & 3;
+                let taken = cx
+                    .kind("customer")
+                    .is_some_and(|k| cx.world.bodies.iter().any(|c| c.alive && c.kind == k && Bars::bar_of(cx, c.y.floor()) == bar));
+                if taken && let Some(n) = slide_resume(fb.ext[1], fb.ext[3], left) {
+                    *ev = Pose::Slide { n: n + 1, phase: 0 };
+                }
+            }
             return;
         }
         // On the setup's own frame (the flow's word 2 at 4, set by
@@ -3734,6 +3756,25 @@ fn flow_table(cx: &ExtCx<'_>, name: &str) -> Vec<i64> {
         .unwrap_or_default()
 }
 
+/// A start inside $1CE1's first waits, from the flow's words 1 and 3 as
+/// loaded (state 15 or 16, the flow not yet counting the slide, sub 10):
+/// the slide's frame count the start goes on from, where $232B goes on
+/// (E3A9: $1D4B after the wait of 30, $1D62 after each wait of 2, B at E39F
+/// counting them down from 3) less `left`, the frames its wait has left.
+/// None for any other start. tapper_bars takes the flow there and the
+/// bartender's hook counts his pictures from it on the same frame.
+fn slide_resume(w1: i64, w3: i64, left: i64) -> Option<i64> {
+    if (w3 >> 16) & 0xff == 10 || (w1 >> 8) & 0xff != 10 {
+        return None;
+    }
+    let resume = match (w1 >> 16) & 0xffff {
+        0x1D4B => 30,
+        0x1D62 => 30 + 2 * (4 - ((w1 >> 32) & 0xff)),
+        _ => return None,
+    };
+    Some((resume - 1 - left).max(0))
+}
+
 fn bp(cx: &ExtCx<'_>, name: &str) -> i64 {
     let Some(k) = cx.kind("bars") else { return 0 };
     cx.spec.kinds[k].ext_params.get(name).map_or(0, |v| v.floor())
@@ -4560,18 +4601,16 @@ impl Ext for Bars {
         // one at the bartender's end of his bar (E6F9, $08D9).
         if (state == 15 || state == 16)
             && let Some((fid, mut fb)) = flow
-            && (fb.ext[3] >> 16) & 0xff != 10
-            && (fb.ext[1] >> 8) & 0xff == 10
-            && let ret @ (0x1D4B | 0x1D62) = (fb.ext[1] >> 16) & 0xffff
+            && let Some(n) = slide_resume(
+                fb.ext[1],
+                fb.ext[3],
+                if state == 16 {
+                    0
+                } else {
+                    timers.iter().find(|(_, t)| t.ext[1] == 0x2346).map_or(0, |(_, t)| t.ext[0])
+                },
+            )
         {
-            let b = (fb.ext[1] >> 32) & 0xff;
-            let left = if state == 16 {
-                0
-            } else {
-                timers.iter().find(|(_, t)| t.ext[1] == 0x2346).map_or(0, |(_, t)| t.ext[0])
-            };
-            let resume = if ret == 0x1D4B { 30 } else { 30 + 2 * (4 - b) };
-            let n = (resume - 1 - left).max(0);
             let rbar = player_k
                 .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
                 .map_or(0, |b| b.ext[0] & 3);
