@@ -3642,6 +3642,28 @@ fn bar_ends_go(cx: &mut ExtCx<'_>) {
     }
 }
 
+/// A bar end whose object (E356 on) a hook's object takes is that object
+/// now, so it goes: the end script's glass is put in E356 ($46E2 on), and
+/// a clip started inside the script loads it as the bar end of slot 0,
+/// which then stood where the glass was while the glass moved on
+/// (tapper.clear.004, frames 8 to 58: one glass on his head, and one left
+/// behind).
+fn bar_ends_taken(cx: &mut ExtCx<'_>, want: &[BonusObj]) {
+    let Some(ek) = cx.kind("bar_end") else { return };
+    let gone: Vec<usize> = cx.requests().iter().filter_map(|r| if let gp_sim::ext::Request::Remove(i) = r { Some(*i) } else { None }).collect();
+    let ids: Vec<usize> = cx
+        .world
+        .bodies
+        .iter()
+        .enumerate()
+        .filter(|(i, b)| b.alive && b.kind == ek && !gone.contains(i) && want.iter().any(|o| o.at == 0xE356 + 4 * (b.ext[1] - 1)))
+        .map(|(i, _)| i)
+        .collect();
+    for id in ids {
+        cx.remove(id);
+    }
+}
+
 /// The frame's palette cycles ($01CC, from the interrupt every frame while
 /// E410 is set): a step of the running lists when their wait (E121) goes
 /// below 0, the step's colour written and its frames waited; a list's 0
@@ -6994,6 +7016,7 @@ impl Ext for Bars {
                     cx.set_body(pid, b);
                 }
             }
+            bar_ends_taken(cx, &want);
             place_scene(cx, ok, want);
         }
         if sprites_gone_next {
