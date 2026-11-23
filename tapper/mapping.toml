@@ -1050,6 +1050,19 @@ presentation = true
 ram = [0xE3BD]
 
 [[field]]
+lookup = [[2, 1], [3, 1], [12, 1]]
+lookup_else = 0
+note = "Not compared: 1 while the attract mode plays its demo game, read from the game's state E397 with E3BD 1: 2 its start ($5A64), 3 its play, 12 its life lost. Loaded so a clip that starts in the demo's play goes on with it (gameover-high-score-table clip 3 starts on 13740, the frame before the demo's mug falls, $23AF taking E4A7 from 0 to 255 on 13741). State 4, the high scores after it, is left at 0: the hooks' start in that wait ($4A50) sets it as they take the count"
+path = "counters.demo"
+presentation = true
+ram = [0xE397]
+
+[[field.case]]
+note = "Not the attract mode (E3BD 0 a game, 2 the game over): no demo"
+number = 0
+when = "ram[0xE3BD] != 1"
+
+[[field]]
 note = "The sound requests the frame made, as the frame ends: the queue $606B fills, E114 its length and its bytes from E0E1 (6 at most), which the next frame's interrupt sends ($0379). Compared, so a sound the model doesn't ask for, or asks for on another frame, is a difference"
 path = "entities.sound[0].ext[1]"
 ram = [0xE114, 0xE0E1, 0xE0E2, 0xE0E3, 0xE0E4, 0xE0E5, 0xE0E6]

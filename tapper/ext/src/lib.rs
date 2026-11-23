@@ -4572,6 +4572,23 @@ impl Bars {
         let t = cx.table("bar_ends");
         (t.get(row + 1).copied().unwrap_or(0), t.get(row + 2).copied().unwrap_or(0))
     }
+    /// A mug past its bar's end, where it falls: an empty one past the
+    /// bartender's end ($0790 to $07A2: 19 in from the left end moving
+    /// left, 10 out from the right end moving right), a full one past the
+    /// far end ($0804 to $0818: at the left end moving left, 28 out from
+    /// the right end moving right). Its flags (+4): bit 0 empty, bit 3
+    /// moving left, its bar above.
+    fn past_end(cx: &ExtCx<'_>, b: &gp_sim::world::Body) -> bool {
+        let (empty, left_tap) = (b.ext[3] & 1 != 0, b.ext[3] & 8 != 0);
+        let h = b.x.floor();
+        let (lo, hi) = Self::ends(cx, (b.ext[3] >> 4) & 3);
+        match (empty, left_tap) {
+            (true, true) => (lo + 0x13) & 0xff >= h,
+            (true, false) => h > (hi + 0x0A) & 0xff,
+            (false, true) => h > (hi + 0x1C) & 0xff,
+            (false, false) => lo >= h,
+        }
+    }
     /// A picture copied over the dancers' 9 objects ($150F or $0C62,
     /// ldir): an object whose y is 0 is none.
     fn put_picture(cx: &ExtCx<'_>, dk: usize, dancers: &mut [Option<gp_sim::world::Body>; 9], pic: &[i64]) {
@@ -4684,6 +4701,32 @@ impl Ext for Bars {
             for id in ids {
                 let mut b = cx.world.bodies[id];
                 b.ext[3] |= BOARD_HIDDEN;
+                cx.set_body(id, b);
+            }
+        }
+        // A start in a life lost (state 12): the mug that fell is the one
+        // past its bar's end, where the mugs' move stopped ($07AE, $0824),
+        // and $23B0's fall and rise move it from there (gameover-high-score-
+        // table clip 3 starts on the demo's frame its empty mug at x 212
+        // passed bar 0's end, rising from 13742). The mug's move marks it as
+        // it falls; nothing loads the mark, so it is set here.
+        if let Some(mk) = cx.kind("mug")
+            && cx
+                .kind("flow")
+                .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+                .is_some_and(|fb| fb.ext[3] & 0xff == 12)
+        {
+            let fallen: Vec<usize> = cx
+                .world
+                .bodies
+                .iter()
+                .enumerate()
+                .filter(|(_, b)| b.alive && b.kind == mk && b.ext[3] & 0x100 == 0 && Self::past_end(cx, b))
+                .map(|(i, _)| i)
+                .collect();
+            for id in fallen {
+                let mut b = cx.world.bodies[id];
+                b.ext[3] |= 0x100;
                 cx.set_body(id, b);
             }
         }
@@ -6997,15 +7040,7 @@ impl Ext for Bars {
             let x16 = if left_tap { x16 - speed } else { x16 + speed };
             b.x = Fx::from_int((x16 >> 8) & 0xff);
             b.ext[1] = (b.ext[1] & !0xff) | (x16 & 0xff);
-            let h = b.x.floor();
-            let (lo, hi) = Self::ends(cx, bar);
-            let falls = match (empty, left_tap) {
-                (true, true) => (lo + 0x13) & 0xff >= h,
-                (true, false) => h > (hi + 0x0A) & 0xff,
-                (false, true) => h > (hi + 0x1C) & 0xff,
-                (false, false) => lo >= h,
-            };
-            if falls {
+            if Self::past_end(cx, &b) {
                 b.ext[3] |= 0x100;
                 bodies[k].1 = b;
                 fell = true;
