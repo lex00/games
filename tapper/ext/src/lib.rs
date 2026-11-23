@@ -2970,6 +2970,14 @@ fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
     if me.y.floor() == 0 || out_of_play(cx) {
         return Vec::new();
     }
+    // A setup empties the objects ($4B4D's $5F31) and its RAM clear takes
+    // E715 and E714 with it: a pour a lost life cut short shows through the
+    // slide and is gone from the setup's frame, through the intro
+    // (tapper.l13.001: the life lost on 219, the layers up to 260, the
+    // setup on 261).
+    if cx.counter("intro").is_some_and(|i| i > 0) {
+        return Vec::new();
+    }
     let Some((tap_x, tap_left)) = Bartender::tap(cx, me.ext[0] & 3) else { return Vec::new() };
     let y = me.y.floor();
     // A level's end ($4742, from the end script's frame 56 as
@@ -2978,6 +2986,17 @@ fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
     // object, picture $0B then $0C, until $4852 empties eight objects 15
     // frames after the full mug ($4815, frame 85).
     let flow = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k));
+    // A life lost empties the pour's objects as it starts: a fallen mug's
+    // $239E the six from E18E, a slide's $1D3C those and the rest. E715
+    // and E714 stay as they were, and nothing draws from them until the
+    // setup (tapper.l13.001: the mug falls on 261 with a full mug at the
+    // tap).
+    if let Some(fb) = flow {
+        let (state, sub) = (fb.ext[3] & 0xff, (fb.ext[3] >> 16) & 0xff);
+        if (state == 12 && sub >= 1) || ([13, 15].contains(&state) && [1, 10, 11].contains(&sub)) {
+            return Vec::new();
+        }
+    }
     if let Some(fb) = flow
         && [15, 16].contains(&(fb.ext[3] & 0xff))
         && (fb.ext[3] >> 16) & 0xff == 8
