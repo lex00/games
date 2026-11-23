@@ -884,3 +884,19 @@ note = "Not compared: 1 in the bonus round: $256A numbers the cans 0 to 5 in E70
 path = "counters.bonus"
 presentation = true
 ram = [0xE705]
+
+[[field]]
+lookup = [[1, 1]]
+lookup_else = 0
+note = "Not compared: 1 while the bonus round's card is on the screen: E3B7 is 1 from $251C to $2530, and through the card's last frame the round is in or just out of its wait of 20 at $252C, E3A9 holding where it goes on ($252F; rbtapper's $2534), the stage's copy ($2546) only coming on the next frame (tapper.bonus.001 to .006 start there). Loaded so such a clip draws the card on its first frame; the hooks keep it from there"
+path = "counters.bonus_card"
+presentation = true
+ram = [0xE3B7]
+
+[[field.case]]
+number = 0
+when = "ram[0xE3BD] != 0"
+
+[[field.case]]
+number = 1
+when = "ram[0xE3AA] == 37 && (ram[0xE3A9] == 47 || ram[0xE3A9] == 52)"

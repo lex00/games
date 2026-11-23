@@ -2566,6 +2566,20 @@ rbtapper = 0xAEA1
 sutapper = 0xAD21
 tappera = 0xAD11
 
+# The card the bonus round shows first, the logo on blue: $251F puts ld
+# de,$B4A1 in E395 and $252C waits 20 before the stage. rbtapper's at $B621
+# ($2524), tappera's at $B491 ($251F), sutapper's at $B4A1 ($251F).
+[[asset]]
+name = "screen_bonus_card"
+format = "mcr-screen"
+region = "maincpu"
+offset = 0xB4A1
+
+[asset.at]
+rbtapper = 0xB621
+sutapper = 0xB4A1
+tappera = 0xB491
+
 # The HUD's tile codes as the vblank writes them, the code's own bytes:
 # the score's ($05D5: a digit added to the byte at $05F6, the cells' high
 # byte at $05FA), the lives' ($5D45: the high byte at $5D50, the tile at

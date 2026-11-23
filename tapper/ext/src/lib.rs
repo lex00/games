@@ -2320,6 +2320,16 @@ fn bonus_round(cx: &mut ExtCx<'_>, fb: &mut gp_sim::world::Body, cleared: i64, p
     done
 }
 
+/// The bonus round's card (counter bonus_card): $251F puts the card's
+/// screen in E395 with E3B7 1 (the HUD's score and lives off), and $2546
+/// the stage's, whose copy shows from the round's frame 23 (counter bonus).
+fn bonus_card(cx: &mut ExtCx<'_>, c: i64) {
+    let v = i64::from(c < 23);
+    if cx.counter("bonus_card") != Some(v) {
+        cx.set_counter("bonus_card", v);
+    }
+}
+
 /// A sprite object of the bonus round as the game keeps it: its address
 /// (E18E on), y, flags, picture and x. A y of 0 is no picture.
 #[derive(Clone, Copy)]
@@ -3440,7 +3450,13 @@ fn bonus_scene(cx: &ExtCx<'_>, fb: &gp_sim::world::Body, cleared: i64, done: boo
             objs[14] = BonusObj { at: 0xE29A, y: ty + 32, flags: fl, pic: pics[2], x: (tx + 5) & 0xff };
             objs[15] = BonusObj { at: 0xE29E, y: ty + 32, flags: fr, pic: pics[2], x: (tx + 21) & 0xff };
         }
-        text = 2;
+        // $26BF to $26DA queue the four lines with $5F44 as the shuffle
+        // ends; the vblank's $5CED copies them in on the next frame
+        // (tapper.bonus.001, .002 and .003 frame 410: blank on the
+        // shuffle's last, the lines from the frame after).
+        if c > shuffle_end {
+            text = 2;
+        }
         if let Some(at) = at
             && c >= at + 20
         {
@@ -3474,8 +3490,12 @@ fn bonus_scene(cx: &ExtCx<'_>, fb: &gp_sim::world::Body, cleared: i64, done: boo
                 };
             } else {
                 // $284D: the can's top for 2 frames, the spray, then the
-                // can opened and the loss's line ($28F2).
-                text = 0;
+                // can opened and the loss's line ($28F2). As the win's, the
+                // lines change a frame after the code queues them ($5CED's
+                // copy): the instructions stay up on the check's frame and
+                // the loss's line comes a frame after the can is opened
+                // (tapper.bonus.002 frames 956 and 1012).
+                text = if c < at + 21 { 2 } else { 0 };
                 if c < at + 22 {
                     objs.push(beer(2, "beer_pic_spray", -2));
                 } else if c < at + 76 {
@@ -3507,7 +3527,9 @@ fn bonus_scene(cx: &ExtCx<'_>, fb: &gp_sim::world::Body, cleared: i64, done: boo
                 } else {
                     objs.push(beer(16, "beer_pic", -11));
                     objs[k].y = 0;
-                    text = 5;
+                    if c >= at + 77 {
+                        text = 5;
+                    }
                     // $2931 and $2934 call $3BFF twice: two drops (E2B2,
                     // E2B6) from his feet, x 4 and 12 past his first
                     // sprite, falling 1 each 2 frames for 40 frames, each
@@ -4475,6 +4497,9 @@ impl Ext for Bars {
                 timers.iter().find(|(_, t)| t.ext[1] == 0x2346).map_or(0, |(_, t)| t.ext[0])
             };
             let n = (22 - left).max(0);
+            // The clip's first frame is the one its start loaded
+            // (counters.bonus_card in the mapping); this step draws the next.
+            bonus_card(cx, n + 1);
             fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (12 << 16) | (n << 24);
             fb.ext[2] &= !BONUS_MASK;
             fb.ext[1] &= !(0xffff << 16);
@@ -4670,6 +4695,7 @@ impl Ext for Bars {
             // As the script's return at $5681 below: a level more, and the
             // bonus round, sub 12, its frames from bit 24.
             cleared = count & 0xff;
+            bonus_card(cx, 0);
             fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (12 << 16);
             fb.ext[2] &= !BONUS_MASK;
             fb.ext[1] &= !(0xffff << 16);
@@ -5672,6 +5698,7 @@ impl Ext for Bars {
             cx.set_body(fid, fb);
         } else if (state == 15 || state == 16) && sub == 12 && !bonus_entered && let Some((fid, mut fb)) = flow {
             let next = bonus_round(cx, &mut fb, cleared, &mut points);
+            bonus_card(cx, (fb.ext[3] >> 24) & 0xffff);
             bonus_objs = Some(bonus_scene(cx, &fb, cleared, next));
             if next {
                 // $2500 returns to $569D: $56A0's $2EA1, then the setup

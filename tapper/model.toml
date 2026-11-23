@@ -1526,6 +1526,15 @@ description = "The bonus round stage ($2546)"
 source = "tapper"
 asset = "screen_bonus"
 
+[assets.screen_bonus_card]
+kind = "board-screen"
+role = "layout"
+description = "The card the bonus round shows before its stage, the logo on blue ($251F)"
+
+[assets.screen_bonus_card.from]
+source = "tapper"
+asset = "screen_bonus_card"
+
 [assets.screen_saloon]
 kind = "board-screen"
 role = "layout"
@@ -2906,6 +2915,11 @@ cmp = "<"
 counter = "intro"
 value = 2
 
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "bonus_card"
+value = 0
+
 [[levels.main.present.board.counters]]
 at = [23, 1]
 counter = "score_2"
@@ -2927,6 +2941,11 @@ value = 0
 cmp = "<"
 counter = "intro"
 value = 2
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "bonus_card"
+value = 0
 
 [[levels.main.present.board.counters]]
 at = [28, 27]
@@ -5269,6 +5288,24 @@ slot = "demo_color_2"
 cmp = "=="
 counter = "attract_screen"
 value = 2
+
+[[levels.main.present.board.looks]]
+palette = "board_palette"
+screen = "screen_bonus_card"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 109
+column = 5
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "bonus_card"
+value = 1
 
 [[levels.main.present.board.looks]]
 palette = "board_palette"
@@ -21590,6 +21627,11 @@ cmp = "<"
 counter = "intro"
 value = 2
 
+[[levels.main.present.board.repeats.when]]
+cmp = "=="
+counter = "bonus_card"
+value = 0
+
 [[levels.main.present.board.repeats]]
 at = [0, 0]
 counter = "boot_bars"
@@ -24728,6 +24770,9 @@ description = "The attract mode's screen: 1 the logo's ($3D76), 2 the demo's ($4
 [counters.bonus]
 description = "1 from the bonus round's start ($2500, called at $569D) to its end, which the hooks keep: no RAM byte marks the bonus round by itself"
 
+[counters.bonus_card]
+description = "1 while the bonus round shows its card ($251F: E395 = $B4A1, E3B7 1, which keeps the HUD's score and lives off) before its stage ($2546), the round's frames before 23; tapper_bars sets it from the round's frame count"
+
 [counters.bonus_text]
 description = "The bonus round's line of text: 1 its first ($253D), 2 the four after the shuffle ($26BF), 3 the win's two, 4 the win's first alone as the second blinks ($2830), 5 the loss's ($28F2), 0 none; tapper_bars sets it each frame"
 
@@ -26180,6 +26225,14 @@ note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stage
 
 [[evidence."assets.screen_bonus".refs]]
 at = "clip:tapper.l1.001"
+
+[evidence."assets.screen_bonus_card"]
+source = "observed"
+confidence = 80
+note = "gp code listing of $2500 in each set: $251F (rbtapper $2524) puts the card's screen in E395 with E3B7 1, $252C waits 20, then $2546 the stage's; gp code listing --writes E395 over tapper.clear.002 and tapper.bonus.001 has $2522 and $2549 write it. gp picture: the card on tapper.clear.002 frames 1 to 22 and each bonus clip's frame 0"
+
+[[evidence."assets.screen_bonus_card".refs]]
+at = "clip:tapper.bonus.003"
 
 [evidence."assets.screen_saloon"]
 source = "observed"
