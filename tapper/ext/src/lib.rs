@@ -770,6 +770,24 @@ impl Bartender {
             .map(|b| (b.x.floor(), b.facing_left))
     }
 
+    /// The space bar lights the pad beside the tap of the bartender's bar:
+    /// $1921 writes its 3 by 2 cells where the table at $1980 says for his
+    /// bar E6F9 (`bar`), 4 further on when that bar's tap is on its left
+    /// ($0FFB), at the level's setup ($4C60) and as he lands at a bar
+    /// ($0B3F, after $0A8E's $1990 put the bar he left back). The counter
+    /// space_pad is that place from 1, 0 off the space bar; the board's
+    /// texts draw the cells by it. The bonus round's screens, its card's
+    /// ($251F, from the round's frame 2) and its stage's ($2500), have no
+    /// pad (tapper.clear.018).
+    fn space_pad(cx: &ExtCx<'_>, bar: i64) -> i64 {
+        if cx.counter("shown") == Some(3) && cx.counter("bonus").unwrap_or(0) == 0 {
+            let left = Self::tap(cx, bar).is_some_and(|(_, l)| l);
+            bar + if left { 4 } else { 0 } + 1
+        } else {
+            0
+        }
+    }
+
     /// Where he stands at bar `bar`'s tap.
     fn stand(cx: &ExtCx<'_>, bar: i64) -> Option<i64> {
         let (x, left) = Self::tap(cx, bar)?;
@@ -789,21 +807,15 @@ impl Ext for Bartender {
         cx.me.ext[3] &= !BOARD_HIDDEN;
         Self::act(cx, &mut ev, &mut spawned);
         draw_pose(cx, ev, x_before, spawned);
-        // The space bar lights the pad beside the tap of the bartender's
-        // bar: $1921 writes its 3 by 2 cells where the table at $1980 says
-        // for his bar E6F9, 4 further on when that bar's tap is on its left
-        // ($0FFB), at the level's setup ($4C60) and as he lands at a bar
-        // ($0B3F, after $0A8E's $1990 put the bar he left back). The
-        // counter is that place from 1, 0 off the space bar; the board's
-        // texts draw the cells by it. The bonus round's screen ($2500) has
-        // no pad.
-        let pad = if cx.counter("shown") == Some(3) && cx.counter("bonus").unwrap_or(0) == 0 {
-            let bar = cx.me.ext[0] & 3;
-            let left = Self::tap(cx, bar).is_some_and(|(_, l)| l);
-            bar + if left { 4 } else { 0 } + 1
-        } else {
-            0
-        };
+        // This hook runs before tapper_bars: the bonus round's frame this
+        // step reaches is the flow's count (sub 12) plus 1.
+        let round = cx
+            .kind("flow")
+            .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+            .filter(|b| [15, 16].contains(&(b.ext[3] & 0xff)) && (b.ext[3] >> 16) & 0xff == 12)
+            .map(|b| ((b.ext[3] >> 24) & 0xffff) + 1);
+        let card = round.is_some_and(|c| c >= 2);
+        let pad = if card { 0 } else { Self::space_pad(cx, cx.me.ext[0] & 3) };
         if cx.counter("space_pad") != Some(pad) {
             cx.set_counter("space_pad", pad);
         }
@@ -2342,13 +2354,21 @@ fn bonus_round(cx: &mut ExtCx<'_>, fb: &mut gp_sim::world::Body, cleared: i64, p
     done
 }
 
-/// The bonus round's card (counter bonus_card): $251F puts the card's
-/// screen in E395 with E3B7 1 (the HUD's score and lives off), and $2546
-/// the stage's, whose copy shows from the round's frame 23 (counter bonus).
-fn bonus_card(cx: &mut ExtCx<'_>, c: i64) {
-    let v = i64::from(c < 23);
+/// The bonus round's card (counter bonus_card) on the round's frame `c`
+/// (bonus_round's count): the round's first waits ($5E99, $60F6) keep the
+/// last level's screen, its number and the HUD up, then $251F puts the
+/// card's screen in E395 with E3B7 1 (the HUD's score and lives off),
+/// shown from the round's frame 2 (tapper.clear.002 frame 3, clear.013 and
+/// clear.018 frame 2), with the level's number as counted (`cleared`); and
+/// $2546 the stage's, whose copy shows from the round's frame 23 (counter
+/// bonus).
+fn bonus_card(cx: &mut ExtCx<'_>, c: i64, cleared: i64) {
+    let v = i64::from((2..23).contains(&c));
     if cx.counter("bonus_card") != Some(v) {
         cx.set_counter("bonus_card", v);
+    }
+    if v == 1 && cx.counter("cleared_shown") != Some(cleared) {
+        cx.set_counter("cleared_shown", cleared);
     }
 }
 
@@ -4183,6 +4203,34 @@ impl Bars {
         }
     }
 
+    /// A start in an end script's last wait when a bonus round comes next
+    /// (`count` the levels cleared with this one, as $5681 counts it, at 2,
+    /// 5 or 9 mod 13, or 0): script 0's last of $48FC's waits of 10 (B at
+    /// 1), script 1's last of $45E3's waits of 1 (B at 1), script 2's $2DF7
+    /// wait of 15, script 3's last hop ($50EF's or $51A9's, B at 1), script
+    /// 4's last of $4546's waits of 4 (B at 1), with the flow's word 1
+    /// holding the wait's place and B as $232B left them.
+    fn bonus_last_wait(cx: &ExtCx<'_>, b: &gp_sim::world::Body, state: i64, count: i64) -> bool {
+        let bonus_next = matches!(count % 13, 2 | 5 | 9) || count % 13 == 0;
+        let (place, b_reg, sub) = ((b.ext[1] >> 16) & 0xffff, (b.ext[1] >> 32) & 0xff, (b.ext[3] >> 16) & 0xff);
+        if !bonus_next || !(state == 11 || state == 16) || place == 0 || [8, 10, 12].contains(&sub) || (b.ext[1] >> 8) & 0xff != 11 {
+            return false;
+        }
+        // The script by the levels cleared before this one.
+        match Self::end_script(cx, count - 1) {
+            0 => b_reg == 1 && wait_return(cx, "end_last_code", "end_last_start", 2) == Some(place),
+            1 => b_reg == 1 && wait_return(cx, "end_gulp_code", "end_gulp_start", 1) == Some(place),
+            2 => wait_return(cx, "end_turn_code", "end_turn_start", 1) == Some(place),
+            3 => {
+                b_reg == 1
+                    && (wait_return(cx, "hops_code", "hops_start", 2) == Some(place)
+                        || wait_return(cx, "interlude_code", "interlude_start", 5) == Some(place))
+            }
+            4 => b_reg == 1 && wait_return(cx, "end_drop", "end_drop_start", 2) == Some(place),
+            _ => false,
+        }
+    }
+
     fn tap_left(cx: &ExtCx<'_>, bar: i64) -> bool {
         cx.kind("tap").is_some_and(|k| {
             cx.world
@@ -4231,6 +4279,34 @@ impl Ext for Bars {
             .kind("timer")
             .is_some_and(|k| cx.world.bodies.iter().any(|b| b.kind == k && b.alive && b.ext[1] == 0x2023 && b.ext[0] > 0));
         if flow.is_some_and(|w| w[3] & 0xff == 11) && !level_timers {
+            // Back in state 11 from an end script's last wait with a bonus
+            // round next, $5681 has counted the level (E4A8, the stage
+            // loaded) but the screen is still the last level's, its stage
+            // and its number, until the card's ($251F; tapper.clear.013,
+            // clear.018 frames 0 and 1).
+            let fb = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).copied();
+            let cleared = cx.counter("cleared").unwrap_or(0);
+            if cx.counter("bonus_card") != Some(1)
+                && cleared > 0
+                && fb.is_some_and(|b| Self::bonus_last_wait(cx, &b, 11, cleared))
+            {
+                let last = cleared - 1;
+                let stage = if last < 26 { last } else { last.rem_euclid(26) % 13 + 13 };
+                cx.set_counter("stage", stage);
+                set_screen(cx);
+                if cx.counter("cleared_shown").is_none_or(|v| v < 0) {
+                    cx.set_counter("cleared_shown", last);
+                }
+                // The space bar's pad is still lit where the bartender
+                // last stood (tapper.clear.018 frame 0).
+                if let Some(pb) = cx.kind("player").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).copied() {
+                    let pad = Bartender::space_pad(cx, pb.ext[0] & 3);
+                    if cx.counter("space_pad") != Some(pad) {
+                        cx.set_counter("space_pad", pad);
+                    }
+                }
+                return;
+            }
             // But a start in an end script's last wait with no bonus round
             // next: the script has returned, $5681 has counted the level
             // and the setup waits this frame in $5E99, so the screen is
@@ -4615,7 +4691,7 @@ impl Ext for Bars {
             let n = (22 - left).max(0);
             // The clip's first frame is the one its start loaded
             // (counters.bonus_card in the mapping); this step draws the next.
-            bonus_card(cx, n + 1);
+            bonus_card(cx, n + 1, cleared);
             fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (12 << 16) | (n << 24);
             fb.ext[2] &= !BONUS_MASK;
             fb.ext[1] &= !(0xffff << 16);
@@ -4802,38 +4878,15 @@ impl Ext for Bars {
         // ($5E99, $60F6) keep the state at 11 (tapper.clear.013, clear.018,
         // clear.021).
         let count = if state == 16 { cleared + 1 } else { cleared };
-        let bonus_next = matches!(count % 13, 2 | 5 | 9) || count % 13 == 0;
-        let last_wait = bonus_next
-            && (state == 11 || state == 16)
-            && flow.is_some_and(|(_, b)| {
-                let (place, b_reg, sub) = ((b.ext[1] >> 16) & 0xffff, (b.ext[1] >> 32) & 0xff, (b.ext[3] >> 16) & 0xff);
-                // The script by the levels cleared before this one.
-                let script = Self::end_script(cx, count - 1);
-                place != 0
-                    && ![8, 10, 12].contains(&sub)
-                    && (b.ext[1] >> 8) & 0xff == 11
-                    && match script {
-                        0 => b_reg == 1 && wait_return(cx, "end_last_code", "end_last_start", 2) == Some(place),
-                        1 => b_reg == 1 && wait_return(cx, "end_gulp_code", "end_gulp_start", 1) == Some(place),
-                        2 => wait_return(cx, "end_turn_code", "end_turn_start", 1) == Some(place),
-                        3 => {
-                            b_reg == 1
-                                && (wait_return(cx, "hops_code", "hops_start", 2) == Some(place)
-                                    || wait_return(cx, "interlude_code", "interlude_start", 5) == Some(place))
-                        }
-                        4 => b_reg == 1 && wait_return(cx, "end_drop", "end_drop_start", 2) == Some(place),
-                        _ => false,
-                    }
-            });
+        let last_wait = flow.is_some_and(|(_, b)| Self::bonus_last_wait(cx, &b, state, count));
         let hops_done = hops_done && !last_wait;
         let bonus_entered = last_wait && state == 16;
         if last_wait && let Some((fid, mut fb)) = flow {
             // As the script's return at $5681 below: a level more, and the
-            // bonus round, sub 12, its frames from bit 24.
+            // bonus round, sub 12, its frames from bit 24. The screen keeps
+            // the last level's number until the card's ($251F, bonus_card).
             cleared = count & 0xff;
-            bonus_card(cx, 0);
-            // The card's screen ($251F) draws the level's number as counted.
-            cx.set_counter("cleared_shown", cleared);
+            bonus_card(cx, 0, cleared);
             fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (12 << 16);
             fb.ext[2] &= !BONUS_MASK;
             fb.ext[1] &= !(0xffff << 16);
@@ -5854,13 +5907,10 @@ impl Ext for Bars {
             cx.set_body(fid, fb);
         } else if (state == 15 || state == 16) && sub == 12 && !bonus_entered && let Some((fid, mut fb)) = flow {
             let next = bonus_round(cx, &mut fb, cleared, &mut points);
-            bonus_card(cx, (fb.ext[3] >> 24) & 0xffff);
-            // The card's screen ($251F) draws the level's number as counted,
-            // from the round's first frame: the level's last frame still has
-            // the old one (tapper.l9.001 frame 1734).
-            if (fb.ext[3] >> 24) & 0xffff == 1 {
-                cx.set_counter("cleared_shown", cleared);
-            }
+            // The card's screen ($251F) draws the level's number as counted
+            // (bonus_card); the level's last frame and the round's first
+            // still have the old one (tapper.l9.001 frame 1734).
+            bonus_card(cx, (fb.ext[3] >> 24) & 0xffff, cleared);
             bonus_objs = Some(bonus_scene(cx, &fb, cleared, next));
             if next {
                 // $2500 returns to $569D: $56A0's $2EA1, then the setup
