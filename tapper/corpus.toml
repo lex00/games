@@ -366,6 +366,16 @@ why = "the third shaker round to its end"
 level = "bonus"
 
 [[clip]]
+id = "tapper.bonus.007"
+name = "The third bonus round, lost by the button"
+source = "scripted"
+start = "inputs/tapper.bonus.004.start.presses"
+presses = "inputs/tapper.bonus.007.presses"
+frames = 539
+why = "a wrong can chosen with the button ($2787 to $284D): the other bonus clips lose only when the time runs out, and win by the button"
+level = "bonus"
+
+[[clip]]
 id = "tapper.clear.014"
 name = "After the third bonus round"
 source = "played"
