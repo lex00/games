@@ -1179,7 +1179,14 @@ impl Flow {
             cx.set_counter("cleared", 0);
             cx.set_counter("score", 0);
             let defaults = cx.table("defaults").to_vec();
-            let lives = defaults.get(5).copied().unwrap_or(3);
+            // The lives a game starts with are the board's setting (E005, 3
+            // from the program's defaults) unless a profile sets its own
+            // (lives_set, 0 in the model as written: profiles.toml's
+            // five_lives).
+            let lives = match p(cx, "lives_set") {
+                n if n > 0 => n,
+                _ => defaults.get(5).copied().unwrap_or(3),
+            };
             let row = defaults.get(6).copied().unwrap_or(1);
             cx.set_counter("lives", lives);
             let draw = draw_at_most(cx, "game_start", 2);
@@ -4031,9 +4038,19 @@ impl Ext for Bars {
             .map(|w| w[0] + 256 * w.get(1).copied().unwrap_or(0))
             .collect();
         let times = cx.table("level_times").to_vec();
+        // A level's two respawn waits (its words 0 and 8) as a percent of
+        // the program's own, for a profile that slows the customers'
+        // coming in (wait_percent, 0 in the model as written, which is the
+        // program's waits: profiles.toml's slower_arrivals).
+        let wait_percent = bp(cx, "wait_percent");
         let row_word = |row: i64, at: usize| -> i64 {
             let base = usize::try_from((row - 1).max(0)).unwrap_or(0) * 12 + at;
-            times.get(base).copied().unwrap_or(0) + 256 * times.get(base + 1).copied().unwrap_or(0)
+            let word = times.get(base).copied().unwrap_or(0) + 256 * times.get(base + 1).copied().unwrap_or(0);
+            if wait_percent > 0 && (at == 0 || at == 8) {
+                (word * wait_percent / 100).min(0xffff)
+            } else {
+                word
+            }
         };
         let of_kind = |cx: &ExtCx<'_>, k: Option<usize>| -> Vec<(usize, Body)> {
             k.map(|k| {

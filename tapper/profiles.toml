@@ -40,6 +40,25 @@ name = "coin_on_press"
 "entities.flow.ext_params.coin_on_press" = 1
 
 [[groups]]
+description = "Ways to make the game easier, each one number the game's own code reads"
+name = "easier"
+title = "Easier"
+
+[[groups.switches]]
+description = "A game starts with 5 lives, not the board's setting of 3 (the lives a start copies from the settings at $4B1F)"
+name = "five_lives"
+
+[groups.switches.set]
+"entities.flow.ext_params.lives_set" = 5
+
+[[groups.switches]]
+description = "Customers come in half as often: a level's two respawn waits are twice the program's own (the level's times table, its words 0 and 8)"
+name = "slower_arrivals"
+
+[groups.switches.set]
+"entities.bars.ext_params.wait_percent" = 200
+
+[[groups]]
 description = "The original program's own slips, off one at a time"
 name = "fixes"
 title = "Fixes"

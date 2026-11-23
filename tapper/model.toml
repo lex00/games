@@ -2155,6 +2155,7 @@ scene_a = 1
 setup_late_bars = 12
 throw_base = 5
 throw_spread = 15
+wait_percent = 0
 walk_frames = 12
 
 [entities.bars.ext_rows]
@@ -2416,6 +2417,7 @@ coin_on_press = 0
 demo_wait_at = 217
 demo_waits_at = 812
 game_over_wait = 180
+lives_set = 0
 logo_wait_at = 2
 start_bar = 2
 start_left = 61
