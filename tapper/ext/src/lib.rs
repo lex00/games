@@ -1302,6 +1302,12 @@ impl Flow {
             // wait in $5E99 ($4B47); tapper_bars goes on from the next.
             cx.set_counter("credits", now - 1);
             cx.set_counter("mode", 0);
+            // $4AEF writes no video RAM: a start taken in the attract mode
+            // leaves its screen up on the start's frame, its credit line
+            // too, and $4B3F empties it on the next (tapper.poweron.001
+            // frames 866 and 867). The board reads mode_shown, kept at the
+            // attract's 1 for that frame.
+            cx.set_counter("mode_shown", i64::from(mode == 1 && !demo));
             if demo {
                 cx.set_counter("demo", 0);
             }
@@ -1486,6 +1492,7 @@ impl Flow {
     /// 6). Every object goes ($5F31).
     fn attract(cx: &mut ExtCx<'_>, credits: i64) {
         cx.set_counter("mode", 1);
+        cx.set_counter("mode_shown", 1);
         let t = if credits > 0 { attract_at(cx, "attract_demo") } else { 0 };
         cx.me.ext[3] = (cx.me.ext[3] & !0xff) | if credits > 0 { 6 } else { 1 };
         cx.me.ext[2] = (t << ATTRACT_SHIFT) & ATTRACT_MASK;
@@ -1650,9 +1657,22 @@ impl Ext for Flow {
         if cx.counter("credits_shown") != Some(before) {
             cx.set_counter("credits_shown", before);
         }
+        // The mode as the board shows it: the mode itself (as a clip's
+        // start loads it too), except on a start's frame (out_of_game).
+        if let Some(mode) = cx.counter("mode")
+            && cx.counter("mode_shown") != Some(mode)
+        {
+            cx.set_counter("mode_shown", mode);
+        }
+        let attract = cx.counter("mode") == Some(1) && !in_demo(cx);
         let credits = Self::coin(cx);
         let done = Self::out_of_game(cx, credits);
-        set_attract_screen(cx);
+        // On a start's frame in the attract mode the attract's screen
+        // stays as it was (out_of_game). The counters this step set are
+        // read as they were before it, so the start is known by its flag.
+        if !(attract && cx.me.ext[2] & STARTED != 0) {
+            set_attract_screen(cx);
+        }
         if done {
             return;
         }
@@ -6367,6 +6387,7 @@ impl Ext for Bars {
             let c = ((fb.ext[3] >> 24) & 0xffff) + 1;
             if c == 1 {
                 cx.set_counter("mode", 2);
+                cx.set_counter("mode_shown", 2);
             }
             let wait = cx
                 .kind("flow")

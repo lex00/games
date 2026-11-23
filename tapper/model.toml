@@ -2934,7 +2934,7 @@ slot = "score_codes"
 
 [[levels.main.present.board.counters.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.counters.when]]
@@ -2961,7 +2961,7 @@ slot = "score_codes"
 
 [[levels.main.present.board.counters.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.counters.when]]
@@ -3046,7 +3046,7 @@ slot = "score_codes"
 
 [[levels.main.present.board.counters.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 0
 
 [[levels.main.present.board.counters.when]]
@@ -3073,7 +3073,7 @@ slot = "score_codes"
 
 [[levels.main.present.board.counters.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 0
 
 [[levels.main.present.board.counters.when]]
@@ -3101,7 +3101,7 @@ slot = "level_codes"
 
 [[levels.main.present.board.counters.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 0
 
 [[levels.main.present.board.counters.when]]
@@ -3134,7 +3134,7 @@ slot = "level_codes"
 
 [[levels.main.present.board.counters.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 0
 
 [[levels.main.present.board.counters.when]]
@@ -3165,7 +3165,7 @@ slot = "credit_digit"
 
 [[levels.main.present.board.counters.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.counters.when]]
@@ -3191,7 +3191,7 @@ slot = "credit_digit"
 
 [[levels.main.present.board.counters.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.counters.when]]
@@ -5795,7 +5795,7 @@ value = 0
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.looks.when]]
@@ -5837,7 +5837,7 @@ value = 1
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.looks.when]]
@@ -5889,7 +5889,7 @@ value = 1
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.looks.when]]
@@ -5942,7 +5942,7 @@ value = 2
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.looks.when]]
@@ -5995,7 +5995,7 @@ value = 3
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.looks.when]]
@@ -6048,7 +6048,7 @@ value = 4
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.looks.when]]
@@ -6090,7 +6090,7 @@ value = 2
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.looks.when]]
@@ -22057,7 +22057,7 @@ slot = "lives_codes"
 
 [[levels.main.present.board.repeats.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 0
 
 [[levels.main.present.board.repeats.when]]
@@ -23023,7 +23023,7 @@ slot = "text_credit"
 
 [[levels.main.present.board.texts.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.texts.when]]
@@ -23047,7 +23047,7 @@ slot = "text_credit"
 
 [[levels.main.present.board.texts.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.texts.when]]
@@ -23076,7 +23076,7 @@ slot = "text_insert_coin"
 
 [[levels.main.present.board.texts.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.texts.when]]
@@ -23105,7 +23105,7 @@ slot = "text_insert_coin"
 
 [[levels.main.present.board.texts.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.texts.when]]
@@ -23139,7 +23139,7 @@ slot = "text_one_credit"
 
 [[levels.main.present.board.texts.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.texts.when]]
@@ -23168,7 +23168,7 @@ slot = "text_one_credit"
 
 [[levels.main.present.board.texts.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.texts.when]]
@@ -23202,7 +23202,7 @@ slot = "text_credits"
 
 [[levels.main.present.board.texts.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.texts.when]]
@@ -23231,7 +23231,7 @@ slot = "text_credits"
 
 [[levels.main.present.board.texts.when]]
 cmp = "=="
-counter = "mode"
+counter = "mode_shown"
 value = 1
 
 [[levels.main.present.board.texts.when]]
@@ -25501,6 +25501,9 @@ start = -1
 
 [counters.mode]
 description = "E3BD: 0 in a game, 1 in attract mode ($4AB8, $4E3D), 2 at game over"
+
+[counters.mode_shown]
+description = "The mode as the screen shows it, which the board reads: E3BD, except on the frame a start is taken in the attract mode ($584F, $4AEF), when the attract's screen is still up (1) and $4B3F empties it on the next (tapper_flow)"
 
 [counters.score]
 description = "The score, six decimal digits a byte at E3F5 to E3FA, most significant first; the points routine at $5EE7 adds an entry of the points rows from the last digit up, carrying (tapper_bars), only in a game (E3BD 0, $5EEB)"
