@@ -743,6 +743,15 @@ description = "The bartender's pictures: a level's end, $4546: his pictures as t
 source = "tapper"
 asset = "end_drop"
 
+[assets.end_drop_start]
+kind = "rows"
+role = "behavior"
+description = "Where end script 4's last code is: the word it calls $4546 with ($59DA), so end_drop is searched for its waits"
+
+[assets.end_drop_start.from]
+source = "tapper"
+asset = "end_drop_start"
+
 [assets.end_gulp_code]
 kind = "rows"
 role = "behavior"
@@ -2249,6 +2258,7 @@ demo_screen = "demo_screen"
 demo_screen_a = "demo_screen_a"
 demo_setup = "demo_setup"
 end_drop = "end_drop"
+end_drop_start = "end_drop_start"
 end_gulp_code = "end_gulp_code"
 end_gulp_start = "end_gulp_start"
 end_hops = "end_hops"
@@ -25536,6 +25546,14 @@ note = "gp-arcade's writes example on the level clips' logs (tapper.l1.001, l3, 
 
 [[evidence."assets.end_drop".refs]]
 at = "clip:tapper.l1.001"
+
+[evidence."assets.end_drop_start"]
+source = "observed"
+confidence = 70
+note = "gp code listing of each set: end script 4 ($594D) calls $4546 at $59D9 ($5B59 in rbtapper, $59C9 in tappera), whose last loop waits 4 frames fifteen times ($45D2) and returns; tapper.clear.005, .009 and .020 start in its last wait, E3A9 $45D5 with E39F 1, and the original's screen is cleared on their next frame"
+
+[[evidence."assets.end_drop_start".refs]]
+at = "clip:tapper.clear.005"
 
 [evidence."assets.end_gulp_code"]
 source = "observed"

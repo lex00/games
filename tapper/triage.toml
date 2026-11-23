@@ -86,3 +86,10 @@ where = "The saloon, the first stage, a second after play starts, three spare li
 do = "On the bottom bar, send a mug while a customer is a third of the way along, so the push back stops just short of the door and he drinks there"
 stop = "Once he's drinking at the far end (the mug tilted up), then R"
 
+
+[[item]]
+row = "interlude-b-object-off-place"
+goal = "mode == 0 and cleared >= 3"
+from = "tapper.clear.004"
+do = "Watch the level's end: the bartender drinks, then hops along the top bar after a mug"
+stop = "When GET READY comes up"

@@ -3727,6 +3727,11 @@ fn palette_cycles(cx: &mut ExtCx<'_>) {
 /// is the word's place among the table's words.
 fn set_screen(cx: &mut ExtCx<'_>) {
     let Some(stage) = cx.counter("stage") else { return };
+    set_screen_of(cx, stage);
+}
+
+/// The counter screen for the stage `stage`, as set_screen.
+fn set_screen_of(cx: &mut ExtCx<'_>, stage: i64) {
     let rows = cx.table("stage_screens");
     let words: Vec<i64> = rows.chunks(2).map(|w| w[0] | (w.get(1).copied().unwrap_or(0) << 8)).collect();
     let Some(&word) = usize::try_from(stage).ok().and_then(|n| words.get(n)) else { return };
@@ -3744,6 +3749,23 @@ fn set_screen(cx: &mut ExtCx<'_>) {
 /// counted from its start, the operand of the call that reaches it. Each
 /// set's code and start are its own, so a set whose code sits elsewhere
 /// resumes at its own places.
+/// Whether the flow's word 1 as loaded (E3A9 from bit 16, B from bit 32)
+/// is the place an end script's last wait goes on from: script 0's second
+/// of $48FC's waits of 10, script 1's last of $45E3's waits of 1, script
+/// 3's last hop ($50EF), script 4's last of $4546's waits of 4 (each with B
+/// at 1), or script 2's $2DF7 wait of 15.
+fn at_end_last_wait(cx: &ExtCx<'_>, word1: i64) -> bool {
+    let place = (word1 >> 16) & 0xffff;
+    let b_one = (word1 >> 32) & 0xff == 1;
+    place != 0
+        && ((b_one
+            && (wait_return(cx, "hops_code", "hops_start", 2) == Some(place)
+                || wait_return(cx, "end_last_code", "end_last_start", 2) == Some(place)
+                || wait_return(cx, "end_gulp_code", "end_gulp_start", 1) == Some(place)
+                || wait_return(cx, "end_drop", "end_drop_start", 2) == Some(place)))
+            || wait_return(cx, "end_turn_code", "end_turn_start", 1) == Some(place))
+}
+
 fn wait_return(cx: &ExtCx<'_>, code: &str, start: &str, n: usize) -> Option<i64> {
     let call = cx.table("wait_call");
     let window = cx.table(code);
@@ -4209,9 +4231,21 @@ impl Ext for Bars {
             .kind("timer")
             .is_some_and(|k| cx.world.bodies.iter().any(|b| b.kind == k && b.alive && b.ext[1] == 0x2023 && b.ext[0] > 0));
         if flow.is_some_and(|w| w[3] & 0xff == 11) && !level_timers {
-            return;
+            // But a start in an end script's last wait with no bonus round
+            // next: the script has returned, $5681 has counted the level
+            // and the setup waits this frame in $5E99, so the screen is
+            // still the last level's, the stage loaded less one, with its
+            // HUD (tapper.clear.005 frame 0: the sports bar with its mugs,
+            // E4A8 already the next level's; clear.010 the punk bar).
+            let count = cx.counter("stage").unwrap_or(0);
+            let bonus_next = matches!(count % 13, 2 | 5 | 9) || count % 13 == 0;
+            if bonus_next || count < 1 || !flow.is_some_and(|w| at_end_last_wait(cx, w[1])) {
+                return;
+            }
+            set_screen_of(cx, count - 1);
+        } else {
+            set_screen(cx);
         }
-        set_screen(cx);
         if cx.counter("mode") == Some(0) || in_demo(cx) {
             let lives = flow.map(|w| (w[1] >> 40) & 0xff);
             if let Some(lives) = lives
@@ -4749,27 +4783,18 @@ impl Ext for Bars {
         // $4881 and the script, $5681 has counted the level and the setup
         // ($4B3F) waits this frame in $5E99 (tapper.clear.001: E3A9 $492C
         // on its first frame, $5404's first wait on its second).
-        // And the other two scripts' last waits, as the bonus round's way
-        // in below names them: script 1's last of $45E3's waits of 1 (B at
-        // 1; tapper.clear.005: E3A9 $45D5 on its first frame) and script
-        // 2's $2DF7 wait of 15.
-        let hops_done = state == 11
-            && flow.is_some_and(|(_, b)| {
-                let place = (b.ext[1] >> 16) & 0xffff;
-                let b_one = (b.ext[1] >> 32) & 0xff == 1;
-                place != 0
-                    && ((b_one
-                        && (wait_return(cx, "hops_code", "hops_start", 2) == Some(place)
-                            || wait_return(cx, "end_last_code", "end_last_start", 2) == Some(place)
-                            || wait_return(cx, "end_gulp_code", "end_gulp_start", 1) == Some(place)))
-                        || wait_return(cx, "end_turn_code", "end_turn_start", 1) == Some(place))
-            });
+        // And the other scripts' last waits, as the bonus round's way in
+        // below names them: script 1's last of $45E3's waits of 1 (B at 1;
+        // tapper.clear.006: E3A9 $45F8), script 2's $2DF7 wait of 15, and
+        // script 4's last of $4546's 15 waits of 4 as the dropped object
+        // turns (B at 1; tapper.clear.005, .009 and .020: E3A9 $45D5).
+        let hops_done = state == 11 && flow.is_some_and(|(_, b)| at_end_last_wait(cx, b.ext[1]));
         // A start in an end script's last wait when a bonus round comes
         // next ($5681 with the levels cleared plus one at 2, 5 or 9 mod
         // 13, or 0): script 0's last of $48FC's waits of 10 (B at 1),
         // script 1's last of $45E3's waits of 1 (B at 1), script
         // 2's $2DF7 wait of 15, script 3's last hop ($50EF's or $51A9's,
-        // B at 1). In state 16 the wait has run out: the script returns on
+        // B at 1), script 4's last of $4546's waits of 4 (B at 1). In state 16 the wait has run out: the script returns on
         // this frame, $5681 counts the level and the bonus round ($2500)
         // starts, its frames counted from 0 here (tapper.clear.002,
         // clear.006). Back in state 11 it has returned already, the level
@@ -4796,6 +4821,7 @@ impl Ext for Bars {
                                 && (wait_return(cx, "hops_code", "hops_start", 2) == Some(place)
                                     || wait_return(cx, "interlude_code", "interlude_start", 5) == Some(place))
                         }
+                        4 => b_reg == 1 && wait_return(cx, "end_drop", "end_drop_start", 2) == Some(place),
                         _ => false,
                     }
             });
