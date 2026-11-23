@@ -4200,6 +4200,21 @@ fn wait_return(cx: &ExtCx<'_>, code: &str, start: &str, n: usize) -> Option<i64>
     None
 }
 
+/// Where $232B goes on after GAME OVER's first wait of 60 ($2467): the
+/// first call of the wait routine from $2441 on in the sound entity's
+/// lifted $23EA to $24AF (sound_life), as its return address.
+fn game_over_first_wait(cx: &ExtCx<'_>) -> Option<i64> {
+    const BASE: i64 = 0x23EA;
+    let call = cx.table("wait_call");
+    if call.len() != 3 {
+        return None;
+    }
+    (0x2441 - BASE..)
+        .take_while(|&i| sound::code(cx, "sound_life", i + 2).is_some())
+        .find(|&i| (0..3).all(|j| sound::code(cx, "sound_life", i + j) == Some(call[j as usize])))
+        .map(|i| BASE + i + 3)
+}
+
 /// An entry of a points table as a number: six digits a byte, the most
 /// significant first.
 fn points_of(row: &[i64]) -> i64 {
@@ -5413,6 +5428,39 @@ impl Ext for Bars {
             cx.set_body(fid, fb);
             flow = Some((fid, fb));
             state = 15;
+        }
+        // A start inside GAME OVER's two waits of 60 ($2441 with no lives
+        // left: $2467, then $24D8): $232B keeps the state it was called in
+        // at E3A8 (12, the life lost) and where it goes on at E3A9, and the
+        // flow's sub is still the life lost's step E6FF (3, $2441's). The
+        // game over's count (sub 11, from 1 on $2441's frame) is 61 on the
+        // first wait's return ($246A) and 121 on the second's, less the
+        // frames the wait has left (the timer for $2346, none in state 16).
+        // The first wait's place is the first call of $232B from $2441 on
+        // in the lifted $23EA to $24AF; the second's is past it
+        // (gameover-high-score-table clip 5 starts in the second).
+        if !demo
+            && (state == 15 || state == 16)
+            && let Some((fid, mut fb)) = flow
+            && (fb.ext[3] >> 16) & 0xff == 3
+            && (fb.ext[1] >> 8) & 0xff == 12
+            && (fb.ext[1] >> 40) & 0xff == 0
+            && let ret = (fb.ext[1] >> 16) & 0xffff
+            && ret != 0
+            && let Some(first) = game_over_first_wait(cx)
+            && ret >= first
+        {
+            let left = if state == 16 {
+                0
+            } else {
+                timers.iter().find(|(_, t)| t.ext[1] == 0x2346).map_or(0, |(_, t)| t.ext[0])
+            };
+            let at_return = if ret == first { 61 } else { 121 };
+            let n = (at_return - 1 - left).max(1);
+            fb.ext[3] = (fb.ext[3] & !(0xffff_0000 | (0xffff << 24))) | (11 << 16) | ((n & 0xffff) << 24);
+            fb.ext[1] &= !(0xffff << 16);
+            cx.set_body(fid, fb);
+            flow = Some((fid, fb));
         }
         // State 11 outside a level's setup is a level's end ($2304): its
         // script ($55F4) waits through states 15 and 16 ($232B, $2346,
