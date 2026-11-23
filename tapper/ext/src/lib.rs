@@ -100,6 +100,13 @@ pub struct Bartender;
 /// tapper_bartender clears it on his next step.
 const BOARD_HIDDEN: i64 = 1 << 32;
 
+/// The bit of the bartender's ext[3] (byte 4, bit 1) that says tapper_bars'
+/// `loaded` has given him end script 0's last turn ($492F) on a clip's
+/// first frame. A start's state can be loaded more than once, each time
+/// from the model's state after the last `loaded`, so the turn is made
+/// once; tapper_bartender clears the bit on his next step.
+const END_TURNED: i64 = 1 << 33;
+
 /// The bit (byte 7, bit 6) of a body's word the board reads for
 /// board_sprite.gone_next on the frame before a bonus round ($2500) or the
 /// game over's initials ($2B82) empties the objects: ext[3]'s for the kinds
@@ -811,7 +818,7 @@ impl Ext for Bartender {
         let mut ev = Pose::Still;
         let mut spawned = 0;
         let x_before = cx.me.x.floor();
-        cx.me.ext[3] &= !BOARD_HIDDEN;
+        cx.me.ext[3] &= !(BOARD_HIDDEN | END_TURNED);
         Self::act(cx, &mut ev, &mut spawned);
         draw_pose(cx, ev, x_before, spawned);
         // This hook runs before tapper_bars: the bonus round's frame this
@@ -839,7 +846,7 @@ impl Ext for Bartender {
             like: "player-physics",
             about: "Walks along his bar, moves to the next bar's tap on up or down, and steps back from the tap when a mug is sent, by the stick or, in the attract demo, by the presses $59DD picks; his six objects' pictures as the play routine sets them",
             params: PARAMS,
-            state: &["ext[0] bar", "ext[1] move frames left x8 plus the bar moving to x2 plus the stick latch", "ext[2] bob count plus 256 x bob phase; byte 2 his flags and byte 3 his picture (E2E7, E2E8), the board sprite's; bytes 4 to 7 E706, E715, E714 (bit 1: the frame after a send, E72C) and E718", "ext[3] tap held (low byte), the 4-way filter's state above; bit 32 on the frames the board draws none of his sprites (board_sprite.hidden)"],
+            state: &["ext[0] bar", "ext[1] move frames left x8 plus the bar moving to x2 plus the stick latch", "ext[2] bob count plus 256 x bob phase; byte 2 his flags and byte 3 his picture (E2E7, E2E8), the board sprite's; bytes 4 to 7 E706, E715, E714 (bit 1: the frame after a send, E72C) and E718", "ext[3] tap held (low byte), the 4-way filter's state above; bit 32 on the frames the board draws none of his sprites (board_sprite.hidden); bit 33 on a clip's first frame once tapper_bars has turned him at end script 0's last wait (END_TURNED)"],
             reads: &["action", "tap.x", "tap.facing"],
             writes: &["self.x", "self.y", "self.facing", "bartender_part", "tap.y"],
             built_from: &[Primitive::InputBinding, Primitive::Timer, Primitive::Condition, Primitive::Quantity],
@@ -4463,6 +4470,27 @@ impl Ext for Bars {
             }
         }
         let flow = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).map(|fb| fb.ext);
+        // A start in end script 0's last wait, the second of $48FC's waits
+        // of 10 with B at 1: the wait runs out on this frame and $492F
+        // mirrors him once more before $48FC returns, so the frame is drawn
+        // with him turned (tapper.clear.001 frame 0: E3A9 $492C, his
+        // picture $40 mirrored at 318,98). The script's own step does it at
+        // its frame 219 (end_script_pose); a clip's start comes after it.
+        // A start's state may be loaded more than once, each from the
+        // model's state after the last `loaded`: END_TURNED makes the turn
+        // once.
+        if let Some(w) = flow
+            && (w[1] >> 8) & 0xff == 11
+            && (w[1] >> 32) & 0xff == 1
+            && wait_return(cx, "end_last_code", "end_last_start", 2) == Some((w[1] >> 16) & 0xffff)
+            && let Some((pid, mut pb)) =
+                cx.kind("player").and_then(|k| cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == k)).map(|(i, b)| (i, *b))
+            && pb.ext[3] & END_TURNED == 0
+        {
+            pb.ext[2] ^= MIRROR_FLAG << 16;
+            pb.ext[3] |= END_TURNED;
+            cx.set_body(pid, pb);
+        }
         let level_timers = cx
             .kind("timer")
             .is_some_and(|k| cx.world.bodies.iter().any(|b| b.kind == k && b.alive && b.ext[1] == 0x2023 && b.ext[0] > 0));
