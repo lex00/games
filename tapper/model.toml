@@ -5498,6 +5498,236 @@ counter = "bonus"
 value = 1
 
 [[levels.main.present.board.looks]]
+palette = "board_palette"
+screen = "screen_saloon"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 109
+column = 5
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "bonus_tint"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 0
+
+[[levels.main.present.board.looks]]
+palette = "board_palette"
+screen = "screen_69a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 109
+column = 5
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "bonus_tint"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 1
+
+[[levels.main.present.board.looks]]
+palette = "board_palette"
+screen = "screen_7121"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 109
+column = 5
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "bonus_tint"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 2
+
+[[levels.main.present.board.looks]]
+palette = "board_palette"
+screen = "screen_78a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 109
+column = 5
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "bonus_tint"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 3
+
+[[levels.main.present.board.looks]]
+palette = "board_palette"
+screen = "screen_8021"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 109
+column = 5
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "bonus_tint"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 4
+
+[[levels.main.present.board.looks]]
+palette = "board_palette"
+screen = "screen_87a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 109
+column = 5
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "bonus_tint"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 5
+
+[[levels.main.present.board.looks]]
+palette = "board_palette"
+screen = "screen_8f21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 109
+column = 5
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "bonus_tint"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 6
+
+[[levels.main.present.board.looks]]
+palette = "board_palette"
+screen = "screen_96a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 109
+column = 5
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "bonus_tint"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 7
+
+[[levels.main.present.board.looks]]
+palette = "board_palette"
+screen = "screen_9e21"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 109
+column = 5
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "bonus_tint"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 8
+
+[[levels.main.present.board.looks]]
+palette = "board_palette"
+screen = "screen_a5a1"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 96
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 109
+column = 5
+slot = "bonus_colors"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "bonus_tint"
+value = 1
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "screen"
+value = 9
+
+[[levels.main.present.board.looks]]
 screen = "screen_saloon"
 
 [[levels.main.present.board.looks.palette_writes]]
@@ -24994,6 +25224,9 @@ description = "1 while the bonus round shows its card ($251F: E395 = $B4A1, E3B7
 
 [counters.bonus_text]
 description = "The bonus round's line of text: 1 its first ($253D), 2 the four after the shuffle ($26BF), 3 the win's two, 4 the win's first alone as the second blinks ($2830), 5 the loss's ($28F2), 0 none; tapper_bars sets it each frame"
+
+[counters.bonus_tint]
+description = "1 on the bonus round's frame 1 alone: $251F has written the card's palette (bonus_colors over the board's) but the screen's lines are the last level's until the next frame's copy, so its stage and HUD show in the card's colours; tapper_bars sets it from the round's frame count"
 
 [counters.boot_bars]
 description = "30 while the screen still shows the self-test's colour bars ($C64A in the boot), the rows of them drawn; 0 from the logo's first screen on. tapper_flow clears it on the logo's second frame, when the vblank's $5CED has copied the logo's screen ($3D76 sets E395 on the frame before)"

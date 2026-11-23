@@ -2368,11 +2368,18 @@ fn bonus_round(cx: &mut ExtCx<'_>, fb: &mut gp_sim::world::Body, cleared: i64, p
 /// shown from the round's frame 2 (tapper.clear.002 frame 3, clear.013 and
 /// clear.018 frame 2), with the level's number as counted (`cleared`); and
 /// $2546 the stage's, whose copy shows from the round's frame 23 (counter
-/// bonus).
+/// bonus). On the round's frame 1 $251F has written the card's palette but
+/// the screen's lines are copied a frame later: the last level's screen
+/// and HUD in the card's colours (counter bonus_tint; tapper.clear.013 and
+/// clear.018 frame 1, clear.002 frame 2).
 fn bonus_card(cx: &mut ExtCx<'_>, c: i64, cleared: i64) {
     let v = i64::from((2..23).contains(&c));
     if cx.counter("bonus_card") != Some(v) {
         cx.set_counter("bonus_card", v);
+    }
+    let tint = i64::from(c == 1);
+    if cx.counter("bonus_tint") != Some(tint) {
+        cx.set_counter("bonus_tint", tint);
     }
     if v == 1 && cx.counter("cleared_shown") != Some(cleared) {
         cx.set_counter("cleared_shown", cleared);
