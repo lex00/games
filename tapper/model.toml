@@ -3233,6 +3233,11 @@ cmp = "<"
 counter = "intro"
 value = 2
 
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "initials"
+value = 0
+
 [[levels.main.present.board.counters]]
 at = [23, 1]
 counter = "score_2"
@@ -3259,6 +3264,11 @@ value = 0
 cmp = "<"
 counter = "intro"
 value = 2
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "initials"
+value = 0
 
 [[levels.main.present.board.counters]]
 at = [11, 4]

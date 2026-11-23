@@ -1402,6 +1402,11 @@ impl Flow {
             // State 0 after a game over ($4A27): $22B8 again.
             (2, 0) => {
                 Self::attract(cx, credits);
+                // The screen keeps the initials for this frame, with no
+                // credit line ($03EA's on the next, tapper.gameover-attract.001
+                // frames 1204 and 1205): the board reads the game over's
+                // mode until then.
+                cx.set_counter("mode_shown", 2);
                 true
             }
             // The demo game: tapper_bars plays it, and this hook puts the
@@ -1633,6 +1638,11 @@ fn set_attract_screen(cx: &mut ExtCx<'_>) {
         // in the logo's colours (kept as the high scores here); the logo's
         // tiles come on the third.
         Some(1) if t <= 1 && cx.counter("attract_screen") == Some(3) => 3,
+        // The logo after a game over ($22B8 from $4A27): its first frame
+        // still shows the initials, the credit line drawn on them
+        // (tapper.gameover-attract.001 frame 1205); the logo's tiles come
+        // on the next. tapper_bars holds the initials while this is 0.
+        Some(1) if t <= 1 && cx.counter("initials").is_some_and(|i| i >= 1) => 0,
         Some(1) => 1,
         _ => 0,
     };
@@ -3698,12 +3708,24 @@ fn game_over_text(cx: &mut ExtCx<'_>) {
 /// the tapper ([`initials_entry`]). The model keeps no table, so the new
 /// entry is the first place's.
 fn initials_screen(cx: &mut ExtCx<'_>) -> Vec<BonusObj> {
-    let (sub, count) = cx
+    let flow_state = cx
         .kind("flow")
         .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
-        .filter(|fb| fb.ext[3] & 0xff == 13)
-        .map_or((0, 0), |fb| ((fb.ext[3] >> 16) & 0xff, (fb.ext[3] >> 24) & 0xffff));
+        .map(|fb| fb.ext[3]);
+    let (sub, count) = flow_state
+        .filter(|s| s & 0xff == 13)
+        .map_or((0, 0), |s| ((s >> 16) & 0xff, (s >> 24) & 0xffff));
+    // The game over's end: from the frame after its state 0 ($4A27),
+    // tapper_flow's $22B8 has begun the attract mode (mode 1), but while
+    // the attract's screen is 0 (set_attract_screen) the screen keeps the
+    // initials' lines, the cheerleader gone, and the logo comes after
+    // (tapper.gameover-attract.001 frames 1204 and 1205; 1206 the logo).
+    let ending = cx.counter("mode") == Some(1)
+        && cx.counter("attract_screen") == Some(0)
+        && cx.counter("initials").is_some_and(|i| i >= 1)
+        && !in_demo(cx);
     let phase = match (sub, count) {
+        _ if ending => 2,
         (2, 0 | 1) => 1,
         (2, 2) => 2,
         (2, _) => 3,
@@ -3725,7 +3747,17 @@ fn initials_screen(cx: &mut ExtCx<'_>) -> Vec<BonusObj> {
     }
     // Placed on the count's third frame ($2CBD), in sprite RAM on the next;
     // emptied ($2D63) on the frame the third letter is entered.
-    if phase < 2 || done {
+    if phase < 2 || done || ending {
+        return Vec::new();
+    }
+    // The wait's last frame (tapper_bars sets state 0 in this step): the
+    // next frame's picture, drawn from this step's objects, shows no
+    // cheerleader (tapper.gameover-attract.001 frame 1204).
+    let wait = cx
+        .kind("flow")
+        .and_then(|k| cx.spec.kinds[k].ext_params.get("game_over_wait"))
+        .map_or(1203, |v| v.floor());
+    if count + 1 >= wait {
         return Vec::new();
     }
     // $2CB1: the place less 1 times 16 off $D2 for y, x $10 ($2CC4), flags
@@ -3848,6 +3880,37 @@ fn hide_play_objects(cx: &mut ExtCx<'_>) {
             }
             let Some(mut b) = latest.filter(|b| b.alive) else { continue };
             b.ext[w] |= GONE_NEXT;
+            cx.set_body(id, b);
+        }
+    }
+}
+
+/// $5F31 out of tapper_bars' play, as the demo's start empties the objects
+/// ($5A64): the mugs, customers, tips, dancers and bars' ends go, the taps
+/// and the bartender's parts to y 0 (not drawn) where they are, the
+/// bartender to 0,0. GONE_NEXT goes off each kept one, so a hook that later
+/// copies it from the world (the instruction scene's place_cast) doesn't
+/// hide it.
+fn empty_play_objects(cx: &mut ExtCx<'_>) {
+    for name in ["mug", "customer", "tip", "dancer"] {
+        let Some(k) = cx.kind(name) else { continue };
+        let ids: Vec<usize> = cx.world.bodies.iter().enumerate().filter(|(_, b)| b.alive && b.kind == k).map(|(i, _)| i).collect();
+        for id in ids {
+            cx.remove(id);
+        }
+    }
+    bar_ends_go(cx);
+    for name in ["tap", "bartender_part", "player"] {
+        let Some(k) = cx.kind(name) else { continue };
+        let w = gone_next_word(name);
+        let found: Vec<(usize, gp_sim::world::Body)> =
+            cx.world.bodies.iter().enumerate().filter(|(_, b)| b.alive && b.kind == k).map(|(i, b)| (i, *b)).collect();
+        for (id, mut b) in found {
+            b.ext[w] &= !GONE_NEXT;
+            b.y = Fx::ZERO;
+            if name == "player" {
+                b.x = Fx::ZERO;
+            }
             cx.set_body(id, b);
         }
     }
@@ -4731,6 +4794,14 @@ impl Ext for Bars {
                 place_scene(cx, ok, want);
             }
             game_over_text(cx);
+            // $22B8's $5F31 empties every object as the attract mode
+            // starts after a game over; the game over's own $5F31 ($3CE1)
+            // left the model's objects up, hidden (initials_screen), so
+            // they go now as the demo's go (tapper.gameover-attract.001
+            // from frame 1205: no taps on the logo).
+            if cx.counter("attract_screen") == Some(0) && cx.counter("initials").is_some_and(|i| i >= 1) {
+                empty_play_objects(cx);
+            }
             initials_screen(cx);
             return;
         }

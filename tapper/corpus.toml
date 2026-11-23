@@ -7,9 +7,9 @@
 [corpus]
 format = "1.0.0"
 name = "tapper"
-version = "1.1.0"
+version = "1.2.0"
 title = "Tapper"
-recipes = "b3:08981d01d054ab5d8fca62adaef8e0c092e74189fe7150c06ae3550642b4bedb"
+recipes = "b3:b444b22d70273aa8b9e3e5d3cf80437fd297be08b61f49d27978906918af2235"
 
 [target]
 game = "tapper"
@@ -839,3 +839,19 @@ version = "1.1.0"
 date = "2026-11-23"
 says = "gp corpus import from the mechanic sessions: added tapper.gameover-high-score-table.001, tapper.gameover-high-score-table.004."
 added = ["tapper.gameover-high-score-table.001", "tapper.gameover-high-score-table.004"]
+
+[[clip]]
+id = "tapper.gameover-attract.001"
+name = "Game over into the attract mode"
+source = "played"
+start = "inputs/tapper.gameover-attract.001.start.presses"
+presses = "inputs/tapper.gameover-attract.001.presses"
+frames = 1500
+why = "the game over's initials wait run out with no initials entered (its 1200-frame timer), into the attract mode's logo and its instruction scene"
+level = "saloon"
+
+[[changelog]]
+version = "1.2.0"
+date = "2026-11-23"
+says = "tapper.gameover-attract.001: the game over's initials wait run out into the attract mode's logo and instruction scene (row gameover-end-into-attract)"
+added = ["tapper.gameover-attract.001"]
