@@ -751,9 +751,9 @@ presentation = true
 ram = [0xE4A7]
 
 [[field.case]]
-note = "The HUD's first lives cell (F08E:F08F) holds no mug: the screen isn't drawn yet (tapper.bonus.001 starts on the logo, 8 and 80 there, with the mugs, 16 and 48, from its frame 1), or no mug is due. -1 leaves it to the hooks, which give it the lives on the first step as the screen's copy does"
+note = "The HUD's first lives cell (F090:F091, cell 8,2, where $5D21 puts the first mug and the model's repeat starts) holds no mug (16 and 48): the screen isn't drawn yet (tapper.bonus.001 starts on the logo, with the mugs from its frame 1), or no mug is due. -1 leaves it to the hooks, which give it the lives on the first step as the screen's copy does. The cell before it (F08E, the second mug) holds none with one mug shown (E4A7 2), so it can't say whether the screen is drawn (tapper.clear.007 and clear.011 start in the bonus round's last wait with one mug, at 128,32)"
 number = -1
-when = "ram[0xF08E] != 16 || ram[0xF08F] != 48"
+when = "ram[0xF090] != 16 || ram[0xF091] != 48"
 
 [[field]]
 lookup = [[0x31, 0], [0x32, 1], [0x33, 2], [0x34, 3], [0x35, 4], [0x36, 5], [0x37, 6], [0x38, 7], [0x39, 8]]
