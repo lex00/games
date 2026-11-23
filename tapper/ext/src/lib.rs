@@ -681,7 +681,6 @@ const PARAMS: &[Param] = &[
     Param::new("stand_right", "fixed", "px"),
     Param::new("stand_left", "fixed", "px"),
     Param::new("send_step", "fixed", "px"),
-    Param::new("pour_frames", "frames", "frames"),
     Param::new("bob_frames", "frames", "frames"),
     Param::new("four_way", "bool", ""),
     Param::new("mug_speed", "fixed", "px/frame"),
@@ -916,7 +915,15 @@ impl Bartender {
                     return;
                 }
                 *ev = Pose::Rest;
-                if cx.me.ext[3] & 0xff >= p(cx, "pour_frames") {
+                // A frame with the tap let go ($06DB): a full mug (E718)
+                // is sent ($13CC) unless the pour still counts (E715), he
+                // walked off with it (E714 0, $2231) or it's the frame
+                // after a send (E72C). However many presses filled it: a
+                // pour let go early keeps E715 ($2085) and the next press
+                // goes on from there, so the release after the fifth
+                // frame held in all sends it.
+                let (e715, e714, e718) = ((cx.me.ext[2] >> 40) & 0xff, (cx.me.ext[2] >> 48) & 0xff, (cx.me.ext[2] >> 56) & 0xff);
+                if e718 != 0 && e715 == 0 && e714 == 1 {
                     *ev = Pose::Sent;
                     if let Some((tap_x, left)) = tap {
                         let step = p(cx, "send_step");

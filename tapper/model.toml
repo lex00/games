@@ -2508,7 +2508,6 @@ mug_above = 4
 mug_out = 24
 mug_out_left = 27
 mug_speed = 5
-pour_frames = 5
 row_bottom = 48
 row_height = 48
 send_step = 6
@@ -13846,14 +13845,6 @@ note = "5 a frame: E6FE set to $FB at $14D3 by the send, added each frame at $07
 
 [[evidence."entities.player.ext_params.mug_speed".refs]]
 at = "clip:tapper.l1.001"
-
-[evidence."entities.player.ext_params.pour_frames"]
-source = "observed"
-confidence = 90
-note = "5 frames held fill a mug: gp model static reads E715 set to 4 at $121F, and gp model blind's hold_frames is 5. gp model blind's pour_frames (12) and gp rule lane's (8) are the fewest frames held before a send they saw; the clips decide: with every counter left out of the mapping, 5 (or 2, rule lane's pour_least) scores 87.7% on the 52 clips, 8 86.6% and 12 85.6%"
-
-[[evidence."entities.player.ext_params.pour_frames".refs]]
-at = "rom:1da6316bba47 frames 321-645: gp model blind, the frames the held button counts before it acts"
 
 [evidence."entities.player.ext_params.row_bottom"]
 source = "observed"
