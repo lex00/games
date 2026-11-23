@@ -3693,9 +3693,10 @@ fn game_over_text(cx: &mut ExtCx<'_>) {
 /// of state 13): from 0 cleared with the table's new entry ($3CE1), from 2
 /// the three strings ($2C87 to $2C99, queued the frame before and written
 /// by the interrupt) and the letter in its colour ($2CDD), from 3 the
-/// cheerleader (tapper.poweron.001 frames 5028, 5030 and 5031). The model
-/// keeps no table and reads no stick here, so the new entry is the first
-/// place's with the letter A.
+/// cheerleader (tapper.poweron.001 frames 5028, 5030 and 5031). From the
+/// count's second frame the three letters are entered with the stick and
+/// the tapper ([`initials_entry`]). The model keeps no table, so the new
+/// entry is the first place's.
 fn initials_screen(cx: &mut ExtCx<'_>) -> Vec<BonusObj> {
     let (sub, count) = cx
         .kind("flow")
@@ -3708,11 +3709,12 @@ fn initials_screen(cx: &mut ExtCx<'_>) -> Vec<BonusObj> {
         (2, _) => 3,
         _ => 0,
     };
-    for (n, v) in [("initials", phase), ("initials_place", 0), ("initials_letter", 0)] {
+    for (n, v) in [("initials", phase), ("initials_place", 0)] {
         if cx.counter(n) != Some(v) {
             cx.set_counter(n, v);
         }
     }
+    let done = initials_entry(cx, phase, count);
     // $2B82's $5E99 empties the draw list and $3CE1's $5F31 the objects
     // from E18E, the taps' (E346 on) among them; the model keeps its taps,
     // the bartender reads them, so the board leaves every play object out
@@ -3721,8 +3723,9 @@ fn initials_screen(cx: &mut ExtCx<'_>) -> Vec<BonusObj> {
     if phase >= 1 || sub == 1 {
         hide_play_objects(cx);
     }
-    // Placed on the count's third frame ($2CBD), in sprite RAM on the next.
-    if phase < 2 {
+    // Placed on the count's third frame ($2CBD), in sprite RAM on the next;
+    // emptied ($2D63) on the frame the third letter is entered.
+    if phase < 2 || done {
         return Vec::new();
     }
     // $2CB1: the place less 1 times 16 off $D2 for y, x $10 ($2CC4), flags
@@ -3738,6 +3741,93 @@ fn initials_screen(cx: &mut ExtCx<'_>) -> Vec<BonusObj> {
         BonusObj { at: 0xE192, y, flags: b(0x2B31), pic: b(0x2B1E), x: (x + b(0x2B2A)) & 0xff },
         BonusObj { at: 0xE196, y: (y - b(0x2B13)) & 0xff, flags: b(0x2B31), pic: b(0x2B22), x },
     ]
+}
+
+/// The initials' three letters, counters initials_letter, initials_letter_2
+/// and initials_letter_3: 0 not reached yet, 1 to 26 A to Z, 27 blank.
+const INITIALS_LETTERS: [&str; 3] = ["initials_letter", "initials_letter_2", "initials_letter_3"];
+
+/// The letter after `l` ($2CFC): Z to blank ($5B), blank to A.
+fn letter_up(l: i64) -> i64 {
+    if l >= 27 { 1 } else { l + 1 }
+}
+
+/// The letter before `l` ($2D0E): A to blank ($40), blank to Z ($FF).
+fn letter_down(l: i64) -> i64 {
+    if l <= 1 { 27 } else { l - 1 }
+}
+
+/// The initials entered, as $2CE2 to $2D57 read them: the stick and the
+/// tapper ($2B3A, E38E) on the count's second frame (the frame $2CBD places
+/// the cheerleader) and then on each frame the loop wakes. Up (bit 3) steps
+/// the letter on, down (bit 2) back, either then waiting 10 frames ($2D51);
+/// the tapper (bit 4) waits for its release a frame at a time ($2D20), and
+/// on the release's frame the next place gets A and is read at once, or
+/// after the third the cheerleader goes ($2D63) and the game over ends 30
+/// frames on ($2D6D, then state 0 as after the 1200-frame timer): counter
+/// initials_end, the flow's count it ends at (tapper.gameover.003: the third
+/// letter entered on the count's frame 285, state 0 on 315's). Counters
+/// initials_at (the place entered, 3 when done), initials_next (the count
+/// of the next read) and initials_tap (1 while the tapper is held). Returns
+/// whether the third letter is in.
+fn initials_entry(cx: &mut ExtCx<'_>, phase: i64, count: i64) -> bool {
+    let get = |cx: &ExtCx<'_>, n: &str| cx.counter(n).unwrap_or(0);
+    let (mut l, mut at, mut next, mut tap, mut end) = if phase == 0 {
+        ([0; 3], 0, 2, 0, 0)
+    } else {
+        (
+            INITIALS_LETTERS.map(|n| get(cx, n)),
+            get(cx, "initials_at").clamp(0, 3),
+            get(cx, "initials_next"),
+            get(cx, "initials_tap"),
+            get(cx, "initials_end"),
+        )
+    };
+    // $2C54: the new entry's first letter is A.
+    if phase >= 1 && l[0] == 0 {
+        l[0] = 1;
+    }
+    if phase >= 2 && at < 3 && count >= next {
+        let (up, down, tapper) = (cx.held("up"), cx.held("down"), cx.held("button1"));
+        let mut stick = true;
+        if tap != 0 {
+            if tapper {
+                next = count + 1;
+                stick = false;
+            } else {
+                tap = 0;
+                at += 1;
+                if at == 3 {
+                    end = count + 31;
+                    stick = false;
+                } else {
+                    l[at as usize] = 1;
+                }
+            }
+        }
+        if stick {
+            let i = at as usize;
+            if up {
+                l[i] = letter_up(l[i]);
+                next = count + 10;
+            } else if down {
+                l[i] = letter_down(l[i]);
+                next = count + 10;
+            } else if tapper {
+                tap = 1;
+                next = count + 1;
+            } else {
+                next = count + 1;
+            }
+        }
+    }
+    let values = [("initials_at", at), ("initials_next", next), ("initials_tap", tap), ("initials_end", end)];
+    for (n, v) in INITIALS_LETTERS.into_iter().zip(l).chain(values) {
+        if cx.counter(n) != Some(v) {
+            cx.set_counter(n, v);
+        }
+    }
+    at >= 3
 }
 
 /// GONE_NEXT on every play object but the bonus_object kind's, set over
@@ -6464,8 +6554,8 @@ impl Ext for Bars {
             // initials 1200 frames ($2CA7, the timer for $2D59, with a
             // wait of 1 each frame at $2CF7) after two frames of its own
             // ($2C76, $2CA2); then state 0 ($4A27), whose $22B8 starts
-            // the attract mode. The initials aren't modelled: a stick or
-            // button in them is not seen.
+            // the attract mode. The third letter entered ends it sooner
+            // (counter initials_end, initials_entry).
             let c = ((fb.ext[3] >> 24) & 0xffff) + 1;
             if c == 1 {
                 cx.set_counter("mode", 2);
@@ -6475,7 +6565,8 @@ impl Ext for Bars {
                 .kind("flow")
                 .and_then(|k| cx.spec.kinds[k].ext_params.get("game_over_wait"))
                 .map_or(1203, |v| v.floor());
-            fb.ext[3] = if c >= wait {
+            let end = cx.counter("initials_end").unwrap_or(0);
+            fb.ext[3] = if c >= wait || (end > 0 && c >= end) {
                 fb.ext[3] & !(0xffff_00ff | (0xffff << 24))
             } else {
                 (fb.ext[3] & !(0xffff << 24)) | ((c & 0xffff) << 24)
@@ -7486,6 +7577,24 @@ impl Ext for Bars {
             built_from: &[Primitive::Timer, Primitive::Condition, Primitive::Quantity],
             ..Record::EMPTY
         }]
+    }
+}
+
+#[cfg(test)]
+mod initials_letters {
+    use super::{letter_down, letter_up};
+
+    /// Up from Z is blank and from blank A; down from A is blank and from
+    /// blank Z, as $2CFC and $2D0E step the code (tapper.gameover.003: A
+    /// down to blank, blank down to Z).
+    #[test]
+    fn the_letters_wrap_through_blank() {
+        assert_eq!(letter_up(1), 2);
+        assert_eq!(letter_up(26), 27);
+        assert_eq!(letter_up(27), 1);
+        assert_eq!(letter_down(2), 1);
+        assert_eq!(letter_down(1), 27);
+        assert_eq!(letter_down(27), 26);
     }
 }
 

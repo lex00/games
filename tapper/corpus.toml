@@ -9,7 +9,7 @@ format = "1.0.0"
 name = "tapper"
 version = "1.0.0"
 title = "Tapper"
-recipes = "b3:4353eae7057d324c63ef5400e1f15e4d2a7d5a307406f0c57597465940a6810b"
+recipes = "b3:623b70fee8a6ea10b3f503ff503641094d3b2943a06be8b791c1c36dbdf02ca2"
 
 [target]
 game = "tapper"
@@ -805,3 +805,13 @@ presses = "inputs/tapper.slide.001.presses"
 frames = 700
 why = "a slide off a sports bar's end, where the bar ends inside the screen (row shoved-bartender-shows-through-background)"
 level = "bar2"
+
+[[clip]]
+id = "tapper.gameover.003"
+name = "Game over, initials entered"
+source = "played"
+start = "inputs/tapper.gameover.003.start.presses"
+presses = "inputs/tapper.gameover.003.presses"
+frames = 550
+why = "the initials entered with the stick and the tapper: a letter stepped up once and held up, down to blank and to Z, each place entered, the third ending the wait early"
+level = "saloon"

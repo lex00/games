@@ -2880,6 +2880,7 @@ value = 1
 at = [10, 5]
 counter = "initials_letter"
 digits = 1
+plus = -1
 
 [levels.main.present.board.counters.high]
 column = 10
@@ -2898,6 +2899,7 @@ value = 1
 at = [10, 5]
 counter = "initials_letter"
 digits = 1
+plus = -1
 
 [levels.main.present.board.counters.high]
 column = 466
@@ -2911,6 +2913,280 @@ slot = "initials"
 cmp = ">="
 counter = "initials"
 value = 2
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials_letter"
+value = 1
+
+[[levels.main.present.board.counters.when]]
+cmp = "<="
+counter = "initials_letter"
+value = 10
+
+[[levels.main.present.board.counters]]
+at = [10, 5]
+counter = "initials_letter"
+digits = 1
+plus = -11
+
+[levels.main.present.board.counters.high]
+column = 466
+slot = "initials"
+
+[levels.main.present.board.counters.tile]
+column = 31
+slot = "text_initials"
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials"
+value = 2
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials_letter"
+value = 11
+
+[[levels.main.present.board.counters.when]]
+cmp = "<="
+counter = "initials_letter"
+value = 20
+
+[[levels.main.present.board.counters]]
+at = [10, 5]
+counter = "initials_letter"
+digits = 1
+plus = -21
+
+[levels.main.present.board.counters.high]
+column = 466
+slot = "initials"
+
+[levels.main.present.board.counters.tile]
+column = 20
+slot = "text_initials"
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials"
+value = 2
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials_letter"
+value = 21
+
+[[levels.main.present.board.counters.when]]
+cmp = "<="
+counter = "initials_letter"
+value = 26
+
+[[levels.main.present.board.counters]]
+at = [10, 5]
+counter = "initials_letter"
+digits = 1
+plus = -27
+
+[levels.main.present.board.counters.high]
+column = 466
+slot = "initials"
+
+[levels.main.present.board.counters.tile]
+column = 19
+slot = "text_initials"
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials"
+value = 2
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "initials_letter"
+value = 27
+
+[[levels.main.present.board.counters]]
+at = [11, 5]
+counter = "initials_letter_2"
+digits = 1
+plus = -1
+
+[levels.main.present.board.counters.high]
+column = 466
+slot = "initials"
+
+[levels.main.present.board.counters.tile]
+column = 331
+slot = "initials"
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials_letter_2"
+value = 1
+
+[[levels.main.present.board.counters.when]]
+cmp = "<="
+counter = "initials_letter_2"
+value = 10
+
+[[levels.main.present.board.counters]]
+at = [11, 5]
+counter = "initials_letter_2"
+digits = 1
+plus = -11
+
+[levels.main.present.board.counters.high]
+column = 466
+slot = "initials"
+
+[levels.main.present.board.counters.tile]
+column = 31
+slot = "text_initials"
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials_letter_2"
+value = 11
+
+[[levels.main.present.board.counters.when]]
+cmp = "<="
+counter = "initials_letter_2"
+value = 20
+
+[[levels.main.present.board.counters]]
+at = [11, 5]
+counter = "initials_letter_2"
+digits = 1
+plus = -21
+
+[levels.main.present.board.counters.high]
+column = 466
+slot = "initials"
+
+[levels.main.present.board.counters.tile]
+column = 20
+slot = "text_initials"
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials_letter_2"
+value = 21
+
+[[levels.main.present.board.counters.when]]
+cmp = "<="
+counter = "initials_letter_2"
+value = 26
+
+[[levels.main.present.board.counters]]
+at = [11, 5]
+counter = "initials_letter_2"
+digits = 1
+plus = -27
+
+[levels.main.present.board.counters.high]
+column = 466
+slot = "initials"
+
+[levels.main.present.board.counters.tile]
+column = 19
+slot = "text_initials"
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "initials_letter_2"
+value = 27
+
+[[levels.main.present.board.counters]]
+at = [12, 5]
+counter = "initials_letter_3"
+digits = 1
+plus = -1
+
+[levels.main.present.board.counters.high]
+column = 466
+slot = "initials"
+
+[levels.main.present.board.counters.tile]
+column = 331
+slot = "initials"
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials_letter_3"
+value = 1
+
+[[levels.main.present.board.counters.when]]
+cmp = "<="
+counter = "initials_letter_3"
+value = 10
+
+[[levels.main.present.board.counters]]
+at = [12, 5]
+counter = "initials_letter_3"
+digits = 1
+plus = -11
+
+[levels.main.present.board.counters.high]
+column = 466
+slot = "initials"
+
+[levels.main.present.board.counters.tile]
+column = 31
+slot = "text_initials"
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials_letter_3"
+value = 11
+
+[[levels.main.present.board.counters.when]]
+cmp = "<="
+counter = "initials_letter_3"
+value = 20
+
+[[levels.main.present.board.counters]]
+at = [12, 5]
+counter = "initials_letter_3"
+digits = 1
+plus = -21
+
+[levels.main.present.board.counters.high]
+column = 466
+slot = "initials"
+
+[levels.main.present.board.counters.tile]
+column = 20
+slot = "text_initials"
+
+[[levels.main.present.board.counters.when]]
+cmp = ">="
+counter = "initials_letter_3"
+value = 21
+
+[[levels.main.present.board.counters.when]]
+cmp = "<="
+counter = "initials_letter_3"
+value = 26
+
+[[levels.main.present.board.counters]]
+at = [12, 5]
+counter = "initials_letter_3"
+digits = 1
+plus = -27
+
+[levels.main.present.board.counters.high]
+column = 466
+slot = "initials"
+
+[levels.main.present.board.counters.tile]
+column = 19
+slot = "text_initials"
+
+[[levels.main.present.board.counters.when]]
+cmp = "=="
+counter = "initials_letter_3"
+value = 27
 
 [[levels.main.present.board.counters]]
 at = [16, 5]
@@ -25490,11 +25766,29 @@ description = "1 while GAME OVER is on the bottom bar: from the frame $2441 queu
 [counters.initials]
 description = "The game over's initials ($2B82, state 13 and E3BD 2): 0 out of them; 1 from the frame $3CE1 clears the screen and draws the table's new entry (with $2B82's palette writes to F860 and F86D), 2 once the interrupt has written the three strings $2C87 to $2C99 queue and the letter's colour is set ($2CDD), 3 once the cheerleader's objects ($2CBD, $2B0C) are in sprite RAM; back to 0 as the game over ends (state 0, $4A27, 1203 frames on: the initials' timer of $4B0 at $2CA7). tapper_bars sets it each frame from the flow's count"
 
+[counters.initials_at]
+description = "The place of the new entry's letters being entered in the initials: 0 to 2, 3 once the third is entered ($2D30). tapper_bars' initials_entry sets it"
+
+[counters.initials_end]
+description = "The flow's count the game over ends at when the third letter is entered: the frame's count plus 31 ($2D6D waits 30 frames, then state 0 as after the timer); 0 while it hasn't been, and the 1200-frame timer ends it (tapper.gameover.003: entered on count 285, state 0 on 315's frame)"
+
 [counters.initials_letter]
-description = "The new entry's first letter in the initials, from A ($2C54): 0. The model doesn't read the stick there, so it stays A"
+description = "The new entry's first letter in the initials: 0 out of them, 1 to 26 A to Z, 27 blank. A from $2C54; up steps it on ($2CFC, Z to blank to A), down back ($2D0E), each then waiting 10 frames"
+
+[counters.initials_letter_2]
+description = "The new entry's second letter, as initials_letter: 0 until the first is entered, then A ($2D37)"
+
+[counters.initials_letter_3]
+description = "The new entry's third letter, as initials_letter: 0 until the second is entered, then A ($2D37)"
+
+[counters.initials_next]
+description = "The flow's count the initials next read the stick and the tapper on ($2B3A): the next frame, or 10 on after a letter steps ($2D51)"
 
 [counters.initials_place]
 description = "The new entry's place in the high scores' table less 1 ($2C34): 0, the first. The model keeps no table, so every game's score is the first"
+
+[counters.initials_tap]
+description = "1 while the initials wait for the tapper's release ($2D20), the letter entered on the frame it is let go"
 
 [counters.intro]
 description = "The level's intro ($5404), counted by tapper_bars from the setup: 1 on the setup's frame (2 in a game's first level and after a life lost, whose screen is cleared on the setup's frame), then the frames since plus 1 while the screen is cleared and its lines are up, one past its count on the frame the screen keeps it after the stage is drawn ($5DF6, counter stage_late), then 0"
