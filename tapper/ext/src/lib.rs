@@ -408,9 +408,20 @@ fn draw_pose(cx: &mut ExtCx<'_>, ev: Pose, x_before: i64, spawned: usize) {
     let hide = out_of_play(cx) || me.y == 0;
     let hold = e714 & 2 != 0;
     e714 &= 1;
+    // In a customer's slide ($1CE1, the flow's sub 10) his own object
+    // leaves the bar ($1FB9) while his second sprite (iy+$14, place 4) goes
+    // on 3 a frame for 4 frames ($1FBD to $1FDB) before $1FDD takes it
+    // away: tapper_bars moves it and puts it at y 0, so it isn't hidden
+    // with him (tapper.l6.001 frames 1514 to 1517).
+    let sliding = cx
+        .kind("flow")
+        .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+        .is_some_and(|b| [15, 16].contains(&(b.ext[3] & 0xff)) && (b.ext[3] >> 16) & 0xff == 10);
     if hide {
-        for o in &mut parts {
-            o.y = 0;
+        for (k, o) in parts.iter_mut().enumerate() {
+            if !(sliding && k == 4 && !out_of_play(cx)) {
+                o.y = 0;
+            }
         }
     } else if hold && ev != Pose::Still {
         // $06B5: the frame after a send runs none of it.
