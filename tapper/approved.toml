@@ -3,6 +3,20 @@
 # apart: frame, sprites' and background's pixels apart when approved.
 
 [[look]]
+row = "gameover-start-uses-gone-next"
+clip = "tapper.gameover.001"
+frames = [0, 4]
+look = "game"
+approved = "2026-11-23"
+apart = [
+  [0, 0, 0],
+  [1, 0, 0],
+  [2, 0, 0],
+  [3, 0, 0],
+  [4, 0, 0],
+]
+
+[[look]]
 row = "confirm-level-1"
 clip = "tapper.l1.001"
 frames = [0, 335]
