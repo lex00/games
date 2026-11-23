@@ -5556,11 +5556,23 @@ impl Ext for Bars {
                     // off the edge; hidden on an earlier frame, he is still
                     // on the bar until phase 4, 5 below the customer
                     // ($1E07).
+                    //
+                    // Where the bar ends inside the screen (the saloon's
+                    // upper bars, the sports bar's right ends) he and his
+                    // head go on past it over the wall or the stands for 4
+                    // frames each, as the original draws them (tapper.slide
+                    // .001 frames 580 to 587). The owner's choice
+                    // (2026-11-22, row shoved-bartender-shows-through-
+                    // background): nothing of him shows past the bar's end,
+                    // so from the frame the program's own test puts him off
+                    // the bar (phase 1, $1F60 or $1F6B above) he and his
+                    // head are hidden, on every bar.
                     let off_edge = |x: i64| !(3..=243).contains(&x);
                     let sliding = n > 51 && phase <= 4;
+                    let off_bar = n > 51 && phase >= 1;
                     let mx = pb.x.floor();
                     let my = if sliding && pb.y.floor() == 0 { ry - 5 } else { pb.y.floor() };
-                    pb.y = Fx::from_int(if sliding && off_edge(mx) { 0 } else { my });
+                    pb.y = Fx::from_int(if sliding && (off_edge(mx) || off_bar) { 0 } else { my });
                     cx.set_body(pid, pb);
                     // His arm and head ($1D8A to $1DD8 as he is taken, 16
                     // up; from $1E02 his head 16 along at his height,
@@ -5571,9 +5583,9 @@ impl Ext for Bars {
                         place_parts(cx, &[0, 4], true, |k, _, _| (if k == 4 { mx + along } else { mx }, my - 0x10));
                     } else if n >= 51 && phase_before < 4 && my != 0 {
                         let hx = mx + along;
-                        place_parts_unwrapped(cx, &[4], true, |_, _, _| (hx, if off_edge(hx) { 0 } else { my }));
+                        place_parts_unwrapped(cx, &[4], true, |_, _, _| (hx, if off_edge(hx) || off_bar { 0 } else { my }));
                     } else if (4..8).contains(&phase_before) {
-                        place_parts_unwrapped(cx, &[4], false, |_, px, py| (px + step, if off_edge(px + step) { 0 } else { py }));
+                        place_parts_unwrapped(cx, &[4], false, |_, px, py| (px + step, if off_edge(px + step) || off_bar { 0 } else { py }));
                     } else if phase_before == 8 {
                         place_parts(cx, &[4], false, |_, px, _| (px, 0));
                     }

@@ -9,7 +9,7 @@ format = "1.0.0"
 name = "tapper"
 version = "1.0.0"
 title = "Tapper"
-recipes = "b3:ac5d97e388ea2375f97095687384fe18a11679e28fc82fe698107cf69a6facaf"
+recipes = "b3:4353eae7057d324c63ef5400e1f15e4d2a7d5a307406f0c57597465940a6810b"
 
 [target]
 game = "tapper"
@@ -795,3 +795,13 @@ added = ["tapper.enemies.002", "tapper.enemies.003"]
 version = "1.0.0"
 date = "2026-11-20"
 says = "gp corpus import from the mechanic sessions: added tapper.attract-demo.001, tapper.clear-stage.001, tapper.double-drink-end.001, tapper.drink-far-end.001, tapper.drink-far-end.002, tapper.enemies.001, tapper.game-over.001, tapper.get-ready-screen.001, tapper.title.001."
+
+[[clip]]
+id = "tapper.slide.001"
+name = "Level 3, nothing pressed: a customer reaches the end and slides the bartender off a bar's right end"
+source = "generated"
+start = "inputs/tapper.slide.001.start.presses"
+presses = "inputs/tapper.slide.001.presses"
+frames = 700
+why = "a slide off a sports bar's end, where the bar ends inside the screen (row shoved-bartender-shows-through-background)"
+level = "bar2"
