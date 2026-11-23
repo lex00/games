@@ -3559,6 +3559,18 @@ fn bp(cx: &ExtCx<'_>, name: &str) -> i64 {
 /// his own hook has drawn him; his parts (kind bartender_part, by place
 /// `k` from E2EA) go with him here: `f` gets each part's x and y.
 fn place_parts(cx: &mut ExtCx<'_>, ks: &[i64], hidden_too: bool, f: impl Fn(i64, i64, i64) -> (i64, i64)) {
+    place_parts_x(cx, ks, hidden_too, true, f);
+}
+
+/// `place_parts` with x left as `f` gives it, not rolled over into a byte:
+/// the slide off a bar's end, where the original's x byte rolls over and
+/// draws the part on the screen's far edge, and the owner's choice
+/// (2026-11-22) is that it leaves at the near one (tapper_bars hides it).
+fn place_parts_unwrapped(cx: &mut ExtCx<'_>, ks: &[i64], hidden_too: bool, f: impl Fn(i64, i64, i64) -> (i64, i64)) {
+    place_parts_x(cx, ks, hidden_too, false, f);
+}
+
+fn place_parts_x(cx: &mut ExtCx<'_>, ks: &[i64], hidden_too: bool, wrap: bool, f: impl Fn(i64, i64, i64) -> (i64, i64)) {
     let Some(pk) = cx.kind("bartender_part") else { return };
     let found: Vec<(usize, gp_sim::world::Body)> = cx
         .world
@@ -3573,7 +3585,7 @@ fn place_parts(cx: &mut ExtCx<'_>, ks: &[i64], hidden_too: bool, f: impl Fn(i64,
             continue;
         }
         let (x, y) = f(b.ext[1] - 1, b.x.floor(), b.y.floor());
-        b.x = Fx::from_int(x & 0xff);
+        b.x = Fx::from_int(if wrap { x & 0xff } else { x });
         b.y = Fx::from_int(y & 0xff);
         cx.set_body(id, b);
     }
@@ -4939,7 +4951,9 @@ impl Ext for Bars {
                     } else if n > 51 && phase == 0 {
                         let nx = (x + step) & 0xff;
                         let on = if left { nx - 24 < hi } else { nx - 3 >= lo };
-                        pb.x = Fx::from_int(if on { nx } else { (nx + step) & 0xff });
+                        // His x isn't rolled over (the tests here take the
+                        // byte, as the original's): see off_edge below.
+                        pb.x = Fx::from_int(if on { x + step } else { x + 2 * step });
                         if let Some(k) = cust {
                             bodies[k].1.x = Fx::from_int((bodies[k].1.x.floor() + step) & 0xff);
                         }
@@ -4991,7 +5005,7 @@ impl Ext for Bars {
                             }
                         }
                     } else if (1..4).contains(&phase) {
-                        pb.x = Fx::from_int((x + step) & 0xff);
+                        pb.x = Fx::from_int(x + step);
                         phase += 1;
                     } else if phase == 4 {
                         pb.y = Fx::ZERO;
@@ -5035,19 +5049,36 @@ impl Ext for Bars {
                     if phase == 9 && phase_before == 8 {
                         ask(cx, "sound_lost", &[0x2FE]);
                     }
+                    // Past the bar's end the board draws him and his head
+                    // across the screen's edge, and what is past it shows
+                    // on the far side (a sprite's left is 2 (x - 3), 32
+                    // wide, on a screen 512 wide; tapper.l6.001: x 0 on
+                    // 1512 at -6, 253 on 1513 at 500). The owner's choice
+                    // (2026-11-22): a sprite that would cross the edge (x
+                    // under 3 or over 243) is hidden, so he leaves at the
+                    // near edge and nothing of him shows on the far one.
+                    // His x isn't rolled over in the slide, so it stays
+                    // off the edge; hidden on an earlier frame, he is still
+                    // on the bar until phase 4, 5 below the customer
+                    // ($1E07).
+                    let off_edge = |x: i64| !(3..=243).contains(&x);
+                    let sliding = n > 51 && phase <= 4;
+                    let mx = pb.x.floor();
+                    let my = if sliding && pb.y.floor() == 0 { ry - 5 } else { pb.y.floor() };
+                    pb.y = Fx::from_int(if sliding && off_edge(mx) { 0 } else { my });
                     cx.set_body(pid, pb);
                     // His arm and head ($1D8A to $1DD8 as he is taken, 16
                     // up; from $1E02 his head 16 along at his height,
                     // sliding with him), and past the bar's end ($1FB9 to
                     // $1FDD) his head 3 a frame on for 4 frames, then gone.
                     let along = if left { -0x10 } else { 0x10 };
-                    let (mx, my) = (pb.x.floor(), pb.y.floor());
                     if (36..51).contains(&n) {
                         place_parts(cx, &[0, 4], true, |k, _, _| (if k == 4 { mx + along } else { mx }, my - 0x10));
                     } else if n >= 51 && phase_before < 4 && my != 0 {
-                        place_parts(cx, &[4], true, |_, _, _| (mx + along, my));
+                        let hx = mx + along;
+                        place_parts_unwrapped(cx, &[4], true, |_, _, _| (hx, if off_edge(hx) { 0 } else { my }));
                     } else if (4..8).contains(&phase_before) {
-                        place_parts(cx, &[4], false, |_, px, py| (px + step, py));
+                        place_parts_unwrapped(cx, &[4], false, |_, px, py| (px + step, if off_edge(px + step) { 0 } else { py }));
                     } else if phase_before == 8 {
                         place_parts(cx, &[4], false, |_, px, _| (px, 0));
                     }
