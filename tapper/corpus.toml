@@ -875,3 +875,13 @@ presses = "inputs/tapper.gameover.005.presses"
 frames = 1750
 why = "a second game's score (0) under the first's (BAA, 19950, entered after the game of tapper.gameover.002) takes the high scores' second place: the initials C, A, A entered there, then the attract mode's HIGH SCORES listing both"
 level = "saloon"
+
+[[clip]]
+id = "tapper.gameover.006"
+name = "Game over with no place in the high scores"
+source = "played"
+start = "inputs/tapper.gameover.006.start.presses"
+presses = "inputs/tapper.gameover.006.presses"
+frames = 1269
+why = "the high scores full (the first game's of tapper.gameover-high-score-table.001 and nine of 50, a customer served in each), a tenth game's 0 has no place ($2C1A to $2C29): no initials and no table, one frame of the game over and then the attract mode's logo"
+level = "saloon"

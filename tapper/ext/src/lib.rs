@@ -1643,6 +1643,9 @@ fn set_attract_screen(cx: &mut ExtCx<'_>) {
         // (tapper.gameover-attract.001 frame 1205); the logo's tiles come
         // on the next. tapper_bars holds the initials while this is 0.
         Some(1) if t <= 1 && cx.counter("initials").is_some_and(|i| i >= 1) => 0,
+        // The same after a game over whose score had no place ($2C29): the
+        // screen keeps the game over's first frame's picture.
+        Some(1) if t <= 1 && cx.counter("table_entered") == Some(ENTERED_NONE) => 0,
         Some(1) => 1,
         _ => 0,
     };
@@ -3724,8 +3727,18 @@ fn initials_screen(cx: &mut ExtCx<'_>) -> Vec<BonusObj> {
         && cx.counter("attract_screen") == Some(0)
         && cx.counter("initials").is_some_and(|i| i >= 1)
         && !in_demo(cx);
+    // A score with no place in the table ($2C29 returns from $2B82 before
+    // $3CE1): no initials and no table, the screen left as the game over's
+    // first frame had it, and the same end into the attract mode, its
+    // objects emptied ($5E99, then $22B8's $5F31).
+    let none = sub == 2 && no_place(cx);
+    let none_ending = cx.counter("mode") == Some(1)
+        && cx.counter("attract_screen") == Some(0)
+        && cx.counter("table_entered") == Some(ENTERED_NONE)
+        && !in_demo(cx);
     let phase = match (sub, count) {
         _ if ending => 2,
+        _ if none => 0,
         (2, 0 | 1) => 1,
         (2, 2) => 2,
         (2, _) => 3,
@@ -3735,13 +3748,13 @@ fn initials_screen(cx: &mut ExtCx<'_>) -> Vec<BonusObj> {
         cx.set_counter("initials", phase);
     }
     let (done, letters, at) = initials_entry(cx, phase, count);
-    let place = high_score_table(cx, phase, letters, at);
+    let place = high_score_table(cx, phase, letters, at, none);
     // $2B82's $5E99 empties the draw list and $3CE1's $5F31 the objects
     // from E18E, the taps' (E346 on) among them; the model keeps its taps,
     // the bartender reads them, so the board leaves every play object out
     // of the next frame's picture (GONE_NEXT, cleared each step) from the
     // game over's first frame. Not the cheerleader's (bonus_object).
-    if phase >= 1 || sub == 1 {
+    if phase >= 1 || sub == 1 || none || none_ending {
         hide_play_objects(cx);
     }
     // Placed on the count's third frame ($2CBD), in sprite RAM on the next;
@@ -3894,6 +3907,14 @@ fn table_places(cx: &mut ExtCx<'_>, t: &[[i64; 4]; TABLE_PLACES]) {
     }
 }
 
+/// The game over's score is under the tenth place's ($2C22's compare with
+/// E04D): $2C29 returns with no place, no initials and no table drawn. Once
+/// the score has a place it is in the table, never under the tenth's.
+fn no_place(cx: &ExtCx<'_>) -> bool {
+    let score = cx.counter("score").unwrap_or(0).rem_euclid(1_000_000);
+    score < cx.counter(&table_names(TABLE_PLACES - 1)[3]).unwrap_or(0)
+}
+
 /// The high scores' table (E014, ten places of three letters and a score in
 /// packed BCD, empty at the boot), counters table_P_a, _b, _c and _score.
 /// On the game over's first frame ($2C1A) the score takes the place under
@@ -3903,13 +3924,20 @@ fn table_places(cx: &mut ExtCx<'_>, t: &[[i64; 4]; TABLE_PLACES]) {
 /// two blanks with the score ($2C54), counter initials_place its place less
 /// 1. Its letters are then the initials' as they step ($2D4E: a blank $20),
 /// and table_P_lit says how many of its letters are drawn in the entry's
-/// colour. Returns initials_place.
-fn high_score_table(cx: &mut ExtCx<'_>, phase: i64, letters: [i64; 3], at: i64) -> i64 {
+/// colour. Returns initials_place. `none`: the game over's score has no
+/// place ([`no_place`]); table_entered says so until the attract mode's
+/// screen comes on after it.
+fn high_score_table(cx: &mut ExtCx<'_>, phase: i64, letters: [i64; 3], at: i64, none: bool) -> i64 {
     let mut t = table_read(cx);
     let mut entered = cx.counter("table_entered").unwrap_or(0);
     let mut place = cx.counter("initials_place").unwrap_or(0).clamp(0, TABLE_PLACES as i64 - 1);
-    if phase == 0 {
-        entered = 0;
+    let kept = entered == ENTERED_NONE && cx.counter("mode") != Some(0) && cx.counter("attract_screen") == Some(0);
+    if none {
+        entered = ENTERED_NONE;
+    } else if phase == 0 {
+        if !kept {
+            entered = 0;
+        }
     } else if entered == 0 {
         // $5CB8 packs the score's six digits into E05E.
         let score = cx.counter("score").unwrap_or(0).rem_euclid(1_000_000);
@@ -4897,7 +4925,9 @@ impl Ext for Bars {
             // left the model's objects up, hidden (initials_screen), so
             // they go now as the demo's go (tapper.gameover-attract.001
             // from frame 1205: no taps on the logo).
-            if cx.counter("attract_screen") == Some(0) && cx.counter("initials").is_some_and(|i| i >= 1) {
+            let after_game_over = cx.counter("initials").is_some_and(|i| i >= 1)
+                || cx.counter("table_entered") == Some(ENTERED_NONE);
+            if cx.counter("attract_screen") == Some(0) && after_game_over {
                 empty_play_objects(cx);
             }
             initials_screen(cx);
@@ -6735,7 +6765,11 @@ impl Ext for Bars {
                 .and_then(|k| cx.spec.kinds[k].ext_params.get("game_over_wait"))
                 .map_or(1203, |v| v.floor());
             let end = cx.counter("initials_end").unwrap_or(0);
-            fb.ext[3] = if c >= wait || (end > 0 && c >= end) {
+            // A score with no place ($2C29) returns on the frame E3BD
+            // becomes 2, and state 0 follows at once (the no-place clip of
+            // row gameover-no-place-in-table: E3BD 2 for one frame).
+            let none = c == 1 && no_place(cx);
+            fb.ext[3] = if c >= wait || (end > 0 && c >= end) || none {
                 fb.ext[3] & !(0xffff_00ff | (0xffff << 24))
             } else {
                 (fb.ext[3] & !(0xffff << 24)) | ((c & 0xffff) << 24)
