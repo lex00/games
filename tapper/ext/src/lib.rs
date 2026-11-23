@@ -4892,6 +4892,37 @@ impl Ext for Bars {
             fb.ext[1] &= !(0xffff << 16);
             cx.set_body(fid, fb);
             flow = Some((fid, fb));
+            if bonus_entered {
+                // $2500's $5F31 on this frame empties every object, as at
+                // the end script's own return below: the mugs, the
+                // bartender and his parts, the taps and the bars' ends. The
+                // original's screen shows none from the clip's frame 1 on
+                // (tapper.clear.002, clear.006); the model's from frame 2,
+                // its frame 1 drawn from the loaded frame's bodies as its
+                // frame 0 is (no step comes between them, and hiding them
+                // in `loaded` hides frame 0's too).
+                for (id, _) in &bodies {
+                    removed.push(*id);
+                }
+                if let Some(tk) = cx.kind("tap") {
+                    let taps: Vec<(usize, Body)> =
+                        cx.world.bodies.iter().enumerate().filter(|(_, b)| b.kind == tk).map(|(i, b)| (i, *b)).collect();
+                    for (id, mut t) in taps {
+                        t.y = Fx::ZERO;
+                        cx.set_body(id, t);
+                    }
+                }
+                if let Some(pk) = player_k
+                    && let Some((pid, pb)) = cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == pk)
+                {
+                    let mut pb = *pb;
+                    pb.x = Fx::ZERO;
+                    pb.y = Fx::ZERO;
+                    cx.set_body(pid, pb);
+                }
+                place_parts(cx, &[0, 1, 2, 3, 4], false, |_, px, _| (px, 0));
+                bar_ends_go(cx);
+            }
             state = 15;
             // $2500's $5F31 empties the objects, as at the script's return
             // below: the taps, the bartender and his parts are gone under
