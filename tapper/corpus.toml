@@ -7,9 +7,9 @@
 [corpus]
 format = "1.0.0"
 name = "tapper"
-version = "1.0.0"
+version = "1.1.0"
 title = "Tapper"
-recipes = "b3:623b70fee8a6ea10b3f503ff503641094d3b2943a06be8b791c1c36dbdf02ca2"
+recipes = "b3:08981d01d054ab5d8fca62adaef8e0c092e74189fe7150c06ae3550642b4bedb"
 
 [target]
 game = "tapper"
@@ -815,3 +815,27 @@ presses = "inputs/tapper.gameover.003.presses"
 frames = 550
 why = "the initials entered with the stick and the tapper: a letter stepped up once and held up, down to blank and to Z, each place entered, the third ending the wait early"
 level = "saloon"
+
+[[clip]]
+id = "tapper.gameover-high-score-table.001"
+name = "gameover-high-score-table 001: probe high-score-table-second-game: A second game after power-on whose score is below the first's: its entry at the second place,"
+source = "played"
+start = "inputs/tapper.gameover-high-score-table.001.start.presses"
+presses = "inputs/tapper.gameover-high-score-table.001.presses"
+frames = 13964
+why = "a clip of the gameover-high-score-table mechanic session"
+
+[[clip]]
+id = "tapper.gameover-high-score-table.004"
+name = "gameover-high-score-table 004: The attract mode after two games, through its demo to its high scores: both entries ($4A37's $3CE1)"
+source = "played"
+start = "inputs/tapper.gameover-high-score-table.004.start.presses"
+presses = "inputs/tapper.gameover-high-score-table.004.presses"
+frames = 1528
+why = "a clip of the gameover-high-score-table mechanic session"
+
+[[changelog]]
+version = "1.1.0"
+date = "2026-11-23"
+says = "gp corpus import from the mechanic sessions: added tapper.gameover-high-score-table.001, tapper.gameover-high-score-table.004."
+added = ["tapper.gameover-high-score-table.001", "tapper.gameover-high-score-table.004"]
