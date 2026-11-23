@@ -88,6 +88,13 @@ fn four_way(word: &mut i64, held: [bool; 4]) -> [bool; 4] {
 /// The bartender ($E2E6's object).
 pub struct Bartender;
 
+/// The bit of the bartender's and his parts' ext[3] (byte 4, bit 0) on the
+/// frames the board draws none of their sprites though they stay placed
+/// (board_sprite.hidden): the punk bar's setup, whose $5E99 empties the
+/// draw list. tapper_flow sets it where the setup places him and
+/// tapper_bartender clears it on his next step.
+const BOARD_HIDDEN: i64 = 1 << 32;
+
 /// Which branch of the play routine's $06A4 ran for the bartender this
 /// frame, for his pictures (draw_pose).
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
@@ -618,16 +625,20 @@ fn draw_pose(cx: &mut ExtCx<'_>, ev: Pose, x_before: i64, spawned: usize) {
     // Spawned bodies take their ids in order from the world's end, after
     // any mug the send put in this frame.
     let mut fresh = cx.world.bodies.len() + spawned;
+    // His parts are left off the board with him (BOARD_HIDDEN).
+    let board_hidden = cx.me.ext[3] & BOARD_HIDDEN;
     for (k, o) in parts.iter().enumerate() {
         let word = o.flags | (o.pic << 8);
         match ids[k] {
             Some(id) => {
                 let b = cx.world.bodies[id];
-                if b.y.floor() != o.y || b.x.floor() != o.x || b.ext[0] != word {
+                let ext3 = (b.ext[3] & !BOARD_HIDDEN) | board_hidden;
+                if b.y.floor() != o.y || b.x.floor() != o.x || b.ext[0] != word || b.ext[3] != ext3 {
                     let mut b = b;
                     b.y = Fx::from_int(o.y);
                     b.x = Fx::from_int(o.x);
                     b.ext[0] = word;
+                    b.ext[3] = ext3;
                     cx.set_body(id, b);
                 }
             }
@@ -637,6 +648,7 @@ fn draw_pose(cx: &mut ExtCx<'_>, ev: Pose, x_before: i64, spawned: usize) {
                 let mut b = gp_sim::systems::new_body(cx.spec, cx.world, pk, Fx::from_int(o.x), Fx::from_int(o.y), false);
                 b.ext[0] = word;
                 b.ext[1] = k as i64 + 1;
+                b.ext[3] = board_hidden;
                 cx.spawn(pk, b.x, b.y, false);
                 cx.set_body(fresh, b);
                 fresh += 1;
@@ -664,7 +676,7 @@ impl Ext for BartenderPart {
             like: "",
             about: "One of the bartender's other five objects (E2EA to E2FD), which tapper_bartender sets as the play routine's $06A4 does",
             params: &[],
-            state: &["ext[0] flags plus 256 times the picture", "ext[1] its object's place from E2EA, plus 1"],
+            state: &["ext[0] flags plus 256 times the picture", "ext[1] its object's place from E2EA, plus 1", "ext[3] bit 32 while the board draws none of it, as the bartender's"],
             writes: &[],
             built_from: &[Primitive::Condition],
             ..Record::EMPTY
@@ -717,6 +729,7 @@ impl Ext for Bartender {
         let mut ev = Pose::Still;
         let mut spawned = 0;
         let x_before = cx.me.x.floor();
+        cx.me.ext[3] &= !BOARD_HIDDEN;
         Self::act(cx, &mut ev, &mut spawned);
         draw_pose(cx, ev, x_before, spawned);
     }
@@ -732,7 +745,7 @@ impl Ext for Bartender {
             like: "player-physics",
             about: "Walks along his bar, moves to the next bar's tap on up or down, and steps back from the tap when a mug is sent, by the stick or, in the attract demo, by the presses $59DD picks; his six objects' pictures as the play routine sets them",
             params: PARAMS,
-            state: &["ext[0] bar", "ext[1] move frames left x8 plus the bar moving to x2 plus the stick latch", "ext[2] bob count plus 256 x bob phase; byte 2 his flags and byte 3 his picture (E2E7, E2E8), the board sprite's; bytes 4 to 7 E706, E715, E714 (bit 1: the frame after a send, E72C) and E718", "ext[3] tap held (low byte), the 4-way filter's state above"],
+            state: &["ext[0] bar", "ext[1] move frames left x8 plus the bar moving to x2 plus the stick latch", "ext[2] bob count plus 256 x bob phase; byte 2 his flags and byte 3 his picture (E2E7, E2E8), the board sprite's; bytes 4 to 7 E706, E715, E714 (bit 1: the frame after a send, E72C) and E718", "ext[3] tap held (low byte), the 4-way filter's state above; bit 32 on the frames the board draws none of his sprites (board_sprite.hidden)"],
             reads: &["action", "tap.x", "tap.facing"],
             writes: &["self.x", "self.y", "self.facing", "bartender_part", "tap.y"],
             built_from: &[Primitive::InputBinding, Primitive::Timer, Primitive::Condition, Primitive::Quantity],
@@ -1601,7 +1614,14 @@ impl Ext for Flow {
             const S: i64 = 0x4BCB;
             let flags = imm(cx, "bartender_setup", S, if left { 0x4C03 } else { 0x4BE0 });
             let pic = imm(cx, "bartender_setup", S, 0x4BF8);
-            b.ext = [bar, 0, (flags << 16) | (pic << 24), 0];
+            // The punk bar's setup (bar shown 2): its $4937 ($4C4B) waits in
+            // $5E99, which empties the draw list (E11A), so the sprite copy
+            // $49B9 writes none of his objects on the frame the board shows
+            // this one: only the taps (tapper.l8.001 frames 2 and 2782, his
+            // sprite byte $E95F written on 3), though he is placed and
+            // compared. tapper_bartender clears it on his next step.
+            let hidden = if shown == 2 { BOARD_HIDDEN } else { 0 };
+            b.ext = [bar, 0, (flags << 16) | (pic << 24), hidden];
             cx.set_body(id, b);
             let head = Obj {
                 y: imm(cx, "bartender_setup", S, 0x4BEC),
@@ -1625,12 +1645,14 @@ impl Ext for Flow {
                     } else {
                         p.y = Fx::ZERO;
                     }
+                    p.ext[3] = (p.ext[3] & !BOARD_HIDDEN) | hidden;
                     cx.set_body(pid, p);
                 }
                 if !have[4] {
                     let mut p = gp_sim::systems::new_body(cx.spec, cx.world, pk, Fx::from_int(head.x), Fx::from_int(head.y), false);
                     p.ext[0] = head.flags | (head.pic << 8);
                     p.ext[1] = 5;
+                    p.ext[3] = hidden;
                     cx.spawn(pk, p.x, p.y, false);
                     cx.set_body(cx.world.bodies.len() + spawned, p);
                 }
@@ -3959,6 +3981,26 @@ impl Ext for Bars {
     /// cleared, already the next level's, while the original still shows
     /// the last screen or a card no look draws (tapper.bonus.001 frame 0).
     fn loaded(&self, cx: &mut ExtCx<'_>) {
+        // A start on the frame after a punk bar's setup (the mapping's
+        // cycle_on 2, E3B8 2): he is placed, but the setup's $5E99 emptied
+        // the draw list, so the board shows none of him on this frame
+        // (tapper.l9.001 frame 0; on 1 none either, him from 2).
+        if cx.counter("cycle_on") == Some(2) {
+            let (pk, qk) = (cx.kind("player"), cx.kind("bartender_part"));
+            let ids: Vec<usize> = cx
+                .world
+                .bodies
+                .iter()
+                .enumerate()
+                .filter(|(_, b)| b.alive && (Some(b.kind) == pk || Some(b.kind) == qk))
+                .map(|(i, _)| i)
+                .collect();
+            for id in ids {
+                let mut b = cx.world.bodies[id];
+                b.ext[3] |= BOARD_HIDDEN;
+                cx.set_body(id, b);
+            }
+        }
         let flow = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).map(|fb| fb.ext);
         let level_timers = cx
             .kind("timer")

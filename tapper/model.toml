@@ -2284,6 +2284,11 @@ slot = "board_sprites"
 [entities.bartender_part.board_sprite.flags]
 word = 0
 
+[entities.bartender_part.board_sprite.hidden]
+bit = 0
+byte = 4
+word = 3
+
 [entities.bartender_part.board_sprite.picture]
 byte = 1
 word = 0
@@ -2501,6 +2506,11 @@ slot = "board_sprites"
 [entities.player.board_sprite.flags]
 byte = 2
 word = 2
+
+[entities.player.board_sprite.hidden]
+bit = 0
+byte = 4
+word = 3
 
 [entities.player.board_sprite.picture]
 byte = 3
