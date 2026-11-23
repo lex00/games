@@ -745,6 +745,17 @@ presentation = true
 ram = [0xE3F3]
 
 [[field]]
+note = "Not compared: the lives the HUD shows, E4A7 as a clip's start has it, so its first frame draws the mugs beside the score ($5D21, one fewer for player 1); the hooks keep it from there, as the screen's copy ($5CED) redraws them. tapper.l9.001's frame 0 drew none (box 112,32 32x16)"
+path = "counters.lives_shown"
+presentation = true
+ram = [0xE4A7]
+
+[[field.case]]
+note = "The HUD's first lives cell (F08E:F08F) holds no mug: the screen isn't drawn yet (tapper.bonus.001 starts on the logo, 8 and 80 there, with the mugs, 16 and 48, from its frame 1), or no mug is due. -1 leaves it to the hooks, which give it the lives on the first step as the screen's copy does"
+number = -1
+when = "ram[0xF08E] != 16 || ram[0xF08F] != 48"
+
+[[field]]
 note = "Not compared until the model keeps it: Levels cleared, E4A8: 1 more at each level's end ($5681), bonus rounds included"
 path = "counters.cleared"
 presentation = true
