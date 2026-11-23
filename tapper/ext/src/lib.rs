@@ -5962,6 +5962,13 @@ impl Ext for Bars {
                 5 => {
                     if t == 0 {
                         c.ext[0] &= !0xff;
+                        // A customer stands for its wait between two walks.
+                        // A profile can make that wait longer, as a percent
+                        // of the program's own (customer_wait_percent, 0 in
+                        // the model as written: profiles.toml's
+                        // slower_customers); the timer is a byte.
+                        let pct = bp(cx, "customer_wait_percent");
+                        let wait = if pct > 0 { (wait * pct / 100).clamp(1, 255) } else { wait };
                         set_cust_timer(&mut c, wait);
                     } else {
                         let dx = if facing == 1 { -walk } else { walk };

@@ -2145,6 +2145,7 @@ size = [1, 1]
 after_throw = 14
 catch_once = 1
 catch_reach = 25
+customer_wait_percent = 0
 drink_turns = 6
 hand_reach = 15
 line = 57
