@@ -4672,27 +4672,37 @@ impl Ext for Bars {
                 cx.set_body(id, b);
             }
         }
-        // A start on the game over's first frame (state 13 with E3BD still
-        // 0: $230F has asked for its sounds and $2B82's $5E99 waits the
-        // frame, $2B90 sets E3BD 2 on the next): the flow as tapper_bars
-        // leaves it on that frame, sub 2 with its count at 0, whatever E6FF
-        // a life lost left there. The screen is still the level's with GAME
-        // OVER on it and its sprites, the initials' from the next frame with
-        // none ($5E99 emptied the draw list): GONE_NEXT on the play objects
-        // leaves them out of frame 1's picture only (tapper.gameover.001
-        // frame 0, E6FF 3).
+        // A start in the game over with E3BD still 0, which is two frames
+        // (tapper.gameover-high-score-table.001: state 13 on 11988 and
+        // 11989, E3BD 2 on 11990). The flow's sub there is tapper_bars',
+        // whatever E6FF a life lost left. On the second $230F has asked
+        // for its sounds (the queue as loaded, counter game_over_asked) and
+        // $2B82's $5E99 waits the frame, $2B90 setting E3BD 2 on the next:
+        // sub 2 with its count at 0. The screen is still the level's with
+        // GAME OVER on it and its sprites, the initials' from the next
+        // frame with none ($5E99 emptied the draw list): GONE_NEXT on the
+        // play objects leaves them out of frame 1's picture only
+        // (tapper.gameover.001 frame 0, E6FF 3). On the first ($24EE has
+        // just set state 13, the queue empty) it is sub 1, the objects
+        // staying a frame more, as a run from power-on has it
+        // (gameover-high-score-table clip 2 frame 0).
+        const ASKED: i64 = 0x03_02_02;
         if cx.counter("mode") == Some(0)
             && let Some((fid, mut fb)) =
                 cx.kind("flow").and_then(|k| cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == k)).map(|(i, b)| (i, *b))
             && fb.ext[3] & 0xff == 13
             && (fb.ext[3] >> 16) & 0xff != 2
         {
-            fb.ext[3] = (fb.ext[3] & !(0x00ff_0000 | (0xffff << 24))) | (2 << 16);
+            let second = cx.counter("game_over_asked") == Some(ASKED);
+            let sub = if second { 2 } else { 1 };
+            fb.ext[3] = (fb.ext[3] & !(0x00ff_0000 | (0xffff << 24))) | (sub << 16);
             cx.set_body(fid, fb);
             for (n, v) in [("initials", 0), ("game_over_text", 1)] {
                 cx.set_counter(n, v);
             }
-            hide_play_objects(cx);
+            if second {
+                hide_play_objects(cx);
+            }
         }
         // A start in the bonus round's last wait ($296F's 15 frames): its
         // objects are loaded from E226 (the mapping's bonus_objects), and

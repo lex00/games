@@ -37406,6 +37406,9 @@ description = "The extra life's every, as the instruction scene's close draws it
 [counters.extra_first]
 description = "The first extra life's score, as the instruction scene's close draws it ($3360 to $3376): E00D and E00E, the defaults' 14th and 15th bytes that the boot copies ($0517), as two digits; tapper_bars sets it in the attract mode"
 
+[counters.game_over_asked]
+description = "Loaded at a clip's start only: the sound queue as the frame ended (E114, E0E1, E0E2), 0x030202 once the game over's $49E5 has asked for its sounds 2 and 3. A start in state 13 with E3BD 0 reads it to tell the game over's first frame (the queue empty, the objects up, sub 1) from its second (asked, sub 2 with its count at 0). The hooks never change it"
+
 [counters.game_over_text]
 description = "1 while GAME OVER is on the bottom bar: from the frame $2441 queues it with no lives left ($244B) through its two waits of 60 ($2467, $24D8) to the game over's first frame (state 13), whose $2B82 clears the screen on the next; 0 otherwise. tapper_bars sets it each frame from the flow's state"
 

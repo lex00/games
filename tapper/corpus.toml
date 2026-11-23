@@ -7,9 +7,9 @@
 [corpus]
 format = "1.0.0"
 name = "tapper"
-version = "1.2.0"
+version = "1.3.0"
 title = "Tapper"
-recipes = "b3:b444b22d70273aa8b9e3e5d3cf80437fd297be08b61f49d27978906918af2235"
+recipes = "b3:19b8b40de902ac0846b8c054896a3df77733cf27a7821cafa69d82a5800da470"
 
 [target]
 game = "tapper"
@@ -885,3 +885,19 @@ presses = "inputs/tapper.gameover.006.presses"
 frames = 1269
 why = "the high scores full (the first game's of tapper.gameover-high-score-table.001 and nine of 50, a customer served in each), a tenth game's 0 has no place ($2C1A to $2C29): no initials and no table, one frame of the game over and then the attract mode's logo"
 level = "saloon"
+
+[[clip]]
+id = "tapper.gameover-high-score-table.002"
+name = "gameover-high-score-table 002: probe high-score-table-second-initials: The second game over's initials: its entry (B, a blank, A, score 0) at the second place, "
+source = "played"
+start = "inputs/tapper.gameover-high-score-table.002.start.presses"
+presses = "inputs/tapper.gameover-high-score-table.002.presses"
+frames = 472
+why = "a start on the game over's first frame (state 13, E3BD 0, the sound queue empty): the second game over's initials, B, a blank and A at the high scores' second place under the first game's"
+level = "saloon"
+
+[[changelog]]
+version = "1.3.0"
+date = "2026-11-23"
+says = "gp corpus import from the mechanic sessions: added tapper.gameover-high-score-table.002 (the second game over's initials, from the game over's first frame)"
+added = ["tapper.gameover-high-score-table.002"]

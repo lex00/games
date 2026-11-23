@@ -986,6 +986,12 @@ presentation = true
 ram = [0xE3BD]
 
 [[field]]
+note = "Not compared: the sound queue as the frame ends (E114 its length, E0E1 and E0E2 its first two bytes), 0x030202 when it holds $230F's $49E5 requests 2 and 3. Loaded so a start in the game over (state 13, E3BD still 0) knows which of its two frames it is: on the first ($24EE has just set state 13) the queue is empty and the objects are still up, on the second $49E5 has asked and $2B82's $5E99 waits (gameover-high-score-table clip 2 frame 0 empty, tapper.gameover.001 frame 0 0x030202)"
+path = "counters.game_over_asked"
+presentation = true
+ram = [0xE114, 0xE0E1, 0xE0E2]
+
+[[field]]
 note = "Lives, E4A7: 3 at the start ($4B22), 1 less at a life lost ($23AF), 1 more at an extra life ($615D)"
 path = "counters.lives"
 ram = [0xE4A7]
