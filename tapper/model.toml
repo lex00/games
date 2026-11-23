@@ -11766,7 +11766,7 @@ description = "The first extra life's score, as the instruction scene's close dr
 description = "1 while GAME OVER is on the bottom bar: from the frame $2441 queues it with no lives left ($244B) through its two waits of 60 ($2467, $24D8) to the game over's first frame (state 13), whose $2B82 clears the screen on the next; 0 otherwise. tapper_bars sets it each frame from the flow's state"
 
 [counters.intro]
-description = "The level's intro ($5404), counted by tapper_bars from the setup: 1 on the setup's frame, then the frames since plus 1 while the screen is cleared and its lines are up, one past its count on the frame the screen keeps it after the stage is drawn ($5DF6, counter stage_late), then 0"
+description = "The level's intro ($5404), counted by tapper_bars from the setup: 1 on the setup's frame (2 in a game's first level and after a life lost, whose screen is cleared on the setup's frame), then the frames since plus 1 while the screen is cleared and its lines are up, one past its count on the frame the screen keeps it after the stage is drawn ($5DF6, counter stage_late), then 0"
 
 [counters.lives]
 description = "Lives, E4A7: 3 at a game's start ($4B22), one less when a life is lost ($23AF), one more at each extra-life score ($615D)"

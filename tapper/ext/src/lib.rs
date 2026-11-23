@@ -4746,7 +4746,13 @@ impl Ext for Bars {
             // on the next, cleared again on the intro's frame 101 and GET
             // READY on 102 (tapper.start.001 frames 1, 2, 101 and 102),
             // its stage drawn on the same frame as the others' (138).
-            cx.set_counter("intro", if cleared == 0 { 2 } else { 1 });
+            // So too a setup after a life lost (state 9, from $24CC): the
+            // setup's $4B5B and $5404's $540C and first wait ($543A) all
+            // run on the setup's frame, so the screen is cleared on it and
+            // GET READY is up on the next (tapper.l8.001: E6FF 3 on 15015,
+            // $24C6 on 15017, $4B5B, $540C and $543A on 15019; tapper.l6.001
+            // the same on 7990, 7992 and 7994).
+            cx.set_counter("intro", if cleared == 0 || state == 9 { 2 } else { 1 });
             // $5512's six sprites ($5567, on the intro's frame 2): the
             // screen shows objects a frame on, so they are made here to be
             // seen on that frame (tapper.start.001 frame 2, tapper.die.001
@@ -4773,9 +4779,10 @@ impl Ext for Bars {
             // the stage is drawn; the counter intro is the frames since the
             // setup, plus 1, and 0 once the stage is up.
             let total = 2 + 30 + 5 + if cleared == 0 { 100 } else { 0 };
-            // One more in a game's first level (its screen a frame ahead,
-            // at the setup above).
-            let ahead = i64::from(cleared == 0);
+            // One more in a game's first level and after a life lost (their
+            // screen a frame ahead, at the setup above): the count a frame
+            // ago was already one past the frames since the setup.
+            let ahead = i64::from(cleared == 0 || cx.counter("intro") == Some(total - left + 1));
             let intro = if left > 0 { total - left + 1 + ahead } else { 0 };
             // The screen keeps the intro on the frame of the stage's draw
             // and shows the stage from the next (tapper.l1.001 and l5.001
