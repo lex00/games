@@ -4469,6 +4469,60 @@ impl Ext for Bars {
                 gone_next(cx, true);
             }
         }
+        // A start inside the kicked glass's arc (tapper.clear-stage.001
+        // starts in $58C5's first wait, E3A9 $5901 with B 22): $58C5
+        // (scripts 0 and 3, 22 steps) or $5904 (scripts 1 and 2, 21), each
+        // a step and a wait of 2 with B counting the steps down, from the
+        // end's frame 128 (kicked_glass). $232B's place and B give the
+        // frame, as for $51A9 in `step`, less the frames the wait has left
+        // (the timer for $2346, none in state 16). The end's draws before
+        // it are taken as if $4742 ran once, which the poses count the same
+        // either way. Set here, so the first step draws the glass from it
+        // (tapper.clear-stage.001 frame 2: the arc's second step).
+        if let Some((fid, mut fb)) =
+            cx.kind("flow").and_then(|k| cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == k)).map(|(i, b)| (i, *b))
+            && let state = fb.ext[3] & 0xff
+            && (state == 15 || state == 16)
+            && (fb.ext[3] >> 16) & 0xff != 8
+            && let ret = (fb.ext[1] >> 16) & 0xffff
+            && let Some(steps) = [(1, 22), (2, 21)]
+                .into_iter()
+                .find(|&(k, _)| wait_return(cx, "glass_arcs", "glass_arc_start", k) == Some(ret))
+                .map(|(_, s)| s)
+        {
+            let b = (fb.ext[1] >> 32) & 0xff;
+            let left = if state == 16 {
+                0
+            } else {
+                cx.kind("timer")
+                    .and_then(|k| cx.world.bodies.iter().find(|t| t.alive && t.kind == k && t.ext[1] == 0x2346))
+                    .map_or(0, |t| t.ext[0])
+            };
+            let n = (128 + 2 * (steps - b + 1) - 1 - left).max(0);
+            fb.ext[3] = (fb.ext[3] & 0xff00) | state | (8 << 16) | (n << 24) | END_TWICE_KNOWN | END_SOUNDS;
+            // The place is read once, at the start.
+            fb.ext[1] &= !(0xffff << 16);
+            cx.set_body(fid, fb);
+            // His arm (E2EA, place 0) is hidden through the arc ($4815's
+            // y 0), so the start loads no body for it, but its flags are
+            // still the let-go's ($2085, the end's frame 70), which $4708
+            // (172) and $489A (170) show it with when they put it back up
+            // (tapper.clear-stage.001 frames 44 to 55: his leg, $46, in
+            // the let-go's colours).
+            if let Some(qk) = cx.kind("bartender_part")
+                && !cx.world.bodies.iter().any(|b| b.alive && b.kind == qk && b.ext[1] == 1)
+                && let Some(pk) = cx.kind("player")
+                && let Some(pb) = cx.world.bodies.iter().find(|b| b.alive && b.kind == pk).copied()
+                && let Some((_, left)) = Bartender::tap(cx, pb.ext[0] & 3)
+            {
+                let mut b = gp_sim::systems::new_body(cx.spec, cx.world, qk, pb.x, Fx::ZERO, false);
+                b.ext[0] = imm(cx, "bartender_wait", 0x2085, if left { 0x20C9 } else { 0x2090 });
+                b.ext[1] = 1;
+                let fresh = cx.world.bodies.len();
+                cx.spawn(qk, b.x, b.y, false);
+                cx.set_body(fresh, b);
+            }
+        }
         let flow = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).map(|fb| fb.ext);
         // A start in end script 0's last wait, the second of $48FC's waits
         // of 10 with B at 1: the wait runs out on this frame and $492F

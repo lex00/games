@@ -914,6 +914,15 @@ description = "The colour byte GAME OVER is drawn in: $244D's ld a,$10, put in E
 source = "tapper"
 asset = "game_over_color"
 
+[assets.glass_arc_start]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: the word end script 0 calls the arcs' code $58C5 with ($4884), searched for the arcs' waits"
+
+[assets.glass_arc_start.from]
+source = "tapper"
+asset = "glass_arc_start"
+
 [assets.glass_arcs]
 kind = "rows"
 role = "graphics"
@@ -2309,6 +2318,7 @@ fall_crash_pictures = "fall_crash_pictures"
 fall_picture_crash = "fall_picture_crash"
 fall_picture_empty = "fall_picture_empty"
 fall_picture_full = "fall_picture_full"
+glass_arc_start = "glass_arc_start"
 glass_arcs = "glass_arcs"
 glass_crash = "glass_crash"
 glass_down = "glass_down"
@@ -26329,6 +26339,14 @@ note = "gp code listing --routine 2441: $244D's ld a,$10 and $244F's ld ($E38F),
 
 [[evidence."assets.game_over_color".refs]]
 at = "clip:tapper.l6.001"
+
+[evidence."assets.glass_arc_start"]
+source = "observed"
+confidence = 80
+note = "gp code listing of $4881 in tapper, sutapper and tappera ($4884 call $58C5, $58B5 in tappera) and $4A03 in rbtapper ($4A06 call $5A45); $58C5's wait returns to $5901, where tapper.clear-stage.001 starts (E3A9 $5901, E39F 22)"
+
+[[evidence."assets.glass_arc_start".refs]]
+at = "clip:tapper.clear-stage.001"
 
 [evidence."assets.glass_arcs"]
 source = "observed"

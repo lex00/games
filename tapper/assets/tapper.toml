@@ -2952,6 +2952,21 @@ rbtapper = 0x5A45
 sutapper = 0x58C5
 tappera = 0x58B5
 
+# $4885: the word end script 0 calls $58C5 with ($4884), the arcs' place,
+# so a clip that starts in an arc's wait ($5901, $594A) knows its frame.
+[[asset]]
+name = "glass_arc_start"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4885
+count = 1
+width = 2
+
+[asset.at]
+rbtapper = 0x4A07
+sutapper = 0x4885
+tappera = 0x4885
+
 [[asset]]
 name = "glass_turns"
 format = "byte-rows"
