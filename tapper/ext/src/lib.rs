@@ -5348,6 +5348,13 @@ impl Ext for Bars {
             let count = cleared + 1;
             let bonus = matches!(count % 13, 2 | 5 | 9) || count % 13 == 0;
             let returns = done.is_some_and(|d| n == d + i64::from(shown == 2 || shown == 3));
+            if (shown == 2 || shown == 3) && done == Some(n) {
+                // $5663's $5E99 empties the palette cycles: the lamps and
+                // lights in their colours from before the first step from
+                // the next frame (tapper.l8.001: E410 0 on 16217, the
+                // lamps brown on 16218).
+                cx.set_counter("cycle_on", 0);
+            }
             if returns {
                 // $5681: a level more. Without a bonus round $56A0's $2EA1:
                 // from 6 levels cleared, on an even count, the level row
