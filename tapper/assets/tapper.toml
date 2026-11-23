@@ -928,10 +928,28 @@ rbtapper = 0x10FE
 sutapper = 0x1103
 tappera = 0x1103
 
+# $57A7: the four colour runs the space bar's setup starts ($575B's four
+# calls of $5EA9, for colours $16, $17, $18 and $15): ten bytes each, three
+# steps of frames, ninth bit and low byte, then a zero. They end on their
+# last step, which shows until $600F loads the colours again 30 frames on.
+[[asset]]
+name = "space_wait_colors"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x57A7
+count = 4
+width = 10
+
+[asset.at]
+rbtapper = 0x5937
+sutapper = 0x57A7
+tappera = 0x57A7
+
 # $1974: the space bar's lit pad, 6 cells of tile and high byte, which
 # $1921 writes under the bartender's bar's tap. A row a byte, so a board
-# text reads one cell's tile or high byte. Every set has it at the same
-# place (the code around it is the same, the bytes differ by set).
+# text reads one cell's tile or high byte. sutapper and tappera have it at
+# the same place; rbtapper's program has no such routine there, and its
+# bytes at this place aren't a pad's (its bars aren't worked yet).
 [[asset]]
 name = "space_pad_lit"
 format = "byte-rows"

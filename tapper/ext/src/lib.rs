@@ -86,6 +86,11 @@ fn four_way(word: &mut i64, held: [bool; 4]) -> [bool; 4] {
 }
 
 /// The bartender ($E2E6's object).
+/// Frames from the space bar's stage's draw to its lit pad: the frame of
+/// the draw, $575B's wait of $1E ($5797) before the colours load (while
+/// the count is over 1), and the frame more to the setup's $4C60.
+const SPACE_WAIT: i64 = 32;
+
 pub struct Bartender;
 
 /// The bit of the bartender's and his parts' ext[3] (byte 4, bit 0) on the
@@ -4697,9 +4702,24 @@ impl Ext for Bars {
         // one the setup places the bartender on (tapper.l1.001 and l5.001
         // start on the stage's draw: GET READY on their first frame, the
         // stage on their second).
+        // The space bar's stage is up 30 frames before its own colours and
+        // its lit pad: the setup's $575B ($4B8B) waits $1E frames ($232B)
+        // before $600F and $570C load them, and $4C60 lights the pad after.
+        // The counter space_wait is the frames of that left, which the
+        // board's looks and the pad's cells read.
+        let waited = cx.counter("space_wait").unwrap_or(0);
         if cx.counter("stage_late").is_some_and(|l| l > 0) {
             cx.set_counter("stage_late", 0);
             cx.set_counter("intro", 0);
+            if cx.counter("shown") == Some(3) {
+                cx.set_counter("space_wait", SPACE_WAIT);
+                cx.set_counter("space_wait_step", 0);
+            }
+        } else if waited > 0 {
+            // The four colour runs $575B starts ($5EA9) take a step every
+            // 3 frames and go round their 3 steps while the wait lasts.
+            cx.set_counter("space_wait", waited - 1);
+            cx.set_counter("space_wait_step", ((SPACE_WAIT - (waited - 1)) % 9) / 3);
         }
         // State 8, a game's start ($4AEF, then the setup $4B3F), is a
         // setup as after a life lost.
