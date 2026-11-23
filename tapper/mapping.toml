@@ -768,6 +768,224 @@ path = "counters.score"
 ram = [0xE3F5, 0xE3F6, 0xE3F7, 0xE3F8, 0xE3F9, 0xE3FA]
 
 [[field]]
+note = "The high scores' place 1, letter 1: E014 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_1_a"
+ram = [0xE014]
+
+[[field]]
+note = "The high scores' place 1, letter 2: E015 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_1_b"
+ram = [0xE015]
+
+[[field]]
+note = "The high scores' place 1, letter 3: E016 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_1_c"
+ram = [0xE016]
+
+[[field]]
+bcd = true
+note = "The high scores' place 1, its score: E017 to E019, packed BCD most significant first, from E05E ($2C60), which $5CB8 packs from the score's six digits"
+path = "counters.table_1_score"
+ram = [0xE017, 0xE018, 0xE019]
+
+[[field]]
+note = "The high scores' place 2, letter 1: E01A ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_2_a"
+ram = [0xE01A]
+
+[[field]]
+note = "The high scores' place 2, letter 2: E01B ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_2_b"
+ram = [0xE01B]
+
+[[field]]
+note = "The high scores' place 2, letter 3: E01C ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_2_c"
+ram = [0xE01C]
+
+[[field]]
+bcd = true
+note = "The high scores' place 2, its score: E01D to E01F, packed BCD most significant first, from E05E ($2C60), which $5CB8 packs from the score's six digits"
+path = "counters.table_2_score"
+ram = [0xE01D, 0xE01E, 0xE01F]
+
+[[field]]
+note = "The high scores' place 3, letter 1: E020 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_3_a"
+ram = [0xE020]
+
+[[field]]
+note = "The high scores' place 3, letter 2: E021 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_3_b"
+ram = [0xE021]
+
+[[field]]
+note = "The high scores' place 3, letter 3: E022 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_3_c"
+ram = [0xE022]
+
+[[field]]
+bcd = true
+note = "The high scores' place 3, its score: E023 to E025, packed BCD most significant first, from E05E ($2C60), which $5CB8 packs from the score's six digits"
+path = "counters.table_3_score"
+ram = [0xE023, 0xE024, 0xE025]
+
+[[field]]
+note = "The high scores' place 4, letter 1: E026 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_4_a"
+ram = [0xE026]
+
+[[field]]
+note = "The high scores' place 4, letter 2: E027 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_4_b"
+ram = [0xE027]
+
+[[field]]
+note = "The high scores' place 4, letter 3: E028 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_4_c"
+ram = [0xE028]
+
+[[field]]
+bcd = true
+note = "The high scores' place 4, its score: E029 to E02B, packed BCD most significant first, from E05E ($2C60), which $5CB8 packs from the score's six digits"
+path = "counters.table_4_score"
+ram = [0xE029, 0xE02A, 0xE02B]
+
+[[field]]
+note = "The high scores' place 5, letter 1: E02C ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_5_a"
+ram = [0xE02C]
+
+[[field]]
+note = "The high scores' place 5, letter 2: E02D ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_5_b"
+ram = [0xE02D]
+
+[[field]]
+note = "The high scores' place 5, letter 3: E02E ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_5_c"
+ram = [0xE02E]
+
+[[field]]
+bcd = true
+note = "The high scores' place 5, its score: E02F to E031, packed BCD most significant first, from E05E ($2C60), which $5CB8 packs from the score's six digits"
+path = "counters.table_5_score"
+ram = [0xE02F, 0xE030, 0xE031]
+
+[[field]]
+note = "The high scores' place 6, letter 1: E032 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_6_a"
+ram = [0xE032]
+
+[[field]]
+note = "The high scores' place 6, letter 2: E033 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_6_b"
+ram = [0xE033]
+
+[[field]]
+note = "The high scores' place 6, letter 3: E034 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_6_c"
+ram = [0xE034]
+
+[[field]]
+bcd = true
+note = "The high scores' place 6, its score: E035 to E037, packed BCD most significant first, from E05E ($2C60), which $5CB8 packs from the score's six digits"
+path = "counters.table_6_score"
+ram = [0xE035, 0xE036, 0xE037]
+
+[[field]]
+note = "The high scores' place 7, letter 1: E038 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_7_a"
+ram = [0xE038]
+
+[[field]]
+note = "The high scores' place 7, letter 2: E039 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_7_b"
+ram = [0xE039]
+
+[[field]]
+note = "The high scores' place 7, letter 3: E03A ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_7_c"
+ram = [0xE03A]
+
+[[field]]
+bcd = true
+note = "The high scores' place 7, its score: E03B to E03D, packed BCD most significant first, from E05E ($2C60), which $5CB8 packs from the score's six digits"
+path = "counters.table_7_score"
+ram = [0xE03B, 0xE03C, 0xE03D]
+
+[[field]]
+note = "The high scores' place 8, letter 1: E03E ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_8_a"
+ram = [0xE03E]
+
+[[field]]
+note = "The high scores' place 8, letter 2: E03F ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_8_b"
+ram = [0xE03F]
+
+[[field]]
+note = "The high scores' place 8, letter 3: E040 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_8_c"
+ram = [0xE040]
+
+[[field]]
+bcd = true
+note = "The high scores' place 8, its score: E041 to E043, packed BCD most significant first, from E05E ($2C60), which $5CB8 packs from the score's six digits"
+path = "counters.table_8_score"
+ram = [0xE041, 0xE042, 0xE043]
+
+[[field]]
+note = "The high scores' place 9, letter 1: E044 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_9_a"
+ram = [0xE044]
+
+[[field]]
+note = "The high scores' place 9, letter 2: E045 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_9_b"
+ram = [0xE045]
+
+[[field]]
+note = "The high scores' place 9, letter 3: E046 ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_9_c"
+ram = [0xE046]
+
+[[field]]
+bcd = true
+note = "The high scores' place 9, its score: E047 to E049, packed BCD most significant first, from E05E ($2C60), which $5CB8 packs from the score's six digits"
+path = "counters.table_9_score"
+ram = [0xE047, 0xE048, 0xE049]
+
+[[field]]
+note = "The high scores' place 10, letter 1: E04A ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_10_a"
+ram = [0xE04A]
+
+[[field]]
+note = "The high scores' place 10, letter 2: E04B ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_10_b"
+ram = [0xE04B]
+
+[[field]]
+note = "The high scores' place 10, letter 3: E04C ($41 to $5A, $20 blank, 0 not taken). $2C48 moves the places under the new entry's down 6 bytes, $2C54 writes A and two blanks, $2D4E each letter stepped"
+path = "counters.table_10_c"
+ram = [0xE04C]
+
+[[field]]
+bcd = true
+note = "The high scores' place 10, its score: E04D to E04F, packed BCD most significant first, from E05E ($2C60), which $5CB8 packs from the score's six digits"
+path = "counters.table_10_score"
+ram = [0xE04D, 0xE04E, 0xE04F]
+
+[[field]]
+lookup = [[2, 1]]
+lookup_else = 0
+note = "Not compared: 1 in the game over's initials (E3BD 2, $2B90), the score being in the table then; loaded so a clip that starts in them doesn't take it in again"
+path = "counters.table_entered"
+presentation = true
+ram = [0xE3BD]
+
+[[field]]
 note = "Lives, E4A7: 3 at the start ($4B22), 1 less at a life lost ($23AF), 1 more at an extra life ($615D)"
 path = "counters.lives"
 ram = [0xE4A7]

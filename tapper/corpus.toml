@@ -855,3 +855,23 @@ version = "1.2.0"
 date = "2026-11-23"
 says = "tapper.gameover-attract.001: the game over's initials wait run out into the attract mode's logo and instruction scene (row gameover-end-into-attract)"
 added = ["tapper.gameover-attract.001"]
+
+[[clip]]
+id = "tapper.gameover.004"
+name = "Game over, initials to the high scores"
+source = "played"
+start = "inputs/tapper.gameover.004.start.presses"
+presses = "inputs/tapper.gameover.004.presses"
+frames = 1800
+why = "the initials entered (C, a blank and B) into the high scores' empty table, then the attract mode to its HIGH SCORES, which lists the entry"
+level = "saloon"
+
+[[clip]]
+id = "tapper.gameover.005"
+name = "Second game over, initials below the first"
+source = "played"
+start = "inputs/tapper.gameover.005.start.presses"
+presses = "inputs/tapper.gameover.005.presses"
+frames = 1750
+why = "a second game's score (0) under the first's (BAA, 19950, entered after the game of tapper.gameover.002) takes the high scores' second place: the initials C, A, A entered there, then the attract mode's HIGH SCORES listing both"
+level = "saloon"

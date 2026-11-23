@@ -3705,8 +3705,8 @@ fn game_over_text(cx: &mut ExtCx<'_>) {
 /// by the interrupt) and the letter in its colour ($2CDD), from 3 the
 /// cheerleader (tapper.poweron.001 frames 5028, 5030 and 5031). From the
 /// count's second frame the three letters are entered with the stick and
-/// the tapper ([`initials_entry`]). The model keeps no table, so the new
-/// entry is the first place's.
+/// the tapper ([`initials_entry`]), into the new entry's place of the high
+/// scores' table ([`high_score_table`]).
 fn initials_screen(cx: &mut ExtCx<'_>) -> Vec<BonusObj> {
     let flow_state = cx
         .kind("flow")
@@ -3731,12 +3731,11 @@ fn initials_screen(cx: &mut ExtCx<'_>) -> Vec<BonusObj> {
         (2, _) => 3,
         _ => 0,
     };
-    for (n, v) in [("initials", phase), ("initials_place", 0)] {
-        if cx.counter(n) != Some(v) {
-            cx.set_counter(n, v);
-        }
+    if cx.counter("initials") != Some(phase) {
+        cx.set_counter("initials", phase);
     }
-    let done = initials_entry(cx, phase, count);
+    let (done, letters, at) = initials_entry(cx, phase, count);
+    let place = high_score_table(cx, phase, letters, at);
     // $2B82's $5E99 empties the draw list and $3CE1's $5F31 the objects
     // from E18E, the taps' (E346 on) among them; the model keeps its taps,
     // the bartender reads them, so the board leaves every play object out
@@ -3765,7 +3764,6 @@ fn initials_screen(cx: &mut ExtCx<'_>) -> Vec<BonusObj> {
     // pictures $CC, $CD and $CE, flags 3 for each.
     const I: i64 = 0x2B0C;
     let b = |at: i64| imm(cx, "initials", I, at);
-    let place = cx.counter("initials_place").unwrap_or(0);
     let y = (b(0x2CBC) - ((place * 16) & 0xff)) & 0xff;
     let x = b(0x2CCB);
     vec![
@@ -3801,8 +3799,8 @@ fn letter_down(l: i64) -> i64 {
 /// letter entered on the count's frame 285, state 0 on 315's). Counters
 /// initials_at (the place entered, 3 when done), initials_next (the count
 /// of the next read) and initials_tap (1 while the tapper is held). Returns
-/// whether the third letter is in.
-fn initials_entry(cx: &mut ExtCx<'_>, phase: i64, count: i64) -> bool {
+/// whether the third letter is in, the three letters and initials_at.
+fn initials_entry(cx: &mut ExtCx<'_>, phase: i64, count: i64) -> (bool, [i64; 3], i64) {
     let get = |cx: &ExtCx<'_>, n: &str| cx.counter(n).unwrap_or(0);
     let (mut l, mut at, mut next, mut tap, mut end) = if phase == 0 {
         ([0; 3], 0, 2, 0, 0)
@@ -3859,7 +3857,103 @@ fn initials_entry(cx: &mut ExtCx<'_>, phase: i64, count: i64) -> bool {
             cx.set_counter(n, v);
         }
     }
-    at >= 3
+    (at >= 3, l, at)
+}
+
+/// The high scores' table's places (E014 on, 6 bytes each).
+const TABLE_PLACES: usize = 10;
+
+/// counter table_entered: 1 the game over's score is in the table as the
+/// clip loaded it (the mapping's, E3BD 2), 2 the model took it in (its
+/// letters are the initials'), 3 it had no place.
+const ENTERED_HERE: i64 = 2;
+const ENTERED_NONE: i64 = 3;
+
+/// A place's counters: its three letters and its score.
+fn table_names(p: usize) -> [String; 4] {
+    let n = p + 1;
+    [format!("table_{n}_a"), format!("table_{n}_b"), format!("table_{n}_c"), format!("table_{n}_score")]
+}
+
+/// The table as the counters hold it.
+fn table_read(cx: &ExtCx<'_>) -> [[i64; 4]; TABLE_PLACES] {
+    std::array::from_fn(|p| table_names(p).map(|n| cx.counter(&n).unwrap_or(0)))
+}
+
+/// Counters table_P_place: P down to the first place not taken (its first
+/// letter 0), where $3CE1's list stops ($3D0A), and 0 from there.
+fn table_places(cx: &mut ExtCx<'_>, t: &[[i64; 4]; TABLE_PLACES]) {
+    let mut taken = true;
+    for (p, e) in t.iter().enumerate() {
+        taken &= e[0] != 0;
+        let n = format!("table_{}_place", p + 1);
+        let v = if taken { p as i64 + 1 } else { 0 };
+        if cx.counter(&n) != Some(v) {
+            cx.set_counter(&n, v);
+        }
+    }
+}
+
+/// The high scores' table (E014, ten places of three letters and a score in
+/// packed BCD, empty at the boot), counters table_P_a, _b, _c and _score.
+/// On the game over's first frame ($2C1A) the score takes the place under
+/// every one whose score is above it, a tie going above ($5C8A carries only
+/// when the score is less): a score under the tenth's has none ($2C29), else
+/// the places from there move down one ($2C48) and the new entry is A and
+/// two blanks with the score ($2C54), counter initials_place its place less
+/// 1. Its letters are then the initials' as they step ($2D4E: a blank $20),
+/// and table_P_lit says how many of its letters are drawn in the entry's
+/// colour. Returns initials_place.
+fn high_score_table(cx: &mut ExtCx<'_>, phase: i64, letters: [i64; 3], at: i64) -> i64 {
+    let mut t = table_read(cx);
+    let mut entered = cx.counter("table_entered").unwrap_or(0);
+    let mut place = cx.counter("initials_place").unwrap_or(0).clamp(0, TABLE_PLACES as i64 - 1);
+    if phase == 0 {
+        entered = 0;
+    } else if entered == 0 {
+        // $5CB8 packs the score's six digits into E05E.
+        let score = cx.counter("score").unwrap_or(0).rem_euclid(1_000_000);
+        if score < t[TABLE_PLACES - 1][3] {
+            entered = ENTERED_NONE;
+        } else {
+            let mut c = TABLE_PLACES - 1;
+            while c > 0 && score >= t[c - 1][3] {
+                c -= 1;
+            }
+            for i in (c + 1..TABLE_PLACES).rev() {
+                t[i] = t[i - 1];
+            }
+            t[c] = [0x41, 0x20, 0x20, score];
+            place = c as i64;
+            entered = ENTERED_HERE;
+        }
+    }
+    let here = phase >= 1 && entered == ENTERED_HERE;
+    if here {
+        let p = place as usize;
+        for (k, l) in letters.into_iter().enumerate() {
+            t[p][k] = if (1..=26).contains(&l) { 0x40 + l } else { 0x20 };
+        }
+    }
+    for (p, e) in t.iter().enumerate() {
+        for (n, v) in table_names(p).iter().zip(e) {
+            if cx.counter(n) != Some(*v) {
+                cx.set_counter(n, *v);
+            }
+        }
+        let lit = if here && phase >= 2 && p as i64 == place { (at + 1).min(3) } else { 0 };
+        let n = format!("table_{}_lit", p + 1);
+        if cx.counter(&n) != Some(lit) {
+            cx.set_counter(&n, lit);
+        }
+    }
+    table_places(cx, &t);
+    for (n, v) in [("table_entered", entered), ("initials_place", place)] {
+        if cx.counter(n) != Some(v) {
+            cx.set_counter(n, v);
+        }
+    }
+    place
 }
 
 /// GONE_NEXT on every play object but the bonus_object kind's, set over
@@ -4526,6 +4620,10 @@ impl Ext for Bars {
     /// cleared, already the next level's, while the original still shows
     /// the last screen or a card no look draws (tapper.bonus.001 frame 0).
     fn loaded(&self, cx: &mut ExtCx<'_>) {
+        // The high scores' places taken, as the loaded table has them, for
+        // the loaded frame's list.
+        let t = table_read(cx);
+        table_places(cx, &t);
         // A start on the frame after a punk bar's setup (the mapping's
         // cycle_on 2, E3B8 2): he is placed, but the setup's $5E99 emptied
         // the draw list, so the board shows none of him on this frame
