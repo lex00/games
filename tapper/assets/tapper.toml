@@ -1635,6 +1635,22 @@ rbtapper = 0x2500
 sutapper = 0x2500
 tappera = 0x2500
 
+# $284A: jp $296F, the bonus round's end the win jumps to (ld de,$000F,
+# call $232B, then the return). A clip that starts in that last wait has
+# its return, 6 on, at E3A9. rbtapper's is at $2858 and jumps to $297D.
+[[asset]]
+name = "bonus_end"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x284B
+count = 1
+width = 2
+
+[asset.at]
+rbtapper = 0x2859
+sutapper = 0x284B
+tappera = 0x284B
+
 [[asset]]
 name = "bonus_start"
 format = "byte-rows"

@@ -756,6 +756,24 @@ number = -1
 when = "ram[0xF08E] != 16 || ram[0xF08F] != 48"
 
 [[field]]
+lookup = [[0x31, 0], [0x32, 1], [0x33, 2], [0x34, 3], [0x35, 4], [0x36, 5], [0x37, 6], [0x38, 7], [0x39, 8]]
+lookup_else = -1
+note = "Not compared: the level number the HUD shows, less 1, read from its last cell (F6FA its code, $30 plus the digit, $5D9E; F6FB its high byte, $10): the screen draws it only with a stage ($5D8C) or the bonus round's card ($251F), so between a level's count ($5681) and the next stage the screen keeps the old number while E4A8 has the new one (tapper.clear.001 starts there: E4A8 1, the cell's code $31, its HUD 1; tapper.l8.001 $38 at level 8). Loaded so a clip's first frame draws the number its screen shows; -1 (no digit there, or a second digit before it) leaves it to the hooks, which give it the count on the first step"
+path = "counters.cleared_shown"
+presentation = true
+ram = [0xF6FA]
+
+[[field.case]]
+note = "No digit's high byte ($10) in the last cell, or two digits (F6F9, the cell before's, holds it too): the last cell's code alone isn't the number"
+number = -1
+when = "ram[0xF6FB] != 16 || ram[0xF6F9] == 16"
+
+[[field.case]]
+note = "The bonus round's card is up (E3B7 1, $251C): its screen shows the number as counted, which the hooks give (tapper.clear.013 starts on the round's frame 1)"
+number = -1
+when = "ram[0xE3B7] != 0"
+
+[[field]]
 note = "Not compared until the model keeps it: Levels cleared, E4A8: 1 more at each level's end ($5681), bonus rounds included"
 path = "counters.cleared"
 presentation = true

@@ -446,6 +446,15 @@ description = "The bonus round: the two drops' picture after a loss ($3C17)"
 source = "tapper"
 asset = "bonus_drop_pic"
 
+[assets.bonus_end]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: the bonus round's end, the operand of the win's jump to it ($284A); its last wait returns 6 on"
+
+[assets.bonus_end.from]
+source = "tapper"
+asset = "bonus_end"
+
 [assets.bonus_objects]
 kind = "rows"
 role = "graphics"
@@ -2227,6 +2236,7 @@ bonus_burst = "bonus_burst"
 bonus_code = "bonus_code"
 bonus_drop_flags = "bonus_drop_flags"
 bonus_drop_pic = "bonus_drop_pic"
+bonus_end = "bonus_end"
 bonus_objects = "bonus_objects"
 bonus_start = "bonus_start"
 customer_starts = "customer_starts"
@@ -25259,6 +25269,14 @@ note = "gp code listing --writes E2B2 to E2B9 on tapper.bonus.002 and gp query o
 
 [[evidence."assets.bonus_drop_pic".refs]]
 at = "clip:tapper.bonus.002"
+
+[evidence."assets.bonus_end"]
+source = "observed"
+confidence = 70
+note = "gp code listing: $2500's win ends with jp $296F at $284A, and $296F is ld de,$000F, call $232B, ld a,$20, ld ($E38F),a, ret; gp element inputs on tapper.clear.003: E397 15 with E3A8 11 at its start, the wait's place E3A9 $2975, and $543D (the intro's) from frame 1. The same bytes at $297D in rbtapper, its jump at $2858"
+
+[[evidence."assets.bonus_end".refs]]
+at = "clip:tapper.clear.003"
 
 [evidence."assets.bonus_objects"]
 source = "observed"

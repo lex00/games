@@ -4526,6 +4526,29 @@ impl Ext for Bars {
             flow = Some((fid, fb));
             state = 15;
         }
+        // A start inside the bonus round's last wait ($296F's 15 frames,
+        // the won or lost line still up): $232B's place (E3A9) is the
+        // return from that wait, 6 past the routine's end the win jumps to
+        // ($284A's operand, lifted as bonus_end), and its frames left are
+        // the timer for $2346. The round's own count isn't known there, so
+        // the flow waits them out in sub 18 and goes on as the round's
+        // return does (tapper.clear.003 and the other clips named after a
+        // bonus round start on its last frame).
+        let end = cx.table("bonus_end");
+        let end_return = if end.len() >= 2 { Some((end[0] | (end[1] << 8)) + 6) } else { None };
+        if let Some((fid, mut fb)) = flow
+            && ![12, 18].contains(&((fb.ext[3] >> 16) & 0xff))
+            && end_return.is_some()
+            && Some((fb.ext[1] >> 16) & 0xffff) == end_return
+        {
+            let left = timers.iter().find(|(_, t)| t.ext[1] == 0x2346).map_or(0, |(_, t)| t.ext[0]);
+            fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (18 << 16) | ((left & 0xffff) << 24);
+            fb.ext[2] &= !BONUS_MASK;
+            fb.ext[1] &= !(0xffff << 16);
+            cx.set_body(fid, fb);
+            flow = Some((fid, fb));
+            state = 15;
+        }
         // A start inside $1CE1's first waits (tapper.die.001 to die.003
         // start on the last of its three waits of 2): $232B keeps the
         // state the wait was called in at E3A8 (10, the play: $1CE1 runs
@@ -4665,13 +4688,20 @@ impl Ext for Bars {
         // $4881 and the script, $5681 has counted the level and the setup
         // ($4B3F) waits this frame in $5E99 (tapper.clear.001: E3A9 $492C
         // on its first frame, $5404's first wait on its second).
+        // And the other two scripts' last waits, as the bonus round's way
+        // in below names them: script 1's last of $45E3's waits of 1 (B at
+        // 1; tapper.clear.005: E3A9 $45D5 on its first frame) and script
+        // 2's $2DF7 wait of 15.
         let hops_done = state == 11
             && flow.is_some_and(|(_, b)| {
                 let place = (b.ext[1] >> 16) & 0xffff;
+                let b_one = (b.ext[1] >> 32) & 0xff == 1;
                 place != 0
-                    && (b.ext[1] >> 32) & 0xff == 1
-                    && (wait_return(cx, "hops_code", "hops_start", 2) == Some(place)
-                        || wait_return(cx, "end_last_code", "end_last_start", 2) == Some(place))
+                    && ((b_one
+                        && (wait_return(cx, "hops_code", "hops_start", 2) == Some(place)
+                            || wait_return(cx, "end_last_code", "end_last_start", 2) == Some(place)
+                            || wait_return(cx, "end_gulp_code", "end_gulp_start", 1) == Some(place)))
+                        || wait_return(cx, "end_turn_code", "end_turn_start", 1) == Some(place))
             });
         // A start in an end script's last wait when a bonus round comes
         // next ($5681 with the levels cleared plus one at 2, 5 or 9 mod
@@ -4715,12 +4745,29 @@ impl Ext for Bars {
             // bonus round, sub 12, its frames from bit 24.
             cleared = count & 0xff;
             bonus_card(cx, 0);
+            // The card's screen ($251F) draws the level's number as counted.
+            cx.set_counter("cleared_shown", cleared);
             fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (12 << 16);
             fb.ext[2] &= !BONUS_MASK;
             fb.ext[1] &= !(0xffff << 16);
             cx.set_body(fid, fb);
             flow = Some((fid, fb));
             state = 15;
+            // $2500's $5F31 empties the objects, as at the script's return
+            // below: the taps, the bartender and his parts are gone under
+            // the card (tapper.clear.002: no sprite from its frame 1).
+            for name in ["tap", "player", "bartender_part"] {
+                let Some(k) = cx.kind(name) else { continue };
+                let found: Vec<(usize, Body)> =
+                    cx.world.bodies.iter().enumerate().filter(|(_, b)| b.alive && b.kind == k).map(|(i, b)| (i, *b)).collect();
+                for (id, mut b) in found {
+                    if name == "player" {
+                        b.x = Fx::ZERO;
+                    }
+                    b.y = Fx::ZERO;
+                    cx.set_body(id, b);
+                }
+            }
         }
         let ending = state == 11 && !setting_up && bartender_y != 0 && !level_timers && !hops_done;
         let finishing = state == 11 && !setting_up && bartender_y != 0 && level_timers;
@@ -5018,8 +5065,11 @@ impl Ext for Bars {
             // run on the setup's frame, so the screen is cleared on it and
             // GET READY is up on the next (tapper.l8.001: E6FF 3 on 15015,
             // $24C6 on 15017, $4B5B, $540C and $543A on 15019; tapper.l6.001
-            // the same on 7990, 7992 and 7994).
-            cx.set_counter("intro", if cleared == 0 || state == 9 { 2 } else { 1 });
+            // the same on 7990, 7992 and 7994). So too a start in an end
+            // script's last wait (hops_done): the original's screen is
+            // cleared on the clip's first step, the setup's, and GET READY
+            // is up on its second (tapper.clear.001 frames 1 and 2).
+            cx.set_counter("intro", if cleared == 0 || state == 9 || hops_done { 2 } else { 1 });
             // $5512's six sprites ($5567, on the intro's frame 2): the
             // screen shows objects a frame on, so they are made here to be
             // seen on that frame (tapper.start.001 frame 2, tapper.die.001
@@ -5718,6 +5768,12 @@ impl Ext for Bars {
         } else if (state == 15 || state == 16) && sub == 12 && !bonus_entered && let Some((fid, mut fb)) = flow {
             let next = bonus_round(cx, &mut fb, cleared, &mut points);
             bonus_card(cx, (fb.ext[3] >> 24) & 0xffff);
+            // The card's screen ($251F) draws the level's number as counted,
+            // from the round's first frame: the level's last frame still has
+            // the old one (tapper.l9.001 frame 1734).
+            if (fb.ext[3] >> 24) & 0xffff == 1 {
+                cx.set_counter("cleared_shown", cleared);
+            }
             bonus_objs = Some(bonus_scene(cx, &fb, cleared, next));
             if next {
                 // $2500 returns to $569D: $56A0's $2EA1, then the setup
@@ -5727,6 +5783,20 @@ impl Ext for Bars {
                 }
                 fb.ext[3] = (fb.ext[3] & 0xff00) | 8;
                 fb.ext[2] &= !BONUS_MASK;
+            }
+            cx.set_body(fid, fb);
+        } else if (state == 15 || state == 16) && sub == 18 && let Some((fid, mut fb)) = flow {
+            // The bonus round's last wait from a clip's start (above): its
+            // frames left, then $2500's return as below.
+            let left = ((fb.ext[3] >> 24) & 0xffff) - 1;
+            if left <= 0 {
+                if cleared >= 6 && cleared % 2 == 0 {
+                    level = (level + 1).min(9);
+                }
+                fb.ext[3] = (fb.ext[3] & 0xff00) | 8;
+                fb.ext[2] &= !BONUS_MASK;
+            } else {
+                fb.ext[3] = (fb.ext[3] & !(0xffff << 24)) | (left << 24);
             }
             cx.set_body(fid, fb);
         } else if (state == 15 || state == 16) && sub == 7 && let Some((fid, mut fb)) = flow {
