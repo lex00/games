@@ -1689,13 +1689,15 @@ impl Ext for Flow {
             const S: i64 = 0x4BCB;
             let flags = imm(cx, "bartender_setup", S, if left { 0x4C03 } else { 0x4BE0 });
             let pic = imm(cx, "bartender_setup", S, 0x4BF8);
-            // The punk bar's setup (bar shown 2): its $4937 ($4C4B) waits in
-            // $5E99, which empties the draw list (E11A), so the sprite copy
-            // $49B9 writes none of his objects on the frame the board shows
-            // this one: only the taps (tapper.l8.001 frames 2 and 2782, his
-            // sprite byte $E95F written on 3), though he is placed and
-            // compared. tapper_bartender clears it on his next step.
-            let hidden = if shown == 2 { BOARD_HIDDEN } else { 0 };
+            // The punk bar's and the space bar's setups (bar shown 2, 3):
+            // their $4937 ($4C4B) waits in $5E99, which empties the draw
+            // list (E11A), so the sprite copy $49B9 writes none of his
+            // objects on the frame the board shows this one: only the taps
+            // (tapper.l8.001 frames 2 and 2782, his sprite byte $E95F
+            // written on 3; tapper.l10.001 and l13.001 frame 2), though he
+            // is placed and compared. tapper_bartender clears it on his
+            // next step.
+            let hidden = if shown >= 2 { BOARD_HIDDEN } else { 0 };
             b.ext = [bar, 0, (flags << 16) | (pic << 24), hidden];
             cx.set_body(id, b);
             let head = Obj {
