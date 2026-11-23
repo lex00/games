@@ -459,6 +459,19 @@ path = "counters.cycle_on"
 presentation = true
 ram = [0xE410]
 
+[[field.case]]
+note = "The frame after a punk bar's setup: its $4937 has emptied the cycles ($5E99) and waits for the next frame, when $5EA9 adds the lamps' list and sets E410 (tapper.l9.001 starts there: E410 1 on its frame 1). The setup has cleared the level's RAM, so E6F7:E6F8 (E25E in play, at a level's end and through a life lost) is 0 on this frame and the setup's own (E6F2 0, which the flow's word 0 takes) and on no other frame in states 9 or 11 (tapper.l8.001: 10663, 12276 and 15056 the setups). 2 has the hooks start them on the next frame as a setup does"
+number = 2
+when = "ram[0xE3BD] == 0 && ram[0xE3B8] == 2 && ram[0xE410] == 0 && ram[0xE6F2] != 0 && ram[0xE6F7] == 0 && ram[0xE6F8] == 0 && (ram[0xE397] == 9 || ram[0xE397] == 11)"
+
+[[field]]
+lookup = [[2, 2]]
+lookup_else = 0
+note = "Not compared: the cycles' list as the setup's $4937 picks it by the bar shown, E3B8 (2 the punk bar's lamps). Loaded so a clip that starts on the frame after a punk bar's setup (counters.cycle_on 2) runs the lamps; a start with the cycles running takes it from cycle_start"
+path = "counters.cycle_list"
+presentation = true
+ram = [0xE3B8]
+
 [[field]]
 note = "Not compared: the frames to the cycles' next step (E11A + 7). Loaded so a clip's start shows the lamps as they stand"
 path = "counters.cycle_wait"
