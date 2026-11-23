@@ -4425,6 +4425,23 @@ impl Ext for Bars {
                 gone_next(cx, true);
             }
         }
+        // A start in state 16 on an end script's last wait with a bonus
+        // round next: the script returns on the first step, $5681 counts
+        // the level and $2500's $5F31 empties every object, so the
+        // original's frame 1 shows no sprite (tapper.clear.002, clear.006).
+        // GONE_NEXT leaves the loaded bodies out of frame 1's picture only;
+        // the board draws frame 0 without it.
+        if let Some(fb) = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).copied()
+            && fb.ext[3] & 0xff == 16
+        {
+            let cleared = cx
+                .kind("bars")
+                .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+                .map_or(0, |b| (b.ext[3] >> 16) & 0xff);
+            if Self::bonus_last_wait(cx, &fb, 16, cleared + 1) {
+                gone_next(cx, true);
+            }
+        }
         let flow = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).map(|fb| fb.ext);
         let level_timers = cx
             .kind("timer")
@@ -5063,10 +5080,9 @@ impl Ext for Bars {
                 // the end script's own return below: the mugs, the
                 // bartender and his parts, the taps and the bars' ends. The
                 // original's screen shows none from the clip's frame 1 on
-                // (tapper.clear.002, clear.006); the model's from frame 2,
-                // its frame 1 drawn from the loaded frame's bodies as its
-                // frame 0 is (no step comes between them, and hiding them
-                // in `loaded` hides frame 0's too).
+                // (tapper.clear.002, clear.006); the model's frame 1 is
+                // drawn from the loaded frame's bodies, which `loaded`
+                // gives GONE_NEXT.
                 for (id, _) in &bodies {
                     removed.push(*id);
                 }
