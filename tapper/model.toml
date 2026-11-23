@@ -1841,6 +1841,15 @@ description = "The space bar pokes ($573E to $574D)"
 source = "tapper"
 asset = "space_colors"
 
+[assets.space_pad_lit]
+kind = "rows"
+role = "graphics"
+description = "The space bar's lit pad: 6 cells of tile and high byte, a byte a row, which $1921 writes beside the tap of the bartender's bar ($1974, lifted from the player's romset)"
+
+[assets.space_pad_lit.from]
+source = "tapper"
+asset = "space_pad_lit"
+
 [assets.stage_screens]
 kind = "rows"
 role = "behavior"
@@ -5862,6 +5871,10 @@ at = 58
 column = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -5928,6 +5941,10 @@ column = 2
 row = 1
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -5994,6 +6011,10 @@ column = 2
 row = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -6042,6 +6063,10 @@ at = 96
 column = 10
 slot = "space_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -6309,6 +6334,10 @@ at = 58
 column = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -6375,6 +6404,10 @@ column = 2
 row = 1
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -6441,6 +6474,10 @@ column = 2
 row = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -6489,6 +6526,10 @@ at = 96
 column = 10
 slot = "space_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -6756,6 +6797,10 @@ at = 58
 column = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -6822,6 +6867,10 @@ column = 2
 row = 1
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -6888,6 +6937,10 @@ column = 2
 row = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -6936,6 +6989,10 @@ at = 96
 column = 10
 slot = "space_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -7203,6 +7260,10 @@ at = 58
 column = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -7269,6 +7330,10 @@ column = 2
 row = 1
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -7335,6 +7400,10 @@ column = 2
 row = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -7383,6 +7452,10 @@ at = 96
 column = 10
 slot = "space_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -7650,6 +7723,10 @@ at = 58
 column = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -7716,6 +7793,10 @@ column = 2
 row = 1
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -7782,6 +7863,10 @@ column = 2
 row = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -7830,6 +7915,10 @@ at = 96
 column = 10
 slot = "space_colors"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -8097,6 +8186,10 @@ at = 58
 column = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -8162,6 +8255,10 @@ at = 58
 column = 2
 row = 1
 slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
@@ -8229,6 +8326,10 @@ column = 2
 row = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -8276,6 +8377,10 @@ slot = "space_colors"
 at = 96
 column = 10
 slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
@@ -8544,6 +8649,10 @@ at = 58
 column = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -8609,6 +8718,10 @@ at = 58
 column = 2
 row = 1
 slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
@@ -8676,6 +8789,10 @@ column = 2
 row = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -8723,6 +8840,10 @@ slot = "space_colors"
 at = 96
 column = 10
 slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
@@ -8991,6 +9112,10 @@ at = 58
 column = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -9056,6 +9181,10 @@ at = 58
 column = 2
 row = 1
 slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
@@ -9123,6 +9252,10 @@ column = 2
 row = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -9170,6 +9303,10 @@ slot = "space_colors"
 at = 96
 column = 10
 slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
@@ -9438,6 +9575,10 @@ at = 58
 column = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -9503,6 +9644,10 @@ at = 58
 column = 2
 row = 1
 slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
@@ -9570,6 +9715,10 @@ column = 2
 row = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -9617,6 +9766,10 @@ slot = "space_colors"
 at = 96
 column = 10
 slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
@@ -9885,6 +10038,10 @@ at = 58
 column = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -9950,6 +10107,10 @@ at = 58
 column = 2
 row = 1
 slot = "cycle_space_3"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
@@ -10017,6 +10178,10 @@ column = 2
 row = 2
 slot = "cycle_space_3"
 
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
+
 [[levels.main.present.board.looks.when]]
 cmp = "=="
 counter = "screen"
@@ -10064,6 +10229,10 @@ slot = "space_colors"
 at = 96
 column = 10
 slot = "space_colors"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "logo_color_zero"
 
 [[levels.main.present.board.looks.when]]
 cmp = "=="
@@ -11673,6 +11842,1006 @@ cmp = "=="
 counter = "attract_screen"
 value = 3
 
+[[levels.main.present.board.texts]]
+at = [25, 27]
+
+[levels.main.present.board.texts.high]
+row = 1
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 1
+
+[[levels.main.present.board.texts]]
+at = [26, 27]
+
+[levels.main.present.board.texts.high]
+row = 3
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 2
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 1
+
+[[levels.main.present.board.texts]]
+at = [27, 27]
+
+[levels.main.present.board.texts.high]
+row = 5
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 4
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 1
+
+[[levels.main.present.board.texts]]
+at = [25, 28]
+
+[levels.main.present.board.texts.high]
+row = 7
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 6
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 1
+
+[[levels.main.present.board.texts]]
+at = [26, 28]
+
+[levels.main.present.board.texts.high]
+row = 9
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 8
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 1
+
+[[levels.main.present.board.texts]]
+at = [27, 28]
+
+[levels.main.present.board.texts.high]
+row = 11
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 10
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 1
+
+[[levels.main.present.board.texts]]
+at = [23, 21]
+
+[levels.main.present.board.texts.high]
+row = 1
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [24, 21]
+
+[levels.main.present.board.texts.high]
+row = 3
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 2
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [25, 21]
+
+[levels.main.present.board.texts.high]
+row = 5
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 4
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [23, 22]
+
+[levels.main.present.board.texts.high]
+row = 7
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 6
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [24, 22]
+
+[levels.main.present.board.texts.high]
+row = 9
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 8
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [25, 22]
+
+[levels.main.present.board.texts.high]
+row = 11
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 10
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 2
+
+[[levels.main.present.board.texts]]
+at = [21, 15]
+
+[levels.main.present.board.texts.high]
+row = 1
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 3
+
+[[levels.main.present.board.texts]]
+at = [22, 15]
+
+[levels.main.present.board.texts.high]
+row = 3
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 2
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 3
+
+[[levels.main.present.board.texts]]
+at = [23, 15]
+
+[levels.main.present.board.texts.high]
+row = 5
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 4
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 3
+
+[[levels.main.present.board.texts]]
+at = [21, 16]
+
+[levels.main.present.board.texts.high]
+row = 7
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 6
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 3
+
+[[levels.main.present.board.texts]]
+at = [22, 16]
+
+[levels.main.present.board.texts.high]
+row = 9
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 8
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 3
+
+[[levels.main.present.board.texts]]
+at = [23, 16]
+
+[levels.main.present.board.texts.high]
+row = 11
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 10
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 3
+
+[[levels.main.present.board.texts]]
+at = [19, 9]
+
+[levels.main.present.board.texts.high]
+row = 1
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 4
+
+[[levels.main.present.board.texts]]
+at = [20, 9]
+
+[levels.main.present.board.texts.high]
+row = 3
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 2
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 4
+
+[[levels.main.present.board.texts]]
+at = [21, 9]
+
+[levels.main.present.board.texts.high]
+row = 5
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 4
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 4
+
+[[levels.main.present.board.texts]]
+at = [19, 10]
+
+[levels.main.present.board.texts.high]
+row = 7
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 6
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 4
+
+[[levels.main.present.board.texts]]
+at = [20, 10]
+
+[levels.main.present.board.texts.high]
+row = 9
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 8
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 4
+
+[[levels.main.present.board.texts]]
+at = [21, 10]
+
+[levels.main.present.board.texts.high]
+row = 11
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 10
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 4
+
+[[levels.main.present.board.texts]]
+at = [3, 27]
+
+[levels.main.present.board.texts.high]
+row = 1
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 5
+
+[[levels.main.present.board.texts]]
+at = [4, 27]
+
+[levels.main.present.board.texts.high]
+row = 3
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 2
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 5
+
+[[levels.main.present.board.texts]]
+at = [5, 27]
+
+[levels.main.present.board.texts.high]
+row = 5
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 4
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 5
+
+[[levels.main.present.board.texts]]
+at = [3, 28]
+
+[levels.main.present.board.texts.high]
+row = 7
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 6
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 5
+
+[[levels.main.present.board.texts]]
+at = [4, 28]
+
+[levels.main.present.board.texts.high]
+row = 9
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 8
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 5
+
+[[levels.main.present.board.texts]]
+at = [5, 28]
+
+[levels.main.present.board.texts.high]
+row = 11
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 10
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 5
+
+[[levels.main.present.board.texts]]
+at = [5, 21]
+
+[levels.main.present.board.texts.high]
+row = 1
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 6
+
+[[levels.main.present.board.texts]]
+at = [6, 21]
+
+[levels.main.present.board.texts.high]
+row = 3
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 2
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 6
+
+[[levels.main.present.board.texts]]
+at = [7, 21]
+
+[levels.main.present.board.texts.high]
+row = 5
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 4
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 6
+
+[[levels.main.present.board.texts]]
+at = [5, 22]
+
+[levels.main.present.board.texts.high]
+row = 7
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 6
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 6
+
+[[levels.main.present.board.texts]]
+at = [6, 22]
+
+[levels.main.present.board.texts.high]
+row = 9
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 8
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 6
+
+[[levels.main.present.board.texts]]
+at = [7, 22]
+
+[levels.main.present.board.texts.high]
+row = 11
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 10
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 6
+
+[[levels.main.present.board.texts]]
+at = [7, 15]
+
+[levels.main.present.board.texts.high]
+row = 1
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 7
+
+[[levels.main.present.board.texts]]
+at = [8, 15]
+
+[levels.main.present.board.texts.high]
+row = 3
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 2
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 7
+
+[[levels.main.present.board.texts]]
+at = [9, 15]
+
+[levels.main.present.board.texts.high]
+row = 5
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 4
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 7
+
+[[levels.main.present.board.texts]]
+at = [7, 16]
+
+[levels.main.present.board.texts.high]
+row = 7
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 6
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 7
+
+[[levels.main.present.board.texts]]
+at = [8, 16]
+
+[levels.main.present.board.texts.high]
+row = 9
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 8
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 7
+
+[[levels.main.present.board.texts]]
+at = [9, 16]
+
+[levels.main.present.board.texts.high]
+row = 11
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 10
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 7
+
+[[levels.main.present.board.texts]]
+at = [9, 9]
+
+[levels.main.present.board.texts.high]
+row = 1
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 8
+
+[[levels.main.present.board.texts]]
+at = [10, 9]
+
+[levels.main.present.board.texts.high]
+row = 3
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 2
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 8
+
+[[levels.main.present.board.texts]]
+at = [11, 9]
+
+[levels.main.present.board.texts.high]
+row = 5
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 4
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 8
+
+[[levels.main.present.board.texts]]
+at = [9, 10]
+
+[levels.main.present.board.texts.high]
+row = 7
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 6
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 8
+
+[[levels.main.present.board.texts]]
+at = [10, 10]
+
+[levels.main.present.board.texts.high]
+row = 9
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 8
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 8
+
+[[levels.main.present.board.texts]]
+at = [11, 10]
+
+[levels.main.present.board.texts.high]
+row = 11
+slot = "space_pad_lit"
+
+[levels.main.present.board.texts.text]
+row = 10
+slot = "space_pad_lit"
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "bonus"
+value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "=="
+counter = "space_pad"
+value = 8
+
 [levels.main.present.sprite_order.bar_end]
 at = 115
 step = 1
@@ -11862,6 +13031,9 @@ description = "The stage's screen, 0 to 9: the place of the word $5DF6 takes for
 
 [counters.shown]
 description = "The bar shown, E3B8: 0 the saloon, 1 the sports bar, 2 the punk bar, 3 the space bar, set at each level's start from the levels cleared ($3C60 to $3C78)"
+
+[counters.space_pad]
+description = "The space bar's lit pad: 0 none, else 1 to 8, the place in the table at $1980 that $1921 lights: the bartender's bar E6F9 from 1, 4 more when that bar's tap is on its left; tapper_bartender sets it each frame"
 
 [counters.stage]
 description = "The stage the setup's $5DF6 shows, the place of its screen among the words at $61ED: the levels cleared, from 26 on 13 to 25 again ($5DFC to $5E0B), which tapper_bars keeps"
@@ -13499,6 +14671,14 @@ note = "gp code listing over the corpus: $5DF6 and the words at $61ED (the stage
 
 [[evidence."assets.space_colors".refs]]
 at = "clip:tapper.l1.001"
+
+[evidence."assets.space_pad_lit"]
+source = "observed"
+confidence = 70
+note = "gp element explain on tapper.l10.001 frame 100 at 392,350: the cell 24,21 was written by $194C; gp code listing --routine 1921: with the bar shown 3 it takes the bartender's bar E6F9 (plus 4 when $0FFB finds its tap on the left), the cell's address from the 8 words at $1980 and writes 3 cells from $1974, adds $3A and writes 3 more; its twin $1990 writes the pad unlit from $19E3, called at $0A8E before the landing changes E6F9, and $1921 at $0B3F after and at the setup's $4C60. The same place in rbtapper, sutapper and tappera"
+
+[[evidence."assets.space_pad_lit".refs]]
+at = "clip:tapper.l10.001"
 
 [evidence."assets.stage_screens"]
 source = "observed"

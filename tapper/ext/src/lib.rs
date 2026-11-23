@@ -783,6 +783,24 @@ impl Ext for Bartender {
         cx.me.ext[3] &= !BOARD_HIDDEN;
         Self::act(cx, &mut ev, &mut spawned);
         draw_pose(cx, ev, x_before, spawned);
+        // The space bar lights the pad beside the tap of the bartender's
+        // bar: $1921 writes its 3 by 2 cells where the table at $1980 says
+        // for his bar E6F9, 4 further on when that bar's tap is on its left
+        // ($0FFB), at the level's setup ($4C60) and as he lands at a bar
+        // ($0B3F, after $0A8E's $1990 put the bar he left back). The
+        // counter is that place from 1, 0 off the space bar; the board's
+        // texts draw the cells by it. The bonus round's screen ($2500) has
+        // no pad.
+        let pad = if cx.counter("shown") == Some(3) && cx.counter("bonus").unwrap_or(0) == 0 {
+            let bar = cx.me.ext[0] & 3;
+            let left = Self::tap(cx, bar).is_some_and(|(_, l)| l);
+            bar + if left { 4 } else { 0 } + 1
+        } else {
+            0
+        };
+        if cx.counter("space_pad") != Some(pad) {
+            cx.set_counter("space_pad", pad);
+        }
     }
 
     fn describe(&self) -> Vec<Record> {

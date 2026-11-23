@@ -928,6 +928,23 @@ rbtapper = 0x10FE
 sutapper = 0x1103
 tappera = 0x1103
 
+# $1974: the space bar's lit pad, 6 cells of tile and high byte, which
+# $1921 writes under the bartender's bar's tap. A row a byte, so a board
+# text reads one cell's tile or high byte. Every set has it at the same
+# place (the code around it is the same, the bytes differ by set).
+[[asset]]
+name = "space_pad_lit"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x1974
+count = 12
+width = 1
+
+[asset.at]
+rbtapper = 0x1974
+sutapper = 0x1974
+tappera = 0x1974
+
 # $1EB2: ld (ix+$02),$11, the picture of a mug a customer's slide knocks
 # over. Every set has it at the same place.
 [[asset]]
