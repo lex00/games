@@ -1,0 +1,3602 @@
+{
+  "_type": "https://in-toto.io/Statement/v1",
+  "predicate": {
+    "clips": [
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "c7527c7a7d4c86e8eafc8c5b26c1fb2cfeb4a832ffc4b01f13501593903154d5",
+        "exact": true,
+        "first": null,
+        "frames": 336,
+        "frames_together": 336,
+        "id": "tapper.score.001",
+        "model_curve": "c7527c7a7d4c86e8eafc8c5b26c1fb2cfeb4a832ffc4b01f13501593903154d5",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 290,
+          "offset": 94,
+          "original": 384
+        },
+        "permille": 1000,
+        "recipe": "b2447b590276a699275eebc343516d7e78e4e6312b87a089192895788d241a1f",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 336,
+            "total": 336
+          },
+          "sprites": {
+            "same": 335,
+            "total": 336
+          }
+        },
+        "start": 384
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "682d5958c608ec42446b7cdbc32879c5d2cb5c9e851f421fa282e5556a1dbb3c",
+        "exact": true,
+        "first": null,
+        "frames": 816,
+        "frames_together": 816,
+        "id": "tapper.attract.001",
+        "model_curve": "556e13db8196822237ec4456be88ec7d3338fa5c2251ef23add7ba99d8cc39b0",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 51,
+          "offset": 94,
+          "original": 145
+        },
+        "permille": 1000,
+        "recipe": "e0314051d75880fb08905be6793c8c1c8751f7138835e92e9f6d8a9fb0e590a9",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 816,
+            "total": 816
+          },
+          "sprites": {
+            "same": 816,
+            "total": 816
+          }
+        },
+        "start": 145,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 816,
+          "longest": 0,
+          "longest_any": 816,
+          "median": 0,
+          "open_end": 816,
+          "p10": 0,
+          "play": 816,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 816,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "165808f0c7adc97d9ffa55984ad4860c5eb1b277646f3c35b1138e65c77d3d04",
+        "exact": true,
+        "first": null,
+        "frames": 270,
+        "frames_together": 270,
+        "id": "tapper.die.001",
+        "model_curve": "f1bfe0364f42ebd632b6697c90a2704d47c7415fde8650e436c375a1757eedc1",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 1556,
+          "offset": 94,
+          "original": 1650
+        },
+        "permille": 1000,
+        "recipe": "b13de8dab4bd44436a37040357b8adfc82c5b344bd45e8b48ed0c7d03f08d0ce",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 270,
+            "total": 270
+          },
+          "sprites": {
+            "same": 262,
+            "total": 270
+          }
+        },
+        "start": 1650
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "1489a82ce0f0c8c1e036a1bbcdce6d9cec10dcd7b0cdead8ddb251c883a9b0dd",
+        "exact": true,
+        "first": null,
+        "frames": 270,
+        "frames_together": 270,
+        "id": "tapper.die.002",
+        "model_curve": "7a6f49c4389fe11a5c11ec0aae6329e327951007d5094dd21259381fbb5b9ec6",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 2382,
+          "offset": 94,
+          "original": 2476
+        },
+        "permille": 1000,
+        "recipe": "9a0d7f04d15fe5fa30a135213349c52723c81fdeabbe0f3bc3da5916fe7c4682",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 270,
+            "total": 270
+          },
+          "sprites": {
+            "same": 262,
+            "total": 270
+          }
+        },
+        "start": 2476
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "097e7933a9f14f5b0ff8ebb1c434d5d973f5d9562c8b0c9726b87fca173b2c95",
+        "exact": true,
+        "first": null,
+        "frames": 252,
+        "frames_together": 252,
+        "id": "tapper.die.003",
+        "model_curve": "b830405f8953be7cfa46b8f91318774342aa3e2d5f07099ba2dc210997285a59",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 3204,
+          "offset": 94,
+          "original": 3298
+        },
+        "permille": 1000,
+        "recipe": "3588ee23c9f9b4c88e0177236f5351673a6f4ee661bc54b6d2e30ee2346e14c9",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 252,
+            "total": 252
+          },
+          "sprites": {
+            "same": 244,
+            "total": 252
+          }
+        },
+        "start": 3298
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "2e7db61318167d2f3714447d2952d28f07b867ecdf61208130527d421855027c",
+        "exact": true,
+        "first": null,
+        "frames": 1203,
+        "frames_together": 1203,
+        "id": "tapper.gameover.001",
+        "model_curve": "962a344f5a99b990e05972896124cbeba9d825f6a697a08fe84ee263ca0235ad",
+        "moved": [
+          "tapper.bartender",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 3455,
+          "offset": 94,
+          "original": 3549
+        },
+        "permille": 1000,
+        "recipe": "b38ac58da7efa7aa6c91423745daf02c7b7a5c14cc4672cbce6fadecc77add94",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1203,
+            "total": 1203
+          },
+          "sprites": {
+            "same": 1203,
+            "total": 1203
+          }
+        },
+        "start": 3549,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1203,
+          "longest": 0,
+          "longest_any": 1203,
+          "median": 0,
+          "open_end": 1203,
+          "p10": 0,
+          "play": 1203,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1203,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "325fb1feb6b5f2e8bca0b914d34cd4ed8256b49ef9c6195a79037fe7643b4f59",
+        "exact": true,
+        "first": null,
+        "frames": 139,
+        "frames_together": 139,
+        "id": "tapper.start.001",
+        "model_curve": "1f4edca8006349f36d5c2c863fe76cc611b2468e1faa6af4a9f208739765afb5",
+        "moved": [
+          "tapper.bartender",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 867,
+          "offset": 94,
+          "original": 961
+        },
+        "permille": 1000,
+        "recipe": "3eb9cceb92935fb31b6229b7a02c23459a8e576292ed9a2c1758cb35f3c7efe1",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 138,
+            "total": 139
+          },
+          "sprites": {
+            "same": 138,
+            "total": 139
+          }
+        },
+        "start": 961
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "ca0a931522e491b2e829d525e449bc672f9146d977f40d88877c35a780ea35bc",
+        "exact": true,
+        "first": null,
+        "frames": 336,
+        "frames_together": 336,
+        "id": "tapper.l1.001",
+        "model_curve": "ca0a931522e491b2e829d525e449bc672f9146d977f40d88877c35a780ea35bc",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 1005,
+          "offset": 94,
+          "original": 1099
+        },
+        "permille": 1000,
+        "recipe": "eba72a5b74fecb5719344c826939fd96cdd6a18e78fb07a047624e402eef14c8",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 336,
+            "total": 336
+          },
+          "sprites": {
+            "same": 335,
+            "total": 336
+          }
+        },
+        "start": 1099
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "35160c0be08e8f3a3838a05beb4380ae43709b2dd6b5b5f460914ddabdba9748",
+        "exact": true,
+        "first": null,
+        "frames": 39,
+        "frames_together": 39,
+        "id": "tapper.clear.001",
+        "model_curve": "3c440e710a524a568ac6c0b8a3b257167061f064b8fef6295efd040f753dc904",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 1340,
+          "offset": 94,
+          "original": 1434
+        },
+        "permille": 1000,
+        "recipe": "79f26cdb417ba8b76b5c7cb7e1db6cad8f4922b51487172411b619fe58e1072e",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 39,
+            "total": 39
+          },
+          "sprites": {
+            "same": 39,
+            "total": 39
+          }
+        },
+        "start": 1434
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "f1459eb0ceae40916af713f67510653e813356eaf3478d279799fe003de8f5e1",
+        "exact": true,
+        "first": null,
+        "frames": 328,
+        "frames_together": 328,
+        "id": "tapper.l2.001",
+        "model_curve": "f1459eb0ceae40916af713f67510653e813356eaf3478d279799fe003de8f5e1",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 1378,
+          "offset": 94,
+          "original": 1472
+        },
+        "permille": 1000,
+        "recipe": "b243c2ad812b6bb2f11012a00103c9874eb2204a329feaf8d3f5cb07c28f3e9c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 328,
+            "total": 328
+          },
+          "sprites": {
+            "same": 327,
+            "total": 328
+          }
+        },
+        "start": 1472
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "06305552606e77cbe6bbf2e600e3584aa89fe9bb6eac2f30aee057a9d9ed098d",
+        "exact": true,
+        "first": null,
+        "frames": 24,
+        "frames_together": 24,
+        "id": "tapper.clear.002",
+        "model_curve": "06305552606e77cbe6bbf2e600e3584aa89fe9bb6eac2f30aee057a9d9ed098d",
+        "moved": [
+          "tapper.bartender",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 1705,
+          "offset": 94,
+          "original": 1799
+        },
+        "permille": 1000,
+        "recipe": "d9a0e8b3a5a014c51ba536016489ead65ec196900c37e7993c0483e1c585ff70",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 24,
+            "total": 24
+          },
+          "sprites": {
+            "same": 24,
+            "total": 24
+          }
+        },
+        "start": 1799
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "15deffd1e65a3f653779d529d6bc633c3c254d038688d856ee93a487cfa153dd",
+        "exact": true,
+        "first": null,
+        "frames": 1042,
+        "frames_together": 1042,
+        "id": "tapper.bonus.001",
+        "model_curve": "15deffd1e65a3f653779d529d6bc633c3c254d038688d856ee93a487cfa153dd",
+        "moved": [
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 1728,
+          "offset": 94,
+          "original": 1822
+        },
+        "permille": 1000,
+        "recipe": "7a3bf4159c502c3c3592c20e30c2590d4708eb13334b8bd7d45bff1f20267338",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1042,
+            "total": 1042
+          },
+          "sprites": {
+            "same": 1042,
+            "total": 1042
+          }
+        },
+        "start": 1822,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1042,
+          "longest": 0,
+          "longest_any": 1042,
+          "median": 0,
+          "open_end": 1042,
+          "p10": 0,
+          "play": 1042,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1042,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "46e2855b33146f0e2d1746f798737cd000a744053a2550212615ec4efeee6f29",
+        "exact": true,
+        "first": null,
+        "frames": 39,
+        "frames_together": 39,
+        "id": "tapper.clear.003",
+        "model_curve": "17e36612144c72d092f10189b209ac9bc7184ca7eac0e34693d4478d9cbc78ed",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 2769,
+          "offset": 94,
+          "original": 2863
+        },
+        "permille": 1000,
+        "recipe": "9b5147fa78af4117c8035e769dc15830264a340121d5d4c856671972d483b96c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 39,
+            "total": 39
+          },
+          "sprites": {
+            "same": 39,
+            "total": 39
+          }
+        },
+        "start": 2863
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "c2fa5245359d8f603bb0fda3d2915774378522f6aaadffc2b1dc667dd1f4bc47",
+        "exact": true,
+        "first": null,
+        "frames": 407,
+        "frames_together": 407,
+        "id": "tapper.l3.001",
+        "model_curve": "c2fa5245359d8f603bb0fda3d2915774378522f6aaadffc2b1dc667dd1f4bc47",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 2807,
+          "offset": 94,
+          "original": 2901
+        },
+        "permille": 1000,
+        "recipe": "59823563cd1d1d0cdb753b2e0e641966b4bb9e3280f2e6545e91f67f876a035c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 407,
+            "total": 407
+          },
+          "sprites": {
+            "same": 406,
+            "total": 407
+          }
+        },
+        "start": 2901
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "483ee1333177a9a79639e0f250e72eddb556914922ac66976aff3c2908089940",
+        "exact": true,
+        "first": null,
+        "frames": 96,
+        "frames_together": 96,
+        "id": "tapper.clear.004",
+        "model_curve": "2b3ce06770447ae126ca4b770238354b798c5ce007cfbdaa811fe2a0b6a7b5fe",
+        "moved": [
+          "tapper.bartender",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 3213,
+          "offset": 94,
+          "original": 3307
+        },
+        "permille": 1000,
+        "recipe": "4e4259d790ac576b1f3eb636306f04762cd6f6ca5b401106f1d74fc5d01c9508",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 96,
+            "total": 96
+          },
+          "sprites": {
+            "same": 96,
+            "total": 96
+          }
+        },
+        "start": 3307
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "1e0cf4a82ae07644c4e79bff0c5f25e7ae119f9184119b4fa31b34f890c06da5",
+        "exact": true,
+        "first": null,
+        "frames": 1640,
+        "frames_together": 1640,
+        "id": "tapper.l4.001",
+        "model_curve": "1e0cf4a82ae07644c4e79bff0c5f25e7ae119f9184119b4fa31b34f890c06da5",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 3308,
+          "offset": 94,
+          "original": 3402
+        },
+        "permille": 1000,
+        "recipe": "8e9b9039a6be4793ff31c881bada506edf98cd019ac0d60cc04d42dfa9de64f9",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1640,
+            "total": 1640
+          },
+          "sprites": {
+            "same": 1637,
+            "total": 1640
+          }
+        },
+        "start": 3402,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1640,
+          "longest": 0,
+          "longest_any": 1640,
+          "median": 0,
+          "open_end": 1640,
+          "p10": 0,
+          "play": 1640,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1640,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "5f9e59abd1c6b7395682e5f104b232b2b3d14c8d8c89b4bdbc1d2bdb243f69c9",
+        "exact": true,
+        "first": null,
+        "frames": 39,
+        "frames_together": 39,
+        "id": "tapper.clear.005",
+        "model_curve": "ac20a345dbe466fbda6602017e9ac4faf2a7b186232cf3166a4478961d558aa5",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 4947,
+          "offset": 94,
+          "original": 5041
+        },
+        "permille": 1000,
+        "recipe": "01d6cc012812867d225350a5ec44df019b0f909f2560f59cdb8a73f87c59bf65",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 39,
+            "total": 39
+          },
+          "sprites": {
+            "same": 39,
+            "total": 39
+          }
+        },
+        "start": 5041
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "c235375335a6cfbf16235f56d86ce95b1a34dd2c51be08f1a263af0893d114c1",
+        "exact": true,
+        "first": null,
+        "frames": 1182,
+        "frames_together": 1182,
+        "id": "tapper.l5.001",
+        "model_curve": "5648174c927904b90579602b66cfc47fe1dbbd0f110e4a7d21429ecaefb4c065",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 4985,
+          "offset": 94,
+          "original": 5079
+        },
+        "permille": 1000,
+        "recipe": "c23371d4e906c7694de4ee6da452876d811e10ddc4b29a8d5808e04483b0def8",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1182,
+            "total": 1182
+          },
+          "sprites": {
+            "same": 1180,
+            "total": 1182
+          }
+        },
+        "start": 5079,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1182,
+          "longest": 0,
+          "longest_any": 1182,
+          "median": 0,
+          "open_end": 1182,
+          "p10": 0,
+          "play": 1182,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1182,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "ebf766af309ad9e17cff3a3c093b5d1613a6cc204e9bac8a2a6ff0f670c87259",
+        "exact": true,
+        "first": null,
+        "frames": 24,
+        "frames_together": 24,
+        "id": "tapper.clear.006",
+        "model_curve": "ebf766af309ad9e17cff3a3c093b5d1613a6cc204e9bac8a2a6ff0f670c87259",
+        "moved": [
+          "tapper.bartender",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 6166,
+          "offset": 94,
+          "original": 6260
+        },
+        "permille": 1000,
+        "recipe": "008f5d558f8bd26fda376d074b6fbe154be376f30aa71cb11968b577b06bf2c2",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 24,
+            "total": 24
+          },
+          "sprites": {
+            "same": 24,
+            "total": 24
+          }
+        },
+        "start": 6260
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "0fe62b0c7121ea4b3dcf266594473189f6b62a00e6b64c0091cc9e014dc76d71",
+        "exact": true,
+        "first": null,
+        "frames": 1132,
+        "frames_together": 1132,
+        "id": "tapper.bonus.002",
+        "model_curve": "0fe62b0c7121ea4b3dcf266594473189f6b62a00e6b64c0091cc9e014dc76d71",
+        "moved": [
+          "tapper.bartender",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 6189,
+          "offset": 94,
+          "original": 6283
+        },
+        "permille": 1000,
+        "recipe": "e2a446a4504fefddc620f1875ce0bb3f41439eac2c77f416342dbb2db448364d",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1132,
+            "total": 1132
+          },
+          "sprites": {
+            "same": 1132,
+            "total": 1132
+          }
+        },
+        "start": 6283,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1132,
+          "longest": 0,
+          "longest_any": 1132,
+          "median": 0,
+          "open_end": 1132,
+          "p10": 0,
+          "play": 1132,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1132,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "4b8956c39acae67f862c2a9553da0fc92e0d9940551072dd9c286e9749cb47be",
+        "exact": true,
+        "first": null,
+        "frames": 39,
+        "frames_together": 39,
+        "id": "tapper.clear.007",
+        "model_curve": "44a10dd5e9af8a25ec3191ea7a919edfcaec05feca3832bfef51e8816ff84a52",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 7320,
+          "offset": 94,
+          "original": 7414
+        },
+        "permille": 1000,
+        "recipe": "c9d4fbfb4e206485a971337803eab3027c77151c8d5b593ba308c79c6014a406",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 39,
+            "total": 39
+          },
+          "sprites": {
+            "same": 39,
+            "total": 39
+          }
+        },
+        "start": 7414
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "9748634cdd76ea55a27ab0f7ee8c05daa5b9c1d494763559c20be2ed09daa6d0",
+        "exact": true,
+        "first": null,
+        "frames": 1681,
+        "frames_together": 1681,
+        "id": "tapper.l6.001",
+        "model_curve": "67c0eed34200a7cb7c88121b1a69bedb412b06257ad9b674442adb5df71f7c40",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 7358,
+          "offset": 94,
+          "original": 7452
+        },
+        "permille": 1000,
+        "recipe": "44c0e79cda2ffe3f088807a35109cd9dab330ea5247bae58c6980617aea96b9c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1681,
+            "total": 1681
+          },
+          "sprites": {
+            "same": 1672,
+            "total": 1681
+          }
+        },
+        "start": 7452,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1681,
+          "longest": 0,
+          "longest_any": 1681,
+          "median": 0,
+          "open_end": 1681,
+          "p10": 0,
+          "play": 1681,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1681,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "35a5dd1f50b8a1efd1444cddddc49da65002edc71ef1759b9905fb726733ccfb",
+        "exact": true,
+        "first": null,
+        "frames": 1203,
+        "frames_together": 1203,
+        "id": "tapper.gameover.002",
+        "model_curve": "e76a80b03d90208d8ebf71ddcee2c30a9d796f89d505d73b89cf315fa373f382",
+        "moved": [
+          "tapper.bartender",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 9038,
+          "offset": 94,
+          "original": 9132
+        },
+        "permille": 1000,
+        "recipe": "b63da1eab6b92a14467e98d4d8e53d568794200af12d98d44fc3ba23b81ecb1e",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1203,
+            "total": 1203
+          },
+          "sprites": {
+            "same": 1203,
+            "total": 1203
+          }
+        },
+        "start": 9132,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1203,
+          "longest": 0,
+          "longest_any": 1203,
+          "median": 0,
+          "open_end": 1203,
+          "p10": 0,
+          "play": 1203,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1203,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "96baa4fe01ffbef16e25a48c6cf0a21bfa95ee0ee162e37dfe2621e799122e09",
+        "exact": true,
+        "first": null,
+        "frames": 3174,
+        "frames_together": 3174,
+        "id": "tapper.l6.002",
+        "model_curve": "96baa4fe01ffbef16e25a48c6cf0a21bfa95ee0ee162e37dfe2621e799122e09",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 7358,
+          "offset": 94,
+          "original": 7452
+        },
+        "permille": 1000,
+        "recipe": "9f2098e5aa94fc19209f889426ba80b51656814efd7b2bb5a5d200a184cfddb5",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 3173,
+            "total": 3174
+          },
+          "sprites": {
+            "same": 3172,
+            "total": 3174
+          }
+        },
+        "start": 7452,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 3174,
+          "longest": 0,
+          "longest_any": 3174,
+          "median": 0,
+          "open_end": 3174,
+          "p10": 0,
+          "play": 3174,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 3174,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "54fa7d8191827cdae53dfd1e740f802ab1b14026964550432ef01cdede3f668e",
+        "exact": true,
+        "first": null,
+        "frames": 39,
+        "frames_together": 39,
+        "id": "tapper.clear.008",
+        "model_curve": "7b02266ad12cf28bff67b3c27a342645364505d16bd91cf8281baa6eef8a3ccd",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 10531,
+          "offset": 94,
+          "original": 10625
+        },
+        "permille": 1000,
+        "recipe": "fb8b2e350d137ed53a4b5ac961686f94cf2a5eb824b8547b53fed99967c3646e",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 39,
+            "total": 39
+          },
+          "sprites": {
+            "same": 39,
+            "total": 39
+          }
+        },
+        "start": 10625
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "24ca1d83231fa68af1efb15299bd4dcca41adc0e5477fbc59cd25c71402fa560",
+        "exact": true,
+        "first": null,
+        "frames": 1576,
+        "frames_together": 1576,
+        "id": "tapper.l7.001",
+        "model_curve": "24ca1d83231fa68af1efb15299bd4dcca41adc0e5477fbc59cd25c71402fa560",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 10569,
+          "offset": 94,
+          "original": 10663
+        },
+        "permille": 1000,
+        "recipe": "2529974b7d177ffa99eb4ea8fb6c636da0db6c88eaff4f37316b62b37121a337",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1576,
+            "total": 1576
+          },
+          "sprites": {
+            "same": 1574,
+            "total": 1576
+          }
+        },
+        "start": 10663,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1576,
+          "longest": 0,
+          "longest_any": 1576,
+          "median": 0,
+          "open_end": 1576,
+          "p10": 0,
+          "play": 1576,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1576,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "57ce6e4f28bcdb1b9bcea8afd28b6d6e487cfe469d6383df587b1afc4f4c5497",
+        "exact": true,
+        "first": null,
+        "frames": 39,
+        "frames_together": 39,
+        "id": "tapper.clear.009",
+        "model_curve": "cbdd49c07056abe47131493e6a62b5674e20ddb45acab6504398bdba5c159966",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 12144,
+          "offset": 94,
+          "original": 12238
+        },
+        "permille": 1000,
+        "recipe": "1f1d62066a24ace2909bb4100ea4d89574ab59128303e462f2a2071cfd6f575d",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 39,
+            "total": 39
+          },
+          "sprites": {
+            "same": 39,
+            "total": 39
+          }
+        },
+        "start": 12238
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "5b88ed1066b253b289f18e2a31fd494e18cb6c92f15326dea75056937d4ba276",
+        "exact": true,
+        "first": null,
+        "frames": 3943,
+        "frames_together": 3943,
+        "id": "tapper.l8.001",
+        "model_curve": "451a9fd88d95a263af19edda05adf0b8fd1dab58ac486c760102df68b524c5b7",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 12182,
+          "offset": 94,
+          "original": 12276
+        },
+        "permille": 1000,
+        "recipe": "e47d001b0168cb8db3b8dab6e49094aab8b3d9abe578212656a06f6c9ce519fd",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 3943,
+            "total": 3943
+          },
+          "sprites": {
+            "same": 3941,
+            "total": 3943
+          }
+        },
+        "start": 12276,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 3943,
+          "longest": 0,
+          "longest_any": 3943,
+          "median": 0,
+          "open_end": 3943,
+          "p10": 0,
+          "play": 3943,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 3943,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "83241c7edb47873f12b5572057432cff0610a736926117d88d5fa9f20ff13bf2",
+        "exact": true,
+        "first": null,
+        "frames": 39,
+        "frames_together": 39,
+        "id": "tapper.clear.010",
+        "model_curve": "b6a01b5e15258028b59059250d9db22149906255fbeadacf2577d00631af003b",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 16124,
+          "offset": 94,
+          "original": 16218
+        },
+        "permille": 1000,
+        "recipe": "cac9bdab12ad4e58401ca8d198526e3683e72e660b8ec67e0bcc03e55f51c817",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 39,
+            "total": 39
+          },
+          "sprites": {
+            "same": 39,
+            "total": 39
+          }
+        },
+        "start": 16218
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "795b4290b5353818d34fbd2a211a9411c110b041b89518e29ea80f48604888a5",
+        "exact": true,
+        "first": null,
+        "frames": 550,
+        "frames_together": 550,
+        "id": "tapper.bonus.003",
+        "model_curve": "795b4290b5353818d34fbd2a211a9411c110b041b89518e29ea80f48604888a5",
+        "moved": [
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 6189,
+          "offset": 94,
+          "original": 6283
+        },
+        "permille": 1000,
+        "recipe": "d811ad7504be81fb238bc0f3a25c1b2b1513405bdf7d227857c1a13a173f33de",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 550,
+            "total": 550
+          },
+          "sprites": {
+            "same": 550,
+            "total": 550
+          }
+        },
+        "start": 6283
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "8677b65bc5990dc6a18986825c8ca4c91f4c0d1957c9a638a693ce3375e6a4df",
+        "exact": true,
+        "first": null,
+        "frames": 39,
+        "frames_together": 39,
+        "id": "tapper.clear.011",
+        "model_curve": "647ec17d5beae63ec5cf4ad4dbf0c7421a3f70825835a321993cc38d9ce1c0b7",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 6738,
+          "offset": 94,
+          "original": 6832
+        },
+        "permille": 1000,
+        "recipe": "25c51fa09d3ac9313acd1db3cf6f90a0c8af622611b922d9bf09d39f4eb985d7",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 39,
+            "total": 39
+          },
+          "sprites": {
+            "same": 39,
+            "total": 39
+          }
+        },
+        "start": 6832
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "ca36b5f3458052b56ca7aafcc559e23fa1c4491688f7a37c639c9fb3ed40fa0f",
+        "exact": true,
+        "first": null,
+        "frames": 39,
+        "frames_together": 39,
+        "id": "tapper.clear.012",
+        "model_curve": "fdd5f8e97acf3a36557e00a15f4e47ddf5e61671f8e404a86ae730d16ced2834",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 10476,
+          "offset": 94,
+          "original": 10570
+        },
+        "permille": 1000,
+        "recipe": "cfdc42a30f30b0caede63b1b2cc88679e56b2472cedd5155b32ee985cd886664",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 39,
+            "total": 39
+          },
+          "sprites": {
+            "same": 38,
+            "total": 39
+          }
+        },
+        "start": 10570
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "613c1fe5fbea91cde0b459153d4368c12893968203bbe4f1b8dc466ef06fad92",
+        "exact": true,
+        "first": null,
+        "frames": 1735,
+        "frames_together": 1735,
+        "id": "tapper.l9.001",
+        "model_curve": "613c1fe5fbea91cde0b459153d4368c12893968203bbe4f1b8dc466ef06fad92",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 10515,
+          "offset": 94,
+          "original": 10609
+        },
+        "permille": 1000,
+        "recipe": "811dbd284066f0bf56c49763a9a7912cbb3869248e5867f42429d522dce56a5b",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1735,
+            "total": 1735
+          },
+          "sprites": {
+            "same": 1733,
+            "total": 1735
+          }
+        },
+        "start": 10609,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1735,
+          "longest": 0,
+          "longest_any": 1735,
+          "median": 0,
+          "open_end": 1735,
+          "p10": 0,
+          "play": 1735,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1735,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "969388c59503aa66444a999ea6bdeafde7ea8152d6e2c660ae64ddac7f9c0964",
+        "exact": true,
+        "first": null,
+        "frames": 23,
+        "frames_together": 23,
+        "id": "tapper.clear.013",
+        "model_curve": "969388c59503aa66444a999ea6bdeafde7ea8152d6e2c660ae64ddac7f9c0964",
+        "moved": [
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 12249,
+          "offset": 94,
+          "original": 12343
+        },
+        "permille": 1000,
+        "recipe": "1def0fabda59f56c432334fdb4192ae91ffd912402f697f2299b56e37937a742",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 23,
+            "total": 23
+          },
+          "sprites": {
+            "same": 23,
+            "total": 23
+          }
+        },
+        "start": 12343
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "5e74faf393c38dd6bc4d1a3d7538a672484248b6c2a650d8a21881508e75c435",
+        "exact": true,
+        "first": null,
+        "frames": 450,
+        "frames_together": 450,
+        "id": "tapper.bonus.004",
+        "model_curve": "5e74faf393c38dd6bc4d1a3d7538a672484248b6c2a650d8a21881508e75c435",
+        "moved": [
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 12271,
+          "offset": 94,
+          "original": 12365
+        },
+        "permille": 1000,
+        "recipe": "70103935536deaf75a066dd59dbcb77a3b229cf83a6894df8cfdf3d8def0fb0a",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 450,
+            "total": 450
+          },
+          "sprites": {
+            "same": 450,
+            "total": 450
+          }
+        },
+        "start": 12365
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "4bb5c4c4af42fe7f56aa04e9d8492ff10b4c3c098c8f5b936aab74e77dffd0b2",
+        "exact": true,
+        "first": null,
+        "frames": 540,
+        "frames_together": 540,
+        "id": "tapper.bonus.007",
+        "model_curve": "4bb5c4c4af42fe7f56aa04e9d8492ff10b4c3c098c8f5b936aab74e77dffd0b2",
+        "moved": [
+          "tapper.bartender",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 12271,
+          "offset": 94,
+          "original": 12365
+        },
+        "permille": 1000,
+        "recipe": "848529aa28c64d43aaf9ae29b097c8b0c7f3c2e9b41ebec144c062a192537067",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 540,
+            "total": 540
+          },
+          "sprites": {
+            "same": 540,
+            "total": 540
+          }
+        },
+        "start": 12365
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "9ddf20ed436713b12e53c7fba73026bd87ba256ca1752f7eef5de9d7adcad996",
+        "exact": true,
+        "first": null,
+        "frames": 70,
+        "frames_together": 70,
+        "id": "tapper.clear.014",
+        "model_curve": "3d4feb91f6a621e4ffee84631e7d22a24588ea0edbe51cd107c6e740c0aadcc9",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 12720,
+          "offset": 94,
+          "original": 12814
+        },
+        "permille": 1000,
+        "recipe": "ed96dc9bc6583882e88f7bd6a6ecf431d53ea971a7abd9bfdc40f9a16335b860",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 69,
+            "total": 70
+          },
+          "sprites": {
+            "same": 70,
+            "total": 70
+          }
+        },
+        "start": 12814
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "66ba1f01496a78c8bd8a6e0156af1efc94e38506ee979dcd1ad05c39c064992f",
+        "exact": true,
+        "first": null,
+        "frames": 3043,
+        "frames_together": 3043,
+        "id": "tapper.l10.001",
+        "model_curve": "66ba1f01496a78c8bd8a6e0156af1efc94e38506ee979dcd1ad05c39c064992f",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 12789,
+          "offset": 94,
+          "original": 12883
+        },
+        "permille": 1000,
+        "recipe": "9667dc1cec8eb4f2b7c333efe7282ac29139b2b1e5bed378dd74b47b830f2903",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 3041,
+            "total": 3043
+          },
+          "sprites": {
+            "same": 3042,
+            "total": 3043
+          }
+        },
+        "start": 12883,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 3043,
+          "longest": 0,
+          "longest_any": 3043,
+          "median": 0,
+          "open_end": 3043,
+          "p10": 0,
+          "play": 3043,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 3043,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "7a41f16e2069631baa84c6896c741cbe2c27955705976f876144b5c5f3eb3760",
+        "exact": true,
+        "first": null,
+        "frames": 70,
+        "frames_together": 70,
+        "id": "tapper.clear.015",
+        "model_curve": "6221c875236eb56a84a2dd83bf049a3a3d0dee165d8e06ecba6e7f015a67ae6e",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 15831,
+          "offset": 94,
+          "original": 15925
+        },
+        "permille": 1000,
+        "recipe": "29b10a270157cb8d2f7afb08991c046866c3aa2c811771135f379f89bd800e90",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 68,
+            "total": 70
+          },
+          "sprites": {
+            "same": 69,
+            "total": 70
+          }
+        },
+        "start": 15925
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "4456a0b4e3b5b0bf7782f4179c35ccc6f52ce31e37d5c02cd1bbddff717d96bf",
+        "exact": true,
+        "first": null,
+        "frames": 1400,
+        "frames_together": 1400,
+        "id": "tapper.l11.001",
+        "model_curve": "4456a0b4e3b5b0bf7782f4179c35ccc6f52ce31e37d5c02cd1bbddff717d96bf",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 15900,
+          "offset": 94,
+          "original": 15994
+        },
+        "permille": 1000,
+        "recipe": "5b246ecc10db102f5ed597e6fa6d6b075d905c17888026cb2b415646eb7d1354",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1398,
+            "total": 1400
+          },
+          "sprites": {
+            "same": 1398,
+            "total": 1400
+          }
+        },
+        "start": 15994,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1400,
+          "longest": 0,
+          "longest_any": 1400,
+          "median": 0,
+          "open_end": 1400,
+          "p10": 0,
+          "play": 1400,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1400,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "b390b0c128d874c9dc340af43cfc72f2f8e707ac046193c6edefd1fa51208440",
+        "exact": true,
+        "first": null,
+        "frames": 70,
+        "frames_together": 70,
+        "id": "tapper.clear.016",
+        "model_curve": "9f2284382280bf7c04280be9277f5224c0963dc09abb9be9de1379d5351df9b3",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 17299,
+          "offset": 94,
+          "original": 17393
+        },
+        "permille": 1000,
+        "recipe": "936235f6b06dbfed69d29c447e0d04986963ede98912156deb184cfb1cf61508",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 68,
+            "total": 70
+          },
+          "sprites": {
+            "same": 70,
+            "total": 70
+          }
+        },
+        "start": 17393
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "30498767ec998f8a6863b554d0e982eeb6b500055ea7515d92a435109eb8c5d7",
+        "exact": true,
+        "first": null,
+        "frames": 1784,
+        "frames_together": 1784,
+        "id": "tapper.l12.001",
+        "model_curve": "30498767ec998f8a6863b554d0e982eeb6b500055ea7515d92a435109eb8c5d7",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 17368,
+          "offset": 94,
+          "original": 17462
+        },
+        "permille": 1000,
+        "recipe": "2c515f454ae7053a0dfa232919a68eb4d31bab261ffcfe331f0b95210da7626b",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1781,
+            "total": 1784
+          },
+          "sprites": {
+            "same": 1782,
+            "total": 1784
+          }
+        },
+        "start": 17462,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1784,
+          "longest": 0,
+          "longest_any": 1784,
+          "median": 0,
+          "open_end": 1784,
+          "p10": 0,
+          "play": 1784,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1784,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "4a2f76d321feeb15e741269fbd7de744694e308f85e281cb983bfdd57f303d2e",
+        "exact": true,
+        "first": null,
+        "frames": 70,
+        "frames_together": 70,
+        "id": "tapper.clear.017",
+        "model_curve": "8c8e08836e85e42c0dbb16208854c7215b3d57c3a532b9c1d836027c6e61c661",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 19151,
+          "offset": 94,
+          "original": 19245
+        },
+        "permille": 1000,
+        "recipe": "4b841eaead59a731099e7a96927f8ad8a87ddff8d79faebd9d2cb170d79d50a5",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 68,
+            "total": 70
+          },
+          "sprites": {
+            "same": 70,
+            "total": 70
+          }
+        },
+        "start": 19245
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "775a999866aa8a2655d43d091e9bb142f0b03823822c2ff82be213f4eeb60937",
+        "exact": true,
+        "first": null,
+        "frames": 1464,
+        "frames_together": 1464,
+        "id": "tapper.l13.001",
+        "model_curve": "e3f44343b6bfe9ad4b0f825b2b8adcacca8001b9c588418b73513a58718c5c56",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 19220,
+          "offset": 94,
+          "original": 19314
+        },
+        "permille": 1000,
+        "recipe": "0f247a5868ba2db36900a61ab2673472508548288959f3717b09f3fd4b467006",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1460,
+            "total": 1464
+          },
+          "sprites": {
+            "same": 1460,
+            "total": 1464
+          }
+        },
+        "start": 19314,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1464,
+          "longest": 0,
+          "longest_any": 1464,
+          "median": 0,
+          "open_end": 1464,
+          "p10": 0,
+          "play": 1464,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1464,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "8fbc0aa579e0eb16860f5af2b60a2822f0d49195fec07714f34f11af5d2efbd5",
+        "exact": true,
+        "first": null,
+        "frames": 23,
+        "frames_together": 23,
+        "id": "tapper.clear.018",
+        "model_curve": "8fbc0aa579e0eb16860f5af2b60a2822f0d49195fec07714f34f11af5d2efbd5",
+        "moved": [
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 20683,
+          "offset": 94,
+          "original": 20777
+        },
+        "permille": 1000,
+        "recipe": "cc1e0fa50a07eea1edc6d26e1799868cce566bb3a4f4069c4f361327e958b67f",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 23,
+            "total": 23
+          },
+          "sprites": {
+            "same": 23,
+            "total": 23
+          }
+        },
+        "start": 20777
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "f5814094e1b15a5f80236f7a5257d633fee60b4138b8f7d69c12e0c22a5b19e1",
+        "exact": true,
+        "first": null,
+        "frames": 498,
+        "frames_together": 498,
+        "id": "tapper.bonus.005",
+        "model_curve": "f5814094e1b15a5f80236f7a5257d633fee60b4138b8f7d69c12e0c22a5b19e1",
+        "moved": [
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 20705,
+          "offset": 94,
+          "original": 20799
+        },
+        "permille": 1000,
+        "recipe": "24b8e2a0d58988d407c31a3808e8f37287189a67a97fe3f02853ed4289e5e18a",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 498,
+            "total": 498
+          },
+          "sprites": {
+            "same": 498,
+            "total": 498
+          }
+        },
+        "start": 20799
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "fa4753987445597212fafbd2c7519c9d750a83d8091ac8d48621226054a9f39a",
+        "exact": true,
+        "first": null,
+        "frames": 39,
+        "frames_together": 39,
+        "id": "tapper.clear.019",
+        "model_curve": "13af0183ef884176a25fab74fa52a79ef619a71ff87d7741828ab665d61eb73f",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 21202,
+          "offset": 94,
+          "original": 21296
+        },
+        "permille": 1000,
+        "recipe": "6ca5c02c2eca8352132257dddc60c8e7a77b85cbdd59a81a5705b9696d253739",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 39,
+            "total": 39
+          },
+          "sprites": {
+            "same": 39,
+            "total": 39
+          }
+        },
+        "start": 21296
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "f723f51c4bf9746e3601d6acfa690a317211a74bbc82a3f06852cc2419832e4b",
+        "exact": true,
+        "first": null,
+        "frames": 3375,
+        "frames_together": 3375,
+        "id": "tapper.l14.001",
+        "model_curve": "f723f51c4bf9746e3601d6acfa690a317211a74bbc82a3f06852cc2419832e4b",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 21240,
+          "offset": 94,
+          "original": 21334
+        },
+        "permille": 1000,
+        "recipe": "54a493ea1cbdc7539db654db0409104aff49b466af0fde7ba390de8b8219d960",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 3375,
+            "total": 3375
+          },
+          "sprites": {
+            "same": 3372,
+            "total": 3375
+          }
+        },
+        "start": 21334,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 3375,
+          "longest": 0,
+          "longest_any": 3375,
+          "median": 0,
+          "open_end": 3375,
+          "p10": 0,
+          "play": 3375,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 3375,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "6162be2529eaf0f39f2680175f19d4b162fd1eb3ce0f966cf650eeab02295703",
+        "exact": true,
+        "first": null,
+        "frames": 39,
+        "frames_together": 39,
+        "id": "tapper.clear.020",
+        "model_curve": "6e2678b4f66dabf9a6c4fe02b0bfffa7a6b230a987b98cf365cfb00ab7be60c9",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 24614,
+          "offset": 94,
+          "original": 24708
+        },
+        "permille": 1000,
+        "recipe": "9cd3840a8f414632503d06de4e37e058f4aeceac1d5c2763213778e2b592ac17",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 38,
+            "total": 39
+          },
+          "sprites": {
+            "same": 38,
+            "total": 39
+          }
+        },
+        "start": 24708
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "94e5d06ea6cdd86655d5941231bc6b580330730fc29d72c9d38a1bbbac39777f",
+        "exact": true,
+        "first": null,
+        "frames": 2541,
+        "frames_together": 2541,
+        "id": "tapper.l15.001",
+        "model_curve": "94e5d06ea6cdd86655d5941231bc6b580330730fc29d72c9d38a1bbbac39777f",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 24652,
+          "offset": 94,
+          "original": 24746
+        },
+        "permille": 1000,
+        "recipe": "bc399af59bf9cacda297174acdf175cbe7569e6ccbaa262381ffe533a62550a0",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 2541,
+            "total": 2541
+          },
+          "sprites": {
+            "same": 2539,
+            "total": 2541
+          }
+        },
+        "start": 24746,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 2541,
+          "longest": 0,
+          "longest_any": 2541,
+          "median": 0,
+          "open_end": 2541,
+          "p10": 0,
+          "play": 2541,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 2541,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "8582e38c9ce532d01d1615a2419435443637fd2b1a49e138dc23d1bcf772594a",
+        "exact": true,
+        "first": null,
+        "frames": 23,
+        "frames_together": 23,
+        "id": "tapper.clear.021",
+        "model_curve": "8582e38c9ce532d01d1615a2419435443637fd2b1a49e138dc23d1bcf772594a",
+        "moved": [
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 27192,
+          "offset": 94,
+          "original": 27286
+        },
+        "permille": 1000,
+        "recipe": "a825d594d9a0f469e37ec19bd85b4a1dd9e37a5bdcbbecfc02753d1aa2768110",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 23,
+            "total": 23
+          },
+          "sprites": {
+            "same": 23,
+            "total": 23
+          }
+        },
+        "start": 27286
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "e4807dc2569af4de3ad4ac914be6b5a1bc6f6c40b390cf97482df3212ed5c7e0",
+        "exact": true,
+        "first": null,
+        "frames": 442,
+        "frames_together": 442,
+        "id": "tapper.bonus.006",
+        "model_curve": "e4807dc2569af4de3ad4ac914be6b5a1bc6f6c40b390cf97482df3212ed5c7e0",
+        "moved": [
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 27214,
+          "offset": 94,
+          "original": 27308
+        },
+        "permille": 1000,
+        "recipe": "400525b027e8a5fa2ae2eba6169c5c3d4a1a64c0ce08251e2b477f9ea607e066",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 442,
+            "total": 442
+          },
+          "sprites": {
+            "same": 442,
+            "total": 442
+          }
+        },
+        "start": 27308
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "75f97638c86ab2c63097b3772b75bcec1df0735097eaa2786a1e5563a10b6658",
+        "exact": true,
+        "first": null,
+        "frames": 39,
+        "frames_together": 39,
+        "id": "tapper.clear.022",
+        "model_curve": "64e3d469dc3b71aac20f17a3300a43bfe242ab292761698a0f9cb6d5aa7103a8",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 27655,
+          "offset": 94,
+          "original": 27749
+        },
+        "permille": 1000,
+        "recipe": "cd334ec94ba85e73c3ecf327758b0a135e17fb4cebc11344f0f54fbeb1812310",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 39,
+            "total": 39
+          },
+          "sprites": {
+            "same": 39,
+            "total": 39
+          }
+        },
+        "start": 27749
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "741b529f5c0e5b1016065ea5fa06ac64c5d53258e83187d94eb5eb55868e19c0",
+        "exact": true,
+        "first": null,
+        "frames": 75,
+        "frames_together": 75,
+        "id": "tapper.tip.001",
+        "model_curve": "741b529f5c0e5b1016065ea5fa06ac64c5d53258e83187d94eb5eb55868e19c0",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 15002,
+          "offset": 94,
+          "original": 15096
+        },
+        "permille": 1000,
+        "recipe": "3f509b828534d1274f267618ac66f8603802d5c98c0a2b9f9c350543478d5a54",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 74,
+            "total": 75
+          },
+          "sprites": {
+            "same": 73,
+            "total": 75
+          }
+        },
+        "start": 15096
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "a6d9ed92d812bf5c50c7e6ae7f2fcf2c25ff7ab176272692fc3616ee16897909",
+        "exact": true,
+        "first": null,
+        "frames": 365,
+        "frames_together": 365,
+        "id": "tapper.tip.002",
+        "model_curve": "37d2245294b53138b4ebd0231a4c68f49b91536e895af651b438fc2f654d0054",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 15002,
+          "offset": 94,
+          "original": 15096
+        },
+        "permille": 1000,
+        "recipe": "d28eef53c5c594755e7adcc38c4466e03d3a9b2e991096d4f58b783f84cebf72",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 363,
+            "total": 365
+          },
+          "sprites": {
+            "same": 363,
+            "total": 365
+          }
+        },
+        "start": 15096
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "0d6425e074ba1f167357433470a8380ef4969d3d00714612b5ae1317bd0ffc59",
+        "exact": true,
+        "first": null,
+        "frames": 5525,
+        "frames_together": 5525,
+        "id": "tapper.poweron.001",
+        "model_curve": "8e5b2e97d1c8a3a7ba7d392741d813abde26061d215a7ed1a0909c6e87b1e9de",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 1,
+          "offset": 94,
+          "original": 95
+        },
+        "permille": 1000,
+        "recipe": "da54bf45dfb1dfded643b65943fff3bb969056d8c9ece91970f52f9bb7a4eaef",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 5525,
+            "total": 5525
+          },
+          "sprites": {
+            "same": 5506,
+            "total": 5525
+          }
+        },
+        "start": 95,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 5525,
+          "longest": 0,
+          "longest_any": 5525,
+          "median": 0,
+          "open_end": 5525,
+          "p10": 0,
+          "play": 5525,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 5525,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "733a0c45a19d909fff1664fb4b601882d78ce3d6b1a6568ad0c07cc7328fde47",
+        "exact": true,
+        "first": null,
+        "frames": 816,
+        "frames_together": 816,
+        "id": "tapper.rb.attract.001",
+        "model_curve": "2b47e968b92f503ddb4c76bdd09f81256773deff742b588b06d644e8d86091d5",
+        "moved": [
+          "tapper.bartender"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 51,
+          "offset": 94,
+          "original": 145
+        },
+        "permille": 1000,
+        "recipe": "cf7fe4624d3adef7b58034dc2cd90d6c040cf5daa53075f5478b361338c98a8f",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 483,
+            "total": 816
+          },
+          "sprites": {
+            "same": 814,
+            "total": 816
+          }
+        },
+        "start": 145,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 816,
+          "longest": 0,
+          "longest_any": 816,
+          "median": 0,
+          "open_end": 816,
+          "p10": 0,
+          "play": 816,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 816,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "98ae069d0900a94a7cafbff97fd1f56b55ee7d0dc9b26b48c2b10e929e16edba",
+        "exact": true,
+        "first": null,
+        "frames": 336,
+        "frames_together": 336,
+        "id": "tapper.rb.l1.001",
+        "model_curve": "98ae069d0900a94a7cafbff97fd1f56b55ee7d0dc9b26b48c2b10e929e16edba",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 1005,
+          "offset": 94,
+          "original": 1099
+        },
+        "permille": 1000,
+        "recipe": "7e9c708aa0e4c744c8b5ac507ed84a78f856965d6d2f04c326dc9b9ed0fa8500",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 336,
+            "total": 336
+          },
+          "sprites": {
+            "same": 295,
+            "total": 336
+          }
+        },
+        "start": 1099
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "30855cf9eef7a8c1a467765d666ff2a895ace3f1d2bba0763f51bd86bd4e47b6",
+        "exact": true,
+        "first": null,
+        "frames": 270,
+        "frames_together": 270,
+        "id": "tapper.rb.die.001",
+        "model_curve": "0dafe94a6e0734eda4ad7609002a63c44c2eb38d2f3c282b2938db89a3181a0b",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 1556,
+          "offset": 94,
+          "original": 1650
+        },
+        "permille": 1000,
+        "recipe": "6ee161ca769557c408d4ef11ebc7af2f743953104a67ee41498d06e85169bbf0",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 270,
+            "total": 270
+          },
+          "sprites": {
+            "same": 262,
+            "total": 270
+          }
+        },
+        "start": 1650
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "a2b694e58965ef74bbbb0fa0127809f7c69259a6015e125c84cbed3a59fab618",
+        "exact": true,
+        "first": null,
+        "frames": 3943,
+        "frames_together": 3943,
+        "id": "tapper.rb.l8.001",
+        "model_curve": "3ea86c05a83deff9096ef85f474287120d7762a1b128f690d32e74983c28f801",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 12182,
+          "offset": 94,
+          "original": 12276
+        },
+        "permille": 1000,
+        "recipe": "fbde49a89aee188ef0d15688ad84ca8f2857b379787465580248f31635d34ff4",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 2825,
+            "total": 3943
+          },
+          "sprites": {
+            "same": 3933,
+            "total": 3943
+          }
+        },
+        "start": 12276,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 3943,
+          "longest": 0,
+          "longest_any": 3943,
+          "median": 0,
+          "open_end": 3943,
+          "p10": 0,
+          "play": 3943,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 3943,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "92a748381d94a3c895b8d549e7cb03da1fd7e9d2d1a1a1279c1e0a4ab39bf2a3",
+        "exact": true,
+        "first": null,
+        "frames": 1801,
+        "frames_together": 1801,
+        "id": "tapper.demo.001",
+        "model_curve": "c0943955ee8838c781870a0bad04d08c862285ceb40d10aa7eb4001b227c19be",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 51,
+          "offset": 94,
+          "original": 145
+        },
+        "permille": 1000,
+        "recipe": "776e308a92ab60f7f60d78b1098e28256639ac77c50c6718d8440bc8ead6114a",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1799,
+            "total": 1801
+          },
+          "sprites": {
+            "same": 1800,
+            "total": 1801
+          }
+        },
+        "start": 145,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1801,
+          "longest": 0,
+          "longest_any": 1801,
+          "median": 0,
+          "open_end": 1801,
+          "p10": 0,
+          "play": 1801,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1801,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "4cd3112a457e123beac283597fdf6f93ea8949a06b1a078969b313ea35970484",
+        "exact": true,
+        "first": null,
+        "frames": 1701,
+        "frames_together": 1701,
+        "id": "tapper.demo.002",
+        "model_curve": "09af9dd6d1c2bade5623d44480c3a757491e998f2857ae5f9017423e102c8446",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 1536,
+          "offset": 94,
+          "original": 1630
+        },
+        "permille": 1000,
+        "recipe": "58bda9df5a5ab9cc3044cf784d43b7599a811109502e192ea9020997b2361b3c",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1696,
+            "total": 1701
+          },
+          "sprites": {
+            "same": 1700,
+            "total": 1701
+          }
+        },
+        "start": 1630,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1701,
+          "longest": 0,
+          "longest_any": 1701,
+          "median": 0,
+          "open_end": 1701,
+          "p10": 0,
+          "play": 1701,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1701,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "3bddcb0caba41281b86b891b3aee93fead33e3529e4dfa05d87371373ed39ddf",
+        "exact": true,
+        "first": null,
+        "frames": 1801,
+        "frames_together": 1801,
+        "id": "tapper.rb.demo.001",
+        "model_curve": "3549a76e6396c98c30496414722398006f932d9404d2240627c0d1e8a66f236a",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 51,
+          "offset": 94,
+          "original": 145
+        },
+        "permille": 1000,
+        "recipe": "639911a460c7408c45f041e311d6c11784a8f92fbe8f8b9dbf1dd5e0678e81cc",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1250,
+            "total": 1801
+          },
+          "sprites": {
+            "same": 1796,
+            "total": 1801
+          }
+        },
+        "start": 145,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1801,
+          "longest": 0,
+          "longest_any": 1801,
+          "median": 0,
+          "open_end": 1801,
+          "p10": 0,
+          "play": 1801,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1801,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "609f7e931fdbf12588a28c6c4367986a9d67eb60017a6a0b27a5ded97eee7de8",
+        "exact": true,
+        "first": null,
+        "frames": 212,
+        "frames_together": 212,
+        "id": "tapper.move.001",
+        "model_curve": "609f7e931fdbf12588a28c6c4367986a9d67eb60017a6a0b27a5ded97eee7de8",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 317,
+          "offset": 94,
+          "original": 411
+        },
+        "permille": 1000,
+        "recipe": "4a4044cdadbc62b034c6dfbd7c3d306139f891f8ee908cc318e7a633918434d0",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 212,
+            "total": 212
+          },
+          "sprites": {
+            "same": 210,
+            "total": 212
+          }
+        },
+        "start": 411
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "5103738c5ccbb0f181d332fcc4aa9c907859a68818fa2e5faafc04c1fe861d64",
+        "exact": true,
+        "first": null,
+        "frames": 554,
+        "frames_together": 554,
+        "id": "tapper.move.002",
+        "model_curve": "b4d8123b2f73ae009400ff7f88fe71dc8f2cbe63071630b0c60828d9f6cdcccd",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 496,
+          "offset": 94,
+          "original": 590
+        },
+        "permille": 1000,
+        "recipe": "ebeaa382a8c19694db93e637709a32f63ea47e53c7d8a3980d03ee19095ec018",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 554,
+            "total": 554
+          },
+          "sprites": {
+            "same": 545,
+            "total": 554
+          }
+        },
+        "start": 590
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": false
+        },
+        "curve": "af9b6fc9d6c126974f0ba02ba2235615f20ecfdf34d43aa268805783bec132be",
+        "exact": false,
+        "first": {
+          "frame": 8,
+          "original_frame": 419,
+          "path": "entities.player[0].x"
+        },
+        "frames": 234,
+        "frames_together": 232,
+        "id": "tapper.drink.001",
+        "model_curve": "93f8097353363b03b6476545a96909f0aa0762dfcd25318ee19f1cfaff2f863d",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 317,
+          "offset": 94,
+          "original": 411
+        },
+        "permille": 999,
+        "recipe": "b5c92466e0fe8fea0408524ea86909e16898c7682f45f81f00e668940b39ad53",
+        "score": 4,
+        "screen": {
+          "background": {
+            "same": 234,
+            "total": 234
+          },
+          "sprites": {
+            "same": 189,
+            "total": 234
+          }
+        },
+        "start": 411
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "2c02fadc1d7cc555d2068772979e0eb6072802e205ef36aa93a5c4654b0ee0ad",
+        "exact": true,
+        "first": null,
+        "frames": 103,
+        "frames_together": 103,
+        "id": "tapper.enemies.002",
+        "model_curve": "2c02fadc1d7cc555d2068772979e0eb6072802e205ef36aa93a5c4654b0ee0ad",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 816,
+          "offset": 94,
+          "original": 910
+        },
+        "permille": 1000,
+        "recipe": "f595d1abe25b0b74cad2ce87a0752c5cd9cb197b52e3f8dc6f7164d3187071df",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 103,
+            "total": 103
+          },
+          "sprites": {
+            "same": 102,
+            "total": 103
+          }
+        },
+        "start": 910
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "46dc653ef49a354f83a8449b80037a915efe3a0f670e1363de9bdfa5fb78faf3",
+        "exact": true,
+        "first": null,
+        "frames": 323,
+        "frames_together": 323,
+        "id": "tapper.enemies.003",
+        "model_curve": "c888b1cd27f8e4cb4a0b942dcac7dd2fb2df9241f4663bc53ee138ff7d8992f1",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 1493,
+          "offset": 94,
+          "original": 1587
+        },
+        "permille": 1000,
+        "recipe": "089c80ea5bd7323aab99cac7a8ecc46c09b05c66fce59fdb1f15b49e91cdff66",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 323,
+            "total": 323
+          },
+          "sprites": {
+            "same": 320,
+            "total": 323
+          }
+        },
+        "start": 1587
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "92a748381d94a3c895b8d549e7cb03da1fd7e9d2d1a1a1279c1e0a4ab39bf2a3",
+        "exact": true,
+        "first": null,
+        "frames": 1801,
+        "frames_together": 1801,
+        "id": "tapper.attract-demo.001",
+        "model_curve": "c0943955ee8838c781870a0bad04d08c862285ceb40d10aa7eb4001b227c19be",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 51,
+          "offset": 94,
+          "original": 145
+        },
+        "permille": 1000,
+        "recipe": "b89e2d9c83c255f95a62803458a5f9488d65c5c87b3ff0d58add4eb860ca67a1",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 1799,
+            "total": 1801
+          },
+          "sprites": {
+            "same": 1800,
+            "total": 1801
+          }
+        },
+        "start": 145,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 1801,
+          "longest": 0,
+          "longest_any": 1801,
+          "median": 0,
+          "open_end": 1801,
+          "p10": 0,
+          "play": 1801,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 1801,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "fa447d115c02cfd3190f3061c6df769b5fc9b750c67d6ce64c2b7032b67c120f",
+        "exact": true,
+        "first": null,
+        "frames": 91,
+        "frames_together": 91,
+        "id": "tapper.clear-stage.001",
+        "model_curve": "fa447d115c02cfd3190f3061c6df769b5fc9b750c67d6ce64c2b7032b67c120f",
+        "moved": [
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 1250,
+          "offset": 94,
+          "original": 1344
+        },
+        "permille": 1000,
+        "recipe": "6073c226e8123e7b78385461dfdd67f1e2f6f3dc258bf4a0dbadf621d60618ca",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 91,
+            "total": 91
+          },
+          "sprites": {
+            "same": 91,
+            "total": 91
+          }
+        },
+        "start": 1344
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": false
+        },
+        "curve": "5b837cd8459fc2cffa123d85dfdef40062286dc4a87445c67769633d67ca080d",
+        "exact": false,
+        "first": {
+          "frame": 11,
+          "original_frame": 4792,
+          "path": "entities.sound[0].ext[1]"
+        },
+        "frames": 261,
+        "frames_together": 146,
+        "id": "tapper.double-drink-end.001",
+        "model_curve": "cce79bd9bead82e96478c148751424317e91ef866402cc94792c11696c5de1ab",
+        "moved": [
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 4687,
+          "offset": 94,
+          "original": 4781
+        },
+        "permille": 950,
+        "recipe": "b577bd36405b461bc7340a22b1d126a9237cbf421676b265d33251f67afcb0cb",
+        "score": 117,
+        "screen": {
+          "background": {
+            "same": 261,
+            "total": 261
+          },
+          "sprites": {
+            "same": 0,
+            "total": 261
+          }
+        },
+        "start": 4781
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": false
+        },
+        "curve": "50c34563a7a796ed8db73a065388c1e54460121afc659db09221e77a27e8f4e1",
+        "exact": false,
+        "first": {
+          "frame": 8,
+          "original_frame": 419,
+          "path": "entities.player[0].x"
+        },
+        "frames": 468,
+        "frames_together": 466,
+        "id": "tapper.drink-far-end.001",
+        "model_curve": "744c014407f1a305043933041f2a6e1270a4c7421adbef4bf64ee7c296aada51",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 317,
+          "offset": 94,
+          "original": 411
+        },
+        "permille": 999,
+        "recipe": "4c3865e330799b1be08b8393baa3b35505a1afd6fdae40744179affa15551579",
+        "score": 4,
+        "screen": {
+          "background": {
+            "same": 468,
+            "total": 468
+          },
+          "sprites": {
+            "same": 387,
+            "total": 468
+          }
+        },
+        "start": 411
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": false
+        },
+        "curve": "af9b6fc9d6c126974f0ba02ba2235615f20ecfdf34d43aa268805783bec132be",
+        "exact": false,
+        "first": {
+          "frame": 8,
+          "original_frame": 419,
+          "path": "entities.player[0].x"
+        },
+        "frames": 234,
+        "frames_together": 232,
+        "id": "tapper.drink-far-end.002",
+        "model_curve": "93f8097353363b03b6476545a96909f0aa0762dfcd25318ee19f1cfaff2f863d",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 317,
+          "offset": 94,
+          "original": 411
+        },
+        "permille": 999,
+        "recipe": "fa7d58d2f61d34e0b32a16681ae678f16733843dd01051e982b75769d4753e5f",
+        "score": 4,
+        "screen": {
+          "background": {
+            "same": 234,
+            "total": 234
+          },
+          "sprites": {
+            "same": 189,
+            "total": 234
+          }
+        },
+        "start": 411
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": false
+        },
+        "curve": "e7e40199a7c410c6fbab023fd7185d4141f6cadffe8e46d9dd552bf225ab4cc9",
+        "exact": false,
+        "first": {
+          "frame": 53,
+          "original_frame": 2048,
+          "path": "entities.sound[0].ext[1]"
+        },
+        "frames": 212,
+        "frames_together": 193,
+        "id": "tapper.enemies.001",
+        "model_curve": "46129740926563d15dd08d125b160deedefc42111880181d8de4684b095d7dd6",
+        "moved": [
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 1901,
+          "offset": 94,
+          "original": 1995
+        },
+        "permille": 982,
+        "recipe": "cec7ff636aca6a8ac29b7723452c5edade234d3d5f95a951cdbf5c59df488627",
+        "score": 19,
+        "screen": {
+          "background": {
+            "same": 212,
+            "total": 212
+          },
+          "sprites": {
+            "same": 2,
+            "total": 212
+          }
+        },
+        "start": 1995
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "eca48b703a4d70caaf43c05e65eeb6c460a923837d565d1bfafcbf82f3b9958c",
+        "exact": true,
+        "first": null,
+        "frames": 202,
+        "frames_together": 202,
+        "id": "tapper.game-over.001",
+        "model_curve": "eca48b703a4d70caaf43c05e65eeb6c460a923837d565d1bfafcbf82f3b9958c",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 3012,
+          "offset": 94,
+          "original": 3106
+        },
+        "permille": 1000,
+        "recipe": "c5d489be76183e8bcf813c6e975969c4b85c971d13301d81a6bc3bcaaf6b89d7",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 202,
+            "total": 202
+          },
+          "sprites": {
+            "same": 199,
+            "total": 202
+          }
+        },
+        "start": 3106
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": false
+        },
+        "curve": "9bd9297e2d4d3f715331e8059ed303cb36acf005fae054f82d6310c8c2cbc95c",
+        "exact": false,
+        "first": {
+          "frame": 219,
+          "original_frame": 419,
+          "path": "entities.player[0].x"
+        },
+        "frames": 221,
+        "frames_together": 219,
+        "id": "tapper.get-ready-screen.001",
+        "model_curve": "d696c72ffb879e9ad4670d9beaf16380d429a70d7b3938df20ab689ddd7f1780",
+        "moved": [
+          "tapper.bartender",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 106,
+          "offset": 94,
+          "original": 200
+        },
+        "permille": 999,
+        "recipe": "010a18e85c1c544e69d1e17512f764f6e09b6de2c74ecde2eec3c8387bdb6993",
+        "score": 4,
+        "screen": {
+          "background": {
+            "same": 220,
+            "total": 221
+          },
+          "sprites": {
+            "same": 118,
+            "total": 221
+          }
+        },
+        "start": 200
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "fc9b5c75fab79c88a3e2a23601cd03d208d859e30c9dbcab52bbbb4577f37b8b",
+        "exact": true,
+        "first": null,
+        "frames": 152,
+        "frames_together": 152,
+        "id": "tapper.title.001",
+        "model_curve": "fc9b5c75fab79c88a3e2a23601cd03d208d859e30c9dbcab52bbbb4577f37b8b",
+        "moved": [],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 51,
+          "offset": 94,
+          "original": 145
+        },
+        "permille": 1000,
+        "recipe": "226637ab7de358a6ccfa2dec64b6a973393fc921a048077dbc15a53d6dcf5ac3",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 152,
+            "total": 152
+          },
+          "sprites": {
+            "same": 152,
+            "total": 152
+          }
+        },
+        "start": 145
+      },
+      {
+        "bars": {
+          "longest_stretch": true,
+          "together": true
+        },
+        "curve": "2094cb90fff448162976b3efe1a311bf4002dee5239d23170255eb660995728c",
+        "exact": true,
+        "first": null,
+        "frames": 701,
+        "frames_together": 701,
+        "id": "tapper.slide.001",
+        "model_curve": "612018aa3779984b09e041e74065d800537f47a9f5a67faaac30129c58fc692f",
+        "moved": [
+          "tapper.bartender",
+          "core.counters",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 2807,
+          "offset": 94,
+          "original": 2901
+        },
+        "permille": 1000,
+        "recipe": "6191f395b1d29a8f2e57b2b59422682493accb620ae6662752f743161963358e",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 701,
+            "total": 701
+          },
+          "sprites": {
+            "same": 693,
+            "total": 701
+          }
+        },
+        "start": 2901,
+        "stretches": {
+          "at_least_10s": 0,
+          "at_least_30s": 0,
+          "at_least_5s": 0,
+          "frames": 701,
+          "longest": 0,
+          "longest_any": 701,
+          "median": 0,
+          "open_end": 701,
+          "p10": 0,
+          "play": 701,
+          "shortest": 0,
+          "split_events": 0,
+          "together": 701,
+          "whole": 0
+        }
+      },
+      {
+        "bars": {
+          "longest_stretch": null,
+          "together": true
+        },
+        "curve": "5ed3641b1fa5def5c86e34f8e28a16779ea115c2ef63b24150462fdaeed638de",
+        "exact": true,
+        "first": null,
+        "frames": 551,
+        "frames_together": 551,
+        "id": "tapper.gameover.003",
+        "model_curve": "8c4d6e8fe339b8293fc2c9d3e53e787c26a2f1486a848aec8045b9e343993421",
+        "moved": [
+          "tapper.bartender",
+          "tapper.sound"
+        ],
+        "out_of_scope": null,
+        "pairing": {
+          "lag": [],
+          "last_offset": 94,
+          "model": 3455,
+          "offset": 94,
+          "original": 3549
+        },
+        "permille": 1000,
+        "recipe": "3c393a22e24b5d23359e79ddf9f62571316b04c1ee5405c6a8fe21756510816f",
+        "score": 0,
+        "screen": {
+          "background": {
+            "same": 549,
+            "total": 551
+          },
+          "sprites": {
+            "same": 333,
+            "total": 551
+          }
+        },
+        "start": 3549
+      }
+    ],
+    "contract": "e227487fdfc5a43d8c53a54380a9c824bcfb0fd20b674362f866d4eafcc20dc7",
+    "corpus": {
+      "hash": "b3:623b70fee8a6ea10b3f503ff503641094d3b2943a06be8b791c1c36dbdf02ca2",
+      "name": "tapper",
+      "version": "1.0.0"
+    },
+    "gp": {
+      "build": "ecdb64abdc15dbe5ce1398b7ed22cf95250ca5d30fddc5c3ab26e0e16cdc2aa3",
+      "version": "0.1.5"
+    },
+    "mapping": {
+      "hash": "c434ca73ce59861af11464f93ffed857f48bff5703f6fb67e5e79c93b76fba2c",
+      "schema": "22"
+    },
+    "model": {
+      "hash": "77e6a8985be72adf2833c76c220acde9cfce5381fc2a92327345eb055fcc78a3",
+      "name": "tapper",
+      "short": "9b8e18ff80b7"
+    },
+    "module": {
+      "hash": "866fdd028eb6901f69ce661ee6b7a90c7403a4dc901a0fbacf24d3d35018275f"
+    },
+    "profile": null,
+    "record_format": "0.3.0",
+    "results": {
+      "bars": {
+        "held": 79,
+        "met": 73
+      },
+      "clips": 79,
+      "errors": 0,
+      "exact": 73,
+      "fidelity_permille": 999,
+      "picture": {
+        "clips_same": 28,
+        "frames": 62666,
+        "frames_same": 59518
+      }
+    },
+    "rom": {
+      "patch": null,
+      "sha256": "1da6316bba4785d780b3df3dc2a46753c09215cfa009f6f69dfd58cf753f4da9"
+    },
+    "runtime": {
+      "name": "gp-interp",
+      "scenario": "0.4.0"
+    }
+  },
+  "predicateType": "urn:game-printer:score-record:0",
+  "subject": [
+    {
+      "digest": {
+        "blake3": "b3:623b70fee8a6ea10b3f503ff503641094d3b2943a06be8b791c1c36dbdf02ca2"
+      },
+      "name": "corpus tapper 1.0.0"
+    },
+    {
+      "digest": {
+        "blake3": "77e6a8985be72adf2833c76c220acde9cfce5381fc2a92327345eb055fcc78a3"
+      },
+      "name": "model tapper"
+    }
+  ]
+}
