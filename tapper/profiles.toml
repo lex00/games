@@ -58,6 +58,20 @@ name = "slower_arrivals"
 [groups.switches.set]
 "entities.bars.ext_params.wait_percent" = 200
 
+[[groups.switches]]
+description = "A game starts on level 8, the punk bar's third, as if seven levels were cleared"
+name = "start_on_level_8"
+
+[groups.switches.set]
+"entities.flow.ext_params.start_cleared" = 7
+
+[[groups.switches]]
+description = "A game starts on level 10, the space bar's first, as if nine levels were cleared; with start on level 8 on too, this one counts"
+name = "start_on_level_10"
+
+[groups.switches.set]
+"entities.flow.ext_params.start_cleared_far" = 9
+
 [[groups]]
 description = "The original program's own slips, off one at a time"
 name = "fixes"

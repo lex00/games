@@ -1176,7 +1176,13 @@ impl Flow {
             if demo {
                 cx.set_counter("demo", 0);
             }
-            cx.set_counter("cleared", 0);
+            // A game starts with no levels cleared unless a profile starts it
+            // further on (start_cleared, 0 in the model as written:
+            // profiles.toml's start_on_level_8 and start_on_level_10).
+            // Two numbers, one a switch, since each switch changes a part of
+            // its own: the further one counts.
+            let start_cleared = p(cx, "start_cleared").max(p(cx, "start_cleared_far")).clamp(0, 99);
+            cx.set_counter("cleared", start_cleared);
             cx.set_counter("score", 0);
             let defaults = cx.table("defaults").to_vec();
             // The lives a game starts with are the board's setting (E005, 3
@@ -1210,8 +1216,10 @@ impl Flow {
             {
                 let mut b = *b;
                 // Word 3: the levels cleared 0 and the level row; word 0:
-                // the tips setting is E006 too.
-                b.ext[3] = row << 24;
+                // the tips setting is E006 too. Started further on, the
+                // level row has gone up one a level cleared to its cap of
+                // 9, as each clear moves it ($5375's and $5460's steps).
+                b.ext[3] = (start_cleared << 16) | ((row + start_cleared).min(9) << 24);
                 b.ext[0] = (b.ext[0] & 0xffff) | (row << 24);
                 cx.set_body(id, b);
             }
