@@ -4388,6 +4388,43 @@ impl Ext for Bars {
             }
             hide_play_objects(cx);
         }
+        // A start in the bonus round's last wait ($296F's 15 frames): its
+        // objects are loaded from E226 (the mapping's bonus_objects), and
+        // the line still up is the win's two ($27C2, the second's blink
+        // over by then) or the loss's ($28F2), as the bartender at E292
+        // shows the win's pictures or the loss's (tapper.clear.003 frame 0:
+        // THIS BUDS FOR YOU, 3000 PTS).
+        let end = cx.table("bonus_end");
+        let end_return = if end.len() >= 2 { Some((end[0] | (end[1] << 8)) + 6) } else { None };
+        if cx.counter("bonus") == Some(1)
+            && end_return.is_some()
+            && cx
+                .kind("flow")
+                .and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k))
+                .is_some_and(|fb| Some((fb.ext[1] >> 16) & 0xffff) == end_return)
+            && let Some(ok) = cx.kind("bonus_object")
+        {
+            let key = (0xE292 - 0xE18E) / 4 + 1;
+            let pic = cx.world.bodies.iter().find(|b| b.alive && b.kind == ok && b.ext[1] == key).map(|b| (b.ext[0] >> 8) & 0xff);
+            let text = match pic {
+                Some(p) if p == byte_of(cx, "bartender_pic_win_1") => 3,
+                Some(p) if p == byte_of(cx, "bartender_pic_lose_1") => 5,
+                _ => 0,
+            };
+            if cx.counter("bonus_text") != Some(text) {
+                cx.set_counter("bonus_text", text);
+            }
+            // A wait with a frame left or none returns on the first step,
+            // and the setup's $5E99 empties the draw list there: the
+            // original's frame 1 shows no sprite (tapper.clear.003).
+            let left = cx
+                .kind("timer")
+                .and_then(|k| cx.world.bodies.iter().find(|b| b.alive && b.kind == k && b.ext[1] == 0x2346))
+                .map_or(0, |b| b.ext[0]);
+            if left <= 1 {
+                gone_next(cx, true);
+            }
+        }
         let flow = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).map(|fb| fb.ext);
         let level_timers = cx
             .kind("timer")
@@ -4821,15 +4858,27 @@ impl Ext for Bars {
         // the timer for $2346. The round's own count isn't known there, so
         // the flow waits them out in sub 18 and goes on as the round's
         // return does (tapper.clear.003 and the other clips named after a
-        // bonus round start on its last frame).
+        // bonus round start on its last frame). The wait returns on the
+        // frame its timer runs out, and the round's return ($569D) runs
+        // the setup on that frame: with a frame left or none, on this
+        // step, whose screen is cleared, GET READY up on the next
+        // (tapper.clear.003 frames 1 and 2, $543D on its frame 1), as a
+        // start in an end script's last wait (hops_done below).
         let end = cx.table("bonus_end");
         let end_return = if end.len() >= 2 { Some((end[0] | (end[1] << 8)) + 6) } else { None };
+        let mut bonus_returned = false;
         if let Some((fid, mut fb)) = flow
             && ![12, 18].contains(&((fb.ext[3] >> 16) & 0xff))
             && end_return.is_some()
             && Some((fb.ext[1] >> 16) & 0xffff) == end_return
         {
             let left = timers.iter().find(|(_, t)| t.ext[1] == 0x2346).map_or(0, |(_, t)| t.ext[0]);
+            if left <= 1 {
+                bonus_returned = true;
+                if cleared >= 6 && cleared % 2 == 0 {
+                    level = (level + 1).min(9);
+                }
+            }
             fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (18 << 16) | ((left & 0xffff) << 24);
             fb.ext[2] &= !BONUS_MASK;
             fb.ext[1] &= !(0xffff << 16);
@@ -4994,7 +5043,9 @@ impl Ext for Bars {
         // clear.021).
         let count = if state == 16 { cleared + 1 } else { cleared };
         let last_wait = flow.is_some_and(|(_, b)| Self::bonus_last_wait(cx, &b, state, count));
-        let hops_done = hops_done && !last_wait;
+        // So too a start in the bonus round's last wait with a frame left
+        // or none (bonus_returned above).
+        let hops_done = (hops_done && !last_wait) || bonus_returned;
         let bonus_entered = last_wait && state == 16;
         if last_wait && let Some((fid, mut fb)) = flow {
             // As the script's return at $5681 below: a level more, and the
@@ -6092,16 +6143,40 @@ impl Ext for Bars {
             cx.set_body(fid, fb);
         } else if (state == 15 || state == 16) && sub == 18 && let Some((fid, mut fb)) = flow {
             // The bonus round's last wait from a clip's start (above): its
-            // frames left, then $2500's return as below.
+            // frames left, then $2500's return as below, a frame before the
+            // timer runs out, so the setup runs on the frame it does (a
+            // start with a frame left or none runs it on its first step,
+            // above). The setup's $5E99 has emptied the draw list on that
+            // frame: GONE_NEXT.
             let left = ((fb.ext[3] >> 24) & 0xffff) - 1;
-            if left <= 0 {
+            if left <= 1 {
                 if cleared >= 6 && cleared % 2 == 0 {
                     level = (level + 1).min(9);
                 }
                 fb.ext[3] = (fb.ext[3] & 0xff00) | 8;
                 fb.ext[2] &= !BONUS_MASK;
+                sprites_gone_next = true;
             } else {
                 fb.ext[3] = (fb.ext[3] & !(0xffff << 24)) | (left << 24);
+                // The round's objects as the clip's start loaded them stay
+                // up through the wait, with its line (bonus_text, which
+                // `loaded` set).
+                if let Some(ok) = cx.kind("bonus_object") {
+                    let objs: Vec<BonusObj> = cx
+                        .world
+                        .bodies
+                        .iter()
+                        .filter(|b| b.alive && b.kind == ok && b.ext[1] > 0)
+                        .map(|b| BonusObj {
+                            at: 0xE18E + 4 * (b.ext[1] - 1),
+                            y: b.y.floor(),
+                            flags: b.ext[0] & 0xff,
+                            pic: (b.ext[0] >> 8) & 0xff,
+                            x: b.x.floor(),
+                        })
+                        .collect();
+                    bonus_objs = Some((objs, cx.counter("bonus_text").unwrap_or(0)));
+                }
             }
             cx.set_body(fid, fb);
         } else if (state == 15 || state == 16) && sub == 7 && let Some((fid, mut fb)) = flow {

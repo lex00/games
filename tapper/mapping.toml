@@ -453,6 +453,40 @@ ram = []
 entity = "bartender_part"
 ids = [0]
 
+[[slots.group]]
+active = 0xE226
+active_stride = 4
+count = 34
+name = "bonus_objects"
+presentation = true
+vacant = "ram[0xE705] != 5 || ram[0xE3BD] != 0"
+note = "The bonus round's objects from E226 to E2AA, 4 bytes each: the bandit (E226, E22A), the cans ($255F puts them from E262), the bartender (E292 to E29E) and the opened can (E2AA). Loaded only once the round's stage is up (E705 5, $256A, to the next setup's $4B65), so a clip that starts in the round's last wait ($296F) shows them on its first frame (tapper.clear.003: the cans, the bandit and the bartender with the opened can); tapper_bars places them from the round's code after that. Word 1 is the object's place from E18E plus 1 (E226 is 39). Drawn by the board, never compared"
+
+[[slots.group.field]]
+path = "x"
+ram = [0xE229]
+stride = 4
+
+[[slots.group.field]]
+path = "y"
+ram = [0xE226]
+stride = 4
+
+[[slots.group.field]]
+path = "ext[0]"
+ram = [0xE227, 0xE228]
+stride = 4
+
+[[slots.group.field]]
+index = true
+offset = 39
+path = "ext[1]"
+ram = []
+
+[[slots.group.kind]]
+entity = "bonus_object"
+ids = [0]
+
 [[field]]
 note = "Not compared: 1 while the palette cycles run ($01CC). Loaded so a clip's start shows the lamps as they stand"
 path = "counters.cycle_on"
