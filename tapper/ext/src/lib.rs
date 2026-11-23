@@ -3949,6 +3949,34 @@ impl Bars {
 }
 
 impl Ext for Bars {
+    /// A clip's loaded state has the counter stage but no screen and no
+    /// lives shown (nothing loads them): set them before the loaded frame
+    /// is drawn, so a clip that starts on a level's first frame shows that
+    /// level's bar and the HUD's mugs there, as `step` would from frame 1.
+    /// A clip that loads in state 11 before a level's setup has set its
+    /// timers ($4E50's $2023 counting) is left as it was: there (a level's
+    /// end, the way into a bonus round) the stage loaded is the levels
+    /// cleared, already the next level's, while the original still shows
+    /// the last screen or a card no look draws (tapper.bonus.001 frame 0).
+    fn loaded(&self, cx: &mut ExtCx<'_>) {
+        let flow = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).map(|fb| fb.ext);
+        let level_timers = cx
+            .kind("timer")
+            .is_some_and(|k| cx.world.bodies.iter().any(|b| b.kind == k && b.alive && b.ext[1] == 0x2023 && b.ext[0] > 0));
+        if flow.is_some_and(|w| w[3] & 0xff == 11) && !level_timers {
+            return;
+        }
+        set_screen(cx);
+        if cx.counter("mode") == Some(0) || in_demo(cx) {
+            let lives = flow.map(|w| (w[1] >> 40) & 0xff);
+            if let Some(lives) = lives
+                && cx.counter("lives_shown").is_none_or(|v| v < 0)
+            {
+                cx.set_counter("lives_shown", lives);
+            }
+        }
+    }
+
     fn step(&self, cx: &mut ExtCx<'_>) {
         use gp_sim::world::Body;
         let (Some(mug_k), Some(cust_k)) = (cx.kind("mug"), cx.kind("customer")) else {
