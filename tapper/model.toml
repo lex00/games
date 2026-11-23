@@ -3022,6 +3022,27 @@ value = 4
 
 [[levels.main.present.board.looks]]
 clear = true
+sprites_off = true
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 0
+slot = "intro_back_color"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 64
+slot = "intro_back_color"
+
+[[levels.main.present.board.looks.palette_writes]]
+at = 77
+slot = "intro_line_color"
+
+[[levels.main.present.board.looks.when]]
+cmp = "=="
+counter = "intro"
+value = 2
+
+[[levels.main.present.board.looks]]
+clear = true
 
 [[levels.main.present.board.looks.palette_writes]]
 at = 0
