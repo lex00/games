@@ -972,6 +972,17 @@ impl Bartender {
         // The demo's presses: $59DD runs first on every frame of state 3,
         // whatever the play routine then does.
         let presses = if demo { Some(demo_presses(cx)) } else { None };
+        // In a game $0660's $2B3A reads the stick and the tapper into E38E
+        // (the counter demo_press), which nothing else writes until the
+        // demo's first pick: the demo's first frames press what the last
+        // game's last read left there (row gameover-no-place-in-table clip
+        // 1: a game with no presses leaves 0, and the demo's bartender
+        // stands until its first pick, where the model kept the 240 its
+        // clip loaded and poured).
+        if presses.is_none() {
+            let raw = ["right", "left", "down", "up"].map(|a| cx.held(a));
+            set_read_presses(cx, raw, cx.held("button1"));
+        }
         let bar = cx.me.ext[0];
         // ext[1]: frames left of a bar move times 8, plus the bar it goes
         // to times 2, plus the stick's latch (E730): set when a move
@@ -1012,7 +1023,10 @@ impl Bartender {
             None => ["right", "left", "down", "up"].map(|a| cx.held(a)),
         };
         let held = if presses.is_none() && p(cx, "four_way") != 0 {
-            four_way(&mut cx.me.ext[3], held)
+            let filtered = four_way(&mut cx.me.ext[3], held);
+            // The program reads the stick as MAME's filter passes it.
+            set_read_presses(cx, filtered, cx.held("button1"));
+            filtered
         } else {
             held
         };
@@ -2186,6 +2200,16 @@ fn demo_presses(cx: &mut ExtCx<'_>) -> i64 {
     }
     cx.set_counter("demo_place", place);
     press
+}
+
+/// $2B3A's read in a game and in the initials: E38E (counter demo_press)
+/// gets the stick's right, left, down and up in bits 0 to 3 and the tapper
+/// in bit 4, the byte the demo's $59DD later goes on from.
+fn set_read_presses(cx: &mut ExtCx<'_>, held: [bool; 4], tap: bool) {
+    let b = held.iter().enumerate().fold(i64::from(tap) << 4, |b, (k, &h)| b | (i64::from(h) << k));
+    if cx.counter("demo_press") != Some(b) {
+        cx.set_counter("demo_press", b);
+    }
 }
 
 /// The 16 records of 32 bytes the setup's $4A65 copies to E4B2 for the
@@ -3832,6 +3856,8 @@ fn initials_entry(cx: &mut ExtCx<'_>, phase: i64, count: i64) -> (bool, [i64; 3]
     }
     if phase >= 2 && at < 3 && count >= next {
         let (up, down, tapper) = (cx.held("up"), cx.held("down"), cx.held("button1"));
+        let raw = ["right", "left", "down", "up"].map(|a| cx.held(a));
+        set_read_presses(cx, raw, tapper);
         let mut stick = true;
         if tap != 0 {
             if tapper {

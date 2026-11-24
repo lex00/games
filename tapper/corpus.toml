@@ -942,3 +942,13 @@ added = ["tapper.gameover-high-score-table.002"]
 version = "2.0.0"
 date = "2026-11-23"
 says = "gp corpus import from the mechanic sessions: added tapper.gameover-high-score-table.003, tapper.gameover-high-score-table.005, tapper.gameover-no-place-in-table.002, tapper.gameover-wait-start.001."
+
+[[clip]]
+id = "tapper.gameover-no-place-in-table.001"
+name = "Ten games filling the high scores, then the attract demo"
+source = "played"
+start = "inputs/tapper.gameover-no-place-in-table.001.start.presses"
+presses = "inputs/tapper.gameover-no-place-in-table.001.presses"
+frames = 27706
+why = "from the attract mode after the demo (E38E 240), nine games of 50 fill the high scores and a tenth game's 0, played with no presses, has no place ($2C29); its play's reads ($2B3A) leave E38E 0, so the attract demo that follows stands still until its first pick ($59DD)"
+level = "saloon"
