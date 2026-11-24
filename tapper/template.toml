@@ -55,5 +55,5 @@ asset_map_sha256 = "919d7406893e284dcc3dad008c8a4e2a871a1d1657273131e1e4bf4542ab
 [scored_against]
 corpus = "tapper"
 version = "2.0.0"
-hash = "b3:c881d761f6bea30d5a5a00171a5901852b67b67088b3830b9811af63c591e2f9"
+hash = "b3:0f78a61f6af7738e214a1a8047b753a572867fdece37f2f447249ed0c37b29ff"
 path = "."
