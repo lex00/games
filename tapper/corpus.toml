@@ -9,7 +9,7 @@ format = "1.0.0"
 name = "tapper"
 version = "2.0.0"
 title = "Tapper"
-recipes = "b3:c881d761f6bea30d5a5a00171a5901852b67b67088b3830b9811af63c591e2f9"
+recipes = "b3:0f78a61f6af7738e214a1a8047b753a572867fdece37f2f447249ed0c37b29ff"
 
 [target]
 game = "tapper"
@@ -952,3 +952,13 @@ presses = "inputs/tapper.gameover-no-place-in-table.001.presses"
 frames = 27706
 why = "from the attract mode after the demo (E38E 240), nine games of 50 fill the high scores and a tenth game's 0, played with no presses, has no place ($2C29); its play's reads ($2B3A) leave E38E 0, so the attract demo that follows stands still until its first pick ($59DD)"
 level = "saloon"
+
+[[clip]]
+id = "tapper.tip.003"
+name = "The saloon again, level 14, a tip picked up and the show to its end"
+source = "generated"
+start = "inputs/tapper.tip.003.start.presses"
+presses = "inputs/tapper.tip.003.presses"
+frames = 360
+why = "the dancers' show in the saloon ($14E7 to $0C71's end, 255 frames), where the moose hangs: tapper.l14.001's log to frame 22743, then the bartender walks right along the second bar from the bottom to the tip, picked up on frame 38 of the clip, steps down to catch the bottom bar's empty mugs, and goes back up to serve the second bar during the show; the dancers go on frame 292 with no life lost"
+level = "cycle"

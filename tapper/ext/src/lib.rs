@@ -5063,6 +5063,7 @@ impl Ext for Bars {
                 empty_play_objects(cx);
             }
             initials_screen(cx);
+            cx.set_counter("dancers_on", 0);
             return;
         }
         let (timer_k, rec_k) = (cx.kind("timer"), cx.kind("record"));
@@ -7831,7 +7832,8 @@ impl Ext for Bars {
             None => {}
         }
         // The dancers, by slot: an object kept is the same body, one whose
-        // y became 0 goes.
+        // y became 0 goes. The counter dancers_on says whether any is up.
+        cx.set_counter("dancers_on", i64::from(dancers.iter().any(Option::is_some)));
         for (id, d) in dancer_ids.iter().zip(dancers.iter()) {
             match (id, d) {
                 (Some(id), Some(b)) => cx.set_body(*id, *b),

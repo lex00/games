@@ -37388,6 +37388,9 @@ description = "The step of the cycles last written, plus 1 (the looks write its 
 [counters.cycle_wait]
 description = "The frames to the cycles' next step, E121 ($01E1 counts it down; at below 0 the step's colour is written and the step's frames begin)"
 
+[counters.dancers_on]
+description = "1 while the dancers of the show a tip starts are up: from the pickup's first picture over the 9 objects from E23E ($150F) until they go at the show's end ($0C75) or when a level's end, a slide, a life lost or a setup empties the objects; tapper_bars sets it each frame, so a theme can show what the room does while they dance (#+ room_react_when)"
+
 [counters.demo]
 description = "1 while the attract mode plays its demo game (E3BD 1): from $5A64, state 2, through its play (state 3), its life lost (12) and the high scores after it ($4A37, state 4) to state 0, whose $22B8 starts the logo again"
 
