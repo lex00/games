@@ -21,8 +21,11 @@ pic screen_attract_logo-13 art/title/title-13.png 512 480 0 0
 pic screen_attract_logo-14 art/title/title-14.png 512 480 0 0
 # --- end title ---
 # The idle panel's lines, centred in its frame; the bonus round's win
-# line in the theme's own words.
-#+ text_center 8 22 3 8
+# line in the theme's own words. Rows 4 and 7 are left where the game puts them: on the extra life screen those
+# rows are a number and two short texts side by side (20000 PTS), and centring each piece by itself laid one over
+# the other.
+#+ text_center 8 22 3 3
+#+ text_center 8 22 5 6
 #+ text_say bonus_text_win_1 ONE FOR THE ROAD
 # --- objects (runway/objects.py) ---
 pic sprite-tap-09 art/obj/tap-09.png 32 32 0 0
@@ -36,6 +39,12 @@ pic sprite-mug-12 art/obj/mug-12.png 32 32 0 0
 pic sprite-mug-13 art/obj/mug-13.png 32 32 0 0
 pic sprite-tip-4d art/obj/tip-4d.png 32 32 0 0
 pic sprite-legend-4d art/obj/tip-4d.png 32 32 0 0
+# The same money wherever another kind of body shows it: the attract cycle's instruction scene lays its tip on the
+# bar as one of its own bodies.
+pic sprite-mug-4d art/obj/tip-4d.png 32 32 0 0
+pic sprite-scene_customer-4d art/obj/tip-4d.png 32 32 0 0
+pic sprite-customer-4d art/obj/tip-4d.png 32 32 0 0
+pic sprite-bonus_object-4d art/obj/tip-4d.png 32 32 0 0
 pic letter-A art/font/letter-A.png 16 16 0 0
 pic letter-B art/font/letter-B.png 16 16 0 0
 pic letter-C art/font/letter-C.png 16 16 0 0
@@ -66,8 +75,7 @@ pic letter-2 art/font/letter-2.png 16 16 0 0
 pic letter-3 art/font/letter-3.png 16 16 0 0
 pic letter-5 art/font/letter-5.png 16 16 0 0
 pic letter-7 art/font/letter-7.png 16 16 0 0
-# The board's tile 3A is the copyright sign in front of COPYRIGHT on the title
-# card (no colon is written with it), so it wears the theme's own copyright sign.
+# The board draws its copyright sign with this tile.
 pic letter-x03a art/font/copyright.png 16 16 0 0
 pic counter-score-0 art/font/letter-0.png 16 16 0 0
 pic counter-score-1 art/font/letter-1.png 16 16 0 0
@@ -99,18 +107,6 @@ pic counter-cleared-6 art/font/letter-6.png 16 16 0 0
 pic counter-cleared-7 art/font/letter-7.png 16 16 0 0
 pic counter-cleared-8 art/font/letter-8.png 16 16 0 0
 pic counter-cleared-9 art/font/letter-9.png 16 16 0 0
-# The round number in the lower right corner during play, as it is shown.
-pic counter-cleared_shown-0 art/font/letter-0.png 16 16 0 0
-pic counter-cleared_shown-1 art/font/letter-1.png 16 16 0 0
-pic counter-cleared_shown-2 art/font/letter-2.png 16 16 0 0
-pic counter-cleared_shown-3 art/font/letter-3.png 16 16 0 0
-pic counter-cleared_shown-4 art/font/letter-4.png 16 16 0 0
-pic counter-cleared_shown-5 art/font/letter-5.png 16 16 0 0
-pic counter-cleared_shown-6 art/font/letter-6.png 16 16 0 0
-pic counter-cleared_shown-7 art/font/letter-7.png 16 16 0 0
-pic counter-cleared_shown-8 art/font/letter-8.png 16 16 0 0
-pic counter-cleared_shown-9 art/font/letter-9.png 16 16 0 0
-# The credits on the credit line (CREDIT N) in the attract mode.
 pic counter-credits_shown-0 art/font/letter-0.png 16 16 0 0
 pic counter-credits_shown-1 art/font/letter-1.png 16 16 0 0
 pic counter-credits_shown-2 art/font/letter-2.png 16 16 0 0
@@ -121,15 +117,254 @@ pic counter-credits_shown-6 art/font/letter-6.png 16 16 0 0
 pic counter-credits_shown-7 art/font/letter-7.png 16 16 0 0
 pic counter-credits_shown-8 art/font/letter-8.png 16 16 0 0
 pic counter-credits_shown-9 art/font/letter-9.png 16 16 0 0
+pic counter-cleared_shown-0 art/font/letter-0.png 16 16 0 0
+pic counter-cleared_shown-1 art/font/letter-1.png 16 16 0 0
+pic counter-cleared_shown-2 art/font/letter-2.png 16 16 0 0
+pic counter-cleared_shown-3 art/font/letter-3.png 16 16 0 0
+pic counter-cleared_shown-4 art/font/letter-4.png 16 16 0 0
+pic counter-cleared_shown-5 art/font/letter-5.png 16 16 0 0
+pic counter-cleared_shown-6 art/font/letter-6.png 16 16 0 0
+pic counter-cleared_shown-7 art/font/letter-7.png 16 16 0 0
+pic counter-cleared_shown-8 art/font/letter-8.png 16 16 0 0
+pic counter-cleared_shown-9 art/font/letter-9.png 16 16 0 0
+pic counter-extra_first-0 art/font/letter-0.png 16 16 0 0
+pic counter-extra_first-1 art/font/letter-1.png 16 16 0 0
+pic counter-extra_first-2 art/font/letter-2.png 16 16 0 0
+pic counter-extra_first-3 art/font/letter-3.png 16 16 0 0
+pic counter-extra_first-4 art/font/letter-4.png 16 16 0 0
+pic counter-extra_first-5 art/font/letter-5.png 16 16 0 0
+pic counter-extra_first-6 art/font/letter-6.png 16 16 0 0
+pic counter-extra_first-7 art/font/letter-7.png 16 16 0 0
+pic counter-extra_first-8 art/font/letter-8.png 16 16 0 0
+pic counter-extra_first-9 art/font/letter-9.png 16 16 0 0
+pic counter-extra_every-0 art/font/letter-0.png 16 16 0 0
+pic counter-extra_every-1 art/font/letter-1.png 16 16 0 0
+pic counter-extra_every-2 art/font/letter-2.png 16 16 0 0
+pic counter-extra_every-3 art/font/letter-3.png 16 16 0 0
+pic counter-extra_every-4 art/font/letter-4.png 16 16 0 0
+pic counter-extra_every-5 art/font/letter-5.png 16 16 0 0
+pic counter-extra_every-6 art/font/letter-6.png 16 16 0 0
+pic counter-extra_every-7 art/font/letter-7.png 16 16 0 0
+pic counter-extra_every-8 art/font/letter-8.png 16 16 0 0
+pic counter-extra_every-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_1_place-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_1_place-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_1_place-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_1_place-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_1_place-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_1_place-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_1_place-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_1_place-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_1_place-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_1_place-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_1_score-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_1_score-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_1_score-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_1_score-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_1_score-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_1_score-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_1_score-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_1_score-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_1_score-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_1_score-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_2_place-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_2_place-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_2_place-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_2_place-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_2_place-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_2_place-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_2_place-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_2_place-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_2_place-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_2_place-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_2_score-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_2_score-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_2_score-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_2_score-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_2_score-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_2_score-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_2_score-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_2_score-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_2_score-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_2_score-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_3_place-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_3_place-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_3_place-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_3_place-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_3_place-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_3_place-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_3_place-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_3_place-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_3_place-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_3_place-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_3_score-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_3_score-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_3_score-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_3_score-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_3_score-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_3_score-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_3_score-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_3_score-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_3_score-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_3_score-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_4_place-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_4_place-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_4_place-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_4_place-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_4_place-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_4_place-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_4_place-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_4_place-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_4_place-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_4_place-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_4_score-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_4_score-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_4_score-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_4_score-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_4_score-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_4_score-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_4_score-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_4_score-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_4_score-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_4_score-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_5_place-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_5_place-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_5_place-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_5_place-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_5_place-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_5_place-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_5_place-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_5_place-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_5_place-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_5_place-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_5_score-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_5_score-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_5_score-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_5_score-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_5_score-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_5_score-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_5_score-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_5_score-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_5_score-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_5_score-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_6_place-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_6_place-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_6_place-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_6_place-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_6_place-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_6_place-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_6_place-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_6_place-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_6_place-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_6_place-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_6_score-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_6_score-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_6_score-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_6_score-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_6_score-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_6_score-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_6_score-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_6_score-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_6_score-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_6_score-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_7_place-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_7_place-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_7_place-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_7_place-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_7_place-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_7_place-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_7_place-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_7_place-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_7_place-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_7_place-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_7_score-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_7_score-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_7_score-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_7_score-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_7_score-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_7_score-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_7_score-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_7_score-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_7_score-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_7_score-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_8_place-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_8_place-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_8_place-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_8_place-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_8_place-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_8_place-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_8_place-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_8_place-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_8_place-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_8_place-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_8_score-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_8_score-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_8_score-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_8_score-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_8_score-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_8_score-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_8_score-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_8_score-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_8_score-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_8_score-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_9_place-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_9_place-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_9_place-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_9_place-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_9_place-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_9_place-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_9_place-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_9_place-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_9_place-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_9_place-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_9_score-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_9_score-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_9_score-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_9_score-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_9_score-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_9_score-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_9_score-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_9_score-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_9_score-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_9_score-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_10_place-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_10_place-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_10_place-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_10_place-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_10_place-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_10_place-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_10_place-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_10_place-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_10_place-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_10_place-9 art/font/letter-9.png 16 16 0 0
+pic counter-table_10_score-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_10_score-1 art/font/letter-1.png 16 16 0 0
+pic counter-table_10_score-2 art/font/letter-2.png 16 16 0 0
+pic counter-table_10_score-3 art/font/letter-3.png 16 16 0 0
+pic counter-table_10_score-4 art/font/letter-4.png 16 16 0 0
+pic counter-table_10_score-5 art/font/letter-5.png 16 16 0 0
+pic counter-table_10_score-6 art/font/letter-6.png 16 16 0 0
+pic counter-table_10_score-7 art/font/letter-7.png 16 16 0 0
+pic counter-table_10_score-8 art/font/letter-8.png 16 16 0 0
+pic counter-table_10_score-9 art/font/letter-9.png 16 16 0 0
 pic counter-lives_shown art/font/glass.png 16 16 0 0
-#+ recolor sprite-bartender_part-03 13=c1821c 10=eab647 14=7b4506
-#+ recolor sprite-bartender_part-06 13=c1821c 10=eab647 14=7b4506
+# The second player's score stays off the screen while it is 0: a lone 0 in the corner of a one-player game.
+#+ counter_off score_2 when score_2 == 0
+# The tap is one design in every picture the board shows it in (runway/tap16.py): at rest its own sprite, and in a
+# pour a part of his sprites, where the original's tap is hidden box by box and ours laid there. His hand and arm
+# stay the board's. 06: his hand reaching, the handle up. 03: the handle pulled. 02 and 05: the spout's end.
+#+ recolor sprite-bartender_part-06 box=11,11,16,17 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-bartender_part-06 box=12,18,31,31 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+also sprite-bartender_part-06 art/obj/tap-06.png 32 32 0 0
+#+ recolor sprite-bartender_part-03 box=0,13,7,20 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-bartender_part-03 box=12,24,31,31 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+also sprite-bartender_part-03 art/obj/tap-03.png 32 32 0 0
 #+ recolor sprite-bartender_part-02 box=7,6,22,31 9=- 4=- 2=- 10=-
-#+ recolor sprite-bartender_part-02 box=9,0,31,5 13=c1821c 10=eab647
-also sprite-bartender_part-02 art/obj/glass-pour-body.png 32 32 0 0
+#+ recolor sprite-bartender_part-02 box=11,0,31,5 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+also sprite-bartender_part-02 art/obj/pour-02.png 32 32 0 0
 #+ recolor sprite-bartender_part-05 box=7,6,22,31 9=- 4=- 2=- 10=-
-#+ recolor sprite-bartender_part-05 box=9,0,31,5 13=c1821c 10=eab647
-also sprite-bartender_part-05 art/obj/glass-pour-body.png 32 32 0 0
+#+ recolor sprite-bartender_part-05 box=11,0,31,5 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+also sprite-bartender_part-05 art/obj/pour-02.png 32 32 0 0
 pic sprite-legend-17 art/obj/mug-17.png 32 32 0 0
 pic sprite-bonus_object-7f art/obj/beer-7f.png 32 32 0 0
 pic sprite-bonus_object-21 art/obj/beer-21.png 32 32 0 0
@@ -138,7 +373,28 @@ pic sprite-bonus_object-0c art/obj/beer-0c.png 32 32 0 0
 pic sprite-bartender_part-0d art/obj/foam-0d.png 32 32 0 0
 pic sprite-customer-23 art/obj/mug-23.png 32 32 0 0
 pic sprite-scene_customer-23 art/obj/mug-23.png 32 32 0 0
-pic sprite-bonus_object-59 art/obj/mug-59.png 32 32 0 0
+# The bonus round's cans (closed, opened, on its side) and the spray, each in the original's box.
+pic sprite-bonus_object-22 art/obj/hand-22.png 32 32 0 0
+pic sprite-bonus_object-57 art/obj/can-57.png 32 32 0 0
+pic sprite-bonus_object-58 art/obj/can-58.png 32 32 0 0
+pic sprite-bonus_object-59 art/obj/can-59.png 32 32 0 0
+# The spray is one painted fountain hung on the drop at the can's mouth, the one sprite the board shows once for the
+# whole spray; it rises and falls back by the drop's age, as the board's stack of pieces does. The pieces themselves
+# are drawn as nothing.
+pic sprite-bonus_object-68 art/obj/blank.png 32 32 0 0
+pic sprite-bonus_object-69 art/obj/spray-69.png 32 32 0 0
+timed sprite-bonus_object-69 3 6 art/obj/fountain-1.png 17 34 6 -24
+timed sprite-bonus_object-69 6 9 art/obj/fountain-2.png 30 60 0 -50
+timed sprite-bonus_object-69 9 12 art/obj/fountain-3.png 41 84 -6 -74
+timed sprite-bonus_object-69 12 15 art/obj/fountain-4.png 53 108 -12 -98
+timed sprite-bonus_object-69 15 18 art/obj/fountain-5.png 65 132 -18 -122
+timed sprite-bonus_object-69 18 21 art/obj/fountain-6.png 78 158 -24 -148
+timed sprite-bonus_object-69 21 41 art/obj/fountain-7.png 90 182 -30 -172
+timed sprite-bonus_object-69 41 44 art/obj/fountain-6.png 78 158 -24 -148
+timed sprite-bonus_object-69 44 47 art/obj/fountain-5.png 65 132 -18 -122
+timed sprite-bonus_object-69 47 50 art/obj/fountain-4.png 53 108 -12 -98
+timed sprite-bonus_object-69 50 53 art/obj/fountain-3.png 41 84 -6 -74
+timed sprite-bonus_object-69 53 56 art/obj/fountain-2.png 30 60 0 -50
 pic sprite-bartender_part-0a art/obj/stream-0a.png 32 32 0 0
 #+ recolor sprite-player-41 box=22,0,31,8 2=- 3=- 4=- 7=- 9=- 10=- 12=- 14=- 15=-
 #+ recolor sprite-player-41 box=22,9,31,14 4=- 10=- 14=-
@@ -287,6 +543,58 @@ stage_piece t011 pieces/saloon/t011.png 32 32
 stage_piece t012 pieces/saloon/t012.png 32 32
 stage_piece t013 pieces/saloon/t013.png 32 32
 stage_piece t014 pieces/saloon/t014.png 32 32
+stage_piece e011 pieces/saloon/e011.png 32 32
+stage_piece e012 pieces/saloon/e012.png 32 32
+stage_piece e013 pieces/saloon/e013.png 32 32
+stage_piece e014 pieces/saloon/e014.png 32 32
+stage_piece e024 pieces/saloon/e024.png 32 32
+stage_piece wide00 pieces/front/wide00.png 500 327
+stage_piece wide01 pieces/front/wide01.png 500 327
+stage_piece wide02 pieces/front/wide02.png 500 327
+stage_piece wide03 pieces/front/wide03.png 500 327
+stage_piece wide04 pieces/front/wide04.png 500 327
+stage_piece wide05 pieces/front/wide05.png 500 327
+stage_piece wide06 pieces/front/wide06.png 500 327
+stage_piece wide07 pieces/front/wide07.png 500 327
+stage_piece wide08 pieces/front/wide08.png 500 327
+stage_piece wide09 pieces/front/wide09.png 500 327
+stage_piece wide10 pieces/front/wide10.png 500 327
+stage_piece wide11 pieces/front/wide11.png 500 327
+stage_piece wide12 pieces/front/wide12.png 500 327
+stage_piece sign_left pieces/saloon/sign_left.png 160 172
+stage_piece btop2 pieces/saloon/btop2.png 32 64
+stage_piece bfront pieces/saloon/bfront.png 32 256
+stage_piece bwedge pieces/saloon/bwedge.png 32 32
+stage_piece bside pieces/saloon/bside.png 32 32
+stage_piece bgap pieces/saloon/bgap.png 32 32
+stage_piece wall64 pieces/saloon/wall64.png 64 32
+stage_piece buck pieces/saloon/buck.png 152 240
+stage_piece buck_right pieces/saloon/buck_right.png 124 196
+stage_piece lamp_l pieces/saloon/lamp_l.png 40 128
+stage_piece lamp_r pieces/saloon/lamp_r.png 40 128
+stage_piece bside_r pieces/saloon/bside_r.png 32 32
+stage_piece bside_lip_r pieces/saloon/bside_lip_r.png 32 32
+stage_piece bwedge_r pieces/saloon/bwedge_r.png 32 32
+stage_piece brr21_31 pieces/saloon/brr21_31.png 32 32
+stage_piece brr22_31 pieces/saloon/brr22_31.png 32 32
+stage_piece brr23_31 pieces/saloon/brr23_31.png 32 32
+stage_piece br185 pieces/saloon/br185.png 32 32
+stage_piece br186 pieces/saloon/br186.png 32 32
+stage_piece br187 pieces/saloon/br187.png 32 32
+stage_piece br188 pieces/saloon/br188.png 32 32
+stage_piece br189 pieces/saloon/br189.png 32 32
+stage_piece br18a pieces/saloon/br18a.png 32 32
+stage_piece br18b pieces/saloon/br18b.png 32 32
+stage_piece br18c pieces/saloon/br18c.png 32 32
+stage_piece bside_lip pieces/saloon/bside_lip.png 32 32
+stage_piece dk pieces/saloon/dk.png 32 32
+stage_piece ft02d pieces/saloon/ft02d.png 32 32
+stage_piece fl027 pieces/saloon/fl027.png 32 32
+stage_piece fl05c pieces/saloon/fl05c.png 32 32
+stage_piece fl05d pieces/saloon/fl05d.png 32 32
+stage_piece fl062 pieces/saloon/fl062.png 32 32
+stage_piece fl063 pieces/saloon/fl063.png 32 32
+stage_piece fl02e pieces/saloon/fl02e.png 32 32
 stage_piece door pieces/saloon/door.png 96 288
 stage_piece hole pieces/saloon/hole.png 96 288
 stage_piece cask pieces/saloon/cask.png 96 128
@@ -305,6 +613,7 @@ stage_piece painting10 pieces/saloon/painting10.png 128 563
 stage_piece painting11 pieces/saloon/painting11.png 128 563
 stage_piece painting12 pieces/saloon/painting12.png 128 563
 stage_piece figure pieces/saloon/figure.png 128 160
+stage_piece moose pieces/saloon/moose.png 150 166
 stage_piece panel pieces/saloon/panel.png 32 32
 stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 # The saloon, as all three of its screens draw it (the second mirrored):
@@ -331,12 +640,25 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_cells door_cfront tile=0x02c tile=0x05f
 #+ room_cells door_cfoot tile=0x02d tile=0x060
 #+ room_cells door_top tile=0x028
+#+ room_cells b02b tile=0x02b
+#+ room_cells b02c tile=0x02c
+#+ room_cells b02d tile=0x02d
+#+ room_cells fl027 tile=0x027
+#+ room_cells fl05c tile=0x05c
+#+ room_cells door_grey tile=0x025-0x026 tile=0x028-0x02e tile=0x05e-0x063
+#+ room_cells fl05d tile=0x05d
+#+ room_cells fl062 tile=0x062
+#+ room_cells fl063 tile=0x063
+#+ room_cells fl02e tile=0x02e
+#+ room_cells top_leaf tile=0x01c
 #+ room_cells cask tile=0x01d-0x01f tile=0x021-0x024
 #+ room_cells cask_top tile=0x01d
+#+ room_cells cask_corner tile=0x024
+#+ room_cells cask_edge tile=0x01d-0x01f tile=0x021-0x023
 #+ room_cells sign tile=0x064-0x08f tile=0x00e
 #+ room_cells picture tile=0x094-0x0b6
 #+ room_cells picture_top tile=0x09b
-#+ room_fill t007 t007
+#+ room_fill t007 wall64
 #+ room_fill t008 t008
 #+ room_fill t015 t015
 #+ room_fill t004 t004
@@ -346,26 +668,52 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_fill t017 t017
 #+ room_fill t018 t018
 #+ room_fill t019 t019
-#+ room_fill t011 t011
-#+ room_fill t012 t012
-#+ room_fill t013 t013
-#+ room_fill t014 t014
-#+ room_fill door t007
+#+ room_fill t011 wall64
+#+ room_fill t011 e011
+#+ room_fill t012 wall64
+#+ room_fill t012 e012
+#+ room_fill t013 wall64
+#+ room_fill t013 e013
+#+ room_fill t014 wall64
+#+ room_fill t014 e014
+#+ room_fill door wall64
+# The floor behind each door's upper leaf, to the floor's own left line
+# (down the post, then the slant, with the edge's dark border). The top
+# door's upper leaf stands on the back wall, so its cell is wall again.
+#+ room_fill fl027 fl027
+#+ room_fill fl05c fl05c
+#+ room_fill fl05d fl05d
+#+ room_fill fl062 fl062
+#+ room_fill fl063 fl063
+#+ room_fill fl02e fl02e
+#+ room_at top_leaf t007 0 16
 #+ room_at door_top hole -16 0
 #+ room_fill door_ctop t001
 #+ room_fill door_cfront t01b
 #+ room_fill door_cfoot t01a
-#+ room_fill cask t007
+# The bar begins at the door's frame, as the original's does: the cell left
+# of it is the doorway's dark behind the lower leaf, then floor with the
+# post's shadow at the bar's foot.
+#+ room_fill b02b dk
+#+ room_fill b02c dk
+#+ room_fill b02d ft02d
+#+ room_fill cask wall64
+# The floor's corner in the cell under each cask, where the edge passes.
+#+ room_fill cask_corner wall64
+#+ room_fill cask_corner e024
 # The floor's edge through the door and cask cells, on the original's own
 # floor pixels (grey), over the wall laid there.
-#+ room_mask door t004 min>0+50 r>b-20 b>r-20 r>g-20
-#+ room_mask cask t004 min>0+50 r>b-20 b>r-20 r>g-20
+#+ room_mask door_grey t004 min>0+50 r>b-20 b>r-20 r>g-20
+#+ room_mask cask_edge t004 min>0+50 r>b-20 b>r-20 r>g-20
 #+ room_fill sign t008
-#+ room_fill picture t007
+#+ room_fill picture wall64
 #+ room_at door_top door -16 0
 #+ room_at cask_top cask 0 0
 #+ room_box sign sign
 #+ room_at picture_top picture|painting01|painting02|painting03|painting04|painting05|painting06|painting07|painting08|painting09|painting10|painting11|painting12 -48 -58
+# A mounted buck high on the right wall, drawn as it is seen from the room (its head out toward the left, its plaque
+# narrow against the wall), clear of the casks and the second score.
+#+ room_at picture_top buck_right 382 -8
 # The wall left of each bar's doorway drawn over the bodies: the bartender
 # walking or thrown past a bar's end goes into the wall, where the
 # original's own colours showed through.
@@ -398,13 +746,27 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_cells door_cfront tile=0x02c tile=0x05f
 #+ room_cells door_cfoot tile=0x02d tile=0x060
 #+ room_cells door_top tile=0x028
+#+ room_cells b02b tile=0x02b
+#+ room_cells b02c tile=0x02c
+#+ room_cells b02d tile=0x02d
+#+ room_cells fl027 tile=0x027
+#+ room_cells fl05c tile=0x05c
+#+ room_cells door_grey tile=0x025-0x026 tile=0x028-0x02e tile=0x05e-0x063
+#+ room_cells fl05d tile=0x05d
+#+ room_cells fl062 tile=0x062
+#+ room_cells fl063 tile=0x063
+#+ room_cells fl02e tile=0x02e
+#+ room_cells top_leaf tile=0x01c
 #+ room_cells cask tile=0x01d-0x01f tile=0x021-0x024
 #+ room_cells cask_top tile=0x01d
+#+ room_cells cask_corner tile=0x024
+#+ room_cells cask_edge tile=0x01d-0x01f tile=0x021-0x023
 #+ room_cells sign tile=0x064-0x08f tile=0x00e
 #+ room_cells picture tile=0x094-0x0b6
 #+ room_cells picture_top tile=0x09b
 #+ room_cells figure tile=0x251-0x260
-#+ room_fill t007 t007
+#+ room_cells figure_top tile=0x256
+#+ room_fill t007 wall64
 #+ room_fill t008 t008
 #+ room_fill t015 t015
 #+ room_fill t004 t004
@@ -414,23 +776,46 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_fill t017 t017
 #+ room_fill t018 t018
 #+ room_fill t019 t019
-#+ room_fill t011 t011
-#+ room_fill t012 t012
-#+ room_fill t013 t013
-#+ room_fill t014 t014
-#+ room_fill door t007
+#+ room_fill t011 wall64
+#+ room_fill t011 e011
+#+ room_fill t012 wall64
+#+ room_fill t012 e012
+#+ room_fill t013 wall64
+#+ room_fill t013 e013
+#+ room_fill t014 wall64
+#+ room_fill t014 e014
+#+ room_fill door wall64
+# The floor behind each door's upper leaf, to the floor's own left line
+# (down the post, then the slant, with the edge's dark border). The top
+# door's upper leaf stands on the back wall, so its cell is wall again.
+#+ room_fill fl027 fl027
+#+ room_fill fl05c fl05c
+#+ room_fill fl05d fl05d
+#+ room_fill fl062 fl062
+#+ room_fill fl063 fl063
+#+ room_fill fl02e fl02e
+#+ room_at top_leaf t007 0 16
 #+ room_at door_top hole -16 0
 #+ room_fill door_ctop t001
 #+ room_fill door_cfront t01b
 #+ room_fill door_cfoot t01a
-#+ room_fill cask t007
+# The bar begins at the door's frame, as the original's does: the cell left
+# of it is the doorway's dark behind the lower leaf, then floor with the
+# post's shadow at the bar's foot.
+#+ room_fill b02b dk
+#+ room_fill b02c dk
+#+ room_fill b02d ft02d
+#+ room_fill cask wall64
+# The floor's corner in the cell under each cask, where the edge passes.
+#+ room_fill cask_corner wall64
+#+ room_fill cask_corner e024
 # The floor's edge through the door and cask cells, on the original's own
 # floor pixels (grey), over the wall laid there.
-#+ room_mask door t004 min>0+50 r>b-20 b>r-20 r>g-20
-#+ room_mask cask t004 min>0+50 r>b-20 b>r-20 r>g-20
+#+ room_mask door_grey t004 min>0+50 r>b-20 b>r-20 r>g-20
+#+ room_mask cask_edge t004 min>0+50 r>b-20 b>r-20 r>g-20
 #+ room_fill sign t008
-#+ room_fill picture t007
-#+ room_fill figure t007
+#+ room_fill picture wall64
+#+ room_fill figure wall64
 #+ room_at door_top door -16 0
 #+ room_at cask_top cask 0 0
 #+ room_box sign sign
@@ -443,7 +828,10 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_front 0 12 3 15
 #+ room_front 28 16 31 17
 #+ room_front 29 18 31 21
-#+ room_box figure figure
+# The trophy the original hangs here: a goofy moose, its tongue out, whole and at its own size.
+# The anchor's cell is one the board mirrors, so the page mirrors the piece and its offset: the picture is stored
+# turned round and the offset given from the cell's other side, and he comes out facing into the room.
+#+ room_at figure_top moose -61 -10
 # The how-to-play screen: the saloon's two lower counters, and a wooden
 # frame round the dark panel the instructions are written on.
 #+ room screen_attract_demo
@@ -467,13 +855,26 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_cells door_cfront tile=0x02c tile=0x05f
 #+ room_cells door_cfoot tile=0x02d tile=0x060
 #+ room_cells door_top tile=0x028
+#+ room_cells b02b tile=0x02b
+#+ room_cells b02c tile=0x02c
+#+ room_cells b02d tile=0x02d
+#+ room_cells fl027 tile=0x027
+#+ room_cells fl05c tile=0x05c
+#+ room_cells door_grey tile=0x025-0x026 tile=0x028-0x02e tile=0x05e-0x063
+#+ room_cells fl05d tile=0x05d
+#+ room_cells fl062 tile=0x062
+#+ room_cells fl063 tile=0x063
+#+ room_cells fl02e tile=0x02e
+#+ room_cells top_leaf tile=0x01c
 #+ room_cells cask tile=0x01d-0x01f tile=0x021-0x024
 #+ room_cells cask_top tile=0x01d
+#+ room_cells cask_corner tile=0x024
+#+ room_cells cask_edge tile=0x01d-0x01f tile=0x021-0x023
 #+ room_cells picture tile=0x094-0x0b6
 #+ room_cells picture_top tile=0x09b
 #+ room_cells frame tile=0x091-0x093
 #+ room_cells panel tile=0x000
-#+ room_fill t007 t007
+#+ room_fill t007 wall64
 #+ room_fill t008 t008
 #+ room_fill t015 t015
 #+ room_fill t004 t004
@@ -483,25 +884,113 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_fill t017 t017
 #+ room_fill t018 t018
 #+ room_fill t019 t019
-#+ room_fill t011 t011
-#+ room_fill t012 t012
-#+ room_fill t013 t013
-#+ room_fill t014 t014
-#+ room_fill door t007
+#+ room_fill t011 wall64
+#+ room_fill t011 e011
+#+ room_fill t012 wall64
+#+ room_fill t012 e012
+#+ room_fill t013 wall64
+#+ room_fill t013 e013
+#+ room_fill t014 wall64
+#+ room_fill t014 e014
+#+ room_fill door wall64
+# The floor behind each door's upper leaf, to the floor's own left line
+# (down the post, then the slant, with the edge's dark border). The top
+# door's upper leaf stands on the back wall, so its cell is wall again.
+#+ room_fill fl027 fl027
+#+ room_fill fl05c fl05c
+#+ room_fill fl05d fl05d
+#+ room_fill fl062 fl062
+#+ room_fill fl063 fl063
+#+ room_fill fl02e fl02e
+#+ room_at top_leaf t007 0 16
 #+ room_at door_top hole -16 0
 #+ room_fill door_ctop t001
 #+ room_fill door_cfront t01b
 #+ room_fill door_cfoot t01a
-#+ room_fill cask t007
+# The bar begins at the door's frame, as the original's does: the cell left
+# of it is the doorway's dark behind the lower leaf, then floor with the
+# post's shadow at the bar's foot.
+#+ room_fill b02b dk
+#+ room_fill b02c dk
+#+ room_fill b02d ft02d
+#+ room_fill cask wall64
+# The floor's corner in the cell under each cask, where the edge passes.
+#+ room_fill cask_corner wall64
+#+ room_fill cask_corner e024
 # The floor's edge through the door and cask cells, on the original's own
 # floor pixels (grey), over the wall laid there.
-#+ room_mask door t004 min>0+50 r>b-20 b>r-20 r>g-20
-#+ room_mask cask t004 min>0+50 r>b-20 b>r-20 r>g-20
-#+ room_fill picture t007
+#+ room_mask door_grey t004 min>0+50 r>b-20 b>r-20 r>g-20
+#+ room_mask cask_edge t004 min>0+50 r>b-20 b>r-20 r>g-20
+#+ room_fill picture wall64
 #+ room_fill frame t015
 #+ room_fill panel panel
 #+ room_at door_top door -16 0
 #+ room_at cask_top cask 0 0
 # The idle screen draws no tap sprites: its barrels get the brass tap where play draws it.
-#+ room_at cask_top idle_tap -19 8
+#+ room_at cask_top idle_tap -20 8
 #+ room_at picture_top picture|painting01|painting02|painting03|painting04|painting05|painting06|painting07|painting08|painting09|painting10|painting11|painting12 -48 -58
+# The mounted buck on the right wall, as on the bars.
+#+ room_at picture_top buck_right 382 -8
+# The bonus round's room: the saloon's walls and floor, one of its paintings
+# front on, on the back wall, the sign on the left wall, and the round's one
+# wide counter built from the bar's pieces.
+#+ room screen_bonus
+#+ room_cells w7 tile=0x007
+#+ room_cells w8 tile=0x008
+#+ room_cells logo tile=0x135-0x17a tile=0x00e
+#+ room_cells logo_top tile=0x179
+#+ room_cells btop tile=0x001 tile=0x17b
+#+ room_cells bend tile=0x17b
+#+ room_cells bfront tile=0x180-0x183 tile=0x17c-0x17f
+#+ room_cells bfloor tile=0x000
+#+ room_cells bside tile=0x17d-0x17f
+#+ room_cells bside_lip tile=0x17c
+#+ room_cells bgap tile=0x184
+#+ room_cells brail tile=0x185-0x18c
+#+ room_cells br185 tile=0x185
+#+ room_cells br186 tile=0x186
+#+ room_cells br187 tile=0x187
+#+ room_cells br188 tile=0x188
+#+ room_cells br189 tile=0x189
+#+ room_cells br18a tile=0x18a
+#+ room_cells br18b tile=0x18b
+#+ room_cells br18c tile=0x18c
+#+ room_fill w7 wall64
+#+ room_fill w8 t008
+#+ room_fill logo t008
+#+ room_fill bgap wall64
+#+ room_fill brail wall64
+#+ room_at logo_top wide00|wide01|wide02|wide03|wide04|wide05|wide06|wide07|wide08|wide09|wide10|wide11|wide12 -5 -10
+#+ room_at logo_top sign_left -120 8
+# On the right wall a mounted buck, and a brass lamp each side of the painting.
+#+ room_at logo_top buck 290 10
+#+ room_at logo_top lamp_l -28 32
+#+ room_at logo_top lamp_r 248 32
+#+ room_fill bfloor t004
+# The floor's ends behind the counter and the two near rails, on straight lines.
+#+ room_fill bgap bgap
+#+ room_fill br185 br185
+#+ room_fill br186 br186
+#+ room_fill br187 br187
+#+ room_fill br188 br188
+#+ room_fill br189 br189
+#+ room_fill br18a br18a
+#+ room_fill br18b br18b
+#+ room_fill br18c br18c
+#+ room_at logo_top brr21_31 368 304
+#+ room_at logo_top brr22_31 368 320
+#+ room_at logo_top brr23_31 368 336
+#+ room_fill btop btop2
+#+ room_fill bend bwedge
+#+ room_fill bfront bfront
+#+ room_fill bside bside
+#+ room_fill bside_lip bside_lip
+# The right side's wall pieces again, unmirrored, so the wall's seams run true there too.
+#+ room_at logo_top bwedge_r 320 192
+#+ room_at logo_top bwedge_r 336 208
+#+ room_at logo_top bside_lip_r 336 224
+#+ room_at logo_top bside_r 336 240
+#+ room_at logo_top bside_r 336 256
+#+ room_at logo_top bside_r 336 272
+#+ room_at logo_top bside_r 336 288
+#+ room_at logo_top bside_r 336 304
