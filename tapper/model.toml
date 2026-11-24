@@ -37442,6 +37442,12 @@ description = "1 while the initials wait for the tapper's release ($2D20), the l
 [counters.intro]
 description = "The level's intro ($5404), counted by tapper_bars from the setup: 1 on the setup's frame (2 in a game's first level and after a life lost, whose screen is cleared on the setup's frame), then the frames since plus 1 while the screen is cleared and its lines are up, one past its count on the frame the screen keeps it after the stage is drawn ($5DF6, counter stage_late), then 0"
 
+[counters.level_end]
+description = "1 while a level's end script runs: from the frame $55F4 starts it (the last customer gone, the level's points) through its waits to its return, where $5681 counts the level (counter cleared) and the setup or the bonus round comes next; 0 otherwise. Presentation only, for a theme's room: tapper_bars sets it each frame from the flow's state"
+
+[counters.life_lost]
+description = "1 from the frame a life is lost to the next life's setup: a mug off a bar's end (state 12, $236E, the life taken at $23AF) through its fall and crash, or a customer at the bartender's end through his slide ($1CE1, the life taken at $1D71) and the state 12 it goes on in, then state 9 until the setup ($4B5B) clears the screen for the next life's intro; with no lives left it ends as GAME OVER goes up (counter game_over_text). 0 otherwise. Presentation only, for a theme's room: tapper_bars sets it each frame from the flow's state"
+
 [counters.lives]
 description = "Lives, E4A7: 3 at a game's start ($4B22), one less when a life is lost ($23AF), one more at each extra-life score ($615D)"
 

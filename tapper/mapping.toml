@@ -1063,6 +1063,32 @@ number = 0
 when = "ram[0xE3BD] != 1"
 
 [[field]]
+lookup = [[12, 1]]
+lookup_else = 0
+note = "Not compared: 1 from the frame a life is lost to the next life's setup, read from the game's state E397: 12 a mug's fall ($236E, E4A7 one less at $23AF). Loaded so a clip that starts there has it on its first frame; the hooks set it from the flow's state each frame. State 9, the setup the life lost goes back to ($24CC, two frames before $4B5B clears the screen: tapper.die.001 1780 and 1781), reads 0 here: the setup's own return from its waits is state 9 too (1919), and a mug's fall has no wait to tell them apart by E3A8. On the frame $24E2's $5E99 waits before a game over E397 is 12 too, and this reads 1 where the hooks give 0 (GAME OVER is up, counter game_over_text)"
+path = "counters.life_lost"
+presentation = true
+ram = [0xE397]
+
+[[field.case]]
+note = "A customer at the bartender's end: $1CE1's first waits ($232B, E397 15 and 16) called in play's state 10 (E3A8; tapper.die.001 starts in one, on 1650). From $1D66 on (1651) its waits are called in state 12, E6FF 3, as the game over's are ($2467, $24D8), so a start in them reads 0 here and the hooks give 1 from the first step"
+number = 1
+when = "(ram[0xE397] == 15 || ram[0xE397] == 16) && ram[0xE3A8] == 10"
+
+[[field]]
+lookup = [[0, 0]]
+lookup_else = 0
+note = "Not compared: 1 while a level's end script runs ($55F4 to its return, where $5681 counts the level, E4A8), read from its waits ($232B, E397 15 and 16) called in state 11 (E3A8). Loaded so a clip that starts in a level's end has it on its first frame; the hooks set it from the flow's state each frame"
+path = "counters.level_end"
+presentation = true
+ram = [0xE397]
+
+[[field.case]]
+note = "An end script's wait"
+number = 1
+when = "(ram[0xE397] == 15 || ram[0xE397] == 16) && ram[0xE3A8] == 11"
+
+[[field]]
 note = "The sound requests the frame made, as the frame ends: the queue $606B fills, E114 its length and its bytes from E0E1 (6 at most), which the next frame's interrupt sends ($0379). Compared, so a sound the model doesn't ask for, or asks for on another frame, is a difference"
 path = "entities.sound[0].ext[1]"
 ram = [0xE114, 0xE0E1, 0xE0E2, 0xE0E3, 0xE0E4, 0xE0E5, 0xE0E6]

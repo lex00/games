@@ -3722,6 +3722,43 @@ fn game_over_text(cx: &mut ExtCx<'_>) {
     }
 }
 
+/// The moments a theme's room reacts to, set each frame from the flow's
+/// state as the frame leaves it (presentation only).
+/// life_lost: a mug off a bar's end puts the game in state 12 ($236E, the
+/// life taken at $23AF on its sub 0's frame), its fall and crash (subs 1
+/// to 3, 6); a customer at the bartender's end, his slide ($1CE1, sub 10
+/// in the waits, the life taken at $1D71), goes on in state 12 at sub 3;
+/// then state 9 until the next life's setup clears the screen ($24CC,
+/// $4B5B). With no lives left the waits before the game over (sub 11)
+/// are game_over_text's. level_end: the level's end script
+/// ($55F4, sub 8 in the waits of states 15 and 16, and state 11's sub 9
+/// on its first frame) until its return, where $5681 counts the level.
+/// The flow is the one this frame's requests leave, the world being the
+/// frame's start until they are applied.
+fn room_moments(cx: &mut ExtCx<'_>) {
+    let fid = cx.kind("flow").and_then(|k| cx.world.bodies.iter().position(|b| b.kind == k));
+    let (state, sub) = fid
+        .map(|fid| {
+            cx.requests()
+                .iter()
+                .rev()
+                .find_map(|r| match r {
+                    gp_sim::ext::Request::SetBody(i, b) if *i == fid => Some(*b),
+                    _ => None,
+                })
+                .unwrap_or(cx.world.bodies[fid])
+        })
+        .map_or((0, 0), |fb| (fb.ext[3] & 0xff, (fb.ext[3] >> 16) & 0xff));
+    let life_lost = (state == 12 && sub != 11) || state == 9 || ([15, 16].contains(&state) && sub == 10);
+    let level_end = ([15, 16].contains(&state) && sub == 8) || (state == 11 && sub == 9);
+    for (name, on) in [("life_lost", life_lost), ("level_end", level_end)] {
+        let v = i64::from(on);
+        if cx.counter(name) != Some(v) {
+            cx.set_counter(name, v);
+        }
+    }
+}
+
 /// The game over's initials ($2B82 on, state 13 sub 2, the flow's count
 /// from bit 24 of word 3): counter initials for the board's look, texts
 /// and table row, and the cheerleader's three objects (E18E, E192, E196)
@@ -5014,6 +5051,7 @@ impl Ext for Bars {
                 place_scene(cx, ok, want);
             }
             game_over_text(cx);
+            room_moments(cx);
             // $22B8's $5F31 empties every object as the attract mode
             // starts after a game over; the game over's own $5F31 ($3CE1)
             // left the model's objects up, hidden (initials_screen), so
@@ -7807,6 +7845,7 @@ impl Ext for Bars {
             }
         }
         game_over_text(cx);
+        room_moments(cx);
         let cheerleader = initials_screen(cx);
         // The bonus round's objects, by address: one kept is the same
         // body, one gone (y 0, or out of the round) is removed.
