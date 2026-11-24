@@ -65,7 +65,9 @@ pic letter-2 art/font/letter-2.png 16 16 0 0
 pic letter-3 art/font/letter-3.png 16 16 0 0
 pic letter-5 art/font/letter-5.png 16 16 0 0
 pic letter-7 art/font/letter-7.png 16 16 0 0
-pic letter-x03a art/font/letter-x03a.png 16 16 0 0
+# The board's tile 3A is the copyright sign in front of COPYRIGHT on the title
+# card (no colon is written with it), so it wears the theme's own copyright sign.
+pic letter-x03a art/font/copyright.png 16 16 0 0
 pic counter-score-0 art/font/letter-0.png 16 16 0 0
 pic counter-score-1 art/font/letter-1.png 16 16 0 0
 pic counter-score-2 art/font/letter-2.png 16 16 0 0
@@ -96,16 +98,28 @@ pic counter-cleared-6 art/font/letter-6.png 16 16 0 0
 pic counter-cleared-7 art/font/letter-7.png 16 16 0 0
 pic counter-cleared-8 art/font/letter-8.png 16 16 0 0
 pic counter-cleared-9 art/font/letter-9.png 16 16 0 0
-pic counter-credits-0 art/font/letter-0.png 16 16 0 0
-pic counter-credits-1 art/font/letter-1.png 16 16 0 0
-pic counter-credits-2 art/font/letter-2.png 16 16 0 0
-pic counter-credits-3 art/font/letter-3.png 16 16 0 0
-pic counter-credits-4 art/font/letter-4.png 16 16 0 0
-pic counter-credits-5 art/font/letter-5.png 16 16 0 0
-pic counter-credits-6 art/font/letter-6.png 16 16 0 0
-pic counter-credits-7 art/font/letter-7.png 16 16 0 0
-pic counter-credits-8 art/font/letter-8.png 16 16 0 0
-pic counter-credits-9 art/font/letter-9.png 16 16 0 0
+# The round number in the lower right corner during play, as it is shown.
+pic counter-cleared_shown-0 art/font/letter-0.png 16 16 0 0
+pic counter-cleared_shown-1 art/font/letter-1.png 16 16 0 0
+pic counter-cleared_shown-2 art/font/letter-2.png 16 16 0 0
+pic counter-cleared_shown-3 art/font/letter-3.png 16 16 0 0
+pic counter-cleared_shown-4 art/font/letter-4.png 16 16 0 0
+pic counter-cleared_shown-5 art/font/letter-5.png 16 16 0 0
+pic counter-cleared_shown-6 art/font/letter-6.png 16 16 0 0
+pic counter-cleared_shown-7 art/font/letter-7.png 16 16 0 0
+pic counter-cleared_shown-8 art/font/letter-8.png 16 16 0 0
+pic counter-cleared_shown-9 art/font/letter-9.png 16 16 0 0
+# The credits on the credit line (CREDIT N) in the attract mode.
+pic counter-credits_shown-0 art/font/letter-0.png 16 16 0 0
+pic counter-credits_shown-1 art/font/letter-1.png 16 16 0 0
+pic counter-credits_shown-2 art/font/letter-2.png 16 16 0 0
+pic counter-credits_shown-3 art/font/letter-3.png 16 16 0 0
+pic counter-credits_shown-4 art/font/letter-4.png 16 16 0 0
+pic counter-credits_shown-5 art/font/letter-5.png 16 16 0 0
+pic counter-credits_shown-6 art/font/letter-6.png 16 16 0 0
+pic counter-credits_shown-7 art/font/letter-7.png 16 16 0 0
+pic counter-credits_shown-8 art/font/letter-8.png 16 16 0 0
+pic counter-credits_shown-9 art/font/letter-9.png 16 16 0 0
 pic counter-lives_shown art/font/glass.png 16 16 0 0
 #+ recolor sprite-bartender_part-03 13=c1821c 10=eab647 14=7b4506
 #+ recolor sprite-bartender_part-06 13=c1821c 10=eab647 14=7b4506
