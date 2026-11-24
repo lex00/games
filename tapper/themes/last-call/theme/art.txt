@@ -35,6 +35,7 @@ pic sprite-mug-11 art/obj/mug-11.png 32 32 0 0
 pic sprite-mug-12 art/obj/mug-12.png 32 32 0 0
 pic sprite-mug-13 art/obj/mug-13.png 32 32 0 0
 pic sprite-tip-4d art/obj/tip-4d.png 32 32 0 0
+pic sprite-legend-4d art/obj/tip-4d.png 32 32 0 0
 pic letter-A art/font/letter-A.png 16 16 0 0
 pic letter-B art/font/letter-B.png 16 16 0 0
 pic letter-C art/font/letter-C.png 16 16 0 0
