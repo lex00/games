@@ -58,6 +58,99 @@ pic counter-table_1_b-0 art/font/letter-0.png 16 16 0 0
 pic counter-table_2_b-0 art/font/letter-0.png 16 16 0 0
 pic letter-Z art/font/letter-Z.png 16 16 0 0
 pic letter-x000 pieces/card/none.png 16 16 0 0
+# A held mug keeps the board's hand on its handle (runway/heldmug.py).
+#+ recolor sprite-customer-23 2=- 4=- 7=- 10=- 14=- 15=-
+#+ recolor sprite-customer-23 box=6,0,31,31 9=- 12=-
+#+ recolor sprite-customer-23 box=0,0,5,14 9=- 12=-
+#+ recolor sprite-customer-23 box=0,23,5,31 9=- 12=-
+also sprite-customer-23 art/obj/mug-held.png 32 32 0 0
+#+ recolor sprite-customer-dd 2=- 4=- 7=- 10=- 14=- 15=-
+#+ recolor sprite-customer-dd box=6,0,31,31 9=- 12=-
+#+ recolor sprite-customer-dd box=0,0,5,14 9=- 12=-
+#+ recolor sprite-customer-dd box=0,23,5,31 9=- 12=-
+also sprite-customer-dd art/obj/mug-held.png 32 32 0 0
+#+ recolor sprite-customer-f1 2=- 4=- 7=- 10=- 14=- 15=-
+#+ recolor sprite-customer-f1 box=6,0,31,31 9=- 12=-
+#+ recolor sprite-customer-f1 box=0,0,5,14 9=- 12=-
+#+ recolor sprite-customer-f1 box=0,23,5,31 9=- 12=-
+also sprite-customer-f1 art/obj/mug-held.png 32 32 0 0
+#+ recolor sprite-customer-fb 2=- 4=- 7=- 10=- 14=- 15=-
+#+ recolor sprite-customer-fb box=6,0,31,31 9=- 12=-
+#+ recolor sprite-customer-fb box=0,0,5,14 9=- 12=-
+#+ recolor sprite-customer-fb box=0,23,5,31 9=- 12=-
+also sprite-customer-fb art/obj/mug-held.png 32 32 0 0
+#+ recolor sprite-scene_customer-23 2=- 4=- 7=- 10=- 14=- 15=-
+#+ recolor sprite-scene_customer-23 box=6,0,31,31 9=- 12=-
+#+ recolor sprite-scene_customer-23 box=0,0,5,14 9=- 12=-
+#+ recolor sprite-scene_customer-23 box=0,23,5,31 9=- 12=-
+also sprite-scene_customer-23 art/obj/mug-held.png 32 32 0 0
+#+ recolor sprite-bonus_object-23 2=- 4=- 7=- 10=- 14=- 15=-
+#+ recolor sprite-bonus_object-23 box=6,0,31,31 9=- 12=-
+#+ recolor sprite-bonus_object-23 box=0,0,5,14 9=- 12=-
+#+ recolor sprite-bonus_object-23 box=0,23,5,31 9=- 12=-
+also sprite-bonus_object-23 art/obj/mug-held.png 32 32 0 0
+# A drinking guest holds our empty glass where the board's mug was (runway/drinkmug.py).
+#+ recolor sprite-customer-1f box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-1f box=23,13,27,16 2=- 10=-
+#+ recolor sprite-customer-31 box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-31 box=23,13,27,16 2=- 10=-
+#+ recolor sprite-customer-3d box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-3d box=23,13,27,16 2=- 10=-
+#+ recolor sprite-customer-7e box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-7e box=23,13,27,16 2=- 10=-
+#+ recolor sprite-customer-85 box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-85 box=23,13,27,16 2=- 10=-
+#+ recolor sprite-customer-8d box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-8d box=23,13,27,16 2=- 10=-
+#+ recolor sprite-customer-95 box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-95 box=23,13,27,16 2=- 10=-
+#+ recolor sprite-customer-9d box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-9d box=23,13,27,16 2=- 10=-
+#+ recolor sprite-customer-b1 box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-b1 box=23,13,27,16 2=- 10=-
+#+ recolor sprite-customer-b9 box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-b9 box=23,13,27,16 2=- 10=-
+#+ recolor sprite-customer-c1 box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-c1 box=23,13,27,16 2=- 10=-
+#+ recolor sprite-customer-c9 box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-c9 box=23,13,27,16 2=- 10=-
+#+ recolor sprite-customer-d9 box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-d9 box=23,13,27,16 2=- 10=-
+#+ recolor sprite-customer-e3 box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-e3 box=23,13,27,16 2=- 10=-
+#+ recolor sprite-customer-f7 box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-f7 box=23,13,27,16 2=- 10=-
+#+ recolor sprite-scene_customer-1f box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-scene_customer-1f box=23,13,27,16 2=- 10=-
+also sprite-scene_customer-1f art/drink/glass-1f.png 48 32 0 0
+#+ recolor sprite-bonus_object-1f box=22,3,31,11 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-bonus_object-1f box=23,13,27,16 2=- 10=-
+also sprite-bonus_object-1f art/drink/glass-1f.png 48 32 0 0
+#+ recolor sprite-customer-ed box=22,1,27,1 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-ed box=31,1,31,1 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-ed box=22,2,26,2 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-ed box=22,3,25,3 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-ed box=31,3,31,3 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-ed box=22,4,22,4 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-ed box=30,4,31,4 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-ed box=29,5,31,5 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-ed box=28,6,31,6 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-ed box=26,7,31,7 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-ed box=25,8,27,8 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-customer-ed box=29,8,29,8 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+also sprite-customer-24 art/drink/glass-24.png 48 32 -32 0
+#+ recolor sprite-player-41 box=22,0,31,8 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+also sprite-player-41 art/drink/glass-player-41.png 48 32 0 0
+#+ recolor sprite-customer-24 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-bonus_object-24 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-scene_customer-24 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+#+ recolor sprite-bartender_part-24 1=- 2=- 3=- 4=- 5=- 6=- 7=- 8=- 9=- 10=- 11=- 12=- 13=- 14=- 15=-
+pic sprite-bonus_object-10 art/obj/mug-10.png 32 32 0 0
+pic sprite-bonus_object-14 art/obj/mug-14.png 32 32 0 0
+pic sprite-bonus_object-17 art/obj/mug-17.png 32 32 0 0
+# The drink's bands, which the board stacks in the mug and takes away as he drinks: our amber.
+pic sprite-bonus_object-15 art/drink/band.png 32 32 0 0
+#+ on screen_69a1 pic sprite-bonus_object-15 art/drink/band-left.png 32 32 0 0
 pic letter-A art/font/letter-A.png 16 16 0 0
 pic letter-B art/font/letter-B.png 16 16 0 0
 pic letter-C art/font/letter-C.png 16 16 0 0
@@ -386,8 +479,6 @@ pic sprite-bonus_object-21 art/obj/beer-21.png 32 32 0 0
 pic sprite-bonus_object-0b art/obj/beer-0b.png 32 32 0 0
 pic sprite-bonus_object-0c art/obj/beer-0c.png 32 32 0 0
 pic sprite-bartender_part-0d art/obj/foam-0d.png 32 32 0 0
-pic sprite-customer-23 art/obj/mug-23.png 32 32 0 0
-pic sprite-scene_customer-23 art/obj/mug-23.png 32 32 0 0
 # The bonus round's cans (closed, opened, on its side) and the spray, each in the original's box.
 pic sprite-bonus_object-22 art/obj/hand-22.png 32 32 0 0
 pic sprite-bonus_object-57 art/obj/can-57.png 32 32 0 0
@@ -412,7 +503,6 @@ timed sprite-bonus_object-69 50 53 art/obj/fountain-3.png 41 84 -6 -74
 timed sprite-bonus_object-69 53 56 art/obj/fountain-2.png 30 60 0 -50
 pic sprite-bartender_part-0a art/obj/stream-0a.png 32 32 0 0
 #+ on screen_69a1 pic sprite-bonus_object-17 art/obj/mug-17.png 32 32 0 0
-pic sprite-bonus_object-10 art/obj/mug-10.png 32 32 0 0
 pic sprite-bonus_object-11 art/obj/mug-11.png 32 32 0 0
 pic sprite-bonus_object-12 art/obj/mug-12.png 32 32 0 0
 pic sprite-bonus_object-13 art/obj/mug-13.png 32 32 0 0
