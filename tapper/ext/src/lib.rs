@@ -7110,6 +7110,15 @@ impl Ext for Bars {
             b.x = Fx::from_int((x16 >> 8) & 0xff);
             b.ext[1] = (b.ext[1] & !0xff) | (x16 & 0xff);
             if Self::past_end(cx, &b) {
+                // A profile can keep an empty mug from breaking: past the
+                // bartender's end it is gone, with no points and no life
+                // lost (empties_safe, 0 in the model as written, where it
+                // falls: profiles.toml's safe_empties).
+                if empty && bp(cx, "empties_safe") != 0 {
+                    bodies[k].1 = b;
+                    removed.push(id);
+                    continue;
+                }
                 b.ext[3] |= 0x100;
                 bodies[k].1 = b;
                 fell = true;

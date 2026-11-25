@@ -2242,6 +2242,7 @@ catch_once = 1
 catch_reach = 25
 customer_wait_percent = 0
 drink_turns = 6
+empties_safe = 0
 hand_reach = 15
 line = 57
 line_step = 48

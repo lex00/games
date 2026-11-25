@@ -66,6 +66,13 @@ name = "slower_customers"
 "entities.bars.ext_params.customer_wait_percent" = 300
 
 [[groups.switches]]
+description = "An empty mug never breaks: one that slides past the bartender's end of its bar is gone, with no points and no life lost, instead of falling and costing a life"
+name = "safe_empties"
+
+[groups.switches.set]
+"entities.bars.ext_params.empties_safe" = 1
+
+[[groups.switches]]
 description = "A game starts on level 3, the sports bar's first, as if two levels were cleared; a start further on, when on too, counts"
 name = "start_on_level_3"
 
