@@ -45,6 +45,19 @@ pic sprite-mug-4d art/obj/tip-4d.png 32 32 0 0
 pic sprite-scene_customer-4d art/obj/tip-4d.png 32 32 0 0
 pic sprite-customer-4d art/obj/tip-4d.png 32 32 0 0
 pic sprite-bonus_object-4d art/obj/tip-4d.png 32 32 0 0
+pic letter-x33c pieces/space/none.png 16 16 0 0
+pic letter-x33d pieces/space/none.png 16 16 0 0
+pic letter-x33e pieces/space/none.png 16 16 0 0
+pic letter-x33f pieces/space/none.png 16 16 0 0
+pic letter-x340 pieces/space/none.png 16 16 0 0
+pic letter-x341 pieces/space/none.png 16 16 0 0
+pic sprite-bar_end-4e pieces/card/none.png 32 32 0 0
+pic sprite-bar_end-74 pieces/card/none.png 32 32 0 0
+pic sprite-bar_end-7b pieces/card/none.png 32 32 0 0
+pic counter-table_1_b-0 art/font/letter-0.png 16 16 0 0
+pic counter-table_2_b-0 art/font/letter-0.png 16 16 0 0
+pic letter-Z art/font/letter-Z.png 16 16 0 0
+pic letter-x000 pieces/card/none.png 16 16 0 0
 pic letter-A art/font/letter-A.png 16 16 0 0
 pic letter-B art/font/letter-B.png 16 16 0 0
 pic letter-C art/font/letter-C.png 16 16 0 0
@@ -349,6 +362,8 @@ pic counter-table_10_score-8 art/font/letter-8.png 16 16 0 0
 pic counter-table_10_score-9 art/font/letter-9.png 16 16 0 0
 pic counter-lives_shown art/font/glass.png 16 16 0 0
 # The second player's score stays off the screen while it is 0: a lone 0 in the corner of a one-player game.
+# The self-test's colour bars at power-on are left off: the game boots from black to the logo.
+#+ counter_off boot_bars
 #+ counter_off score_2 when score_2 == 0
 # The tap is one design in every picture the board shows it in (runway/tap16.py): at rest its own sprite, and in a
 # pour a part of his sprites, where the original's tap is hidden box by box and ours laid there. His hand and arm
@@ -396,13 +411,7 @@ timed sprite-bonus_object-69 47 50 art/obj/fountain-4.png 53 108 -12 -98
 timed sprite-bonus_object-69 50 53 art/obj/fountain-3.png 41 84 -6 -74
 timed sprite-bonus_object-69 53 56 art/obj/fountain-2.png 30 60 0 -50
 pic sprite-bartender_part-0a art/obj/stream-0a.png 32 32 0 0
-#+ recolor sprite-player-41 box=22,0,31,8 2=- 3=- 4=- 7=- 9=- 10=- 12=- 14=- 15=-
-#+ recolor sprite-player-41 box=22,9,31,14 4=- 10=- 14=-
-#+ recolor sprite-player-41 box=22,9,23,13 9=-
-#+ recolor sprite-bartender_part-24 9=- 4=- 10=-
-also sprite-player-41 art/obj/mug-drink.png 32 32 14 -4
-pic sprite-bonus_object-15 art/obj/beer-15.png 32 32 0 0
-pic sprite-bonus_object-17 art/obj/mug-17.png 32 32 0 0
+#+ on screen_69a1 pic sprite-bonus_object-17 art/obj/mug-17.png 32 32 0 0
 pic sprite-bonus_object-10 art/obj/mug-10.png 32 32 0 0
 pic sprite-bonus_object-11 art/obj/mug-11.png 32 32 0 0
 pic sprite-bonus_object-12 art/obj/mug-12.png 32 32 0 0
@@ -568,6 +577,156 @@ stage_piece bwedge pieces/saloon/bwedge.png 32 32
 stage_piece bside pieces/saloon/bside.png 32 32
 stage_piece bgap pieces/saloon/bgap.png 32 32
 stage_piece wall64 pieces/saloon/wall64.png 64 32
+stage_piece sky pieces/sports/sky_plain.png 1024 160
+stage_piece clouds pieces/sports/clouds.png 1024 960
+stage_piece blimp_strip pieces/sports/blimp_strip.png 1344 960
+stage_piece turf pieces/sports/turf.png 1024 960
+stage_piece blimp pieces/sports/blimp.png 224 104
+stage_piece backdrop pieces/sports/backdrop.png 1024 960
+stage_piece bleachers pieces/sports/bleachers.png 1024 960
+stage_piece bar_all pieces/sports/bar_all.png 1024 960
+stage_piece bar_leg pieces/sports/bar_leg.png 1024 960
+stage_piece prop_towel pieces/sports/prop_towel.png 84 44
+stage_piece prop_cooler pieces/sports/prop_cooler.png 67 50
+stage_piece prop_hand pieces/sports/prop_hand.png 34 57
+stage_piece prop_mugtrio pieces/sports/prop_mugtrio.png 36 68
+stage_piece prop_keys pieces/sports/prop_keys.png 36 26
+stage_piece prop_mugs pieces/sports/prop_mugs.png 34 51
+stage_piece prop_dog pieces/sports/prop_dog.png 40 28
+stage_piece cart pieces/sports/cart.png 175 201
+stage_piece umbrella pieces/sports/umbrella.png 128 172
+stage_piece psignpic pieces/punk/sign.png 268 163
+stage_piece puke0 pieces/punk/puke0.png 52 76
+stage_piece puke1 pieces/punk/puke1.png 52 76
+stage_piece pposters pieces/punk/posters.png 136 648
+stage_piece pspeaker0 pieces/punk/speaker0.png 68 156
+stage_piece pspeaker1 pieces/punk/speaker1.png 68 156
+stage_piece steel_shade pieces/punk/steel_shade.png 1024 960
+stage_piece blocks_shade pieces/punk/blocks_shade.png 1024 960
+stage_piece lamp_dim pieces/punk/lamp_dim.png 64 62
+stage_piece lamp_mid pieces/punk/lamp_mid.png 64 62
+stage_piece lamp_bright pieces/punk/lamp_bright.png 64 62
+stage_piece pkegpic pieces/punk/keg.png 104 204
+stage_piece leak0 pieces/punk/leak0.png 104 204
+stage_piece leak1 pieces/punk/leak1.png 104 204
+stage_piece leak2 pieces/punk/leak2.png 104 204
+stage_piece leak3 pieces/punk/leak3.png 104 204
+stage_piece pdoormain pieces/punk/door_main.png 108 208
+stage_piece pdoorupper pieces/punk/door_upper.png 80 72
+stage_piece pbartex pieces/punk/bar.png 1024 960
+stage_piece steel pieces/punk/steel.png 1024 960
+stage_piece blocks pieces/punk/blocks.png 1024 960
+stage_piece pfloor pieces/punk/floor.png 1024 960
+stage_piece pw922400 pieces/punk/sw/pw922400.png 32 32
+stage_piece pw494949 pieces/punk/sw/pw494949.png 32 32
+stage_piece pwff0000 pieces/punk/sw/pwff0000.png 32 32
+stage_piece pw929292 pieces/punk/sw/pw929292.png 32 32
+stage_piece pw6d6d6d pieces/punk/sw/pw6d6d6d.png 32 32
+stage_piece pw492400 pieces/punk/sw/pw492400.png 32 32
+stage_piece pw000000 pieces/punk/sw/pw000000.png 32 32
+stage_piece pwff6d00 pieces/punk/sw/pwff6d00.png 32 32
+stage_piece pw00006d pieces/punk/sw/pw00006d.png 32 32
+stage_piece pwffffff pieces/punk/sw/pwffffff.png 32 32
+stage_piece pwdb9200 pieces/punk/sw/pwdb9200.png 32 32
+stage_piece pw0024b6 pieces/punk/sw/pw0024b6.png 32 32
+stage_piece pwdb0000 pieces/punk/sw/pwdb0000.png 32 32
+stage_piece pwdb4924 pieces/punk/sw/pwdb4924.png 32 32
+stage_piece pw2492ff pieces/punk/sw/pw2492ff.png 32 32
+stage_piece pw6d2400 pieces/punk/sw/pw6d2400.png 32 32
+stage_piece pw009200 pieces/punk/sw/pw009200.png 32 32
+stage_piece pw006d00 pieces/punk/sw/pw006d00.png 32 32
+stage_piece pwff9200 pieces/punk/sw/pwff9200.png 32 32
+stage_piece sshippic pieces/space/ship.png 192 85
+stage_piece ship_strip pieces/space/ship_strip.png 1344 85
+stage_piece planets pieces/space/planets.png 1344 80
+stage_piece comet pieces/space/comet.png 2048 40
+stage_piece convoy pieces/space/convoy.png 1600 36
+stage_piece twinkle0 pieces/space/twinkle0.png 1024 960
+stage_piece twinkle1 pieces/space/twinkle1.png 1024 960
+stage_piece twinkle2 pieces/space/twinkle2.png 1024 960
+stage_piece twinkle3 pieces/space/twinkle3.png 1024 960
+stage_piece st0be pieces/space/t0be.png 32 32
+stage_piece st0bf pieces/space/t0bf.png 32 32
+stage_piece st0c0 pieces/space/t0c0.png 32 32
+stage_piece st0c1 pieces/space/t0c1.png 32 32
+stage_piece st0c2 pieces/space/t0c2.png 32 32
+stage_piece st0c3 pieces/space/t0c3.png 32 32
+stage_piece st0c4 pieces/space/t0c4.png 32 32
+stage_piece st0c5 pieces/space/t0c5.png 32 32
+stage_piece st0c6 pieces/space/t0c6.png 32 32
+stage_piece st0cd pieces/space/t0cd.png 32 32
+stage_piece st0ce pieces/space/t0ce.png 32 32
+stage_piece st0b7 pieces/space/t0b7.png 32 32
+stage_piece st0b8 pieces/space/t0b8.png 32 32
+stage_piece st0b9 pieces/space/t0b9.png 32 32
+stage_piece st0ba pieces/space/t0ba.png 32 32
+stage_piece st0bb pieces/space/t0bb.png 32 32
+stage_piece st0bc pieces/space/t0bc.png 32 32
+stage_piece st0bd pieces/space/t0bd.png 32 32
+stage_piece st0c7 pieces/space/t0c7.png 32 32
+stage_piece st0c8 pieces/space/t0c8.png 32 32
+stage_piece st0ca pieces/space/t0ca.png 32 32
+stage_piece st0cb pieces/space/t0cb.png 32 32
+stage_piece sbaypic pieces/space/bay.png 540 264
+stage_piece st0f7 pieces/space/t0f7.png 32 32
+stage_piece st0f6 pieces/space/t0f6.png 32 32
+stage_piece hoverkeg0 pieces/space/hoverkeg0.png 72 190
+stage_piece hoverkeg1 pieces/space/hoverkeg1.png 72 190
+stage_piece hoverkeg2 pieces/space/hoverkeg2.png 72 190
+stage_piece sbarpaint pieces/space/bar.png 1024 960
+stage_piece sportfront pieces/space/portfront.png 540 264
+stage_piece lamps0 pieces/space/lamps0.png 540 264
+stage_piece lamps1 pieces/space/lamps1.png 540 264
+stage_piece lamps2 pieces/space/lamps2.png 540 264
+stage_piece lamps3 pieces/space/lamps3.png 540 264
+stage_piece lamps4 pieces/space/lamps4.png 540 264
+stage_piece snone pieces/space/none.png 2 2
+stage_piece sdisc pieces/space/disc.png 104 72
+stage_piece st0ee pieces/space/t0ee.png 32 32
+stage_piece craft0 pieces/space/craft0.png 88 76
+stage_piece craft1 pieces/space/craft1.png 88 76
+stage_piece craft2 pieces/space/craft2.png 88 76
+stage_piece neon_cyan pieces/space/neon_cyan.png 32 32
+stage_piece neon_magenta pieces/space/neon_magenta.png 32 32
+stage_piece neon_lime pieces/space/neon_lime.png 32 32
+stage_piece neon_orange pieces/space/neon_orange.png 32 32
+stage_piece neon_violet pieces/space/neon_violet.png 32 32
+stage_piece neon_gold pieces/space/neon_gold.png 32 32
+stage_piece neon_rose pieces/space/neon_rose.png 32 32
+stage_piece neon_teal pieces/space/neon_teal.png 32 32
+stage_piece neon_blue pieces/space/neon_blue.png 32 32
+stage_piece neon_red pieces/space/neon_red.png 32 32
+stage_piece neon_ice pieces/space/neon_ice.png 32 32
+stage_piece neon_pink pieces/space/neon_pink.png 32 32
+stage_piece neon_aqua pieces/space/neon_aqua.png 32 32
+stage_piece neon_amber pieces/space/neon_amber.png 32 32
+stage_piece neon_green pieces/space/neon_green.png 32 32
+stage_piece neon_purple pieces/space/neon_purple.png 32 32
+stage_piece cardnavy pieces/card/navy.png 32 32
+stage_piece stars_far pieces/space/stars_far.png 1024 960
+stage_piece stars_near pieces/space/stars_near.png 1024 960
+stage_piece sp000000 pieces/space/sw/sp000000.png 32 32
+stage_piece sp6d6d6d pieces/space/sw/sp6d6d6d.png 32 32
+stage_piece sp494949 pieces/space/sw/sp494949.png 32 32
+stage_piece sp242424 pieces/space/sw/sp242424.png 32 32
+stage_piece spff6d00 pieces/space/sw/spff6d00.png 32 32
+stage_piece spff0000 pieces/space/sw/spff0000.png 32 32
+stage_piece spdb9200 pieces/space/sw/spdb9200.png 32 32
+stage_piece spffffff pieces/space/sw/spffffff.png 32 32
+stage_piece sp492400 pieces/space/sw/sp492400.png 32 32
+stage_piece tunnel pieces/sports/tunnel.png 172 196
+stage_piece sw000000 pieces/sports/sw/sw000000.png 32 32
+stage_piece swff0000 pieces/sports/sw/swff0000.png 32 32
+stage_piece sw492400 pieces/sports/sw/sw492400.png 32 32
+stage_piece sw922400 pieces/sports/sw/sw922400.png 32 32
+stage_piece sw6d2400 pieces/sports/sw/sw6d2400.png 32 32
+stage_piece sw00006d pieces/sports/sw/sw00006d.png 32 32
+stage_piece sw6d6d6d pieces/sports/sw/sw6d6d6d.png 32 32
+stage_piece swffffff pieces/sports/sw/swffffff.png 32 32
+stage_piece swdb9200 pieces/sports/sw/swdb9200.png 32 32
+stage_piece sw0024b6 pieces/sports/sw/sw0024b6.png 32 32
+stage_piece sw494949 pieces/sports/sw/sw494949.png 32 32
+stage_piece swff6d00 pieces/sports/sw/swff6d00.png 32 32
 stage_piece buck pieces/saloon/buck.png 152 240
 stage_piece buck_right pieces/saloon/buck_right.png 124 196
 stage_piece lamp_l pieces/saloon/lamp_l.png 40 128
@@ -613,6 +772,10 @@ stage_piece painting10 pieces/saloon/painting10.png 128 563
 stage_piece painting11 pieces/saloon/painting11.png 128 563
 stage_piece painting12 pieces/saloon/painting12.png 128 563
 stage_piece figure pieces/saloon/figure.png 128 160
+stage_piece buck_right_oh pieces/saloon/buck_right_oh.png 124 196
+stage_piece buck_right_hearts pieces/saloon/buck_right_hearts.png 124 202
+stage_piece moose_oh pieces/saloon/moose_oh.png 150 166
+stage_piece moose_hearts pieces/saloon/moose_hearts.png 150 206
 stage_piece moose pieces/saloon/moose.png 150 166
 stage_piece panel pieces/saloon/panel.png 32 32
 stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
@@ -656,6 +819,7 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_cells cask_corner tile=0x024
 #+ room_cells cask_edge tile=0x01d-0x01f tile=0x021-0x023
 #+ room_cells sign tile=0x064-0x08f tile=0x00e
+#+ room_cells sign_at tile=0x064
 #+ room_cells picture tile=0x094-0x0b6
 #+ room_cells picture_top tile=0x09b
 #+ room_fill t007 wall64
@@ -709,11 +873,15 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_fill picture wall64
 #+ room_at door_top door -16 0
 #+ room_at cask_top cask 0 0
-#+ room_box sign sign
+# the sign's middle on the back wall's middle (its own cells stand left of it)
+#+ room_at sign_at sign 8 -16
 #+ room_at picture_top picture|painting01|painting02|painting03|painting04|painting05|painting06|painting07|painting08|painting09|painting10|painting11|painting12 -48 -58
 # A mounted buck high on the right wall, drawn as it is seen from the room (its head out toward the left, its plaque
 # narrow against the wall), clear of the casks and the second score.
-#+ room_at picture_top buck_right 382 -8
+# The trophy reacts to two things: a fright while a life is being lost, and heart eyes while the dancers are up.
+#+ room_react picture_top 382 -8 buck_right:1
+#+ room_react_when buck_right_oh life_lost == 1
+#+ room_react_when buck_right_hearts dancers_on == 1
 # The wall left of each bar's doorway drawn over the bodies: the bartender
 # walking or thrown past a bar's end goes into the wall, where the
 # original's own colours showed through.
@@ -762,6 +930,7 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_cells cask_corner tile=0x024
 #+ room_cells cask_edge tile=0x01d-0x01f tile=0x021-0x023
 #+ room_cells sign tile=0x064-0x08f tile=0x00e
+#+ room_cells sign_at tile=0x064
 #+ room_cells picture tile=0x094-0x0b6
 #+ room_cells picture_top tile=0x09b
 #+ room_cells figure tile=0x251-0x260
@@ -818,7 +987,8 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_fill figure wall64
 #+ room_at door_top door -16 0
 #+ room_at cask_top cask 0 0
-#+ room_box sign sign
+# the sign's middle on the back wall's middle (its own cells stand left of it)
+#+ room_at sign_at sign 24 -16
 #+ room_at picture_top picture|painting01|painting02|painting03|painting04|painting05|painting06|painting07|painting08|painting09|painting10|painting11|painting12 -48 -58
 # The walls beside its doorways over the bodies (its doors alternate
 # sides: right, left, right, left).
@@ -831,7 +1001,10 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 # The trophy the original hangs here: a goofy moose, its tongue out, whole and at its own size.
 # The anchor's cell is one the board mirrors, so the page mirrors the piece and its offset: the picture is stored
 # turned round and the offset given from the cell's other side, and he comes out facing into the room.
-#+ room_at figure_top moose -61 -10
+# The trophy reacts to two things: a fright while a life is being lost, and heart eyes while the dancers are up.
+#+ room_react figure_top -61 -10 moose:1
+#+ room_react_when moose_oh life_lost == 1
+#+ room_react_when moose_hearts dancers_on == 1
 # The how-to-play screen: the saloon's two lower counters, and a wooden
 # frame round the dark panel the instructions are written on.
 #+ room screen_attract_demo
@@ -875,8 +1048,6 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_cells frame tile=0x091-0x093
 #+ room_cells panel tile=0x000
 #+ room_fill t007 wall64
-#+ room_fill t008 t008
-#+ room_fill t015 t015
 #+ room_fill t004 t004
 #+ room_fill t001 t001
 #+ room_fill t01b t01b
@@ -902,7 +1073,6 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_fill fl062 fl062
 #+ room_fill fl063 fl063
 #+ room_fill fl02e fl02e
-#+ room_at top_leaf t007 0 16
 #+ room_at door_top hole -16 0
 #+ room_fill door_ctop t001
 #+ room_fill door_cfront t01b
@@ -994,3 +1164,360 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_at logo_top bside_r 336 272
 #+ room_at logo_top bside_r 336 288
 #+ room_at logo_top bside_r 336 304
+# The ballpark bar (levels 3 to 5), built back to front. So far: the sky with its clouds as one painting across the
+# top, the mown field as one painting, and the airship. Everything else is still the board's own.
+#+ room screen_69a1
+#+ room_cells sky tile=0x006 tile=0x349 tile=0x34e tile=0x2c8 tile=0x2c9 tile=0x36d-0x36f tile=0x371-0x373 tile=0x376 tile=0x378-0x37a tile=0x37c-0x383 tile=0x385-0x386
+#+ room_cells turf tile=0x00a
+#+ room_cells blimp_top tile=0x37a
+#+ room_fill sky sky
+#+ room_fill sky clouds
+#+ room_fill sky blimp_strip
+#+ room_fill turf turf
+# The sky moves: the clouds drift right and the airship crosses to the left, each behind the stand, the hoods and the
+# umbrellas, and wraps round (the airship's strip is wider than the screen, so it leaves wholly first).
+#+ room_scroll clouds 1 8
+#+ room_scroll blimp_strip -1 3
+# The stands on the right: one painting of a grandstand laid over the stand's own shape (every pixel of its cells
+# that is not field or sky), the field and the sky carried on under its edge, and a tunnel with its striped awning
+# at each bar's end, placed whole.
+#+ room_cells stand tile=0x00b tile=0x00c tile=0x2ca tile=0x2d0 tile=0x2d7-0x2da tile=0x2e1-0x2e6 tile=0x2ed-0x2ee tile=0x2f0-0x2f3 tile=0x2f8-0x2fe tile=0x302-0x309 tile=0x30e-0x310 tile=0x319-0x31c tile=0x325-0x326 tile=0x330-0x332 tile=0x336-0x339 tile=0x34a tile=0x34c tile=0x34f tile=0x360-0x365 tile=0x2d1 tile=0x2db
+#+ room_cells tunnel_at tile=0x327
+# Under the stand, the sky and the field; over them the stand's painting on everything that is not sky, clear left
+# of the stand's own edge so the field runs up to the first step.
+#+ room_fill stand backdrop
+#+ room_mask stand sky b>r+150
+#+ room_mask stand clouds b>r+150
+#+ room_mask stand blimp_strip b>r+150
+#+ room_mask stand bleachers r>b-150
+# What is not redrawn yet (the bars, the taps' crates and umbrellas) keeps the board's own colours for now: each of
+# its colours laid as a flat swatch on the pixels the player's own romset draws in it, with the field and the sky
+# under them. These lines go as each thing gets its own picture.
+#+ room_cells bar tile=0x311 tile=0x312 tile=0x313 tile=0x314 tile=0x31d tile=0x31e tile=0x31f tile=0x327 tile=0x328 tile=0x329 tile=0x32a tile=0x346 tile=0x347 tile=0x348
+#+ room_cells cart tile=0x2cc tile=0x2cd tile=0x2ce tile=0x2cf tile=0x2d3 tile=0x2d4 tile=0x2d5 tile=0x2d6 tile=0x2de tile=0x2df tile=0x2e0 tile=0x2e7 tile=0x2ea tile=0x2eb tile=0x2ec tile=0x2ef tile=0x2f5 tile=0x2f6 tile=0x2f7 tile=0x2ff tile=0x301 tile=0x30a tile=0x30b tile=0x30c tile=0x30d tile=0x315 tile=0x316 tile=0x317 tile=0x318 tile=0x321 tile=0x322 tile=0x323 tile=0x32b tile=0x32c tile=0x32d tile=0x32e tile=0x334 tile=0x355 tile=0x35b tile=0x366 tile=0x367
+#+ room_cells rest !sky !turf !stand !bar !cart
+#+ room_cells barend tile=0x311 tile=0x31d tile=0x327 tile=0x328 tile=0x34b
+#+ room_fill rest dk
+#+ room_mask rest turf g>r+60 g>b+60
+#+ room_mask rest sky b>r+150 g>r+80
+#+ room_mask rest clouds b>r+150 g>r+80
+#+ room_mask rest blimp_strip b>r+150 g>r+80
+#+ room_mask rest sw000000 r>0-1 0>r-1 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_mask rest swff0000 r>0+254 0>r-256 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_mask rest sw492400 r>0+72 0>r-74 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask rest sw922400 r>0+145 0>r-147 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask rest sw6d2400 r>0+108 0>r-110 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask rest sw00006d r>0-1 0>r-1 g>0-1 0>g-1 b>0+108 0>b-110
+#+ room_mask rest sw6d6d6d r>0+108 0>r-110 g>0+108 0>g-110 b>0+108 0>b-110
+#+ room_mask rest swffffff r>0+254 0>r-256 g>0+254 0>g-256 b>0+254 0>b-256
+#+ room_mask rest swdb9200 r>0+218 0>r-220 g>0+145 0>g-147 b>0-1 0>b-1
+#+ room_mask rest sw0024b6 r>0-1 0>r-1 g>0+35 0>g-37 b>0+181 0>b-183
+#+ room_mask rest sw494949 r>0+72 0>r-74 g>0+72 0>g-74 b>0+72 0>b-74
+#+ room_mask rest swff6d00 r>0+254 0>r-256 g>0+108 0>g-110 b>0-1 0>b-1
+# The stand shows through a bar's last cells where the board draws its grey there.
+#+ room_mask barend turf r>0+60 0>r-120 b>0+60 0>b-120 g>0+60
+#+ room_mask barend bleachers r>0+60 0>r-120 b>0+60 0>b-120 g>0+60
+# The bars: one painting of a bar's rows (runway/bar.py) laid on every pixel the board draws its bar in, so the bar
+# keeps the board's exact shape: red painted planks on top, a frame, a shelf, a footrest. The legs are their own
+# wood. The field and the stand show where the board draws them in a bar's cells.
+#+ room_fill bar bar_all
+#+ room_mask bar turf g>r+60 g>b+60
+#+ room_mask bar turf r>0+60 0>r-120 b>0+60 0>b-120 g>0+60
+#+ room_mask bar bleachers r>0+60 0>r-120 b>0+60 0>b-120 g>0+60
+#+ room_mask bar bar_leg r>0+108 0>r-110 g>0+35 0>g-37 b>0-1 0>b-1
+# A bar's last pixels lie in cells of the stand: the bar's colours there are the bar too.
+#+ room_mask stand bar_all r>0+254 0>r-256 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_mask stand bar_all r>0+72 0>r-74 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask stand bar_all r>0+145 0>r-147 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask stand bar_leg r>0+108 0>r-110 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask barend bar_all r>0+254 0>r-256 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_mask barend bar_all r>0+72 0>r-74 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask barend bar_all r>0+145 0>r-147 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask barend bar_all 0>max-20
+#+ room_mask barend bar_leg r>0+108 0>r-110 g>0+35 0>g-37 b>0-1 0>b-1
+# The tunnels' anchor cells are ones the board mirrors: the picture is stored turned round and its offset given from
+# the cell's other side, so each comes out facing the field at its bar's end.
+#+ room_at tunnel_at tunnel -68 -100
+# The carts on the left: under each, the sky and the field; then its umbrella and the cart itself, with its barrel
+# in ice and its wheel, placed whole, one at each bar's end.
+#+ room_fill cart backdrop
+#+ room_fill cart clouds
+#+ room_fill cart blimp_strip
+#+ room_at blimp_top umbrella -186 30
+#+ room_at blimp_top cart -158 53
+#+ room_at blimp_top umbrella -218 126
+#+ room_at blimp_top cart -190 149
+#+ room_at blimp_top umbrella -250 222
+#+ room_at blimp_top cart -222 245
+#+ room_at blimp_top umbrella -282 318
+#+ room_at blimp_top cart -254 341
+# Things the crowd left on the steps, in the stand's open spaces clear of the hoods.
+#+ room_at blimp_top prop_towel 226 30
+#+ room_at blimp_top prop_cooler 240 1
+#+ room_at blimp_top prop_hand 244 56
+#+ room_at blimp_top prop_mugtrio 221 216
+#+ room_at blimp_top prop_keys 267 148
+#+ room_at blimp_top prop_mugs 191 126
+#+ room_at blimp_top prop_dog 256 112
+# The punk bar (levels 6 to 9; its second room is the first turned round), back to front. So far the walls and the
+# floor: corrugated steel on the side walls, painted blocks on the back wall, worn concrete underfoot. What is not
+# redrawn yet keeps the board's own colours on its own pixels, with the walls and floor carried on round it; the
+# barrels keep their flat greys for now.
+#+ room screen_7121 screen_78a1
+#+ room_cells pside tile=0x200
+#+ room_cells pback tile=0x008
+#+ room_cells pfl tile=0x004
+#+ room_cells pkeg tile=0x20d tile=0x215 tile=0x21c tile=0x221 tile=0x222 tile=0x229 tile=0x22a tile=0x231 tile=0x232 tile=0x233 tile=0x237 tile=0x238 tile=0x239
+#+ room_cells pkegat tile=0x222
+#+ room_cells pbar tile=0x368 tile=0x228 tile=0x230
+#+ room_cells pbarfoot tile=0x369
+#+ room_cells pdoor_at tile=0x21e
+#+ room_cells pdoorup_at tile=0x218
+#+ room_cells psign tile=0x296 tile=0x297 tile=0x298 tile=0x299 tile=0x29a tile=0x29b tile=0x29c tile=0x29d tile=0x29e tile=0x29f tile=0x2a0 tile=0x2a1 tile=0x2a2 tile=0x2a3 tile=0x2a4 tile=0x2a5 tile=0x2a6 tile=0x2a7 tile=0x2a8 tile=0x2a9 tile=0x2aa tile=0x2ab tile=0x2ac tile=0x2ad tile=0x2ae tile=0x2af tile=0x2b0 tile=0x2b1 tile=0x2b2 tile=0x2b3 tile=0x2b4 tile=0x2b5 tile=0x2b6 tile=0x2b7 tile=0x2b8 tile=0x2b9 tile=0x2ba tile=0x2bb tile=0x2bc tile=0x2bd tile=0x2be tile=0x2bf tile=0x2c0 tile=0x2c1 tile=0x2c2 tile=0x2c3 tile=0x2c4 tile=0x2c5
+#+ room_cells psign_at tile=0x2b8
+#+ room_cells ppuke tile=0x248 tile=0x270 tile=0x271
+#+ room_cells plampcell tile=0x241 tile=0x242
+#+ room_cells plamp tile=0x241
+#+ room_cells pra tile=0x205 tile=0x209 tile=0x20e tile=0x216 tile=0x217 tile=0x218 tile=0x21d tile=0x21e tile=0x21f tile=0x223 tile=0x224 tile=0x225 tile=0x226 tile=0x22b tile=0x22d tile=0x22e tile=0x23a tile=0x23c tile=0x23e tile=0x23f tile=0x246 tile=0x24b tile=0x24d tile=0x24e tile=0x262 tile=0x263 tile=0x264 tile=0x265 tile=0x267 tile=0x268 tile=0x269 tile=0x26a tile=0x26b tile=0x26d tile=0x26e tile=0x272 tile=0x273 tile=0x274 tile=0x276 tile=0x278 tile=0x213 tile=0x243 tile=0x244 tile=0x247 tile=0x248 tile=0x24c tile=0x24f tile=0x250 tile=0x266 tile=0x275 tile=0x277 tile=0x279
+#+ room_cells prb tile=0x203 tile=0x207 tile=0x208 tile=0x20c tile=0x20f tile=0x210 tile=0x214 tile=0x219 tile=0x220 tile=0x227 tile=0x22c tile=0x22f tile=0x234 tile=0x235 tile=0x236
+#+ room_fill pside steel
+#+ room_fill pback blocks
+#+ room_fill pfl pfloor
+# What is not redrawn yet, sorted by what stands behind it, so each grey takes the right surface: the side wall alone
+# (its dark grey is an object's shadow on the steel), the side wall where it meets the floor, the back wall alone, and
+# the back wall at the floor.
+#+ room_fill pra dk
+#+ room_mask pra steel r>0+145 0>r-147 g>0+145 0>g-147 b>0+145 0>b-147
+#+ room_mask pra steel r>0+108 0>r-110 g>0+108 0>g-110 b>0+108 0>b-110
+#+ room_mask pra steel_shade r>0+72 0>r-74 g>0+72 0>g-74 b>0+72 0>b-74
+#+ room_mask pra pw000000 r>0-1 0>r-1 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_mask pra dk r>0-1 0>r-1 g>0-1 0>g-1 b>0+108 0>b-110
+#+ room_mask pra dk r>0-1 0>r-1 g>0+35 0>g-37 b>0+181 0>b-183
+#+ room_mask pra pw006d00 r>0-1 0>r-1 g>0+108 0>g-110 b>0-1 0>b-1
+#+ room_mask pra pw009200 r>0-1 0>r-1 g>0+145 0>g-147 b>0-1 0>b-1
+#+ room_mask pra pw2492ff r>0+35 0>r-37 g>0+145 0>g-147 b>0+254 0>b-256
+#+ room_mask pra pbartex r>0+72 0>r-74 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask pra pw6d2400 r>0+108 0>r-110 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask pra pbartex r>0+145 0>r-147 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask pra pwdb0000 r>0+218 0>r-220 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_mask pra pwdb4924 r>0+218 0>r-220 g>0+72 0>g-74 b>0+35 0>b-37
+#+ room_mask pra dk r>0+218 0>r-220 g>0+145 0>g-147 b>0-1 0>b-1
+#+ room_mask pra pbartex r>0+254 0>r-256 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_mask pra dk r>0+254 0>r-256 g>0+108 0>g-110 b>0-1 0>b-1
+#+ room_mask pra pwff9200 r>0+254 0>r-256 g>0+145 0>g-147 b>0-1 0>b-1
+#+ room_mask pra pwffffff r>0+254 0>r-256 g>0+254 0>g-256 b>0+254 0>b-256
+#+ room_fill prb dk
+#+ room_mask prb steel r>0+145 0>r-147 g>0+145 0>g-147 b>0+145 0>b-147
+#+ room_mask prb steel r>0+108 0>r-110 g>0+108 0>g-110 b>0+108 0>b-110
+#+ room_mask prb pfloor r>0+72 0>r-74 g>0+72 0>g-74 b>0+72 0>b-74
+#+ room_mask prb pw000000 r>0-1 0>r-1 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_mask prb dk r>0-1 0>r-1 g>0-1 0>g-1 b>0+108 0>b-110
+#+ room_mask prb dk r>0-1 0>r-1 g>0+35 0>g-37 b>0+181 0>b-183
+#+ room_mask prb pw006d00 r>0-1 0>r-1 g>0+108 0>g-110 b>0-1 0>b-1
+#+ room_mask prb pw009200 r>0-1 0>r-1 g>0+145 0>g-147 b>0-1 0>b-1
+#+ room_mask prb pw2492ff r>0+35 0>r-37 g>0+145 0>g-147 b>0+254 0>b-256
+#+ room_mask prb pbartex r>0+72 0>r-74 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask prb pw6d2400 r>0+108 0>r-110 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask prb pbartex r>0+145 0>r-147 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask prb pwdb0000 r>0+218 0>r-220 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_mask prb pwdb4924 r>0+218 0>r-220 g>0+72 0>g-74 b>0+35 0>b-37
+#+ room_mask prb dk r>0+218 0>r-220 g>0+145 0>g-147 b>0-1 0>b-1
+#+ room_mask prb pbartex r>0+254 0>r-256 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_mask prb dk r>0+254 0>r-256 g>0+108 0>g-110 b>0-1 0>b-1
+#+ room_mask prb pwff9200 r>0+254 0>r-256 g>0+145 0>g-147 b>0-1 0>b-1
+#+ room_mask prb pwffffff r>0+254 0>r-256 g>0+254 0>g-256 b>0+254 0>b-256
+# The bars: glossy red plastic. One painting with a bar's rows at each bar's height, laid on the bar's own cells and,
+# in the cells at its ends, on the bar's own colours, so the bar keeps the board's edges.
+#+ room_fill pbar pbartex
+#+ room_fill pbarfoot pfloor
+#+ room_mask pbarfoot pbartex r>0+254 0>r-256 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_fill pkeg dk
+#+ room_mask pkeg steel r>0-1 0>r-1 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_mask pkeg steel r>0-1 0>r-1 g>0-1 0>g-1 b>0+108 0>b-110
+#+ room_mask pkeg steel r>0-1 0>r-1 g>0+35 0>g-37 b>0+181 0>b-183
+#+ room_mask pkeg steel r>0-1 0>r-1 g>0+108 0>g-110 b>0-1 0>b-1
+#+ room_mask pkeg steel r>0-1 0>r-1 g>0+145 0>g-147 b>0-1 0>b-1
+#+ room_mask pkeg steel r>0+35 0>r-37 g>0+145 0>g-147 b>0+254 0>b-256
+#+ room_mask pkeg steel r>0+72 0>r-74 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask pkeg pfloor r>0+72 0>r-74 g>0+72 0>g-74 b>0+72 0>b-74
+#+ room_mask pkeg steel r>0+108 0>r-110 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask pkeg steel r>0+108 0>r-110 g>0+108 0>g-110 b>0+108 0>b-110
+#+ room_mask pkeg steel r>0+145 0>r-147 g>0+35 0>g-37 b>0-1 0>b-1
+#+ room_mask pkeg steel r>0+145 0>r-147 g>0+145 0>g-147 b>0+145 0>b-147
+#+ room_mask pkeg steel r>0+218 0>r-220 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_mask pkeg steel r>0+218 0>r-220 g>0+72 0>g-74 b>0+35 0>b-37
+#+ room_mask pkeg pfloor r>0+218 0>r-220 g>0+145 0>g-147 b>0-1 0>b-1
+#+ room_mask pkeg steel r>0+254 0>r-256 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_mask pkeg steel r>0+254 0>r-256 g>0+108 0>g-110 b>0-1 0>b-1
+#+ room_mask pkeg steel r>0+254 0>r-256 g>0+145 0>g-147 b>0-1 0>b-1
+#+ room_mask pkeg pfloor r>0+254 0>r-256 g>0+254 0>g-256 b>0+254 0>b-256
+# The sign on the back wall is the Last Call sign, as in the first room: the wall behind it, then the sign whole.
+#+ room_fill psign blocks
+#+ room_at psign_at psignpic 21 16
+# The two splats on the back wall, painted: the wall behind them, then each splat whole where the board has its own.
+#+ room_fill ppuke blocks
+#+ room_at psign_at puke0 -20 32
+#+ room_at psign_at puke1 170 48
+# The left wall's long window is two gig posters: the wall's steel over all of the window, then the posters, each
+# column upright and sliding down toward the viewer as the wall does.
+#+ room_at psign_at pposters -160 24
+# The two boxes on the right wall are big horn loudspeakers: the wall's steel over each of the board's boxes and its
+# shadow, then the cabinet, larger, on the same spot.
+#+ room_at psign_at pspeaker0 260 32
+#+ room_at psign_at pspeaker1 308 144
+# The wall lamps: the wall's steel over the board's lamp, then a bare bulb in a red socket that lights as the board's
+# does. The board steps one of the lamp's colours through four steps of 9 frames (the model's counter cycle_step: 1 dim,
+# 2 mid, 3 bright, 4 mid; 0 before the first step), so the picture is chosen by that counter and keeps the board's time.
+#+ room_fill plampcell steel
+#+ room_react plamp -3 -5 lamp_mid:9
+#+ room_react_when lamp_dim cycle_step == 1
+#+ room_react_when lamp_bright cycle_step == 3
+# The kegs: the wall and the floor over the board's keg, pipe and beer, then a steel keg with a copper pipe up to the
+# tap's fitting, and its leak, a loop of four pictures that never stops: a trickle down its side into the pool at its
+# foot. Drawn as the right wall has it; the board mirrors the left wall's and the pieces go with it.
+#+ room_at pkegat pkegpic -32 -38
+#+ room_react pkegat -32 -38 leak0:6 leak1:6 leak2:6 leak3:6
+# Each bar's doorway and swing doors, on the board's own shapes: the leaf behind the bar (cut at the bar's top), then
+# the dark doorway with its painted frame and post, and the leaf in front of the bar's end. The board's own door
+# colours in the cells round them take the wall, so nothing of the old doors shows at their edges.
+#+ room_at pdoorup_at pdoorupper -4 -20
+#+ room_at pdoor_at pdoormain -16 -52
+# A door stands in front of the keg behind it, and the keg's beer is drawn each frame over the finished room, so the
+# doors are drawn each frame too, after the beer: the pool goes behind the next bar's door as the board's does.
+#+ room_react pdoorup_at -4 -20 pdoorupper:60
+#+ room_react pdoor_at -16 -52 pdoormain:60
+# The space bar (levels 10 to 13, four rooms), back to front. So far the void behind everything: far stars that stand
+# still with faint wisps of colour, and nearer stars drifting slowly across. What is not redrawn yet keeps the board's
+# own colours on its own pixels.
+# A small round hover craft carries the bartender on the space screens: drawn under him wherever he stands, pours or
+# walks, its deck at his feet, its jets flickering all the time.
+#+ on screen_8021 screen_87a1 screen_8f21 screen_96a1 under player 0 26 craft0:4 craft1:4 craft2:4 craft1:4
+#+ room screen_8021 screen_87a1 screen_8f21 screen_96a1
+#+ room_cells svoid tile=0x000
+#+ room_cells sship tile=0x377 tile=0x375 tile=0x38d tile=0x38e tile=0x2e8 tile=0x320 tile=0x36a tile=0x36b tile=0x38b tile=0x394 tile=0x300 tile=0x374 tile=0x370 tile=0x36c tile=0x38f tile=0x395 tile=0x388 tile=0x387 tile=0x390 tile=0x391
+#+ room_cells sship_at tile=0x377
+#+ room_cells sbar tile=0x0f4 tile=0x0f5 tile=0x0fa tile=0x0fb
+#+ room_cells sbarin tile=0x0f7 tile=0x0f6
+#+ room_cells sbartopa tile=0x0f4 tile=0x0f7 tile=0x0fa tile=0x0fd
+#+ room_cells sbarcap tile=0x0fd tile=0x0fc
+#+ room_cells sbay tile=0x0be tile=0x0bf tile=0x0c0 tile=0x0c1 tile=0x0c2 tile=0x0c3 tile=0x0c4 tile=0x0c5 tile=0x0c6 tile=0x0cd tile=0x0ce tile=0x0b7 tile=0x0b8 tile=0x0b9 tile=0x0ba tile=0x0bb tile=0x0bc tile=0x0bd tile=0x0c7 tile=0x0c8 tile=0x0ca tile=0x0cb tile=0x0f7 tile=0x0f6 tile=0x0db tile=0x0de tile=0x0df tile=0x0e0
+#+ room_cells skeg tile=0x0d3 tile=0x0d4 tile=0x0d5 tile=0x0d6 tile=0x0d7 tile=0x0d8 tile=0x0d9 tile=0x0da
+#+ room_cells skeg_at tile=0x0d8
+#+ room_cells sb0f7 tile=0x0f7
+#+ room_cells sb0f6 tile=0x0f6
+#+ room_cells sbay_at tile=0x0bd
+#+ room_cells sbarend tile=0x0f7 tile=0x0f6
+#+ room_cells sb0be tile=0x0be
+#+ room_cells sb0bf tile=0x0bf
+#+ room_cells sb0c0 tile=0x0c0
+#+ room_cells sb0c1 tile=0x0c1
+#+ room_cells sb0c2 tile=0x0c2
+#+ room_cells sb0c3 tile=0x0c3
+#+ room_cells sb0c4 tile=0x0c4
+#+ room_cells sb0c5 tile=0x0c5
+#+ room_cells sb0c6 tile=0x0c6
+#+ room_cells sb0cd tile=0x0cd
+#+ room_cells sb0ce tile=0x0ce
+#+ room_cells sb0b7 tile=0x0b7
+#+ room_cells sb0b8 tile=0x0b8
+#+ room_cells sb0b9 tile=0x0b9
+#+ room_cells sb0ba tile=0x0ba
+#+ room_cells sb0bb tile=0x0bb
+#+ room_cells sb0bc tile=0x0bc
+#+ room_cells sb0bd tile=0x0bd
+#+ room_cells sb0c7 tile=0x0c7
+#+ room_cells sb0c8 tile=0x0c8
+#+ room_cells sb0ca tile=0x0ca
+#+ room_cells sb0cb tile=0x0cb
+#+ room_cells spad tile=0x0e8 tile=0x0e5 tile=0x0e4 tile=0x0e7 tile=0x0e6 tile=0x0e3
+#+ room_cells spad_at tile=0x0e8
+#+ room_cells spylon tile=0x0e9
+#+ room_cells sjoint tile=0x0ee
+#+ room_cells srail tile=0x0f1
+#+ room_cells srest !svoid !sship !sbar !sbay !skeg !spad !spylon !sjoint !srail
+#+ room_fill svoid stars_far
+#+ room_fill svoid stars_near
+# where the board's own ship stands: the stars, laid before anything that moves, so nothing covers the moving ship
+#+ room_fill sship stars_far
+#+ room_fill sship stars_near
+#+ room_scroll stars_near -1 6
+# The galaxy on every other cell too, before anything flies through it: the cells of the tunnels, kegs, pad, pylons
+# and rails whole, and the void's black wherever else it shows.
+#+ room_fill sbay stars_far
+#+ room_fill skeg stars_far
+#+ room_fill spad stars_far
+#+ room_fill spylon stars_far
+#+ room_fill srail stars_far
+#+ room_fill sjoint stars_far
+#+ room_fill srest dk
+#+ room_mask srest stars_far r>0-1 0>r-1 g>0-1 0>g-1 b>0-1 0>b-1
+# Things moving in the void, each a strip wider than the screen that slides inside its own box and comes round again
+# only after it has left the screen wholly: far planets creeping left, a comet, a far convoy flying right, and the ship
+# crossing to the left as the airship does over the ballpark. They stand before the lines below, so whatever of the
+# room lies over them is drawn after them and they pass behind it.
+#+ room_at sship_at planets -240 148
+#+ room_at sship_at comet -240 254
+#+ room_at sship_at convoy -240 348
+#+ room_at sship_at ship_strip -240 12
+#+ room_scroll planets -1 30
+#+ room_scroll comet -3 1
+#+ room_scroll convoy 1 3
+#+ room_scroll ship_strip -1 3
+# The bays the bars reach out from, and their openings: the void behind, then each tile's own picture, in which every
+# one of the board's slanted bars is a separate ribbed tube and an opening's lines a ridge of the same stuff. The bars
+# stay apart with the void between them, as the board has them.
+# The bartender's pad and the pylons: the galaxy where the board has them. Nothing upright holds anything up here;
+# where a pylon met the rail, the rail runs on.
+# The bars: a metal counter, mirror-bright on top with a lit orange strip along its edge, one painting with a bar's
+# rows at each bar's height.
+#+ room_fill sbar sbarpaint
+#+ room_mask srest sp6d6d6d r>0+108 0>r-110 g>0+108 0>g-110 b>0+108 0>b-110
+#+ room_mask srest sp494949 r>0+72 0>r-74 g>0+72 0>g-74 b>0+72 0>b-74
+#+ room_mask srest sp242424 r>0+35 0>r-37 g>0+35 0>g-37 b>0+35 0>b-37
+#+ room_mask srest spff6d00 r>0+254 0>r-256 g>0+108 0>g-110 b>0-1 0>b-1
+#+ room_mask srest spff0000 r>0+254 0>r-256 g>0-1 0>g-1 b>0-1 0>b-1
+#+ room_mask srest spdb9200 r>0+218 0>r-220 g>0+145 0>g-147 b>0-1 0>b-1
+#+ room_mask srest spffffff r>0+254 0>r-256 g>0+254 0>g-256 b>0+254 0>b-256
+#+ room_mask srest sp492400 r>0+72 0>r-74 g>0+35 0>g-37 b>0-1 0>b-1
+# The ship at the top is a Last Call ship: the stars behind it, then the ship whole where the board's flies.
+# Stars that twinkle: four pictures of the same stars a step apart, only where every room is plain void and off the
+# lanes things fly along, so a twinkle never lands on anything.
+#+ room_react sship_at -240 -16 twinkle0:10 twinkle1:10 twinkle2:10 twinkle3:10
+# The tunnel itself, one painted piece on the board's own shapes, placed whole at each bay by the top of its opening
+# and mirrored with it. It is laid after everything else of the room, so none of the board's own cells there (its
+# black gaps, the rails, the bar's first cell) is drawn across it; the bar comes out of its black port.
+#+ room_at sbay_at sbaypic -246 0
+# The bar's first cell lies inside the tunnel's port, so it is laid after the tunnel: the bar comes out of the middle
+# of the opening. Its far end keeps the board's rounded shape, the painting on the bar's own colours there.
+#+ room_fill sbarin sbarpaint
+#+ room_fill sbarcap sbarpaint
+#+ room_fill sbar sbarpaint
+# In front of each port, after the bars: the bar carried back into the port's dark, darker the deeper it lies, and a
+# docking collar where it leaves, so the bar comes out of the tunnel and does not start at a line.
+#+ room_at sbay_at sportfront -246 0
+# The tunnels' red lamps come on and go off, each group on a cycle of its own length (the lengths share no factor),
+# so no pattern shows; by the game's frame number, so a clip replays the same.
+#+ room_react sbay_at -246 0 lamps0:9 snone:61 lamps0:5 snone:113
+#+ room_react_stagger 41
+#+ room_react sbay_at -246 0 snone:37 lamps1:11 snone:89 lamps1:6 snone:47
+#+ room_react_stagger 67
+#+ room_react sbay_at -246 0 snone:71 lamps2:8 snone:131 lamps2:10
+#+ room_react_stagger 53
+#+ room_react sbay_at -246 0 snone:19 lamps3:7 snone:157 lamps3:9 snone:43
+#+ room_react_stagger 79
+#+ room_react sbay_at -246 0 snone:103 lamps4:12 snone:67 lamps4:5 snone:29
+#+ room_react_stagger 37
+# The bars flash neon: each bartop glows a colour for a few seconds, rests as plain bartop, then takes the next of
+# sixteen. Every bar runs the same sequence from a different point, so each changes at its own moment and no two
+# bars show the same colour at once.
+#+ room_react sbartopa 0 0 neon_gold:230 snone:50 neon_purple:200 snone:90 neon_pink:240 snone:70 neon_rose:160 snone:90 neon_red:200 snone:80 neon_cyan:210 snone:50 neon_ice:150 snone:50 neon_amber:220 snone:100 neon_aqua:180 snone:70 neon_violet:160 snone:80 neon_teal:200 snone:90 neon_green:230 snone:80 neon_blue:260 snone:60 neon_magenta:220 snone:60 neon_orange:180 snone:80 neon_lime:270 snone:80
+#+ room_react_stagger 97 rows
+# The floating kegs: a steel keg on a ring of thrusters, held up by blue jets that never stop flickering (three
+# pictures of the same keg, the jets short, medium and long), where the board has its floating pod, and larger.
+#+ room_react skeg_at -2 -26 hoverkeg0:4 hoverkeg1:4 hoverkeg2:4 hoverkeg1:4
+# The bonus round's card: a navy card with the Last Call sign in its middle, where the board shows its logo.
+#+ room screen_bonus_card
+#+ room_cells call tile=0x000-0x3ff
+#+ room_cells card_at tile=0x179
+#+ room_fill call cardnavy
+#+ room_at card_at sign 32 16

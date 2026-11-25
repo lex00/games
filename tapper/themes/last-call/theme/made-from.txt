@@ -1,0 +1,55 @@
+gp-made-from 1
+# Where each picture of Last Call came from (`gp theme look check` reads it). None was fitted from a sheet's
+# cell: each was made for the one game picture it stands for and placed there by hand, at that picture's own
+# box. They were painted by image models on Runway (gpt_image_2, gen4_image) from our own words and our own
+# earlier pictures, 2026-11-16 to 2026-11-24, or drawn by the scripts kept with the work (runway/*.py).
+# Five pieces of the punk and space rooms (the window, the tunnel, the keg, the bar, the pad) were painted
+# with a crop of the board's own drawing of that piece shown to the model as a guide to its shape, on the
+# owner's word in session, 2026-11-24; no pixel of the board's is in any picture here.
+placed screen_attract_logo screen_attract_logo-1 screen_attract_logo-2 screen_attract_logo-3 screen_attract_logo-4 screen_attract_logo-5 screen_attract_logo-6 screen_attract_logo-7
+placed screen_attract_logo-8 screen_attract_logo-9 screen_attract_logo-10 screen_attract_logo-11 screen_attract_logo-12 screen_attract_logo-13 screen_attract_logo-14 sprite-tap-09
+placed sprite-mug-0e sprite-mug-16 sprite-mug-14 sprite-mug-17 sprite-mug-10 sprite-mug-11 sprite-mug-12 sprite-mug-13
+placed sprite-tip-4d sprite-legend-4d sprite-mug-4d sprite-scene_customer-4d sprite-customer-4d sprite-bonus_object-4d letter-x33c letter-x33d
+placed letter-x33e letter-x33f letter-x340 letter-x341 sprite-bar_end-4e sprite-bar_end-74 sprite-bar_end-7b counter-table_1_b-0
+placed counter-table_2_b-0 letter-Z letter-x000 letter-A letter-B letter-C letter-D letter-E
+placed letter-F letter-G letter-H letter-I letter-J letter-K letter-L letter-M
+placed letter-N letter-O letter-P letter-R letter-S letter-T letter-U letter-V
+placed letter-W letter-X letter-Y letter-0 letter-1 letter-2 letter-3 letter-5
+placed letter-7 letter-x03a counter-score-0 counter-score-1 counter-score-2 counter-score-3 counter-score-4 counter-score-5
+placed counter-score-6 counter-score-7 counter-score-8 counter-score-9 counter-score_2-0 counter-score_2-1 counter-score_2-2 counter-score_2-3
+placed counter-score_2-4 counter-score_2-5 counter-score_2-6 counter-score_2-7 counter-score_2-8 counter-score_2-9 counter-cleared-0 counter-cleared-1
+placed counter-cleared-2 counter-cleared-3 counter-cleared-4 counter-cleared-5 counter-cleared-6 counter-cleared-7 counter-cleared-8 counter-cleared-9
+placed counter-credits_shown-0 counter-credits_shown-1 counter-credits_shown-2 counter-credits_shown-3 counter-credits_shown-4 counter-credits_shown-5 counter-credits_shown-6 counter-credits_shown-7
+placed counter-credits_shown-8 counter-credits_shown-9 counter-cleared_shown-0 counter-cleared_shown-1 counter-cleared_shown-2 counter-cleared_shown-3 counter-cleared_shown-4 counter-cleared_shown-5
+placed counter-cleared_shown-6 counter-cleared_shown-7 counter-cleared_shown-8 counter-cleared_shown-9 counter-extra_first-0 counter-extra_first-1 counter-extra_first-2 counter-extra_first-3
+placed counter-extra_first-4 counter-extra_first-5 counter-extra_first-6 counter-extra_first-7 counter-extra_first-8 counter-extra_first-9 counter-extra_every-0 counter-extra_every-1
+placed counter-extra_every-2 counter-extra_every-3 counter-extra_every-4 counter-extra_every-5 counter-extra_every-6 counter-extra_every-7 counter-extra_every-8 counter-extra_every-9
+placed counter-table_1_place-0 counter-table_1_place-1 counter-table_1_place-2 counter-table_1_place-3 counter-table_1_place-4 counter-table_1_place-5 counter-table_1_place-6 counter-table_1_place-7
+placed counter-table_1_place-8 counter-table_1_place-9 counter-table_1_score-0 counter-table_1_score-1 counter-table_1_score-2 counter-table_1_score-3 counter-table_1_score-4 counter-table_1_score-5
+placed counter-table_1_score-6 counter-table_1_score-7 counter-table_1_score-8 counter-table_1_score-9 counter-table_2_place-0 counter-table_2_place-1 counter-table_2_place-2 counter-table_2_place-3
+placed counter-table_2_place-4 counter-table_2_place-5 counter-table_2_place-6 counter-table_2_place-7 counter-table_2_place-8 counter-table_2_place-9 counter-table_2_score-0 counter-table_2_score-1
+placed counter-table_2_score-2 counter-table_2_score-3 counter-table_2_score-4 counter-table_2_score-5 counter-table_2_score-6 counter-table_2_score-7 counter-table_2_score-8 counter-table_2_score-9
+placed counter-table_3_place-0 counter-table_3_place-1 counter-table_3_place-2 counter-table_3_place-3 counter-table_3_place-4 counter-table_3_place-5 counter-table_3_place-6 counter-table_3_place-7
+placed counter-table_3_place-8 counter-table_3_place-9 counter-table_3_score-0 counter-table_3_score-1 counter-table_3_score-2 counter-table_3_score-3 counter-table_3_score-4 counter-table_3_score-5
+placed counter-table_3_score-6 counter-table_3_score-7 counter-table_3_score-8 counter-table_3_score-9 counter-table_4_place-0 counter-table_4_place-1 counter-table_4_place-2 counter-table_4_place-3
+placed counter-table_4_place-4 counter-table_4_place-5 counter-table_4_place-6 counter-table_4_place-7 counter-table_4_place-8 counter-table_4_place-9 counter-table_4_score-0 counter-table_4_score-1
+placed counter-table_4_score-2 counter-table_4_score-3 counter-table_4_score-4 counter-table_4_score-5 counter-table_4_score-6 counter-table_4_score-7 counter-table_4_score-8 counter-table_4_score-9
+placed counter-table_5_place-0 counter-table_5_place-1 counter-table_5_place-2 counter-table_5_place-3 counter-table_5_place-4 counter-table_5_place-5 counter-table_5_place-6 counter-table_5_place-7
+placed counter-table_5_place-8 counter-table_5_place-9 counter-table_5_score-0 counter-table_5_score-1 counter-table_5_score-2 counter-table_5_score-3 counter-table_5_score-4 counter-table_5_score-5
+placed counter-table_5_score-6 counter-table_5_score-7 counter-table_5_score-8 counter-table_5_score-9 counter-table_6_place-0 counter-table_6_place-1 counter-table_6_place-2 counter-table_6_place-3
+placed counter-table_6_place-4 counter-table_6_place-5 counter-table_6_place-6 counter-table_6_place-7 counter-table_6_place-8 counter-table_6_place-9 counter-table_6_score-0 counter-table_6_score-1
+placed counter-table_6_score-2 counter-table_6_score-3 counter-table_6_score-4 counter-table_6_score-5 counter-table_6_score-6 counter-table_6_score-7 counter-table_6_score-8 counter-table_6_score-9
+placed counter-table_7_place-0 counter-table_7_place-1 counter-table_7_place-2 counter-table_7_place-3 counter-table_7_place-4 counter-table_7_place-5 counter-table_7_place-6 counter-table_7_place-7
+placed counter-table_7_place-8 counter-table_7_place-9 counter-table_7_score-0 counter-table_7_score-1 counter-table_7_score-2 counter-table_7_score-3 counter-table_7_score-4 counter-table_7_score-5
+placed counter-table_7_score-6 counter-table_7_score-7 counter-table_7_score-8 counter-table_7_score-9 counter-table_8_place-0 counter-table_8_place-1 counter-table_8_place-2 counter-table_8_place-3
+placed counter-table_8_place-4 counter-table_8_place-5 counter-table_8_place-6 counter-table_8_place-7 counter-table_8_place-8 counter-table_8_place-9 counter-table_8_score-0 counter-table_8_score-1
+placed counter-table_8_score-2 counter-table_8_score-3 counter-table_8_score-4 counter-table_8_score-5 counter-table_8_score-6 counter-table_8_score-7 counter-table_8_score-8 counter-table_8_score-9
+placed counter-table_9_place-0 counter-table_9_place-1 counter-table_9_place-2 counter-table_9_place-3 counter-table_9_place-4 counter-table_9_place-5 counter-table_9_place-6 counter-table_9_place-7
+placed counter-table_9_place-8 counter-table_9_place-9 counter-table_9_score-0 counter-table_9_score-1 counter-table_9_score-2 counter-table_9_score-3 counter-table_9_score-4 counter-table_9_score-5
+placed counter-table_9_score-6 counter-table_9_score-7 counter-table_9_score-8 counter-table_9_score-9 counter-table_10_place-0 counter-table_10_place-1 counter-table_10_place-2 counter-table_10_place-3
+placed counter-table_10_place-4 counter-table_10_place-5 counter-table_10_place-6 counter-table_10_place-7 counter-table_10_place-8 counter-table_10_place-9 counter-table_10_score-0 counter-table_10_score-1
+placed counter-table_10_score-2 counter-table_10_score-3 counter-table_10_score-4 counter-table_10_score-5 counter-table_10_score-6 counter-table_10_score-7 counter-table_10_score-8 counter-table_10_score-9
+placed counter-lives_shown sprite-bartender_part-06 sprite-bartender_part-03 sprite-bartender_part-02 sprite-bartender_part-05 sprite-legend-17 sprite-bonus_object-7f sprite-bonus_object-21
+placed sprite-bonus_object-0b sprite-bonus_object-0c sprite-bartender_part-0d sprite-customer-23 sprite-scene_customer-23 sprite-bonus_object-22 sprite-bonus_object-57 sprite-bonus_object-58
+placed sprite-bonus_object-59 sprite-bonus_object-68 sprite-bonus_object-69 sprite-bartender_part-0a sprite-bonus_object-17 sprite-bonus_object-10 sprite-bonus_object-11 sprite-bonus_object-12
+placed sprite-bonus_object-13

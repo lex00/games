@@ -16,6 +16,10 @@ A theme for Tapper on Game Printer: new pictures, drawn by you, for every body, 
 - No names from the original. The game's kit lists the names a theme may not use: tapper, bally, midway, budweiser, bud, root beer, rootbeer, beer, anheuser, busch, saloon, cowboy, punk, bandit, sports bar, space bar, keg, bartender, barman, mustache, moustache, bow tie, suspenders, stetson, cowboy hat.
 - If an AI tool made any of it, name the tool here, and make sure its terms let you share the result.
 
+## How the pictures were made
+
+Many of the pictures began as images made with Runway's image models (gen4_image, gen4_image_turbo and gpt_image_2) from our own words and our own earlier pictures, then were cut, fitted and repainted by hand and by script to the game's sizes. The rest were drawn by script.
+
 ## Check it
 
 ```sh
