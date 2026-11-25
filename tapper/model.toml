@@ -37364,6 +37364,9 @@ description = "1 from the bonus round's start ($2500, called at $569D) to its en
 [counters.bonus_card]
 description = "1 while the bonus round shows its card ($251F: E395 = $B4A1, E3B7 1, which keeps the HUD's score and lives off) before its stage ($2546), the round's frames before 23; tapper_bars sets it from the round's frame count"
 
+[counters.bonus_shaken]
+description = "Loaded at a clip's start only: the bonus round's six marks of a can shaken (+5 of each can's object, E267 to E28F 8 apart, which $264F sets to 1 after the can's shake), a byte each from the lowest. Those objects stand at y 0, so no bonus_object body carries them; a start inside the round's shakes, walk off or blink reads them (bonus_resume). The hooks never change it"
+
 [counters.bonus_text]
 description = "The bonus round's line of text: 1 its first ($253D), 2 the four after the shuffle ($26BF), 3 the win's two, 4 the win's first alone as the second blinks ($2830), 5 the loss's ($28F2), 0 none; tapper_bars sets it each frame"
 

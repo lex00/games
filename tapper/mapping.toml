@@ -992,6 +992,12 @@ presentation = true
 ram = [0xE114, 0xE0E1, 0xE0E2]
 
 [[field]]
+note = "Not compared: the bonus round's marks of a can shaken, +5 of each can's object from E262 ($259D reads them, $264F sets one to 1 after its shake), a byte each from the lowest. Loaded so a start inside the round's shakes, walk off or blink knows which cans are shaken (tapper.enemies.001 starts after the fifth's draw, four marked)"
+path = "counters.bonus_shaken"
+presentation = true
+ram = [0xE267, 0xE26F, 0xE277, 0xE27F, 0xE287, 0xE28F]
+
+[[field]]
 note = "Lives, E4A7: 3 at the start ($4B22), 1 less at a life lost ($23AF), 1 more at an extra life ($615D)"
 path = "counters.lives"
 ram = [0xE4A7]

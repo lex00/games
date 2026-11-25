@@ -2270,6 +2270,64 @@ fn shuffle_start(cx: &ExtCx<'_>, shaking: i64) -> i64 {
     198 + bandit_walk(cx, shaking) + 40
 }
 
+/// A start inside the bonus round's shakes, walk off or blink: the round's
+/// frame on the loaded frame (bonus_round's count) and its word 2 (the
+/// cans' fields under BONUS_MASK), from where $232B goes on (E3A9 in
+/// `word1` from bit 16, B from bit 32) and the wait's frames left. The
+/// waits are the round's calls of $232B 3 to 9 (bonus_code): each shake's
+/// rise of 16 waits of 1 ($25DA, B counting down), its wait of 5 ($2600),
+/// its two shakes' waits of 2 ($2626, $2643, B from 2), the walk's waits
+/// of 1 ($2678) and the blink's two of 4 ($2697, $26A4, B from 5). The
+/// code after a wait runs on the round's frame `ret`; the loaded frame is
+/// `ret - 1 - left`. A shaken can has +5 of its object set ($264F: E267
+/// on, 8 apart, counter bonus_shaken), after its shake; the can shaken is
+/// the one under the bandit (E226, E229) by bonus_bandit_places, the walk
+/// 2 a frame left of it. tapper.enemies.001 starts in the last shake's second wait of 2
+/// (round frame 195).
+fn bonus_resume(cx: &ExtCx<'_>, word1: i64, left: i64) -> Option<(i64, i64)> {
+    let place = (word1 >> 16) & 0xffff;
+    let b = (word1 >> 32) & 0xff;
+    let r = (3..=9).find(|&n| wait_return(cx, "bonus_code", "bonus_start", n) == Some(place))?;
+    let ok = cx.kind("bonus_object")?;
+    // E226 is place 39.
+    let bandit = cx.world.bodies.iter().find(|o| o.alive && o.kind == ok && o.ext[1] == 39)?;
+    let (by, bx) = (bandit.y.floor(), bandit.x.floor());
+    let marks = cx.counter("bonus_shaken").unwrap_or(0);
+    let flagged: i64 = (0..6).filter(|&k| (marks >> (8 * k)) & 0xff != 0).map(|k| 1 << k).sum();
+    let places = cx.table("bonus_bandit_places");
+    let at = |k: i64| -> (i64, i64) {
+        let k = usize::try_from(k).unwrap_or(0);
+        (places.get(2 * k).copied().unwrap_or(0), places.get(2 * k + 1).copied().unwrap_or(0))
+    };
+    let shaking = (0..6).find(|&k| {
+        let (ty, tx) = at(k);
+        if r <= 6 {
+            flagged & (1 << k) == 0 && tx == bx && (1..=16).contains(&(by - ty))
+        } else {
+            flagged & (1 << k) != 0 && by == ty + 16 && tx >= bx && (tx - bx) % 2 == 0 && (tx - bx) / 2 <= bandit_walk(cx, k)
+        }
+    })?;
+    let shake = flagged.count_ones() as i64;
+    let c0 = 53 + 29 * shake;
+    let blink = 198 + bandit_walk(cx, shaking);
+    let c = match r {
+        3 => c0 + 17 - b - 1 - left,
+        4 => c0 + 21 - 1 - left,
+        5 => c0 + 23 + 4 * (2 - b) - 1 - left,
+        6 => c0 + 25 + 4 * (2 - b) - 1 - left,
+        // $2669 takes 2 from his x each frame of the walk, its first on 198.
+        7 => 197 + (at(shaking).1 - bx) / 2,
+        8 => blink + 8 * (5 - b) + 4 - 1 - left,
+        _ => blink + 8 * (5 - b) + 8 - 1 - left,
+    };
+    if (r <= 6 && shake > 4) || (r > 6 && shake != 5) || c < 53 {
+        return None;
+    }
+    let shaken = flagged | (1 << shaking);
+    let unshaken = if shaken.count_ones() == 5 { (0..6).find(|k| shaken & (1 << k) == 0).unwrap_or(0) } else { 0 };
+    Some((c, (unshaken << 40) | (shaken << 49) | (shaking << 55)))
+}
+
 /// The bonus round ($2500), sub 12 of a level's end, a frame: true on the
 /// frame it returns. Its frames are counted from the frame $5681 counted
 /// the level (0): $5E99 and $60F6 wait a frame each and $252C 20, the
@@ -5446,6 +5504,26 @@ impl Ext for Bars {
             cx.set_body(fid, fb);
             flow = Some((fid, fb));
             state = 15;
+        }
+        // A start inside the round's shakes, walk off or blink
+        // (bonus_resume): the round goes on from its frame there.
+        if let Some((fid, mut fb)) = flow
+            && ![12, 18].contains(&((fb.ext[3] >> 16) & 0xff))
+            && (state == 15 || state == 16)
+        {
+            let left = if state == 16 {
+                0
+            } else {
+                timers.iter().find(|(_, t)| t.ext[1] == 0x2346).map_or(0, |(_, t)| t.ext[0])
+            };
+            if let Some((n, word2)) = bonus_resume(cx, fb.ext[1], left) {
+                fb.ext[3] = (fb.ext[3] & 0xff00) | 15 | (12 << 16) | (n << 24);
+                fb.ext[2] = (fb.ext[2] & !BONUS_MASK) | word2;
+                fb.ext[1] &= !(0xffff << 16);
+                cx.set_body(fid, fb);
+                flow = Some((fid, fb));
+                state = 15;
+            }
         }
         // A start inside the bonus round's last wait ($296F's 15 frames,
         // the won or lost line still up): $232B's place (E3A9) is the

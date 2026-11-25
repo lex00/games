@@ -1622,13 +1622,14 @@ tappera = 0x4999
 # routine shifted). The routines' code, their starts from the calls that
 # reach them ($569D, $48F1), and the call's own bytes ($252C) are lifted from
 # each set, so a set whose code sits elsewhere resumes at its own places.
+# The round's 448 bytes reach the blink's last wait ($26A4, its call 9).
 [[asset]]
 name = "bonus_code"
 format = "byte-rows"
 region = "maincpu"
 offset = 0x2500
 count = 1
-width = 64
+width = 448
 
 [asset.at]
 rbtapper = 0x2500
