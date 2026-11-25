@@ -1334,10 +1334,14 @@ impl Flow {
             }
             // A game starts with no levels cleared unless a profile starts it
             // further on (start_cleared, 0 in the model as written:
-            // profiles.toml's start_on_level_8 and start_on_level_10).
-            // Two numbers, one a switch, since each switch changes a part of
-            // its own: the further one counts.
-            let start_cleared = p(cx, "start_cleared").max(p(cx, "start_cleared_far")).clamp(0, 99);
+            // profiles.toml's start_on_level_3, _8, _10 and _14).
+            // Four numbers, one a switch, since each switch changes a part
+            // of its own: the furthest one counts.
+            let start_cleared = p(cx, "start_cleared")
+                .max(p(cx, "start_cleared_far"))
+                .max(p(cx, "start_cleared_near"))
+                .max(p(cx, "start_cleared_last"))
+                .clamp(0, 99);
             cx.set_counter("cleared", start_cleared);
             cx.set_counter("score", 0);
             let defaults = cx.table("defaults").to_vec();

@@ -52,18 +52,25 @@ name = "five_lives"
 "entities.flow.ext_params.lives_set" = 5
 
 [[groups.switches]]
-description = "A customer you served takes twice as long to come back: a level's two respawn waits are twice the program's own (the level's times table, its words 0 and 8)"
+description = "A customer you served takes three times as long to come back: a level's two respawn waits are three times the program's own (the level's times table, its words 0 and 8)"
 name = "slower_arrivals"
 
 [groups.switches.set]
-"entities.bars.ext_params.wait_percent" = 200
+"entities.bars.ext_params.wait_percent" = 300
 
 [[groups.switches]]
-description = "Customers come down the bar at about half the pace: each stands twice as long between two walks (the wait a customer's record holds, which the program shortens as a level goes on)"
+description = "Customers come down the bar at about a third of the pace: each stands three times as long between two walks (the wait a customer's record holds, which the program shortens as a level goes on)"
 name = "slower_customers"
 
 [groups.switches.set]
-"entities.bars.ext_params.customer_wait_percent" = 200
+"entities.bars.ext_params.customer_wait_percent" = 300
+
+[[groups.switches]]
+description = "A game starts on level 3, the sports bar's first, as if two levels were cleared; a start further on, when on too, counts"
+name = "start_on_level_3"
+
+[groups.switches.set]
+"entities.flow.ext_params.start_cleared_near" = 2
 
 [[groups.switches]]
 description = "A game starts on level 8, the punk bar's third, as if seven levels were cleared"
@@ -78,6 +85,13 @@ name = "start_on_level_10"
 
 [groups.switches.set]
 "entities.flow.ext_params.start_cleared_far" = 9
+
+[[groups.switches]]
+description = "A game starts on level 14, the saloon again after the space bar, as if thirteen levels were cleared; with an earlier start on too, this one counts"
+name = "start_on_level_14"
+
+[groups.switches.set]
+"entities.flow.ext_params.start_cleared_last" = 13
 
 [[groups]]
 description = "The original program's own slips, off one at a time"
