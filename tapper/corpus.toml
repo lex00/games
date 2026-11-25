@@ -7,9 +7,9 @@
 [corpus]
 format = "1.0.0"
 name = "tapper"
-version = "2.0.0"
+version = "2.1.0"
 title = "Tapper"
-recipes = "b3:0f78a61f6af7738e214a1a8047b753a572867fdece37f2f447249ed0c37b29ff"
+recipes = "b3:b8019358133978113608718c30f4b125bc7b4b9aad62cc93bbf26d3ca3f02a47"
 
 [target]
 game = "tapper"
@@ -962,3 +962,18 @@ presses = "inputs/tapper.tip.003.presses"
 frames = 360
 why = "the dancers' show in the saloon ($14E7 to $0C71's end, 255 frames), where the moose hangs: tapper.l14.001's log to frame 22743, then the bartender walks right along the second bar from the bottom to the tip, picked up on frame 38 of the clip, steps down to catch the bottom bar's empty mugs, and goes back up to serve the second bar during the show; the dancers go on frame 292 with no life lost"
 level = "cycle"
+
+[[clip]]
+id = "tapper.theme-trophy-fright.001"
+name = "theme-trophy-fright 001: tapper.die.001's presses from 120 frames earlier: play in the first saloon, the first life lost at clip frame 120, GET READY, play agai"
+source = "played"
+start = "inputs/tapper.theme-trophy-fright.001.start.presses"
+presses = "inputs/tapper.theme-trophy-fright.001.presses"
+frames = 389
+why = "a clip of the theme-trophy-fright mechanic session"
+
+[[changelog]]
+version = "2.1.0"
+date = "2026-11-25"
+says = "gp corpus import from the mechanic sessions: added tapper.theme-trophy-fright.001."
+added = ["tapper.theme-trophy-fright.001"]
