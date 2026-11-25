@@ -1030,6 +1030,15 @@ impl Bartender {
         } else {
             held
         };
+        // $06B5: on the frame after a send (E72C, word 2's E714 bit 1) the
+        // play routine counts E72C down and goes to $072C, reading neither
+        // the stick nor the tap and leaving the stick's latch (E730) as it
+        // was: a move pressed then starts on the next frame (tapper.drink.001
+        // and drink-far-end.001: the tap let go on 411, the mug sent on 412,
+        // down from 412, the move from 414 and the landing on 420).
+        if (cx.me.ext[2] >> 48) & 2 != 0 {
+            return;
+        }
         // The tap: E38E's bit 4 in the demo.
         let tap_held = presses.map_or_else(|| cx.held("button1"), |b| b & 0x10 != 0);
         let dir = held.iter().position(|&h| h);
