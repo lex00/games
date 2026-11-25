@@ -1,4 +1,5 @@
 gp-presses 0
 frames 102
-left@12-17
-down@88-94
+arcade tapper CSRLDUT
+tap@12-17
+up@88-94

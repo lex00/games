@@ -1,5 +1,6 @@
 gp-presses 0
 frames 411
-a@124-134
-b@195-201
-left@393-410
+arcade tapper CSRLDUT
+coin@124-134
+start1@195-201
+tap@393-410

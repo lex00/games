@@ -1,16 +1,17 @@
 gp-presses 0
 frames 322
-left@17-23
-left@33-39
-down@48-53
-left@58-65
-left@73-78
-down@121-124
-left@137-142
-left@156-160
-up@171-178
-start@185-211
-down@227-233
-start@241-285
-down@289-294
-left@308-313
+arcade tapper CSRLDUT
+tap@17-23
+tap@33-39
+up@48-53
+tap@58-65
+tap@73-78
+up@121-124
+tap@137-142
+tap@156-160
+down@171-178
+left@185-211
+up@227-233
+left@241-285
+up@289-294
+tap@308-313

@@ -7,9 +7,9 @@
 [corpus]
 format = "1.0.0"
 name = "tapper"
-version = "2.1.0"
+version = "3.0.0"
 title = "Tapper"
-recipes = "b3:b8019358133978113608718c30f4b125bc7b4b9aad62cc93bbf26d3ca3f02a47"
+recipes = "b3:9e8d6256af977f2728ff160b14b7b9c1ce11949e2b8c1f2187f6aad93ba7a92a"
 
 [target]
 game = "tapper"
@@ -977,3 +977,9 @@ version = "2.1.0"
 date = "2026-11-25"
 says = "gp corpus import from the mechanic sessions: added tapper.theme-trophy-fright.001."
 added = ["tapper.theme-trophy-fright.001"]
+
+[[changelog]]
+version = "3.0.0"
+date = "2026-11-25"
+says = "the 12 clips the import saved with NES button names (tapper.attract-demo.001, tapper.clear-stage.001, tapper.double-drink-end.001, tapper.drink-far-end.001, tapper.drink-far-end.002, tapper.enemies.001 to .003, tapper.game-over.001, tapper.get-ready-screen.001, tapper.move.001, tapper.title.001) written again with the arcade's names and `arcade tapper CSRLDUT`: the same presses on the same frames, scored on the tapper set as before, every clip's score the same"
+changed = ["tapper.attract-demo.001", "tapper.clear-stage.001", "tapper.double-drink-end.001", "tapper.drink-far-end.001", "tapper.drink-far-end.002", "tapper.enemies.001", "tapper.enemies.002", "tapper.enemies.003", "tapper.game-over.001", "tapper.get-ready-screen.001", "tapper.move.001", "tapper.title.001"]

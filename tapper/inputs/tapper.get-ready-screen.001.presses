@@ -1,5 +1,6 @@
 gp-presses 0
 frames 220
-b@0-1
-left@193-210
-up@212-213
+arcade tapper CSRLDUT
+start1@0-1
+tap@193-210
+down@212-213
