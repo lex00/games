@@ -1749,6 +1749,37 @@ rbtapper = 0x4A19
 sutapper = 0x4897
 tappera = 0x4897
 
+# $4603: the level's end's first code, which every end script calls
+# first, searched for its waits: 15 ($4606), 4 of 10 ($4668, B from 4),
+# then after $4742, 15 ($46C5) and 4 ($46DF) before the glass is kicked
+# at $46E2. 229 bytes reach rbtapper's kick ($477F to $4864).
+[[asset]]
+name = "end_step_code"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4603
+count = 1
+width = 229
+
+[asset.at]
+rbtapper = 0x477F
+sutapper = 0x4603
+tappera = 0x4603
+
+# $4882: the word end script 0 calls $4603 with ($4881), its place.
+[[asset]]
+name = "end_step_start"
+format = "byte-rows"
+region = "maincpu"
+offset = 0x4882
+count = 1
+width = 2
+
+[asset.at]
+rbtapper = 0x4A04
+sutapper = 0x4882
+tappera = 0x4882
+
 [[asset]]
 name = "hops_code"
 format = "byte-rows"

@@ -4946,6 +4946,48 @@ impl Ext for Bars {
                 cx.set_body(fresh, b);
             }
         }
+        // A start inside $4603, the code every end script calls first
+        // (tapper.double-drink-end.001 starts in its third wait, E3A9
+        // $46C8, 6 frames left): $232B's place and B give the frame its
+        // wait returns on, counted from the end's first as `step` counts
+        // it, less the frames the wait has left (the timer for $2346, none
+        // in state 16). Its four waits: 15, returning on 16 ($2A there);
+        // 4 of 10 from B 4, $4742 on 56; and after $4742, 15 and 4, the
+        // glass kicked on 128. Past $4742 the frames are counted as if it
+        // ran once, which the poses and requests count the same either
+        // way. Without this the script's waits put the game back in state
+        // 11 and the model counts a level's end of its own, which asks
+        // for nothing (END_SOUNDS).
+        if let Some((fid, mut fb)) =
+            cx.kind("flow").and_then(|k| cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == k)).map(|(i, b)| (i, *b))
+            && let state = fb.ext[3] & 0xff
+            && (state == 15 || state == 16)
+            && (fb.ext[3] >> 16) & 0xff != 8
+            && let ret = (fb.ext[1] >> 16) & 0xffff
+            && let Some(k) = (1..=4).find(|&k| wait_return(cx, "end_step_code", "end_step_start", k) == Some(ret))
+        {
+            let b = (fb.ext[1] >> 32) & 0xff;
+            let back = match k {
+                1 => 16,
+                2 => 16 + 10 * (4 - b + 1),
+                3 => 124,
+                _ => 128,
+            };
+            let left = if state == 16 {
+                0
+            } else {
+                cx.kind("timer")
+                    .and_then(|k| cx.world.bodies.iter().find(|t| t.alive && t.kind == k && t.ext[1] == 0x2346))
+                    .map_or(0, |t| t.ext[0])
+            };
+            let n = (back - 1 - left).max(0);
+            // Before $4742 its draw ($467E) is still to come.
+            let twice = if k >= 3 { END_TWICE_KNOWN } else { 0 };
+            fb.ext[3] = (fb.ext[3] & 0xff00) | state | (8 << 16) | (n << 24) | twice | END_SOUNDS;
+            // The place is read once, at the start.
+            fb.ext[1] &= !(0xffff << 16);
+            cx.set_body(fid, fb);
+        }
         let flow = cx.kind("flow").and_then(|k| cx.world.bodies.iter().find(|b| b.kind == k)).map(|fb| fb.ext);
         // A start in end script 0's last wait, the second of $48FC's waits
         // of 10 with B at 1: the wait runs out on this frame and $492F

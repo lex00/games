@@ -842,6 +842,24 @@ description = "The level's end scripts by the game's draw E3ED and the levels cl
 source = "tapper"
 asset = "end_script_lists"
 
+[assets.end_step_code]
+kind = "rows"
+role = "behavior"
+description = "Where a clip resumes: the level's end's first code ($4603), searched for its waits"
+
+[assets.end_step_code.from]
+source = "tapper"
+asset = "end_step_code"
+
+[assets.end_step_start]
+kind = "rows"
+role = "behavior"
+description = "Where the level's end's first code is: the word end script 0 calls $4603 with ($4882)"
+
+[assets.end_step_start.from]
+source = "tapper"
+asset = "end_step_start"
+
 [assets.end_turn_code]
 kind = "rows"
 role = "behavior"
@@ -2313,6 +2331,8 @@ end_last_start = "end_last_start"
 end_lift = "end_lift"
 end_pose_b = "end_pose_b"
 end_script_lists = "end_script_lists"
+end_step_code = "end_step_code"
+end_step_start = "end_step_start"
 end_turn_code = "end_turn_code"
 end_turn_start = "end_turn_start"
 fall_crash_pictures = "fall_crash_pictures"
@@ -38413,6 +38433,22 @@ note = "gp code listing on tapper.l1.001 and tapper.l7.001: a level's end ($55F4
 
 [[evidence."assets.end_script_lists".refs]]
 at = "clip:tapper.l7.001"
+
+[evidence."assets.end_step_code"]
+source = "observed"
+confidence = 80
+note = "gp code listing of $4603 in tapper, tappera and sutapper ($477F in rbtapper): waits at $4606 (15), $4668 (10, a loop of 4), $46C5 (15) and $46DF (4), then $14 at $46E2 ($4864 in rbtapper); tapper.double-drink-end.001 starts in the third (E3A8 11, E3A9 $46C8, its timer 6 frames left) and the kick's $14 is asked on its frame 11"
+
+[[evidence."assets.end_step_code".refs]]
+at = "clip:tapper.double-drink-end.001"
+
+[evidence."assets.end_step_start"]
+source = "observed"
+confidence = 80
+note = "gp code listing of each set: end script 0 ($4881) calls $4603 first ($4A03 calls $477F in rbtapper)"
+
+[[evidence."assets.end_step_start".refs]]
+at = "clip:tapper.double-drink-end.001"
 
 [evidence."assets.end_turn_code"]
 source = "observed"
