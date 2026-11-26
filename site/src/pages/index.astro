@@ -1,6 +1,7 @@
 ---
 import { games } from '../lib/catalog.mjs';
 import { arcade } from '../lib/arcade.mjs';
+import { videoOf } from '../lib/videos.mjs';
 import site from '../styles/site.css?raw';
 const list = await games();
 const look = await arcade();
@@ -39,6 +40,12 @@ const colours = ['cyan', 'yellow', 'green', 'violet'];
 									{g.themes.map((t) => <li><a class="tube violet" href={t.play}>{t.title}</a></li>)}
 								</ul>
 							</div>
+						)}
+						{videoOf(g.name) && (
+							<a class="video" href={videoOf(g.name).href} target="_blank" rel="noopener">
+								<span class="frame"><img src={videoOf(g.name).picture} alt="" loading="lazy" /><span class="mark" aria-hidden="true"></span></span>
+								<span class="says">{videoOf(g.name).says}<span class="where"> on YouTube</span></span>
+							</a>
 						)}
 						{g.howToGet && (
 							<details class="need" open>
