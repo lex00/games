@@ -1,0 +1,161 @@
+/* A copy of scripts/web/public/arcade.css from the tools repo
+   (github.com/lex00/gameprinter) at its commit
+   0559c0ff1cebe14cbe67ce7ab25e59d220f3bd70, kept so the site builds when the
+   game page can't be read. The build takes the game page's served copy when
+   it can (src/lib/arcade.mjs). Don't edit it here: change it in the tools
+   repo and copy it again. The site's own rules are in site.css. */
+
+/* The arcade look, shared by the public page (page.css lays that page out
+   on top of this file) and any other page that lists or plays the games:
+   the colours, the type scale and a few classes. It names nothing of the
+   player page, so another site can take the file as it is (docs/web.md,
+   "The page's look"). System fonts only, no pictures, no requests.
+
+   The classes:
+   .arcade           on body: the dark room, its text and its focus ring
+   .tube             a neon button (a button, a link or a label), 56 px tall;
+                     its colour is one of .pink .cyan .yellow .green .red
+                     .violet; .quiet has no glow (a lesser action); .big is
+                     the one large button of a page
+   .sign             a neon sign, for a page's title; .long, .longer and
+                     .longest step its letters down for long words
+   .card             a panel outlined in a tube's colour (the same colour
+                     classes), for a game on a list or a box of text
+   .cap              a key cap (a kbd), with .arrow and one of .up .right
+                     .down .left inside it for an arrow key
+   .chev             a small "back" chevron drawn with borders
+   .label            a small spaced heading over a group of buttons
+   No text is smaller than 16 px. */
+
+:root {
+  --bg: #0a0520;
+  --card: #140a33;
+  --ink: #ffffff;
+  --muted: #d3caf2;
+  --pink: #ff4fd8;
+  --cyan: #3df2ff;
+  --yellow: #ffe14a;
+  --green: #6dff9c;
+  --red: #ff7a7a;
+  --violet: #9d8cff;
+  --display: ui-rounded, "Arial Rounded MT Bold", "Helvetica Rounded", system-ui, sans-serif;
+  --text: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: ui-monospace, Menlo, Consolas, monospace;
+  --fs-small: 16px;
+  --fs: 18px;
+  --fs-btn: 20px;
+  --fs-key: 20px;
+  --btn-h: 56px;
+}
+
+.arcade {
+  margin: 0;
+  color: var(--ink);
+  font: var(--fs)/1.35 var(--text);
+  background:
+    radial-gradient(circle at 8% 15%, #ff4fd826, transparent 38%),
+    radial-gradient(circle at 92% 85%, #3df2ff22, transparent 38%),
+    var(--bg);
+  background-attachment: fixed;
+}
+.arcade *, .arcade *::before, .arcade *::after { box-sizing: border-box; }
+.arcade :focus-visible { outline: 4px solid #fff; outline-offset: 3px; }
+.arcade a { color: var(--cyan); }
+
+/* A neon tube: one colour, --c, set by a colour class. */
+.tube, .card { --c: var(--cyan); }
+.tube.pink, .card.pink { --c: var(--pink); }
+.tube.cyan, .card.cyan { --c: var(--cyan); }
+.tube.yellow, .card.yellow { --c: var(--yellow); }
+.tube.green, .card.green { --c: var(--green); }
+.tube.red, .card.red { --c: var(--red); }
+.tube.violet, .card.violet { --c: var(--violet); }
+.tube {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: var(--btn-h);
+  margin: 0;
+  padding: 6px 20px;
+  border: 3px solid var(--c);
+  border-radius: 999px;
+  background: #0a052099;
+  color: #fff;
+  font: 700 var(--fs-btn)/1.1 var(--display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 0 0 10px var(--c);
+  box-shadow: 0 0 14px var(--c), inset 0 0 14px color-mix(in srgb, var(--c) 45%, transparent);
+  cursor: pointer;
+}
+.arcade a.tube { color: #fff; }
+.tube:hover { background: color-mix(in srgb, var(--c) 22%, #0a0520); }
+.tube:active { transform: scale(0.98); }
+.tube.quiet { box-shadow: none; text-shadow: none; border-color: color-mix(in srgb, var(--c) 70%, #0a0520); }
+.tube[aria-pressed="true"] { background: color-mix(in srgb, var(--c) 40%, #0a0520); box-shadow: 0 0 14px var(--c); }
+.tube:disabled { cursor: default; box-shadow: none; text-shadow: none; border-color: color-mix(in srgb, var(--c) 60%, #0a0520); }
+.tube:disabled:hover { background: #0a052099; }
+.tube:disabled:active { transform: none; }
+.tube.big { min-height: 92px; padding: 10px 40px; font-size: 32px; }
+/* A label that holds a file input is focused through the input. */
+label.tube:has(:focus-visible) { outline: 4px solid #fff; outline-offset: 3px; }
+
+.sign {
+  margin: 0;
+  padding: 14px 16px;
+  border: 3px solid var(--pink);
+  border-radius: 18px;
+  text-align: center;
+  font: 700 46px/1.05 var(--display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  color: #fff;
+  text-shadow: 0 0 6px #fff, 0 0 18px var(--pink), 0 0 40px var(--pink);
+  box-shadow: 0 0 18px var(--pink), inset 0 0 18px #ff4fd866;
+  animation: arcade-hum 8s ease-in-out infinite;
+}
+.sign.long { font-size: 36px; }
+.sign.longer { font-size: 28px; letter-spacing: 0.05em; }
+.sign.longest { font-size: 22px; letter-spacing: 0.03em; }
+@keyframes arcade-hum {
+  50% { box-shadow: 0 0 28px var(--pink), inset 0 0 24px #ff4fd888; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sign { animation: none; }
+  .tube:active { transform: none; }
+}
+
+.card {
+  border: 3px solid var(--c);
+  border-radius: 22px;
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--c) 55%, transparent);
+}
+
+.cap {
+  display: inline-grid;
+  place-items: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 9px;
+  border: 2px solid var(--violet);
+  border-radius: 8px;
+  background: #1d1247;
+  color: #fff;
+  font: 700 var(--fs-key)/1 var(--mono);
+  letter-spacing: 0;
+  text-transform: none;
+  text-shadow: none;
+  white-space: nowrap;
+}
+.arrow { display: inline-block; width: 0; height: 0; border: 8px solid transparent; border-top: 0; border-bottom: 12px solid currentColor; }
+.arrow.right { transform: rotate(90deg); }
+.arrow.down { transform: rotate(180deg); }
+.arrow.left { transform: rotate(270deg); }
+.chev { flex: none; width: 12px; height: 12px; border-left: 4px solid currentColor; border-bottom: 4px solid currentColor; transform: rotate(45deg); }
+.label { margin: 0; font: 700 18px/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }

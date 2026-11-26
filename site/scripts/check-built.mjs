@@ -2,10 +2,14 @@
 import { readFileSync } from 'node:fs';
 
 const html = readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8');
+const runner = 'href="https:\\/\\/[^"]+\\/p\\?g=[a-z0-9.-]+\\/[a-z0-9.-]+"';
+const play = 'class="[^"]*\\bplay\\b[^"]*"';
 const need = [
-	[/class="play"[^>]*href="https:\/\/[^"]+\/p\?g=[a-z0-9.-]+\/[a-z0-9.-]+"|href="https:\/\/[^"]+\/p\?g=[a-z0-9.-]+\/[a-z0-9.-]+"[^>]*class="play"/, 'a Play link to the game runner naming the game (p?g=NAMESPACE/NAME)'],
-	[/<img[^>]*alt="The title screen of /, "a game's picture"],
+	[new RegExp(`<a [^>]*${play}[^>]*${runner}|<a [^>]*${runner}[^>]*${play}`), 'a Play link to the game runner naming the game (p?g=NAMESPACE/NAME)'],
+	[/<img[^>]*alt="[^"]+ in the [^"]+ look"/, "a game's picture, described as the game in its look"],
 	[/href="https:\/\/lex00\.github\.io\/gameprinter\/"/, 'the link to the docs'],
+	[/<body[^>]*class="[^"]*\barcade\b/, 'the arcade look on its body'],
+	[/<style[^>]*>[^<]*--pink\s*:[^<]*\.tube[\s,.:{]/, 'the shared stylesheet (arcade.css) in the page'],
 ];
 const missing = need.filter(([re]) => !re.test(html)).map(([, what]) => what);
 if (missing.length) {

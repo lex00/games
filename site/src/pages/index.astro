@@ -1,6 +1,11 @@
 ---
 import { games } from '../lib/catalog.mjs';
+import { arcade } from '../lib/arcade.mjs';
+import site from '../styles/site.css?raw';
 const list = await games();
+const look = await arcade();
+// Each card is outlined in its own tube colour, in turn. Pink is Play's.
+const colours = ['cyan', 'yellow', 'green', 'violet'];
 ---
 <!doctype html>
 <html lang="en">
@@ -9,27 +14,34 @@ const list = await games();
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Games</title>
 		<meta name="description" content="Games for the ROMs you own, played in your browser." />
-		<meta name="color-scheme" content="light dark" />
+		<meta name="color-scheme" content="dark" />
+		<meta name="theme-color" content="#0a0520" />
+		<style is:inline data-from={look.from} set:html={look.css}></style>
+		<style is:inline set:html={site}></style>
 	</head>
-	<body>
-		<header>
-			<h1>Games</h1>
+	<body class="arcade">
+		<header class="top">
+			<h1 class="sign">Games</h1>
 			<p>For the ROMs you own, in your browser, with nothing to install.</p>
 		</header>
 		<main>
-			{list.map((g) => (
-				<article>
-					{g.picture && <a class="art" href={g.play} aria-label={`Play ${g.title}`}><img src={g.picture.src} alt={g.picture.alt} /></a>}
-					<div class="about">
+			{list.map((g, i) => (
+				<article class:list={['game', 'card', colours[i % colours.length], !g.picture && 'plain']}>
+					{g.picture && <a class="pic" href={g.play} aria-label={`Play ${g.title}`}><img src={g.picture.src} alt={g.picture.alt} /></a>}
+					<div class="info">
 						<h2>{g.title}</h2>
-						<a class="play" href={g.play}>Play</a>
+						<a class="tube pink big play" href={g.play} aria-label={`Play ${g.title}`}>Play</a>
 						{g.themes.length > 0 && (
-							<p class="themes">
-								Looks: Original, {g.themes.map((t, i) => <>{i > 0 && ', '}<a href={t.play}>{t.title}</a></>)}
-							</p>
+							<div class="looks">
+								<h3 class="label" id={`looks-${i}`}>Pick a look</h3>
+								<ul aria-labelledby={`looks-${i}`}>
+									<li><a class="tube violet quiet" href={g.play}>Original</a></li>
+									{g.themes.map((t) => <li><a class="tube violet" href={t.play}>{t.title}</a></li>)}
+								</ul>
+							</div>
 						)}
 						{g.howToGet && (
-							<details open>
+							<details class="need" open>
 								<summary>You need your own copy of {g.original}</summary>
 								<p>Press Play, then load your copy on the game page. It stays in your browser and is never uploaded.</p>
 								<p class="how">{g.howToGet}</p>
@@ -39,56 +51,10 @@ const list = await games();
 				</article>
 			))}
 		</main>
-		<footer>
+		<footer class="foot">
 			<a href="https://lex00.github.io/gameprinter/">Make or improve a game</a>
 			<a href="https://github.com/lex00/games">Source</a>
+			<p class="mark">Not affiliated with or endorsed by the makers of the games listed.</p>
 		</footer>
 	</body>
 </html>
-
-<style is:global>
-	:root {
-		--paper: #efe6cf; --sheet: #f8f2e2; --ink: #2a221c; --soft: #6b5d4c;
-		--rule: #c9bb9c; --link: #2b5a9c; --go: #c4462c; --go-ink: #fff8ec;
-		background: var(--paper); color: var(--ink);
-	}
-	@media (prefers-color-scheme: dark) {
-		:root {
-			--paper: #1d1915; --sheet: #29231d; --ink: #f3ead6; --soft: #b5a78f;
-			--rule: #4c4236; --link: #8db7ee; --go: #d9583c; --go-ink: #1d1915;
-		}
-	}
-	* { box-sizing: border-box; }
-	body {
-		margin: 0 auto; padding: 3rem 16px 2rem; max-width: 56rem; min-height: 100vh;
-		display: flex; flex-direction: column;
-		font: 1.0625rem/1.55 ui-rounded, 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
-	}
-	header { margin-bottom: 2rem; }
-	h1 { margin: 0; font-size: clamp(2.5rem, 8vw, 4rem); line-height: 1; letter-spacing: -0.02em; }
-	header p { margin: 0.6rem 0 0; color: var(--soft); font-size: 1.2rem; }
-	main { flex: 1; display: grid; gap: 1.5rem; }
-	article {
-		display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 1.75rem; align-items: center;
-		background: var(--sheet); border: 1px solid var(--rule); border-radius: 0.5rem; padding: 1.25rem;
-	}
-	.art { display: block; line-height: 0; border-radius: 0.25rem; overflow: hidden; }
-	.art img { width: 100%; height: auto; display: block; }
-	h2 { margin: 0 0 1rem; font-size: clamp(1.75rem, 5vw, 2.5rem); line-height: 1.1; }
-	.play {
-		display: inline-block; padding: 0.7rem 2.2rem; border-radius: 0.4rem;
-		background: var(--go); color: var(--go-ink); font-weight: 700; font-size: 1.15rem; text-decoration: none;
-	}
-	.play:hover { filter: brightness(1.08); }
-	.play:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
-	a { color: var(--link); }
-	.themes { margin: 1rem 0 0; color: var(--soft); }
-	details { margin-top: 1rem; font-size: 0.95rem; color: var(--soft); }
-	summary { cursor: pointer; }
-	details p { margin: 0.6rem 0 0; }
-	.how { white-space: pre-line; }
-	footer { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
-	@media (max-width: 40rem) {
-		article { grid-template-columns: minmax(0, 1fr); gap: 1rem; padding: 1rem; }
-	}
-</style>

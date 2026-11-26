@@ -1,0 +1,60 @@
+/* The list's own layout, on top of arcade.css (the look shared with the game
+   page: its colours, type scale and the classes .arcade, .tube, .sign, .card
+   and .label). Nothing here is smaller than 16 px. */
+
+html { background: var(--bg); color-scheme: dark; }
+body { min-height: 100vh; display: flex; flex-direction: column; }
+.top, main, .foot { width: 100%; max-width: 1180px; margin: 0 auto; }
+
+.top { display: flex; align-items: center; gap: 28px; padding: 28px 24px 8px; }
+.top .sign { flex: none; font-size: 60px; padding: 14px 36px; }
+.top p { margin: 0; font-size: 24px; color: var(--muted); }
+
+main { flex: 1; display: grid; gap: 28px; align-content: start; padding: 24px; }
+
+.game {
+	display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 28px; align-items: center;
+	padding: 22px;
+}
+.game.plain { grid-template-columns: minmax(0, 1fr); }
+.pic {
+	display: block; line-height: 0; overflow: hidden;
+	border: 2px solid #ffffff40; border-radius: 8px; background: #04050a;
+}
+.pic img { display: block; width: 100%; height: auto; }
+.info { display: grid; gap: 18px; justify-items: start; min-width: 0; }
+.game h2 {
+	margin: 0; font: 700 44px/1.05 var(--display); letter-spacing: 0.08em; text-transform: uppercase;
+	overflow-wrap: anywhere; text-shadow: 0 0 6px #fff, 0 0 20px var(--c);
+}
+.game .play { padding-inline: 64px; background: color-mix(in srgb, var(--pink) 30%, var(--bg)); }
+.game .play:hover { background: color-mix(in srgb, var(--pink) 45%, var(--bg)); }
+
+.looks { display: grid; gap: 12px; justify-items: start; }
+.looks ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 12px; }
+.looks .tube { min-height: 48px; font-size: 18px; }
+
+.need { color: var(--muted); }
+.need summary { cursor: pointer; color: var(--ink); font-weight: 600; padding: 4px 0; }
+.need p { margin: 10px 0 0; }
+.need .how { white-space: pre-line; }
+
+.foot {
+	display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center;
+	padding: 14px 24px 24px; color: var(--muted);
+}
+.foot a { font-weight: 600; padding: 8px 0; }
+.foot .mark { margin: 0 0 0 auto; }
+
+@media (max-width: 760px) {
+	.top { display: block; padding: 16px 12px 0; }
+	.top .sign { font-size: 44px; padding: 12px; }
+	.top p { font-size: 18px; margin-top: 14px; text-align: center; }
+	main { padding: 16px 12px; gap: 20px; }
+	.game { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 14px; }
+	.info { justify-items: stretch; }
+	.game h2 { font-size: 36px; }
+	.game .play { padding-inline: 20px; min-height: 76px; }
+	.foot { padding: 8px 12px 20px; }
+	.foot .mark { margin-left: 0; }
+}
