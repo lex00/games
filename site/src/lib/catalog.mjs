@@ -8,6 +8,10 @@ const REGISTRY = process.env.GP_REGISTRY ?? 'https://raw.githubusercontent.com/l
 // address (`/p?g=NAMESPACE/NAME`, with `&c=NAMESPACE/THEME` for a theme).
 // The games the list shows first, by their names in the registry, in order.
 const FIRST = ['lex00/tapper'];
+// A game's system as the card names it, by the platform its package gives
+// its ROMs (rom.entry's `platform`). One the list hasn't a name for is
+// shown as the package writes it.
+const SYSTEMS = { arcade: 'Arcade', nes: 'NES' };
 // What a visitor brings to play each game, in a few words that end the
 // card's one sentence ("Bring ... that you own."). A game with no entry
 // says a copy of the game by its title. The package's own longer note
@@ -71,6 +75,7 @@ export async function games() {
 		if (![...have.keys()].some((k) => k.startsWith('play/'))) continue;
 		const pkg = parse(await text(`blobs/${have.get('package.toml')}`));
 		const title = p.title;
+		const platform = pkg.rom?.entry?.[0]?.platform ?? null;
 		// A game's themes, with those from the game's own namespace first (for
 		// lex00/donkey-kong, lex00/turnips before a theme someone else made), then
 		// by title. The first is the look the card shows.
@@ -92,6 +97,7 @@ export async function games() {
 			name: p.name,
 			title,
 			version: p.latest,
+			system: platform ? (SYSTEMS[platform] ?? platform) : null,
 			// The runner plays any game its registry offers, named in the address
 			// (`p?g=NAMESPACE/NAME`): it installs the game's package and plays a ROM
 			// the visitor loads, or one kept from an earlier visit.

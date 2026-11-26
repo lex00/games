@@ -30,6 +30,12 @@ main { flex: 1; display: grid; gap: 28px; align-content: start; padding: 24px; }
 	margin: 0; font: 700 44px/1.05 var(--display); letter-spacing: 0.08em; text-transform: uppercase;
 	overflow-wrap: anywhere; text-shadow: 0 0 6px #fff, 0 0 20px var(--c);
 }
+/* The game's system, a small plate beside its name in the card's colour. */
+.name { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.system {
+	margin: 0; padding: 6px 12px; border: 2px solid var(--c); border-radius: 8px;
+	font: 700 18px/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink);
+}
 .game .play { padding-inline: 64px; background: color-mix(in srgb, var(--pink) 30%, var(--bg)); }
 .game .play:hover { background: color-mix(in srgb, var(--pink) 45%, var(--bg)); }
 

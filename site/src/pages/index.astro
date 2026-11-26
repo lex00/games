@@ -30,7 +30,10 @@ const colours = ['cyan', 'yellow', 'green', 'violet'];
 				<article class:list={['game', 'card', colours[i % colours.length], !g.picture && 'plain']}>
 					{g.picture && <a class="pic" href={g.play} aria-label={`Play ${g.title}`}><img src={g.picture.src} alt={g.picture.alt} /></a>}
 					<div class="info">
-						<h2>{g.title}</h2>
+						<div class="name">
+							<h2>{g.title}</h2>
+							{g.system && <p class="system">{g.system}</p>}
+						</div>
 						<a class="tube pink big play" href={g.play} aria-label={`Play ${g.title}`}>Play</a>
 						{g.themes.length > 0 && (
 							<div class="looks">
