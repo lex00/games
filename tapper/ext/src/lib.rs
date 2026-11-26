@@ -5068,6 +5068,26 @@ impl Ext for Bars {
             pb.ext[3] |= END_TURNED;
             cx.set_body(pid, pb);
         }
+        // A start inside a pour: the beer's layers in the mug at the tap
+        // (the objects from E18E) are put down by `step` from his loaded
+        // E715 and E714, so the loaded frame would show the tap with no mug
+        // until then (tapper.drink-far-end.001 frames 0 and 1: E715 0 and
+        // E714 1, the full mug's three layers at 380,178 to 380,194). Placed
+        // here as `step` places them; a layer already loaded is kept, so a
+        // second load adds none.
+        if let Some(ok) = cx.kind("bonus_object") {
+            let key = |at: i64| (at - 0xE18E) / 4 + 1;
+            let have: Vec<i64> = cx.world.bodies.iter().filter(|b| b.alive && b.kind == ok).map(|b| b.ext[1]).collect();
+            for o in pour_layers(cx).into_iter().filter(|o| !have.contains(&key(o.at))) {
+                let mut b = gp_sim::systems::new_body(cx.spec, cx.world, ok, Fx::from_int(o.x), Fx::from_int(o.y), false);
+                b.ext[0] = o.flags | (o.pic << 8);
+                b.ext[1] = key(o.at);
+                let id = cx.world.bodies.len()
+                    + cx.requests().iter().filter(|r| matches!(r, gp_sim::ext::Request::Spawn { .. })).count();
+                cx.spawn(ok, b.x, b.y, false);
+                cx.set_body(id, b);
+            }
+        }
         let level_timers = cx
             .kind("timer")
             .is_some_and(|k| cx.world.bodies.iter().any(|b| b.kind == k && b.alive && b.ext[1] == 0x2023 && b.ext[0] > 0));
