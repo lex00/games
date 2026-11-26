@@ -74,7 +74,7 @@ export async function games() {
 		for (const c of themes) {
 			const tf = files(await text(`packages/${c.id}`));
 			if (tf.has('preview.png')) {
-				picture = { src: `${REGISTRY}/blobs/${tf.get('preview.png')}`, alt: `The title screen of ${title} in the ${c.title} look` };
+				picture = { src: `${REGISTRY}/blobs/${tf.get('preview.png')}`, alt: `${title} in the ${c.title} look` };
 				break;
 			}
 		}
