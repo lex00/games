@@ -47,12 +47,11 @@ const colours = ['cyan', 'yellow', 'green', 'violet'];
 								<span class="says">{videoOf(g.name).says}<span class="where"> on YouTube</span></span>
 							</a>
 						)}
-						{g.howToGet && (
-							<details class="need" open>
-								<summary>You need your own copy of {g.original}</summary>
-								<p>Press Play, then load your copy on the game page. It stays in your browser and is never uploaded.</p>
-								<p class="how">{g.howToGet}</p>
-							</details>
+						{g.bring && (
+							<div class="need">
+								<h3 class="label">You need your own copy</h3>
+								<p>Bring {g.bring} that you own. Press Play and load it on the game page. It stays in your browser and is never uploaded.</p>
+							</div>
 						)}
 					</div>
 				</article>

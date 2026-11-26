@@ -58,10 +58,8 @@ main { flex: 1; display: grid; gap: 28px; align-content: start; padding: 24px; }
 .video:hover .frame { box-shadow: 0 0 22px var(--red); }
 .video:focus-visible { outline: 4px solid #fff; outline-offset: 6px; border-radius: 12px; }
 
-.need { color: var(--muted); }
-.need summary { cursor: pointer; color: var(--ink); font-weight: 600; padding: 4px 0; }
-.need p { margin: 10px 0 0; }
-.need .how { white-space: pre-line; }
+.need { display: grid; gap: 8px; color: var(--muted); }
+.need p { margin: 0; }
 
 .foot {
 	display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center;

@@ -2,8 +2,10 @@
 // YouTube that shows it played. The list shows the video's own picture with
 // a play mark, linking to the video there; nothing of YouTube's runs on the
 // page. A game with no entry shows no video.
+// `look` is the theme the video shows; every card says the same words of it.
 export const VIDEOS = {
-	'lex00/tapper': { id: 'PIKpRCtSEK8', says: 'Watch it played in the Last Call look' },
+	'lex00/tapper': { id: 'PIKpRCtSEK8', look: 'Last Call' },
+	'lex00/donkey-kong': { id: '9nsA4A4e_x8', look: 'Turnips' },
 };
 
 /** The video of game `name`: where it plays, its picture and its words, or null. */
@@ -13,6 +15,6 @@ export function videoOf(name) {
 	return {
 		href: `https://www.youtube.com/watch?v=${v.id}`,
 		picture: `https://i.ytimg.com/vi/${v.id}/maxresdefault.jpg`,
-		says: v.says,
+		says: `Watch it played in the ${v.look} look`,
 	};
 }

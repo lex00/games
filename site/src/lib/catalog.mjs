@@ -8,6 +8,14 @@ const REGISTRY = process.env.GP_REGISTRY ?? 'https://raw.githubusercontent.com/l
 // address (`/p?g=NAMESPACE/NAME`, with `&c=NAMESPACE/THEME` for a theme).
 // The games the list shows first, by their names in the registry, in order.
 const FIRST = ['lex00/tapper'];
+// What a visitor brings to play each game, in a few words that end the
+// card's one sentence ("Bring ... that you own."). A game with no entry
+// says a copy of the game by its title. The package's own longer note
+// (rom.how_to_get) is for gp's commands, not for this list.
+const BRING = {
+	'lex00/tapper': 'a MAME romset of Tapper (tapper.zip)',
+	'lex00/donkey-kong': 'a ROM of Donkey Kong: Original Edition',
+};
 export const RUNNER =process.env.GP_RUNNER ?? 'https://gameprinter.intentius.workers.dev';
 
 async function text(key) {
@@ -90,8 +98,7 @@ export async function games() {
 			play: `${RUNNER}/p?g=${p.name}`,
 			picture,
 			original: pkg.rom ? p.title : null,
-			// The package wraps its text at a width; only a blank line is a break.
-			howToGet: pkg.rom?.how_to_get?.trim().replace(/([^\n])\n(?=[^\n])/g, '$1 ') ?? null,
+			bring: pkg.rom ? (BRING[p.name] ?? `a copy of ${p.title}`) : null,
 			themes: themes.map((c) => ({ title: c.title, play: `${RUNNER}/p?g=${p.name}&c=${c.name}` })),
 		});
 	}
