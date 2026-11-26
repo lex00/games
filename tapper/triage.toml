@@ -13,6 +13,7 @@ mode = 0xE3BD      # 1 in attract, 0 in a game, 2 at game over
 pbar = 0xE6F9      # the bartender's bar, 0 the bottom to 3 the top
 px = 0xE2E9        # the bartender's x
 score4 = 0xE3F8    # a digit of the score (six, one a byte, from E3F5)
+bonus = 0xE705     # 5 in the bonus round ($256A numbers its cans 0 to 5 in E700-E705), else 0
 
 [[item]]
 row = "title"
@@ -32,7 +33,8 @@ stop = "After a few moves each way"
 [[item]]
 row = "enemies"
 # A customer walking along the bottom bar (bar 0, y 0x39), past the middle.
-goal = "mode == 0 and @0 == 0x39 and @3 >= 0x70"
+# Not in the bonus round (bonus 5), whose cans sit in the customers' slots.
+goal = "mode == 0 and bonus < 5 and @0 == 0x39 and @3 >= 0x70"
 slots = { at = 0xE262, stride = 4, count = 8 }
 near = "mode == 0"
 do = "Stand still at a tap and let the customers come"
