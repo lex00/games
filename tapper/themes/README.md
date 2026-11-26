@@ -9,7 +9,7 @@ Each theme is a folder here, published to the registry as its own package. Its p
 | Theme | What it is | Where it lives |
 |---|---|---|
 | Original | The game's own art and sound, lifted from your ROM when you play. Never stored in a repo. | Your ROM |
-| Last Call | A large-art theme: a warm saloon drawn in sharper pixel art, the cast dressed, a glass mug with foam (lex00/last-call 0.2.1, CC-BY-4.0) | `last-call/` here |
+| Last Call | A large-art theme: a warm saloon drawn in sharper pixel art, the cast dressed, a glass mug with foam (lex00/last-call 0.2.2, CC-BY-4.0) | `last-call/` here |
 
 On the page, pick one under Settings, Theme.
 

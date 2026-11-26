@@ -8,7 +8,7 @@ A theme for Tapper on Game Printer: new pictures, drawn by you, for every body, 
 - `theme/look.txt` names the look and its rules file.
 - `theme/art.txt` holds the rules (`gp-art 1`): which of the game's pictures each of yours replaces, and at what size. Each line marked TO DRAW is a picture still to make.
 - `theme/art/` holds your pictures, as PNG, at 2 times the game's pixel size.
-- `preview.png` is the first bar in this look, for lists of games: the stage, the sign, the casks, the glasses and the score, with no one at the bar. Every pixel in it is this theme's own; the people, who are still the board's pictures, are left out.
+- `preview.png` is the first bar in this look, for lists of games: the stage, the sign, the casks, one full mug and the score, with no one at the bar. Every pixel in it is this theme's own; the people, who are still the board's pictures, are left out.
 
 ## The rules
 
