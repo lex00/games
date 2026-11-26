@@ -10,7 +10,7 @@ The game is unchanged. Every body keeps its place and hit box; only the pictures
 - `theme/art.txt` holds the rules (`gp-art 1`, read by `gp_present::art` in [gameprinter](https://github.com/lex00/gameprinter)): which of the game's pictures each clay picture replaces and at what size, timed extra frames, the scarabs' facing, the ball Kong holds, the stump and the stink over the drum, and how each stage is built from pieces.
 - `theme/art/` holds the pictures, at 6 to 8 times the game's pixel size.
 - `package.toml` names the package, `lex00/turnips`.
-- `preview.png` is the clay title screen, for lists of games.
+- `preview.png` is the first stage in play, for lists of games.
 
 ## No ROM data
 
