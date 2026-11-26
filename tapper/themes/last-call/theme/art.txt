@@ -771,27 +771,21 @@ stage_piece lamps2 pieces/space/lamps2.png 540 264
 stage_piece lamps3 pieces/space/lamps3.png 540 264
 stage_piece lamps4 pieces/space/lamps4.png 540 264
 stage_piece snone pieces/space/none.png 2 2
+stage_piece glow_blue0 pieces/space/glow_blue0.png 32 32
+stage_piece glow_white0 pieces/space/glow_white0.png 32 32
+stage_piece glow_blue1 pieces/space/glow_blue1.png 32 32
+stage_piece glow_white1 pieces/space/glow_white1.png 32 32
+stage_piece glow_blue2 pieces/space/glow_blue2.png 32 32
+stage_piece glow_white2 pieces/space/glow_white2.png 32 32
+stage_piece glow_blue3 pieces/space/glow_blue3.png 32 32
+stage_piece glow_white3 pieces/space/glow_white3.png 32 32
+stage_piece glow_blue4 pieces/space/glow_blue4.png 32 32
+stage_piece glow_white4 pieces/space/glow_white4.png 32 32
 stage_piece sdisc pieces/space/disc.png 104 72
 stage_piece st0ee pieces/space/t0ee.png 32 32
 stage_piece craft0 pieces/space/craft0.png 88 76
 stage_piece craft1 pieces/space/craft1.png 88 76
 stage_piece craft2 pieces/space/craft2.png 88 76
-stage_piece neon_cyan pieces/space/neon_cyan.png 32 32
-stage_piece neon_magenta pieces/space/neon_magenta.png 32 32
-stage_piece neon_lime pieces/space/neon_lime.png 32 32
-stage_piece neon_orange pieces/space/neon_orange.png 32 32
-stage_piece neon_violet pieces/space/neon_violet.png 32 32
-stage_piece neon_gold pieces/space/neon_gold.png 32 32
-stage_piece neon_rose pieces/space/neon_rose.png 32 32
-stage_piece neon_teal pieces/space/neon_teal.png 32 32
-stage_piece neon_blue pieces/space/neon_blue.png 32 32
-stage_piece neon_red pieces/space/neon_red.png 32 32
-stage_piece neon_ice pieces/space/neon_ice.png 32 32
-stage_piece neon_pink pieces/space/neon_pink.png 32 32
-stage_piece neon_aqua pieces/space/neon_aqua.png 32 32
-stage_piece neon_amber pieces/space/neon_amber.png 32 32
-stage_piece neon_green pieces/space/neon_green.png 32 32
-stage_piece neon_purple pieces/space/neon_purple.png 32 32
 stage_piece cardnavy pieces/card/navy.png 32 32
 stage_piece stars_far pieces/space/stars_far.png 1024 960
 stage_piece stars_near pieces/space/stars_near.png 1024 960
@@ -1489,6 +1483,8 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_cells sbar tile=0x0f4 tile=0x0f5 tile=0x0fa tile=0x0fb
 #+ room_cells sbarin tile=0x0f7 tile=0x0f6
 #+ room_cells sbartopa tile=0x0f4 tile=0x0f7 tile=0x0fa tile=0x0fd
+#+ room_cells sbarblue tile=0x0f4 tile=0x0f7 tile=0x0fa tile=0x0fd b>r+60
+#+ room_cells sbarwhite tile=0x0f4 tile=0x0f7 tile=0x0fa tile=0x0fd !sbarblue
 #+ room_cells sbarcap tile=0x0fd tile=0x0fc
 #+ room_cells sbay tile=0x0be tile=0x0bf tile=0x0c0 tile=0x0c1 tile=0x0c2 tile=0x0c3 tile=0x0c4 tile=0x0c5 tile=0x0c6 tile=0x0cd tile=0x0ce tile=0x0b7 tile=0x0b8 tile=0x0b9 tile=0x0ba tile=0x0bb tile=0x0bc tile=0x0bd tile=0x0c7 tile=0x0c8 tile=0x0ca tile=0x0cb tile=0x0f7 tile=0x0f6 tile=0x0db tile=0x0de tile=0x0df tile=0x0e0
 #+ room_cells skeg tile=0x0d3 tile=0x0d4 tile=0x0d5 tile=0x0d6 tile=0x0d7 tile=0x0d8 tile=0x0d9 tile=0x0da
@@ -1597,11 +1593,13 @@ stage_piece idle_tap pieces/saloon/idle_tap.png 64 64
 #+ room_react_stagger 79
 #+ room_react sbay_at -246 0 snone:103 lamps4:12 snone:67 lamps4:5 snone:29
 #+ room_react_stagger 37
-# The bars flash neon: each bartop glows a colour for a few seconds, rests as plain bartop, then takes the next of
-# sixteen. Every bar runs the same sequence from a different point, so each changes at its own moment and no two
-# bars show the same colour at once.
-#+ room_react sbartopa 0 0 neon_gold:230 snone:50 neon_purple:200 snone:90 neon_pink:240 snone:70 neon_rose:160 snone:90 neon_red:200 snone:80 neon_cyan:210 snone:50 neon_ice:150 snone:50 neon_amber:220 snone:100 neon_aqua:180 snone:70 neon_violet:160 snone:80 neon_teal:200 snone:90 neon_green:230 snone:80 neon_blue:260 snone:60 neon_magenta:220 snone:60 neon_orange:180 snone:80 neon_lime:270 snone:80
-#+ room_react_stagger 97 rows
+# The bars' light swells and fades, and each bar keeps the board's own colour for it: the bars the romset
+# draws blue glow blue and the others white, so they alternate down the screen as the original's do. A bar
+# is half a swell from the next of its colour, and the white bars a quarter from the blue.
+#+ room_react sbarblue 0 0 glow_blue0:12 glow_blue1:7 glow_blue2:7 glow_blue3:7 glow_blue4:16 glow_blue3:7 glow_blue2:7 glow_blue1:7
+#+ room_react_stagger 35 rows
+#+ room_react sbarwhite 0 0 glow_white2:7 glow_white3:7 glow_white4:16 glow_white3:7 glow_white2:7 glow_white1:7 glow_white0:12 glow_white1:7
+#+ room_react_stagger 35 rows
 # The floating kegs: a steel keg on a ring of thrusters, held up by blue jets that never stop flickering (three
 # pictures of the same keg, the jets short, medium and long), where the board has its floating pod, and larger.
 #+ room_react skeg_at -2 -26 hoverkeg0:4 hoverkeg1:4 hoverkeg2:4 hoverkeg1:4
