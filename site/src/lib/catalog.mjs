@@ -6,7 +6,9 @@ import { parse } from 'smol-toml';
 const REGISTRY = process.env.GP_REGISTRY ?? 'https://raw.githubusercontent.com/lex00/gp-registry/main';
 // The game runner: one page for every game, which takes the game from its
 // address (`/p?g=NAMESPACE/NAME`, with `&c=NAMESPACE/THEME` for a theme).
-export const RUNNER = process.env.GP_RUNNER ?? 'https://gameprinter.intentius.workers.dev';
+// The games the list shows first, by their names in the registry, in order.
+const FIRST = ['lex00/tapper'];
+export const RUNNER =process.env.GP_RUNNER ?? 'https://gameprinter.intentius.workers.dev';
 
 async function text(key) {
 	const r = await fetch(`${REGISTRY}/${key}`);
@@ -94,5 +96,9 @@ export async function games() {
 		});
 	}
 	if (list.length === 0) throw new Error('the registry lists no games');
+	// The games in the order the list shows them: those named in FIRST, in
+	// that order, then the rest as the registry lists them.
+	const place = (g) => (FIRST.includes(g.name) ? FIRST.indexOf(g.name) : FIRST.length);
+	list.sort((a, b) => place(a) - place(b));
 	return list;
 }
