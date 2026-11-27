@@ -1,7 +1,7 @@
 # lex00/last-call: Last Call, a large-art theme for Tapper.
 [package]
 name = "lex00/last-call"
-version = "0.2.2"
+version = "0.2.3"
 kind = "content"
 title = "Last Call"
 license = "CC-BY-4.0"
