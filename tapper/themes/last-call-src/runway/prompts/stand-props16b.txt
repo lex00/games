@@ -1,0 +1,5 @@
+A sheet of three separate small objects left on the concrete steps of a ballpark grandstand, for a pixel art video game in the 16-bit console style of the early 1990s. They stand side by side in one row on a flat pure magenta background with wide magenta space between them, each seen in the same three-quarter view from the front and slightly above, each with no shadow:
+Left: a chunky 1980s portable radio cassette player with two round speakers and a handle, drawn narrow and tall, with two paper cups with straws standing directly in front of it, overlapping its front, so the whole group is about as wide as it is tall.
+Middle: a striped red and cream paper box of popcorn, standing alone.
+Right: a navy blue foam pointing hand with one finger up, standing upright alone.
+Bright readable colours. Fine small pixels, smooth painted shading in four or five close tones, clean dark brown outlines, small sharp highlights, light from the upper left. No people, no text, no logos, no letters. Match the pixel size, the colours and the smooth painted shading of the objects in @props.

@@ -1,0 +1,12 @@
+A sheet of nine square swatches in a three by three grid on a plain flat white background, each swatch a separate square with a gap between them, for a pixel art video game in the late-1980s arcade style: crisp hard-edged pixels, no blur, no gradients beyond a few flat shades, bright readable colours. Each swatch is a flat, straight-on, evenly lit texture that repeats seamlessly, filling its whole square:
+1 top left: wall of bright blue painted vertical boards with thin dark seams.
+2 top middle: a lighter sky-blue painted wall panel with a thin trim line along the bottom.
+3 top right: a dark brown wooden corner post, vertical grain.
+4 middle left: honey-coloured floor planks running left to right, thin dark seams, a few knots.
+5 middle centre: the polished top of a wooden serving counter, warm orange-brown with a bright highlight along its front edge.
+6 middle right: the front of a wooden serving counter: dark reddish-brown panels with vertical slats.
+7 bottom left: the foot of a serving counter: dark wood with a shiny brass rail running left to right across it.
+8 bottom middle: the end of a serving counter seen face on: dark wood with a rounded bright edge.
+9 bottom right: deep blue wall boards in shadow.
+No text, no labels, no numbers, no people.
+Match the pixel style, outlines and materials of @board, but much brighter: daytime light, light and mid tones, nothing murky or near black except thin outlines.

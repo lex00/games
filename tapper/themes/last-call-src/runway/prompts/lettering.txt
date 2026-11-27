@@ -1,0 +1,8 @@
+A sheet of pixel art lettering for a late-1980s arcade video game, on a plain flat white background: one complete bold blocky font, every character drawn on its own square cell of the same size, laid out in neat rows with wide white space between cells, crisp hard-edged pixels, no blur, no anti-aliasing.
+Each character is cream white with a warm gold lower half, outlined all round with a thick dark brown outline so it reads on any colour, and stands in the middle of its cell.
+Row one: A B C D E F G H I J
+Row two: K L M N O P Q R S T
+Row three: U V W X Y Z
+Row four: 0 1 2 3 4 5 6 7 8 9
+Row five: a period, a comma, an exclamation mark, a question mark, a hyphen, a colon, an apostrophe, a copyright symbol, and a small tall drink glass with a handle full of amber drink and white foam on top, the same height as the letters.
+Nothing else on the sheet.

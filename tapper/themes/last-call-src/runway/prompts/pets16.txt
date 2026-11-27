@@ -1,0 +1,4 @@
+A sheet of two separate sleeping animals, for a pixel art video game in the 16-bit console style of the early 1990s, side by side on a flat pure magenta background with wide magenta space between them, each seen in the same three-quarter view from the front and slightly above, each with no shadow:
+Left: a ginger tabby cat fast asleep, curled up tight into a round ball with its tail wrapped round its nose, eyes closed.
+Right: a floppy-eared brown and white dog fast asleep, curled up tight into a compact ball with its chin on its paws, eyes closed.
+Each is compact, about as wide as it is tall. Bright readable colours. Fine small pixels, smooth painted shading in four or five close tones, clean dark brown outlines, small sharp highlights, light from the upper left. No people, no text, no bed, no cushion. Match the pixel size and the smooth painted shading of the objects in @props.

@@ -1,0 +1,5 @@
+Two separate small pictures for a pixel art video game in the late-1980s arcade style, side by side on a plain flat white background with wide white space around each: crisp hard-edged pixels, no blur, clean dark outlines, bright readable colours, lit from the upper left.
+Left: a man's hand in a white shirt cuff, seen from the side, gripping the wooden lever of a polished brass drink dispenser tap and pulling it down and forward, the tap's short spout pointing left.
+Right: the same hand resting on the same tap's lever standing straight up.
+Only the hand, the cuff and the tap in each, no arm beyond the cuff, no face, no people, no text.
+The tap is exactly the tap in @tap, and the pulled tap is exactly @pulled.

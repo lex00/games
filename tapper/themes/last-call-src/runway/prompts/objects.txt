@@ -1,0 +1,7 @@
+A sheet of separate small objects for a pixel art video game in the late-1980s arcade style, each on a plain flat white background with wide white space around it, laid out in a neat grid of four across and four down: crisp hard-edged pixels, no blur, clean dark outlines, bright readable colours, lit from the upper left.
+Row one: a polished brass drink dispenser tap seen from the side, its short spout pointing left and its lever handle standing straight up; the same brass tap with its lever pulled down and forward; a tall clear glass mug with a handle, full of glowing amber drink with a tall white foam head; the same full glass with its foam sloshing over one side as it slides.
+Row two: the same full glass tipping over sideways, drink spilling out; the same glass empty and upright, clear with a few drops at the bottom; the same empty glass tipping over sideways; a small burst of glass shards and drink drops, just broken.
+Row three: the burst of shards at its widest, scattered; the shards spread out and fading; a small stack of gold coins on a folded green paper note; three small round white drink bubbles rising, of different sizes.
+Row four: a white foam head on its own, as it sits on top of a full glass; a thin stream of amber drink pouring straight down; an empty glass mug lying on its side; a full glass seen from straight in front.
+The glass is the same glass in every picture, about as tall as it is wide plus a half. No people, no text.
+Match the pixel style, outlines and materials of @board.

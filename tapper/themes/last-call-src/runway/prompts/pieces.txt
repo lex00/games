@@ -1,0 +1,8 @@
+A sheet of five separate objects for a pixel art video game in the late-1980s arcade style, each on a plain flat white background with wide space around it: crisp hard-edged pixels, no blur, clean dark outlines, bright readable colours, lit from the upper left.
+Top left: a pair of swinging half-doors of orange-painted wood in a tall narrow wooden door frame with a brass edge, the opening dark behind them, drawn as a tall thin shape about one third as wide as it is tall.
+Top middle: the round end of a big wooden barrel set into a wall, seen face on: curved staves, two iron hoops, a brass tap in its middle, a red diamond painted around the tap.
+Top right: a wide painted wooden sign board with a carved border, a big orange-red bow shape painted across it and the words LAST CALL in bold cream letters with a dark outline.
+Bottom left: a tall framed oil painting of a desert landscape in an ornate gold frame, the frame about one third as wide as it is tall.
+Bottom right: a small mounted set of long curved horns on a wooden shield plaque, for hanging on a wall.
+No people, no other text.
+Match the pixel style, outlines and materials of @board, but much brighter: daytime light, light and mid tones, nothing murky or near black except thin outlines.

@@ -1,0 +1,8 @@
+A sheet of six separate small objects left on the concrete steps of a ballpark grandstand, for a pixel art video game in the 16-bit console style of the early 1990s. They are laid out in a grid of three across and two down on a flat pure magenta background with wide magenta space between them, each seen in the same three-quarter view from the front and slightly above, each sitting flat with no shadow:
+One: a striped beach towel spread out flat with a pair of sunglasses lying on it.
+Two: a chunky 1980s portable radio cassette player with two round speakers and a handle, with two paper cups with straws standing beside it.
+Three: a red picnic cooler box with a white lid and a handle.
+Four: a folded team jacket with a baseball cap resting on top of it.
+Five: a striped paper box of popcorn standing next to a foam pointing hand.
+Six: a baseball glove with a ball in it, next to a small pennant flag on a stick lying down.
+Bright readable colours. Fine small pixels, smooth painted shading in four or five close tones, clean dark brown outlines, small sharp highlights, light from the upper left. No people, no text, no logos, no letters. Match the pixel size and the smooth painted shading of the picture in @canyon.
