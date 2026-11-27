@@ -56,4 +56,6 @@ These were used during the work and are not kept, because each shows the origina
 | The board's screens (`screen_8021.png` and the rest) | A whole room in the original's pictures | `gp theme look sheet --game tapper` writes them under `~/.gameprinter/work/theme-kits/tapper/board/` |
 | A clip's sprite list | Every sprite a clip draws on every frame | `gp picture tapper --run RUN --clip CLIP --sprites FILE`: a line a frame, the original's sprites by code and box beside the model's |
 
+Two of these, the bar's crop and the pad's, were sent to the image model beside a prompt, to give it the shape to fill. That is not to be done again: `gp theme generate` refuses to send a file from the theme kit's local part, the lifted pictures or the ROMs, and a theme's calls go by the same rule. Send the kit's measures in words, or a flat shape drawn from them, as `bleachers.py` and `hood.py` do.
+
 Shots of the theme over the game are never committed either (`gp theme look play --shots` says so).
