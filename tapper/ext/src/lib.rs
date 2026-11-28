@@ -3197,10 +3197,15 @@ fn pour_layers(cx: &ExtCx<'_>, twice_now: bool) -> Vec<BonusObj> {
     // $239E the six from E18E, a slide's $1D3C those and the rest. E715
     // and E714 stay as they were, and nothing draws from them until the
     // setup (tapper.l13.001: the mug falls on 261 with a full mug at the
-    // tap).
+    // tap). The flow read here is the frame before's, so state 12's sub 0
+    // is the frame $2389 empties them on (tapper.pour-clips-by-hand.002:
+    // E715 2, the mug falls and the layers are gone on its frame 68), and
+    // the setup after ($24CC's state 9, then the intro's sub 5) leaves
+    // E715 where it was with the objects empty (the same clip's GET READY,
+    // frame 97).
     if let Some(fb) = flow {
         let (state, sub) = (fb.ext[3] & 0xff, (fb.ext[3] >> 16) & 0xff);
-        if (state == 12 && sub >= 1) || ([13, 15].contains(&state) && [1, 10, 11].contains(&sub)) {
+        if [9, 12].contains(&state) || ([13, 15].contains(&state) && [1, 10, 11].contains(&sub)) || ([15, 16].contains(&state) && sub == 5) {
             return Vec::new();
         }
     }
