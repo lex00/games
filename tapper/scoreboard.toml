@@ -113,15 +113,19 @@ clip = "tapper.clear.001"
 [[line]]
 name = "fast pours"
 clip = "tapper.pour-clips-by-hand.001"
+confirm = false
 
 [[line]]
 name = "pours in short pulls"
 clip = "tapper.pour-clips-by-hand.002"
+confirm = false
 
 [[line]]
 name = "a pour let go early"
 clip = "tapper.pour-clips-by-hand.003"
+confirm = false
 
 [[line]]
 name = "level 1 at a person's speed"
 clip = "tapper.pour-clips-by-hand.004"
+confirm = false

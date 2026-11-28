@@ -2,7 +2,7 @@
 # no game data, only facts about the romset and the model made from it.
 [package]
 name = "lex00/tapper"
-version = "0.1.13"
+version = "0.1.14"
 kind = "game"
 title = "Tapper"
 tier = "commercial"
