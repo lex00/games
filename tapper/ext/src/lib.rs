@@ -3168,8 +3168,10 @@ fn demo_scene(cx: &ExtCx<'_>, n: i64) -> Vec<BonusObj> {
 /// for the first and $21 above it, at the tap's handle's x. Three layers
 /// fill the mug (E715 at 1, then 0 with E714 1, $125E); a send ($13CC),
 /// a move ($214B) or a walk empties both counts, and the layers with them.
-/// The level's end pours its own mug the same way.
-fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
+/// The level's end pours its own mug the same way. `twice_now`: this
+/// step's end hook drew a second run of $4742 on the end's frame 109,
+/// which the flow's word read here does not hold yet.
+fn pour_layers(cx: &ExtCx<'_>, twice_now: bool) -> Vec<BonusObj> {
     let Some(pk) = cx.kind("player") else { return Vec::new() };
     let Some(me) = cx.world.bodies.iter().find(|b| b.alive && b.kind == pk) else { return Vec::new() };
     if me.y.floor() == 0 || out_of_play(cx) {
@@ -3206,7 +3208,11 @@ fn pour_layers(cx: &ExtCx<'_>) -> Vec<BonusObj> {
         && [15, 16].contains(&(fb.ext[3] & 0xff))
         && (fb.ext[3] >> 16) & 0xff == 8
     {
-        let w3 = fb.ext[3];
+        // On the end's frame 109 the draw for a second run of $4742 is
+        // taken in this same step, after the flow's word here was read:
+        // with it the glass is not put beside him on that frame, as he is
+        // back at the tap (tapper.l4.001 frame 1319).
+        let w3 = fb.ext[3] | if twice_now { END_TWICE } else { 0 };
         let n = ((w3 >> 24) & 0xffff) + 1;
         let n = if n >= 109 && w3 & END_TWICE != 0 { n - 53 } else { n };
         let b = |at: i64| imm(cx, "end_pose_b", 0x467B, at);
@@ -3438,8 +3444,18 @@ fn kicked_glass(cx: &ExtCx<'_>, me: &gp_sim::world::Body, n: i64, left: bool, w3
         }
         mx &= 0xff;
     }
-    // Where he stood before the step: the glass is placed from there.
-    let stood = if left { mx + 1 } else { mx - 1 };
+    // Where he stood before the step: the glass is placed from there
+    // ($469F reads his x before $46B4 to $46BF step him). On 109 itself
+    // tapper_bars takes the step after this is read, so his x is still
+    // the one before it (tapper.l1.001 frame 226: the glass at 175, not
+    // 174).
+    let stood = if n == 109 {
+        mx
+    } else if left {
+        mx + 1
+    } else {
+        mx - 1
+    };
     let gx = if left { stood + b(0x46A3) - b(0x46AC) } else { stood + b(0x46A3) };
     let flags = if left { b(0x46B0) } else { b(0x469E) };
     let gy = my - b(0x4693);
@@ -5092,7 +5108,7 @@ impl Ext for Bars {
         if let Some(ok) = cx.kind("bonus_object") {
             let key = |at: i64| (at - 0xE18E) / 4 + 1;
             let have: Vec<i64> = cx.world.bodies.iter().filter(|b| b.alive && b.kind == ok).map(|b| b.ext[1]).collect();
-            for o in pour_layers(cx).into_iter().filter(|o| !have.contains(&key(o.at))) {
+            for o in pour_layers(cx, false).into_iter().filter(|o| !have.contains(&key(o.at))) {
                 let mut b = gp_sim::systems::new_body(cx.spec, cx.world, ok, Fx::from_int(o.x), Fx::from_int(o.y), false);
                 b.ext[0] = o.flags | (o.pic << 8);
                 b.ext[1] = key(o.at);
@@ -5515,6 +5531,9 @@ impl Ext for Bars {
             .and_then(|k| cx.world.bodies.iter().enumerate().find(|(_, b)| b.kind == k))
             .map(|(i, b)| (i, *b));
         let mut state = flow.map_or(10, |(_, b)| b.ext[3] & 0xff);
+        // Set when the level's end draws a second run of $4742 in this step
+        // (pour_layers reads the flow before it).
+        let mut end_twice_now = false;
         // A start inside the bonus round ($2500): $232B's place (E3A9)
         // gives its frame. The wait of 20 at $252C ends on the round's
         // frame 22, the cans' objects coming in on the next ($255F); a start
@@ -6858,6 +6877,7 @@ impl Ext for Bars {
                 }
             }
             if raw == 109 && fb.ext[3] & END_TWICE != 0 {
+                end_twice_now = true;
                 // $4684 runs $4742 again on this frame, after his hook took
                 // the first run's next step ($4603's at 109): its first
                 // frame is drawn here, as end_script_pose's 56 (at the tap,
@@ -8046,7 +8066,7 @@ impl Ext for Bars {
                 text = cx.counter("bonus_text").unwrap_or(0);
             }
             if !in_round {
-                want.extend(pour_layers(cx));
+                want.extend(pour_layers(cx, end_twice_now));
                 if let Some(n) = scene_frame(cx) {
                     want.extend(demo_scene(cx, n));
                 }
