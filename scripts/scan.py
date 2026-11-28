@@ -21,7 +21,26 @@ MAGIC = [b"NES\x1a", b"FDS\x1a", b"UNIF", b"\x01*NINTENDO-HVC*", b"NESM\x1a",
          b"NSFE", b"PATCH", b"BPS1", b"UPS1"]
 
 
+def theme_media(rel: str, data: bytes) -> bool:
+    """A theme's own picture or sound: GAME/themes/NAME/... as a .png or
+    .wav that is one by its contents (.gitattributes keeps them in Git LFS;
+    a checkout without LFS holds its pointer, which is text). Themes are new
+    art that lives with its game, so these are the two binary kinds the repo
+    holds."""
+    parts = Path(rel).parts
+    ext = Path(rel).suffix.lower()
+    if len(parts) < 4 or parts[1] != "themes" or ext not in (".png", ".wav"):
+        return False
+    if data.startswith(b"version https://git-lfs.github.com/spec/"):
+        return True
+    if ext == ".png":
+        return data.startswith(b"\x89PNG\r\n\x1a\n")
+    return data.startswith(b"RIFF") and data[8:12] == b"WAVE"
+
+
 def refusal(rel: str, data: bytes) -> str | None:
+    if theme_media(rel, data):
+        return None
     if Path(rel).suffix.lower() in BAD_EXT:
         return "a game image, patch or built file by its name"
     if any(data.startswith(m) for m in MAGIC):
