@@ -2261,6 +2261,7 @@ catch_reach = 25
 customer_wait_percent = 0
 drink_turns = 6
 empties_safe = 0
+empty_speed_percent = 0
 hand_reach = 15
 line = 57
 line_step = 48
@@ -15087,6 +15088,11 @@ cmp = "=="
 counter = "boot_bars"
 value = 0
 
+[[levels.main.present.board.counters.when]]
+cmp = "<"
+counter = "attract_screen"
+value = 4
+
 [[levels.main.present.board.counters]]
 at = [9, 27]
 counter = "credits_shown"
@@ -15245,6 +15251,7 @@ value = 3
 
 [[levels.main.present.board.looks]]
 clear = true
+sprites_off = true
 
 [[levels.main.present.board.looks.palette_writes]]
 at = 0
@@ -34991,6 +34998,11 @@ cmp = "=="
 counter = "boot_bars"
 value = 0
 
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "attract_screen"
+value = 4
+
 [[levels.main.present.board.texts]]
 at = [2, 27]
 
@@ -35048,6 +35060,11 @@ value = 2
 cmp = "=="
 counter = "boot_bars"
 value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "attract_screen"
+value = 4
 
 [[levels.main.present.board.texts]]
 at = [15, 27]
@@ -35111,6 +35128,11 @@ value = 2
 cmp = "=="
 counter = "boot_bars"
 value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "attract_screen"
+value = 4
 
 [[levels.main.present.board.texts]]
 at = [13, 27]
@@ -35174,6 +35196,11 @@ value = 2
 cmp = "=="
 counter = "boot_bars"
 value = 0
+
+[[levels.main.present.board.texts.when]]
+cmp = "<"
+counter = "attract_screen"
+value = 4
 
 [[levels.main.present.board.texts]]
 at = [11, 27]

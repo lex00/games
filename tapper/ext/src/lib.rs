@@ -2100,6 +2100,20 @@ fn draw_at_most(cx: &mut ExtCx<'_>, site: &str, n: i64) -> i64 {
     }
 }
 
+/// An empty mug's speed in 8.8 under the Easier setting Slower empties: the
+/// program's as a percent (`empty_speed_percent`), never under a 256th of a
+/// pixel; 0, the model as written, is the program's own.
+fn slowed_empty_speed(speed_x16: i64, percent: i64) -> i64 {
+    if percent > 0 { (speed_x16 * percent / 100).max(1) } else { speed_x16 }
+}
+
+/// A customer's wait between two walks under the Easier setting Slower
+/// customers: the program's as a percent (`customer_wait_percent`), a byte
+/// from 1 to 255; 0, the model as written, is the program's own.
+fn slowed_customer_wait(wait: i64, percent: i64) -> i64 {
+    if percent > 0 { (wait * percent / 100).clamp(1, 255) } else { wait }
+}
+
 /// The show a tip starts ($14E7) and $0C25 runs each frame of play: the
 /// bars hook's word 1 above the empty mug's speed.
 #[derive(Clone, Copy)]
@@ -5295,6 +5309,8 @@ impl Ext for Bars {
             .map(|(i, b)| (i, *b))
             .collect();
         let mut removed: Vec<usize> = Vec::new();
+        // A level's setup ran this step: its $5F31 emptied every object.
+        let mut set_up = false;
         // The frame before a level's end starts the bonus round, whose
         // $5F31 empties every object: GONE_NEXT, as the step ends.
         let mut sprites_gone_next = false;
@@ -6076,6 +6092,7 @@ impl Ext for Bars {
             for (id, _) in &bodies {
                 removed.push(*id);
             }
+            set_up = true;
             if let Some((Some(id), _)) = tip.take() {
                 tips_gone.push(id);
             }
@@ -7254,7 +7271,12 @@ impl Ext for Bars {
                 b.ext[1] = (b.ext[1] & 0xff) | (left << 8);
             }
             let x16 = b.x.floor() * 256 + (b.ext[1] & 0xff);
-            let speed = if empty { empty_speed * 256 } else { full_speed };
+            // A profile can slow the empty mugs, as a percent of the
+            // program's speed in 8.8 (empty_speed_percent, 0 in the model as
+            // written, which is the program's: profiles.toml's
+            // slower_empties). A full mug keeps the program's speed, since a
+            // slower one only gives its customer longer to come on.
+            let speed = if empty { slowed_empty_speed(empty_speed * 256, bp(cx, "empty_speed_percent")) } else { full_speed };
             let x16 = if left_tap { x16 - speed } else { x16 + speed };
             b.x = Fx::from_int((x16 >> 8) & 0xff);
             b.ext[1] = (b.ext[1] & !0xff) | (x16 & 0xff);
@@ -7368,9 +7390,7 @@ impl Ext for Bars {
                         // of the program's own (customer_wait_percent, 0 in
                         // the model as written: profiles.toml's
                         // slower_customers); the timer is a byte.
-                        let pct = bp(cx, "customer_wait_percent");
-                        let wait = if pct > 0 { (wait * pct / 100).clamp(1, 255) } else { wait };
-                        set_cust_timer(&mut c, wait);
+                        set_cust_timer(&mut c, slowed_customer_wait(wait, bp(cx, "customer_wait_percent")));
                     } else {
                         let dx = if facing == 1 { -walk } else { walk };
                         c.x = Fx::from_int((c.x.floor() + dx) & 0xff);
@@ -8036,12 +8056,16 @@ impl Ext for Bars {
                 // before the setup empties the customers: none in the slide
                 // (sub 10) or after it, while he is off the bar (y 0, $1FB9).
                 // A mug's fall ($2389) empties only the 0x18 bytes before
-                // them, so they stay there.
+                // them, so they stay there, until the setup's $5F31 empties
+                // them on its own frame: the customers are removed then, but
+                // `bodies` still holds them and the bartender's y 0 is only
+                // asked for, so none from that step (tapper.l6.001: a mug's
+                // fall, the setup on 542, GET READY on 543 with none).
                 let sliding = flow.is_some_and(|(_, b)| [15, 16].contains(&(b.ext[3] & 0xff)) && (b.ext[3] >> 16) & 0xff == 10);
                 let off_bar = player_k
                     .and_then(|pk| cx.world.bodies.iter().find(|b| b.alive && b.kind == pk))
                     .is_some_and(|b| b.y.floor() == 0);
-                if !(bubbles_gone || sliding || off_bar) {
+                if !(bubbles_gone || set_up || sliding || off_bar) {
                     want.extend(customer_bubbles(cx, &bodies, cust_k, ok, state).into_iter().filter(|o| !taken.contains(&o.at)));
                 }
             }
@@ -8120,6 +8144,33 @@ mod initials_letters {
         assert_eq!(letter_down(2), 1);
         assert_eq!(letter_down(1), 27);
         assert_eq!(letter_down(27), 26);
+    }
+}
+
+#[cfg(test)]
+mod difficulty_switches {
+    use super::{slowed_customer_wait, slowed_empty_speed};
+
+    /// The row tapper-difficulty-switches: the customers' walk (Slower
+    /// customers, 300 in profiles.toml) and the empty mugs' speed (Slower
+    /// empties, 50) each slow the game when on, and with the number at 0,
+    /// the model as written, each is the program's own.
+    #[test]
+    fn the_walk_and_the_mugs_slow_only_when_on() {
+        // Off: the program's wait and speed, whatever they are.
+        for wait in [1, 6, 40, 85, 200, 255] {
+            assert_eq!(slowed_customer_wait(wait, 0), wait);
+        }
+        for speed in [256, 512, 3 * 256] {
+            assert_eq!(slowed_empty_speed(speed, 0), speed);
+        }
+        // On: three times the wait, a byte at most; half the speed, never
+        // stopped.
+        assert_eq!(slowed_customer_wait(6, 300), 18);
+        assert_eq!(slowed_customer_wait(85, 300), 255);
+        assert_eq!(slowed_customer_wait(200, 300), 255);
+        assert_eq!(slowed_empty_speed(256, 50), 128);
+        assert_eq!(slowed_empty_speed(1, 50), 1);
     }
 }
 

@@ -66,6 +66,13 @@ name = "slower_customers"
 "entities.bars.ext_params.customer_wait_percent" = 300
 
 [[groups.switches]]
+description = "Empty mugs slide back along the bar at half the pace, so the bartender has twice as long to catch one; full mugs keep the program's speed (the empty mug's speed E3B0, in steps of a 256th of a pixel)"
+name = "slower_empties"
+
+[groups.switches.set]
+"entities.bars.ext_params.empty_speed_percent" = 50
+
+[[groups.switches]]
 description = "An empty mug never breaks: one that slides past the bartender's end of its bar is gone, with no points and no life lost, instead of falling and costing a life"
 name = "safe_empties"
 
