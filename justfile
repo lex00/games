@@ -86,11 +86,31 @@ check-game: _gp _in-game
     name="$(basename {{quote(game)}})"
     failed=()
     # A recipe runs in the justfile's folder: each is started from the game's.
-    for r in model score mame play-web-arcade web-parity-arcade; do
+    for r in model score mame board play-web-arcade web-parity-arcade; do
         (cd {{quote(game)}} && just "$r") || failed+=("$r")
     done
     [ "${#failed[@]}" -eq 0 ] || { echo "check-game: $name failed ${failed[*]}" >&2; exit 1; }
     echo "check-game: $name passed"
+
+# An arcade game's checks against its own ROM (gp oracle board, gameprinter
+# docs/oracle-mame.md): the board against each [[replay]] capture of
+# oracle/mame-captures.toml with snapshots and the watchdog, the sound board
+# alone against the whole machine, the disassembler against a trace, and the
+# static harvest against harvest.toml. gp skips in words a check whose
+# romset, capture or file isn't on this machine; a game with no
+# oracle/mame-captures.toml is skipped here.
+board: _gp _in-game
+    #!/usr/bin/env bash
+    set -uo pipefail
+    g={{quote(game)}} name="$(basename {{quote(game)}})"
+    if [ ! -f "$g/oracle/mame-captures.toml" ]; then echo "board: skipped, $name has no oracle/mame-captures.toml"; exit 0; fi
+    out=$(cd "$g" && GP_GAMES_DIR={{quote(justfile_directory())}} {{quote(gp)}} oracle board 2>&1); rc=$?
+    grep -v '^hint' <<<"$out"
+    case "$rc" in
+        0) echo "board: $name passed" ;;
+        2) echo "board: skipped, nothing $name's checks need is on this machine" ;;
+        *) echo "board: $name FAILED" >&2; exit 1 ;;
+    esac
 
 # This game's model checked and in canonical form (no ROM).
 model: _gp _in-game
