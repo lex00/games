@@ -7,9 +7,9 @@
 [corpus]
 format = "1.0.0"
 name = "tapper"
-version = "3.0.0"
+version = "3.1.0"
 title = "Tapper"
-recipes = "b3:9e8d6256af977f2728ff160b14b7b9c1ce11949e2b8c1f2187f6aad93ba7a92a"
+recipes = "b3:d837fd08a350c2a6eae835b0df9b8aa1e95270ee65341be8e8765e9dfaf0d5e0"
 
 [target]
 game = "tapper"
@@ -972,6 +972,42 @@ presses = "inputs/tapper.theme-trophy-fright.001.presses"
 frames = 389
 why = "a clip of the theme-trophy-fright mechanic session"
 
+[[clip]]
+id = "tapper.pour-clips-by-hand.001"
+name = "pour-clips-by-hand 001: probe pour-fast: Six full pours as fast as a person can make them: the tap held 6 frames, let go 2; the original fills and sends five mu"
+source = "played"
+start = "inputs/tapper.pour-clips-by-hand.001.start.presses"
+presses = "inputs/tapper.pour-clips-by-hand.001.presses"
+frames = 146
+why = "a clip of the pour-clips-by-hand mechanic session"
+
+[[clip]]
+id = "tapper.pour-clips-by-hand.002"
+name = "pour-clips-by-hand 002: probe pour-short-pulls: Mugs poured in short pulls of 2 or 3 frames, let go and pulled again: the original sends three mugs, each on the"
+source = "played"
+start = "inputs/tapper.pour-clips-by-hand.002.start.presses"
+presses = "inputs/tapper.pour-clips-by-hand.002.presses"
+frames = 158
+why = "a clip of the pour-clips-by-hand mechanic session"
+
+[[clip]]
+id = "tapper.pour-clips-by-hand.003"
+name = "pour-clips-by-hand 003: probe pour-let-go-early: A pull let go too early: the mug waits half full at the tap and the next pull fills and sends it; a second half"
+source = "played"
+start = "inputs/tapper.pour-clips-by-hand.003.start.presses"
+presses = "inputs/tapper.pour-clips-by-hand.003.presses"
+frames = 178
+why = "a clip of the pour-clips-by-hand mechanic session"
+
+[[clip]]
+id = "tapper.pour-clips-by-hand.004"
+name = "pour-clips-by-hand 004: probe pour-level-1: Level 1 played to its clear with presses a person makes: a bar move of 2 frames, pours of 7 to 9; it clears on frame"
+source = "played"
+start = "inputs/tapper.pour-clips-by-hand.004.start.presses"
+presses = "inputs/tapper.pour-clips-by-hand.004.presses"
+frames = 365
+why = "a clip of the pour-clips-by-hand mechanic session"
+
 [[changelog]]
 version = "2.1.0"
 date = "2026-11-25"
@@ -983,3 +1019,9 @@ version = "3.0.0"
 date = "2026-11-25"
 says = "the 12 clips the import saved with NES button names (tapper.attract-demo.001, tapper.clear-stage.001, tapper.double-drink-end.001, tapper.drink-far-end.001, tapper.drink-far-end.002, tapper.enemies.001 to .003, tapper.game-over.001, tapper.get-ready-screen.001, tapper.move.001, tapper.title.001) written again with the arcade's names and `arcade tapper CSRLDUT`: the same presses on the same frames, scored on the tapper set as before, every clip's score the same"
 changed = ["tapper.attract-demo.001", "tapper.clear-stage.001", "tapper.double-drink-end.001", "tapper.drink-far-end.001", "tapper.drink-far-end.002", "tapper.enemies.001", "tapper.enemies.002", "tapper.enemies.003", "tapper.game-over.001", "tapper.get-ready-screen.001", "tapper.move.001", "tapper.title.001"]
+
+[[changelog]]
+version = "3.1.0"
+date = "2026-11-28"
+says = "gp corpus import from the mechanic sessions: added tapper.pour-clips-by-hand.001, tapper.pour-clips-by-hand.002, tapper.pour-clips-by-hand.003, tapper.pour-clips-by-hand.004."
+added = ["tapper.pour-clips-by-hand.001", "tapper.pour-clips-by-hand.002", "tapper.pour-clips-by-hand.003", "tapper.pour-clips-by-hand.004"]
