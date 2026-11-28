@@ -1,4 +1,4 @@
-# The public page's game: the folder the tools' release check builds the page
-# from when it is given no --game (gameprinter scripts/web/release-check.sh,
+# The public page's game: the folder the release check builds the page
+# from when it is given no --game (page/release-check.sh; gameprinter
 # docs/web.md "Deploying the public page").
 game = "donkey-kong"

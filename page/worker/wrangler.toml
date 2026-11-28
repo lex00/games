@@ -1,0 +1,14 @@
+# Cloudflare Worker for the public page (gameprinter's docs/web.md,
+# "Deploying the public page"): Workers static assets, a Worker with no code
+# that serves a folder. page/deploy.sh gives `wrangler versions upload` the
+# bundle's folder with --assets, checks that version at its preview address,
+# then makes it live with `wrangler versions deploy`. The address is
+# gameprinter.intentius.workers.dev, under the account's own subdomain, so no
+# other account can hold it. preview_urls gives each uploaded version an
+# address of its own (VERSION-gameprinter.intentius.workers.dev) before it
+# is live. No account id, token or key belongs in this file; `wrangler
+# login` keeps the login outside the repo.
+name = "gameprinter"
+compatibility_date = "2026-11-01"
+workers_dev = true
+preview_urls = true

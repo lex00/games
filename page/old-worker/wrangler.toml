@@ -1,0 +1,12 @@
+# The old Worker, nes-donkey-kong, which served the public page until it was
+# renamed gameprinter (gameprinter's docs/web.md, "The old address"). It now
+# serves only a _redirects file that sends every path, query included, to
+# the same path on gameprinter.intentius.workers.dev with a 301.
+# page/deploy-old.sh builds that folder and puts it up the same way as the
+# page: a hidden version first, checked at its preview address, then made
+# live. After a few weeks the Worker is deleted, from the Cloudflare
+# dashboard or with `npx wrangler@4.157.0 delete` run from this folder.
+name = "nes-donkey-kong"
+compatibility_date = "2026-11-01"
+workers_dev = true
+preview_urls = true

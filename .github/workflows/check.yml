@@ -33,6 +33,17 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build gp
         run: cargo build -q --manifest-path /Users/alex/Documents/checkouts/lex00/gameprinter/Cargo.toml -p gp-cli
+      # Each game's model against the schema and its evidence, and in
+      # canonical form: gp model check and gp model fmt --check. No ROM.
+      - name: Each game's model
+        run: |
+          gp=/Users/alex/Documents/checkouts/lex00/gameprinter/target/debug/gp
+          git ls-files -- '*/model.toml' | while IFS= read -r m; do
+            d="$(dirname "$m")"
+            "$gp" model check "$d" > /dev/null || exit 1
+            "$gp" model fmt --check "$d" || exit 1
+            echo "$d: model checked and in canonical form"
+          done
       - name: Pack the tool's source and the kit
         run: |
           gp=/Users/alex/Documents/checkouts/lex00/gameprinter/target/debug/gp
